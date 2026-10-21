@@ -177,12 +177,19 @@
         app:layout_constraintTop_toBottomOf="@id/export_label_include"
         android:minHeight="?listPreferredItemHeight">
 
-        <Spinner
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/deck_selector"
+            style="?android:attr/spinnerItemStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="12dp"
+            android:drawableEnd="@drawable/id_arrow_drop_down"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:gravity="center_vertical" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/loading_decks_indicator"

@@ -12,18 +12,19 @@ import android.view.WindowManager
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageButton
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.content.res.use
-import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import anki.collection.opChanges
 import anki.decks.deckTreeNode
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.TR
@@ -44,8 +45,10 @@ import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.anki.utils.ext.requireLongArray
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.AccessibleSearchView
@@ -54,6 +57,7 @@ import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.Job
 import timber.log.Timber
 import com.ichi2.anki.common.android.R as CommonR
 
@@ -68,7 +72,9 @@ import com.ichi2.anki.common.android.R as CommonR
 @NeedsTest("test the ordering of decks in search page in the dialog")
 @NeedsTest("test syncing the status of collapsing deck with teh deckPicker")
 class DeckSelectionDialog : AnalyticsDialogFragment() {
-    private lateinit var binding: DialogDeckPickerBinding
+    @VisibleForTesting
+    internal lateinit var binding: DialogDeckPickerBinding
+        private set
     private lateinit var decksAdapter: DecksArrayAdapter
     private lateinit var decksRoot: DeckNode
     private val title: String
@@ -89,8 +95,8 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.decks.addItemDecoration(dividerItemDecoration)
-        val decks: List<SelectableDeck> = getDeckNames()
-        decksAdapter = DecksArrayAdapter(decks)
+        val deckIds = getDeckIds()
+        decksAdapter = DecksArrayAdapter(deckIds)
         binding.decks.adapter = decksAdapter
         setupMenu()
         return AlertDialog.Builder(requireActivity()).create {
@@ -112,8 +118,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         )
     }
 
-    private fun getDeckNames(): ArrayList<SelectableDeck> =
-        BundleCompat.getParcelableArrayList(requireArguments(), ARG_DECK_NAMES, SelectableDeck::class.java)!!
+    private fun getDeckIds(): LongArray = requireArguments().requireLongArray(ARG_DECK_IDS)
 
     private fun setupMenu() {
         val toolbar: Toolbar = binding.toolbar
@@ -175,6 +180,13 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
     /** Updates the list and simulates a click on the newly created deck */
     private fun onNewDeckCreated(id: DeckId) {
         // a deck/subdeck was created
+        ChangeManager.notifySubscribers(
+            opChanges {
+                deck = true
+                studyQueues = true
+            },
+            initiator = this,
+        )
         launchCatchingTask {
             val name = withCol { decks.name(id) }
             val deck = SelectableDeck.Deck(id, name)
@@ -214,7 +226,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     open inner class DecksArrayAdapter(
-        decks: List<SelectableDeck>,
+        deckIds: LongArray,
     ) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(),
         Filterable {
         private lateinit var expandImage: Drawable
@@ -390,11 +402,11 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
             launchCatchingTask {
                 decksRoot = withCol { Pair(sched.deckDueTree(), isEmpty) }.first
                 val allDecksSet =
-                    decks
-                        .mapNotNull { it as? SelectableDeck.Deck }
-                        .mapNotNull { decksRoot.find(it.deckId) }
+                    deckIds
+                        .filter { it != ALL_DECKS_ID }
+                        .mapNotNull { decksRoot.find(it) }
                         .toSet()
-                if (decks.any { it is SelectableDeck.AllDecks }) {
+                if (ALL_DECKS_ID in deckIds) {
                     val newDeckNode =
                         deckTreeNode {
                             deckId = ALL_DECKS_ID
@@ -421,7 +433,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         const val ARG_SKIP_EMPTY_DEFAULT = "arg_skip_empty_default"
         private const val ARG_TITLE = "arg_title"
         private const val ARG_TEMPLATE_EDITOR_MESSAGE = "arg_template_editor_message"
-        private const val ARG_DECK_NAMES = "deckNames"
+        private const val ARG_DECK_IDS = "arg_deck_ids"
         private const val ARG_ALLOW_MULTIPLE_SELECTION = "arg_allow_multiple_selection"
 
         /** Creates a new instance of [DeckSelectionDialog]. */
@@ -440,7 +452,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                     Bundle().apply {
                         putString(ARG_TEMPLATE_EDITOR_MESSAGE, templateEditorMessage)
                         putString(ARG_TITLE, title)
-                        putParcelableArrayList(ARG_DECK_NAMES, ArrayList(decks))
+                        putLongArray(ARG_DECK_IDS, decks.map { (it as? SelectableDeck.Deck)?.deckId ?: ALL_DECKS_ID }.toLongArray())
                         putString(ARG_REQUEST_KEY, requestKey)
                         putBoolean(ARG_ALLOW_MULTIPLE_SELECTION, allowMultipleSelection)
                         putBoolean(ARG_ALLOW_ALL, allowAll)
@@ -484,6 +496,16 @@ fun Fragment.registerDeckSelectedHandler(
     }
 }
 
+fun Fragment.registerChildDeckSelectedHandler(
+    requestKey: String = REQUEST_SELECT_DECK,
+    action: (deck: SelectableDeck?) -> Unit,
+) {
+    childFragmentManager.setFragmentResultListener(requestKey, this) { _, bundle ->
+        val selectedDeck = bundle.getParcelableCompat<SelectableDeck?>(RESULT_SELECTED_DECK)
+        action(selectedDeck)
+    }
+}
+
 /**
  * Displays a [DeckSelectionDialog] for the user to select a deck. Using the default parameters will
  * result in all possible decks('All Decks', normal, filtered and the 'Default' deck) being shown.
@@ -508,8 +530,8 @@ fun Fragment.startDeckSelection(
     allowAll: Boolean = true,
     allowFiltered: Boolean = true,
     skipEmptyDefault: Boolean = false,
-) {
-    requireActivity().launchCatchingTask {
+): Job =
+    launchCatchingTask {
         val decks =
             withProgress {
                 val backendDecks =
@@ -543,7 +565,6 @@ fun Fragment.startDeckSelection(
             dialog.show(targetManager, DeckSelectionDialog.TAG)
         }
     }
-}
 
 /**
  * Displays a [DeckSelectionDialog] for the user to select a deck. Using the default parameters will

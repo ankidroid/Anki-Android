@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.requireBoolean
 import com.ichi2.anki.utils.ext.requireLong
+import com.ichi2.anki.utils.ext.requireLongArray
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
@@ -102,6 +103,34 @@ class BundleUtilsTest {
 
         verify(mockedBundle).containsKey(eq(KEY))
         verify(mockedBundle).getBoolean(eq(KEY))
+
+        assertEquals(expected, value)
+    }
+
+    @Test
+    fun test_RequireLongArray_NotFound_ThrowsException() {
+        val mockedBundle = mock(Bundle::class.java)
+
+        whenever(mockedBundle.containsKey(anyString())).thenReturn(false)
+
+        val exception = assertFailsWith<IllegalStateException> { mockedBundle.requireLongArray(KEY) }
+
+        assertThat(exception.message, equalTo("key: 'KEY' not found"))
+        verify(mockedBundle).containsKey(eq(KEY))
+    }
+
+    @Test
+    fun test_RequireLongArray_Found_ReturnIt() {
+        val expected = longArrayOf(Random.nextLong())
+        val mockedBundle = mock(Bundle::class.java)
+
+        whenever(mockedBundle.containsKey(anyString())).thenReturn(true)
+        whenever(mockedBundle.getLongArray(anyString())).thenReturn(expected)
+
+        val value = mockedBundle.requireLongArray(KEY)
+
+        verify(mockedBundle).containsKey(eq(KEY))
+        verify(mockedBundle).getLongArray(eq(KEY))
 
         assertEquals(expected, value)
     }
