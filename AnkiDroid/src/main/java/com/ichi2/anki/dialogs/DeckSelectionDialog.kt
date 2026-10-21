@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import anki.collection.opChanges
 import anki.decks.deckTreeNode
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
@@ -45,6 +46,7 @@ import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -55,6 +57,7 @@ import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.Job
 import timber.log.Timber
 
 /**
@@ -175,6 +178,13 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
     /** Updates the list and simulates a click on the newly created deck */
     private fun onNewDeckCreated(id: DeckId) {
         // a deck/subdeck was created
+        ChangeManager.notifySubscribers(
+            opChanges {
+                deck = true
+                studyQueues = true
+            },
+            initiator = this,
+        )
         launchCatchingTask {
             val name = withCol { decks.name(id) }
             val deck = SelectableDeck.Deck(id, name)
@@ -508,8 +518,8 @@ fun Fragment.startDeckSelection(
     allowAll: Boolean = true,
     allowFiltered: Boolean = true,
     skipEmptyDefault: Boolean = false,
-) {
-    requireActivity().launchCatchingTask {
+): Job =
+    launchCatchingTask {
         val decks =
             withProgress {
                 val backendDecks =
@@ -543,7 +553,6 @@ fun Fragment.startDeckSelection(
             dialog.show(targetManager, DeckSelectionDialog.TAG)
         }
     }
-}
 
 /**
  * Displays a [DeckSelectionDialog] for the user to select a deck. Using the default parameters will
