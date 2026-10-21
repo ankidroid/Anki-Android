@@ -102,6 +102,41 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `renaming preserves unrelated backend distinct ligature tags`() =
+        runTest {
+            val original = setOf("source", "ffi", "ﬃ")
+            val note = addTags(*original.toTypedArray())
+            val unrelated = addTags("ffi", "ﬃ")
+            val untouched = col.backend.getNote(unrelated.id)
+            assertEquals(3, col.getNote(note.id).tags.size)
+            withViewModel {
+                ensureOpsExecuted(1) { renameTag("source", "renamed").join() }
+                val expected = setOf("renamed", "ffi", "ﬃ")
+                assertEquals(expected, col.getNote(note.id).tags.toSet())
+                assertEquals(3, col.getNote(note.id).tags.size)
+                assertEquals(untouched, col.backend.getNote(unrelated.id))
+                col.undo()
+                assertEquals(original, col.getNote(note.id).tags.toSet())
+                col.redo()
+                assertEquals(expected, col.getNote(note.id).tags.toSet())
+            }
+        }
+
+    @Test
+    fun `merging deduplicates ligatures using backend identity`() =
+        runTest {
+            val note = addTags("source", "iff")
+            withViewModel {
+                ensureOpsExecuted(1) { renameTag("source", "ﬃ").join() }
+                assertEquals(listOf("iff"), col.getNote(note.id).tags)
+                col.undo()
+                assertEquals(setOf("source", "iff"), col.getNote(note.id).tags.toSet())
+                col.redo()
+                assertEquals(listOf("iff"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
     fun `merge deduplicates using backend tag identity`() =
         runTest {
             val note = addBasicNote().update { listOf("source", "STRASSE", "i", "ı").forEach(::addTag) }
