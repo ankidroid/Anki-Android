@@ -9,11 +9,32 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.android.showThemedToast
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.Collections
+import java.util.IdentityHashMap
 
 object ExceptionUtil {
     /** This throwable followed lazily by its causes. Cyclic chains repeat instances indefinitely. */
     internal val Throwable.causeChain: Sequence<Throwable>
         get() = generateSequence(this) { it.cause }
+
+    /**
+     * Produces a sequence of this throwable and all throwables reachable through
+     * [Throwable.cause] or [Throwable.getSuppressed].
+     */
+    internal fun Throwable.causesAndSuppressed(): Sequence<Throwable> =
+        sequence {
+            val seen = Collections.newSetFromMap(IdentityHashMap<Throwable, Boolean>())
+            val pending = ArrayDeque<Throwable>()
+            pending.add(this@causesAndSuppressed)
+            while (pending.isNotEmpty()) {
+                val throwable = pending.removeLast()
+                if (!seen.add(throwable)) continue
+                yield(throwable)
+                // Visit causes first so shared suppressed references cannot truncate the cause chain.
+                pending.addAll(throwable.suppressed)
+                throwable.cause?.let { pending.add(it) }
+            }
+        }
 
     @CheckResult
     fun getExceptionMessage(e: Throwable?): String = getExceptionMessage(e, "\n")

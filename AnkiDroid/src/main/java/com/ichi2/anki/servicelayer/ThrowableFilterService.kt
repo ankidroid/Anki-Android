@@ -7,6 +7,7 @@ package com.ichi2.anki.servicelayer
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.utils.ExceptionUtil.causeChain
+import com.ichi2.utils.ExceptionUtil.causesAndSuppressed
 import net.ankiweb.rsdroid.BackendException.BackendSchedulerUpgradeRequiredException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
@@ -73,9 +74,9 @@ object ThrowableFilterService {
     }
 
     fun shouldDiscardThrowable(t: Throwable): Boolean {
-        // Check cycles before recursive PII inspection. ACRA's cause hashing also requires an
-        // acyclic cause chain.
-        return exceptionIsUnwanted(t) || t.hasCyclicCause() || !t.safeFromPII()
+        // PII-bearing exceptions may be nested or suppressed. ACRA's stack-trace hashing also
+        // assumes the main cause chain is acyclic, so circular causes cannot be reported as-is.
+        return exceptionIsUnwanted(t) || !t.safeFromPII() || t.hasCyclicCause()
     }
 
     // There are few exception types that are common, but are unwanted in
@@ -93,13 +94,10 @@ object ThrowableFilterService {
     }
 
     /**
-     * Checks if the [Throwable] is safe from Personally Identifiable Information (PII)
+     * Checks this throwable, its causes and suppressed exceptions for known PII-bearing types.
      * @return `false` if the [Throwable] contains PII, otherwise `true`
      */
-    fun Throwable.safeFromPII(): Boolean {
-        if (this.containsPIINonRecursive()) return false
-        return this.cause?.safeFromPII() != false
-    }
+    fun Throwable.safeFromPII(): Boolean = causesAndSuppressed().none { it.containsPIINonRecursive() }
 
     private fun Throwable.hasCyclicCause(): Boolean {
         val seen = Collections.newSetFromMap(IdentityHashMap<Throwable, Boolean>())
