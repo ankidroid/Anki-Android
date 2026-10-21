@@ -58,9 +58,9 @@ object ImportUtils {
      * failure. Success does not mean that the file's contents have been imported.
      */
     fun handleFileImport(
-        context: Context,
+        activity: Activity,
         intent: Intent,
-    ): ImportResult = FileImporter().handleFileImport(context, intent)
+    ): ImportResult = FileImporter().handleFileImport(activity, intent)
 
     /** Resolve the source and select its importer without copying files or starting UI. */
     fun resolveImport(
@@ -129,7 +129,7 @@ object ImportUtils {
     open class FileImporter {
         /** See [ImportUtils.handleFileImport] for the UI and error handling contract. */
         fun handleFileImport(
-            context: Context,
+            activity: Activity,
             intent: Intent,
         ): ImportResult {
             Timber.i("IntentHandler/ User requested to view a file")
@@ -138,15 +138,15 @@ object ImportUtils {
             return try {
                 val uri = getDataUri(intent)
                 if (uri == null) {
-                    ImportResult.Failure(context.getString(CommonString.import_error_handle_exception))
+                    ImportResult.Failure(activity.getString(CommonString.import_error_handle_exception))
                 } else {
-                    handleContentProviderFile(context, uri, intent)
+                    handleContentProviderFile(activity, uri, intent)
                 }
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
                 ImportResult.Failure(
-                    humanReadableMessage = context.getString(CommonString.import_error_handle_exception, e.localizedMessage),
+                    humanReadableMessage = activity.getString(CommonString.import_error_handle_exception, e.localizedMessage),
                     exception = e,
                 )
             }
@@ -160,14 +160,14 @@ object ImportUtils {
          * confirmation propagate to the caller; [handleFileImport] converts them into [ImportResult.Failure].
          */
         fun handleContentProviderFile(
-            context: Context,
+            activity: Activity,
             importPathUri: Uri,
             intent: Intent? = null,
         ): ImportResult =
-            prepareImport(context, intent ?: Intent().setData(importPathUri)).also { result ->
+            prepareImport(activity, intent ?: Intent().setData(importPathUri)).also { result ->
                 if (result is ImportResult.Success) {
                     if (result.file is ImportResolution.Text) {
-                        (context as Activity).openCsvImporter(result.path)
+                        activity.openCsvImporter(result.path)
                     } else {
                         sendShowImportFileDialogMsg(result.path)
                     }
