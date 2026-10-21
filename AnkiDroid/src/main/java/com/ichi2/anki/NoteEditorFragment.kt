@@ -2437,8 +2437,8 @@ class NoteEditorFragment :
             CustomToolbarButton(
                 index = currentButtonIndex,
                 buttonText = buttonText.ifEmpty { currentButton.buttonText },
-                prefix = prefix.ifEmpty { currentButton.prefix },
-                suffix = suffix.ifEmpty { currentButton.suffix },
+                prefix = prefix,
+                suffix = suffix,
             )
 
         saveToolbarButtons(toolbarButtons)
@@ -2563,6 +2563,14 @@ class NoteEditorFragment :
             )
         }
         editToolbarDialog.show()
+
+        fun updateSaveButton() {
+            editToolbarDialog.positiveButton.isEnabled = !et.text.isNullOrBlank() || !et2.text.isNullOrBlank()
+        }
+
+        et.doAfterTextChanged { updateSaveButton() }
+        et2.doAfterTextChanged { updateSaveButton() }
+        updateSaveButton()
     }
 
     private fun setNoteTypePosition() {
