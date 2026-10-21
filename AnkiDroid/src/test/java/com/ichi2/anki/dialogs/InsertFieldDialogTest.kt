@@ -2,10 +2,16 @@
 
 package com.ichi2.anki.dialogs
 
+import androidx.fragment.app.commitNow
+import androidx.fragment.app.testing.launchFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.RESULT_INSERTED_FIELD
+import com.ichi2.anki.model.FieldName
 import com.ichi2.anki.model.SpecialField
 import com.ichi2.anki.model.SpecialFields
 import com.ichi2.testutils.EmptyApplication
@@ -18,6 +24,9 @@ import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 /** Tests for [InsertFieldDialog] */
 @RunWith(AndroidJUnit4::class)
@@ -34,6 +43,55 @@ class InsertFieldDialogTest : RobolectricTest() {
             deck = "aa::bb",
             flag = 0,
         )
+
+    @Test
+    fun `selection waits for the dialog view to be recreated`() =
+        withDialog { dialog, results ->
+            val manager = dialog.parentFragmentManager
+            val viewModel = ViewModelProvider(dialog)[InsertFieldDialogViewModel::class.java]
+            manager.commitNow { detach(dialog) }
+            assertNull(dialog.view)
+
+            viewModel.selectNamedField(FieldName("Front"))
+            advanceRobolectricLooper()
+            assertEquals(emptyList(), results, "A destroyed view must not deliver the selection")
+
+            manager.commitNow { attach(dialog) }
+            advanceRobolectricLooper()
+            assertEquals(listOf("{{Front}}"), results)
+            assertFalse(dialog.isAdded, "Selecting a field dismisses the dialog")
+        }
+
+    @Test
+    fun `recreated dialog delivers a special field selection once`() =
+        withDialog { dialog, results ->
+            val manager = dialog.parentFragmentManager
+            manager.commitNow { detach(dialog) }
+            manager.commitNow { attach(dialog) }
+            advanceRobolectricLooper()
+
+            ViewModelProvider(dialog)[InsertFieldDialogViewModel::class.java].selectSpecialField(SpecialFields.Tags)
+            advanceRobolectricLooper()
+
+            assertEquals(listOf("{{Tags}}"), results)
+            assertFalse(dialog.isAdded, "Selecting a field dismisses the dialog")
+        }
+
+    private fun withDialog(block: (InsertFieldDialog, MutableList<String>) -> Unit) {
+        val requestKey = "insert_field"
+        launchFragment<InsertFieldDialog>(
+            fragmentArgs = InsertFieldDialog.newInstance(listOf("Front", "Back"), metadata, requestKey).requireArguments(),
+            themeResId = R.style.Theme_Light,
+        ).use { scenario ->
+            scenario.onFragment { dialog ->
+                val results = mutableListOf<String>()
+                dialog.parentFragmentManager.setFragmentResultListener(requestKey, dialog.requireActivity()) { _, result ->
+                    results.add(requireNotNull(result.getString(RESULT_INSERTED_FIELD)))
+                }
+                block(dialog, results)
+            }
+        }
+    }
 
     @Test
     fun `all special fields have a descriptions`() {

@@ -39,7 +39,7 @@ import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_FIELD_NAM
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_INSERT_FIELD_METADATA
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_REQUEST_KEY
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
-import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.launchCatchingViewTask
 import com.ichi2.anki.model.SpecialField
 import com.ichi2.anki.model.SpecialFields
 import com.ichi2.anki.utils.ext.requireString
@@ -102,7 +102,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
         )
 
         // setup flows
-        launchCatchingTask {
+        launchCatchingViewTask {
             viewModel.selectedFieldFlow.collect { field ->
                 if (field == null) return@collect
                 parentFragmentManager.setFragmentResult(
