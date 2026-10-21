@@ -126,6 +126,17 @@ jobs:
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
+      # Work around Ubuntu 26.04's RAM-backed /tmp until the image fix rolls out.
+      # https://github.com/actions/runner-images/pull/14814
+      - name: Keep /tmp on disk
+        if: runner.os == 'Linux'
+        run: |
+          if [ "$(findmnt -n -o FSTYPE --target /tmp)" = "tmpfs" ]; then
+            sudo systemctl mask tmp.mount
+            sudo umount -l /tmp
+          fi
+          df -hT /tmp
+
       - name: Configure Windows Pagefile
         uses: al-cheb/configure-pagefile-action@9b6da52fb72a3c6147c1aad2df22d8d905681adc # v1.5
         if: contains(matrix.os, 'windows')
