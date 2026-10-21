@@ -169,7 +169,7 @@ fun FragmentActivity.showException(
     exc: Exception,
     errorMessage: String? = null,
     callerTrace: String? = null,
-) {
+): AlertDialog? {
     when (exc) {
         is BackendInterruptedException -> {
             Timber.w(exc, errorMessage)
@@ -186,7 +186,7 @@ fun FragmentActivity.showException(
         -> {
             // these exceptions do not generate worthwhile crash reports
             Timber.i("Showing error dialog but not sending a crash report.")
-            showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
+            return showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
         }
         // must precede `is BackendException`: BackendDbCorruptException is a subclass
         is SQLiteDatabaseCorruptException, is BackendDbCorruptException -> {
@@ -202,14 +202,15 @@ fun FragmentActivity.showException(
         is BackendException -> {
             Timber.e(exc, errorMessage)
             if (callerTrace != null) Timber.e(callerTrace)
-            showError(exc.localizedMessage!!, exc.toCrashReportData(this))
+            return showError(exc.localizedMessage!!, exc.toCrashReportData(this))
         }
         else -> {
             Timber.e(exc, errorMessage)
             if (callerTrace != null) Timber.e(callerTrace)
-            showError(exc)
+            return showError(exc)
         }
     }
+    return null
 }
 
 /**
@@ -330,14 +331,14 @@ fun Fragment.launchCatchingViewTask(
 fun Context.showError(
     message: CharSequence,
     crashReportData: CrashReportData?,
-) {
+): AlertDialog? {
     crashReportData.throwIfDialogUnusable(message.toString())
 
     Timber.i("Error dialog displayed")
 
     val helpAction = crashReportData?.helpAction?.takeIf { it.canExecute(this) }
 
-    try {
+    return try {
         AlertDialog
             .Builder(this)
             .create {
@@ -365,6 +366,7 @@ fun Context.showError(
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
         crashReportData?.sendCrashReport()
+        null
     }
 }
 

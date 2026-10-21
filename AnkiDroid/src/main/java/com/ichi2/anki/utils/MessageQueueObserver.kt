@@ -3,9 +3,11 @@
 
 package com.ichi2.anki.utils
 
+import androidx.activity.ComponentDialog
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -47,5 +49,19 @@ suspend fun AlertDialog.Builder.showAndAwaitDismissal(block: AlertDialog.Builder
     suspendCancellableCoroutine { continuation ->
         val dialog = setOnDismissListener { continuation.resume(Unit) }.show()
         continuation.invokeOnCancellation { dialog.dismiss() }
+    }
+}
+
+suspend fun ComponentDialog.awaitDismissal() {
+    suspendCancellableCoroutine { continuation ->
+        lifecycle.addObserver(
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_DESTROY) continuation.resume(Unit)
+            },
+        )
+        continuation.invokeOnCancellation {
+            setOnDismissListener(null)
+            dismiss()
+        }
     }
 }
