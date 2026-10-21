@@ -203,6 +203,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
+import com.ichi2.anki.utils.awaitDismissal
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
@@ -1026,7 +1027,7 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.collectInLifecycle(::createIcon)
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
         viewModel.onError.receiveAsFlow().collectInLifecycle { showException(it) }
-        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { showException(it) }
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { showException(it)?.awaitDismissal() }
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.collectInLifecycle(::onStudiedTodayChanged)
