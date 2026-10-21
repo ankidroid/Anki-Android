@@ -111,6 +111,7 @@ class DeckStudyStateTest : RobolectricTest() {
 
     @Test
     fun `daily limits and buried cards are retained together`() {
+        preventDayRolloverAlarmFromUnburyingCards()
         val buried = addBasicNote().firstCard()
         col.sched.buryCards(listOf(buried.id))
         addBasicNote("Limited")
@@ -118,6 +119,8 @@ class DeckStudyStateTest : RobolectricTest() {
         config.new.perDay = 0
         col.decks.save(config)
 
+        // Exercise a day-rollover alarm query after the card has been buried.
+        simulateDayRolloverAlarmCutoffQuery()
         val state = col.currentDeckStudyState()
 
         assertEquals(StudyAvailability.NoCardsAvailable, state.availability)
