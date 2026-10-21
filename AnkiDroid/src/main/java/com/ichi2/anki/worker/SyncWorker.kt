@@ -19,6 +19,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import anki.collection.Progress
 import anki.sync.SyncCollectionResponse
+import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -60,8 +61,8 @@ val syncLock = Mutex()
  *
  * Media is synced by enqueueing a [SyncMediaWorker] work, which doesn't block the collection.
  *
- * Full uploads run when the server specifies the direction.
- * Full downloads and conflicts requiring a direction are ignored.
+ * Full uploads and downloads run when the server specifies the direction.
+ * Conflicts requiring the user to choose a direction are ignored.
  *
  * That is useful when the user isn't interacting with
  * the app, like when doing an automatic sync after leaving the app.
@@ -153,11 +154,10 @@ class SyncWorker(
                         // cannot change between checking whether it is empty and replacing it.
                         when (response.required) {
                             SyncCollectionResponse.ChangesRequired.NO_CHANGES -> _loadScheduler()
-                            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> fullUpload(syncAuth)
-                            SyncCollectionResponse.ChangesRequired.FULL_SYNC,
-                            SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD,
-                            -> {
-                                Timber.d("One-way sync required: Skipping background sync")
+                            SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> fullSync(syncAuth, upload = false)
+                            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> fullSync(syncAuth, upload = true)
+                            SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
+                                Timber.d("Sync direction required: Skipping background sync")
                                 return@withCol null
                             }
                             SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
@@ -176,12 +176,27 @@ class SyncWorker(
         if (syncMedia) syncMedia(syncAuth)
     }
 
-    private fun Collection.fullUpload(auth: SyncAuth) {
-        notify(getProgressNotification(TR.syncUploadingToAnkiweb()))
+    private fun Collection.fullSync(
+        auth: SyncAuth,
+        upload: Boolean,
+    ) {
+        val title = if (upload) TR.syncUploadingToAnkiweb() else TR.syncDownloadingFromAnkiweb()
+        notify(getProgressNotification(title))
+        if (!upload) {
+            val created =
+                createBackup(
+                    BackupManager.getBackupDirectoryFromCollection(colDb),
+                    force = true,
+                    waitForCompletion = true,
+                )
+            if (!created) {
+                Timber.i("SyncWorker: Backup skipped before full download: collection unchanged")
+            }
+        }
         close(downgrade = false, forFullSync = true)
         try {
             // Media starts separately so WorkManager can enforce its network constraints.
-            fullUploadOrDownload(auth, upload = true, mediaSync = MediaSync.Skip)
+            fullUploadOrDownload(auth, upload = upload, mediaSync = MediaSync.Skip)
         } finally {
             reopen(afterFullSync = true)
         }
