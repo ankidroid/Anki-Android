@@ -38,6 +38,8 @@ class SyncWorkerFullSyncTest : RobolectricTest() {
     private val redirectedAuth get() = auth.toBuilder().setEndpoint(endpoint).build()
     private var required = ChangesRequired.FULL_UPLOAD
     private var transferError: Exception? = null
+    private var backupError: Exception? = null
+    private var backupCalls = 0
     private val transfers = mutableListOf<FullUploadOrDownloadRequest>()
     private val mediaAuth = mutableListOf<anki.sync.SyncAuth>()
     private lateinit var collection: Collection
@@ -58,9 +60,19 @@ class SyncWorkerFullSyncTest : RobolectricTest() {
                 newEndpoint = endpoint
             }
         }
+        every { backend.createBackup(any(), any(), any()) } answers {
+            assertFalse(collection.dbClosed)
+            assertTrue(secondArg())
+            assertTrue(thirdArg())
+            backupCalls++
+            backupError?.let { throw it }
+            false // An unchanged backup can be skipped without blocking the download.
+        }
         every { backend.fullUploadOrDownload(any()) } answers {
+            val input = firstArg<FullUploadOrDownloadRequest>()
             assertTrue(collection.dbClosed)
-            transfers.add(firstArg())
+            assertEquals(if (input.upload) 0 else 1, backupCalls)
+            transfers.add(input)
             transferError?.let { throw it }
         }
         coEvery { SyncMediaWorker.start(any(), any(), any()) } coAnswers {
@@ -76,25 +88,40 @@ class SyncWorkerFullSyncTest : RobolectricTest() {
     }
 
     @Test
-    fun `automatic full upload respects media preference`() =
+    fun `automatic full sync follows direction and media preference`() =
         runTest {
-            for (media in listOf(true, false)) {
-                assertEquals(Result.success(), runSync(ChangesRequired.FULL_UPLOAD, media))
-                val request = transfers.single()
-                assertTrue(request.upload)
-                assertEquals(redirectedAuth, request.auth)
-                assertFalse(request.hasServerUsn(), "media must start through WorkManager")
-                assertEquals(if (media) listOf(redirectedAuth) else emptyList(), mediaAuth)
+            for (direction in listOf(ChangesRequired.FULL_UPLOAD, ChangesRequired.FULL_DOWNLOAD)) {
+                for (media in listOf(true, false)) {
+                    assertEquals(Result.success(), runSync(direction, media))
+                    val request = transfers.single()
+                    assertEquals(direction == ChangesRequired.FULL_UPLOAD, request.upload)
+                    assertEquals(redirectedAuth, request.auth)
+                    assertFalse(request.hasServerUsn(), "media must start through WorkManager")
+                    assertEquals(if (media) listOf(redirectedAuth) else emptyList(), mediaAuth)
+                    assertCollectionOpen()
+                }
+            }
+        }
+
+    @Test
+    fun `failed full sync reopens the collection without starting media`() =
+        runTest {
+            transferError = IllegalStateException("transfer failed")
+            for (direction in listOf(ChangesRequired.FULL_UPLOAD, ChangesRequired.FULL_DOWNLOAD)) {
+                assertEquals(Result.failure(), runSync(direction))
+                assertEquals(1, transfers.size)
+                assertTrue(mediaAuth.isEmpty())
                 assertCollectionOpen()
             }
         }
 
     @Test
-    fun `failed full upload reopens the collection without starting media`() =
+    fun `backup failure prevents full download`() =
         runTest {
-            transferError = IllegalStateException("transfer failed")
-            assertEquals(Result.failure(), runSync(ChangesRequired.FULL_UPLOAD))
-            assertEquals(1, transfers.size)
+            backupError = IllegalStateException("backup failed")
+            assertEquals(Result.failure(), runSync(ChangesRequired.FULL_DOWNLOAD))
+            assertEquals(1, backupCalls)
+            assertTrue(transfers.isEmpty())
             assertTrue(mediaAuth.isEmpty())
             assertCollectionOpen()
         }
@@ -118,6 +145,7 @@ class SyncWorkerFullSyncTest : RobolectricTest() {
         media: Boolean = true,
     ): Result {
         this.required = required
+        backupCalls = 0
         transfers.clear()
         mediaAuth.clear()
         val input =
