@@ -18,10 +18,12 @@ import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
 import com.ichi2.anki.common.destinations.StatisticsDestination
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
+import com.ichi2.anki.common.destinations.WidgetConfigDestination
 import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.preferences.toIntent
 import com.ichi2.anki.toIntent
+import com.ichi2.widget.toIntent
 
 /** AnkiDroid's [Navigator] implementation. */
 object AnkiDroidNavigator : Navigator {
@@ -44,6 +46,7 @@ object AnkiDroidNavigator : Navigator {
             is ReviewDeckDestination -> destination.toIntent(navContext)
             is StatisticsDestination -> destination.toIntent(navContext)
             is StudyOptionsDestination -> destination.toIntent(navContext)
+            is WidgetConfigDestination -> destination.toIntent(navContext)
         }
 }
 
