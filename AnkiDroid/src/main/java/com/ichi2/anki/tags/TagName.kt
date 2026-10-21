@@ -13,9 +13,9 @@ import java.text.Normalizer
 /**
  * A tag name, e.g. "science::biology".
  *
- * Equality, hashing and hierarchy checks use normalized Unicode case folding. [value] retains
- * the name's case for display and case-only renames; compare it explicitly when
- * checking whether the spelling changed.
+ * Equality, hashing and hierarchy checks mirror backend tag identity, including normalization
+ * and the case-folding bug in Anki's pinned unicase version. [value] retains the name's spelling
+ * for display and case-only renames; compare it explicitly when checking whether the spelling changed.
  *
  * Tag names should not be logged using `Timber.i` or above to avoid leaking PII to crash reports.
  */
@@ -57,16 +57,22 @@ class TagName private constructor(
             return TagName(tagName.replace(" ", "_"))
         }
 
-        /** Match the three-character expansion order in Anki's pinned unicase 2.6.0. */
+        /**
+         * Match the backend's three-character case-folding bug in unicase 2.6.0.
+         *
+         * Anki pins this version because collation changes can invalidate SQLite indexes.
+         * The bug is fixed in unicase 2.10.0 by
+         * [afc3c16219c9](https://github.com/seanmonstar/unicase/commit/afc3c16219c9720839f2f4c16a3ede52274df7d7).
+         * Remove the rotation when the backend adopts that fix.
+         */
         private fun foldCase(spelling: String): String =
             buildString {
                 var offset = 0
                 while (offset < spelling.length) {
                     val codePoint = spelling.codePointAt(offset)
                     val folded = UCharacter.foldCase(String(Character.toChars(codePoint)), true)
-                    // unicase's Fold::Three yields the third character before the first two.
-                    // Fold each input character separately: literal "ffi" must stay "ffi",
-                    // while the ligature "ﬃ" must become "iff".
+                    // Reproduce unicase 2.6.0's bug per input character: "ﬃ" folds to "iff",
+                    // while the three literal characters in "ffi" keep their order.
                     if (folded.codePointCount(0, folded.length) == 3) {
                         val last = folded.offsetByCodePoints(0, 2)
                         append(folded, last, folded.length)

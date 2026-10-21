@@ -24,16 +24,13 @@ internal fun Collection.renameTagTree(
     val result = tags.rename(oldName, newName)
     if (result.count == 0) return result
 
-    // Renaming into an existing tag can leave duplicate tags on a note. Saving only those
-    // notes canonifies their tags and keeps unrelated notes untouched.
-    val duplicates = affectedNotes.map(::getNote).filter { note -> note.tags.distinctBy(TagName::build).size != note.tags.size }
-    if (duplicates.isEmpty()) return result
-
+    // Renaming into an existing tag can leave duplicate tags on a note. Use the backend's
+    // tag identity to deduplicate: its pinned unicase 2.6.0 has a folding bug that equates
+    // "ﬃ" with "iff", but keeps "ffi" distinct. Standard Unicode folding disagrees, so
+    // client-side cleanup can remove valid tags or miss duplicates.
+    // The rename already marked these notes modified; no card generation is needed.
     val undoStep = undoStatus().lastStep
-    duplicates.forEach { it.tags = it.tags.distinctBy(TagName::build).toMutableList() }
-    // The combined changes from mergeUndoEntries below include these note updates.
-    @Suppress("CheckResult")
-    updateNotes(duplicates)
+    afterNoteUpdates(affectedNotes, markModified = false, generateCards = false)
     return result.copy { changes = mergeUndoEntries(undoStep) }
 }
 
