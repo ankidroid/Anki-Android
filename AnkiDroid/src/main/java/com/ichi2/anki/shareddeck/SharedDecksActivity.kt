@@ -57,6 +57,8 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
     private var shouldHistoryBeCleared = false
 
+    private var isReturningAfterLogin = false
+
     private var loginRequiredDialog: AlertDialog? = null
 
     private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
@@ -82,7 +84,14 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             isReload: Boolean,
         ) {
             super.doUpdateVisitedHistory(view, url, isReload)
+            if (isReturningAfterLogin && url?.startsWith(SHARED_PAGES_PREFIX) == true) {
+                binding.webView.clearHistory()
+                isReturningAfterLogin = false
+            }
             onBackPressedCallback.isEnabled = binding.webView.canGoBack()
+            if (url?.startsWith(AFTER_LOGIN_URL) == true && isLoggedInToAnkiWeb()) {
+                returnToSharedDecks()
+            }
         }
 
         override fun onPageFinished(
@@ -166,14 +175,24 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
     private fun redirectToLogin() {
         val url = getString(R.string.shared_decks_login_url)
         Timber.i("HTTP 429, redirecting to login: '$url'")
-        // TODO: the result of login is typically redirecting the user to their decks
-        // this should be improved
         binding.webView.loadUrl(url)
     }
 
     private fun redirectToSignUp() {
         val url = getString(R.string.shared_decks_sign_up_url)
         Timber.i("HTTP 429, redirecting to sign up: '$url'")
+        binding.webView.loadUrl(url)
+    }
+
+    private fun returnToSharedDecks() {
+        val history = binding.webView.copyBackForwardList()
+        val url =
+            (history.currentIndex - 1 downTo 0)
+                .map { history.getItemAtIndex(it).url }
+                .firstOrNull { it.startsWith(SHARED_PAGES_PREFIX) }
+                ?: return
+        Timber.i("Logged in to AnkiWeb, returning to '$url'")
+        isReturningAfterLogin = true
         binding.webView.loadUrl(url)
     }
 
@@ -185,6 +204,9 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         const val DOWNLOAD_FILE = "DownloadFile"
 
         const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
+
+        private const val AFTER_LOGIN_URL = "https://ankiweb.net/account/login?afterAuth=1"
+        private const val SHARED_PAGES_PREFIX = "https://ankiweb.net/shared/"
     }
 
     // Show WebView with AnkiWeb shared decks with the functionality to capture downloads and import decks.

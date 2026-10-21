@@ -24,6 +24,7 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 
 /** Tests for [SharedDecksActivity] */
@@ -82,6 +83,68 @@ class SharedDecksActivityTest : RobolectricTest() {
         assertEquals(getResourceString(R.string.shared_decks_url), activity.lastLoadedUrl)
     }
 
+    @Test
+    fun `logging in to AnkiWeb returns to the shared deck`() {
+        val activity = startOnSharedDeck()
+
+        activity.logInToAnkiWeb()
+
+        assertEquals(SHARED_DECK, activity.webView.url)
+    }
+
+    @Test
+    fun `back after logging in to AnkiWeb does not reopen its login pages`() {
+        val activity = startOnSharedDeck()
+        activity.logInToAnkiWeb()
+
+        activity.visit(SHARED_DECK)
+
+        assertFalse(activity.webView.canGoBack())
+    }
+
+    @Test
+    fun `logging in after AnkiWeb refuses a download returns to the deck page`() {
+        val activity = startOnSharedDeck()
+        activity.visit(DECK_DOWNLOAD)
+
+        activity.logInToAnkiWeb()
+
+        assertEquals(SHARED_DECK, activity.webView.url)
+    }
+
+    @Test
+    fun `AnkiWeb login without a session stays on AnkiWeb`() {
+        val activity = startOnSharedDeck()
+        activity.openAnkiWebLogin()
+
+        activity.visit(AFTER_LOGIN)
+
+        assertEquals(AFTER_LOGIN, activity.webView.url)
+    }
+
+    private fun startOnSharedDeck(): SharedDecksActivity =
+        startSharedDecks().apply {
+            visit(getResourceString(R.string.shared_decks_url))
+            visit(SHARED_DECK)
+        }
+
+    private fun SharedDecksActivity.openAnkiWebLogin() {
+        receiveTooManyRequests()
+        clickAlertDialogButton { positiveButton }
+        visit(getResourceString(R.string.shared_decks_login_url))
+    }
+
+    private fun SharedDecksActivity.logInToAnkiWeb() {
+        openAnkiWebLogin()
+        CookieManager.getInstance().setCookie("https://ankiweb.net", "has_auth=1")
+        visit(AFTER_LOGIN)
+    }
+
+    private fun SharedDecksActivity.visit(url: String) {
+        Shadows.shadowOf(webView).pushEntryToHistory(url)
+        webViewClient.doUpdateVisitedHistory(webView, url, false)
+    }
+
     private fun startSharedDecks(): SharedDecksActivity {
         val controller =
             Robolectric
@@ -104,4 +167,10 @@ class SharedDecksActivityTest : RobolectricTest() {
 
     private val SharedDecksActivity.lastLoadedUrl: String?
         get() = Shadows.shadowOf(webView).lastLoadedUrl
+
+    companion object {
+        private const val SHARED_DECK = "https://ankiweb.net/shared/info/1234"
+        private const val DECK_DOWNLOAD = "https://ankiweb.net/svc/shared/download-deck/1234?t=key"
+        private const val AFTER_LOGIN = "https://ankiweb.net/account/login?afterAuth=1"
+    }
 }
