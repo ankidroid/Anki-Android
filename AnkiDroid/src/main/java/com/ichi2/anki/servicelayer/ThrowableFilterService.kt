@@ -5,6 +5,7 @@
 package com.ichi2.anki.servicelayer
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.exception.SanitizedThrowable
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.utils.ExceptionUtil.causeChain
 import com.ichi2.utils.ExceptionUtil.causesAndSuppressed
@@ -29,11 +30,15 @@ object ThrowableFilterService {
                 Timber.w("unexpected: thread was null")
                 return@FilteringExceptionHandler
             }
-            if (shouldDiscardThrowable(throwable)) {
-                Timber.i("discarding throwable")
-                return@FilteringExceptionHandler
-            }
-            originalUncaughtExceptionHandler?.uncaughtException(thread, throwable)
+            val reportable =
+                if (shouldDiscardThrowable(throwable)) {
+                    // Retain diagnostic class names and frames without exposing private messages.
+                    Timber.i("sanitizing uncaught throwable")
+                    SanitizedThrowable.from(throwable)
+                } else {
+                    throwable
+                }
+            originalUncaughtExceptionHandler?.uncaughtException(thread, reportable)
         }
 
     fun initialize() {
@@ -42,7 +47,7 @@ object ThrowableFilterService {
     }
 
     /**
-     * We want to filter any exceptions with PII, then chain to other handlers
+     * Sanitize filtered uncaught exceptions before delegating to the reporting handlers.
      */
     @Synchronized
     @VisibleForTesting
@@ -73,14 +78,18 @@ object ThrowableFilterService {
         initialize()
     }
 
+    /**
+     * Whether a handled report should be discarded. Uncaught errors are sanitized instead, so they
+     * can still reach the reporting handlers.
+     */
     fun shouldDiscardThrowable(t: Throwable): Boolean {
         // PII-bearing exceptions may be nested or suppressed. ACRA's stack-trace hashing also
         // assumes the main cause chain is acyclic, so circular causes cannot be reported as-is.
         return exceptionIsUnwanted(t) || !t.safeFromPII() || t.hasCyclicCause()
     }
 
-    // There are few exception types that are common, but are unwanted in
-    // our analytics or crash report service because they are not actionable
+    // These common types are noise in handled reports. Uncaught instances still indicate crashes
+    // and must reach reporting after sanitization.
     fun exceptionIsUnwanted(t: Throwable): Boolean {
         Timber.v("exceptionIsUnwanted - examining %s", t.javaClass.simpleName)
         when (t) {
