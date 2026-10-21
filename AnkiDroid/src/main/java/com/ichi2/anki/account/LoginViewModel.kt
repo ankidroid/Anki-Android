@@ -7,22 +7,34 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.cancelSync
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.sync.SyncAuth
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * ViewModel that manages the state for user login. It handles the login process,
  * validates input fields, and provides results for login operations.
  */
-class LoginViewModel : ViewModel() {
+class LoginViewModel :
+    ViewModel(),
+    HasProgress<Unit> {
     val loginButtonEnabled: StateFlow<Boolean>
         field = MutableStateFlow(false)
 
@@ -32,8 +44,10 @@ class LoginViewModel : ViewModel() {
     val passwordError: StateFlow<LoginError?>
         field = MutableStateFlow<LoginError?>(null)
 
-    val loginState: StateFlow<LoginState>
-        field = MutableStateFlow<LoginState>(LoginState.Idle)
+    private val loginChannel: Channel<Login> = Channel(Channel.BUFFERED)
+    val loginFlow = loginChannel.receiveAsFlow()
+
+    override val progressManager: ProgressManager<Unit> = ProgressManager()
 
     fun onUserNameFocusChange(
         hasFocus: Boolean,
@@ -72,19 +86,32 @@ class LoginViewModel : ViewModel() {
     ) {
         Timber.i("Logging in")
         viewModelScope.launch {
-            try {
-                val auth = syncLogin(username, password, endpoint)
-                Timber.i("Login success")
-                updateLogin(username, auth.hkey)
-                loginState.value = LoginState.Success
-            } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-                Timber.i("Login auth failed")
-                updateLogin("", "")
-                loginState.value = LoginState.Error(exc)
-            } catch (exc: Exception) {
-                // do not log the error, can contain PII
-                Timber.w("Login error")
-                loginState.value = LoginState.Error(exc)
+            progressManager.withProgress(
+                Unit,
+                onCancel = {
+                    cancel()
+                    cancelSync(CollectionManager.getBackend())
+                },
+            ) {
+                val result =
+                    try {
+                        val auth = syncLogin(username, password, endpoint)
+                        delay(10.seconds)
+                        Timber.i("Login success")
+                        updateLogin(username, auth.hkey)
+                        Login.Success
+                    } catch (exc: CancellationException) {
+                        throw exc
+                    } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
+                        Timber.i("Login auth failed")
+                        updateLogin("", "")
+                        Login.Error(exc)
+                    } catch (exc: Exception) {
+                        // do not log the error, can contain PII
+                        Timber.w("Login error")
+                        Login.Error(exc)
+                    }
+                loginChannel.send(result)
             }
         }
     }
@@ -122,10 +149,8 @@ enum class LoginError(
 }
 
 /** Handles the Login State */
-sealed class LoginState {
-    data object Idle : LoginState()
-
-    data object Success : LoginState()
+sealed class Login {
+    data object Success : Login()
 
     /**
      * The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException]
@@ -134,5 +159,5 @@ sealed class LoginState {
      */
     data class Error(
         val exception: Exception,
-    ) : LoginState()
+    ) : Login()
 }
