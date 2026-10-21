@@ -27,11 +27,15 @@ import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelSync
 import com.ichi2.anki.common.permissions.canPostNotifications
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.reopen
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.MediaSync
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.fullUploadOrDownload
 import com.ichi2.anki.sync.syncCollection
 import com.ichi2.anki.utils.ext.trySetForeground
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +60,8 @@ val syncLock = Mutex()
  *
  * Media is synced by enqueueing a [SyncMediaWorker] work, which doesn't block the collection.
  *
- * Note that one-way syncs will be ignored, since they require user input.
+ * Full uploads run when the server specifies the direction.
+ * Full downloads and conflicts requiring a direction are ignored.
  *
  * That is useful when the user isn't interacting with
  * the app, like when doing an automatic sync after leaving the app.
@@ -117,7 +122,7 @@ class SyncWorker(
         syncMedia: Boolean,
     ) {
         Timber.v("SyncWorker::syncCollection")
-        val response =
+        val syncAuth =
             coroutineScope {
                 val monitor =
                     launch(Dispatchers.IO) {
@@ -136,35 +141,50 @@ class SyncWorker(
                 try {
                     withCol {
                         val response = syncCollection(auth, syncMedia = false)
+                        val syncAuth =
+                            if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
+                                Prefs.currentSyncUri = response.newEndpoint
+                                auth.withEndpoint(response.newEndpoint)
+                            } else {
+                                auth
+                            }
                         Timber.i("Sync required: %s", response.required)
+                        // Keep the direction decision and transfer on the queue so the collection
+                        // cannot change between checking whether it is empty and replacing it.
                         when (response.required) {
                             SyncCollectionResponse.ChangesRequired.NO_CHANGES -> _loadScheduler()
+                            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> fullUpload(syncAuth)
                             SyncCollectionResponse.ChangesRequired.FULL_SYNC,
                             SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD,
-                            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD,
-                            -> Timber.d("One-way sync required: Skipping background sync")
+                            -> {
+                                Timber.d("One-way sync required: Skipping background sync")
+                                return@withCol null
+                            }
                             SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
                             SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
                             null,
                             -> TODO("should never happen")
                         }
-                        response
+                        syncAuth
                     }
                 } finally {
                     Timber.d("Collection sync completed. Cancelling monitor...")
                     // this doesn't wait for completion; the outer `coroutineScope` does.
                     monitor.cancel()
                 }
-            }
-        if (response.required != SyncCollectionResponse.ChangesRequired.NO_CHANGES || !syncMedia) return
-        val syncAuth =
-            if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
-                Prefs.currentSyncUri = response.newEndpoint
-                auth.withEndpoint(response.newEndpoint)
-            } else {
-                auth
-            }
-        syncMedia(syncAuth)
+            } ?: return
+        if (syncMedia) syncMedia(syncAuth)
+    }
+
+    private fun Collection.fullUpload(auth: SyncAuth) {
+        notify(getProgressNotification(TR.syncUploadingToAnkiweb()))
+        close(downgrade = false, forFullSync = true)
+        try {
+            // Media starts separately so WorkManager can enforce its network constraints.
+            fullUploadOrDownload(auth, upload = true, mediaSync = MediaSync.Skip)
+        } finally {
+            reopen(afterFullSync = true)
+        }
     }
 
     private suspend fun syncMedia(auth: SyncAuth) {
