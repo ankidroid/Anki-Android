@@ -12,7 +12,9 @@ import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -240,6 +242,37 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                     height = ViewGroup.LayoutParams.WRAP_CONTENT
                 }
                 setPaddingRelative(0, paddingTop, paddingEnd, paddingBottom)
+                setOnTouchListener { _, event ->
+                    val toCard = requireView().findViewById<View>(R.id.to_card)
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            // Calculate the touch coordinates relative to the "To" card.
+                            val locCard = intArrayOf(0, 0)
+                            toCard.getLocationInWindow(locCard)
+                            val relX = event.rawX - locCard[0]
+                            val relY = event.rawY - locCard[1]
+
+                            // Set the ripple hotspot coordinates on the "To" card.
+                            toCard.foreground.setHotspot(relX, relY)
+
+                            toCard.isPressed = true
+                        }
+                        MotionEvent.ACTION_UP -> {
+                            toCard.isPressed = false
+
+                            // Click the "To" card if the touch is a tap. Ignore a long-press.
+                            val touchDuration = event.eventTime - event.downTime
+                            val longPressTimeout = ViewConfiguration.getLongPressTimeout()
+                            if (touchDuration < longPressTimeout) {
+                                toCard.performClick()
+                            }
+                        }
+                        MotionEvent.ACTION_CANCEL -> {
+                            toCard.isPressed = false
+                        }
+                    }
+                    false
+                }
             }
 
             override fun getDropDownView(
