@@ -6,12 +6,14 @@ package com.ichi2.anki.dialogs
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -170,7 +172,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
 
     private fun setupChangeNoteTypeDialog(binding: DialogChangeNoteTypeBinding) {
         Timber.d("setting up dialog")
-        setupNoteTypeSpinner(binding)
+        setupNoteTypeCards(binding)
         setupViewPagerAndTabs(binding)
         bindSaveButtonState(binding)
     }
@@ -183,22 +185,38 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         }
     }
 
-    private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
+    private fun setupNoteTypeCards(binding: DialogChangeNoteTypeBinding) {
+        // "From" card
+        binding.fromCard.setTooltipTextCompat(viewModel.inputNoteType.name)
         binding.CardEditorModelText.text = BidiFormatter.getInstance().unicodeWrap(viewModel.inputNoteType.name)
-        binding.CardEditorModelText.setTooltipTextCompat(viewModel.inputNoteType.name)
 
+        // "To" card
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()
 
             val position = viewModel.availableNoteTypes.indexOfFirst { it.id == viewModel.outputNoteType.id }
             setSelection(position, false)
+            binding.toCard.setTooltipTextCompat(viewModel.outputNoteType.name)
 
             onItemSelectedListener =
                 BasicItemSelectedListener { position, id: NoteTypeId ->
                     viewModel.setOutputNoteTypeId(id)
+                    binding.toCard.setTooltipTextCompat(viewModel.availableNoteTypes[position].name)
                 }
-        }
 
+            // Let the card handle the ripple, clicks and long-press tooltip over the spinner too.
+            setOnTouchListener { view, event ->
+                val offset = Rect()
+                binding.toCard.offsetDescendantRectToMyCoords(view, offset)
+                val cardEvent = MotionEvent.obtain(event)
+                cardEvent.offsetLocation(offset.left.toFloat(), offset.top.toFloat())
+                try {
+                    binding.toCard.onTouchEvent(cardEvent)
+                } finally {
+                    cardEvent.recycle()
+                }
+            }
+        }
         binding.toCard.setOnClickListener {
             binding.destNoteTypeSpinner.performClick()
         }
@@ -236,7 +254,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                 // Leave room for the mappings even when the selected note type has a long name.
                 maxLines = resources.getInteger(R.integer.change_note_type_name_max_lines)
                 ellipsize = TextUtils.TruncateAt.END
-                setTooltipTextCompat(noteType.name)
                 updateLayoutParams {
                     height = ViewGroup.LayoutParams.WRAP_CONTENT
                 }
