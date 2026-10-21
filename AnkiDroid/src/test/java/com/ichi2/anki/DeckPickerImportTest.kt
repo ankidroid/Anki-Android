@@ -2,9 +2,15 @@
 
 package com.ichi2.anki
 
+import android.content.ContentProvider
 import android.content.Intent
+import android.database.MatrixCursor
+import android.net.Uri
+import android.os.Looper
+import android.provider.OpenableColumns
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
@@ -25,11 +31,18 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doCallRealMethod
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowContentResolver
+import java.io.File
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -57,6 +70,42 @@ class DeckPickerImportTest : RobolectricTest() {
     @After
     fun resetBackupSpace() {
         BackupManagerTestUtilities.reset()
+    }
+
+    @Test
+    fun `selected package displays one confirmation with its cached path`() {
+        val activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+        val fileName = "deck name.apkg"
+        val uri = "content://import/document/123".toUri()
+        // FileProvider's Android path handling depends on the host filesystem.
+        val provider = mock<ContentProvider>()
+        whenever(provider.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)).thenAnswer {
+            MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME)).apply { addRow(arrayOf(fileName)) }
+        }
+        ShadowContentResolver.registerProviderInternal("import", provider)
+        shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) { "package contents".byteInputStream() }
+        val cachedPath = Uri.fromFile(File(activity.cacheDir, fileName)).encodedPath!!
+        val executor = Executors.newSingleThreadExecutor()
+        try {
+            executor.submit { activity.onSelectedPackageToImport(Intent(Intent.ACTION_VIEW, uri)) }.get(10, TimeUnit.SECONDS)
+            advanceRobolectricLooper()
+            activity.assertSingleImportConfirmation(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, cachedPath)
+        } finally {
+            executor.shutdownNow()
+            File(cachedPath).delete()
+        }
+    }
+
+    private fun DeckPickerImport.assertSingleImportConfirmation(
+        type: ImportDialog.Type,
+        path: String,
+    ) {
+        assertEquals(1, importConfirmations.size, "One import must display exactly one confirmation")
+        val (thread, fragment) = importConfirmations.single()
+        assertEquals(Looper.getMainLooper().thread, thread)
+        assertEquals(type.code, fragment.requireArguments().getInt(ImportDialog.ARG_DIALOG_TYPE))
+        assertEquals(path, fragment.requireArguments().getString(ImportDialog.ARG_PACKAGE_PATH))
+        assertTrue(assertNotNull(fragment.dialog as? AlertDialog).isShowing)
     }
 
     @Test
@@ -136,6 +185,7 @@ class DeckPickerImportTest : RobolectricTest() {
 
     private class DeckPickerImport : DeckPicker() {
         private var dialogFragment: AsyncDialogFragment? = null
+        val importConfirmations = mutableListOf<Pair<Thread, ImportDialog>>()
 
         fun getAsyncDialogFragmentClass(): Class<*> {
             if (dialogFragment == null) {
@@ -146,6 +196,9 @@ class DeckPickerImportTest : RobolectricTest() {
 
         override fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
             dialogFragment = newFragment
+            if (newFragment is ImportDialog) {
+                importConfirmations.add(Thread.currentThread() to newFragment)
+            }
             super.showAsyncDialogFragment(newFragment)
         }
     }
