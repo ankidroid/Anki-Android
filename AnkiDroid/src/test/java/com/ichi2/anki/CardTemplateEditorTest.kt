@@ -18,6 +18,7 @@ import com.ichi2.anki.common.utils.ext.deepClonedInto
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.notetype.ManageNoteTypesState.CardEditor
@@ -51,6 +52,33 @@ import kotlin.time.Duration
 
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorTest : RobolectricTest() {
+    @Test
+    fun `deletion confirmation counts the original card type after an unsaved deletion`() {
+        val noteType = col.notetypes.basicAndReversed
+        val spare =
+            Notetypes.newTemplate("Spare").apply {
+                qfmt = "{{Front}} spare"
+                afmt = "{{Back}}"
+            }
+        col.notetypes.addTemplate(noteType, spare)
+        addBasicAndReversedNote("one", "back")
+        addBasicAndReversedNote("two", "")
+
+        withCardTemplateEditor(noteType) {
+            deleteSelectedCardType()
+            selectTab(0)
+            advanceRobolectricLooper()
+            assertTrue("Unable to delete the card type", shadowOf(this).clickMenuItem(R.id.action_delete))
+            advanceRobolectricLooper()
+
+            assertEquals(
+                "The remaining reverse card type has one card in the database",
+                getQuantityString(CommonPlurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
+                getAlertDialogText(true),
+            )
+        }
+    }
+
     @Test
     fun `change detection does not serialize the note type - Issue 21912`() {
         val original = col.notetypes.basic

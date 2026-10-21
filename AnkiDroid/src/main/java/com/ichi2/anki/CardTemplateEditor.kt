@@ -1050,7 +1050,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 val numAffectedCards =
                     if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
                         Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                        withCol { notetypes.tmplUseCount(tempModel.notetype, ordinal) }
+                        withCol { notetypes.tmplUseCount(tempModel.notetype, tempModel.getOriginalOrdinal(ordinal)!!) }
                     } else {
                         0
                     }
