@@ -10,12 +10,14 @@ import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.deepClonedInto
 import com.ichi2.anki.dialogs.InsertFieldDialog
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
@@ -52,6 +54,24 @@ import kotlin.time.Duration
 
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorTest : RobolectricTest() {
+    @Test
+    fun `field insertion previews the original card after an unsaved deletion`() {
+        val note = addBasicAndReversedNote()
+        val reverseCardId = note.cards().single { it.ord == 1 }.id
+        val intent = CardTemplateEditor.getIntent(targetContext, col.notetypes.basicAndReversed.id, note.id)
+        val editor = startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
+
+        with(editor) {
+            deleteSelectedCardType()
+            currentFragment!!.showInsertFieldDialog()
+            advanceRobolectricLooper()
+            val dialog = supportFragmentManager.fragments.filterIsInstance<InsertFieldDialog>().single()
+            val metadata = ViewModelProvider(dialog)[InsertFieldDialogViewModel::class.java].metadata
+
+            assertEquals("The preview should use the surviving card", reverseCardId, metadata.cardId)
+        }
+    }
+
     @Test
     fun `deletion confirmation counts the original card type after an unsaved deletion`() {
         val noteType = col.notetypes.basicAndReversed
