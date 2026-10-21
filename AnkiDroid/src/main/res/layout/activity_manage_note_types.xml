@@ -80,7 +80,6 @@
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add"
         android:contentDescription="@string/cd_manage_notetypes_add"
-        app:backgroundTint="?attr/fab_normal"
-        app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior" />
+        app:backgroundTint="?attr/fab_normal"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
