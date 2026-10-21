@@ -57,4 +57,14 @@ class ThrowableFilterServiceTest {
         val exception3 = StorageAccessException("test exception")
         assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception3))
     }
+
+    @Test
+    fun `circular causes are discarded before reporting`() {
+        val exception = Exception()
+        val cause = Exception()
+        exception.initCause(cause)
+        cause.initCause(exception)
+
+        assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception))
+    }
 }
