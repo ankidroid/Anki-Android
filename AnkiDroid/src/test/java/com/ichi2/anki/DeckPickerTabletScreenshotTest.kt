@@ -34,12 +34,10 @@ class DeckPickerTabletScreenshotTest : ScreenshotTest() {
 
     @Test
     fun deckPickerWith30Decks() =
-        withDeckPicker(deckCount = 30, withCards = true) { deckPicker ->
-            deckPicker.simulateEdgeToEdge()
-            // Allow tryShowStudyOptionsPanel()'s async fragment commit to finalize
-            // before capturing, otherwise the right pane is empty.
-            advanceRobolectricLooper()
-            advanceRobolectricLooper()
-            captureScreen("30_decks_tablet")
+        runTest {
+            withDeckPicker(deckCount = 30, withCards = true) { deckPicker ->
+                deckPicker.simulateEdgeToEdge()
+                captureScreen("30_decks_tablet")
+            }
         }
 }
