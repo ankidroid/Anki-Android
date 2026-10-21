@@ -9,8 +9,7 @@ import com.ichi2.anki.CardTemplateNotetype.ChangeType.DELETE
 import com.ichi2.anki.CardTemplateNotetype.TemplateChange
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.NotetypeJson
-import com.ichi2.testutils.AndroidTest
-import com.ichi2.testutils.targetContext
+import net.ankiweb.rsdroid.BackendException
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
@@ -23,9 +22,33 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 @RunWith(AndroidJUnit4::class)
-class CardTemplateNotetypeTest : AndroidTest {
+class CardTemplateNotetypeTest : RobolectricTest() {
+    @Test
+    fun `failed validation preserves a bundle saved before the save attempt`() =
+        runTest {
+            val original = col.notetypes.basicAndReversed
+            val edited = CardTemplateNotetype(original.deepClone())
+            edited.getTemplate(0).qfmt = "{{Missing}}"
+            val state = edited.toBundle()
+
+            try {
+                edited.saveToDatabase()
+                Assert.fail("An unknown field must fail validation")
+            } catch (_: BackendException) {
+                // The saved bundle must remain usable after validation fails.
+            }
+
+            val restored = CardTemplateNotetype.fromBundle(state)
+            assertNotNull("Failed validation must preserve the saved editor state", restored)
+            Assert.assertEquals(edited.notetype.toString(), restored!!.notetype.toString())
+            restored.getTemplate(0).qfmt = original.templates[0].qfmt
+            restored.saveToDatabase()
+            assertNull("A successful save should clear the temporary file", CardTemplateNotetype.fromBundle(state))
+        }
+
     @Test
     fun `deletion checks reverse earlier deletions in order`() {
         // Starting with A, B, C, D, delete B and then A before proposing C.
