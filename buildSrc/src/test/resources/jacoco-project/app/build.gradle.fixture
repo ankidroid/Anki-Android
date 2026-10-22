@@ -21,8 +21,10 @@ dependencies {
     tooling project(':tooling')
 }
 
-tasks.named('jacocoUnitTestReport') {
-    println 'Coverage sources: ' + sourceDirectories.files.collect {
-        rootDir.toPath().relativize(it.toPath()).toString().replace(File.separator, '/')
-    }.sort()
+gradle.projectsEvaluated {
+    tasks.named('jacocoUnitTestReport') {
+        println 'Coverage sources: ' + sourceDirectories.files.collect {
+            rootDir.toPath().relativize(it.toPath()).toString().replace(File.separator, '/')
+        }.sort()
+    }
 }
