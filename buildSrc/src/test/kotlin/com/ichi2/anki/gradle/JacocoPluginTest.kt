@@ -59,7 +59,7 @@ class JacocoPluginTest {
     @Test
     fun `library without unit tests is included as uncovered in the report`() {
         // A valid, empty execution file represents a run that never touched this class.
-        ExecFileLoader().save(File(projectDir, "app/build/jacoco/empty.exec"), false)
+        ExecFileLoader().save(File(projectDir, "app/build/jacoco/testPlayDebugUnitTest.exec"), false)
 
         // Run the real report with Android compilation, skipping only test execution.
         val result =
