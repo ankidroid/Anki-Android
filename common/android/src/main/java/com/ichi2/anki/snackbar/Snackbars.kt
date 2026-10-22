@@ -14,8 +14,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
-import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.BuildConfig
+import com.ichi2.anki.common.android.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.utils.android.showThemedToast

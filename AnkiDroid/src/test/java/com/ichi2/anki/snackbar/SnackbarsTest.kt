@@ -26,6 +26,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -68,12 +69,12 @@ class SnackbarsTest {
     fun `pending snackbar is retained by the root until shown`() {
         val child = View(context).also(host::addView)
         val snackbar = child.showSnackbar("Message")
-        assertSame(snackbar, host.getTag(R.id.pending_snackbar))
+        assertSame(snackbar, host.getTag(CommonR.id.pending_snackbar))
 
         looper.idle()
         snackbar.view.layout(0, 0, 300, 60)
 
-        assertNull(host.getTag(R.id.pending_snackbar))
+        assertNull(host.getTag(CommonR.id.pending_snackbar))
     }
 
     @Test
@@ -81,15 +82,15 @@ class SnackbarsTest {
         val first = host.showSnackbar("First")
         looper.idle()
         val second = host.showSnackbar("Second")
-        assertSame(second, host.getTag(R.id.pending_snackbar))
+        assertSame(second, host.getTag(CommonR.id.pending_snackbar))
 
         // Showing the first snackbar must not release the second, which is still queued.
         first.view.layout(0, 0, 300, 60)
-        assertSame(second, host.getTag(R.id.pending_snackbar))
+        assertSame(second, host.getTag(CommonR.id.pending_snackbar))
 
         // Finish dismissing the first and attach the second, without laying it out yet.
         looper.idle()
-        assertSame(second, host.getTag(R.id.pending_snackbar))
+        assertSame(second, host.getTag(CommonR.id.pending_snackbar))
     }
 
     @Test
@@ -100,18 +101,18 @@ class SnackbarsTest {
 
         looper.idle()
 
-        assertSame(second, host.getTag(R.id.pending_snackbar))
+        assertSame(second, host.getTag(CommonR.id.pending_snackbar))
     }
 
     @Test
     fun `dismissal before layout releases the pending snackbar`() {
         val snackbar = host.showSnackbar("Message")
         looper.idle()
-        assertSame(snackbar, host.getTag(R.id.pending_snackbar))
+        assertSame(snackbar, host.getTag(CommonR.id.pending_snackbar))
 
         snackbar.dismiss()
         looper.idle()
 
-        assertNull(host.getTag(R.id.pending_snackbar))
+        assertNull(host.getTag(CommonR.id.pending_snackbar))
     }
 }
