@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.DownloadListener
 import android.webkit.ValueCallback
+import android.webkit.WebBackForwardList
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -142,6 +143,9 @@ open class SafeWebViewLayout :
     fun clearHistory() {
         activeWebView?.clearHistory()
     }
+
+    @MainThread
+    fun copyBackForwardList(): WebBackForwardList = uncheckedWebView.copyBackForwardList()
 
     @MainThread
     fun setDownloadListener(listener: DownloadListener?) {

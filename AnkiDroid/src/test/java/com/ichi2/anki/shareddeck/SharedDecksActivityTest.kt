@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.shareddeck
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebResourceResponse
@@ -15,6 +16,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
+import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.testutils.webView
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import org.junit.Test
@@ -22,12 +25,13 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.robolectric.Robolectric
-import org.robolectric.Shadows
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.fakes.RoboMenuItem
 import org.robolectric.shadows.ShadowDialog
 import timber.log.Timber
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -189,6 +193,67 @@ class SharedDecksActivityTest : RobolectricTest() {
         assertFalse(logs.any { it.contains(SHARED_DECK) }, "Deck URL was logged at info or above: $logs")
     }
 
+    @Test
+    fun `onRenderProcessGone recovers webview and reloads content`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java).setup()
+        val activity = controller.get()
+        saveControllerForCleanup(controller)
+
+        val layout = activity.safeWebViewLayout
+        val initialWebView = activity.webView
+
+        layout.onRenderProcessGone(initialWebView)
+
+        assertTrue(shadowOf(initialWebView).wasDestroyCalled(), "Dead WebView should be destroyed")
+        assertNull(initialWebView.parent, "Dead WebView should be removed from parent")
+
+        val recoveredWebView = activity.webView
+        assertNotSame(initialWebView, recoveredWebView, "A new WebView instance should be created")
+        assertFalse(shadowOf(recoveredWebView).wasDestroyCalled(), "Recovered WebView should not be destroyed")
+        val expectedUrl = getResourceString(R.string.shared_decks_url)
+        assertEquals(expectedUrl, shadowOf(recoveredWebView).lastLoadedUrl)
+    }
+
+    @Test
+    fun `onDestroy cleans up recovered webview`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java).setup()
+        val activity = controller.get()
+
+        val layout = activity.safeWebViewLayout
+        val initialWebView = activity.webView
+
+        layout.onRenderProcessGone(initialWebView)
+        val recoveredWebView = activity.webView
+
+        controller.destroy()
+
+        assertTrue(shadowOf(recoveredWebView).wasDestroyCalled(), "Recovered WebView should be destroyed on activity destroy")
+    }
+
+    @Test
+    @SuppressLint("NewApi")
+    fun `back exits while the recovered WebView is loading`() {
+        val activity = startSharedDecks()
+        val initialWebView = activity.webView
+        val homeUrl = getResourceString(R.string.shared_decks_url)
+        val deckUrl = "https://ankiweb.net/shared/info/1"
+        shadowOf(initialWebView).pushEntryToHistory(homeUrl)
+        initialWebView.webViewClient.doUpdateVisitedHistory(initialWebView, homeUrl, false)
+        assertFalse(activity.onBackPressedDispatcher.hasEnabledCallbacks())
+        shadowOf(initialWebView).pushEntryToHistory(deckUrl)
+        initialWebView.webViewClient.doUpdateVisitedHistory(initialWebView, deckUrl, false)
+        assertTrue(initialWebView.canGoBack())
+        assertTrue(activity.onBackPressedDispatcher.hasEnabledCallbacks())
+        // Invoke the installed client, as Android does when the renderer exits.
+        assertTrue(initialWebView.webViewClient.onRenderProcessGone(initialWebView, mock()))
+        assertNotSame(initialWebView, activity.webView)
+        assertFalse(activity.webView.canGoBack())
+        assertFalse(activity.isFinishing)
+        // Robolectric has not delivered the replacement page's history callback yet.
+        activity.onBackPressedDispatcher.onBackPressed()
+        assertTrue(activity.isFinishing, "Back should exit while the replacement WebView has no history")
+    }
+
     private fun startOnSharedDeck(): SharedDecksActivity =
         startSharedDecks().apply {
             visit(getResourceString(R.string.shared_decks_url))
@@ -209,13 +274,13 @@ class SharedDecksActivityTest : RobolectricTest() {
 
     private fun SharedDecksActivity.visit(url: String) {
         if (webView.copyBackForwardList().currentItem?.url != url) {
-            Shadows.shadowOf(webView).pushEntryToHistory(url)
+            shadowOf(webView).pushEntryToHistory(url)
         }
         webViewClient.doUpdateVisitedHistory(webView, url, false)
         webViewClient.onPageFinished(webView, url)
         // Robolectric clears every history entry; real WebView keeps the current page.
         if (webView.copyBackForwardList().size == 0) {
-            Shadows.shadowOf(webView).pushEntryToHistory(url)
+            shadowOf(webView).pushEntryToHistory(url)
         }
     }
 
@@ -263,11 +328,14 @@ class SharedDecksActivityTest : RobolectricTest() {
         webViewClient.onReceivedHttpError(webView, mock(), response)
     }
 
-    private val SharedDecksActivity.webView: WebView
+    private val SharedDecksActivity.safeWebViewLayout: SafeWebViewLayout
         get() = findViewById(R.id.web_view)
 
+    private val SharedDecksActivity.webView: WebView
+        get() = safeWebViewLayout.webView
+
     private val SharedDecksActivity.lastLoadedUrl: String?
-        get() = Shadows.shadowOf(webView).lastLoadedUrl
+        get() = shadowOf(webView).lastLoadedUrl
 
     companion object {
         private const val SHARED_DECK = "https://ankiweb.net/shared/info/1234"

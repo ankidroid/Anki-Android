@@ -30,7 +30,7 @@
             app:popupTheme="@style/ActionBar.Popup" />
     </FrameLayout>
 
-    <WebView
+    <com.ichi2.anki.workarounds.SafeWebViewLayout
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
