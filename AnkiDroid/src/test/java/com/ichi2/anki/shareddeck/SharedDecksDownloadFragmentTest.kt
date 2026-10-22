@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.webkit.CookieManager
-import android.webkit.WebView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.ui.semantics.SemanticsActions
@@ -29,6 +28,8 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
+import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.testutils.webView
 import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import org.junit.After
@@ -357,7 +358,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     @Test
     fun `rate limited download opens the login page only once the user taps log in`() {
         val download = startDownload()
-        val webView = download.activity.findViewById<WebView>(R.id.web_view)
+        val webView = download.activity.findViewById<SafeWebViewLayout>(R.id.web_view).webView
 
         download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
         shadowOf(Looper.getMainLooper()).idle()
