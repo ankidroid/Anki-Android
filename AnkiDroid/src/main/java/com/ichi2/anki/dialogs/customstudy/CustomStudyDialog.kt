@@ -25,6 +25,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.copy
@@ -37,10 +38,10 @@ import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.search.CardState
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogCustomStudyMenuBinding
 import com.ichi2.anki.databinding.FragmentCustomStudyBinding
@@ -71,10 +72,8 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -109,7 +108,6 @@ import timber.log.Timber
  *
  * @see TagLimitFragment
  */
-@KotlinCleanup("remove 'runBlocking' call'")
 class CustomStudyDialog : AnalyticsDialogFragment() {
     @VisibleForTesting(otherwise = PRIVATE)
     lateinit var binding: FragmentCustomStudyBinding
@@ -244,7 +242,22 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }
         }
 
-        buildMenuItems((initialization.getCompleted() as CustomStudyInitialization.Ready).defaults)
+        fun render(state: CustomStudyInitialization) {
+            container.removeAllViews()
+            menuBinding.progressBar.isVisible = state is CustomStudyInitialization.Loading
+            menuBinding.menuItems.isVisible = state is CustomStudyInitialization.Ready
+            when (state) {
+                CustomStudyInitialization.Loading -> Unit
+                is CustomStudyInitialization.Ready -> buildMenuItems(state.defaults)
+            }
+        }
+
+        render(CustomStudyInitialization.Loading)
+        dialog.setOnShowListener {
+            launchCatchingTask {
+                render(initialization.await())
+            }
+        }
 
         return dialog
     }
@@ -538,14 +551,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      *
      * This method may be slow (> 1s)
      */
-    private fun loadInitialization(): Deferred<CustomStudyInitialization> =
-        CompletableDeferred(
-            runBlocking {
-                coMeasureTime("loadCustomStudyDefaults") {
-                    viewModel.initialize()
-                }
-            },
-        )
+    private fun loadInitialization() =
+        lifecycleScope.asyncIO {
+            coMeasureTime("loadCustomStudyDefaults") {
+                viewModel.initialize()
+            }
+        }
 
     /**
      * Line 1 of the number entry dialog
