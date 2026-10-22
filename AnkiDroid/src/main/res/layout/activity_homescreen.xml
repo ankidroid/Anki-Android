@@ -38,6 +38,7 @@
         android:layout_gravity="bottom"
         android:background="?attr/colorSurface"
         android:visibility="gone"
+        app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu" />
 

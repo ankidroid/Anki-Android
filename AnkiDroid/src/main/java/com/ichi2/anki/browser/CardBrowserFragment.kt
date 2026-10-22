@@ -142,6 +142,7 @@ import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
+import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.getParcelableCompat
@@ -339,6 +340,19 @@ class CardBrowserFragment :
             view.findViewById<RecyclerView>(R.id.card_browser_list).apply {
                 attachFastScroller(R.id.browser_scroller)
                 clipToPadding = false
+                // Upward scrolls in the embedded browser do not reliably reach the bottom bar's
+                // scroll behavior, so drive the bar directly from the list.
+                addOnScrollListener(
+                    object : RecyclerView.OnScrollListener() {
+                        override fun onScrolled(
+                            recyclerView: RecyclerView,
+                            dx: Int,
+                            dy: Int,
+                        ) {
+                            updateBottomNavOnScroll(dy)
+                        }
+                    },
+                )
             }
         applyContentInsets(view)
         DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
@@ -493,9 +507,8 @@ class CardBrowserFragment :
             toolbarContainer?.updatePadding(top = bars.top)
             // The bottom of the safe area is above the navigation bar, rounded display corners and keyboard.
             // When scrolled to the bottom of the scrollbar should be aligned with the last row.
-            // Embedded content already ends above the bottom navigation, including its system-bar inset.
-            val safeAreaBottom =
-                if (activity is CardBrowser) maxOf(bars.bottom, insets.bottomCornerClearance(v)) else 0
+            // When embedded, the bottom navigation is included in the navigation bar inset.
+            val safeAreaBottom = maxOf(bars.bottom, insets.bottomCornerClearance(v))
             // Due to clipToPadding=false, only the last row is affected
             cardsListView.updatePadding(bottom = safeAreaBottom)
             // The scrollbar track stays full-height (edge to edge); only the handle is kept above

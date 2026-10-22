@@ -26,9 +26,12 @@
             app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <!-- Nested scrolling lets the bottom navigation hide on scroll -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/more_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -339,5 +342,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

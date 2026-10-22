@@ -7,10 +7,14 @@ import android.print.PrintAttributes
 import android.print.PrintJob
 import android.print.PrintManager
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
@@ -20,6 +24,7 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -43,6 +48,16 @@ class Statistics : PageFragment(R.layout.page_statistics) {
             binding.toolbar.navigationIcon = null
         }
 
+        // In the bottom navigation, the page draws beneath the bar: pad it so its end can scroll above.
+        // Padding the WebView instead would resize it, which relayouts the page.
+        if (activity is DeckPicker) {
+            ViewCompat.setOnApplyWindowInsetsListener(webViewLayout) { _, insets ->
+                val bottom = insets.getInsets(systemBars()).bottom / resources.displayMetrics.density
+                webViewLayout.evaluateJavascript("document.body.style.paddingBottom = '${bottom}px'")
+                insets
+            }
+        }
+
         binding.deckName.setOnClickListener {
             startDeckSelection(allowAll = false, allowFiltered = false, skipEmptyDefault = true)
         }
@@ -63,6 +78,22 @@ class Statistics : PageFragment(R.layout.page_statistics) {
                     savedInstanceState?.getString(STATE_DECK_NAME, null) ?: withCol { decks.current().name }
                 changeDeck(deckName)
             }
+        }
+    }
+
+    // the page has no body to pad until it loads
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?) =
+        super.onCreateWebViewClient(savedInstanceState).apply {
+            onPageFinishedCallbacks.add { ViewCompat.requestApplyInsets(webViewLayout) }
+        }
+
+    override fun onWebViewCreated() {
+        // Also called when the WebView is recreated after a renderer crash, so the listener is re-attached.
+        webViewLayout.setOnScrollChangeListener { webView, _, scrollY, _, oldScrollY ->
+            val dy = scrollY - oldScrollY
+            // Hiding the bar makes the page taller, which pulls a scroll at the bottom back up.
+            // That scroll comes from the resize, not the user: reacting to it would show the bar again.
+            if (!webView.scrolledUpToBottom(dy)) updateBottomNavOnScroll(dy)
         }
     }
 
@@ -130,3 +161,12 @@ class Statistics : PageFragment(R.layout.page_statistics) {
 
 private val PrintJob.isActive: Boolean
     get() = !isCompleted && !isFailed && !isCancelled
+
+/**
+ * Whether scrolling up by [dy] left this view at the bottom of its scrollable content.
+ *
+ * Scrolling up moves away from the bottom, so this only happens when the view grew and scrolled
+ * itself back into range.
+ */
+@VisibleForTesting
+internal fun View.scrolledUpToBottom(dy: Int) = dy < 0 && canScrollVertically(-1) && !canScrollVertically(1)

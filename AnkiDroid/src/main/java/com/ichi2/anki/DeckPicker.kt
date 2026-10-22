@@ -24,7 +24,9 @@ import android.text.util.Linkify
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -73,6 +75,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
 import anki.sync.SyncStatusResponse
+import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -751,16 +754,25 @@ open class DeckPicker :
                 left = bars.left,
                 right = if (fragmented) 0 else bars.right,
             )
+            // The bottom navigation raises the summary itself, as it slides in and out
             deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = withKeyboard.bottom)
 
-            val bottomNavView = findViewById<View?>(R.id.bottom_navigation)
-            val bottomNavOffset = if (bottomNavView?.isVisible == true) BOTTOM_NAV_HEIGHT_DP.dp.toPx(this) else 0
+            val bottomNavigation =
+                binding.bottomNavigation?.takeIf { it.isVisible && HideViewOnScrollBehavior.from(it).isScrolledIn }
+            // The bar's height includes the system navigation inset. Estimate it until it is measured.
+            val navigationInset =
+                when {
+                    bottomNavigation == null -> bars.bottom
+                    bottomNavigation.height > 0 -> bottomNavigation.height
+                    else -> bars.bottom + BOTTOM_NAV_HEIGHT_DP.dp.toPx(this)
+                }
             // the keyboard covers the bottom navigation: clear whichever is taller
-            floatingActionButtonBinding.root.updatePadding(
-                bottom = maxOf(bars.bottom + bottomNavOffset, withKeyboard.bottom),
-            )
-
+            floatingActionButtonBinding.root.updatePadding(bottom = maxOf(navigationInset, withKeyboard.bottom))
             insets
+        }
+        // Re-apply the insets above once the bar's measured height is known or changes
+        binding.bottomNavigation?.addOnLayoutChangeListener { _, _, top, _, bottom, _, oldTop, _, oldBottom ->
+            if (bottom - top != oldBottom - oldTop) ViewCompat.requestApplyInsets(deckPickerBinding.root)
         }
         // Insets move the FAB's ancestors without changing the FAB's bounds within its parent.
         // Wait until the whole hierarchy is laid out before reading positions in the window.
@@ -1711,6 +1723,32 @@ open class DeckPicker :
             }
         }
         return false
+    }
+
+    /** Where the current downward drag started: reset whenever the finger moves up */
+    private var touchAnchorY = 0f
+    private var lastTouchY = 0f
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        // Content which fits once the bottom bar hides can no longer scroll, so scrolling alone
+        // could never bring the bar back: a downward drag always restores it.
+        if (bottomNavigationEnabled) {
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    touchAnchorY = event.y
+                    lastTouchY = event.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (event.y < lastTouchY) {
+                        touchAnchorY = event.y
+                    } else if (event.y - touchAnchorY > ViewConfiguration.get(this).scaledTouchSlop) {
+                        binding.bottomNavigation?.let { HideViewOnScrollBehavior.from(it).slideIn(it) }
+                    }
+                    lastTouchY = event.y
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
