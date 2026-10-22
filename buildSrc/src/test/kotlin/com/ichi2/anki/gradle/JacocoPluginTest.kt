@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import javax.tools.ToolProvider
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.xpath.XPathFactory
 
@@ -59,11 +58,10 @@ class JacocoPluginTest {
 
     @Test
     fun `library without unit tests is included as uncovered in the report`() {
-        compileUncoveredLibraryClass()
         // A valid, empty execution file represents a run that never touched this class.
         ExecFileLoader().save(File(projectDir, "app/build/jacoco/empty.exec"), false)
 
-        // Run the real report, skipping Android compilation and test execution.
+        // Run the real report with Android compilation, skipping only test execution.
         val result =
             runCoverage(
                 "-x",
@@ -109,23 +107,6 @@ class JacocoPluginTest {
         assertThat(File(projectDir, "empty/custom-tests/ExampleTest.kt").delete(), equalTo(true))
         val after = dryRunCoverage()
         assertThat(after, not(containsString(":empty:testDebugUnitTest")))
-    }
-
-    private fun compileUncoveredLibraryClass() {
-        // Supply bytecode in AGP's Kotlin output directory without building an Android project.
-        val classes = File(projectDir, "empty/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes")
-        classes.mkdirs()
-        val exitCode =
-            ToolProvider.getSystemJavaCompiler().run(
-                null,
-                null,
-                null,
-                "-g",
-                "-d",
-                classes.absolutePath,
-                File(projectDir, "empty/src/main/java/regression/Uncovered.java").absolutePath,
-            )
-        assertThat(exitCode, equalTo(0))
     }
 
     private fun dryRunCoverage(): String = runCoverage("--dry-run").output
