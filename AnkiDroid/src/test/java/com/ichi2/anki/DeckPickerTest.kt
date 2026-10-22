@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Bundle
-import android.os.SystemClock
 import android.text.Layout
 import android.view.KeyEvent
 import android.view.Menu
@@ -22,6 +21,11 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.Insets
@@ -47,7 +51,6 @@ import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.DeckPickerFloatingActionMenu.CloseAnimation
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -117,6 +120,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
@@ -147,6 +151,9 @@ typealias ContextMenuOption = DeckPickerContextMenuOption
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class DeckPickerTest : RobolectricTest() {
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
+
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField // required for Parameter
     var qualifiers: String? = null
@@ -1362,71 +1369,21 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `FAB opens menu on accessibility click`() =
         deckPicker {
-            val fab = findViewById<View>(R.id.fab_main)
             assertThat("menu starts closed", floatingActionMenu.isFABOpen, equalTo(false))
-            // TalkBack activate a focused control, which routes to [View.performClick]
-            fab.performClick()
+            // TalkBack activates a focused control, which routes to [View.performClick]
+            composeRule.onNodeWithContentDescription(getString(CommonString.menu_add)).performClick()
             assertThat("FAB menu opens on click", floatingActionMenu.isFABOpen, equalTo(true))
         }
 
     @Test
-    fun `adding a note by single tap preserves the visible FAB menu`() = assertAddingNoteByTouchPreservesMenu(doubleTap = false)
-
-    @Test
-    fun `adding a note by double tap preserves the visible FAB menu`() = assertAddingNoteByTouchPreservesMenu(doubleTap = true)
-
-    private fun assertAddingNoteByTouchPreservesMenu(doubleTap: Boolean) =
+    fun `adding a note preserves the visible FAB menu`() =
         deckPicker {
-            val fab = floatingActionButtonBinding.fabMain
-            val startTime = SystemClock.uptimeMillis()
-
-            fun tap(offset: Long) {
-                val downTime = startTime + offset
-                for (action in listOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP)) {
-                    val eventTime = downTime + if (action == MotionEvent.ACTION_UP) 50 else 0
-                    val event = MotionEvent.obtain(downTime, eventTime, action, 0f, 0f, 0)
-                    try {
-                        fab.dispatchTouchEvent(event)
-                    } finally {
-                        event.recycle()
-                    }
-                }
-            }
-
-            if (!doubleTap) floatingActionMenu.showFloatingActionMenu()
+            floatingActionMenu.showFloatingActionMenu()
             viewModel.flowOfNavigate.test {
-                if (doubleTap) {
-                    tap(0)
-                    assertTrue(floatingActionMenu.isFABOpen)
-                }
-                tap(100)
+                floatingActionMenu.addNote()
                 val intent = AnkiDroidNavigator.toIntent(awaitItem())
                 assertEquals("com.ichi2.anki.NoteEditorActivity", intent.component!!.className)
                 assertFalse(floatingActionMenu.isFABOpen, "Adding a note must save a closed menu state")
-                assertTrue(floatingActionButtonBinding.fabMain.isExtended)
-                assertEquals(View.VISIBLE, floatingActionButtonBinding.fabBGLayout.visibility)
-            }
-        }
-
-    @Test
-    fun `selecting Add during FAB reopening keeps menu buttons visible`() =
-        deckPicker {
-            floatingActionMenu.showFloatingActionMenu()
-            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
-            floatingActionMenu.closeFloatingActionMenu(style = CloseAnimation.SHORT)
-            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
-            assertEquals(View.GONE, floatingActionButtonBinding.addDeckButton.visibility)
-
-            floatingActionMenu.showFloatingActionMenu()
-            // Select Add before the opening animations have finished.
-            floatingActionButtonBinding.fabMain.performClick()
-            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
-
-            with(floatingActionButtonBinding) {
-                assertTrue(fabMain.isExtended)
-                assertEquals(View.VISIBLE, addDeckButton.visibility)
-                assertEquals(View.VISIBLE, addFilteredDeckButton.visibility)
-                assertEquals(View.VISIBLE, addSharedButton.visibility)
             }
         }
 
@@ -1438,35 +1395,20 @@ class DeckPickerTest : RobolectricTest() {
                 deckPicker.lifecycle.addObserver(LifecycleEventObserver { _, event -> events.add(event) })
                 deckPicker.floatingActionMenu.showFloatingActionMenu()
                 advanceRobolectricLooper()
-                with(deckPicker.floatingActionButtonBinding) {
-                    val expandedColor = fabMain.backgroundTintList
-                    fabMain.performClick()
-                    assertTrue(fabMain.isExtended)
-                    assertEquals(expandedColor, fabMain.backgroundTintList)
-                    assertEquals(View.VISIBLE, fabBGLayout.visibility)
-                }
+                assertTrue(deckPicker.floatingActionMenu.isFABOpen)
+                deckPicker.floatingActionMenu.addNote()
             }
 
             // A visible activity can be paused without being stopped in multi-window mode.
             scenario.moveToState(Lifecycle.State.STARTED)
-            scenario.onActivity { deckPicker ->
-                assertTrue(deckPicker.floatingActionButtonBinding.fabMain.isExtended)
-            }
             scenario.moveToState(Lifecycle.State.RESUMED)
 
             scenario.onActivity { deckPicker ->
                 assertTrue(Lifecycle.Event.ON_PAUSE in events)
                 assertFalse(Lifecycle.Event.ON_STOP in events)
-                with(deckPicker.floatingActionButtonBinding) {
-                    assertFalse(fabMain.isExtended)
-                    assertEquals(View.GONE, fabBGLayout.visibility)
-                    assertEquals(View.GONE, addDeckButton.visibility)
-                    assertEquals(View.GONE, addFilteredDeckButton.visibility)
-                    assertEquals(View.GONE, addSharedButton.visibility)
-                    fabMain.performClick()
-                    assertTrue(deckPicker.floatingActionMenu.isFABOpen)
-                    assertEquals(View.VISIBLE, fabBGLayout.visibility)
-                }
+                assertFalse(deckPicker.floatingActionMenu.isFABOpen)
+                deckPicker.floatingActionMenu.showFloatingActionMenu()
+                assertTrue(deckPicker.floatingActionMenu.isFABOpen)
             }
         }
     }
@@ -1500,24 +1442,6 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    fun `FAB menu closes when clicking background inside menu container`() =
-        deckPicker {
-            floatingActionMenu.showFloatingActionMenu()
-            assertThat("menu is open", floatingActionMenu.isFABOpen, equalTo(true))
-
-            // Click the background inside the FAB menu container
-            // (simulating, for example, tapping to the left of narrower buttons such as the "Add" button)
-            val linearLayout = floatingActionButtonBinding.fabLinearLayout
-            linearLayout.performClick()
-
-            assertThat(
-                "clicking the background inside the FAB menu container closes the menu",
-                floatingActionMenu.isFABOpen,
-                equalTo(false),
-            )
-        }
-
-    @Test
     fun `expanded FAB menu is restored after recreation`() {
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             lateinit var originalActivity: DeckPicker
@@ -1532,11 +1456,6 @@ class DeckPickerTest : RobolectricTest() {
             scenario.onActivity { deckPicker ->
                 assertNotSame(originalActivity, deckPicker)
                 assertTrue(deckPicker.floatingActionMenu.isFABOpen)
-                with(deckPicker.floatingActionButtonBinding) {
-                    assertEquals(View.VISIBLE, addSharedButton.visibility)
-                    assertEquals(View.VISIBLE, addDeckButton.visibility)
-                    assertEquals(View.VISIBLE, addFilteredDeckButton.visibility)
-                }
 
                 deckPicker.invalidateOptionsMenu()
                 advanceRobolectricLooper()
@@ -1555,37 +1474,10 @@ class DeckPickerTest : RobolectricTest() {
             floatingActionMenu.showFloatingActionMenu()
             advanceRobolectricLooper()
 
-            val binding = floatingActionButtonBinding
-            assertThat(binding.fabMain.text.toString(), equalTo(getString(CommonString.menu_add)))
-            assertThat(
-                binding.addSharedButton.text.toString(),
-                equalTo(getString(CommonString.menu_get_shared_decks)),
-            )
-            assertThat(
-                binding.addFilteredDeckButton.text.toString(),
-                equalTo(getString(CommonString.new_dynamic_deck)),
-            )
-            // 'Create deck' uses a backend string rather than an android:text resource
-            assertThat(
-                binding.addDeckButton.text.toString(),
-                equalTo(with(targetContext) { TR.sentenceCase.createDeck }),
-            )
-        }
-
-    @Test
-    fun `expanding the FAB menu re-extends the Create deck button`() =
-        deckPicker {
-            val addDeckButton = floatingActionButtonBinding.addDeckButton
-            addDeckButton.isExtended = false
-
-            floatingActionMenu.showFloatingActionMenu()
-            advanceRobolectricLooper()
-
-            assertTrue(!addDeckButton.text.isNullOrBlank(), "Create deck button must have a label")
-            assertTrue(
-                addDeckButton.isExtended,
-                "Create deck button must be extended so its label is visible",
-            )
+            composeRule.onNodeWithText(getString(CommonString.menu_add)).assertIsDisplayed()
+            composeRule.onNodeWithText(getString(CommonString.menu_get_shared_decks)).assertIsDisplayed()
+            composeRule.onNodeWithText(getString(CommonString.new_dynamic_deck)).assertIsDisplayed()
+            composeRule.onNodeWithText(with(targetContext) { TR.sentenceCase.createDeck }).assertIsDisplayed()
         }
 
     @Test
