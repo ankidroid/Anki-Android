@@ -1459,7 +1459,6 @@ class CardBrowserViewModel(
      *
      * @see com.ichi2.anki.searchForRows
      */
-    @NeedsTest("Invalid searches are handled. For instance: 'and'")
     fun launchSearchForCards(feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE) {
         if (!initCompleted) return
 
