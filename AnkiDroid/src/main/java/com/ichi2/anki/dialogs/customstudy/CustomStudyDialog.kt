@@ -190,10 +190,28 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      * Continues the custom study process by showing an input dialog where the user can enter an
      * amount specific to that type of custom study(eg. cards, days etc).
      */
-    private fun onMenuItemSelected(
+    private suspend fun onMenuItemSelected(
+        menuDialog: Dialog,
         item: ContextMenuOption,
         defaults: CustomStudyDefaults,
+        onEmptyDeck: () -> Unit,
     ) {
+        // The deck may have changed since this menu loaded.
+        val isUnavailable = withProgress { viewModel.isDeckEmptyOrHidden() }
+        // The fragment can outlive this dialog and recreate it while the check is queued.
+        if (
+            this.dialog !== menuDialog ||
+            !menuDialog.isShowing ||
+            !isResumed ||
+            requireActivity().isFinishing ||
+            parentFragmentManager.isStateSaved
+        ) {
+            return
+        }
+        if (isUnavailable) {
+            onEmptyDeck()
+            return
+        }
         if (item.checkAvailability?.invoke(defaults) == false) {
             showSnackbar(getString(CommonString.studyoptions_no_cards_due))
             return
@@ -217,7 +235,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val ta = TypedValue()
         builder.context.theme.resolveAttribute(android.R.attr.selectableItemBackground, ta, true)
 
-        fun buildMenuItems(defaults: CustomStudyDefaults) {
+        fun buildMenuItems(
+            defaults: CustomStudyDefaults,
+            onEmptyDeck: () -> Unit,
+        ) {
             ContextMenuOption.entries
                 .map { option ->
                     Pair(
@@ -237,7 +258,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             setTextAppearance(android.R.style.TextAppearance_Material_Body1)
                             setOnClickListener {
                                 launchCatchingTask {
-                                    onMenuItemSelected(menuItem, defaults)
+                                    onMenuItemSelected(dialog, menuItem, defaults, onEmptyDeck)
                                 }
                             }
                         }.also { container.addView(it) }
@@ -259,7 +280,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             host.showSnackbar(CommonString.empty_deck)
                         }
                     }
-                is CustomStudyInitialization.Ready -> buildMenuItems(state.defaults)
+                is CustomStudyInitialization.Ready -> buildMenuItems(state.defaults) { render(CustomStudyInitialization.Empty) }
             }
         }
 

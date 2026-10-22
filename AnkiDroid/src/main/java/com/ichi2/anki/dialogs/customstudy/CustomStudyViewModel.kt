@@ -59,11 +59,13 @@ class CustomStudyViewModel(
         }
     }
 
+    suspend fun isDeckEmptyOrHidden(): Boolean = withCol { !hasCustomStudyCards() }
+
     private fun Collection.hasCustomStudyCards(): Boolean =
-        decks.cardCount(deckId, includeSubdecks = true) > 0 &&
-            // cardCount includes borrowed cards, but the backend can still hide Default when
-            // all of its cards are in a filtered deck. Defaults require a listed deck.
-            sched.deckTree(includeCounts = false).find(deckId) != null
+        // Check listing first: counting child-deck cards requires the deck to exist.
+        // Default may also be hidden while cardCount still includes its borrowed cards.
+        sched.deckTree(includeCounts = false).find(deckId) != null &&
+            decks.cardCount(deckId, includeSubdecks = true) > 0
 
     /*
      * Translates the user's selection into a specific study type.

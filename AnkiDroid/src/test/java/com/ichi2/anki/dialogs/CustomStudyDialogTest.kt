@@ -49,6 +49,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.sched.Scheduler
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.EmptyAnkiActivity
@@ -63,6 +64,8 @@ import io.mockk.verify
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.withContext
 import org.hamcrest.CoreMatchers.allOf
@@ -85,6 +88,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -244,6 +248,120 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
 
     @Test
+    fun `stale custom study menu explains that the deck is now empty`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            withCustomStudyFragment(argumentsDisplayingMainScreen()) { fragment ->
+                val fragmentManager = fragment.parentFragmentManager
+                col.removeNotes(cardIds = listOf(card.id))
+
+                onView(withText(TR.customStudyReviewAhead())).inRoot(isDialog()).perform(click())
+                advanceUntilIdle()
+
+                assertUnavailableMenu(fragment)
+                assertEquals(
+                    0,
+                    fragmentManager.fragments
+                        .filterIsInstance<CustomStudyDialog>()
+                        .size,
+                )
+            }
+        }
+
+    @Test
+    fun `stale menu becomes unavailable when its deck is deleted`() =
+        runTest {
+            val target = addDeck("Target")
+            col.setDeck(listOf(addBasicNote().firstCard().id), target)
+            withCustomStudyFragment(argumentsDisplayingMainScreen(target)) { fragment ->
+                val dialog = assertNotNull(fragment.dialog as? AlertDialog)
+                col.decks.remove(listOf(target))
+                val selectedDeck = col.decks.selected()
+                val undoStatus = col.undoStatus()
+
+                onView(withText(TR.customStudyReviewAhead())).inRoot(isDialog()).perform(click())
+                advanceUntilIdle()
+
+                assertFalse(dialog.isShowing)
+                assertUnavailableMenu(fragment)
+                assertEquals(selectedDeck, col.decks.selected())
+                assertEquals(undoStatus, col.undoStatus())
+            }
+        }
+
+    @Test
+    fun `deleted deck initialization explains why custom study is unavailable`() {
+        val target = addDeck("Target")
+        col.setDeck(listOf(addBasicNote().firstCard().id), target)
+        col.decks.remove(listOf(target))
+        val selectedDeck = col.decks.selected()
+        val undoStatus = col.undoStatus()
+
+        withCustomStudyFragment(argumentsDisplayingMainScreen(target)) { fragment ->
+            assertUnavailableMenu(fragment)
+        }
+
+        assertEquals(selectedDeck, col.decks.selected())
+        assertEquals(undoStatus, col.undoStatus())
+    }
+
+    @Test
+    fun `menu check does not navigate after state saving and can be retried on resume`() =
+        runTest {
+            addBasicNote()
+            val controller = Robolectric.buildActivity(EmptyAnkiActivity::class.java).setup()
+            saveControllerForCleanup(controller)
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+            val activity = controller.get()
+            activity.showDialogFragment(CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID))
+            val fragment = activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as CustomStudyDialog
+            advanceRobolectricLooperUntil { fragment.dialog?.findViewById<View>(R.id.progress_bar)?.isVisible != true }
+
+            // Exercise the production queue's suspension instead of Robolectric's synchronous lock.
+            val previousIoDispatcher = ioDispatcher
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+            val collectionScheduler = TestCoroutineScheduler()
+            val previousDispatcher =
+                CollectionManager.setTestDispatcher(StandardTestDispatcher(collectionScheduler), useReentrantLock = false)
+            try {
+                onView(withText(TR.customStudyReviewAhead())).inRoot(isDialog()).perform(click())
+                runCurrent()
+                assertSame(fragment, activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+                controller.pause().saveInstanceState(Bundle()).stop()
+
+                collectionScheduler.runCurrent()
+                runCurrent()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertSame(fragment, activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+                controller.start().resume().visible()
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                assertSame(fragment, activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+
+                onView(withText(TR.customStudyReviewAhead())).inRoot(isDialog()).perform(click())
+                runCurrent()
+                collectionScheduler.runCurrent()
+                runCurrent()
+                shadowOf(Looper.getMainLooper()).idle()
+                collectionScheduler.runCurrent()
+                runCurrent()
+
+                onSubscreenEditText().check(matches(isDisplayed()))
+                assertEquals(
+                    1,
+                    activity.supportFragmentManager.fragments
+                        .filterIsInstance<CustomStudyDialog>()
+                        .size,
+                )
+            } finally {
+                CollectionManager.setTestDispatcher(previousDispatcher)
+                ioDispatcher = previousIoDispatcher
+            }
+        }
+
+    @Test
     fun `hidden empty Default explains why custom study is unavailable and preserves redo`() {
         val other = addDeck("Other")
         col.setDeck(listOf(addBasicNote().firstCard().id), other)
@@ -289,6 +407,32 @@ class CustomStudyDialogTest : RobolectricTest() {
                 .check(matches(isEnabled()))
         }
     }
+
+    @Test
+    fun `stale menu becomes unavailable when a filtered deck borrows all Default cards`() =
+        runTest {
+            addBasicNote()
+            withCustomStudyFragment(argumentsDisplayingMainScreen()) { fragment ->
+                val fragmentManager = fragment.parentFragmentManager
+                val filtered = addDynamicDeck("Filtered", "")
+                assertNull(col.sched.deckDueTree().find(Consts.DEFAULT_DECK_ID))
+                assertEquals(1, col.decks.cardCount(Consts.DEFAULT_DECK_ID, includeSubdecks = true))
+                val undoStatus = col.undoStatus()
+
+                onView(withText(TR.customStudyReviewAhead())).inRoot(isDialog()).perform(click())
+                advanceUntilIdle()
+
+                assertUnavailableMenu(fragment)
+                assertEquals(
+                    0,
+                    fragmentManager.fragments
+                        .filterIsInstance<CustomStudyDialog>()
+                        .size,
+                )
+                assertEquals(filtered, col.decks.selected())
+                assertEquals(undoStatus, col.undoStatus())
+            }
+        }
 
     @Test
     fun `empty deck explains why custom study is unavailable without selecting it`() {
