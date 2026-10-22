@@ -8,6 +8,7 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import androidx.annotation.CheckResult
 import com.ichi2.anki.compat.UtteranceProgressListenerCompat
+import com.ichi2.anki.i18n.replaceObsoleteLanguageCode
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.libanki.TtsPlayer.TtsCompletionStatus
@@ -121,7 +122,7 @@ class AndroidTtsPlayer(
         }
 
     override suspend fun play(tag: TTSTag): TtsCompletionStatus {
-        val match = voiceForTag(tag)
+        val match = voiceForTag(tag.copy(lang = tag.lang.replaceObsoleteLanguageCode()))
         if (match == null) {
             Timber.w("could not find voice for %s", tag)
             return TtsCompletionStatus.failure(AndroidTtsError.MissingVoiceError(tag))

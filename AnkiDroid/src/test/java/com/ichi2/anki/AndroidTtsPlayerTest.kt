@@ -168,6 +168,35 @@ class AndroidTtsPlayerTest {
         }
 
     @Test
+    fun `tags with obsolete language codes play voices with current codes`() =
+        runBlocking {
+            val hebrew = AndroidTtsVoice(fakeVoice("hebrew", Locale.forLanguageTag("he-IL")), ENGINE_A)
+            val indonesian = AndroidTtsVoice(fakeVoice("indonesian", Locale.forLanguageTag("id-ID")), ENGINE_A)
+            val tts = fakeTts()
+            val player = AndroidTtsPlayer(listOf(hebrew, indonesian)) { tts }
+            player.init(this)
+
+            try {
+                for ((lang, voice) in listOf("iw_IL" to hebrew, "in_ID" to indonesian)) {
+                    val tag =
+                        TTSTag(
+                            fieldText = "hello world",
+                            lang = lang,
+                            voices = listOf(voice.name),
+                            speed = null,
+                            otherArgs = emptyList(),
+                        )
+                    val result = withTimeout(PLAYBACK_TIMEOUT) { player.play(tag) }
+
+                    assertThat(lang, result.success, equalTo(true))
+                    verify(exactly = 1) { tts.voice = voice.voice }
+                }
+            } finally {
+                player.close()
+            }
+        }
+
+    @Test
     fun `playback is routed to the engine which owns the voice`() {
         val test = playerTest()
 
