@@ -25,7 +25,6 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import anki.decks.deckTreeNode
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -557,7 +556,7 @@ fun Fragment.startDeckSelection(
  * @param allowFiltered shows filtered decks if true
  * @param skipEmptyDefault if true, hides the 'Default' deck if it has no cards or subdecks
  */
-fun AnkiActivity.startDeckSelection(
+fun FragmentActivity.startDeckSelection(
     title: String? = null,
     templateEditorMessage: String? = null,
     requestKey: String = REQUEST_SELECT_DECK,
