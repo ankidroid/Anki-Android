@@ -8,9 +8,6 @@ import com.ichi2.widget.AnkiDroidWidgetSmall
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 
-// These lists reference concrete provider classes, so they stay in :AnkiDroid
-// until the providers move to :widgets
-
 val RECURRING_WIDGETS: List<Class<out AnalyticsWidgetProvider>> =
     listOf(
         DeckPickerWidget::class.java,
