@@ -10,6 +10,7 @@ import com.ichi2.anki.gradle.HasUnitTestSources.Companion.hasAndroidUnitTestSour
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.component.ProjectComponentIdentifier
+import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
@@ -139,10 +140,13 @@ private fun Project.configureJvmCoverage(
     includeModule: () -> Boolean,
 ) {
     pluginManager.withPlugin("java") {
-        val sources = files("src/main/java", "src/main/kotlin")
+        val mainSourceSet = extensions.getByType(SourceSetContainer::class.java).named("main")
+        val sources = mainSourceSet.map { it.allSource.srcDirs }
         val classes =
-            fileTree(layout.buildDirectory.dir("classes/kotlin/main"))
-                .matching { exclude(classExcludes) }
+            mainSourceSet.map { sourceSet ->
+                sourceSet.output.classesDirs.asFileTree
+                    .matching { exclude(classExcludes) }
+            }
         report.configure {
             if (!includeModule()) return@configure
             sourceDirectories.from(sources)
