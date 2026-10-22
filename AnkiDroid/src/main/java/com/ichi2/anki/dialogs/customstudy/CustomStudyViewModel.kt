@@ -10,6 +10,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyCardState
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
 import kotlinx.coroutines.currentCoroutineContext
@@ -42,17 +43,27 @@ class CustomStudyViewModel(
     val deckId: DeckId
         get() = savedStateHandle.get<DeckId>(ARG_DECK_ID) ?: error("Deck id was not provided!")
 
-    /** Load defaults before selecting the requested deck. */
+    /** Check the requested deck before loading defaults or changing selection. */
     suspend fun initialize(): CustomStudyInitialization {
         val context = currentCoroutineContext()
         return withCol {
-            val defaults = sched.customStudyDefaults(deckId).toDomainModel()
-            // The dialog may have closed while the backend was loading defaults.
-            context.ensureActive()
-            decks.select(deckId)
-            CustomStudyInitialization.Ready(deckId, defaults)
+            if (!hasCustomStudyCards()) {
+                CustomStudyInitialization.Empty
+            } else {
+                val defaults = sched.customStudyDefaults(deckId).toDomainModel()
+                // The dialog may have closed while the backend was loading defaults.
+                context.ensureActive()
+                decks.select(deckId)
+                CustomStudyInitialization.Ready(deckId, defaults)
+            }
         }
     }
+
+    private fun Collection.hasCustomStudyCards(): Boolean =
+        decks.cardCount(deckId, includeSubdecks = true) > 0 &&
+            // cardCount includes borrowed cards, but the backend can still hide Default when
+            // all of its cards are in a filtered deck. Defaults require a listed deck.
+            sched.deckTree(includeCounts = false).find(deckId) != null
 
     /*
      * Translates the user's selection into a specific study type.
@@ -79,6 +90,8 @@ class CustomStudyViewModel(
 
 sealed interface CustomStudyInitialization {
     data object Loading : CustomStudyInitialization
+
+    data object Empty : CustomStudyInitialization
 
     data class Ready(
         val deckId: DeckId,
