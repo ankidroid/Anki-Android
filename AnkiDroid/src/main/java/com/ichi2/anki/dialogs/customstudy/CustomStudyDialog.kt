@@ -10,13 +10,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.text.InputFilter
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
@@ -46,6 +44,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.databinding.DialogCustomStudyMenuBinding
 import com.ichi2.anki.databinding.FragmentCustomStudyBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.Companion.deferredDefaults
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
@@ -74,7 +73,6 @@ import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.setPaddingRelative
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.Deferred
@@ -205,22 +203,18 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     }
 
     private fun buildContextMenu(): AlertDialog {
-        val customMenuView = ScrollView(requireContext())
-        val container =
-            LinearLayout(requireContext())
-                .apply {
-                    orientation = LinearLayout.VERTICAL
-                    setPaddingRelative(9.dp.toPx(requireContext()))
-                }
-        customMenuView.addView(
-            container,
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-            ),
-        )
+        val builder =
+            AlertDialog
+                .Builder(requireActivity())
+                .title(text = TR.sentenceCase.customStudy)
+                .cancelable(true)
+        val inflater = LayoutInflater.from(builder.context)
+        val menuBinding = DialogCustomStudyMenuBinding.inflate(inflater)
+        val container = menuBinding.menuItems
+        val dialog = builder.customView(menuBinding.root).create()
+
         val ta = TypedValue()
-        requireContext().theme.resolveAttribute(android.R.attr.selectableItemBackground, ta, true)
+        builder.context.theme.resolveAttribute(android.R.attr.selectableItemBackground, ta, true)
 
         fun buildMenuItems() {
             ContextMenuOption.entries
@@ -235,7 +229,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             option.checkAvailability(deferredDefaults.getCompleted()),
                     )
                 }.forEach { (menuItem, isItemEnabled) ->
-                    (layoutInflater.inflate(android.R.layout.simple_list_item_1, container, false) as TextView)
+                    (inflater.inflate(android.R.layout.simple_list_item_1, container, false) as TextView)
                         .apply {
                             updatePadding(
                                 top = 12.dp.toPx(requireContext()),
@@ -264,12 +258,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             }
         }
 
-        return AlertDialog
-            .Builder(requireActivity())
-            .title(text = TR.sentenceCase.customStudy)
-            .cancelable(true)
-            .customView(customMenuView)
-            .create()
+        return dialog
     }
 
     /**
