@@ -44,6 +44,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -74,7 +79,17 @@ fun DeckPickerFabMenu(
     }
 
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .onPreviewKeyEvent { event ->
+                    if (expanded && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                        onExpandedChange(false)
+                        true
+                    } else {
+                        false
+                    }
+                },
         contentAlignment = Alignment.BottomEnd,
     ) {
         if (expanded) {

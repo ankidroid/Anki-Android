@@ -21,11 +21,15 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.pressKey
+import androidx.compose.ui.test.requestFocus
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.Insets
@@ -1416,11 +1420,12 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `FAB menu opens on ENTER key`() =
         deckPicker {
-            val fab = findViewById<View>(R.id.fab_main)
-
             assertThat("menu starts closed", floatingActionMenu.isFABOpen, equalTo(false))
 
-            fab.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+            composeRule
+                .onNodeWithContentDescription(getString(CommonString.menu_add))
+                .requestFocus()
+                .performKeyInput { pressKey(Key.Enter) }
 
             assertThat("ENTER key opens the FAB menu", floatingActionMenu.isFABOpen, equalTo(true))
         }
@@ -1428,11 +1433,14 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `FAB menu closes on ESCAPE key`() =
         deckPicker {
-            val fab = findViewById<View>(R.id.fab_main)
             floatingActionMenu.showFloatingActionMenu()
+            advanceRobolectricLooper()
             assertThat("menu is open", floatingActionMenu.isFABOpen, equalTo(true))
 
-            fab.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE))
+            composeRule
+                .onNodeWithContentDescription(getString(CommonString.dialog_cancel))
+                .requestFocus()
+                .performKeyInput { pressKey(Key.Escape) }
 
             assertThat(
                 "ESCAPE key closes the FAB menu",
