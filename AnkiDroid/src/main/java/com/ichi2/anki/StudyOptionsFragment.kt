@@ -449,7 +449,7 @@ class StudyOptionsFragment :
         buryInfoLabel.isVisible = data.hasBuriedCards
 
         fun TextView.updateBuryText(count: Int) {
-            this.isVisible = count > 0
+            this.isVisible = deckInfoLayout.isVisible && count > 0
             this.text =
                 when {
                     count > 0 ->
@@ -458,7 +458,6 @@ class StudyOptionsFragment :
                             count,
                             count,
                         )
-                    // #18094 - potential race condition: view may be visible with a count of 0
                     else -> ""
                 }
         }

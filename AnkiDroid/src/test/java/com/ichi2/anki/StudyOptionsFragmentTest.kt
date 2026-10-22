@@ -4,6 +4,7 @@ package com.ichi2.anki
 
 import android.view.View
 import android.view.View.MeasureSpec
+import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.databinding.FragmentStudyOptionsBinding
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.ext.triggerDeckNotFoundInLimitsMap
 import com.ichi2.testutils.launchFragmentInContainer
@@ -57,6 +59,37 @@ class StudyOptionsFragmentTest : RobolectricTest() {
 
                 assertTrue(assertIs<StudyOptionsState.Congrats>(viewModel.state).isDynamic)
                 assertEquals(View.VISIBLE, counts.visibility)
+            }
+        }
+
+    @Test
+    fun `bury counts stay hidden without buried cards`() =
+        runTest {
+            addBasicNote()
+            withStudyOptions {
+                assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
+                assertBuryCountsHidden()
+
+                reattachView()
+                assertBuryCountsHidden()
+            }
+        }
+
+    @Test
+    fun `bury count is shown next to the counts`() =
+        runTest {
+            addBasicAndReversedNote("Front", "Back")
+            val config = col.decks.configDictForDeckId(col.decks.current().id)
+            config.new.bury = true
+            col.decks.save(config)
+            withStudyOptions {
+                assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
+                val newBury = binding.studyoptionsNewBury
+                assertEquals(View.VISIBLE, newBury.visibility)
+
+                reattachView()
+                assertEquals(View.VISIBLE, newBury.visibility)
+                assertEquals("+1 buried", newBury.text.toString())
             }
         }
 
@@ -288,6 +321,24 @@ class StudyOptionsFragmentTest : RobolectricTest() {
             advanceRobolectricLooper()
             scenario.withFragment(block)
         }
+
+    private val StudyOptionsFragment.binding
+        get() = FragmentStudyOptionsBinding.bind(requireView())
+
+    private fun StudyOptionsFragment.assertBuryCountsHidden() =
+        with(binding) {
+            for (bury in listOf(studyoptionsNewBury, studyoptionsLearningBury, studyoptionsReviewBury)) {
+                assertEquals(View.GONE, bury.visibility, resources.getResourceEntryName(bury.id))
+            }
+        }
+
+    private fun StudyOptionsFragment.reattachView() {
+        val view = requireView()
+        val parent = view.parent as ViewGroup
+        val index = parent.indexOfChild(view)
+        parent.removeView(view)
+        parent.addView(view, index)
+    }
 
     context(scope: TestScope)
     private fun StudyOptionsFragment.refreshAndAwait() {
