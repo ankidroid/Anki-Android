@@ -136,7 +136,8 @@ class DeckPickerFloatingActionMenu(
      * Opens the [NoteEditorFragment], preserving the menu during the outgoing transition.
      * @see DeckPicker.addNote
      */
-    private fun addNote() {
+    @VisibleForTesting
+    fun addNote() {
         if (pendingMenuReset) return
         pendingMenuReset = true
         isFABOpen = false
