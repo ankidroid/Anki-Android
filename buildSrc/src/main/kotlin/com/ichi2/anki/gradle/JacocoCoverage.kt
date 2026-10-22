@@ -3,6 +3,7 @@
 package com.ichi2.anki.gradle
 
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.HostTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.api.variant.Variant
 import com.ichi2.anki.gradle.HasUnitTestSources.Companion.hasAndroidUnitTestSources
@@ -28,9 +29,8 @@ fun Project.registerJacocoLibraryVariants() {
         val variants = objects.domainObjectSet(Variant::class.java)
         extensions.add("jacocoLibraryVariants", JacocoLibraryVariants(variants))
         pluginManager.withPlugin("com.android.library") {
-            val androidTestBuildType = (rootProject.extensions.extraProperties["androidTestVariantName"] as String).lowercase()
             extensions.configure<LibraryAndroidComponentsExtension> {
-                onVariants(selector().withBuildType(androidTestBuildType)) { variant ->
+                onVariants(selector().withBuildType("debug")) { variant ->
                     variants.add(variant)
                 }
             }
@@ -94,13 +94,18 @@ private fun Project.configureAndroidAppCoverage(
     classExcludes: List<String>,
 ) {
     extensions.configure<ApplicationAndroidComponentsExtension> {
-        onVariants(selector().withName("playDebug")) {
+        // AGP enables unit tests only for testBuildType by default. These reports
+        // always run debug unit tests, including when emulator tests target release.
+        beforeVariants(selector().withName("playDebug")) { variant ->
+            variant.hostTests[HostTestBuilder.UNIT_TEST_TYPE]?.enable = true
+        }
+        onVariants(selector().withName("playDebug")) { debugVariant ->
+            includeAndroidClasses(unitTestReport, debugVariant, classExcludes)
             includeTestExecutionData(unitTestReport, "testPlayDebugUnitTest", "**/*.exec")
             includeTestExecutionData(mergedReport, "testPlayDebugUnitTest", "**/*.exec")
         }
 
         onVariants(selector().withName("play$androidTestVariantName")) { androidTestVariant ->
-            includeAndroidClasses(unitTestReport, androidTestVariant, classExcludes)
             val connectedTest = "connectedPlay${androidTestVariantName}AndroidTest"
             includeAndroidClasses(androidTestReport, androidTestVariant, classExcludes)
             includeTestExecutionData(androidTestReport, connectedTest, "**/*.ec")
@@ -110,7 +115,7 @@ private fun Project.configureAndroidAppCoverage(
     }
 }
 
-/** Adds an Android library's classes and unit-test coverage to a report. */
+/** Adds an Android library's debug classes and unit-test coverage to a report. */
 private fun Project.configureAndroidLibraryCoverage(
     report: TaskProvider<JacocoReport>,
     classExcludes: List<String>,
