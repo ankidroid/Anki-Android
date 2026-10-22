@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.pages
 
+import android.os.Bundle
 import android.os.Looper
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -17,17 +22,25 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.testutils.launchFragmentInContainer
+import com.ichi2.testutils.uninitializeField
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
+import org.hamcrest.Matchers.allOf
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
@@ -106,5 +119,61 @@ class CongratsPageTest : RobolectricTest() {
                     .inRoot(isDialog())
                     .check(matches(isDisplayed()))
             }
+        }
+
+    @Test
+    fun `custom study tag selection survives process death`() =
+        runTest {
+            // Keep the deck finished so the Congrats page stays open.
+            updateDeckConfig(Consts.DEFAULT_DECK_ID) { new.perDay = 0 }
+            val selectedNote = addBasicNote().update { addTag("selected") }
+            val otherNote = addBasicNote().update { addTag("other") }
+
+            val original = Robolectric.buildActivity(EmptyAnkiActivity::class.java)
+            saveControllerForCleanup(original)
+            original.setup()
+            val page = CongratsPage()
+            original.get().supportFragmentManager.commitNow {
+                add(android.R.id.content, page, "congrats")
+            }
+            page.bridgeCommands.getValue("customStudy").invoke()
+            shadowOf(Looper.getMainLooper()).idle()
+
+            onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                .inRoot(isDialog())
+                .perform(scrollTo(), click())
+            onView(withId(android.R.id.button1))
+                .inRoot(isDialog())
+                .perform(click())
+            shadowOf(Looper.getMainLooper()).idle()
+            assertNotNull(original.get().supportFragmentManager.findFragmentByTag("TagsDialog") as? TagsDialog)
+
+            // recreate() retains ViewModels and process-local defaults. Restore a fresh activity
+            // from saved state and clear the defaults to model process death with the picker open.
+            val savedState = Bundle()
+            original
+                .pause()
+                .stop()
+                .saveInstanceState(savedState)
+                .destroy()
+            uninitializeField<CustomStudyDialog>("deferredDefaults")
+
+            val restored = Robolectric.buildActivity(EmptyAnkiActivity::class.java)
+            saveControllerForCleanup(restored)
+            restored.setup(savedState)
+            shadowOf(Looper.getMainLooper()).idle()
+            val tagsDialog =
+                assertNotNull(restored.get().supportFragmentManager.findFragmentByTag("TagsDialog") as? TagsDialog)
+
+            // Submit through the real picker and FragmentResult listener, without injecting a result.
+            onView(allOf(withId(R.id.tags_dialog_tag_item), hasDescendant(withText("selected"))))
+                .inRoot(isDialog())
+                .perform(click())
+            (tagsDialog.requireDialog() as AlertDialog).performPositiveClick()
+            shadowOf(Looper.getMainLooper()).idle()
+
+            val customStudyDeck = assertNotNull(col.decks.customStudySession)
+            assertEquals(customStudyDeck.id, selectedNote.firstCard().did)
+            assertEquals(Consts.DEFAULT_DECK_ID, otherNote.firstCard().did)
         }
 }

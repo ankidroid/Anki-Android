@@ -173,7 +173,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val option = selectedSubDialog
-        return if (option == null || !defaultsAreInitialized()) {
+        return if (option == null || (option.checkAvailability != null && !defaultsAreInitialized())) {
             Timber.i("Showing Custom Study main menu")
             deferredDefaults = loadCustomStudyDefaults()
             // Select the specified deck
@@ -278,7 +278,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      */
     @NeedsTest("17757: fragment not dismissed before result is output")
     private fun buildInputDialog(contextMenuOption: ContextMenuOption): AlertDialog {
-        require(deferredDefaults.isCompleted || selectedSubDialog!!.checkAvailability == null)
+        require(selectedSubDialog!!.checkAvailability == null || deferredDefaults.isCompleted)
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)
