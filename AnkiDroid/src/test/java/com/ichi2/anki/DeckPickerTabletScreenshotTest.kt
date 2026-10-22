@@ -34,10 +34,8 @@ class DeckPickerTabletScreenshotTest : ScreenshotTest() {
 
     @Test
     fun deckPickerWith30Decks() =
-        runTest {
-            withDeckPicker(deckCount = 30, withCards = true) { deckPicker ->
-                deckPicker.simulateEdgeToEdge()
-                captureScreen("30_decks_tablet")
-            }
+        withDeckPicker(deckCount = 30, withCards = true) { deckPicker ->
+            deckPicker.simulateEdgeToEdge()
+            captureScreen("30_decks_tablet")
         }
 }

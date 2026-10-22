@@ -217,7 +217,7 @@
 
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/group_counts"
-                        app:constraint_referenced_ids="studyoptions_new_count,studyoptions_new_count_label,studyoptions_new_bury,studyoptions_learning_count,studyoptions_learning_count_label,studyoptions_learning_bury,studyoptions_review_count,studyoptions_review_count_label,studyoptions_review_bury,studyoptions_total_new_label,studyoptions_total_new_count,studyoptions_total_label,studyoptions_total_count"
+                        app:constraint_referenced_ids="studyoptions_new_count,studyoptions_new_count_label,studyoptions_learning_count,studyoptions_learning_count_label,studyoptions_review_count,studyoptions_review_count_label,studyoptions_total_new_label,studyoptions_total_new_count,studyoptions_total_label,studyoptions_total_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
