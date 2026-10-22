@@ -2,12 +2,14 @@
 
 package com.ichi2.anki.gradle
 
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.api.variant.Variant
 import com.ichi2.anki.gradle.HasUnitTestSources.Companion.hasAndroidUnitTestSources
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.component.ProjectComponentIdentifier
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.extra
@@ -15,31 +17,6 @@ import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.jacoco.tasks.JacocoReport
-
-fun builtInKotlincClassDir(variant: String): String {
-    // AGP9 built-in Kotlin compiler writes classes to
-    // build/intermediates/built_in_kotlinc/<variant>/compile<Variant>Kotlin/classes
-    return "intermediates/built_in_kotlinc/$variant/compile${variant.replaceFirstChar { it.uppercase() }}Kotlin/classes"
-}
-
-// Narrow coverage roots: a fileTree over the whole build/ dir makes Gradle treat every
-// sibling task output under build/ as an undeclared input (e.g. lintFullDebug + this report).
-val unitTestCoverageDirs = listOf("outputs/unit_test_code_coverage", "jacoco")
-val androidTestCoverageDirs = listOf("outputs/code_coverage")
-
-fun Project.coverageFileTree(
-    relativeDirs: List<String>,
-    includes: List<String>,
-) = files(
-    relativeDirs.map { relativeDir ->
-        fileTree(
-            mapOf(
-                "dir" to layout.buildDirectory.dir(relativeDir),
-                "includes" to includes,
-            ),
-        )
-    },
-)
 
 private class JacocoLibraryVariants(
     val variants: DomainObjectSet<Variant>,
@@ -67,103 +44,153 @@ fun Project.registerJacocoCoverageReports(
     openReportRequested: Boolean,
     linuxHtmlCmd: String?,
 ) {
-    val flavorClassDir = builtInKotlincClassDir("play${rootProject.androidTestVariantName}")
-    val moduleClassDir = builtInKotlincClassDir(rootProject.androidTestVariantName.lowercase())
-
-    fun includeUnitTestCoverage(
-        report: JacocoReport,
-        project: Project,
-        classDir: String,
-    ) {
-        report.sourceDirectories.from(project.files("src/main/java", "src/main/kotlin"))
-        report.classDirectories.from(
-            project.files(
-                project.fileTree(
-                    mapOf(
-                        "dir" to project.layout.buildDirectory.dir(classDir),
-                        "excludes" to fileFilter,
-                    ),
-                ),
-            ),
-        )
-        report.executionData.from(project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")))
-    }
-
-    fun configureModuleUnitTestCoverage(
-        report: JacocoReport,
-        module: Project,
-    ) {
-        when {
-            module.plugins.hasPlugin("com.android.library") -> {
-                includeUnitTestCoverage(report, module, moduleClassDir)
-                // Include classes exercised by app tests even when the library has no tests.
-                // Avoid empty test tasks: their resource linking may require app resources.
-                if (module.hasAndroidUnitTestSources()) {
-                    runUnitTestsWithoutCaching(report, module, "testDebugUnitTest")
-                }
-            }
-
-            module.plugins.hasPlugin("org.jetbrains.kotlin.jvm") -> {
-                includeUnitTestCoverage(report, module, "classes/kotlin/main")
-                runUnitTestsWithoutCaching(report, module, "test")
-            }
-        }
-    }
-
     // Our merge report task
-    tasks.register<JacocoReport>("jacocoTestReport") {
-        configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
-
-        val kotlinClasses =
-            project.fileTree(
-                mapOf(
-                    "dir" to project.layout.buildDirectory.dir(flavorClassDir),
-                    "excludes" to fileFilter,
-                ),
-            )
-        val mainSrc = "${project.projectDir}/src/main/java"
-
-        sourceDirectories.setFrom(project.files(mainSrc))
-        classDirectories.setFrom(project.files(kotlinClasses))
-        executionData.setFrom(
-            project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")),
-            project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")),
-        )
-        dependsOn("testPlayDebugUnitTest")
-        dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
-    }
+    val mergedReport =
+        tasks.register<JacocoReport>("jacocoTestReport") {
+            configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
+        }
 
     // A unit-test only report task
-    tasks.register<JacocoReport>("jacocoUnitTestReport") {
-        val report = this
-        configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
-
-        includeUnitTestCoverage(report, getProject(), flavorClassDir)
-        runUnitTestsWithoutCaching(report, getProject(), "testPlayDebugUnitTest")
-
-        for (module in project.runtimeProjectDependencies("playDebugRuntimeClasspath")) {
-            configureModuleUnitTestCoverage(report, module)
+    val unitTestReport =
+        tasks.register<JacocoReport>("jacocoUnitTestReport") {
+            configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
         }
-    }
 
     // A connected android tests only report task
-    tasks.register<JacocoReport>("jacocoAndroidTestReport") {
-        configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
+    val androidTestReport =
+        tasks.register<JacocoReport>("jacocoAndroidTestReport") {
+            configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
+        }
 
-        val kotlinClasses =
-            project.fileTree(
-                mapOf(
-                    "dir" to project.layout.buildDirectory.dir(flavorClassDir),
-                    "excludes" to fileFilter,
-                ),
-            )
-        val mainSrc = "${project.projectDir}/src/main/java"
+    configureAndroidAppCoverage(
+        unitTestReport,
+        androidTestReport,
+        mergedReport,
+        rootProject.androidTestVariantName,
+        fileFilter,
+    )
 
-        sourceDirectories.setFrom(project.files(mainSrc))
-        classDirectories.setFrom(project.files(kotlinClasses))
-        executionData.setFrom(project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")))
-        dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
+    // Libraries may already be configured. Subscribe to the captured variants,
+    // then select runtime dependencies when the report's graph is available.
+    for (module in rootProject.allprojects.filter { it != project }) {
+        val includeModule = { module in runtimeProjectDependencies("playDebugRuntimeClasspath") }
+        module.configureAndroidLibraryCoverage(unitTestReport, fileFilter, includeModule)
+        module.configureJvmCoverage(unitTestReport, fileFilter, includeModule)
     }
+}
+
+private val unitTestCoverageDirs = listOf("outputs/unit_test_code_coverage", "jacoco")
+private val androidTestCoverageDirs = listOf("outputs/code_coverage")
+
+/**
+ * Connects app reports to debug unit tests and the selected emulator-test variant.
+ * The merged report uses the emulator variant's classes and both tests' execution data.
+ */
+private fun Project.configureAndroidAppCoverage(
+    unitTestReport: TaskProvider<JacocoReport>,
+    androidTestReport: TaskProvider<JacocoReport>,
+    mergedReport: TaskProvider<JacocoReport>,
+    androidTestVariantName: String,
+    classExcludes: List<String>,
+) {
+    extensions.configure<ApplicationAndroidComponentsExtension> {
+        onVariants(selector().withName("playDebug")) {
+            includeTestExecutionData(unitTestReport, "testPlayDebugUnitTest", "**/*.exec")
+            includeTestExecutionData(mergedReport, "testPlayDebugUnitTest", "**/*.exec")
+        }
+
+        onVariants(selector().withName("play$androidTestVariantName")) { androidTestVariant ->
+            includeAndroidClasses(unitTestReport, androidTestVariant, classExcludes)
+            val connectedTest = "connectedPlay${androidTestVariantName}AndroidTest"
+            includeAndroidClasses(androidTestReport, androidTestVariant, classExcludes)
+            includeTestExecutionData(androidTestReport, connectedTest, "**/*.ec")
+            includeAndroidClasses(mergedReport, androidTestVariant, classExcludes)
+            includeTestExecutionData(mergedReport, connectedTest, "**/*.ec")
+        }
+    }
+}
+
+/** Adds an Android library's classes and unit-test coverage to a report. */
+private fun Project.configureAndroidLibraryCoverage(
+    report: TaskProvider<JacocoReport>,
+    classExcludes: List<String>,
+    includeModule: () -> Boolean,
+) {
+    val coverageVariants = extensions.getByType(JacocoLibraryVariants::class.java)
+    coverageVariants.variants.all {
+        includeAndroidClasses(report, this, classExcludes, includeModule)
+        // Classes from libraries without tests still count as uncovered.
+        // Their empty test tasks may require resources supplied by the app.
+        includeTestExecutionData(report, "testDebugUnitTest", "**/*.exec") {
+            includeModule() && hasAndroidUnitTestSources()
+        }
+    }
+}
+
+/** Adds a JVM module's main classes and unit-test coverage to a report. */
+private fun Project.configureJvmCoverage(
+    report: TaskProvider<JacocoReport>,
+    classExcludes: List<String>,
+    includeModule: () -> Boolean,
+) {
+    pluginManager.withPlugin("java") {
+        val sources = files("src/main/java", "src/main/kotlin")
+        val classes =
+            fileTree(layout.buildDirectory.dir("classes/kotlin/main"))
+                .matching { exclude(classExcludes) }
+        report.configure {
+            if (!includeModule()) return@configure
+            sourceDirectories.from(sources)
+            classDirectories.from(classes)
+        }
+        includeTestExecutionData(report, "test", "**/*.exec", includeModule)
+    }
+}
+
+private fun Project.includeAndroidClasses(
+    report: TaskProvider<JacocoReport>,
+    variant: Variant,
+    classExcludes: List<String>,
+    includeModule: () -> Boolean = { true },
+) {
+    val classes = fileTree(layout.buildDirectory.dir(builtInKotlincClassDir(variant.name)))
+    report.configure {
+        if (!includeModule()) return@configure
+        classDirectories.from(classes.matching { exclude(classExcludes) })
+        sourceDirectories.from(files("src/main/java", "src/main/kotlin"))
+    }
+}
+
+private fun Project.includeTestExecutionData(
+    report: TaskProvider<JacocoReport>,
+    taskName: String,
+    pattern: String,
+    includeModule: () -> Boolean = { true },
+) {
+    val coverageProject = this
+    // Narrow coverage roots avoid including unrelated outputs elsewhere under build/.
+    val coverageDirs = if (pattern == "**/*.exec") unitTestCoverageDirs else androidTestCoverageDirs
+    val testTaskPath = "$path:$taskName"
+    val coverageFiles =
+        files(
+            coverageDirs.map { relativeDir ->
+                fileTree(layout.buildDirectory.dir(relativeDir)).matching { include(pattern) }
+            },
+        )
+    report.configure {
+        if (!includeModule()) return@configure
+        executionData.from(coverageFiles)
+        dependsOn(testTaskPath)
+        if (pattern == "**/*.exec") {
+            runUnitTestsWithoutCaching(this, coverageProject, taskName)
+        }
+    }
+}
+
+private fun builtInKotlincClassDir(variant: String): String {
+    // AGP9 built-in Kotlin compiler writes classes to
+    // build/intermediates/built_in_kotlinc/<variant>/compile<Variant>Kotlin/classes
+    return "intermediates/built_in_kotlinc/$variant/compile${variant.replaceFirstChar { it.uppercase() }}Kotlin/classes"
 }
 
 // Follow the app's runtime graph, including transitive project dependencies.
@@ -189,4 +216,4 @@ fun runUnitTestsWithoutCaching(
     test.outputs.cacheIf { false }
 }
 
-val Project.androidTestVariantName: String get() = extra["androidTestVariantName"] as String
+private val Project.androidTestVariantName: String get() = extra["androidTestVariantName"] as String
