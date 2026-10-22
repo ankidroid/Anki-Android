@@ -39,8 +39,23 @@ private val twoLetterSystemLocaleMapping: Map<String, Locale> by lazy {
 @CheckResult
 fun Locale.toAnkiTwoLetterCode(): String =
     this.normalize().run {
-        return if (country.isBlank()) language else "${language}_$country"
+        val code = if (country.isBlank()) language else "${language}_$country"
+        return code.replaceObsoleteLanguageCode()
     }
+
+// TODO: give Anki language codes their own type instead of passing them around as Strings
+@CheckResult
+fun String.replaceObsoleteLanguageCode(): String {
+    val language = substringBefore('_')
+    val current =
+        when (language) {
+            "iw" -> "he"
+            "in" -> "id"
+            "ji" -> "yi"
+            else -> return this
+        }
+    return current + removePrefix(language)
+}
 
 /**
  * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)
