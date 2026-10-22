@@ -21,6 +21,10 @@ enum class AddingDefaultsMode {
 
 /**
  * @see AddingDefaultsMode
+ *
+ * The default for `ADDING_DEFAULTS_TO_CURRENT_DECK` is `true` upstream.
+ *
+ * @see <a href="https://github.com/ankitects/anki/blob/main/rslib/src/config/bool.rs">Upstream default</a>
  */
 var Config.addingDefaultsMode: AddingDefaultsMode
     get() =
