@@ -4,12 +4,15 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import android.os.Looper
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -35,6 +38,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.REQUEST_SELECT_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.RESULT_SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts
@@ -53,6 +57,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.withContext
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.equalTo
@@ -68,7 +74,9 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -99,6 +107,54 @@ class CustomStudyDialogTest : RobolectricTest() {
             }
 
             verify(exactly = 0) { decks.select(Consts.DEFAULT_DECK_ID) }
+        }
+
+    @Test
+    fun `populated deck selection waits for initialization`() =
+        runTest {
+            val target = addDeck("Target")
+            col.setDeck(listOf(addBasicNote().firstCard().id), target)
+            val previousDispatcher = ioDispatcher
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+            try {
+                AnkiFragmentScenario.launch(CustomStudyDialog::class.java, argumentsDisplayingMainScreen(target)).use { scenario ->
+                    assertEquals(Consts.DEFAULT_DECK_ID, col.decks.selected())
+
+                    runCurrent()
+
+                    assertEquals(target, col.decks.selected())
+                    scenario.onFragment { fragment ->
+                        assertFalse(assertNotNull(fragment.dialog?.findViewById<View>(R.id.progress_bar)).isVisible)
+                        onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                            .inRoot(isDialog())
+                            .check(matches(isEnabled()))
+                    }
+                }
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
+        }
+
+    @Test
+    fun `cancelling initialization does not select the deck`() =
+        runTest {
+            val target = addDeck("Target")
+            col.setDeck(listOf(addBasicNote().firstCard().id), target)
+            val undoStatus = col.undoStatus()
+            val previousDispatcher = ioDispatcher
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+            try {
+                AnkiFragmentScenario.launch(CustomStudyDialog::class.java, argumentsDisplayingMainScreen(target)).use { scenario ->
+                    scenario.moveToState(Lifecycle.State.DESTROYED)
+
+                    runCurrent()
+
+                    assertEquals(Consts.DEFAULT_DECK_ID, col.decks.selected())
+                    assertEquals(undoStatus, col.undoStatus())
+                }
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
         }
 
     @Test
@@ -541,6 +597,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     ) {
         AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args).use { scenario ->
             scenario.onFragment { dialogFragment: CustomStudyDialog ->
+                advanceRobolectricLooperUntil { dialogFragment.dialog?.findViewById<View>(R.id.progress_bar)?.isVisible != true }
                 block(dialogFragment)
             }
         }
