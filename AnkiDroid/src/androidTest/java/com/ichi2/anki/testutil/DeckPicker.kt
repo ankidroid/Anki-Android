@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.tests.checkWithTimeout
@@ -49,8 +50,9 @@ fun discardPreliminaryViews() {
 fun createDeckWithUniqueName(): String {
     val testString = System.currentTimeMillis().toString()
     val deckName = "TestDeck$testString"
-    onView(withId(R.id.fab_main)).perform(click())
-    onView(withId(R.id.add_deck_button)).perform(click())
+    useResumedActivity<DeckPicker> { deckPicker ->
+        deckPicker.showCreateDeckDialog()
+    }
     onView(withId(R.id.dialog_text_input)).perform(typeText(deckName))
     onView(withText(CommonString.dialog_ok)).perform(click())
     return deckName
