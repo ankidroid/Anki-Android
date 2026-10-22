@@ -10,6 +10,7 @@ plugins {
 
 configure<LibraryExtension> {
     namespace = "com.ichi2.anki.common.android"
+    buildFeatures.buildConfig = true
     testFixtures.enable = true
 }
 
