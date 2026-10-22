@@ -84,6 +84,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
+import com.ichi2.anki.utils.showSearchError
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
@@ -489,7 +490,7 @@ open class CardBrowser :
                     searchView?.post { searchView?.clearFocus() }
                 }
                 is SearchState.Error -> {
-                    showError(searchState.error, crashReportData = null)
+                    showSearchError(searchState.error)
                 }
             }
         }
