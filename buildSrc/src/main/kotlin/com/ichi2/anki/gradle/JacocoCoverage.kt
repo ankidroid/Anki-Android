@@ -2,9 +2,11 @@
 
 package com.ichi2.anki.gradle
 
+import com.android.build.api.artifact.ScopedArtifact
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.HostTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
+import com.android.build.api.variant.ScopedArtifacts
 import com.android.build.api.variant.Variant
 import com.ichi2.anki.gradle.HasUnitTestSources.Companion.hasAndroidUnitTestSources
 import org.gradle.api.DomainObjectSet
@@ -162,11 +164,17 @@ private fun Project.includeAndroidClasses(
     classExcludes: List<String>,
     includeModule: () -> Boolean = { true },
 ) {
-    val classes = fileTree(layout.buildDirectory.dir(builtInKotlincClassDir(variant.name)))
+    val classInputs = objects.newInstance(AndroidCoverageInputs::class.java)
+    val projectArtifacts = variant.artifacts.forScope(ScopedArtifacts.Scope.PROJECT)
+    projectArtifacts.use(report).toGet(
+        ScopedArtifact.CLASSES,
+        { classInputs.jars },
+        { classInputs.directories },
+    )
     report.configure {
         if (!includeModule()) return@configure
-        classDirectories.from(classes.matching { exclude(classExcludes) })
-        sourceDirectories.from(files("src/main/java", "src/main/kotlin"))
+        classDirectories.from(classInputs.classes.matching { exclude(classExcludes) })
+        sourceDirectories.from(variant.sources.java?.all, variant.sources.kotlin?.all)
     }
 }
 
@@ -194,12 +202,6 @@ private fun Project.includeTestExecutionData(
             runUnitTestsWithoutCaching(this, coverageProject, taskName)
         }
     }
-}
-
-private fun builtInKotlincClassDir(variant: String): String {
-    // AGP9 built-in Kotlin compiler writes classes to
-    // build/intermediates/built_in_kotlinc/<variant>/compile<Variant>Kotlin/classes
-    return "intermediates/built_in_kotlinc/$variant/compile${variant.replaceFirstChar { it.uppercase() }}Kotlin/classes"
 }
 
 // Follow the app's runtime graph, including transitive project dependencies.
