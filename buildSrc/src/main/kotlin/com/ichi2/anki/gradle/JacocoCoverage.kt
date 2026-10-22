@@ -64,7 +64,7 @@ fun Project.registerJacocoCoverageReports(
 
     // Our merge report task
     tasks.register<JacocoReport>("jacocoTestReport") {
-        configureMergedReportOutput(openReportRequested, linuxHtmlCmd)
+        configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
 
         val kotlinClasses =
             project.fileTree(
@@ -88,7 +88,7 @@ fun Project.registerJacocoCoverageReports(
     // A unit-test only report task
     tasks.register<JacocoReport>("jacocoUnitTestReport") {
         val report = this
-        configureUnitReportOutput(layout, openReportRequested, linuxHtmlCmd)
+        configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
 
         includeUnitTestCoverage(report, getProject(), flavorClassDir)
         dependsOn("testPlayDebugUnitTest")
@@ -106,7 +106,7 @@ fun Project.registerJacocoCoverageReports(
 
     // A connected android tests only report task
     tasks.register<JacocoReport>("jacocoAndroidTestReport") {
-        configureAndroidReportOutput(layout, openReportRequested, linuxHtmlCmd)
+        configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
 
         val kotlinClasses =
             project.fileTree(
