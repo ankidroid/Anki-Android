@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -17,8 +18,13 @@ import org.mockito.Mockito.spy
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
-import org.robolectric.Shadows
+import org.robolectric.Shadows.shadowOf
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 /** Tests for [SharedDecksActivity] */
 @RunWith(AndroidJUnit4::class)
@@ -29,10 +35,11 @@ class SharedDecksActivityTest : RobolectricTest() {
         val activity = controller.get()
         saveControllerForCleanup(controller)
 
-        val webView = activity.findViewById<WebView>(R.id.web_view)
+        val layout = activity.findViewById<SafeWebViewLayout>(R.id.web_view)
+        val webView = layout.getChildAt(0) as WebView
         val spyWebClient = spy(activity.webViewClient)
         doReturn(false).whenever(spyWebClient).isLoggedInToAnkiWeb
-        webView.webViewClient = spyWebClient
+        layout.setWebViewClient(spyWebClient)
 
         controller.start().resume().visible()
 
@@ -43,7 +50,7 @@ class SharedDecksActivityTest : RobolectricTest() {
         spyWebClient.onReceivedHttpError(webView, mockRequest, mockErrorResponse)
 
         val expectedUrl = getResourceString(R.string.shared_decks_login_url)
-        val actualUrl = Shadows.shadowOf(webView).lastLoadedUrl
+        val actualUrl = shadowOf(webView).lastLoadedUrl
         assertEquals(expectedUrl, actualUrl)
     }
 
@@ -53,10 +60,11 @@ class SharedDecksActivityTest : RobolectricTest() {
         val activity = controller.get()
         saveControllerForCleanup(controller)
 
-        val webView = activity.findViewById<WebView>(R.id.web_view)
+        val layout = activity.findViewById<SafeWebViewLayout>(R.id.web_view)
+        val webView = layout.getChildAt(0) as WebView
         val spyWebClient = spy(activity.webViewClient)
         doReturn(true).whenever(spyWebClient).isLoggedInToAnkiWeb
-        webView.webViewClient = spyWebClient
+        layout.setWebViewClient(spyWebClient)
 
         controller.start().resume().visible()
 
@@ -67,7 +75,44 @@ class SharedDecksActivityTest : RobolectricTest() {
         spyWebClient.onReceivedHttpError(webView, mockRequest, mockErrorResponse)
 
         val expectedUrl = getResourceString(R.string.shared_decks_url)
-        val lastUrl = Shadows.shadowOf(webView).lastLoadedUrl
+        val lastUrl = shadowOf(webView).lastLoadedUrl
         assertEquals(expectedUrl, lastUrl)
+    }
+
+    @Test
+    fun `onRenderProcessGone recovers webview and reloads content`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java).setup()
+        val activity = controller.get()
+        saveControllerForCleanup(controller)
+
+        val layout = activity.findViewById<SafeWebViewLayout>(R.id.web_view)
+        val initialWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+
+        layout.onRenderProcessGone(initialWebView)
+
+        assertTrue(shadowOf(initialWebView).wasDestroyCalled(), "Dead WebView should be destroyed")
+        assertNull(initialWebView.parent, "Dead WebView should be removed from parent")
+
+        val recoveredWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+        assertNotSame(initialWebView, recoveredWebView, "A new WebView instance should be created")
+        assertFalse(shadowOf(recoveredWebView).wasDestroyCalled(), "Recovered WebView should not be destroyed")
+        val expectedUrl = getResourceString(R.string.shared_decks_url)
+        assertEquals(expectedUrl, shadowOf(recoveredWebView).lastLoadedUrl)
+    }
+
+    @Test
+    fun `onDestroy cleans up recovered webview`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java).setup()
+        val activity = controller.get()
+
+        val layout = activity.findViewById<SafeWebViewLayout>(R.id.web_view)
+        val initialWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+
+        layout.onRenderProcessGone(initialWebView)
+        val recoveredWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+
+        controller.destroy()
+
+        assertTrue(shadowOf(recoveredWebView).wasDestroyCalled(), "Recovered WebView should be destroyed on activity destroy")
     }
 }

@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.webkit.CookieManager
-import android.webkit.WebView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.compose.ui.semantics.SemanticsActions
@@ -29,6 +28,8 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
+import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.testutils.webView
 import com.ichi2.utils.openInputStreamSafe
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -381,7 +382,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
         shadowOf(Looper.getMainLooper()).idle()
 
-        val webView = download.activity.findViewById<WebView>(R.id.web_view)
+        val webView = download.activity.findViewById<SafeWebViewLayout>(R.id.web_view).webView
         assertEquals(
             getResourceString(R.string.shared_decks_login_url),
             shadowOf(webView).lastLoadedUrl,
