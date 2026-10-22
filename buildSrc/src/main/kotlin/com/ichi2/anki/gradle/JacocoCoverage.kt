@@ -82,9 +82,6 @@ fun Project.registerJacocoCoverageReports(
     }
 }
 
-private val unitTestCoverageDirs = listOf("outputs/unit_test_code_coverage", "jacoco")
-private val androidTestCoverageDirs = listOf("outputs/code_coverage")
-
 /**
  * Connects app reports to debug unit tests and the selected emulator-test variant.
  * The merged report uses the emulator variant's classes and both tests' execution data.
@@ -185,15 +182,12 @@ private fun Project.includeTestExecutionData(
     includeModule: () -> Boolean = { true },
 ) {
     val coverageProject = this
-    // Narrow coverage roots avoid including unrelated outputs elsewhere under build/.
-    val coverageDirs = if (pattern == "**/*.exec") unitTestCoverageDirs else androidTestCoverageDirs
+    // Restrict the input to this producer's declared outputs. In particular, do
+    // not pick up stale coverage from other flavors or build types.
+    // AGP may register the producer later, so use a live task collection.
+    val testTasks = tasks.named { it == taskName }
     val testTaskPath = "$path:$taskName"
-    val coverageFiles =
-        files(
-            coverageDirs.map { relativeDir ->
-                fileTree(layout.buildDirectory.dir(relativeDir)).matching { include(pattern) }
-            },
-        )
+    val coverageFiles = files(testTasks).asFileTree.matching { include(pattern) }
     report.configure {
         if (!includeModule()) return@configure
         executionData.from(coverageFiles)
