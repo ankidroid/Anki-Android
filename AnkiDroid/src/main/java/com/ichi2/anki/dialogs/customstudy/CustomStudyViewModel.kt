@@ -6,9 +6,14 @@ import android.widget.AdapterView
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyCardState
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 
 /**
  * @see CustomStudyDialog
@@ -37,6 +42,18 @@ class CustomStudyViewModel(
     val deckId: DeckId
         get() = savedStateHandle.get<DeckId>(ARG_DECK_ID) ?: error("Deck id was not provided!")
 
+    /** Load defaults before selecting the requested deck. */
+    suspend fun initialize(): CustomStudyInitialization {
+        val context = currentCoroutineContext()
+        return withCol {
+            val defaults = sched.customStudyDefaults(deckId).toDomainModel()
+            // The dialog may have closed while the backend was loading defaults.
+            context.ensureActive()
+            decks.select(deckId)
+            CustomStudyInitialization.Ready(deckId, defaults)
+        }
+    }
+
     /*
      * Translates the user's selection into a specific study type.
      * This prevents the app from "forgetting" user's choice (e.g., Due Cards)
@@ -58,4 +75,13 @@ class CustomStudyViewModel(
         private const val KEY_CARDS_SELECTION_INDEX = "key_cards_selection_index"
         private const val KEY_USER_INPUT_TEXT = "key_user_input_text"
     }
+}
+
+sealed interface CustomStudyInitialization {
+    data object Loading : CustomStudyInitialization
+
+    data class Ready(
+        val deckId: DeckId,
+        val defaults: CustomStudyDefaults,
+    ) : CustomStudyInitialization
 }

@@ -142,7 +142,7 @@ class CongratsPageTest : RobolectricTest() {
 
             // recreate() retains ViewModels and process-local defaults. Restore a fresh activity
             // from saved state and clear the defaults to model process death with the picker open.
-            uninitializeField<CustomStudyDialog>("deferredDefaults")
+            uninitializeField<CustomStudyDialog>("deferredInitialization")
             Robolectric.buildActivity(EmptyAnkiActivity::class.java).use { controller ->
                 controller.setup(savedState)
                 shadowOf(Looper.getMainLooper()).idle()

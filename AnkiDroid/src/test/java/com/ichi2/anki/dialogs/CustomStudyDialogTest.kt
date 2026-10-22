@@ -50,6 +50,10 @@ import com.ichi2.testutils.uninitializeField
 import com.ichi2.utils.positiveButton
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
@@ -64,6 +68,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -72,8 +77,29 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        uninitializeField<CustomStudyDialog>("deferredDefaults")
+        uninitializeField<CustomStudyDialog>("deferredInitialization")
     }
+
+    @Test
+    fun `cancelling a defaults read prevents late deck selection`() =
+        runTest {
+            val response = customStudyDefaultsResponse { availableNew = 1 }
+            val collection = mockCollectionWithSchedulerReturning(response)
+            val decks = collection.decks
+            val initialization = Job()
+            every { collection.sched.customStudyDefaults(Consts.DEFAULT_DECK_ID) } answers {
+                initialization.cancel()
+                response
+            }
+            CollectionManager.setColForTests(collection)
+            val viewModel = CustomStudyViewModel(SavedStateHandle(mapOf(CustomStudyViewModel.ARG_DECK_ID to Consts.DEFAULT_DECK_ID)))
+
+            assertFailsWith<CancellationException> {
+                withContext(initialization) { viewModel.initialize() }
+            }
+
+            verify(exactly = 0) { decks.select(Consts.DEFAULT_DECK_ID) }
+        }
 
     @Test
     fun `new custom study decks have expected structure - issue 6289`() =
