@@ -904,7 +904,7 @@ class DeckPickerTest : RobolectricTest() {
             scenario.onActivity { deckPicker ->
                 val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
                 assertFalse(searchItem.isActionViewExpanded)
-                assertEquals(11, deckPicker.visibleDeckCount)
+                advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 11 }
             }
         }
     }
