@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -139,6 +140,8 @@ private fun ToolbarLayoutChoice(
     modifier: Modifier = Modifier,
 ) {
     val isSelected = layout == selected
+    var isFocused by remember { mutableStateOf(false) }
+    val showFocusBorder = isFocused && !showSelectionBackground
     val selectionBackground =
         if (isSelected && showSelectionBackground) MaterialTheme.colorScheme.primary.copy(alpha = 0.08f) else Color.Transparent
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
@@ -153,7 +156,12 @@ private fun ToolbarLayoutChoice(
             .onGloballyPositioned { isPositioned = true }
             .clip(MaterialTheme.shapes.small)
             .background(selectionBackground)
-            .border(2.dp, if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent, MaterialTheme.shapes.small)
+            // A thicker border distinguishes keyboard focus from selection without grey shading.
+            .border(
+                width = if (showFocusBorder) 4.dp else 2.dp,
+                color = if (isSelected || showFocusBorder) MaterialTheme.colorScheme.primary else Color.Transparent,
+                shape = MaterialTheme.shapes.small,
+            ).onFocusChanged { isFocused = it.isFocused }
             .selectable(
                 selected = isSelected,
                 interactionSource = null,

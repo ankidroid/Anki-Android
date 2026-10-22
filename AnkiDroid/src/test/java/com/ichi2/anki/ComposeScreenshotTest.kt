@@ -10,8 +10,8 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.github.takahirom.roborazzi.provideRoborazziContext
-import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
+import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.Theme
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
@@ -26,9 +26,11 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
 /**
- * Captures Compose content with every AnkiDroid XML theme, without starting an app screen.
+ * Captures Compose content with an AnkiDroid XML theme, without starting an app screen.
  *
  * Subclasses call [capture] with their content. For a dialog, pass `node = isDialog()`.
+ * Parameterize a test method with [ThemeProvider] to cover every theme.
+ * Use [capture]'s `beforeCapture` callback to interact with the content before capturing it.
  * Screenshots participate in the root `recordScreenshots`, `compareScreenshots` and
  * `verifyScreenshots` tasks with `-Pscreenshot`.
  */
@@ -40,14 +42,13 @@ abstract class ComposeScreenshotTest {
     @get:Rule
     val composeRule = createComposeRule()
 
-    @TestParameter(valuesProvider = ThemeProvider::class)
-    lateinit var theme: Theme
-
     @OptIn(ExperimentalRoborazziApi::class)
     protected fun capture(
         name: String,
         node: SemanticsMatcher = isRoot(),
         fontScale: Float = 1f,
+        theme: Theme = DayTheme.LIGHT,
+        beforeCapture: () -> Unit = {},
         content: @Composable () -> Unit,
     ) {
         if (theme is NightTheme) RuntimeEnvironment.setQualifiers("+night")
@@ -55,6 +56,8 @@ abstract class ComposeScreenshotTest {
         composeRule.setContent {
             AnkiDroidPreview(theme = theme, content = content)
         }
+        composeRule.waitForIdle()
+        beforeCapture()
         composeRule.waitForIdle()
         val classDir = "build/outputs/roborazzi/${javaClass.simpleName}"
         val options = provideRoborazziContext().options
