@@ -307,10 +307,10 @@ fun Fragment.launchCatchingViewTask(
  * @param crashReportData Crash report data which may be reported when the dialog is dismissed.
  */
 fun Context.showError(
-    message: String,
+    message: CharSequence,
     crashReportData: CrashReportData?,
 ) {
-    crashReportData.throwIfDialogUnusable(message)
+    crashReportData.throwIfDialogUnusable(message.toString())
 
     Timber.i("Error dialog displayed")
 
