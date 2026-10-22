@@ -7,6 +7,7 @@ import android.print.PrintDocumentAdapter
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.webkit.CookieManager
+import android.webkit.DownloadListener
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -136,6 +137,16 @@ open class SafeWebViewLayout :
 
     @MainThread
     fun canGoBack(): Boolean = activeWebView?.canGoBack() ?: false
+
+    @MainThread
+    fun clearHistory() {
+        activeWebView?.clearHistory()
+    }
+
+    @MainThread
+    fun setDownloadListener(listener: DownloadListener?) {
+        activeWebView?.setDownloadListener(listener)
+    }
 
     @MainThread
     fun pageUp(): Boolean = activeWebView?.pageUp(false) ?: false
