@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import com.ichi2.anki.gradle.ReportOpener
-import groovy.util.Node
-import groovy.xml.XmlParser
-import org.gradle.api.GradleException
+import com.ichi2.anki.gradle.assertNonzeroAndroidTestCoverage
+import com.ichi2.anki.gradle.registerJacocoCoverageReports
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
-import org.gradle.testing.jacoco.tasks.JacocoReport
-import java.io.FileNotFoundException
 import java.util.Properties
 
 apply(plugin = "jacoco")
@@ -80,110 +76,18 @@ val fileFilter =
         "**/*\$Result\$*.*",
     )
 
-fun builtInKotlincClassDir(variant: String): String {
-    // AGP9 built-in Kotlin compiler writes classes to
-    // build/intermediates/built_in_kotlinc/<variant>/compile<Variant>Kotlin/classes
-    return "intermediates/built_in_kotlinc/$variant/compile${variant.replaceFirstChar { it.uppercase() }}Kotlin/classes"
-}
-
-val flavorClassDir = builtInKotlincClassDir("play${rootProject.androidTestVariantName}")
-val moduleClassDir = builtInKotlincClassDir(rootProject.androidTestVariantName.lowercase())
-
-// Narrow coverage roots: a fileTree over the whole build/ dir makes Gradle treat every
-// sibling task output under build/ as an undeclared input (e.g. lintFullDebug + this report).
-val unitTestCoverageDirs = listOf("outputs/unit_test_code_coverage", "jacoco")
-val androidTestCoverageDirs = listOf("outputs/code_coverage")
-
-fun Project.coverageFileTree(
-    relativeDirs: List<String>,
-    includes: List<String>,
-) = files(
-    relativeDirs.map { relativeDir ->
-        fileTree(
-            mapOf(
-                "dir" to layout.buildDirectory.dir(relativeDir),
-                "includes" to includes,
-            ),
-        )
-    },
-)
-
-// Our merge report task
-tasks.register<JacocoReport>("jacocoTestReport") {
-    val htmlOutDir =
-        project.layout.buildDirectory
-            .dir("reports/jacoco/$name/html")
-            .get()
-            .asFile
-    val openReport = openReportRequested
-    val htmlCmd = linuxHtmlCmd
-
-    doLast {
-        ReportOpener.open(htmlOutDir, openReport, htmlCmd)
-    }
-
-    reports {
-        xml.required = true
-        html.outputLocation = htmlOutDir
-    }
-
-    val kotlinClasses =
-        project.fileTree(
-            mapOf(
-                "dir" to project.layout.buildDirectory.dir(flavorClassDir),
-                "excludes" to fileFilter,
-            ),
-        )
-    val mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.setFrom(project.files(mainSrc))
-    classDirectories.setFrom(project.files(kotlinClasses))
-    executionData.setFrom(
-        project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")),
-        project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")),
-    )
-    dependsOn("testPlayDebugUnitTest")
-    dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
-}
-
 // Android library modules (do not yet support flavors play/full)
 val androidModulesToUnitTest = listOf(":api", ":common:android", ":libanki", ":compat")
 // JVM modules: use 'test' task and 'classes/kotlin/main' class dir
 val jvmModulesToUnitTest = listOf(":common")
 
-// A unit-test only report task
-tasks.register<JacocoReport>("jacocoUnitTestReport") {
-    val report = this
-    val htmlOutDir =
-        layout.buildDirectory
-            .dir("reports/jacoco/$name/html")
-            .get()
-            .asFile
-    val openReport = openReportRequested
-    val htmlCmd = linuxHtmlCmd
-
-    doLast {
-        ReportOpener.open(htmlOutDir, openReport, htmlCmd)
-    }
-
-    reports {
-        xml.required = true
-        html.outputLocation = htmlOutDir
-    }
-
-    includeUnitTestCoverage(report, getProject(), flavorClassDir)
-    dependsOn("testPlayDebugUnitTest")
-
-    for (module in androidModulesToUnitTest) {
-        includeUnitTestCoverage(report, project(module), moduleClassDir)
-        dependsOn("$module:testDebugUnitTest")
-    }
-
-    for (module in jvmModulesToUnitTest) {
-        includeUnitTestCoverage(report, project(module), "classes/kotlin/main")
-        dependsOn("$module:test")
-    }
-}
+registerJacocoCoverageReports(
+    fileFilter,
+    androidModulesToUnitTest,
+    jvmModulesToUnitTest,
+    openReportRequested,
+    linuxHtmlCmd,
+)
 
 gradle.projectsEvaluated {
     // ensure test results aren't cached
@@ -207,59 +111,6 @@ gradle.projectsEvaluated {
     }
 }
 
-fun includeUnitTestCoverage(
-    report: JacocoReport,
-    project: Project,
-    classDir: String,
-) {
-    report.sourceDirectories.from(project.files("src/main/java"))
-    report.classDirectories.from(
-        project.files(
-            project.fileTree(
-                mapOf(
-                    "dir" to project.layout.buildDirectory.dir(classDir),
-                    "excludes" to fileFilter,
-                ),
-            ),
-        ),
-    )
-    report.executionData.from(project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")))
-}
-
-// A connected android tests only report task
-tasks.register<JacocoReport>("jacocoAndroidTestReport") {
-    val htmlOutDir =
-        layout.buildDirectory
-            .dir("reports/jacoco/$name/html")
-            .get()
-            .asFile
-    val openReport = openReportRequested
-    val htmlCmd = linuxHtmlCmd
-
-    doLast {
-        ReportOpener.open(htmlOutDir, openReport, htmlCmd)
-    }
-
-    reports {
-        xml.required = true
-        html.outputLocation = htmlOutDir
-    }
-
-    val kotlinClasses =
-        project.fileTree(
-            mapOf(
-                "dir" to project.layout.buildDirectory.dir(flavorClassDir),
-                "excludes" to fileFilter,
-            ),
-        )
-    val mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.setFrom(project.files(mainSrc))
-    classDirectories.setFrom(project.files(kotlinClasses))
-    executionData.setFrom(project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")))
-    dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
-}
-
 // Issue 16640 - some emulators run, but register zero coverage
 tasks.register("assertNonzeroAndroidTestCoverage") {
     // Resolve the file at configuration time, which is Gradle Configuration Cache compatible
@@ -267,37 +118,7 @@ tasks.register("assertNonzeroAndroidTestCoverage") {
     doLast {
         val jacocoReport = jacocoReportFile.get().asFile
 
-        if (!jacocoReport.exists()) {
-            throw FileNotFoundException("jacocoAndroidTestReport.xml was not found after running jacocoAndroidTestReport")
-        }
-
-        val xmlParser = XmlParser()
-        xmlParser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
-        xmlParser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
-
-        val reportRoot: Node = xmlParser.parse(jacocoReport)
-        var hasCovered = false
-
-        // https://github.com/jacoco/jacoco/blob/5aabb2eb60bbcd05df968005f1746ba19dcd5361/org.jacoco.report/src/org/jacoco/report/internal/xml/ReportElement.java#L190
-        for (rawChild in reportRoot.children()) {
-            val child = rawChild as Node
-            if (child.name() != "counter") continue
-
-            if (child.attribute("covered") == "0") {
-                logger.warn(
-                    "jacoco registered zero code coverage for counter type ${child.attribute("type")}",
-                    null as Throwable?,
-                )
-            } else {
-                hasCovered = true
-            }
-        }
-
-        if (!hasCovered) {
-            throw GradleException(
-                "androidTest registered zero code coverage in jacocoAndroidTestReport.xml. Probably some incompatibilities in the toolchain.",
-            )
-        }
+        assertNonzeroAndroidTestCoverage(jacocoReport, logger)
     }
 }
 
@@ -306,5 +127,3 @@ afterEvaluate {
         finalizedBy("assertNonzeroAndroidTestCoverage")
     }
 }
-
-val Project.androidTestVariantName: String get() = extra["androidTestVariantName"] as String
