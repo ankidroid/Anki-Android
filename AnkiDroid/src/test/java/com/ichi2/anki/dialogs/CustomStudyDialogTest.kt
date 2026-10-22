@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -20,6 +21,7 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -29,6 +31,7 @@ import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.customStudyDefaultsResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -48,6 +51,8 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.AnkiFragmentScenario
+import com.ichi2.testutils.EmptyAnkiActivity
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.launchFragment
 import com.ichi2.testutils.uninitializeField
@@ -74,11 +79,13 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
@@ -107,6 +114,33 @@ class CustomStudyDialogTest : RobolectricTest() {
             }
 
             verify(exactly = 0) { decks.select(Consts.DEFAULT_DECK_ID) }
+        }
+
+    @Test
+    fun `empty deck initialization does not block the dialog`() =
+        runTest {
+            val other = addDeck("Other")
+            col.setDeck(listOf(addBasicNote().firstCard().id), other)
+            val undoStatus = col.undoStatus()
+            val previousDispatcher = ioDispatcher
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+            try {
+                createHostActivity().use { controller ->
+                    val activity = controller.get()
+                    val fragment = CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID)
+                    activity.showDialogFragment(fragment)
+                    val dialog = fragment.requireDialog()
+                    assertTrue(assertNotNull(dialog.findViewById<View>(R.id.progress_bar)).isVisible)
+
+                    runCurrent()
+
+                    assertUnavailableMenu(fragment)
+                    assertEquals(Consts.DEFAULT_DECK_ID, col.decks.selected())
+                    assertEquals(undoStatus, col.undoStatus())
+                }
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
         }
 
     @Test
@@ -156,6 +190,131 @@ class CustomStudyDialogTest : RobolectricTest() {
                 ioDispatcher = previousDispatcher
             }
         }
+
+    @Test
+    fun `empty initialization waits for resume before showing feedback`() =
+        runTest {
+            val previousDispatcher = ioDispatcher
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+            try {
+                createHostActivity().use { controller ->
+                    val activity = controller.get()
+                    val fragment = CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID)
+                    activity.showDialogFragment(fragment)
+                    controller.pause().saveInstanceState(Bundle()).stop()
+
+                    runCurrent()
+
+                    assertTrue(fragment.isAdded)
+                    assertTrue(activity.supportFragmentManager.isStateSaved)
+                    assertNull(activity.snackbarText)
+
+                    controller.start().resume().visible()
+                    runCurrent()
+
+                    assertUnavailableMenu(fragment)
+                }
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
+        }
+
+    @Test
+    fun `cancelled loading dialog does not show empty-deck feedback`() =
+        runTest {
+            val previousDispatcher = ioDispatcher
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+            try {
+                createHostActivity().use { controller ->
+                    val activity = controller.get()
+                    val fragment = CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID)
+                    activity.showDialogFragment(fragment)
+                    fragment.requireDialog().cancel()
+
+                    runCurrent()
+                    shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+                    activity.supportFragmentManager.executePendingTransactions()
+
+                    assertFalse(fragment.isAdded)
+                    assertNull(activity.snackbarText)
+                }
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
+        }
+
+    @Test
+    fun `hidden empty Default explains why custom study is unavailable and preserves redo`() {
+        val other = addDeck("Other")
+        col.setDeck(listOf(addBasicNote().firstCard().id), other)
+        addBasicNote()
+        col.undo()
+        assertNull(col.sched.deckDueTree().find(Consts.DEFAULT_DECK_ID))
+        val undoStatus = col.undoStatus()
+        assertNotNull(undoStatus.redo)
+
+        withCustomStudyFragment(argumentsDisplayingMainScreen()) { fragment ->
+            assertUnavailableMenu(fragment)
+        }
+
+        assertEquals(Consts.DEFAULT_DECK_ID, col.decks.selected())
+        assertEquals(undoStatus, col.undoStatus())
+        col.redo()
+        withCustomStudyFragment(argumentsDisplayingMainScreen()) {
+            onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                .inRoot(isDialog())
+                .check(matches(isEnabled()))
+        }
+    }
+
+    @Test
+    fun `hidden Default with borrowed cards avoids loading defaults and preserves selection`() {
+        addBasicNote()
+        val filtered = addDynamicDeck("Filtered", "")
+        assertNull(col.sched.deckDueTree().find(Consts.DEFAULT_DECK_ID))
+        assertEquals(1, col.decks.cardCount(Consts.DEFAULT_DECK_ID, includeSubdecks = true))
+        val undoStatus = col.undoStatus()
+
+        withCustomStudyFragment(argumentsDisplayingMainScreen()) { fragment ->
+            assertUnavailableMenu(fragment)
+        }
+
+        assertEquals(filtered, col.decks.selected())
+        assertEquals(undoStatus, col.undoStatus())
+
+        col.sched.emptyFilteredDeck(filtered)
+        withCustomStudyFragment(argumentsDisplayingMainScreen()) {
+            onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                .inRoot(isDialog())
+                .check(matches(isEnabled()))
+        }
+    }
+
+    @Test
+    fun `empty deck explains why custom study is unavailable without selecting it`() {
+        addBasicNote()
+        val emptyDeck = addDeck("Empty")
+        val undoStatus = col.undoStatus()
+
+        withCustomStudyFragment(argumentsDisplayingMainScreen(emptyDeck)) { fragment ->
+            assertUnavailableMenu(fragment)
+        }
+
+        assertEquals(Consts.DEFAULT_DECK_ID, col.decks.selected())
+        assertEquals(undoStatus, col.undoStatus())
+    }
+
+    @Test
+    fun `custom study remains available when only a child deck has cards`() {
+        val child = addDeck("Default::Child")
+        col.setDeck(listOf(addBasicNote().firstCard().id), child)
+
+        withCustomStudyFragment(argumentsDisplayingMainScreen()) {
+            onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                .inRoot(isDialog())
+                .check(matches(isEnabled()))
+        }
+    }
 
     @Test
     fun `new custom study decks have expected structure - issue 6289`() =
@@ -391,11 +550,12 @@ class CustomStudyDialogTest : RobolectricTest() {
 
     @Test
     fun `subscreens are ignored when restoring from process death`() {
+        addBasicNote()
         withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV, restoreFromProcessDeath = true)) {
             // ensure we're on the main screen
             onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
                 .inRoot(isDialog())
-                .check(matches(isEnabled()))
+                .check(matches(isDisplayed()))
         }
     }
 
@@ -446,6 +606,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun `'review ahead' shows a day or days suffix`() {
+        addBasicNote()
         withStudyAheadDialog {
             val layout = binding.detailsEditText2Layout
             assertThat("default of 1 day", layout.suffixText.toString(), equalTo("day"))
@@ -460,6 +621,7 @@ class CustomStudyDialogTest : RobolectricTest() {
 
     @Test
     fun `'review ahead' rejects leading zeros and more than 5 digits`() {
+        addBasicNote()
         withStudyAheadDialog {
             val editText = binding.detailsEditText2
 
@@ -508,14 +670,19 @@ class CustomStudyDialogTest : RobolectricTest() {
     fun `'review ahead' search does not treat the deck name as a pattern`() =
         runTest {
             // '_' is a single-character wildcard in a search: "A_B" must not match "AXB"
-            val emptyDeckId = addDeck("A_B")
+            val deckId = addDeck("A_B")
+            addBasicNote().update { moveToDeck("A_B", false) }.firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today + 30
+            }
             addDeck("AXB")
             addNoteDueTomorrow(deckName = "AXB")
 
-            withStudyAheadDialog(deckId = emptyDeckId) { dialog ->
+            withStudyAheadDialog(deckId = deckId) { dialog ->
                 onSubscreenEditText().perform(replaceText("1"))
                 shadowOf(Looper.getMainLooper()).idle()
-                assertThat("A_B has no cards", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat("A_B has no cards due tomorrow", dialog.positiveButton.isEnabled, equalTo(false))
             }
         }
 
@@ -537,6 +704,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun `'review ahead' warns when 0 days is entered`() =
         runTest {
+            addBasicNote()
             withStudyAheadDialog {
                 val layout = binding.detailsEditText2Layout
 
@@ -595,11 +763,17 @@ class CustomStudyDialogTest : RobolectricTest() {
         args: Bundle,
         block: (CustomStudyDialog) -> Unit,
     ) {
-        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args).use { scenario ->
-            scenario.onFragment { dialogFragment: CustomStudyDialog ->
-                advanceRobolectricLooperUntil { dialogFragment.dialog?.findViewById<View>(R.id.progress_bar)?.isVisible != true }
-                block(dialogFragment)
+        createHostActivity().use { controller ->
+            val fragment = CustomStudyDialog().apply { arguments = args }
+            controller.get().showDialogFragment(fragment)
+            val start = System.nanoTime()
+            while (fragment.dialog?.findViewById<View>(R.id.progress_bar)?.isVisible == true) {
+                check(System.nanoTime() - start < TimeUnit.SECONDS.toNanos(10)) { "Custom Study did not finish loading" }
+                Thread.sleep(10)
+                shadowOf(Looper.getMainLooper()).idleFor(16, TimeUnit.MILLISECONDS)
             }
+            shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+            block(fragment)
         }
     }
 
@@ -617,6 +791,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         typed: String,
         block: CustomStudyDialog.() -> Unit,
     ) {
+        addBasicNote()
         val customStudy = CustomStudyDialog().apply { arguments = argumentsDisplayingSubscreen(option) }
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
             controller.get().setTheme(R.style.Base_Theme_Light)
@@ -634,13 +809,17 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
     }
 
-    private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
-        mockk<Collection>(relaxed = true) {
+    private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse): Collection {
+        val tree = col.sched.deckTree(includeCounts = false)
+        return mockk<Collection>(relaxed = true) {
+            every { decks.cardCount(Consts.DEFAULT_DECK_ID, includeSubdecks = true) } returns 1
             every { sched } returns
                 mockk<Scheduler> {
+                    every { deckTree(includeCounts = false) } returns tree
                     every { customStudyDefaults(Consts.DEFAULT_DECK_ID) } returns response
                 }
         }
+    }
 
     private fun argumentsDisplayingSubscreen(
         subscreen: ContextMenuOption,
@@ -676,6 +855,19 @@ class CustomStudyDialogTest : RobolectricTest() {
     private fun onSubscreenEditText() =
         onView(withId(R.id.details_edit_text_2))
             .inRoot(isDialog())
+
+    private fun createHostActivity() =
+        Robolectric.buildActivity(EmptyAnkiActivity::class.java).setup().apply {
+            val activity = get()
+            activity.setContentView(CoordinatorLayout(activity).apply { id = R.id.root_layout })
+        }
+
+    private fun assertUnavailableMenu(fragment: CustomStudyDialog) {
+        shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+        assertFalse(fragment.dialog?.isShowing == true)
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(matches(allOf(isDisplayed(), withText(CommonString.empty_deck))))
+    }
 
     private fun CustomStudyDialog.submitSubscreenData() =
         assertNotNull(dialog as? AlertDialog?, "dialog").also { dialog ->

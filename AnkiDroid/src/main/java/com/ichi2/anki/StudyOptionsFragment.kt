@@ -326,7 +326,7 @@ class StudyOptionsFragment :
             menu.findItem(R.id.action_custom_study)?.isVisible = true
             menu.findItem(R.id.action_deck_or_study_options)?.title = TR.sentenceCase.deckOptions
         }
-        if (state is StudyOptionsState.Congrats) {
+        if (state is StudyOptionsState.Congrats || state is StudyOptionsState.Empty) {
             menu.findItem(R.id.action_custom_study)?.isVisible = false
         }
         menu.findItem(R.id.action_schedule_reminders)?.isVisible = Prefs.newReviewRemindersEnabled

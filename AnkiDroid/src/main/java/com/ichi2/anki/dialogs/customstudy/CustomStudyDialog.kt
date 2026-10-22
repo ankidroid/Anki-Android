@@ -26,6 +26,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.copy
@@ -74,6 +75,7 @@ import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -248,6 +250,15 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             menuBinding.menuItems.isVisible = state is CustomStudyInitialization.Ready
             when (state) {
                 CustomStudyInitialization.Loading -> Unit
+                CustomStudyInitialization.Empty ->
+                    lifecycleScope.launch {
+                        lifecycle.withResumed {
+                            val host = activity ?: return@withResumed
+                            if (!dialog.isShowing || host.isFinishing || parentFragmentManager.isStateSaved) return@withResumed
+                            dismiss()
+                            host.showSnackbar(CommonString.empty_deck)
+                        }
+                    }
                 is CustomStudyInitialization.Ready -> buildMenuItems(state.defaults)
             }
         }
