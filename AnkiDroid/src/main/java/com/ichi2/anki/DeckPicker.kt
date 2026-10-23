@@ -955,6 +955,12 @@ open class DeckPicker :
             fragment?.refreshInterface()
         }
 
+        fun onCreatedDeckSelected(param: Unit) {
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
+
         fun onStartupResponse(response: StartupResponse) {
             Timber.d("onStartupResponse: %s", response)
             when (response) {
@@ -1035,6 +1041,7 @@ open class DeckPicker :
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
+        viewModel.flowOfCreatedDeckSelected.launchCollectionInLifecycleScope(::onCreatedDeckSelected)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
         viewModel.flowOfShowContextMenu.launchCollectionInLifecycleScope(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.launchCollectionInLifecycleScope(::showDeckPickerRightClickContextMenu)
@@ -2422,13 +2429,7 @@ open class DeckPicker :
      * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
      * is often the hidden Default deck.
      */
-    private fun onDeckCreated(deckId: DeckId) =
-        launchCatchingTask {
-            viewModel.selectDeck(deckId).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
-        }
+    private fun onDeckCreated(deckId: DeckId) = viewModel.selectCreatedDeck(deckId)
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
