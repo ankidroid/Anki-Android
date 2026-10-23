@@ -54,8 +54,6 @@
         <attr name="helpLink" format="string"/>
     </declare-styleable>
 
-    <attr name="incrementerButtonBackground" format="color|reference" />
-
     <declare-styleable name="SliderPreference">
         <!-- Format string to be used as template to display the value
              There must be ONLY ONE placeholder, which will be replaced by the preference value -->
@@ -99,15 +97,6 @@
     <!-- Navigation drawer -->
     <attr name="navDrawerItemColor" format="reference"/>
     <attr name="navDrawerItemBackgroundColor" format="reference"/>
-    <!-- Note editor colors -->
-    <attr name="duplicateColor" format="color"/>
-    <attr name="editTextBackgroundColor" format="color"/>
-    <attr name="editTextHighlightColor" format="color"/><!-- TODO replace this with colorOnPrimaryContainer, see #19361 -->
-    <attr name="toolbarBackgroundColor" format="color"/>
-    <attr name="toolbarIconColor" format="color"/>
-    <attr name="buttonShadowColor" format="color"/>
-    <attr name="buttonRippleColor" format="color"/>
-    <attr name="buttonForegroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
 
@@ -121,13 +110,9 @@
     <attr name="popupBackgroundColor" format="reference"/>
     <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
-    <attr name="editTextDisabled" format="color"/>
-
     <attr name="snackbarBackgroundTintColor" format="color"/>
     <attr name="dialogBackground" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
-
-    <attr name="clozeColor" format="color" />
 
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />

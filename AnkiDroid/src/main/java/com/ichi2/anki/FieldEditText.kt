@@ -31,6 +31,7 @@ import timber.log.Timber
 import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
+import com.ichi2.anki.common.android.R as CommonR
 
 class FieldEditText :
     FixedEditText,
@@ -79,7 +80,7 @@ class FieldEditText :
         val highlightColor =
             MaterialColors.getColor(
                 context,
-                R.attr.editTextHighlightColor,
+                CommonR.attr.editTextHighlightColor,
                 "#99CCFF".toColorInt(), // light blue color for fallback just-in-case
             )
         setHighlightColor(highlightColor)
@@ -112,7 +113,7 @@ class FieldEditText :
      * Modify the style of this view to represent a duplicate field.
      */
     fun setDupeStyle() {
-        setBackgroundColor(MaterialColors.getColor(context, R.attr.duplicateColor, 0))
+        setBackgroundColor(MaterialColors.getColor(context, CommonR.attr.duplicateColor, 0))
     }
 
     /**
