@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.preferences
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -12,9 +13,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -45,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
@@ -80,6 +84,9 @@ fun TimeboxSettingsScreen(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val verticalSpacing = if (isLandscape) 8.dp else 16.dp
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -101,15 +108,17 @@ fun TimeboxSettingsScreen(
                 Modifier
                     .fillMaxSize()
                     .padding(contentPadding)
+                    .consumeWindowInsets(contentPadding)
+                    .imePadding()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = if (isLandscape) 4.dp else 8.dp),
         ) {
             TimeboxMainSwitch(
                 isEnabled = isEnabled,
                 onToggleEnabled = onToggleEnabled,
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(verticalSpacing))
 
             AnimatedVisibility(
                 visible = isEnabled,
@@ -119,11 +128,9 @@ fun TimeboxSettingsScreen(
                 Column {
                     TimeboxDurationCard(
                         minutes = minutes,
-                        onIncrement = onIncrement,
-                        onDecrement = onDecrement,
                         onSetMinutes = onSetMinutes,
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(verticalSpacing))
                 }
             }
 
@@ -141,6 +148,7 @@ private fun TimeboxMainSwitch(
     onToggleEnabled: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     val containerColor =
         if (isEnabled) {
             MaterialTheme.colorScheme.primaryContainer
@@ -167,7 +175,7 @@ private fun TimeboxMainSwitch(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 20.dp),
+                    .padding(horizontal = 24.dp, vertical = if (isLandscape) 12.dp else 20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -192,11 +200,10 @@ private fun TimeboxMainSwitch(
 @Composable
 private fun TimeboxDurationCard(
     minutes: Int,
-    onIncrement: () -> Unit,
-    onDecrement: () -> Unit,
     onSetMinutes: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     var textValue by rememberSaveable { mutableStateOf(minutes.toString()) }
     val focusManager = LocalFocusManager.current
 
@@ -226,7 +233,7 @@ private fun TimeboxDurationCard(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                    .padding(horizontal = 20.dp, vertical = if (isLandscape) 10.dp else 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
@@ -240,8 +247,14 @@ private fun TimeboxDurationCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 FilledTonalIconButton(
-                    onClick = onDecrement,
-                    enabled = minutes > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
+                    onClick = {
+                        val currentVal = textValue.toIntOrNull() ?: minutes
+                        val prevVal = (currentVal - 1).coerceIn(validRange)
+                        textValue = prevVal.toString()
+                        onSetMinutes(prevVal)
+                        focusManager.clearFocus()
+                    },
+                    enabled = (textValue.toIntOrNull() ?: minutes) > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_remove),
@@ -252,7 +265,13 @@ private fun TimeboxDurationCard(
                 OutlinedTextField(
                     value = textValue,
                     onValueChange = { input ->
-                        val filtered = input.filter { it.isDigit() }.take(3)
+                        val digits = input.filter { it.isDigit() }
+                        val filtered =
+                            if (digits.length > 1 && digits.startsWith("0")) {
+                                digits.trimStart('0')
+                            } else {
+                                digits.take(3)
+                            }
                         textValue = filtered
                         val p = filtered.toIntOrNull()
                         if (p != null && p in validRange) {
@@ -282,7 +301,7 @@ private fun TimeboxDurationCard(
                     shape = RoundedCornerShape(12.dp),
                     textStyle =
                         LocalTextStyle.current.copy(
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.Start,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
                         ),
@@ -308,8 +327,14 @@ private fun TimeboxDurationCard(
                 )
 
                 FilledTonalIconButton(
-                    onClick = onIncrement,
-                    enabled = minutes < TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES,
+                    onClick = {
+                        val currentVal = textValue.toIntOrNull() ?: minutes
+                        val nextVal = (currentVal + 1).coerceIn(validRange)
+                        textValue = nextVal.toString()
+                        onSetMinutes(nextVal)
+                        focusManager.clearFocus()
+                    },
+                    enabled = (textValue.toIntOrNull() ?: minutes) < TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES,
                 ) {
                     Icon(
                         painter = painterResource(CommonR.drawable.ic_add),
