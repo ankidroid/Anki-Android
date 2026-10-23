@@ -20,7 +20,6 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
@@ -31,6 +30,7 @@ import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
 import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.utils.showAndAwaitDismissal
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
@@ -43,8 +43,6 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.utils.toRGBHex
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * MediaCheckFragment for displaying a list of media files that are either unused or missing.
@@ -77,14 +75,12 @@ class MediaCheckFragment :
         observeProgress(viewModel) { progress -> getString(progress.messageRes) }
         viewModel.checkMedia()
 
-        lifecycleScope.launch {
-            viewModel.mediaCheckResult.collectLatest { result ->
-                updateWebView(result?.report.orEmpty())
-                if (result != null) {
-                    binding.tagMissingMediaButton.isVisible = result.missingCount != 0
-                    binding.deleteUsedMediaButton.isVisible = result.unusedCount != 0
-                    if (result.haveTrash) setupMenu()
-                }
+        viewModel.mediaCheckResult.launchCollectionInViewLifecycleScope { result ->
+            updateWebView(result?.report.orEmpty())
+            if (result != null) {
+                binding.tagMissingMediaButton.isVisible = result.missingCount != 0
+                binding.deleteUsedMediaButton.isVisible = result.unusedCount != 0
+                if (result.haveTrash) setupMenu()
             }
         }
 

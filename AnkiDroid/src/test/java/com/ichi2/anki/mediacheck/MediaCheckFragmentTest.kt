@@ -4,7 +4,9 @@ package com.ichi2.anki.mediacheck
 
 import android.webkit.WebView
 import android.widget.Button
+import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
 import anki.backend.backendError
@@ -29,6 +31,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import java.io.File
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -107,6 +110,36 @@ class MediaCheckFragmentTest : RobolectricTest() {
             assertTrue(shadowOf(initialWebView).wasDestroyCalled(), "Dead WebView should be destroyed")
             assertNull(initialWebView.parent, "Dead WebView should be removed from parent")
             assertEquals(0, layout.childCount, "No new WebView should be created when fragment view is gone")
+        }
+
+    @Test
+    fun `media check result after view destruction is displayed after reattachment`() =
+        runTest {
+            val mediaCheck = startMediaCheck()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+            val manager = mediaCheck.get().supportFragmentManager
+            val fragment = manager.findFragmentById(R.id.fragment_container) as MediaCheckFragment
+            val viewModel = ViewModelProvider(fragment)[MediaCheckViewModel::class.java]
+            val oldView = fragment.requireView()
+
+            manager.commitNow { detach(fragment) }
+            addUnusedMedia()
+            viewModel.checkMedia().join()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+            assertNull(fragment.view)
+
+            manager.commitNow { attach(fragment) }
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+
+            val newView = fragment.requireView()
+            assertNotSame(oldView, newView)
+            assertTrue(newView.findViewById<Button>(R.id.delete_used_media_button).isVisible)
+            val layout = newView.findViewById<SafeWebViewLayout>(R.id.web_view)
+            val webView = assertNotNull(layout.getChildAt(0) as? WebView)
+            assertContains(shadowOf(webView).lastLoadDataWithBaseURL.data, "unused.png")
         }
 
     @Test
