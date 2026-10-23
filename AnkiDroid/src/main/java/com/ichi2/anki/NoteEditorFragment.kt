@@ -540,6 +540,7 @@ class NoteEditorFragment :
         if (savedInstanceState != null) {
             caller = fromValue(savedInstanceState.getInt(STATE_CALLER))
             addNote = savedInstanceState.getBoolean("addNote")
+            isFieldEdited = savedInstanceState.getBoolean("isFieldEdited")
             deckId = savedInstanceState.getLong("did")
             selectedNoteTypeId =
                 if (savedInstanceState.containsKey("noteTypeId")) savedInstanceState.getLong("noteTypeId") else null
@@ -587,6 +588,9 @@ class NoteEditorFragment :
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
         try {
             setupEditor(getColUnsafe, savedInstanceState)
+            if (addNote) {
+                savedInstanceState?.getStringArrayList("addNoteFieldBaseline")?.let { addNoteFieldBaseline = it }
+            }
         } catch (ex: RuntimeException) {
             Timber.w(ex, "setupEditor")
             requireAnkiActivity().onCollectionLoadError()
@@ -616,11 +620,16 @@ class NoteEditorFragment :
         Timber.i("Saving instance")
         savedInstanceState.putInt(STATE_CALLER, caller.value)
         savedInstanceState.putBoolean("addNote", addNote)
+        if (addNote) {
+            savedInstanceState.putBoolean("isFieldEdited", isFieldEdited)
+            savedInstanceState.putStringArrayList("addNoteFieldBaseline", ArrayList(addNoteFieldBaseline))
+        }
         savedInstanceState.putLong("did", deckId)
         selectedNoteTypeId?.let { savedInstanceState.putLong("noteTypeId", it) }
         savedInstanceState.putBoolean(STATE_NOTE_CHANGED, changed)
         savedInstanceState.putBoolean(STATE_RELOAD_REQUIRED, reloadRequired)
         savedInstanceState.putIntegerArrayList("customViewIds", customViewIds)
+        fieldState.saveInstanceState(savedInstanceState)
         multimediaController.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("toggleSticky", toggleStickyText)
         if (selectedTags == null) {

@@ -484,6 +484,32 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun copyNotePreservesHiddenFieldsAcrossRecreation() =
+        withRealSpinnerSelection {
+            ensureCollectionLoadIsSynchronous()
+            val name = addStandardNoteType("Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+            val original = addNoteUsingNoteTypeName(name, "front", "back", "extra")
+            val editor =
+                openNoteEditorWithArgs(
+                    NoteEditorDestination.EditSelection(listOf(original.firstCard().id), DEFAULT).toBundle(),
+                )
+            val args = getCopyNoteIntent(editor)
+            ActivityScenario.launch<NoteEditorActivity>(NoteEditorDestination.PassArguments(args).toIntent()).use { scenario ->
+                scenario.onNoteEditor { copied ->
+                    copied.setCurrentlySelectedNoteType(col.notetypes.basic.id)
+                    advanceRobolectricLooper()
+                }
+                scenario.recreate()
+                scenario.onNoteEditor { recreated ->
+                    advanceRobolectricLooper()
+                    recreated.setCurrentlySelectedNoteType(original.noteTypeId)
+                    advanceRobolectricLooper()
+                    assertEquals(listOf("front", "back", "extra"), recreated.currentFieldStrings.toList())
+                }
+            }
+        }
+
+    @Test
     fun hiddenFieldsDoNotCarryOverAfterSaving() =
         withRealSpinnerSelection {
             runTest {
@@ -549,6 +575,49 @@ class NoteEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(listOf("", ""), editor.currentFieldStrings.toList())
             assertTrue(editor.hasUnsavedChanges(), "Hidden draft text must still trigger the discard confirmation")
+        }
+
+    @Test
+    fun hiddenDraftRequiresConfirmationAfterRecreation() = assertHiddenFieldStateAfterRecreation(sticky = false)
+
+    @Test
+    fun unchangedHiddenStickyFieldDoesNotRequireConfirmationAfterRecreation() = assertHiddenFieldStateAfterRecreation(sticky = true)
+
+    private fun assertHiddenFieldStateAfterRecreation(sticky: Boolean) =
+        withRealSpinnerSelection {
+            runTest {
+                ensureCollectionLoadIsSynchronous()
+                val name = addStandardNoteType("Draft Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+                val type = col.notetypes.byName(name)!!
+                if (sticky) type.markFieldAsSticky(2)
+                ActivityScenario.launch<NoteEditorActivity>(NoteEditorDestination.AddNote().toIntent()).use { scenario ->
+                    lateinit var editor: NoteEditorFragment
+                    scenario.onNoteEditor { editor = it }
+                    editor.setCurrentlySelectedNoteType(type.id)
+                    advanceRobolectricLooper()
+                    editor.setField(2, "third field")
+                    if (sticky) {
+                        editor.setField(0, "saved note")
+                        editor.saveNote()
+                        advanceRobolectricLooper()
+                        assertEquals(listOf("", "", "third field"), editor.currentFieldStrings.toList())
+                        editor.setFieldValueFromUi(0, "reverted edit")
+                        editor.setFieldValueFromUi(0, "")
+                    }
+                    editor.setCurrentlySelectedNoteType(col.notetypes.basic.id)
+                    advanceRobolectricLooper()
+                    assertEquals(!sticky, editor.hasUnsavedChanges())
+                    scenario.recreate()
+                    scenario.onNoteEditor { restored ->
+                        advanceRobolectricLooper()
+                        assertEquals(!sticky, restored.hasUnsavedChanges(), "Hidden edits and their baseline survive recreation")
+                        restored.setCurrentlySelectedNoteType(type.id)
+                        advanceRobolectricLooper()
+                        assertEquals(listOf("", "", "third field"), restored.currentFieldStrings.toList())
+                        assertEquals(!sticky, restored.hasUnsavedChanges())
+                    }
+                }
+            }
         }
 
     @Test
