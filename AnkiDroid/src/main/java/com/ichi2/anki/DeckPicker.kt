@@ -219,6 +219,7 @@ import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
+import com.ichi2.utils.isRtl
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -750,9 +751,10 @@ open class DeckPicker :
                 val nav = insets.getInsets(navigationBars())
                 window.isNavigationBarContrastEnforced = nav.left > 0 || nav.right > 0
             }
+            val isRtl = deckPickerInclude.isRtl()
             deckPickerInclude.updatePadding(
-                left = bars.left,
-                right = if (fragmented) 0 else bars.right,
+                left = if (isRtl && fragmented) 0 else bars.left,
+                right = if (!isRtl && fragmented) 0 else bars.right,
             )
             deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = withKeyboard.bottom)
 
@@ -788,10 +790,16 @@ open class DeckPicker :
             val studyoptionsView = binding.studyoptionsFragment ?: return
             ViewCompat.setOnApplyWindowInsetsListener(studyoptionsView) { _, insets ->
                 val bars = insets.getInsets(systemBars() or displayCutout())
-                // the toolbar clears the top and the deck list clears the left: the panel's
-                // fragments apply the remaining insets themselves, so their scrolled content
+                // the toolbar clears the top and the deck list clears the side touching the divider:
+                // the panel's fragments apply the remaining insets themselves, so their scrolled content
                 // renders underneath the navigation bar
-                insets.inset(bars.left, bars.top, 0, 0)
+                val isRtl = studyoptionsView.isRtl()
+                insets.inset(
+                    if (isRtl) 0 else bars.left,
+                    bars.top,
+                    if (isRtl) bars.right else 0,
+                    0,
+                )
             }
         }
     }
