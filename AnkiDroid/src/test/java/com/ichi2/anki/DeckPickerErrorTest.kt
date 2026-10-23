@@ -14,6 +14,7 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
 import anki.decks.SetDeckCollapsedRequest
+import app.cash.turbine.test
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
@@ -29,6 +30,8 @@ import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.rules.BackendOverrideRule
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import net.ankiweb.rsdroid.exceptions.BackendIoException
@@ -292,6 +295,16 @@ class DeckPickerErrorTest : RobolectricTest() {
     }
 
     @Test
+    fun `failed selection does not open the right click context menu`() =
+        assertFailedSelectionSkips({ flowOfShowRightClickContextMenu }) { deckId ->
+            requestRightClickContextMenu(deckId, x = 10f, y = 20f)
+        }
+
+    @Test
+    fun `failed selection of a created deck does not update the screen`() =
+        assertFailedSelectionSkips({ flowOfCreatedDeckSelected }) { deckId -> selectCreatedDeck(deckId) }
+
+    @Test
     fun `failed deck list update shows an error`() {
         var failDeckTree = false
         backendOverride.replaceWith {
@@ -356,6 +369,26 @@ class DeckPickerErrorTest : RobolectricTest() {
 
             assertErrorShown()
         }
+    }
+
+    private fun <T> assertFailedSelectionSkips(
+        followUp: DeckPickerViewModel.() -> Flow<T>,
+        request: DeckPickerViewModel.(DeckId) -> Job,
+    ) = runTest {
+        backendOverride.replaceWith {
+            object : Backend() {
+                override fun setCurrentDeck(did: Long): OpChanges = throw failure
+            }
+        }
+        val deckId = addDeck("Target")
+        val viewModel = DeckPickerViewModel()
+
+        viewModel.followUp().test {
+            viewModel.request(deckId).join()
+
+            expectNoEvents()
+        }
+        assertEquals(1, viewModel.pendingErrors.value.size)
     }
 
     private fun DeckPicker.selectContextMenuOption(
