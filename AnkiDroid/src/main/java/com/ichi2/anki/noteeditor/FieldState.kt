@@ -94,6 +94,14 @@ class FieldState private constructor(
 
     fun setInstanceState(savedInstanceState: Bundle?) {
         customViewIds = savedInstanceState?.getIntegerArrayList("customViewIds")
+        hiddenFieldValues = savedInstanceState?.getStringArrayList("hiddenFieldValues").orEmpty()
+    }
+
+    fun saveInstanceState(outState: Bundle) {
+        // Visible values are already saved by the field views; only save the hidden tail here.
+        if (hiddenFieldValues.isNotEmpty()) {
+            outState.putStringArrayList("hiddenFieldValues", ArrayList(hiddenFieldValues))
+        }
     }
 
     fun clearHiddenFields() {
