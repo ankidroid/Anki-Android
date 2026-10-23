@@ -17,14 +17,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -49,6 +52,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ichi2.anki.CommonPlurals
@@ -57,6 +61,7 @@ import com.ichi2.anki.R
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.compose.ui.preview.ThemePreviews
 import androidx.appcompat.R as AppCompatR
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Screen allowing users to enable/disable and configure the review timebox time limit.
@@ -69,6 +74,8 @@ fun TimeboxSettingsScreen(
     isEnabled: Boolean,
     minutes: Int,
     onToggleEnabled: (Boolean) -> Unit,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
     onSetMinutes: (Int) -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
@@ -110,8 +117,10 @@ fun TimeboxSettingsScreen(
                 exit = fadeOut() + shrinkVertically(),
             ) {
                 Column {
-                    TimeboxDurationField(
+                    TimeboxDurationCard(
                         minutes = minutes,
+                        onIncrement = onIncrement,
+                        onDecrement = onDecrement,
                         onSetMinutes = onSetMinutes,
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -178,11 +187,13 @@ private fun TimeboxMainSwitch(
 }
 
 /**
- * Inline text field allowing users to configure the timebox duration with unit suffix.
+ * Stepper card allowing users to increment/decrement or directly edit the timebox duration inline.
  */
 @Composable
-private fun TimeboxDurationField(
+private fun TimeboxDurationCard(
     minutes: Int,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
     onSetMinutes: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -195,67 +206,119 @@ private fun TimeboxDurationField(
         }
     }
 
+    val validRange = TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES
     val count = textValue.toIntOrNull() ?: minutes
-    val safeCount =
-        if (count in TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES) {
-            count
-        } else {
-            minutes
-        }
+    val safeCount = if (count in validRange) count else minutes
     val unitSuffix =
         pluralStringResource(CommonPlurals.pref_summ_minutes, safeCount, safeCount)
             .replace(safeCount.toString(), "")
             .trim()
 
     val parsed = textValue.toIntOrNull()
-    val isValid = parsed != null && parsed in TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES
+    val isValid = parsed != null && parsed in validRange
 
-    OutlinedTextField(
-        value = textValue,
-        onValueChange = { input ->
-            val filtered = input.filter { it.isDigit() }.take(3)
-            textValue = filtered
-            val p = filtered.toIntOrNull()
-            if (p != null && p in TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES) {
-                onSetMinutes(p)
-            }
-        },
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused) {
-                        val p = textValue.toIntOrNull()
-                        if (p != null && p in TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+    ) {
+        Column(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                text = stringResource(CommonString.time_limit_label),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                FilledTonalIconButton(
+                    onClick = onDecrement,
+                    enabled = minutes > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_remove),
+                        contentDescription = stringResource(CommonString.minus_sign),
+                    )
+                }
+
+                OutlinedTextField(
+                    value = textValue,
+                    onValueChange = { input ->
+                        val filtered = input.filter { it.isDigit() }.take(3)
+                        textValue = filtered
+                        val p = filtered.toIntOrNull()
+                        if (p != null && p in validRange) {
                             onSetMinutes(p)
-                        } else {
-                            textValue = minutes.toString()
                         }
-                    }
-                },
-        label = { Text(stringResource(CommonString.time_limit_label)) },
-        suffix = { Text(unitSuffix) },
-        singleLine = true,
-        isError = textValue.isNotEmpty() && !isValid,
-        keyboardOptions =
-            KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done,
-            ),
-        keyboardActions =
-            KeyboardActions(
-                onDone = {
-                    val p = textValue.toIntOrNull()
-                    if (p != null && p in TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES) {
-                        onSetMinutes(p)
-                    } else {
-                        textValue = minutes.toString()
-                    }
-                    focusManager.clearFocus()
-                },
-            ),
-        shape = RoundedCornerShape(12.dp),
-    )
+                    },
+                    modifier =
+                        Modifier
+                            .width(136.dp)
+                            .onFocusChanged { focusState ->
+                                if (!focusState.isFocused) {
+                                    val p = textValue.toIntOrNull()
+                                    if (p != null && p in validRange) {
+                                        onSetMinutes(p)
+                                    } else {
+                                        textValue = minutes.toString()
+                                    }
+                                }
+                            },
+                    suffix = {
+                        Text(
+                            text = unitSuffix,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle =
+                        LocalTextStyle.current.copy(
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                        ),
+                    singleLine = true,
+                    isError = textValue.isNotEmpty() && !isValid,
+                    keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        ),
+                    keyboardActions =
+                        KeyboardActions(
+                            onDone = {
+                                val p = textValue.toIntOrNull()
+                                if (p != null && p in validRange) {
+                                    onSetMinutes(p)
+                                } else {
+                                    textValue = minutes.toString()
+                                }
+                                focusManager.clearFocus()
+                            },
+                        ),
+                )
+
+                FilledTonalIconButton(
+                    onClick = onIncrement,
+                    enabled = minutes < TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES,
+                ) {
+                    Icon(
+                        painter = painterResource(CommonR.drawable.ic_add),
+                        contentDescription = stringResource(CommonString.plus_sign),
+                    )
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -296,6 +359,8 @@ private fun TimeboxSettingsScreenEnabledPreview() {
             isEnabled = true,
             minutes = 20,
             onToggleEnabled = {},
+            onIncrement = {},
+            onDecrement = {},
             onSetMinutes = {},
             onNavigateUp = {},
         )
@@ -310,6 +375,8 @@ private fun TimeboxSettingsScreenDisabledPreview() {
             isEnabled = false,
             minutes = 20,
             onToggleEnabled = {},
+            onIncrement = {},
+            onDecrement = {},
             onSetMinutes = {},
             onNavigateUp = {},
         )
