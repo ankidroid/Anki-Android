@@ -361,6 +361,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         binding.detailsText1.isVisible =
             contextMenuOption != STUDY_AHEAD &&
             contextMenuOption != STUDY_PREVIEW &&
+            contextMenuOption != STUDY_FORGOT &&
             !isExtendLimits
         binding.detailsText2.text = text2
         binding.detailsAvailableCards.text = text1
@@ -408,7 +409,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 gravity = Gravity.CENTER
             }
-            if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+            if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW || contextMenuOption == STUDY_FORGOT) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
                 filters += arrayOf(InputFilter.LengthFilter(5), NonLeadingZeroInputFilter)
                 setSuffixText(userInputValue ?: defaultValue.toInt())
@@ -417,7 +418,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
-            } else if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+            } else if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW || contextMenuOption == STUDY_FORGOT) {
                 getString(CommonString.dialog_positive_create)
             } else if (isExtendLimits) {
                 getString(CommonString.custom_study_increase)
@@ -433,7 +434,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             AlertDialog
                 .Builder(requireActivity())
                 .apply {
-                    if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+                    if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW || contextMenuOption == STUDY_FORGOT) {
                         title(text = contextMenuOption.getTitle(resources))
                     } else if (isExtendLimits) {
                         title(text = getString(CommonString.custom_study_extend_limits_title))
@@ -528,7 +529,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val value = userInputValue
         val range = contextMenuOption.validRange
 
-        if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+        if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW || contextMenuOption == STUDY_FORGOT) {
             value?.let { setSuffixText(it) }
             searchJob?.cancel()
             searchJob = launchCatchingTask { updateCreateButtonState(dialog, value) }
@@ -576,7 +577,26 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             findCards(buildSearchString(search)).isNotEmpty()
         }
 
-    /** Enables 'Create' only if some cards would be reviewed ahead/previewed by [days] */
+    /** Whether the deck contains forgotten cards from the last [days] days, as 'review forgotten' would select them */
+    private suspend fun hasForgottenCards(days: Int): Boolean =
+        withCol {
+            val search =
+                listOf(
+                    searchNode { deck = decks.name(viewModel.deckId) },
+                    searchNode {
+                        rated =
+                            SearchNode.Rated
+                                .newBuilder()
+                                .setRating(SearchNode.Rating.RATING_AGAIN)
+                                .setDays(days)
+                                .build()
+                    },
+                )
+            findCards(buildSearchString(search)).isNotEmpty()
+        }
+
+    /** Enables 'Create' only if some cards would be reviewed ahead/previewed
+     * or if forgotten cards need to be recalled by [days] */
     private suspend fun updateCreateButtonState(
         dialog: AlertDialog,
         days: Int?,
@@ -597,6 +617,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val hasCards =
             when (selectedSubDialog) {
                 STUDY_PREVIEW -> hasPreviewCards(days)
+                STUDY_FORGOT -> hasForgottenCards(days)
                 else -> hasCardsDueWithin(days)
             }
         binding.detailsEditText2Layout.error = if (hasCards) null else TR.customStudyNoCardsMatchedTheCriteriaYou()
