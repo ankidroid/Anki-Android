@@ -13,13 +13,18 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.multimedia.MultimediaArgsStorage
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import com.ichi2.anki.multiprofile.isPhoenixProcess
+import com.ichi2.anki.recorder.VoiceRecorder
 import io.mockk.every
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import leakcanary.AppWatcher
 import org.junit.After
@@ -28,10 +33,12 @@ import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import java.io.File
+import java.io.IOException
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.time.Duration.Companion.days
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidAppTest {
@@ -162,6 +169,25 @@ class AnkiDroidAppTest {
         assertNull(profileRegistry.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
         assertEquals(frameworkBase.filesDir, app.filesDir)
     }
+
+    @Test
+    fun `multimedia cleanup failure does not prevent voice recording cleanup`() =
+        runBlocking {
+            profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_cleanup_failure") }
+            val app = startApplication()
+            val recording =
+                File(VoiceRecorder.recordingsDirectory(app).apply { mkdirs() }, "ankidroid_audiorec-expired.3gp").apply {
+                    writeText("expired recording")
+                }
+            assertTrue(recording.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+            mockkObject(MultimediaArgsStorage.Companion)
+            every { MultimediaArgsStorage.create(any()) } throws IOException("unavailable multimedia storage")
+
+            app.launchCacheCleanup().join()
+
+            verify(exactly = 1) { MultimediaArgsStorage.create(app) }
+            assertFalse(recording.exists())
+        }
 
     private fun startApplication(): AnkiDroidApp =
         AttachableApp().apply {

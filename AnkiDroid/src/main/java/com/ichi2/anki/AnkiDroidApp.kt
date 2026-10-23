@@ -281,15 +281,26 @@ open class AnkiDroidApp :
     }
 
     /** Schedules cache maintenance and logs its duration without delaying startup. */
-    private fun launchCacheCleanup() =
+    @VisibleForTesting
+    internal fun launchCacheCleanup() =
         applicationScope.launch(Dispatchers.IO) {
-            runCatching {
-                measureTime("cacheCleanup") {
+            measureTime("cacheCleanup") {
+                runCacheCleanup("multimediaArgsCleanup") {
                     MultimediaArgsStorage.create(this@AnkiDroidApp).removeExpiredFiles()
+                }
+                runCacheCleanup("voiceRecordingsCleanup") {
                     VoiceRecorder.removeExpiredRecordings(VoiceRecorder.recordingsDirectory(this@AnkiDroidApp))
                 }
-            }.onFailure { Timber.w(it, "Unable to clean up expired cache files") }
+            }
         }
+
+    private inline fun runCacheCleanup(
+        name: String,
+        block: () -> Unit,
+    ) {
+        runCatching { measureTime(name, block) }
+            .onFailure { Timber.w(it, "Unable to run %s", name) }
+    }
 
     /**
      * @param debugTraceSqlCalls Log all SQL statements executed by the backend.
