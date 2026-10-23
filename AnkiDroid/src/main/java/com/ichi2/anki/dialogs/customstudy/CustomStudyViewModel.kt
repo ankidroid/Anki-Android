@@ -27,6 +27,12 @@ class CustomStudyViewModel(
             savedStateHandle[KEY_CARDS_SELECTION_INDEX] = value
         }
 
+    var userInputText: String?
+        get() = savedStateHandle[KEY_USER_INPUT_TEXT]
+        set(value) {
+            savedStateHandle[KEY_USER_INPUT_TEXT] = value
+        }
+
     /** Required [DeckId] of the [Deck] for which the custom study session is being built. */
     val deckId: DeckId
         get() = savedStateHandle.get<DeckId>(ARG_DECK_ID) ?: error("Deck id was not provided!")
@@ -50,5 +56,6 @@ class CustomStudyViewModel(
          */
         const val ARG_DECK_ID = "key_did"
         private const val KEY_CARDS_SELECTION_INDEX = "key_cards_selection_index"
+        private const val KEY_USER_INPUT_TEXT = "key_user_input_text"
     }
 }

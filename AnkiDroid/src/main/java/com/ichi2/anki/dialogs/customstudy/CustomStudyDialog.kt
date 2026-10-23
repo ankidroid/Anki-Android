@@ -322,7 +322,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             setAdapterAndSelection(cardStates, viewModel.selectedCardStateIndex)
         }
         binding.detailsEditText2.apply {
-            setText(defaultValue)
+            setText(viewModel.userInputText ?: defaultValue)
             // Give EditText focus and show keyboard
             setSelectAllOnFocus(true)
             requestFocus()
@@ -333,7 +333,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
                 filters += arrayOf(InputFilter.LengthFilter(5), NonLeadingZeroInputFilter)
-                setSuffixText(defaultValue.toInt())
+                setSuffixText(userInputValue ?: defaultValue.toInt())
             }
         }
         val positiveBtnLabel =
@@ -432,6 +432,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
+            viewModel.userInputText = it?.toString()
             val value = userInputValue
             if (contextMenuOption != STUDY_AHEAD && contextMenuOption != STUDY_PREVIEW) {
                 dialog.positiveButton.isEnabled = value != null && value != 0
