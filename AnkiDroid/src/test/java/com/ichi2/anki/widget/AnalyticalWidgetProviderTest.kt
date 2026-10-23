@@ -3,9 +3,10 @@
 
 import android.appwidget.AppWidgetManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.targetContext
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetIds
 import io.mockk.every
@@ -18,17 +19,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class AnalyticalWidgetProviderTest : RobolectricTest() {
+class AnalyticalWidgetProviderTest : AndroidTest {
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         mockkObject(Analytics)
         every { Analytics.send(any()) } answers { }
     }
 
     @After
-    override fun tearDown() {
-        super.tearDown()
+    fun tearDown() {
         unmockkObject(Analytics)
     }
 
