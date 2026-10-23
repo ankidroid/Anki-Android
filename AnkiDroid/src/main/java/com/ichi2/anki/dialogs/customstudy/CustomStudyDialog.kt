@@ -384,6 +384,7 @@ class CustomStudyDialog :
         binding.detailsText1.isVisible =
             contextMenuOption != STUDY_AHEAD &&
             contextMenuOption != STUDY_PREVIEW &&
+            contextMenuOption != STUDY_FORGOT &&
             !isExtendLimits
         binding.detailsText2.text = text2
         binding.detailsAvailableCards.text = text1
@@ -440,7 +441,7 @@ class CustomStudyDialog :
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
-            } else if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+            } else if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW || contextMenuOption == STUDY_FORGOT) {
                 getString(CommonString.dialog_positive_create)
             } else if (isExtendLimits) {
                 getString(CommonString.custom_study_increase)
@@ -456,7 +457,7 @@ class CustomStudyDialog :
             AlertDialog
                 .Builder(requireActivity())
                 .apply {
-                    if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+                    if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW || contextMenuOption == STUDY_FORGOT) {
                         title(text = contextMenuOption.getTitle(resources))
                     } else if (isExtendLimits) {
                         title(text = getString(CommonString.custom_study_extend_limits_title))
@@ -760,7 +761,7 @@ class CustomStudyDialog :
             return when (selectedSubDialog) {
                 EXTEND_NEW -> TR.customStudyIncreaseTodaysNewCardLimitBy()
                 EXTEND_REV -> TR.customStudyIncreaseTodaysReviewLimitBy()
-                STUDY_FORGOT -> res.getString(CommonString.custom_study_forgotten)
+                STUDY_FORGOT -> TR.customStudyReviewCardsForgottenInLast()
                 STUDY_AHEAD -> res.getString(CommonString.custom_study_ahead_description)
                 STUDY_PREVIEW -> res.getString(CommonString.custom_study_preview)
                 STUDY_TAGS -> res.getString(CommonString.custom_study_tags)
@@ -843,6 +844,7 @@ class CustomStudyDialog :
         STUDY_FORGOT(
             { TR.customStudyReviewForgottenCards() },
             validRange = 1..FORGOT_MAX_DAYS,
+            showsDaySuffix = true,
             requiresMatchingCards = true,
         ),
 
