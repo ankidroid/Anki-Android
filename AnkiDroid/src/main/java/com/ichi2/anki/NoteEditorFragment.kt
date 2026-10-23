@@ -98,6 +98,7 @@ import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.ifZero
+import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
@@ -2205,7 +2206,10 @@ class NoteEditorFragment :
     private fun setNote(
         note: Note?,
         changeType: FieldChangeType,
+        noteTypeId: NoteTypeId? = null,
     ) {
+        // An explicit type takes precedence over the deck's remembered type.
+        noteTypeId?.let { selectedNoteTypeId = it }
         editorNote = note ?: Note.fromNotetypeId(getColUnsafe, checkNotNull(selectedNoteTypeId))
         if (selectedTags == null) {
             selectedTags = editorNote!!.tags
@@ -2545,8 +2549,7 @@ class NoteEditorFragment :
     }
 
     private fun setNoteTypePosition() {
-        // Set current note type and deck positions in spinners
-        val position = allNoteTypeIds!!.indexOf(editorNote!!.notetype.id)
+        val position = allNoteTypeIds!!.indexOfOrNull(editorNote!!.noteTypeId)!!
         // set selection without firing selectionChanged event
         noteTypeSpinner!!.setSelection(position, false)
     }
