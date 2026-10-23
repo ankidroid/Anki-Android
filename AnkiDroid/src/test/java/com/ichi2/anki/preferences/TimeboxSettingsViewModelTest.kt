@@ -15,6 +15,12 @@ import kotlin.time.toDuration
 @RunWith(AndroidJUnit4::class)
 class TimeboxSettingsViewModelTest : RobolectricTest() {
     @Test
+    fun `TimeboxUiState defaults to loading`() {
+        val defaultState = TimeboxUiState()
+        assertThat("Should default to loading", defaultState.isLoading, equalTo(true))
+    }
+
+    @Test
     fun `initializes disabled when time limit is zero`() =
         runTest {
             CollectionPreferences.setTimeboxTimeLimit(0.toDuration(DurationUnit.MINUTES))
@@ -23,6 +29,7 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             advanceRobolectricLooper()
 
             val state = viewModel.uiState.value
+            assertThat("Should not be loading", state.isLoading, equalTo(false))
             assertThat("Should be disabled", state.isEnabled, equalTo(false))
             assertThat(
                 "Default minutes should be 20",

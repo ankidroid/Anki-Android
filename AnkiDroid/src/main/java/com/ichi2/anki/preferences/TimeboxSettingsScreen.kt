@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -82,6 +84,7 @@ fun TimeboxSettingsScreen(
     onDecrement: () -> Unit,
     onSetMinutes: (Int) -> Unit,
     onNavigateUp: () -> Unit,
+    isLoading: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -103,38 +106,50 @@ fun TimeboxSettingsScreen(
             )
         },
     ) { contentPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding)
-                    .consumeWindowInsets(contentPadding)
-                    .imePadding()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = if (isLandscape) 4.dp else 8.dp),
-        ) {
-            TimeboxMainSwitch(
-                isEnabled = isEnabled,
-                onToggleEnabled = onToggleEnabled,
-            )
-
-            Spacer(modifier = Modifier.height(verticalSpacing))
-
-            AnimatedVisibility(
-                visible = isEnabled,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
+        if (isLoading) {
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(contentPadding),
+                contentAlignment = Alignment.Center,
             ) {
-                Column {
-                    TimeboxDurationCard(
-                        minutes = minutes,
-                        onSetMinutes = onSetMinutes,
-                    )
-                    Spacer(modifier = Modifier.height(verticalSpacing))
-                }
+                CircularProgressIndicator()
             }
+        } else {
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(contentPadding)
+                        .consumeWindowInsets(contentPadding)
+                        .imePadding()
+                        .verticalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp, vertical = if (isLandscape) 4.dp else 8.dp),
+            ) {
+                TimeboxMainSwitch(
+                    isEnabled = isEnabled,
+                    onToggleEnabled = onToggleEnabled,
+                )
 
-            TimeboxHelpSection()
+                Spacer(modifier = Modifier.height(verticalSpacing))
+
+                AnimatedVisibility(
+                    visible = isEnabled,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically(),
+                ) {
+                    Column {
+                        TimeboxDurationCard(
+                            minutes = minutes,
+                            onSetMinutes = onSetMinutes,
+                        )
+                        Spacer(modifier = Modifier.height(verticalSpacing))
+                    }
+                }
+
+                TimeboxHelpSection()
+            }
         }
     }
 }
