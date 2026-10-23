@@ -132,6 +132,7 @@ import kotlin.math.min
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
+import com.ichi2.anki.common.android.R as CommonR
 
 private typealias BackendCardTemplate = com.ichi2.anki.libanki.CardTemplate
 
@@ -234,7 +235,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
         fragmented = binding.fragmentContainer?.isVisible == true
 
-        setNavigationBarColor(R.attr.alternativeBackgroundColor)
+        setNavigationBarColor(CommonR.attr.alternativeBackgroundColor)
 
         // Disable the home icon
         enableToolbar()
@@ -672,7 +673,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 binding.mainLayout.setBackgroundColor(
                     getColorFromAttr(
                         requireContext(),
-                        R.attr.alternativeBackgroundColor,
+                        CommonR.attr.alternativeBackgroundColor,
                     ),
                 )
 
