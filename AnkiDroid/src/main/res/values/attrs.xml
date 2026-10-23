@@ -96,33 +96,9 @@
         <!-- Time to bw shown above the ease name -->
         <attr name="nextTime" format="string"/>
     </declare-styleable>
-
-    <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
-    <attr name="widgetColorActivated" format="color"/>
-    <!-- Deck list colors, divider, and expander -->
-    <attr name="currentDeckBackground" format="reference"/>
-    <attr name="currentDeckBackgroundColor" format="color"/>
-    <attr name="focusedRowBackgroundColor" format="color"/>
-    <attr name="dynDeckColor" format="color"/>
-    <attr name="deckDivider" format="reference"/>
-    <attr name="expandRef" format="reference"/>
-    <attr name="collapseRef" format="reference"/>
     <!-- Navigation drawer -->
     <attr name="navDrawerItemColor" format="reference"/>
     <attr name="navDrawerItemBackgroundColor" format="reference"/>
-    <!-- Card count colors -->
-    <attr name="newCountColor" format="color"/>
-    <attr name="learnCountColor" format="color"/>
-    <attr name="reviewCountColor" format="color"/>
-    <attr name="zeroCountColor" format="color"/>
-    <attr name="buryCountColor" format="color"/>
-    <!-- Card Browser Colors -->
-    <attr name="cardBrowserDivider" format="color"/>
-    <!-- Browser colors -->
-    <attr name="suspendedColor" format="color"/>
-    <attr name="buriedColor" format="color"/>
-    <attr name="selectedColor" format="color"/>
-    <attr name="markedColor" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
     <attr name="editTextBackgroundColor" format="color"/>
@@ -177,10 +153,6 @@
     <!-- Reminder troubleshooting -->
     <attr name="reminderTroubleshootingOk" format="color"/>
     <attr name="reminderTroubleshootingWarning" format="color"/>
-
-
-    <attr name="badgeWarningColor" format="color"/>
-    <attr name="badgeErrorColor" format="color"/>
     <attr name="widgetStrokeWidth" format="dimension"/>
     <attr name="widgetStrokeColor" format="color"/>
     <attr name="whiteboardToolbarCardStyle" format="reference"/>

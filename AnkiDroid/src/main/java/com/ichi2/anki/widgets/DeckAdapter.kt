@@ -233,15 +233,15 @@ class DeckAdapter(
         // Get the colors from the theme attributes
         val attrs =
             intArrayOf(
-                R.attr.zeroCountColor,
-                R.attr.newCountColor,
-                R.attr.learnCountColor,
-                R.attr.reviewCountColor,
-                R.attr.currentDeckBackground,
+                CommonR.attr.zeroCountColor,
+                CommonR.attr.newCountColor,
+                CommonR.attr.learnCountColor,
+                CommonR.attr.reviewCountColor,
+                CommonR.attr.currentDeckBackground,
                 android.R.attr.textColor,
-                R.attr.dynDeckColor,
-                R.attr.expandRef,
-                R.attr.collapseRef,
+                CommonR.attr.dynDeckColor,
+                CommonR.attr.expandRef,
+                CommonR.attr.collapseRef,
             )
         val ta = context.obtainStyledAttributes(attrs)
         zeroCountColor = ta.getColor(0, context.getColor(R.color.black))

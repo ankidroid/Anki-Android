@@ -10,6 +10,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Preference used on the headers of [com.ichi2.anki.preferences.HeaderFragment]
@@ -41,7 +42,7 @@ class HeaderPreference : Preference {
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
         if (isHighlighted) {
-            val color = ThemeUtils.getThemeAttrColor(context, R.attr.currentDeckBackgroundColor)
+            val color = ThemeUtils.getThemeAttrColor(context, CommonR.attr.currentDeckBackgroundColor)
             holder.itemView.setBackgroundColor(color)
         }
     }
