@@ -157,7 +157,7 @@ private fun TextInputDialogCard(
                                     Spacer(modifier = Modifier.weight(1f))
                                 }
                                 if (maxLengthCounter != null) {
-                                    Text("${text.length}/$maxLengthCounter")
+                                    Text("${text.trim().length}/$maxLengthCounter")
                                 }
                             }
                         }
