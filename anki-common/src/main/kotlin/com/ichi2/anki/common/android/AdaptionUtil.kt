@@ -14,6 +14,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
@@ -34,6 +35,17 @@ object AdaptionUtil {
         hasWebBrowser = checkHasWebBrowser(context)
         hasRunWebBrowserCheck = true
         return hasWebBrowser
+    }
+
+    /**
+     * Clears the memoized web-browser availability result.
+     *
+     * Robolectric tests can register a browser handler after another test in the same JVM fork
+     * already cached "no browser"; production code should not call this.
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun resetWebBrowserAvailabilityCacheForTests() {
+        hasRunWebBrowserCheck = false
     }
 
     val isUserATestClient: Boolean
