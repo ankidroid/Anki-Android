@@ -45,10 +45,10 @@ class FragmentLifecycleFixture(
 fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
     listOf(
         FragmentLifecycleFixture("StudyOptions") { StudyOptionsFragment() },
-        FragmentLifecycleFixture("AppearanceSettings", knownFailures = setOf(REMOVE)) { AppearanceSettingsFragment() },
-        FragmentLifecycleFixture("GeneralSettings", knownFailures = setOf(REMOVE)) { GeneralSettingsFragment() },
-        FragmentLifecycleFixture("ReviewerOptions", knownFailures = setOf(REMOVE)) { ReviewerOptionsFragment() },
-        FragmentLifecycleFixture("ReviewingSettings", knownFailures = setOf(REMOVE)) { ReviewingSettingsFragment() },
+        FragmentLifecycleFixture("AppearanceSettings") { AppearanceSettingsFragment() },
+        FragmentLifecycleFixture("GeneralSettings") { GeneralSettingsFragment() },
+        FragmentLifecycleFixture("ReviewerOptions") { ReviewerOptionsFragment() },
+        FragmentLifecycleFixture("ReviewingSettings") { ReviewingSettingsFragment() },
         FragmentLifecycleFixture("AdvancedSettings") { AdvancedSettingsFragment() },
         FragmentLifecycleFixture("DeveloperOptions") { DeveloperOptionsFragment() },
         FragmentLifecycleFixture("SyncSettings") { SyncSettingsFragment() },
@@ -59,11 +59,11 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         },
         FragmentLifecycleFixture("MediaCheck", knownFailures = setOf(REMOVE, DESTROY_VIEW)) { MediaCheckFragment() },
         FragmentLifecycleFixture("ManageSpace", knownFailures = setOf(REMOVE)) { ManageSpaceFragment() },
-        FragmentLifecycleFixture("ChangeNoteType", knownFailures = setOf(REMOVE)) {
+        FragmentLifecycleFixture("ChangeNoteType") {
             ChangeNoteTypeDialog.newInstance(listOf(addBasicNote().id))
         },
         FragmentLifecycleFixture("CustomStudy", hasFragmentView = false) { CustomStudyDialog.createInstance(col.decks.selected()) },
-        FragmentLifecycleFixture("AddReminder", hasFragmentView = false, knownFailures = setOf(REMOVE)) {
+        FragmentLifecycleFixture("AddReminder", hasFragmentView = false) {
             AddEditReminderDialog.getInstance(AddEditReminderDialog.DialogMode.Add(ReviewReminderScope.Global))
         },
         FragmentLifecycleFixture("InsertField") {
