@@ -1579,7 +1579,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         ) {
             val templates = noteType.templates
             templates.append(newTemplate)
-            templateEditor.tempNoteType!!.addNewTemplate(newTemplate)
+            templateEditor.tempNoteType!!.addNewTemplate()
             templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
                 .notifyDataSetChanged()
             templateEditor.mainBinding.cardTemplateEditorPager.setCurrentItem(
