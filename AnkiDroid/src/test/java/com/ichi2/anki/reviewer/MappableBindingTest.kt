@@ -5,6 +5,7 @@ package com.ichi2.anki.reviewer
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerCommand.entries
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
@@ -41,6 +42,30 @@ class MappableBindingTest {
     @Test
     fun `preference parsing returns no bindings when all entries are invalid`() {
         assertTrue(MappableBinding.fromPreferenceString("1/unknown|⌨not-a-number|✅").isEmpty())
+    }
+
+    @Test
+    fun `plus unicode bindings roundtrip through preferences`() {
+        val bindings =
+            listOf(
+                MappableBinding(Binding.unicode(BindingUnicodeCharacter('+'), Binding.ModifierKeys.none())),
+                MappableBinding(Binding.unicode(BindingUnicodeCharacter('+'), BindingTest.allModifierKeys())),
+                MappableBinding(Binding.unicode(BindingUnicodeCharacter('Ä'), Binding.ModifierKeys.ctrl())),
+            )
+
+        assertEquals(bindings, MappableBinding.fromPreferenceString(bindings.toPreferenceString()))
+    }
+
+    @Test
+    fun `plus unicode reviewer bindings preserve card sides through preferences`() {
+        val bindings =
+            CardSide.entries.map { side ->
+                ReviewerBinding(Binding.unicode(BindingUnicodeCharacter('+'), BindingTest.allModifierKeys()), side)
+            }
+        val restored = ReviewerBinding.fromPreferenceString(bindings.toPreferenceString())
+
+        assertEquals(bindings.map { it.binding }, restored.map { it.binding })
+        assertEquals(bindings.map { it.side }, restored.map { it.side })
     }
 
     private fun getAllBindings() =

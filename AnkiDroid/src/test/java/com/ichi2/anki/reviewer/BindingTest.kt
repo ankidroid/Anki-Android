@@ -86,6 +86,26 @@ class BindingTest {
     }
 
     @Test
+    fun `plus unicode binding roundtrips with every modifier combination`() {
+        val modifiers =
+            listOf(
+                Binding.ModifierKeys.none(),
+                Binding.ModifierKeys.ctrl(),
+                Binding.ModifierKeys.alt(),
+                Binding.ModifierKeys.shift(),
+                Binding.ModifierKeys(ctrl = true, alt = true),
+                Binding.ModifierKeys(ctrl = true, shift = true),
+                Binding.ModifierKeys(alt = true, shift = true),
+                allModifierKeys(),
+            )
+        for (modifierKeys in modifiers) {
+            val binding = Binding.unicode(BindingUnicodeCharacter('+'), modifierKeys)
+
+            assertEquals(binding.toString(), binding, Binding.fromString(binding.toString()))
+        }
+    }
+
+    @Test
     fun testGestureToString() {
         assertEquals(GESTURE_PREFIX + "TAP_TOP", Binding.gesture(Gesture.TAP_TOP).toString())
     }

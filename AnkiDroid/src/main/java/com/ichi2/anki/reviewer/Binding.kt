@@ -185,7 +185,8 @@ sealed interface Binding {
              * @return The [ModifierKeys], and the remainder of the string
              */
             fun parse(s: String): Pair<ModifierKeys, String> {
-                val plusIndex = s.lastIndexOfOrNull('+') ?: return Pair(none(), s)
+                // A trailing '+' is the bound character, not a modifier separator.
+                val plusIndex = s.lastIndexOfOrNull('+', startIndex = s.lastIndex - 1) ?: return Pair(none(), s)
                 val modifiers = fromString(s.take(plusIndex + 1))
                 return Pair(modifiers, s.substring(plusIndex + 1))
             }
