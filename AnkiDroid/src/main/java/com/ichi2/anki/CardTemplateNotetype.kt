@@ -25,37 +25,20 @@ import java.io.IOException
 class CardTemplateNotetype(
     val notetype: NotetypeJson,
 ) {
-    enum class ChangeType {
-        ADD,
-        DELETE,
-    }
-
-    data class TemplateChange(
-        var ordinal: Int,
-        val type: ChangeType,
-    ) : java.io.Serializable
-
-    private val changes = CardTemplateChanges()
-
     private var originalTemplateOrds: ArrayList<CardOrdinal?> = notetype.templates.mapTo(ArrayList()) { it.ord }
-
-    var templateChanges: ArrayList<TemplateChange>
-        get() = changes.templateChanges
-        private set(value) {
-            changes.templateChanges = value
-        }
+    private var deletedTemplateOrds = ArrayList<CardOrdinal>()
 
     fun toBundle(): Bundle =
         Bundle().apply {
             putString(STATE_EDITED_NOTE_TYPE_FILENAME, saveTempNoteType(appContext, notetype))
-            putSerializable(STATE_TEMPLATE_CHANGES, templateChanges)
             putSerializable(STATE_ORIGINAL_TEMPLATE_ORDS, originalTemplateOrds)
+            putSerializable(STATE_DELETED_TEMPLATE_ORDS, deletedTemplateOrds)
         }
 
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
-            templateChanges = bundle.getSerializableCompat(STATE_TEMPLATE_CHANGES)!!
             originalTemplateOrds = bundle.getSerializableCompat(STATE_ORIGINAL_TEMPLATE_ORDS)!!
+            deletedTemplateOrds = bundle.getSerializableCompat(STATE_DELETED_TEMPLATE_ORDS)!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
@@ -85,21 +68,18 @@ class CardTemplateNotetype(
         notetype.templates[ordinal] = template
     }
 
-    fun addNewTemplate(newTemplate: CardTemplate) {
+    fun addNewTemplate() {
         Timber.d("addNewTemplate()")
-        addTemplateChange(ChangeType.ADD, newTemplate.ord)
         originalTemplateOrds.add(null)
     }
 
     fun removeTemplate(ord: Int) {
         Timber.d("removeTemplate() on ordinal %s", ord)
-        addTemplateChange(ChangeType.DELETE, ord)
-        originalTemplateOrds.removeAt(ord)
+        originalTemplateOrds.removeAt(ord)?.let { deletedTemplateOrds.add(it) }
     }
 
     suspend fun saveToDatabase() {
         Timber.d("saveToDatabase() called")
-        changes.dumpChanges()
         val updated = notetype.deepClone()
         for ((i, template) in updated.templates.withIndex()) {
             template.setOrd(originalTemplateOrds[i])
@@ -110,20 +90,16 @@ class CardTemplateNotetype(
         clearTempNoteTypeFiles()
     }
 
-    fun addTemplateChange(
-        type: ChangeType,
-        ordinal: Int,
-    ) = changes.addTemplateChange(type, ordinal)
-
-    fun getDeleteDbOrds(ord: Int): IntArray = changes.getDeleteDbOrds(ord)
+    /** Database ordinals of pending deletions, including the proposed editor position. */
+    fun getDeleteDbOrds(ord: Int): IntArray = (deletedTemplateOrds + listOfNotNull(getOriginalOrdinal(ord))).toIntArray()
 
     /** Database ordinal for an editor position, or null for an unsaved addition. */
     fun getOriginalOrdinal(ordinal: Int): CardOrdinal? = originalTemplateOrds[ordinal]
 
     companion object {
         private const val STATE_EDITED_NOTE_TYPE_FILENAME = "editedNoteTypeFilename"
-        private const val STATE_TEMPLATE_CHANGES = "mTemplateChanges"
         private const val STATE_ORIGINAL_TEMPLATE_ORDS = "originalTemplateOrds"
+        private const val STATE_DELETED_TEMPLATE_ORDS = "deletedTemplateOrds"
 
         /**
          * Load the TemporaryNoteType from the filename included in a Bundle
@@ -206,12 +182,7 @@ class CardTemplateNotetype(
         fun isOrdinalPendingAdd(
             noteType: CardTemplateNotetype,
             ord: Int,
-        ): Boolean = CardTemplateChanges.isOrdinalPendingAdd(noteType.changes, ord)
-
-        fun getAdjustedAddOrdinalAtChangeIndex(
-            noteType: CardTemplateNotetype,
-            changesIndex: Int,
-        ): Int = CardTemplateChanges.getAdjustedAddOrdinalAtChangeIndex(noteType.changes, changesIndex)
+        ): Boolean = noteType.getOriginalOrdinal(ord) == null
     }
 }
 

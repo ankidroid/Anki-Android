@@ -324,7 +324,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         // Assert.assertEquals("Wrong dialog shown?", "This will create NN cards. Proceed?", getDialogText());
         // clickDialogButton(WhichButton.POSITIVE);
         assertTrue("Note type should have changed", testEditor.noteTypeHasChanged())
-        assertEquals("Change not pending add?", 1, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 0))
+        assertNull("New templates have no database ordinal", testEditor.tempNoteType!!.getOriginalOrdinal(1))
         assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(0))
         assertTrue("Ordinal not pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(1))
         assertEquals("Note type should have 2 templates now", 2, testEditor.tempNoteType!!.templateCount)
@@ -438,7 +438,7 @@ class CardTemplateEditorTest : RobolectricTest() {
                 getCurrentDatabaseNoteTypeCopy(noteTypeName).toString().trim(),
             )
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(0))
-            assertEquals("Change incorrectly added to list?", 0, testEditor.templateChangeCount)
+            assertFalse("A blocked deletion must not change the note type", testEditor.noteTypeHasChanged())
 
             // Assert can delete 'Card 2'
             assertNotNull("Cannot delete unused template?", collectionBasicNoteTypeOriginal.getCardIds(1))
@@ -529,11 +529,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             // the templates must be different
             testEditor.tempNoteType!!.getTemplate(2).qfmt += "different_template"
             assertTrue("Note type should have changed", testEditor.noteTypeHasChanged())
-            assertEquals(
-                "Change added but not adjusted correctly?",
-                2,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 0),
-            )
+            assertNull("New templates have no database ordinal", testEditor.tempNoteType!!.getOriginalOrdinal(2))
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(0))
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(1))
             assertTrue("Ordinal not pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(2))
@@ -565,22 +561,14 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             // Add another template - but we work in memory for a while before saving
             addCardType(testEditor, shadowTestEditor)
-            assertEquals(
-                "Change added but not adjusted correctly?",
-                3,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 0),
-            )
+            assertNull("New templates have no database ordinal", testEditor.tempNoteType!!.getOriginalOrdinal(3))
             assertTrue("Note type should have changed", testEditor.noteTypeHasChanged())
             assertEquals("Note type should have 4 templates now", 4, testEditor.tempNoteType?.templateCount)
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(0))
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(1))
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(2))
             assertTrue("Ordinal not pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(3))
-            assertEquals(
-                "Change added but not adjusted correctly?",
-                3,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 0),
-            )
+            assertNull("New templates have no database ordinal", testEditor.tempNoteType!!.getOriginalOrdinal(3))
 
             // Delete two pre-existing templates for real now - but still without saving it out, should work fine
             advanceRobolectricLooper()
@@ -619,21 +607,7 @@ class CardTemplateEditorTest : RobolectricTest() {
                 collectionBasicNoteTypeOriginal.toString().trim(),
                 getCurrentDatabaseNoteTypeCopy(noteTypeName).toString().trim(),
             )
-            assertEquals(
-                "Change added but not adjusted correctly?",
-                1,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 0),
-            )
-            assertEquals(
-                "Change incorrectly pending add?",
-                -1,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 1),
-            )
-            assertEquals(
-                "Change incorrectly pending add?",
-                -1,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 2),
-            )
+            assertNull("New templates have no database ordinal", testEditor.tempNoteType!!.getOriginalOrdinal(1))
 
             // Now confirm everything to persist it to the database
             assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
@@ -710,11 +684,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             // Add a template - click add, click confirm for card add, click confirm again for full sync
             addCardType(testEditor, shadowTestEditor)
             assertTrue("Note type should have changed", testEditor.noteTypeHasChanged())
-            assertEquals(
-                "Change added but not adjusted correctly?",
-                1,
-                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempNoteType!!, 1),
-            )
+            assertNull("New templates have no database ordinal", testEditor.tempNoteType!!.getOriginalOrdinal(1))
             assertFalse("Ordinal pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(0))
             assertTrue("Ordinal not pending add?", testEditor.tempNoteType.isOrdinalPendingAdd(1))
             assertEquals("Note type should have 2 templates", 2, testEditor.tempNoteType?.templateCount)
@@ -1507,9 +1477,6 @@ Hello World{{Front}}
         requireNotNull(this)
         return CardTemplateNotetype.isOrdinalPendingAdd(this, ordinal)
     }
-
-    private val CardTemplateEditor.templateChangeCount
-        get() = tempNoteType?.templateChanges?.size
 
     private suspend fun NotetypeJson.getCardIds(vararg ords: Int): List<Long>? = withCol { notetypes.getCardIdsForNoteType(id, ords) }
 }
