@@ -1,3 +1,10 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled
+  SPDX-FileComment: Derived from radio_button_unchecked; added a custom inset, thicker checkmark.
+  Source: https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/android/toggle/radio_button_unchecked/materialicons/black/res/drawable/baseline_radio_button_unchecked_24.xml
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
