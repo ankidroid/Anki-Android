@@ -36,6 +36,8 @@ class TimeboxSettingsFragment : Fragment() {
                         isEnabled = state.isEnabled,
                         minutes = state.minutes,
                         onToggleEnabled = viewModel::toggleEnabled,
+                        onIncrement = viewModel::increment,
+                        onDecrement = viewModel::decrement,
                         onSetMinutes = viewModel::setMinutes,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
                     )
