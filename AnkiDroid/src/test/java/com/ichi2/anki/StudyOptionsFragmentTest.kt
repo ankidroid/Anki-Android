@@ -2,18 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
+import android.content.Context
+import android.content.res.Configuration
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.View.MeasureSpec
 import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.databinding.FragmentStudyOptionsBinding
@@ -31,6 +36,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
+import java.util.Locale
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -319,6 +325,28 @@ class StudyOptionsFragmentTest : RobolectricTest() {
                 assertEquals(ConstraintLayout.LayoutParams.PARENT_ID, params.startToStart)
             }
         }
+
+    @Test
+    fun `shadow_left drawable mirrors in RTL`() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val ltrConfig =
+            Configuration(context.resources.configuration).apply {
+                setLayoutDirection(Locale.US)
+            }
+        val ltrContext = context.createConfigurationContext(ltrConfig)
+        val ltrDrawable =
+            AppCompatResources.getDrawable(ltrContext, R.drawable.shadow_left) as GradientDrawable
+        assertEquals(GradientDrawable.Orientation.LEFT_RIGHT, ltrDrawable.orientation)
+
+        val rtlConfig =
+            Configuration(context.resources.configuration).apply {
+                setLayoutDirection(Locale.forLanguageTag("ar"))
+            }
+        val rtlContext = context.createConfigurationContext(rtlConfig)
+        val rtlDrawable =
+            AppCompatResources.getDrawable(rtlContext, R.drawable.shadow_left) as GradientDrawable
+        assertEquals(GradientDrawable.Orientation.RIGHT_LEFT, rtlDrawable.orientation)
+    }
 
     private fun assertLifecycleFailure(
         message: String,
