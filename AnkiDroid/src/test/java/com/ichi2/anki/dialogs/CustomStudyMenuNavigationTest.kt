@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.RootMatchers.isDialog
@@ -162,14 +163,19 @@ class CustomStudyMenuNavigationTest : RobolectricTest() {
         }
 
     @Test
-    fun `two queued menu taps open exactly one input dialog`() =
+    fun `two queued menu taps open exactly one input dialog`() = assertTwoQueuedTapsOpenOneInput(childHosted = false)
+
+    @Test
+    fun `two queued taps in a child-hosted menu open exactly one input dialog`() = assertTwoQueuedTapsOpenOneInput(childHosted = true)
+
+    private fun assertTwoQueuedTapsOpenOneInput(childHosted: Boolean) =
         runTest {
-            val (activity, fragment) = openMenu()
+            val (activity, fragment) = openMenu(childHosted)
             withQueuedChecks(this) { collectionScheduler ->
                 repeat(2) {
                     onView(withText(TR.customStudyReviewAhead())).inRoot(isDialog()).perform(click())
                     runCurrent()
-                    assertSame(fragment, activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+                    assertTrue(fragment.requireDialog().isShowing)
                 }
                 collectionScheduler.runCurrent()
                 runCurrent()
@@ -179,19 +185,30 @@ class CustomStudyMenuNavigationTest : RobolectricTest() {
 
                 val dialogs = activity.supportFragmentManager.fragments.filterIsInstance<CustomStudyDialog>()
                 assertEquals(1, dialogs.size)
-                assertEquals(2, activity.supportFragmentManager.backStackEntryCount)
+                assertEquals(if (childHosted) 1 else 2, activity.supportFragmentManager.backStackEntryCount)
                 assertNotNull(dialogs.single().requireDialog().findViewById<View>(R.id.details_edit_text_2))
             }
         }
 
-    private fun openMenu(): Pair<EmptyAnkiActivity, CustomStudyDialog> {
+    private fun openMenu(childHosted: Boolean = false): Pair<EmptyAnkiActivity, CustomStudyDialog> {
         addBasicNote()
         val controller = Robolectric.buildActivity(EmptyAnkiActivity::class.java).setup()
         saveControllerForCleanup(controller)
         advanceRobolectricLooper()
         val activity = controller.get()
-        activity.showDialogFragment(CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID))
-        val fragment = activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as CustomStudyDialog
+        val fragment = CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID)
+        if (childHosted) {
+            // CongratsPage hosts Custom Study in its child fragment manager.
+            val parent = Fragment()
+            activity.supportFragmentManager
+                .beginTransaction()
+                .add(parent, "host")
+                .commitNow()
+            fragment.show(parent.childFragmentManager, null)
+            parent.childFragmentManager.executePendingTransactions()
+        } else {
+            activity.showDialogFragment(fragment)
+        }
         advanceRobolectricLooperUntil { fragment.dialog?.findViewById<View>(R.id.progress_bar)?.isVisible != true }
         return activity to fragment
     }

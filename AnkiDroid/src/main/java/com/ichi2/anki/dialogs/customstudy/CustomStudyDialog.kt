@@ -130,6 +130,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     /** The search for cards to review ahead. Cancelled when the input changes, so only the latest input counts */
     private var searchJob: Job? = null
 
+    /** Whether a menu availability check or transition is already in progress. */
+    private var menuSelectionInProgress = false
+
     /** Defaults captured for this input dialog when its main menu finishes loading. */
     private lateinit var defaults: CustomStudyDefaults
 
@@ -196,29 +199,35 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         defaults: CustomStudyDefaults,
         onEmptyDeck: () -> Unit,
     ) {
-        // The deck may have changed since this menu loaded.
-        val isUnavailable = withProgress { viewModel.isDeckEmptyOrHidden() }
-        // The fragment can outlive this dialog and recreate it while the check is queued.
-        if (
-            this.dialog !== menuDialog ||
-            !menuDialog.isShowing ||
-            !isResumed ||
-            requireActivity().isFinishing ||
-            parentFragmentManager.isStateSaved
-        ) {
-            return
-        }
-        if (isUnavailable) {
-            onEmptyDeck()
-            return
-        }
-        if (item.checkAvailability?.invoke(defaults) == false) {
-            showSnackbar(getString(CommonString.studyoptions_no_cards_due))
-            return
-        }
+        if (menuSelectionInProgress) return
+        menuSelectionInProgress = true
+        try {
+            // The deck may have changed since this menu loaded.
+            val isUnavailable = withProgress { viewModel.isDeckEmptyOrHidden() }
+            // The fragment can outlive this dialog and recreate it while the check is queued.
+            if (
+                this.dialog !== menuDialog ||
+                !menuDialog.isShowing ||
+                !isResumed ||
+                requireActivity().isFinishing ||
+                parentFragmentManager.isStateSaved
+            ) {
+                return
+            }
+            if (isUnavailable) {
+                onEmptyDeck()
+                return
+            }
+            if (item.checkAvailability?.invoke(defaults) == false) {
+                showSnackbar(getString(CommonString.studyoptions_no_cards_due))
+                return
+            }
 
-        val dialog: CustomStudyDialog = createSubDialog(viewModel.deckId, item)
-        requireActivity().showDialogFragment(dialog)
+            val dialog: CustomStudyDialog = createSubDialog(viewModel.deckId, item)
+            requireActivity().showDialogFragment(dialog)
+        } finally {
+            menuSelectionInProgress = false
+        }
     }
 
     private fun buildContextMenu(initialization: Deferred<CustomStudyInitialization>): AlertDialog {
