@@ -7,6 +7,7 @@ import com.ichi2.testutils.simulateKeyboard
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 
 /**
  * Screenshot tests for [DeckPicker] in fragmented mode.
@@ -37,5 +38,15 @@ class DeckPickerTabletScreenshotTest : ScreenshotTest() {
         withDeckPicker(deckCount = 30, withCards = true) { deckPicker ->
             deckPicker.simulateEdgeToEdge()
             captureScreen("30_decks_tablet")
+        }
+
+    @Test
+    fun deckPickerWith30DecksRtl() =
+        runTest {
+            RuntimeEnvironment.setQualifiers("+ar")
+            withDeckPicker(deckCount = 30, withCards = true) { deckPicker ->
+                deckPicker.simulateEdgeToEdge()
+                captureScreen("30_decks_tablet_rtl")
+            }
         }
 }
