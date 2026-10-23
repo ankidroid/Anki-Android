@@ -243,11 +243,18 @@ fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
     skipCrashReport: ((Exception) -> Boolean)? = null,
     block: suspend CoroutineScope.() -> Unit,
-): Job =
-    lifecycle.coroutineScope.launch {
+): Job {
+    val fragmentLifecycle = lifecycle
+    return fragmentLifecycle.coroutineScope.launch {
+        // Removal can precede scope registration; reading the fragment creates a new lifecycle.
+        if (fragmentLifecycle.currentState == Lifecycle.State.DESTROYED) {
+            Timber.w("Skipping launchCatchingTask for %s: fragment lifecycle is destroyed", this@launchCatchingTask.javaClass.simpleName)
+            return@launch
+        }
         val validActivity = validActivityForTask() ?: return@launch
         validActivity.runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
+}
 
 private fun Fragment.validActivityForTask(): FragmentActivity? =
     // It's a bug to call this if the activity is invalid or finishing.
@@ -293,7 +300,13 @@ fun Fragment.launchCatchingViewTask(
     val owner = viewLifecycleOwnerLiveData.value ?: return null
     return owner.lifecycleScope.launch {
         // A synchronous replacement can destroy the view before lifecycleScope registers cancellation.
-        if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return@launch
+        if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) {
+            Timber.w(
+                "Skipping launchCatchingViewTask for %s: view lifecycle is destroyed",
+                this@launchCatchingViewTask.javaClass.simpleName,
+            )
+            return@launch
+        }
         val validActivity = validActivityForTask() ?: return@launch
         validActivity.runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
