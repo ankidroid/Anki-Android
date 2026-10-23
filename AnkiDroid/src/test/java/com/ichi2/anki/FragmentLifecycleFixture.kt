@@ -57,7 +57,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         FragmentLifecycleFixture("FilteredDeckOptions", knownFailures = setOf(REMOVE, DESTROY_VIEW, RECREATE_VIEW)) {
             FilteredDeckOptionsFragment()
         },
-        FragmentLifecycleFixture("MediaCheck", knownFailures = setOf(REMOVE, DESTROY_VIEW)) { MediaCheckFragment() },
+        FragmentLifecycleFixture("MediaCheck") { MediaCheckFragment() },
         FragmentLifecycleFixture("ManageSpace", knownFailures = setOf(REMOVE)) { ManageSpaceFragment() },
         FragmentLifecycleFixture("ChangeNoteType") {
             ChangeNoteTypeDialog.newInstance(listOf(addBasicNote().id))
