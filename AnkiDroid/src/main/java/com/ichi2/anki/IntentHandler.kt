@@ -384,8 +384,9 @@ class IntentHandler : AbstractIntentHandler() {
     }
 
     companion object {
+        private const val ACTION_DO_SYNC = "com.ichi2.anki.DO_SYNC"
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
-        private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
+        private const val ACTION_COPY_DEBUG_INFO = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val EXTRA_CLIPBOARD_DATA = "clip_data"
 
         private val textMimeTypes = MimeTypeUtils.CSV_TSV_MIME_TYPES
@@ -440,11 +441,11 @@ class IntentHandler : AbstractIntentHandler() {
                     textMimeTypes.contains(mimeType) -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
                 }
-            } else if ("com.ichi2.anki.DO_SYNC" == action) {
+            } else if (ACTION_DO_SYNC == action) {
                 LaunchType.SYNC
             } else if (intent.hasExtra(EXTRA_DECK_ID)) {
                 LaunchType.REVIEW
-            } else if (action == CLIPBOARD_INTENT) {
+            } else if (action == ACTION_COPY_DEBUG_INFO) {
                 LaunchType.COPY_DEBUG_INFO
             } else {
                 LaunchType.DEFAULT_START_APP_IF_NEW
