@@ -15,6 +15,7 @@ import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
 import anki.decks.SetDeckCollapsedRequest
 import app.cash.turbine.test
+import com.google.protobuf.ByteString
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
@@ -322,6 +323,27 @@ class DeckPickerErrorTest : RobolectricTest() {
             deckPicker.viewModel.updateDeckList()
 
             assertErrorShown()
+        }
+    }
+
+    @Test
+    fun `deck list keeps its decks when filtering cannot read the current deck`() {
+        var failRead = false
+        useBackend {
+            object : Backend() {
+                override fun getDeckLegacy(did: Long): ByteString = if (failRead) throw failure else super.getDeckLegacy(did)
+            }
+        }
+        val deckId = addDeck("Existing")
+
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            throwOnShowError = false
+            failRead = true
+            deckPicker.viewModel.updateDeckFilter("no matching deck")
+
+            assertErrorShown()
+            val visibleDecks = deckPicker.viewModel.flowOfDeckList.value.data
+            assertTrue(visibleDecks.any { it.did == deckId })
         }
     }
 

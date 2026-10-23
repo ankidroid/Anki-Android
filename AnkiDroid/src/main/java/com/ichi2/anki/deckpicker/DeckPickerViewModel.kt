@@ -55,6 +55,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -126,15 +127,23 @@ class DeckPickerViewModel :
             // TODO: use flowOfFocusedDeck once it's set on all instances
             // This flow can outlive the visible screen. Do not reopen the collection just to redraw it.
             val currentDeckId =
-                withOpenColOrNull { decks.current().id }
-                    ?: return@combine FlattenedDeckList.empty
+                try {
+                    withOpenColOrNull { decks.current().id }
+                        ?: return@combine FlattenedDeckList.empty
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    reportError(e)
+                    return@combine null
+                }
             Timber.i("currentDeckId: %d", currentDeckId)
 
             FlattenedDeckList(
                 data = tree.filterAndFlattenDisplay(DeckFilters.create(query), currentDeckId),
                 hasSubDecks = tree.children.any { it.children.any() },
             )
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = FlattenedDeckList.empty)
+        }.filterNotNull()
+            .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = FlattenedDeckList.empty)
 
     /**
      * @see deleteDeck
@@ -258,9 +267,11 @@ class DeckPickerViewModel :
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                withContext(Dispatchers.Main.immediate) { errorQueue.enqueue(e) }
+                reportError(e)
             }
         }
+
+    private suspend fun reportError(e: Exception) = withContext(Dispatchers.Main.immediate) { errorQueue.enqueue(e) }
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -489,9 +500,9 @@ class DeckPickerViewModel :
         val loadDeckCounts =
             launchCatchingTask(Dispatchers.IO) {
                 Timber.d("Refreshing deck list")
-                val (deckDueTree, collectionHasNoCards) =
+                val (deckDueTree, collectionHasNoCards, currentDeckId) =
                     withCol {
-                        Pair(sched.deckDueTree(), isEmpty)
+                        Triple(sched.deckDueTree(), isEmpty, decks.current().id)
                     }
                 dueTree = deckDueTree
 
@@ -516,7 +527,7 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // current deck may have changed
-                focusedDeck = withCol { decks.current().id }
+                focusedDeck = currentDeckId
                 refreshUndoMenuState()
 
                 // Reopening can leave the counts and selection unchanged after a skipped display refresh.
