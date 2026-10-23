@@ -88,12 +88,12 @@ jobs:
           # Cap the full list so we remain within GitHub's comment limit
           max_details=100
 
-          # Group by module and test class, after the artifact's per-run directory.
+          # Group by test class, module prefix is dropped for readability.
+          # Reconsider it once we are heavily mutlimodule.
           declare -A class_counts class_files
           for file in "${files[@]}"; do
             class_dir="${file%/*}"
-            class="${class_dir#./screenshot-diff/}"
-            class="${class#*/}"
+            class="${class_dir##*/}"
             class_counts[$class]=$(( ${class_counts[$class]:-0} + 1 ))
             class_files[$class]+="$(basename "$file")"$'\n'
           done

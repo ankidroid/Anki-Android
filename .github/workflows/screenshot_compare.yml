@@ -102,7 +102,11 @@ jobs:
           while IFS= read -r -d '' compare; do
             module="${compare%%/build/reports/screenshot-diffs/*}"
             relative="${compare#*/build/reports/screenshot-diffs/}"
-            destination="screenshot-diff/$SUBDIR/${module#./}/$relative"
+            # Flatten local /diffs/ directory: keeps baselines apart from
+            # diffs while testing, and means nothing inside artifact
+            class="${relative%%/*}"
+            name="${relative##*/}"
+            destination="screenshot-diff/$SUBDIR/${module#./}/$class/$name"
             mkdir -p "$(dirname "$destination")"
             cp "$compare" "$destination"
           done < <(find . -type f -path '*/build/reports/screenshot-diffs/*_compare.png' -print0)
