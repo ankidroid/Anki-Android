@@ -55,6 +55,7 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * A fragment which allows the user to select one or multiple decks from a list of decks. It also
@@ -221,8 +222,8 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         val attrs =
             intArrayOf(
-                R.attr.expandRef,
-                R.attr.collapseRef,
+                CommonR.attr.expandRef,
+                CommonR.attr.collapseRef,
             )
 
         inner class ViewHolder(

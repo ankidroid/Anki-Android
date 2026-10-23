@@ -146,6 +146,7 @@ import kotlin.test.assertNotSame
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
+import com.ichi2.anki.common.android.R as CommonR
 
 typealias ContextMenuOption = DeckPickerContextMenuOption
 
@@ -1294,7 +1295,7 @@ class DeckPickerTest : RobolectricTest() {
 
             assertThat(
                 shadowOf(selectedDeck.background).createdFromResId,
-                equalTo(getResFromAttr(this, R.attr.currentDeckBackground)),
+                equalTo(getResFromAttr(this, CommonR.attr.currentDeckBackground)),
             )
         }
     }

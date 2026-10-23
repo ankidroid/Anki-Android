@@ -21,6 +21,7 @@ import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.title
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Shows a list of decks from which the user can select one to display its deck options.
@@ -39,7 +40,7 @@ fun Context.showDeckOptionsSelectionDialog(
             getColor(0, 0)
         }
     val dynamicDeckNameColor: Int =
-        usingStyledAttributes(null, intArrayOf(R.attr.dynDeckColor)) {
+        usingStyledAttributes(null, intArrayOf(CommonR.attr.dynDeckColor)) {
             getColor(0, 0)
         }
     val dialog =

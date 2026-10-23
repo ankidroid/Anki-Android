@@ -38,6 +38,7 @@ import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.math.abs
+import com.ichi2.anki.common.android.R as CommonR
 
 typealias RowIsSelected = Boolean
 
@@ -259,7 +260,7 @@ class BrowserMultiColumnAdapter(
             val rowColor =
                 // This only highlights in fragmented mode
                 if (viewModel.paneRow == id) {
-                    ThemeUtils.getThemeAttrColor(context, R.attr.focusedRowBackgroundColor)
+                    ThemeUtils.getThemeAttrColor(context, CommonR.attr.focusedRowBackgroundColor)
                 } else {
                     backendColorToColor(row.color)
                 }
@@ -289,9 +290,9 @@ class BrowserMultiColumnAdapter(
             Color.COLOR_FLAG_TURQUOISE -> context.getColor(Flag.TURQUOISE.browserColorRes!!)
             Color.COLOR_FLAG_PURPLE -> context.getColor(Flag.PURPLE.browserColorRes!!)
 
-            Color.COLOR_SUSPENDED -> ThemeUtils.getThemeAttrColor(context, R.attr.suspendedColor)
-            Color.COLOR_MARKED -> ThemeUtils.getThemeAttrColor(context, R.attr.markedColor)
-            Color.COLOR_BURIED -> ThemeUtils.getThemeAttrColor(context, R.attr.buriedColor)
+            Color.COLOR_SUSPENDED -> ThemeUtils.getThemeAttrColor(context, CommonR.attr.suspendedColor)
+            Color.COLOR_MARKED -> ThemeUtils.getThemeAttrColor(context, CommonR.attr.markedColor)
+            Color.COLOR_BURIED -> ThemeUtils.getThemeAttrColor(context, CommonR.attr.buriedColor)
 
             Color.COLOR_DEFAULT, Color.UNRECOGNIZED ->
                 ThemeUtils.getThemeAttrColor(context, android.R.attr.colorBackground)

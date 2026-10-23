@@ -15,6 +15,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ItemManageNoteTypeBinding
 import com.ichi2.anki.notetype.NoteTypesAdapter.NoteTypeViewHolder
 import com.ichi2.anki.utils.ext.usingStyledAttributes
+import com.ichi2.anki.common.android.R as CommonR
 
 private val notetypeNamesAndCountDiff =
     object : DiffUtil.ItemCallback<NoteTypeItemState>() {
@@ -91,7 +92,7 @@ internal class NoteTypesAdapter(
                 getResourceId(0, 0)
             }
         private val selectedNoteTypeBackground: Int =
-            context.usingStyledAttributes(null, intArrayOf(R.attr.currentDeckBackground)) {
+            context.usingStyledAttributes(null, intArrayOf(CommonR.attr.currentDeckBackground)) {
                 getResourceId(0, 0)
             }
 

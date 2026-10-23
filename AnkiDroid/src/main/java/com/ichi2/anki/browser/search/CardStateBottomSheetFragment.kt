@@ -20,6 +20,7 @@ import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
 import com.ichi2.anki.databinding.ItemBrowserFilterBottomSheetBinding
 import com.ichi2.anki.utils.ext.behavior
 import dev.androidbroadcast.vbpd.viewBinding
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * A [BottomSheetDialogFragment] allowing selection of 0-many [CardState]s
@@ -131,11 +132,11 @@ fun CardState?.getIcon(context: Context): Drawable? {
     val colorAttr =
         when (this) {
             null -> androidx.appcompat.R.attr.colorPrimary
-            CardState.New -> R.attr.newCountColor
-            CardState.Learning -> R.attr.learnCountColor
-            CardState.Review -> R.attr.reviewCountColor
-            CardState.Buried -> R.attr.buriedColor
-            CardState.Suspended -> R.attr.suspendedColor
+            CardState.New -> CommonR.attr.newCountColor
+            CardState.Learning -> CommonR.attr.learnCountColor
+            CardState.Review -> CommonR.attr.reviewCountColor
+            CardState.Buried -> CommonR.attr.buriedColor
+            CardState.Suspended -> CommonR.attr.suspendedColor
         }
     return ContextCompat.getDrawable(context, iconRes)?.mutate()?.also {
         DrawableCompat.setTint(it, MaterialColors.getColor(context, colorAttr, 0))
