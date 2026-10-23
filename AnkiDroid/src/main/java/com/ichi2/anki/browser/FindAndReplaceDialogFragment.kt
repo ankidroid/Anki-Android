@@ -99,9 +99,8 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             (dialog as? AlertDialog)?.positiveButton?.isEnabled = false
             binding.contentViewsGroup.isVisible = false
             binding.loadingViewsGroup.isVisible = true
-            val fetchNoteIdsResult = runCatching { idsFile.getIds() }
-            val noteIds = fetchNoteIdsResult.getOrNull()
-            if (fetchNoteIdsResult.isFailure || noteIds == null) {
+            val noteIds = runCatching { idsFile.getIdsOrNull() }.getOrNull()
+            if (noteIds == null) {
                 requireActivity().showSnackbar(CommonString.something_wrong)
                 dismiss()
                 return@launch
