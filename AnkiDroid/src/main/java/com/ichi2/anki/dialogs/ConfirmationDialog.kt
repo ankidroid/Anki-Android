@@ -55,12 +55,16 @@ class ConfirmationDialog : DialogFragment() {
         title: String?,
         message: String,
         positiveButtonText: String? = null,
+        requestKey: String? = null,
+        resultBundle: Bundle? = null,
     ) {
         arguments =
             Bundle().apply {
                 putString(ARG_MESSAGE, message)
                 putString(ARG_TITLE, title)
                 putString(ARG_POSITIVE_BUTTON_TEXT, positiveButtonText)
+                putString(ARG_REQUEST_KEY, requestKey)
+                putBundle(ARG_RESULT_BUNDLE, resultBundle)
             }
     }
 
@@ -76,7 +80,14 @@ class ConfirmationDialog : DialogFragment() {
         AlertDialog.Builder(requireContext()).create {
             title(text = title)
             message(text = message)
-            positiveButton(text = positiveButtonText) { confirm.run() }
+            positiveButton(text = positiveButtonText) {
+                val requestKey = requireArguments().getString(ARG_REQUEST_KEY)
+                if (requestKey != null) {
+                    val bundle = requireArguments().getBundle(ARG_RESULT_BUNDLE) ?: Bundle()
+                    parentFragmentManager.setFragmentResult(requestKey, bundle)
+                }
+                confirm.run()
+            }
             negativeButton(CommonString.dialog_cancel) { cancel.run() }
         }
 
@@ -91,5 +102,8 @@ class ConfirmationDialog : DialogFragment() {
 
         /** Optional text for the positive button. Default: "OK" */
         private const val ARG_POSITIVE_BUTTON_TEXT = "positiveButtonText"
+
+        private const val ARG_REQUEST_KEY = "requestKey"
+        private const val ARG_RESULT_BUNDLE = "resultBundle"
     }
 }
