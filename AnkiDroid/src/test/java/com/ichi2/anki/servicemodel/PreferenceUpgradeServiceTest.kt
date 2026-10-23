@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.android.getCurrentLocaleTag
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -38,6 +37,7 @@ import org.robolectric.annotation.Config
 import java.util.Locale
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -238,13 +238,13 @@ class PreferenceUpgradeServiceTest : AndroidTest {
         val upgrade = UpgradeThemes()
 
         // Constants should have the correct values
-        assertEquals(UpgradeThemes.THEME_FOLLOW_SYSTEM, targetContext.getString(R.string.theme_follow_system_value))
-        assertEquals(UpgradeThemes.THEME_LIGHT, targetContext.getString(R.string.theme_light_value))
-        assertEquals(UpgradeThemes.THEME_PLAIN, targetContext.getString(R.string.theme_plain_value))
-        assertEquals(UpgradeThemes.THEME_BLACK, targetContext.getString(R.string.theme_black_value))
-        assertEquals(UpgradeThemes.THEME_DARK, targetContext.getString(R.string.theme_dark_value))
-        assertEquals(UpgradeThemes.THEME_DAY, targetContext.getString(R.string.theme_day_scheme_value))
-        assertEquals(UpgradeThemes.THEME_NIGHT, targetContext.getString(R.string.theme_night_scheme_value))
+        assertEquals(UpgradeThemes.THEME_FOLLOW_SYSTEM, targetContext.getString(CommonR.string.theme_follow_system_value))
+        assertEquals(UpgradeThemes.THEME_LIGHT, targetContext.getString(CommonR.string.theme_light_value))
+        assertEquals(UpgradeThemes.THEME_PLAIN, targetContext.getString(CommonR.string.theme_plain_value))
+        assertEquals(UpgradeThemes.THEME_BLACK, targetContext.getString(CommonR.string.theme_black_value))
+        assertEquals(UpgradeThemes.THEME_DARK, targetContext.getString(CommonR.string.theme_dark_value))
+        assertEquals(UpgradeThemes.THEME_DAY, targetContext.getString(CommonR.string.theme_day_scheme_value))
+        assertEquals(UpgradeThemes.THEME_NIGHT, targetContext.getString(CommonR.string.theme_night_scheme_value))
 
         // Follow System -> Should remain Follow System, no sub-themes set
         prefs.edit { putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_FOLLOW_SYSTEM) }
