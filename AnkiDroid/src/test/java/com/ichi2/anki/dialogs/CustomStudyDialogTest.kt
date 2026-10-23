@@ -7,7 +7,9 @@ import android.os.Looper
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -59,6 +61,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
@@ -481,6 +484,19 @@ class CustomStudyDialogTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `typed value is kept after a dialog on top closes - issue 22731`() =
+        withTypedInputCoveredByAnotherDialog(ContextMenuOption.EXTEND_NEW, typed = "7") {
+            onSubscreenEditText().check(matches(withText("7")))
+        }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'review ahead' suffix matches the typed value after a dialog on top closes`() =
+        withTypedInputCoveredByAnotherDialog(ContextMenuOption.STUDY_AHEAD, typed = "2") {
+            assertThat(binding.detailsEditText2Layout.suffixText.toString(), equalTo("days"))
+        }
+
     /** Adds a note to [deckName] whose card is due tomorrow */
     private fun addNoteDueTomorrow(deckName: String) {
         addBasicNote().update { moveToDeck(deckName, false) }.firstCard().update {
@@ -511,6 +527,28 @@ class CustomStudyDialogTest : RobolectricTest() {
     ) = withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_AHEAD, deckId = deckId)) { fragment ->
         shadowOf(Looper.getMainLooper()).idle()
         fragment.block(fragment.dialog as AlertDialog)
+    }
+
+    private fun withTypedInputCoveredByAnotherDialog(
+        option: ContextMenuOption,
+        typed: String,
+        block: CustomStudyDialog.() -> Unit,
+    ) {
+        val customStudy = CustomStudyDialog().apply { arguments = argumentsDisplayingSubscreen(option) }
+        Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+            controller.get().setTheme(R.style.Base_Theme_Light)
+            val activity = controller.setup().get()
+            activity.showDialogFragment(customStudy)
+            onSubscreenEditText().perform(replaceText(typed))
+
+            val dialogOnTop = DialogFragment()
+            activity.showDialogFragment(dialogOnTop)
+            shadowOf(Looper.getMainLooper()).idle()
+            dialogOnTop.dismiss()
+            shadowOf(Looper.getMainLooper()).idle()
+
+            customStudy.block()
+        }
     }
 
     private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
