@@ -130,6 +130,15 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             }
             dismissAllDialogFragments()
         }
+        setFragmentResultListener(REQUEST_KEY_DELETE_FIELD) { _, bundle ->
+            val fieldNameToDelete = bundle.getString(ARG_FIELD_NAME) ?: return@setFragmentResultListener
+            getColUnsafe.modSchema(check = false)
+            deleteField(fieldNameToDelete)
+            supportFragmentManager.popBackStackImmediate(
+                null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE,
+            )
+        }
     }
 
     // ----------------------------------------------------------------------------
@@ -277,53 +286,53 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm =
-            Runnable {
-                getColUnsafe.modSchema(check = false)
-                deleteField()
-
-                // This ensures that the context menu closes after the field has been deleted
-                supportFragmentManager.popBackStackImmediate(
-                    null,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
-                )
-            }
-
         if (fieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(R.string.toast_last_field), true)
         } else {
+            val fieldName = noteFields[currentPos].name
+            val resultBundle = Bundle().apply { putString(ARG_FIELD_NAME, fieldName) }
             try {
                 getColUnsafe.modSchema(check = true)
-                val fieldName = noteFields[currentPos].name
                 ConfirmationDialog().let {
                     it.setArgs(
                         title = fieldName,
                         message = resources.getString(R.string.field_delete_warning),
                         positiveButtonText = getString(R.string.dialog_positive_delete),
+                        requestKey = REQUEST_KEY_DELETE_FIELD,
+                        resultBundle = resultBundle,
                     )
-                    it.setConfirm(confirm)
                     showDialogFragment(it)
                 }
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 ConfirmationDialog().let {
-                    it.setConfirm(confirm)
-                    it.setArgs(resources.getString(R.string.full_sync_confirmation))
+                    it.setArgs(
+                        title = "",
+                        message = resources.getString(R.string.full_sync_confirmation),
+                        positiveButtonText = null,
+                        requestKey = REQUEST_KEY_DELETE_FIELD,
+                        resultBundle = resultBundle,
+                    )
                     showDialogFragment(it)
                 }
             }
         }
     }
 
-    private fun deleteField() {
+    private fun deleteField(fieldNameToDelete: String) {
         launchCatchingTask {
             Timber.d("doInBackGroundDeleteField")
             withProgress(message = getString(R.string.model_field_editor_changing)) {
                 val result =
                     withCol {
                         try {
-                            notetypes.remFieldLegacy(notetype, noteFields[currentPos])
-                            true
+                            val fieldToRemove = notetype.fields.find { it.name == fieldNameToDelete }
+                            if (fieldToRemove != null) {
+                                notetypes.remFieldLegacy(notetype, fieldToRemove)
+                                true
+                            } else {
+                                false
+                            }
                         } catch (e: ConfirmModSchemaException) {
                             // Should never be reached
                             e.log()
@@ -582,6 +591,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     companion object {
         const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
         const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
+        const val REQUEST_KEY_DELETE_FIELD = "request_key_delete_field"
+        const val ARG_FIELD_NAME = "arg_field_name"
     }
 }
 
