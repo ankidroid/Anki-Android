@@ -11,8 +11,8 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.android.R as CommonR
 
 private const val DEFAULT_HORIZONTAL_PADDING = 4F
 
@@ -91,14 +91,14 @@ fun Context.increaseHorizontalPaddingOfMenuIcons(
 
 /**
  * Recursively mutates and tints the icons of the items of the given overflow or popup menu
- * with the color [R.attr.overflowAndPopupMenuIconColor] that is specified in the theme.
+ * with the color [CommonR.attr.overflowAndPopupMenuIconColor] that is specified in the theme.
  * Has no effect for items that have no icon.
  */
 fun Context.tintOverflowMenuIcons(
     menu: Menu,
     skipIf: ((MenuItem) -> Boolean)? = null,
 ) {
-    val iconColor = MaterialColors.getColor(this, R.attr.overflowAndPopupMenuIconColor, 0)
+    val iconColor = MaterialColors.getColor(this, CommonR.attr.overflowAndPopupMenuIconColor, 0)
 
     menu.overflowItemsRecursive().forEach { item ->
         if (skipIf == null || !skipIf(item)) {
