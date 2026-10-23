@@ -9,6 +9,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
@@ -306,6 +307,18 @@ class StudyOptionsFragmentTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `study options gradient spans from top to bottom of parent`() =
+        runTest {
+            withStudyOptions {
+                val gradient = requireView().findViewById<View>(R.id.studyoptions_gradient)
+                val params = gradient.layoutParams as ConstraintLayout.LayoutParams
+                assertEquals(ConstraintLayout.LayoutParams.PARENT_ID, params.topToTop)
+                assertEquals(ConstraintLayout.LayoutParams.PARENT_ID, params.bottomToBottom)
+                assertEquals(ConstraintLayout.LayoutParams.PARENT_ID, params.startToStart)
+            }
+        }
 
     private fun assertLifecycleFailure(
         message: String,
