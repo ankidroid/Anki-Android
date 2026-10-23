@@ -106,7 +106,7 @@ class TagsDialog : AnalyticsDialogFragment {
         viewModelFactory {
             initializer {
                 val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_TAGS_FILE)
-                val noteIds = idsFile.getIds()
+                val noteIds = idsFile.getIdsOrNull() ?: throw IOException("Tag selection is no longer available")
                 val checkedTags =
                     requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
                         "$ARG_CHECKED_TAGS is required"

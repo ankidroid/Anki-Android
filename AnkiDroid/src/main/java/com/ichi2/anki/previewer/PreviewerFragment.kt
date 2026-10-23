@@ -62,11 +62,11 @@ class PreviewerFragment :
             // Read before constructing the ViewModel, which immediately loads the first card.
             val ids =
                 try {
-                    arguments.requireParcelable<IdsFile>(ARG_CARD_IDS_FILE).getIds()
+                    arguments.requireParcelable<IdsFile>(ARG_CARD_IDS_FILE).getIdsOrNull()
                 } catch (e: IOException) {
                     throw UnavailableSelectionException(e)
                 }
-            if (ids.isEmpty()) throw UnavailableSelectionException()
+            if (ids.isNullOrEmpty()) throw UnavailableSelectionException()
             PreviewerViewModel(handle, ids, requireNotNull(arguments.getIntOrNull(ARG_CURRENT_INDEX)))
         }
     }

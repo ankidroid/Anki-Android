@@ -53,7 +53,7 @@ class IdsFile(
      *
      * @throws IOException if the file is missing or corrupt.
      */
-    fun getIds(): List<Long> =
+    private fun readIds(): List<Long> =
         FileInputStream(this).use { fileStream ->
             val inputStream = DataInputStream(fileStream.buffered())
             val size = inputStream.readInt()
@@ -73,7 +73,7 @@ class IdsFile(
      */
     fun getIdsOrNull(): List<Long>? =
         try {
-            getIds()
+            readIds()
         } catch (_: FileNotFoundException) {
             Timber.w("ID snapshot is no longer available: %s", this)
             null

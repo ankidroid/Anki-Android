@@ -27,6 +27,7 @@ import java.io.IOException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.days
 
@@ -60,7 +61,7 @@ class IdsFileTest : AndroidTest {
             val file = IdsFile(temporaryFolder.root, listOf(42L), purpose)
             assertTrue(file.name.startsWith(prefix))
             assertTrue(file.name.endsWith(".tmp"))
-            assertEquals(listOf(42L), file.getIds())
+            assertEquals(listOf(42L), file.getIdsOrNull())
         }
     }
 
@@ -73,8 +74,8 @@ class IdsFileTest : AndroidTest {
             file.writeToParcel(parcel, 0)
             parcel.setDataPosition(0)
             val restored = IdsFile.CREATOR.createFromParcel(parcel)
-            assertEquals(ids, restored.getIds())
-            assertEquals(ids, restored.getIds())
+            assertEquals(ids, restored.getIdsOrNull())
+            assertEquals(ids, restored.getIdsOrNull())
             assertTrue(file.exists())
         } finally {
             parcel.recycle()
@@ -84,16 +85,16 @@ class IdsFileTest : AndroidTest {
     @Test
     fun `empty selection is distinct from a missing file`() {
         val file = IdsFile(temporaryFolder.root, emptyList(), IdsFile.Purpose.PREVIEW)
-        assertEquals(emptyList(), file.getIds())
+        assertEquals(emptyList(), file.getIdsOrNull())
         assertTrue(file.delete())
-        assertFailsWith<IOException> { file.getIds() }
+        assertNull(file.getIdsOrNull())
     }
 
     @Test
     fun `incomplete header cannot be read`() {
         val file = IdsFile(temporaryFolder.root, emptyList(), IdsFile.Purpose.PREVIEW)
         file.writeBytes(byteArrayOf(0, 0))
-        assertFailsWith<IOException> { file.getIds() }
+        assertFailsWith<IOException> { file.getIdsOrNull() }
     }
 
     @Test
@@ -104,7 +105,7 @@ class IdsFileTest : AndroidTest {
                 it.writeInt(count)
                 it.writeLong(1L)
             }
-            assertFailsWith<IOException>("count: $count") { file.getIds() }
+            assertFailsWith<IOException>("count: $count") { file.getIdsOrNull() }
         }
     }
 
@@ -116,7 +117,7 @@ class IdsFileTest : AndroidTest {
                 it.writeInt(count)
                 it.writeLong(1L)
             }
-            assertFailsWith<IOException>("count: $count") { file.getIds() }
+            assertFailsWith<IOException>("count: $count") { file.getIdsOrNull() }
         }
     }
 
@@ -229,10 +230,10 @@ class IdsFileTest : AndroidTest {
             parcel.setDataPosition(0)
             val restored = IdsFile.CREATOR.createFromParcel(parcel)
             IdsFile.deleteStaleFiles(storageContext)
-            assertEquals(listOf(7L, 11L), restored.getIds())
+            assertEquals(listOf(7L, 11L), restored.getIdsOrNull())
             file.aged(8.days.inWholeMilliseconds)
             IdsFile.deleteStaleFiles(storageContext)
-            assertFailsWith<IOException> { restored.getIds() }
+            assertNull(restored.getIdsOrNull())
         } finally {
             parcel.recycle()
         }
