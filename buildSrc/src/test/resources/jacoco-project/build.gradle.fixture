@@ -5,6 +5,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' apply false
 }
 
+com.ichi2.anki.gradle.JacocoCoverageKt.registerJacocoLibraryVariants(project)
+
 ext.androidTestVariantName = 'Debug'
 
 // Runtime graph: app -> library -> nested:core (a transitive JVM dependency).
@@ -25,3 +27,6 @@ configure([project(':library'), project(':empty')]) {
     }
     dependencies { implementation project(':nested:core') }
 }
+
+// A runtime library may finish configuring before the app applies coverage.
+evaluationDependsOn(':library')

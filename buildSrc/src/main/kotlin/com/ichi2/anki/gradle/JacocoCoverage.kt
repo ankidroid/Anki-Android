@@ -2,10 +2,14 @@
 
 package com.ichi2.anki.gradle
 
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
+import com.android.build.api.variant.Variant
 import com.ichi2.anki.gradle.HasUnitTestSources.Companion.hasAndroidUnitTestSources
+import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.component.ProjectComponentIdentifier
 import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.named
@@ -36,6 +40,26 @@ fun Project.coverageFileTree(
         )
     },
 )
+
+private class JacocoLibraryVariants(
+    val variants: DomainObjectSet<Variant>,
+)
+
+/** Captures library variants before any library can finish configuring. */
+fun Project.registerJacocoLibraryVariants() {
+    allprojects {
+        val variants = objects.domainObjectSet(Variant::class.java)
+        extensions.add("jacocoLibraryVariants", JacocoLibraryVariants(variants))
+        pluginManager.withPlugin("com.android.library") {
+            val androidTestBuildType = (rootProject.extensions.extraProperties["androidTestVariantName"] as String).lowercase()
+            extensions.configure<LibraryAndroidComponentsExtension> {
+                onVariants(selector().withBuildType(androidTestBuildType)) { variant ->
+                    variants.add(variant)
+                }
+            }
+        }
+    }
+}
 
 /** Registers the merged, unit-test, and Android-test coverage reports. */
 fun Project.registerJacocoCoverageReports(
