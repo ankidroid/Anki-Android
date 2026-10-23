@@ -23,6 +23,10 @@ class FieldState private constructor(
 ) {
     private var customViewIds: List<Int>? = null
 
+    /** Current draft values in display order. */
+    val currentFieldValues: List<String>
+        get() = editor.currentFieldStrings.map { it.orEmpty() }
+
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
         val fieldEditLines: List<FieldEditLine> =
             if (type.type == Type.INIT && customViewIds != null) {
@@ -45,9 +49,9 @@ class FieldState private constructor(
             }
         }
         if (type.type == Type.CHANGE_FIELD_COUNT) {
-            val currentFieldStrings = editor.currentFieldStrings
-            for (i in 0 until min(currentFieldStrings.size, fieldEditLines.size)) {
-                fieldEditLines[i].setContent(currentFieldStrings[i], type.replaceNewlines)
+            val fieldValues = currentFieldValues
+            for (i in 0 until min(fieldValues.size, fieldEditLines.size)) {
+                fieldEditLines[i].setContent(fieldValues[i], type.replaceNewlines)
             }
         }
         return fieldEditLines
