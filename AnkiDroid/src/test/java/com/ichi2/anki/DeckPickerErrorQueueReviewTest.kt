@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
 import anki.backend.backendError
 import anki.collection.OpChanges
+import com.google.protobuf.ByteString
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
@@ -58,6 +59,36 @@ class DeckPickerErrorQueueReviewTest : RobolectricTest() {
                 picker.supportFragmentManager.fragments.any { it is DeckPickerContextMenu },
                 "The context menu must not cover the selection error and use the previous deck's state",
             )
+        }
+    }
+
+    @Test
+    fun `deck refresh handles a failure reading the current deck`() {
+        var failRead = false
+        useBackend {
+            object : Backend() {
+                override fun getDeckLegacy(did: Long): ByteString =
+                    if (failRead) {
+                        throw BackendIoException(
+                            backendError {
+                                kind = BackendError.Kind.IO_ERROR
+                                message = "Review probe: current deck read failed"
+                            },
+                        )
+                    } else {
+                        super.getDeckLegacy(did)
+                    }
+            }
+        }
+        addDeck("Existing")
+        withDeckPicker(deckCount = 0) { picker ->
+            throwOnShowError = false
+            addDeck("New deck to refresh")
+            failRead = true
+            val refresh = picker.viewModel.reloadDeckCounts()
+            advanceRobolectricLooperUntil { refresh.isCompleted }
+            advanceRobolectricLooper()
+            assertEquals(1, picker.viewModel.pendingErrors.value.size)
         }
     }
 
