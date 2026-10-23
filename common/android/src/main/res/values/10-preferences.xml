@@ -555,5 +555,6 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
     <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
     <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
+    <string name="pref_directory_storage_advisory">Some storage devices may have limited free space or per-file size limits. Check that this location can store your collection and media.</string>
     <string name="pref_directory_not_writable">Directory is not writable</string>
 </resources>

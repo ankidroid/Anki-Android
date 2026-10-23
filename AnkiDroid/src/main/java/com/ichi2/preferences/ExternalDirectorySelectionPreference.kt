@@ -45,6 +45,7 @@ class ExternalDirectorySelectionPreference(
             SummaryProvider<ListPreference> { pref ->
                 pref.value.takeUnless { it.isNullOrEmpty() } ?: context.getString(CommonString.pref_directory_not_set)
             }
+        dialogMessage = context.getText(CommonString.pref_directory_storage_advisory)
     }
 
     /** The default AnkiDroid directory, or null if storage is unavailable. */

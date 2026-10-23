@@ -6,6 +6,7 @@ package com.ichi2.preferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
@@ -56,6 +57,18 @@ class ExternalDirectorySelectionPreferenceTest : RobolectricTest() {
         val pref = buildPreference()
 
         assertThat(pref.makeDialogFragment(), instanceOf(FullWidthListPreferenceDialogFragment::class.java))
+    }
+
+    @Test
+    fun `the dialog warns about storage limits without changing the selected directory summary`() {
+        val selectedDirectory = File(targetContext.filesDir, "AnkiDroidTest").absolutePath
+        val pref = buildPreference().apply { value = selectedDirectory }
+
+        assertThat(
+            pref.dialogMessage.toString(),
+            equalTo(targetContext.getString(CommonString.pref_directory_storage_advisory)),
+        )
+        assertThat(pref.summary.toString(), equalTo(selectedDirectory))
     }
 
     /** Builds the preference attached to a screen, as the settings screen does */
