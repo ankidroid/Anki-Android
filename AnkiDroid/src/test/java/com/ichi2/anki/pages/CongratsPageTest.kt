@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.pages
 
-import android.os.Bundle
 import android.os.Looper
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
@@ -23,13 +21,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
-import com.ichi2.anki.dialogs.tags.TagsDialog
-import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.testutils.launchFragmentInContainer
+import com.ichi2.testutils.saveState
 import com.ichi2.testutils.uninitializeField
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -129,51 +126,41 @@ class CongratsPageTest : RobolectricTest() {
             val selectedNote = addBasicNote().update { addTag("selected") }
             val otherNote = addBasicNote().update { addTag("other") }
 
-            val original = Robolectric.buildActivity(EmptyAnkiActivity::class.java)
-            saveControllerForCleanup(original)
-            original.setup()
-            val page = CongratsPage()
-            original.get().supportFragmentManager.commitNow {
-                add(android.R.id.content, page, "congrats")
-            }
-            page.bridgeCommands.getValue("customStudy").invoke()
-            shadowOf(Looper.getMainLooper()).idle()
-
-            onView(withText(TR.customStudyStudyByCardStateOrTag()))
-                .inRoot(isDialog())
-                .perform(scrollTo(), click())
-            onView(withId(android.R.id.button1))
-                .inRoot(isDialog())
-                .perform(click())
-            shadowOf(Looper.getMainLooper()).idle()
-            assertNotNull(original.get().supportFragmentManager.findFragmentByTag("TagsDialog") as? TagsDialog)
+            val savedState =
+                Robolectric.buildActivity(EmptyAnkiActivity::class.java).use { controller ->
+                    val activity = controller.setup().get()
+                    val page = CongratsPage()
+                    activity.supportFragmentManager.commitNow { add(android.R.id.content, page) }
+                    page.bridgeCommands.getValue("customStudy").invoke()
+                    shadowOf(Looper.getMainLooper()).idle()
+                    onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                        .inRoot(isDialog())
+                        .perform(scrollTo(), click())
+                    clickDialogPositiveButton()
+                    controller.saveState()
+                }
 
             // recreate() retains ViewModels and process-local defaults. Restore a fresh activity
             // from saved state and clear the defaults to model process death with the picker open.
-            val savedState = Bundle()
-            original
-                .pause()
-                .stop()
-                .saveInstanceState(savedState)
-                .destroy()
             uninitializeField<CustomStudyDialog>("deferredDefaults")
+            Robolectric.buildActivity(EmptyAnkiActivity::class.java).use { controller ->
+                controller.setup(savedState)
+                shadowOf(Looper.getMainLooper()).idle()
+                // Submit through the real picker and FragmentResult listener, without injecting a result.
+                onView(allOf(withId(R.id.tags_dialog_tag_item), hasDescendant(withText("selected"))))
+                    .inRoot(isDialog())
+                    .perform(click())
+                clickDialogPositiveButton()
+            }
 
-            val restored = Robolectric.buildActivity(EmptyAnkiActivity::class.java)
-            saveControllerForCleanup(restored)
-            restored.setup(savedState)
-            shadowOf(Looper.getMainLooper()).idle()
-            val tagsDialog =
-                assertNotNull(restored.get().supportFragmentManager.findFragmentByTag("TagsDialog") as? TagsDialog)
-
-            // Submit through the real picker and FragmentResult listener, without injecting a result.
-            onView(allOf(withId(R.id.tags_dialog_tag_item), hasDescendant(withText("selected"))))
-                .inRoot(isDialog())
-                .perform(click())
-            (tagsDialog.requireDialog() as AlertDialog).performPositiveClick()
-            shadowOf(Looper.getMainLooper()).idle()
-
-            val customStudyDeck = assertNotNull(col.decks.customStudySession)
-            assertEquals(customStudyDeck.id, selectedNote.firstCard().did)
+            assertEquals(assertNotNull(col.decks.customStudySession).id, selectedNote.firstCard().did)
             assertEquals(Consts.DEFAULT_DECK_ID, otherNote.firstCard().did)
         }
+
+    private fun clickDialogPositiveButton() {
+        onView(withId(android.R.id.button1))
+            .inRoot(isDialog())
+            .perform(click())
+        shadowOf(Looper.getMainLooper()).idle()
+    }
 }
