@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.widget.Chronometer
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.isVisible
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R as CommonR
 
 class AnswerTimerView(
     context: Context,
@@ -81,7 +81,7 @@ class AnswerTimerView(
     }
 
     private fun updateTextColor(isOverLimit: Boolean) {
-        val colorAttr = if (isOverLimit) R.attr.maxTimerColor else android.R.attr.textColor
+        val colorAttr = if (isOverLimit) CommonR.attr.maxTimerColor else android.R.attr.textColor
         setTextColor(ThemeUtils.getThemeAttrColor(context, colorAttr))
     }
 }

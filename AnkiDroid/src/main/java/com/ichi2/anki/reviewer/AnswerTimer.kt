@@ -11,11 +11,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.view.isInvisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Responsible for pause/resume of the card timer and the UI element displaying the amount of time to answer a card
@@ -83,7 +83,7 @@ class AnswerTimer(
         cardTimer.setOnChronometerTickListener { chronometer: Chronometer ->
             val elapsed: Long = elapsedRealTime - chronometer.base
             if (elapsed >= limit) {
-                chronometer.setTextColor(MaterialColors.getColor(context, R.attr.maxTimerColor, 0))
+                chronometer.setTextColor(MaterialColors.getColor(context, CommonR.attr.maxTimerColor, 0))
                 chronometer.stop()
             }
         }

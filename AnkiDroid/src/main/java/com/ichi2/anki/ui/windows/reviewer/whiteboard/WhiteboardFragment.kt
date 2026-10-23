@@ -52,6 +52,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import kotlin.math.roundToInt
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Fragment that displays a whiteboard and its controls.
@@ -353,7 +354,7 @@ class WhiteboardFragment :
             PopupWindow(popupBrushBinding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
 
         val typedValue = TypedValue()
-        val hasAttr = requireContext().theme.resolveAttribute(R.attr.studyScreenElevation, typedValue, true)
+        val hasAttr = requireContext().theme.resolveAttribute(CommonR.attr.studyScreenElevation, typedValue, true)
         brushConfigPopup?.elevation =
             if (hasAttr && typedValue.type == TypedValue.TYPE_DIMENSION) {
                 typedValue.getDimension(resources.displayMetrics)
