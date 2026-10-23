@@ -4,18 +4,19 @@ package com.ichi2.anki.settings.enums
 
 import androidx.annotation.StyleRes
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R as CommonR
 
 sealed interface Theme : PrefEnum {
     @get:StyleRes
     val styleResId: Int
 }
 
-/** [R.array.day_theme_values] */
+/** [CommonR.array.day_theme_values] */
 enum class DayTheme(
     override val entryResId: Int,
     override val styleResId: Int,
 ) : Theme {
-    LIGHT(R.string.theme_light_value, R.style.Theme_Light),
-    PLAIN(R.string.theme_plain_value, R.style.Theme_Light_Plain),
-    EINK(R.string.theme_eink_scheme_value, R.style.Theme_Light_Eink),
+    LIGHT(CommonR.string.theme_light_value, R.style.Theme_Light),
+    PLAIN(CommonR.string.theme_plain_value, R.style.Theme_Light_Plain),
+    EINK(CommonR.string.theme_eink_scheme_value, R.style.Theme_Light_Eink),
 }

@@ -2,7 +2,7 @@
 
 package com.ichi2.anki.settings.enums
 
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R
 
 /** [R.array.app_theme_values] */
 enum class AppTheme(

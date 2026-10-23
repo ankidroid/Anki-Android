@@ -31,6 +31,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 class AppearanceSettingsFragment : SettingsFragment() {
     private var backgroundImage: Preference? = null
@@ -131,7 +132,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             // Drop "Follow system" option (the first one)
             appThemePref.entries = resources.getStringArray(R.array.app_theme_labels).drop(1).toTypedArray()
-            appThemePref.entryValues = resources.getStringArray(R.array.app_theme_values).drop(1).toTypedArray()
+            appThemePref.entryValues = resources.getStringArray(CommonR.array.app_theme_values).drop(1).toTypedArray()
             if (appTheme == AppTheme.FOLLOW_SYSTEM) {
                 appThemePref.value = getString(Themes.currentTheme.entryResId)
             }
