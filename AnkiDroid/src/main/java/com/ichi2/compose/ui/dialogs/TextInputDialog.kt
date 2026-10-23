@@ -54,6 +54,7 @@ fun TextInputDialog(
     dismissText: String = stringResource(CommonString.dialog_cancel),
     initialText: String = "",
     maxLengthCounter: Int? = null,
+    lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
 ) {
@@ -67,6 +68,7 @@ fun TextInputDialog(
             dismissText = dismissText,
             initialText = initialText,
             maxLengthCounter = maxLengthCounter,
+            lengthOf = lengthOf,
             capitalization = capitalization,
             errorMessageFor = errorMessageFor,
         )
@@ -84,6 +86,7 @@ private fun TextInputDialogCard(
     dismissText: String,
     initialText: String,
     maxLengthCounter: Int?,
+    lengthOf: (String) -> Int,
     capitalization: KeyboardCapitalization,
     errorMessageFor: (String) -> String?,
 ) {
@@ -135,7 +138,7 @@ private fun TextInputDialogCard(
                                     Spacer(modifier = Modifier.weight(1f))
                                 }
                                 if (maxLengthCounter != null) {
-                                    Text("${text.length}/$maxLengthCounter")
+                                    Text("${lengthOf(text)}/$maxLengthCounter")
                                 }
                             }
                         }

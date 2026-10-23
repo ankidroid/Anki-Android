@@ -75,6 +75,7 @@ private fun ProfileNameDialog(
         onDismissRequest = onDismissRequest,
         initialText = initialText,
         maxLengthCounter = ProfileName.MAX_LENGTH,
+        lengthOf = { it.trim().length },
         capitalization = KeyboardCapitalization.Words,
         errorMessageFor = { text ->
             when (val result = ProfileName.validate(text)) {
