@@ -15,6 +15,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
@@ -66,7 +67,6 @@ import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
-import com.ichi2.utils.cancelable
 import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -222,18 +222,34 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     }
 
     private fun buildContextMenu(initialization: Deferred<CustomStudyInitialization>): AlertDialog {
-        val builder =
-            AlertDialog
-                .Builder(requireActivity())
-                .title(text = TR.sentenceCase.customStudy)
-                .cancelable(true)
-        val inflater = LayoutInflater.from(builder.context)
+        val dialog =
+            object : AlertDialog(requireActivity()) {
+                override fun onStop() {
+                    // Native dismissal happens before DialogFragment receives its queued callback.
+                    initialization.cancel()
+                    super.onStop()
+                }
+            }
+        val inflater = LayoutInflater.from(dialog.context)
         val menuBinding = DialogCustomStudyMenuBinding.inflate(inflater)
         val container = menuBinding.menuItems
-        val dialog = builder.customView(menuBinding.root).create()
+        dialog.setTitle(TR.sentenceCase.customStudy)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setView(
+            FrameLayout(dialog.context).apply {
+                addView(
+                    menuBinding.root,
+                    FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                    ),
+                )
+            },
+        )
 
         val ta = TypedValue()
-        builder.context.theme.resolveAttribute(android.R.attr.selectableItemBackground, ta, true)
+        dialog.context.theme.resolveAttribute(android.R.attr.selectableItemBackground, ta, true)
 
         fun buildMenuItems(
             defaults: CustomStudyDefaults,
@@ -583,12 +599,14 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      *
      * This method may be slow (> 1s)
      */
-    private fun loadInitialization() =
-        lifecycleScope.asyncIO {
+    private fun loadInitialization(): Deferred<CustomStudyInitialization> {
+        val host = requireActivity()
+        return lifecycleScope.asyncIO {
             coMeasureTime("loadCustomStudyDefaults") {
-                viewModel.initialize()
+                viewModel.initialize { !host.isFinishing }
             }
         }
+    }
 
     /**
      * Line 1 of the number entry dialog
