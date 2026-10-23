@@ -1,3 +1,9 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled
+  Source: https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/android/action/visibility/materialicons/black/res/drawable/baseline_visibility_24.xml
+-->
 <vector android:height="24dp" android:tint="?attr/colorControlNormal"
     android:viewportHeight="24.0" android:viewportWidth="24.0"
     android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
