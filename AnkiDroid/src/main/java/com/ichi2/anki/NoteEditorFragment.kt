@@ -1193,8 +1193,7 @@ class NoteEditorFragment :
             }
 
             if (!isFieldEdited) return false
-            val currentStrings = editFields!!.map { it.text?.toString() ?: "" }
-            return currentStrings != addNoteFieldBaseline
+            return fieldState.currentFieldValues != addNoteFieldBaseline
         }
 
         // changed note type?
