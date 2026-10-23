@@ -23,9 +23,12 @@ class FieldState private constructor(
 ) {
     private var customViewIds: List<Int>? = null
 
-    /** Current draft values in display order. */
+    // Values beyond the current type's field count, retained until the draft is saved or discarded.
+    private var hiddenFieldValues: List<String> = emptyList()
+
+    /** All draft values, including fields temporarily hidden by a smaller note type. */
     val currentFieldValues: List<String>
-        get() = editor.currentFieldStrings.map { it.orEmpty() }
+        get() = editor.currentFieldStrings.map { it.orEmpty() } + hiddenFieldValues
 
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
         val fieldEditLines: List<FieldEditLine> =
@@ -53,6 +56,9 @@ class FieldState private constructor(
             for (i in 0 until min(fieldValues.size, fieldEditLines.size)) {
                 fieldEditLines[i].setContent(fieldValues[i], type.replaceNewlines)
             }
+            hiddenFieldValues = fieldValues.drop(fieldEditLines.size)
+        } else if (type.type != Type.INIT) {
+            clearHiddenFields()
         }
         return fieldEditLines
     }
@@ -88,6 +94,10 @@ class FieldState private constructor(
 
     fun setInstanceState(savedInstanceState: Bundle?) {
         customViewIds = savedInstanceState?.getIntegerArrayList("customViewIds")
+    }
+
+    fun clearHiddenFields() {
+        hiddenFieldValues = emptyList()
     }
 
     /** How fields should be changed when the UI is rebuilt  */
