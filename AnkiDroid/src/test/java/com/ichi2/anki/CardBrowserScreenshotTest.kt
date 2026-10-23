@@ -13,13 +13,13 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
 import com.ichi2.testutils.insetsOf
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateKeyboard
 import com.ichi2.testutils.simulateSystemBars
-import com.ichi2.utils.dp
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 

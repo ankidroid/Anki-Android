@@ -4,7 +4,7 @@ package com.ichi2.anki.ui.animations
 
 import android.view.View
 import android.view.ViewPropertyAnimator
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.dp
 
 fun View.fadeIn(
     duration: Int,

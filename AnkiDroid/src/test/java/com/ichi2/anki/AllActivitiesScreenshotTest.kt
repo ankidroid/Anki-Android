@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
 import com.ichi2.anki.account.AccountActivity
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
@@ -26,7 +27,6 @@ import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.skipTest
-import com.ichi2.utils.dp
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

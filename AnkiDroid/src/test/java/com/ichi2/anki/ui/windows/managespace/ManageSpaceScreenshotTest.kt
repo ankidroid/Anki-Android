@@ -14,8 +14,8 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.testutils.insetsOf
-import com.ichi2.utils.dp
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 

@@ -32,6 +32,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.ActivityNoteTypeFieldEditorBinding
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -54,7 +55,6 @@ import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.customView
-import com.ichi2.utils.dp
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
 import com.ichi2.utils.moveCursorToEnd

@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.TextField
@@ -30,7 +31,6 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.insetsOf
-import com.ichi2.utils.dp
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.util.ReflectionHelpers

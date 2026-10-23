@@ -38,6 +38,7 @@ import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
@@ -48,7 +49,6 @@ import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.ui.AccessibleSearchView
-import com.ichi2.utils.dp
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input

@@ -14,6 +14,7 @@ import androidx.preference.DialogPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogControlPreferenceBinding
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
@@ -31,7 +32,6 @@ import com.ichi2.ui.GesturePicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.create
 import com.ichi2.utils.customView
-import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show

@@ -12,8 +12,8 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
-import com.ichi2.utils.Dp
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.Dp
+import com.ichi2.anki.common.utils.dp
 import org.robolectric.RuntimeEnvironment
 import timber.log.Timber
 import kotlin.math.ceil

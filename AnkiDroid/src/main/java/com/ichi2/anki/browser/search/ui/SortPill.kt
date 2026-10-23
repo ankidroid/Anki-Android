@@ -23,7 +23,7 @@ import com.google.android.material.shape.AbsoluteCornerSize
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.ColumnType
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.utils.updatePaddingRelative
 
 /** Direction expressed by a [SortPill] half — which side is the "active" sort. */

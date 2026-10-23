@@ -19,10 +19,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.ItemDeckBinding
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.utils.dp
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
 import com.ichi2.anki.common.android.R as CommonR

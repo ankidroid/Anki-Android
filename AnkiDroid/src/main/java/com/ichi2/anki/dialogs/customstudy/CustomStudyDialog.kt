@@ -45,6 +45,7 @@ import com.ichi2.anki.browser.search.CardState
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentCustomStudyBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.Companion.deferredDefaults
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
@@ -71,7 +72,6 @@ import com.ichi2.anki.withProgress
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
-import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.setPaddingRelative

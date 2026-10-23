@@ -13,10 +13,10 @@ import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.test.core.app.ActivityScenario
 import com.google.testing.junit.testparameterinjector.TestParameter
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.insetsOf
 import com.ichi2.testutils.simulateKeyboard
-import com.ichi2.utils.dp
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment

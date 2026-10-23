@@ -117,6 +117,7 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
@@ -218,7 +219,6 @@ import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
-import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show

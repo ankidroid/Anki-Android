@@ -6,9 +6,9 @@ import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentSettingsBinding
 import com.ichi2.testutils.dispatchInsets
-import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test

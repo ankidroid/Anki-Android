@@ -12,7 +12,7 @@ import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.dp
 
 @JvmInline
 private value class DepthBitSet(

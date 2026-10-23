@@ -5,11 +5,11 @@ package com.ichi2.anki.filtered
 import androidx.core.view.isVisible
 import anki.decks.copy
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.simulateSystemBars
-import com.ichi2.utils.dp
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject

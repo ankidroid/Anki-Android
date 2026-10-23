@@ -40,6 +40,7 @@ import com.ichi2.anki.asyncCatching
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.removeSafely
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogSetDueDateBinding
 import com.ichi2.anki.databinding.FragmentSetDueDateRangeBinding
 import com.ichi2.anki.databinding.FragmentSetDueDateSingleBinding
@@ -58,7 +59,6 @@ import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.create
-import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title

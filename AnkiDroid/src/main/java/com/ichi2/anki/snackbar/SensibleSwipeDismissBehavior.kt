@@ -13,7 +13,7 @@ import androidx.customview.widget.ViewDragHelper
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.common.android.appContext
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.dp
 import kotlin.math.absoluteValue
 import kotlin.math.sign
 

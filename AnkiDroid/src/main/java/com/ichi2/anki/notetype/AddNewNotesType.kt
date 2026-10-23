@@ -16,6 +16,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogNewNoteTypeBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Utils
@@ -28,7 +29,6 @@ import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
-import com.ichi2.utils.dp
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton

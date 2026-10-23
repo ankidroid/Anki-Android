@@ -13,8 +13,8 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.utils.Dp
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.Dp
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
 import com.skydoves.colorpickerview.AlphaTileView

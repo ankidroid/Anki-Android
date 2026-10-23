@@ -16,8 +16,8 @@ import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
-import com.ichi2.utils.dp
 import com.ichi2.utils.setPaddingRelative
 import timber.log.Timber
 import com.google.android.material.R as MaterialR

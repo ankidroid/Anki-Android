@@ -9,7 +9,7 @@ import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.github.takahirom.roborazzi.provideRoborazziContext
 import com.ichi2.anki.ScreenshotTest
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.dp
 import org.junit.Test
 import org.robolectric.annotation.Config
 
