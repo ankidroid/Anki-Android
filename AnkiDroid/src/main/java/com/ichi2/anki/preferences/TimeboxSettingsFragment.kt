@@ -33,6 +33,7 @@ class TimeboxSettingsFragment : Fragment() {
                 AnkiDroidTheme {
                     val state by viewModel.uiState.collectAsStateWithLifecycle()
                     TimeboxSettingsScreen(
+                        isLoading = state.isLoading,
                         isEnabled = state.isEnabled,
                         minutes = state.minutes,
                         onToggleEnabled = viewModel::toggleEnabled,

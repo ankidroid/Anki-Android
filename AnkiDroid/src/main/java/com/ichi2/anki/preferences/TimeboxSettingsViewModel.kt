@@ -14,6 +14,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 data class TimeboxUiState(
+    val isLoading: Boolean = true,
     val isEnabled: Boolean = false,
     val minutes: Int = TimeboxSettingsViewModel.DEFAULT_TIMEBOX_MINUTES,
 )
@@ -36,6 +37,7 @@ class TimeboxSettingsViewModel : ViewModel() {
             val minutes = if (isEnabled) limitMinutes else DEFAULT_TIMEBOX_MINUTES
             _uiState.value =
                 TimeboxUiState(
+                    isLoading = false,
                     isEnabled = isEnabled,
                     minutes = minutes,
                 )
