@@ -115,8 +115,8 @@ jobs:
     # Do not run the scheduled jobs on forks
     if: (github.event_name == 'schedule' && github.repository == 'ankidroid/Anki-Android') || (github.event_name != 'schedule')
     needs: matrix_prep
-    # Windows takes 30-34 minutes when the Gradle cache misses (#21834)
-    timeout-minutes: 45
+    # Windows can take 40m+ on tests
+    timeout-minutes: 60
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     strategy:
