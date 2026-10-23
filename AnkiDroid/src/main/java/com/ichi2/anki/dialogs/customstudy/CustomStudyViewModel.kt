@@ -13,6 +13,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 
@@ -43,8 +44,11 @@ class CustomStudyViewModel(
     val deckId: DeckId
         get() = savedStateHandle.get<DeckId>(ARG_DECK_ID) ?: error("Deck id was not provided!")
 
-    /** Check the requested deck before loading defaults or changing selection. */
-    suspend fun initialize(): CustomStudyInitialization {
+    /**
+     * Check the requested deck before loading defaults or changing selection.
+     * [canSelectDeck] is checked on the collection queue immediately before selecting.
+     */
+    suspend fun initialize(canSelectDeck: () -> Boolean = { true }): CustomStudyInitialization {
         val context = currentCoroutineContext()
         return withCol {
             if (!hasCustomStudyCards()) {
@@ -53,6 +57,7 @@ class CustomStudyViewModel(
                 val defaults = sched.customStudyDefaults(deckId).toDomainModel()
                 // The dialog may have closed while the backend was loading defaults.
                 context.ensureActive()
+                if (!canSelectDeck()) throw CancellationException("Custom Study initialization is no longer needed")
                 decks.select(deckId)
                 CustomStudyInitialization.Ready(deckId, defaults)
             }
