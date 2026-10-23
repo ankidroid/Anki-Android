@@ -53,6 +53,7 @@ import com.ichi2.utils.copyToClipboard
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * An action which a user can take to resolve a [check][TroubleshootingCheck].
@@ -170,14 +171,14 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                     SummaryStatus.Warning ->
                         Triple(
                             R.drawable.ic_warning_24,
-                            getColorFromAttr(context, R.attr.reminderTroubleshootingWarning),
+                            getColorFromAttr(context, CommonR.attr.reminderTroubleshootingWarning),
                             context.getString(CommonString.reminder_troubleshooting_summary_warning),
                         )
 
                     SummaryStatus.Ok ->
                         Triple(
                             R.drawable.ic_check_circle_24,
-                            getColorFromAttr(context, R.attr.reminderTroubleshootingOk),
+                            getColorFromAttr(context, CommonR.attr.reminderTroubleshootingOk),
                             context.getString(CommonString.reminder_troubleshooting_summary_ok),
                         )
                 }
@@ -430,8 +431,8 @@ private fun CheckResult.iconRes(): Int =
 
 private fun CheckResult.tintColor(context: Context): Int =
     when (this) {
-        is CheckResult.Passed -> getColorFromAttr(context, R.attr.reminderTroubleshootingOk)
-        is CheckResult.Warning -> getColorFromAttr(context, R.attr.reminderTroubleshootingWarning)
+        is CheckResult.Passed -> getColorFromAttr(context, CommonR.attr.reminderTroubleshootingOk)
+        is CheckResult.Warning -> getColorFromAttr(context, CommonR.attr.reminderTroubleshootingWarning)
         is CheckResult.Failed -> context.getColor(android.R.color.holo_red_dark)
         is CheckResult.Loading -> context.getColor(android.R.color.darker_gray)
         is CheckResult.Unavailable -> context.getColor(android.R.color.darker_gray)

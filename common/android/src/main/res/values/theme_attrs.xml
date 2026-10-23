@@ -5,6 +5,12 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
 
+    <!-- Android provides a straightforward way to control action bar styles; an additional color attribute
+     specifically for action bar text color isn't necessary, but it simplifies the color setting
+     while making it accessible everywhere and eases the use of themes -->
+    <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
+    <attr name="actionBarPopupTextColor" format="color"/>
+
     <attr name="incrementerButtonBackground" format="color|reference" />
 
     <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
@@ -17,6 +23,9 @@
     <attr name="deckDivider" format="reference"/>
     <attr name="expandRef" format="reference"/>
     <attr name="collapseRef" format="reference"/>
+    <!-- Navigation drawer -->
+    <attr name="navDrawerItemColor" format="reference"/>
+    <attr name="navDrawerItemBackgroundColor" format="reference"/>
     <!-- Card count colors -->
     <attr name="newCountColor" format="color"/>
     <attr name="learnCountColor" format="color"/>
@@ -79,13 +88,47 @@
     <attr name="buttonShadowColor" format="color"/>
     <attr name="buttonRippleColor" format="color"/>
     <attr name="buttonForegroundColor" format="color"/>
+    <!-- Images -->
+    <attr name="navDrawerImage" format="integer"/>
+
+    <!-- Introduction -->
+    <attr name="introductionLogoTransparent" format="color"/>
+
+    <!-- FAB -->
+    <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
+    <attr name="fab_pressed" format="color"/>
+    <!-- Popup menus' background color -->
+    <attr name="popupBackgroundColor" format="reference"/>
+    <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
 
+    <attr name="snackbarBackgroundTintColor" format="color"/>
+    <attr name="dialogBackground" format="color"/>
+    <attr name="snackbarButtonTextColor" format="color"/>
+
     <attr name="clozeColor" format="color" />
+
+    <!-- Background color for Tab layout. It is essentially the color of the toolbar.
+         The latter is set by colorPrimary, but theme overlay can't use it,
+         as it itself overrides colorPrimary, which is used by the view directly. -->
+    <attr name="tabLayoutBackgroundColor" format="color"/>
+    <attr name="tabActiveIconColor" format="color"/>
+
+    <attr name="checkMediaListBackground" format="color" />
+    <attr name="checkMediaListForeground" format="color" />
+
+    <attr name="progressDialogButtonTextColor" format="color"/>
+
+    <!-- Reminder troubleshooting -->
+    <attr name="reminderTroubleshootingOk" format="color"/>
+    <attr name="reminderTroubleshootingWarning" format="color"/>
 
 
     <attr name="badgeWarningColor" format="color"/>
     <attr name="badgeErrorColor" format="color"/>
+    <attr name="widgetStrokeWidth" format="dimension"/>
+    <attr name="widgetStrokeColor" format="color"/>
     <attr name="studyScreenElevation" format="dimension"/>
+    <attr name="whiteboardToolbarCardStyle" format="reference"/>
 </resources>
