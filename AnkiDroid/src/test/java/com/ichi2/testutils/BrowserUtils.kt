@@ -30,6 +30,7 @@ fun Context.registerWebBrowser() {
             },
         )
     }
+    AdaptionUtil.resetWebBrowserAvailabilityCacheForTests()
     assertTrue(AdaptionUtil.hasWebBrowser(this), "A browser must be available to test external navigation")
 }
 
