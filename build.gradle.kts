@@ -5,6 +5,7 @@ import com.ichi2.anki.gradle.BackendTempLibraryService
 import com.ichi2.anki.gradle.GitHubActionsTestListener
 import com.ichi2.anki.gradle.TestSummaryService
 import com.ichi2.anki.gradle.configureRobolectricJvm
+import com.ichi2.anki.gradle.registerJacocoLibraryVariants
 import com.ichi2.anki.gradle.reportBackendTempLibraries
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
@@ -37,6 +38,8 @@ plugins {
     alias(libs.plugins.ktlint.gradle.plugin) apply false
     alias(libs.plugins.keeper) apply false
 }
+
+registerJacocoLibraryVariants()
 
 val localProperties = Properties()
 if (project.rootProject.file("local.properties").exists()) {
