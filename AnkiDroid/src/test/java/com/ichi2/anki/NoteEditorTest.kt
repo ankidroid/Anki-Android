@@ -464,6 +464,94 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun copyNotePreservesHiddenFieldsAcrossTypeChanges() =
+        withRealSpinnerSelection {
+            val name = addStandardNoteType("Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+            val original = addNoteUsingNoteTypeName(name, "front", "back", "extra")
+            val editor =
+                openNoteEditorWithArgs(
+                    NoteEditorDestination.EditSelection(listOf(original.firstCard().id), DEFAULT).toBundle(),
+                )
+            val copied = openNoteEditorWithArgs(getCopyNoteIntent(editor))
+            advanceRobolectricLooper()
+            copied.setCurrentlySelectedNoteType(col.notetypes.basic.id)
+            advanceRobolectricLooper()
+            copied.setField(0, "edited front")
+            copied.setField(1, "")
+            copied.setCurrentlySelectedNoteType(original.noteTypeId)
+            advanceRobolectricLooper()
+            assertEquals(listOf("edited front", "", "extra"), copied.currentFieldStrings.toList())
+        }
+
+    @Test
+    fun hiddenFieldsDoNotCarryOverAfterSaving() =
+        withRealSpinnerSelection {
+            runTest {
+                val name = addStandardNoteType("Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+                val typeId = col.notetypes.byName(name)!!.id
+                val editor = openNoteEditorWithArgs(NoteEditorDestination.AddNote().toBundle())
+                editor.setCurrentlySelectedNoteType(typeId)
+                advanceRobolectricLooper()
+                editor.setField(0, "front")
+                editor.setField(1, "back")
+                editor.setField(2, "must not leak")
+                editor.setCurrentlySelectedNoteType(col.notetypes.basic.id)
+                advanceRobolectricLooper()
+                val previousCardCount = cardCount
+                editor.saveNote()
+                advanceRobolectricLooper()
+                assertEquals(previousCardCount + 1, cardCount)
+                editor.setCurrentlySelectedNoteType(typeId)
+                advanceRobolectricLooper()
+                assertEquals(listOf("", "", ""), editor.currentFieldStrings.toList())
+            }
+        }
+
+    @Test
+    fun hiddenStickyBaselineSurvivesRoundTrip() =
+        withRealSpinnerSelection {
+            runTest {
+                val name = addStandardNoteType("Sticky Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+                val type = col.notetypes.byName(name)!!
+                type.markFieldAsSticky(2)
+                val editor = openNoteEditorWithArgs(NoteEditorDestination.AddNote().toBundle())
+                editor.setCurrentlySelectedNoteType(type.id)
+                advanceRobolectricLooper()
+                editor.setField(0, "front")
+                editor.setField(2, "sticky text")
+                editor.saveNote()
+                advanceRobolectricLooper()
+                assertEquals(listOf("", "", "sticky text"), editor.currentFieldStrings.toList())
+                assertFalse(editor.hasUnsavedChanges())
+                editor.setFieldValueFromUi(0, "temporary edit")
+                editor.setFieldValueFromUi(0, "")
+                assertFalse(editor.hasUnsavedChanges())
+                editor.setCurrentlySelectedNoteType(col.notetypes.basic.id)
+                advanceRobolectricLooper()
+                editor.setCurrentlySelectedNoteType(type.id)
+                advanceRobolectricLooper()
+                assertEquals(listOf("", "", "sticky text"), editor.currentFieldStrings.toList())
+                assertFalse(editor.hasUnsavedChanges(), "Only unchanged sticky content remains")
+            }
+        }
+
+    @Test
+    fun hiddenDraftStillRequiresDiscardConfirmation() =
+        withRealSpinnerSelection {
+            val name = addStandardNoteType("Hidden Draft", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+            val typeId = col.notetypes.byName(name)!!.id
+            val editor = openNoteEditorWithArgs(NoteEditorDestination.AddNote().toBundle())
+            editor.setCurrentlySelectedNoteType(typeId)
+            advanceRobolectricLooper()
+            editor.setField(2, "unsaved draft text")
+            assertTrue(editor.hasUnsavedChanges())
+            editor.setCurrentlySelectedNoteType(col.notetypes.basic.id)
+            advanceRobolectricLooper()
+            assertEquals(listOf("", ""), editor.currentFieldStrings.toList())
+            assertTrue(editor.hasUnsavedChanges(), "Hidden draft text must still trigger the discard confirmation")
+        }
+
+    @Test
     fun copyNoteCopiesAllFieldsWhenNoteTypeChanges() {
         val name = addStandardNoteType("Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
         val originalNote = addNoteUsingNoteTypeName(name, "front value", "back value", "third value")
