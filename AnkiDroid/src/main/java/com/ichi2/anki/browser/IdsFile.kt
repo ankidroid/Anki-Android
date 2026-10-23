@@ -14,6 +14,7 @@ import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import kotlin.time.Duration.Companion.days
@@ -62,6 +63,20 @@ class IdsFile(
                 throw IOException("Invalid IDs file length or count: $name")
             }
             List(size) { inputStream.readLong() }
+        }
+
+    /**
+     * Reads the IDs, or returns null if the snapshot is no longer available.
+     * An empty snapshot returns an empty list.
+     *
+     * @throws IOException if the file is corrupt or reading fails after opening it.
+     */
+    fun getIdsOrNull(): List<Long>? =
+        try {
+            getIds()
+        } catch (_: FileNotFoundException) {
+            Timber.w("ID snapshot is no longer available: %s", this)
+            null
         }
 
     override fun describeContents(): Int = 0

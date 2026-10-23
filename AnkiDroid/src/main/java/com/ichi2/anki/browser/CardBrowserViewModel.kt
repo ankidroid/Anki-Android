@@ -556,13 +556,12 @@ class CardBrowserViewModel(
         multiselectStateFile = idsFile
         pendingSelectionRestore =
             try {
-                idsFile?.getIds()?.map { CardOrNoteId(it) }
+                idsFile?.getIdsOrNull()?.map { CardOrNoteId(it) }
             } catch (e: Exception) {
-                // #19572: I suspect we have a startup bug here, so continue reporting the exception
                 Timber.w(e, "failed to read STATE_MULTISELECT_VALUES")
                 CrashReportService.sendExceptionReport(
                     e = e,
-                    origin = "19572: STATE_MULTISELECT_VALUES",
+                    origin = "CardBrowserViewModel",
                     onlyIfSilent = true,
                 )
                 // fallback to no selections, but still in multiselect mode
