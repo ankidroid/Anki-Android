@@ -271,9 +271,12 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                 buildExportLimit()
             } catch (e: IOException) {
                 Timber.w(e, "Failed to read export IDs")
-                showThemedToast(requireContext(), CommonString.something_wrong, false)
-                return
+                null
             }
+        if (exportLimit == null) {
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            return
+        }
         export(exportLimit)
     }
 
@@ -345,18 +348,18 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
      * the selected notes/cards or, if those are not present, to the selected
      * deck(or all decks).
      *
-     * @return an [ExportLimit] with the export constraints
+     * @return an [ExportLimit] with the export constraints, or null if the selection is unavailable
      */
-    private fun buildExportLimit(): ExportLimit =
-        when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
+    private fun buildExportLimit(): ExportLimit? {
+        return when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
             ExportType.Notes -> {
-                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIdsOrNull() ?: return null
 
                 exportLimit { noteIds = noteIds { this.noteIds.addAll(ids) } }
             }
 
             ExportType.Cards -> {
-                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIdsOrNull() ?: return null
 
                 exportLimit { cardIds = cardIds { this.cids.addAll(ids) } }
             }
@@ -372,6 +375,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                 }
             }
         }
+    }
 
     /** Attempt to delete the associated [IdsFile] and logs the result */
     private fun removeIdsFile() {

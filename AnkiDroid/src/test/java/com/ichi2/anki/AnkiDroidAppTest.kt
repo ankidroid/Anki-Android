@@ -140,7 +140,7 @@ class AnkiDroidAppTest {
                 val directory = IdsFile.getDirectory()
                 assertEquals(frameworkBase.cacheDir, directory.parentFile)
                 val file = IdsFile(directory, listOf(42L), IdsFile.Purpose.PREVIEW)
-                assertEquals(listOf(42L), file.getIds())
+                assertEquals(listOf(42L), file.getIdsOrNull())
                 assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
 
                 app.launchCacheCleanup().join()
