@@ -110,6 +110,72 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         Assert.assertEquals(3, edited.getOriginalOrdinal(1))
     }
 
+    @Test
+    fun `all reposition destinations preserve the cards belonging to each template`() =
+        runTest {
+            val original = col.notetypes.basicAndReversed
+            col.notetypes.addTemplate(
+                original,
+                Notetypes.newTemplate("Third").apply {
+                    qfmt = "{{Front}} third"
+                    afmt = "{{Back}}"
+                },
+            )
+            val note = addBasicAndReversedNote()
+            val originalCards = note.cards().associate { it.id to it.template().name }
+            for (from in 0..2) {
+                for (to in 0..2) {
+                    if (from == to) continue
+                    val edited = CardTemplateNotetype(col.notetypes.get(original.id)!!.deepClone())
+                    val expectedNames = original.templatesNames.toMutableList()
+                    expectedNames.add(to, expectedNames.removeAt(from))
+                    edited.repositionTemplate(from, to)
+                    edited.saveToDatabase()
+
+                    Assert.assertEquals(expectedNames, col.notetypes.get(original.id)!!.templatesNames)
+                    Assert.assertEquals(originalCards, note.cards().associate { it.id to it.template().name })
+                    col.undo()
+                }
+            }
+        }
+
+    @Test
+    fun `mixed moves additions and deletions survive recreation and a failed save`() =
+        runTest {
+            val original = col.notetypes.basicAndReversed
+            val note = addBasicAndReversedNote()
+            val originalCards = note.cards().sortedBy { it.ord }
+            val edited = CardTemplateNotetype(original.deepClone())
+            edited.appendTemplate("New")
+            edited.getTemplate(2).apply {
+                qfmt = "{{Front}} new"
+                afmt = "{{Back}}"
+            }
+            edited.repositionTemplate(2, 0)
+            edited.deleteTemplate(2)
+            edited.repositionTemplate(1, 0)
+            Assert.assertArrayEquals(intArrayOf(1, 0), edited.getDeleteDbOrds(0))
+            Assert.assertTrue(CardTemplateNotetype.isOrdinalPendingAdd(edited, 1))
+            edited.getTemplate(0).qfmt = "{{Missing}}"
+
+            val restored = CardTemplateNotetype.fromBundle(edited.toBundle())!!
+            try {
+                restored.saveToDatabase()
+                Assert.fail("An unknown field must fail validation")
+            } catch (_: BackendException) {
+                Assert.assertEquals(originalCards.map { it.id }.toSet(), note.cids().toSet())
+            }
+            restored.getTemplate(0).qfmt = original.templates[0].qfmt
+            restored.saveToDatabase()
+
+            Assert.assertEquals(listOf("Card 1", "New"), col.notetypes.get(original.id)!!.templatesNames)
+            Assert.assertEquals(originalCards[0].id, note.cards().single { it.ord == 0 }.id)
+            Assert.assertFalse(note.cids().contains(originalCards[1].id))
+            Assert.assertEquals(2, note.cids().size)
+            col.undo()
+            Assert.assertEquals(originalCards.map { it.id }.toSet(), note.cids().toSet())
+        }
+
     private fun CardTemplateNotetype.appendTemplate(name: String) {
         notetype.templates.append(Notetypes.newTemplate(name))
         Notetypes._updateTemplOrds(notetype)
