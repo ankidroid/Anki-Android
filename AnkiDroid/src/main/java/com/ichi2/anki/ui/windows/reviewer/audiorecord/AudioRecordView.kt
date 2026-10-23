@@ -67,7 +67,7 @@ class AudioRecordView : ConstraintLayout {
     private var stopTrackingAction = false
     private var chronometerBase: Long = 0
     private val recordEnabledColor = context.getColor(CommonR.color.material_red_600)
-    private val recordDisabledColor = ThemeUtils.getThemeAttrColor(context, R.attr.editTextDisabled)
+    private val recordDisabledColor = ThemeUtils.getThemeAttrColor(context, CommonR.attr.editTextDisabled)
 
     private var firstX = 0f
     private var firstY = 0f

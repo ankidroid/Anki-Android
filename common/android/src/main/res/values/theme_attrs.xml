@@ -5,6 +5,8 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
 
+    <attr name="incrementerButtonBackground" format="color|reference" />
+
     <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
     <attr name="widgetColorActivated" format="color"/>
     <!-- Deck list colors, divider, and expander -->
@@ -68,6 +70,19 @@
     <attr name="buriedColor" format="color"/>
     <attr name="selectedColor" format="color"/>
     <attr name="markedColor" format="color"/>
+    <!-- Note editor colors -->
+    <attr name="duplicateColor" format="color"/>
+    <attr name="editTextBackgroundColor" format="color"/>
+    <attr name="editTextHighlightColor" format="color"/><!-- TODO replace this with colorOnPrimaryContainer, see #19361 -->
+    <attr name="toolbarBackgroundColor" format="color"/>
+    <attr name="toolbarIconColor" format="color"/>
+    <attr name="buttonShadowColor" format="color"/>
+    <attr name="buttonRippleColor" format="color"/>
+    <attr name="buttonForegroundColor" format="color"/>
+
+    <attr name="editTextDisabled" format="color"/>
+
+    <attr name="clozeColor" format="color" />
 
 
     <attr name="badgeWarningColor" format="color"/>

@@ -77,6 +77,7 @@ import com.ichi2.utils.boldList
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Supports bulk remapping of notes a different note type, remapping fields and templates
@@ -211,7 +212,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
             android.R.layout.simple_spinner_dropdown_item,
             noteTypes,
         ) {
-            var clozeColor = MaterialColors.getColor(context, R.attr.clozeColor, Color.BLUE)
+            var clozeColor = MaterialColors.getColor(context, CommonR.attr.clozeColor, Color.BLUE)
 
             private val defaultViewTextColor: Int by lazy {
                 (super.getView(0, null, Spinner(context)) as CheckedTextView).currentTextColor

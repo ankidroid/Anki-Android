@@ -575,11 +575,11 @@ class NoteEditorFragment :
             setBackgroundColor(
                 MaterialColors.getColor(
                     requireContext(),
-                    R.attr.toolbarBackgroundColor,
+                    CommonR.attr.toolbarBackgroundColor,
                     0,
                 ),
             )
-            setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
+            setIconColor(MaterialColors.getColor(requireContext(), CommonR.attr.toolbarIconColor, 0))
         }
         setupEdgeToEdge()
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
@@ -2263,7 +2263,7 @@ class NoteEditorFragment :
     ) {
         val drawable =
             ResourcesCompat.getDrawable(resources, drawableRes, null)!!.apply {
-                setTint(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
+                setTint(MaterialColors.getColor(requireContext(), CommonR.attr.toolbarIconColor, 0))
             }
         val button =
             toolbar.insertItem(0, drawable) { insertCloze(type) }.apply {
@@ -2362,7 +2362,7 @@ class NoteEditorFragment :
         // Let the user add more buttons (always at the end).
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, NoteEditorR.drawable.ic_add_toolbar_icon, null)
-        drawable!!.setTint(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
+        drawable!!.setTint(MaterialColors.getColor(requireContext(), CommonR.attr.toolbarIconColor, 0))
         val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(CommonString.add_toolbar_item)
         addButton.setTooltipTextCompat(resources.getString(CommonString.add_toolbar_item))

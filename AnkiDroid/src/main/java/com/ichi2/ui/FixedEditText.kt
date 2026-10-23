@@ -45,9 +45,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.R
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 open class FixedEditText : AppCompatEditText {
     constructor(context: Context) : super(context)
@@ -71,7 +71,7 @@ open class FixedEditText : AppCompatEditText {
         val highlightColor =
             MaterialColors.getColor(
                 context,
-                R.attr.editTextHighlightColor,
+                CommonR.attr.editTextHighlightColor,
                 "#99CCFF".toColorInt(), // light blue color for fallback just-in-case
             )
         setHighlightColor(highlightColor)

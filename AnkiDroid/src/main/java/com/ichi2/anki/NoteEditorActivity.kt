@@ -40,6 +40,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import kotlin.time.Duration.Companion.milliseconds
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * To find the actual note Editor, @see [NoteEditorFragment]
@@ -105,7 +106,7 @@ class NoteEditorActivity :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         } else {
-            setNavigationBarColor(R.attr.toolbarBackgroundColor)
+            setNavigationBarColor(CommonR.attr.toolbarBackgroundColor)
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
