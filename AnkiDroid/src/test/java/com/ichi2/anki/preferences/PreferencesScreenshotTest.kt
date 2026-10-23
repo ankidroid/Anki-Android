@@ -12,6 +12,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
@@ -21,7 +22,6 @@ import com.ichi2.testutils.launchForFullHeightScreenshot
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.withWritePermissions
-import com.ichi2.utils.dp
 import org.junit.After
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment

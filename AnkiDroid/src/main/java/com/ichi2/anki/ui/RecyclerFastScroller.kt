@@ -62,9 +62,9 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.utils.ext.wholeAndFraction
 import com.ichi2.anki.utils.postDelayed
-import com.ichi2.utils.dp
 import com.ichi2.utils.isRtl
 import timber.log.Timber
 import kotlin.time.Duration

@@ -40,12 +40,12 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.noteeditor.data.ToolbarPreferences
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
-import com.ichi2.utils.dp
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber

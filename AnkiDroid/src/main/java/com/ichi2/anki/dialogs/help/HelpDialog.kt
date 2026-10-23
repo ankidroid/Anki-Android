@@ -21,6 +21,7 @@ import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
 import com.ichi2.anki.common.analytics.LinkAction
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogHelpBinding
 import com.ichi2.anki.databinding.FragmentHelpPageBinding
 import com.ichi2.anki.databinding.ItemHelpEntryBinding
@@ -31,7 +32,6 @@ import com.ichi2.anki.dialogs.help.HelpItem.Action.SendReport
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.utils.createAndApply
 import com.ichi2.utils.customView
-import com.ichi2.utils.dp
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 

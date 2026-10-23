@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.OnReceiveContentListener
 import androidx.draganddrop.DropHelper
+import com.ichi2.anki.common.utils.Dp
 
 /** @see View.performClick */
 fun View.performClickIfEnabled() {

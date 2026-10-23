@@ -16,9 +16,9 @@ import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.ViewWhiteboardToolbarBinding
 import com.ichi2.anki.utils.ext.setDuration
-import com.ichi2.utils.dp
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.milliseconds
 

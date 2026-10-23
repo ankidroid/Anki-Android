@@ -67,6 +67,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.common.utils.ext.contentEquals
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ActivityCardTemplateEditorBinding
@@ -114,7 +115,6 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
-import com.ichi2.utils.dp
 import com.ichi2.utils.listItems
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding

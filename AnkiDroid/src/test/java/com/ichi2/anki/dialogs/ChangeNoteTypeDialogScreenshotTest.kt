@@ -11,6 +11,7 @@ import androidx.core.view.updateLayoutParams
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.ScreenshotTest.DeviceConfig.DESKTOP
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
 import com.ichi2.anki.databinding.DialogTemplatesBinding
@@ -19,7 +20,6 @@ import com.ichi2.anki.dialogs.ChangeNoteTypeViewModel.Tab
 import com.ichi2.anki.withCardBrowser
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.windowInsetsOf
-import com.ichi2.utils.dp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

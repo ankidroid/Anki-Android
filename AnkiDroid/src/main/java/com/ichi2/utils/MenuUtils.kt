@@ -12,6 +12,7 @@ import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.dp
 
 private const val DEFAULT_HORIZONTAL_PADDING = 4F
 

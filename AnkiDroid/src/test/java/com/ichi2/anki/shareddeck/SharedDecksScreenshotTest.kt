@@ -21,8 +21,8 @@ import androidx.fragment.app.commit
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.testutils.insetsOf
-import com.ichi2.utils.dp
 import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer

@@ -7,13 +7,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.dialogs.InsertFieldDialog.SelectSpecialFieldFragment
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.withCardTemplateEditor
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.windowInsetsOf
-import com.ichi2.utils.dp
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 

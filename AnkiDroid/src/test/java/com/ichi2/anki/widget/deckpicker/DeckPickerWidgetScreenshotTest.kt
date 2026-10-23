@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.util.SizeF
 import android.view.View.MeasureSpec
 import com.ichi2.anki.ScreenshotTest
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import kotlinx.coroutines.test.TestScope

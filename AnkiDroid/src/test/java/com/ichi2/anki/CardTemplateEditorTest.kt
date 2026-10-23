@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.common.utils.ext.deepClonedInto
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel
@@ -30,7 +31,6 @@ import com.ichi2.anki.scheduling.selectTab
 import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withSplitPaneUi
-import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import org.hamcrest.CoreMatchers.equalTo

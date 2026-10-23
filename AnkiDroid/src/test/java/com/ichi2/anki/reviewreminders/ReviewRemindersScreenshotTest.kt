@@ -17,6 +17,7 @@ import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.launchActivity
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.preferences.PreferencesActivity
@@ -30,7 +31,6 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.positiveButton
 import com.ichi2.testutils.scrollToLastPosition
 import com.ichi2.testutils.simulateSystemBars
-import com.ichi2.utils.dp
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before

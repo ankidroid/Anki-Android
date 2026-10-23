@@ -20,8 +20,8 @@ import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
-import com.ichi2.utils.Dp
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.Dp
+import com.ichi2.anki.common.utils.dp
 
 /**
  * The bottom navigation bar height when the gesture navigation indicator is hidden
