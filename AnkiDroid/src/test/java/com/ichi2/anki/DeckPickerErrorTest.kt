@@ -13,6 +13,7 @@ import anki.backend.backendError
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
+import app.cash.turbine.test
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -248,6 +249,25 @@ class DeckPickerErrorTest : RobolectricTest() {
             assertErrorShown()
         }
     }
+
+    @Test
+    fun `failed selection does not open the right click context menu`() =
+        runTest {
+            useBackend {
+                object : Backend() {
+                    override fun setCurrentDeck(did: Long): OpChanges = throw failure
+                }
+            }
+            val deckId = addDeck("Target")
+            val viewModel = DeckPickerViewModel()
+
+            viewModel.flowOfShowRightClickContextMenu.test {
+                viewModel.requestRightClickContextMenu(deckId, x = 10f, y = 20f).join()
+
+                expectNoEvents()
+            }
+            assertEquals(1, viewModel.pendingErrors.value.size)
+        }
 
     @Test
     fun `failed deck list update shows an error`() {

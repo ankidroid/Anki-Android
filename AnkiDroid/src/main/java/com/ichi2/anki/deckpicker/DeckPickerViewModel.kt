@@ -354,13 +354,14 @@ class DeckPickerViewModel :
     /**
      * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
      */
-    fun selectDeck(deckId: DeckId) =
-        launchCatchingTask {
-            // TODO: should we always reset the Card Browser default deck here?
-            withCol { decks.select(deckId) }
-            focusedDeck = deckId
-            flowOfRefreshDeckList.emit(Unit)
-        }
+    fun selectDeck(deckId: DeckId) = launchCatchingTask { markDeckSelected(deckId) }
+
+    private suspend fun markDeckSelected(deckId: DeckId) {
+        // TODO: should we always reset the Card Browser default deck here?
+        withCol { decks.select(deckId) }
+        focusedDeck = deckId
+        flowOfRefreshDeckList.emit(Unit)
+    }
 
     fun browseCards(deckId: DeckId) =
         launchCatchingIO {
@@ -389,8 +390,8 @@ class DeckPickerViewModel :
     val flowOfShowRightClickContextMenu = MutableSharedFlow<RightClickMenuRequest>(extraBufferCapacity = 1)
 
     fun requestContextMenu(deckId: DeckId) =
-        viewModelScope.launch {
-            selectDeck(deckId).join()
+        launchCatchingTask {
+            markDeckSelected(deckId)
             flowOfShowContextMenu.emit(deckId)
         }
 
@@ -398,8 +399,8 @@ class DeckPickerViewModel :
         deckId: DeckId,
         x: Float,
         y: Float,
-    ) = viewModelScope.launch {
-        selectDeck(deckId).join()
+    ) = launchCatchingTask {
+        markDeckSelected(deckId)
         flowOfShowRightClickContextMenu.emit(RightClickMenuRequest(deckId, x, y))
     }
 
