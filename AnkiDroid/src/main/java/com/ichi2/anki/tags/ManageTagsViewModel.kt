@@ -193,7 +193,14 @@ class ManageTagsViewModel : ViewModel() {
     ) = launchTagOpAndRefresh {
         Timber.i("Moving tag")
         val result = undoableOp { moveTagTree(tag, newParent) }
-        messageQueue.enqueue(TagMoved(result.count))
+        val currentParent = TagName.build(tag.value.substringBeforeLast("::", ""))
+        messageQueue.enqueue(
+            if (result.count == 0 && currentParent != newParent) {
+                UserMessage.UnusedTagNotMoved
+            } else {
+                TagMoved(result.count)
+            },
+        )
     }
 
     private suspend fun loadTags() {
@@ -444,6 +451,12 @@ sealed interface UserMessage {
     data class TagMoved(
         val notesAffected: Int,
     ) : UserMessage
+
+    /**
+     * The backend leaves an entirely unused subtree in place when asked to move it.
+     * Remove this message and its handling when [Anki issue 5870](https://github.com/ankitects/anki/issues/5870) is fixed.
+     */
+    data object UnusedTagNotMoved : UserMessage
 
     /** @param count number of unused tags removed from the collection */
     data class ClearedUnusedTags(
