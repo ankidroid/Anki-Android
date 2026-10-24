@@ -7,6 +7,7 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 class StableScrollbarLayoutManager(
@@ -58,16 +59,19 @@ class StableScrollbarLayoutManager(
         recycler: RecyclerView.Recycler,
         state: RecyclerView.State,
     ): Int {
+        val thumbTopBefore = thumbTop(state)
         val scrolled = super.scrollVerticallyBy(dy, recycler, state)
         scrolledFromTop = scrolledFromTop?.plus(scrolled)
         findViewByPosition(0)?.let { scrolledFromTop = paddingTop - getDecoratedTop(it) }
-        calibrateAtEnd(state)
+        calibrateAtEnd(state, thumbTopBefore)
         return scrolled
     }
 
     override fun onItemsChanged(recyclerView: RecyclerView) {
         super.onItemsChanged(recyclerView)
         rememberRowHeights()
+        measuredRange = measuredRange?.copy(calibrated = false)
+        scrolledFromTop = null
     }
 
     override fun onItemsUpdated(
@@ -132,13 +136,24 @@ class StableScrollbarLayoutManager(
         findViewByPosition(0)?.let { scrolledFromTop = paddingTop - getDecoratedTop(it) }
     }
 
-    private fun calibrateAtEnd(state: RecyclerView.State) {
+    private fun thumbTop(state: RecyclerView.State): Float? {
+        if (measuredRange?.calibrated != false) return null
+        val range = stableRange(state) ?: return null
+        return computeVerticalScrollOffset(state).toFloat() / range
+    }
+
+    private fun calibrateAtEnd(
+        state: RecyclerView.State,
+        thumbTopBefore: Float? = null,
+    ) {
         val scrolled = scrolledFromTop ?: return
         val range = measuredRange ?: return
         if (range.calibrated) return
         val lastRow = findViewByPosition(state.itemCount - 1) ?: return
         if (getDecoratedBottom(lastRow) > height - paddingBottom) return
-        measuredRange = range.copy(range = scrolled + computeVerticalScrollExtent(state), calibrated = true)
+        val extent = computeVerticalScrollExtent(state)
+        val rangeKeepingThumbTop = thumbTopBefore?.let { ceil(extent / (1 - it)).toInt() } ?: 0
+        measuredRange = range.copy(range = maxOf(scrolled + extent, rangeKeepingThumbTop), calibrated = true)
     }
 
     private fun anyRowChangedHeight(heightsBefore: Map<Int, Int>) =

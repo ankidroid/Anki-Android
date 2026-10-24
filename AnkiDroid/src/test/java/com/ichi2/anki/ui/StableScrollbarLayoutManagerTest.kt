@@ -21,6 +21,7 @@ import org.hamcrest.Matchers.closeTo
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.everyItem
 import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
@@ -30,6 +31,46 @@ import org.robolectric.annotation.Config
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
 class StableScrollbarLayoutManagerTest {
+    @Test
+    fun `thumb never moves backwards when the initial rows are taller`() {
+        val list = ScrollbarTestList(List(30) { TALL_ROW } + List(60) { SHORT_ROW })
+
+        val tops = list.scrollToEndCollecting { list.thumb.top }
+        val backwardsStep = tops.zipWithNext().firstOrNull { (before, after) -> after < before }
+
+        assertThat("thumb moved backwards: $backwardsStep", backwardsStep, nullValue())
+    }
+
+    @Test
+    fun `calibration accounts for height changes above the viewport`() {
+        val rows = List(90) { SHORT_ROW }
+        val list = ScrollbarTestList(rows)
+        list.scrollBy(4000)
+        val changedRows = rows.toMutableList().apply { this[0] = 10 * SHORT_ROW }
+
+        // A full refresh can change rows above the viewport without resizing any attached row.
+        list.refreshRows(changedRows)
+        list.scrollToEndCollecting { list.thumb.height }
+        list.scrollToStartCollecting { list.thumb.height }
+        list.scrollToEndCollecting { list.thumb.height }
+
+        assertThat(list.scrollRange, equalTo(changedRows.sum()))
+    }
+
+    @Test
+    fun `calibrated range is invalidated when offscreen rows change height`() {
+        val list = ScrollbarTestList(List(90) { SHORT_ROW })
+        list.scrollToEndCollecting { list.thumb.height }
+        list.scrollToStartCollecting { list.thumb.height }
+        val changedRows = List(60) { SHORT_ROW } + List(30) { TALL_ROW }
+
+        // Toggling browser truncation can resize only the long rows below the viewport.
+        list.refreshRows(changedRows)
+        list.scrollToEndCollecting { list.thumb.height }
+
+        assertThat(list.scrollRange, equalTo(changedRows.sum()))
+    }
+
     @Test
     fun `returning to same content restores thumb position`() {
         val list = ScrollbarTestList(shortThenTallRows)
@@ -49,11 +90,13 @@ class StableScrollbarLayoutManagerTest {
     }
 
     @Test
-    fun `thumb is calibrated at the end after the rows refresh on the way`() {
+    fun `thumb is calibrated on the next pass after the rows refresh on the way`() {
         val list = ScrollbarTestList(shortThenTallRows)
         list.scrollBy(DISTANCE_TO_TALL_ROWS)
 
         list.refreshRows()
+        list.scrollToEndCollecting { list.thumb.height }
+        list.scrollToStartCollecting { list.thumb.height }
         list.scrollToEndCollecting { list.thumb.height }
 
         val expected = list.trackHeight.toDouble() * 2000 / shortThenTallRows.sum()
@@ -189,6 +232,7 @@ private class ScrollbarTestList(
             addView(scroller, FrameLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT, Gravity.END))
         }
 
+    val scrollRange: Int get() = recyclerView.computeVerticalScrollRange()
     val thumb: View get() = scroller.handle
     val trackHeight: Int get() = scroller.height - scroller.handleBottomInset
 
