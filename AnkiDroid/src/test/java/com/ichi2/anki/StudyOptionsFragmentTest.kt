@@ -22,7 +22,10 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.databinding.FragmentStudyOptionsBinding
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.ext.triggerDeckNotFoundInLimitsMap
 import com.ichi2.testutils.launchFragmentInContainer
 import com.ichi2.testutils.withFragment
@@ -42,6 +45,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
@@ -51,6 +55,48 @@ import kotlin.test.assertTrue
  */
 @RunWith(AndroidJUnit4::class)
 class StudyOptionsFragmentTest : RobolectricTest() {
+    /** Issue 22249: backend deletion can leave the tablet showing hidden Default. */
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `tablet shows empty Default after backend deletion and Undo restores custom study`() {
+        val keep = addDeck("Keep")
+        col.setDeck(listOf(addBasicNote().firstCard().id), keep)
+        val deleted = addDeck("Delete me", setAsSelected = true)
+        col.setDeck(listOf(addBasicNote().firstCard().id), deleted)
+
+        deckPicker {
+            advanceRobolectricLooperUntil { fragment?.viewModel?.selectedDeckId == deleted }
+            undoableOp { decks.remove(listOf(deleted)) }
+            advanceRobolectricLooperUntil { fragment?.viewModel?.state is StudyOptionsState.Empty }
+            advanceRobolectricLooper()
+
+            assertEquals(DEFAULT_DECK_ID, col.decks.selected())
+            assertEquals(DEFAULT_DECK_ID, fragment!!.viewModel.selectedDeckId)
+            assertEquals("Default", assertIs<StudyOptionsState.Empty>(fragment!!.viewModel.state).deckName)
+            assertNull(col.sched.deckDueTree().find(DEFAULT_DECK_ID))
+            val undoStatus = col.undoStatus()
+            val menu = menu()
+            fragment!!.onPrepareMenu(menu)
+            updateMenuFromState(menu)
+            assertFalse(assertNotNull(menu.findItem(R.id.action_custom_study)).isVisible)
+            assertTrue(assertNotNull(menu.findItem(R.id.action_deck_or_study_options)).isVisible)
+            assertEquals(undoStatus, col.undoStatus())
+
+            undoAndShowSnackbar()
+            advanceRobolectricLooperUntil { fragment?.viewModel?.selectedDeckId == deleted }
+            assertIs<StudyOptionsState.StudyOptions>(fragment!!.viewModel.state)
+            fragment!!.onPrepareMenu(menu)
+            assertTrue(menu.findItem(R.id.action_custom_study).isVisible)
+            assertNotNull(col.undoStatus().redo)
+
+            redoAndShowSnackbar()
+            advanceRobolectricLooperUntil { fragment?.viewModel?.state is StudyOptionsState.Empty }
+            fragment!!.onPrepareMenu(menu)
+            assertFalse(menu.findItem(R.id.action_custom_study).isVisible)
+            assertEquals(DEFAULT_DECK_ID, fragment!!.viewModel.selectedDeckId)
+        }
+    }
+
     @Test
     fun `empty filtered deck shows counts after a finished regular deck`() =
         runTest {

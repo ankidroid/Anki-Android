@@ -62,7 +62,11 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         FragmentLifecycleFixture("ChangeNoteType") {
             ChangeNoteTypeDialog.newInstance(listOf(addBasicNote().id))
         },
-        FragmentLifecycleFixture("CustomStudy", hasFragmentView = false) { CustomStudyDialog.createInstance(col.decks.selected()) },
+        FragmentLifecycleFixture("CustomStudy", hasFragmentView = false) {
+            // Empty decks dismiss the dialog instead of remaining resumed.
+            addBasicNote()
+            CustomStudyDialog.createInstance(col.decks.selected())
+        },
         FragmentLifecycleFixture("AddReminder", hasFragmentView = false) {
             AddEditReminderDialog.getInstance(AddEditReminderDialog.DialogMode.Add(ReviewReminderScope.Global))
         },
