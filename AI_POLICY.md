@@ -26,9 +26,15 @@ You may be banned from the repository if this occurs a second time.
 ### Contributors
 
 * You **must** be able to explain all your contributions.
-* AI tools **should not** be used to produce GitHub comments, including filling in the pull request 
-  template.
+* When acting as a reviewer, you **may** use AI tools to produce code review comments. Prefer a
+  summary, with the exact AI-generated wording in a `<details>` block.
+* AI tools **should not** be used to produce other GitHub comments, including filling in the pull
+  request template.
 * Contributions that make nontrivial use of AI tools **must** be labelled, with the tool version.
+
+#### Exceptions
+
+AI-generated issues may be submitted at a maintainer's discretion.
 
 ### Handling Questions about AI Use
 
@@ -42,29 +48,53 @@ or trying to bypass this policy may lead to moderator action.
 
 ### Disclosure
 
-**Commit messages** **must** use the `Assisted-by:` 
- [git trailer](https://git-scm.com/docs/git-interpret-trailers#_description) with an explanation
- of the contributions in the description.
+Disclose which AI tools were used.
 
+**Commit messages** **must** use the `Assisted-by:`
+ [git trailer](https://git-scm.com/docs/git-interpret-trailers#_description).
 
 ```
 docs: example title
 
 [Optional commit description]
 
-GPT-5.2 implemented `complexMethod`
-
-Assisted-by: GPT-5.2
-Assisted-by: Claude Opus 4.5 [Proofreading/grammar]
+Assisted-by: GPT-6-Astra xhigh
+Assisted-by: Claude Opus 5.5
 ```
 
-**GitHub comments** **must** use the `> [!NOTE]` 
- [alert](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
+**GitHub comments** **must** disclose AI tool use, typically using one of the following formats:
+
+```md
+Assisted-by: Claude Opus 5.5
+```
+
+```md
+[Summary of change]
+
+<details>
+
+<summary>Assisted-by: Claude Opus 5.5</summary>
+
+Details of change
+
+</details>
+```
+produces:
+
+[Summary of change]
+
+<details>
+
+<summary>Assisted-by: Claude Opus 5.5</summary>
+
+Details of change
+
+</details>
 
 ```md
 > [!NOTE]  
-> The following table was generated using Claude Opus 4.5 
+> The following table was generated using Claude Opus 5.5
 ```
 produces:
-> [!NOTE]  
-> The following table was generated using Claude Opus 4.5
+> [!NOTE]
+> The following table was generated using Claude Opus 5.5
