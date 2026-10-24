@@ -30,7 +30,7 @@ import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.DialogBrowserColumnsSelectionBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.launchCatchingViewTask
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.requireParcelable
@@ -104,7 +104,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_co
         applyInsets()
 
         if (savedInstanceState == null) {
-            launchCatchingTask {
+            launchCatchingViewTask {
                 val (active, available) =
                     withProgress {
                         viewModel.previewColumnHeadings(cardsOrNotes)
