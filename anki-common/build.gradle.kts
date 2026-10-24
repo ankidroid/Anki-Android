@@ -26,6 +26,7 @@ dependencies {
     addAnkiBackendDependencies(project)
 
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.sqlite.framework)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.jakewharton.timber)
