@@ -31,6 +31,8 @@ import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
@@ -134,6 +136,18 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 require(mediaGroupCompleted) { "mediaGroupCompleted never occurred" }
             }
         }
+    }
+
+    @Test
+    fun `missing media warnings can be turned off while media sync is off`() {
+        Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.NEVER)
+        editPreferences { putBoolean(targetContext.getString(R.string.missing_media_warning_key), false) }
+        val viewer = getViewer(addCard = true)
+
+        viewer.displayCouldNotFindMediaSnackbar("missing-image.jpg")
+        advanceRobolectricLooper()
+
+        assertThat(viewer.snackbarText, nullValue())
     }
 
     @Test

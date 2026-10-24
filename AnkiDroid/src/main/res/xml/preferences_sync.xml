@@ -11,7 +11,7 @@
         android:summary="@string/sync_account_summ_logged_out"
         tools:title="AnkiWeb account" >
     </Preference>
-    <ListPreference
+    <com.ichi2.preferences.FetchMediaPreference
         android:defaultValue="@string/sync_media_always_value"
         android:entries="@array/sync_media_entries"
         android:entryValues="@array/sync_media_values"
