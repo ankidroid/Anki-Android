@@ -166,7 +166,7 @@ open class AnkiActivity(
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             @Suppress("deprecation")
-            window.navigationBarColor = getColor(R.color.transparent)
+            window.navigationBarColor = getColor(CommonR.color.transparent)
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
             saveExportFile(

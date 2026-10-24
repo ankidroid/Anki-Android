@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
+    <color name="theme_dark_primary">#3d3d3d</color>
+    <color name="theme_dark_primary_dark">@color/material_grey_900</color>
+    <color name="theme_dark_primary_light">@color/material_grey_800</color>
+    <color name="theme_dark_primary_text">@color/white</color>
+    <color name="theme_dark_secondary_text">#b2ffffff</color>
+    <color name="theme_dark_row_current">#393939</color>
+    <color name="theme_dark_drawer_row_current">#33999999</color>
+    <color name="theme_dark_drawer_item">#DEFFFFFF</color>
+</resources>

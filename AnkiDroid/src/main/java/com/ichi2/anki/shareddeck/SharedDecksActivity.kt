@@ -45,6 +45,7 @@ import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.Serializable
 import kotlin.random.Random
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Browse AnkiWeb shared decks with the functionality to download and import them.
@@ -203,7 +204,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         setTitle(CommonString.download_deck)
         setupEdgeToEdge()
 
-        binding.webviewToolbar.setTitleTextColor(getColor(R.color.white))
+        binding.webviewToolbar.setTitleTextColor(getColor(CommonR.color.white))
         setSupportActionBar(binding.webviewToolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
