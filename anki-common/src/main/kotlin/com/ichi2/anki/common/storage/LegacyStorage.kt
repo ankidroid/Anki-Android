@@ -4,9 +4,11 @@
 package com.ichi2.anki.common.storage
 
 import android.content.Context
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
 import com.ichi2.anki.common.permissions.isExternalStorageManagerCompat
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.android.showThemedToast
 import timber.log.Timber
 import java.io.File
 
@@ -98,3 +100,22 @@ fun grantedStoragePermissions(context: Context): Boolean =
     !isLegacyStorage(context) ||
         hasLegacyStorageAccessPermission(context) ||
         isExternalStorageManagerCompat()
+
+/** Checks whether storage permissions are granted on the device. If the device is not using legacy storage,
+ *  it verifies if the app has been granted the necessary storage access permission.
+ *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
+ *
+ * @throws com.ichi2.anki.exception.SystemStorageException if `getExternalFilesDir` returns null
+ */
+fun grantedStoragePermissions(
+    context: Context,
+    showToast: Boolean,
+): Boolean {
+    val granted = grantedStoragePermissions(context)
+
+    if (!granted && showToast) {
+        showThemedToast(context, context.getString(CommonString.intent_handler_failed_no_storage_permission), false)
+    }
+
+    return granted
+}

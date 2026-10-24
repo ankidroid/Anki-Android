@@ -38,7 +38,6 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.common.destinations.BrowserDestination
@@ -48,6 +47,7 @@ import com.ichi2.anki.common.destinations.StatisticsDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.utils.ext.showDialogFragment
