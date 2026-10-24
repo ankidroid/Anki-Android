@@ -44,20 +44,18 @@ or trying to bypass this policy may lead to moderator action.
 
 ### Disclosure
 
-**Commit messages** **must** use the `Assisted-by:` 
- [git trailer](https://git-scm.com/docs/git-interpret-trailers#_description) with an explanation
- of the contributions in the description.
+Disclose which AI tools were used.
 
+**Commit messages** **must** use the `Assisted-by:`
+ [git trailer](https://git-scm.com/docs/git-interpret-trailers#_description).
 
 ```
 docs: example title
 
 [Optional commit description]
 
-GPT-5.2 implemented `complexMethod`
-
-Assisted-by: GPT-5.2
-Assisted-by: Claude Opus 4.5 [Proofreading/grammar]
+Assisted-by: GPT-6-Astra xhigh
+Assisted-by: Claude Opus 5.5
 ```
 
 **GitHub comments** **must** disclose AI tool use, typically using one of the following formats:
