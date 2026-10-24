@@ -20,11 +20,9 @@
         android:id="@+id/action_add"
         android:title="@string/add_card_type"
         ankidroid:showAsAction="never"/>
-    <!-- not implemented -->
     <item
         android:id="@+id/action_reposition"
         android:title="@string/card_template_reposition_template"
-        android:visible="false"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_rename"

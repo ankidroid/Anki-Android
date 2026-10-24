@@ -4,23 +4,17 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CardTemplateNotetype.ChangeType.ADD
-import com.ichi2.anki.CardTemplateNotetype.ChangeType.DELETE
-import com.ichi2.anki.CardTemplateNotetype.TemplateChange
-import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Notetypes
+import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.remove
 import net.ankiweb.rsdroid.BackendException
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNull
 
@@ -48,16 +42,6 @@ class CardTemplateNotetypeTest : RobolectricTest() {
             restored.saveToDatabase()
             assertNull("A successful save should clear the temporary file", CardTemplateNotetype.fromBundle(state))
         }
-
-    @Test
-    fun `deletion checks reverse earlier deletions in order`() {
-        // Starting with A, B, C, D, delete B and then A before proposing C.
-        val changes = CardTemplateChanges()
-        changes.addTemplateChange(DELETE, 1)
-        changes.addTemplateChange(DELETE, 0)
-
-        Assert.assertArrayEquals(intArrayOf(1, 0, 2), changes.getDeleteDbOrds(0))
-    }
 
     @Test
     @Throws(Exception::class)
@@ -90,124 +74,117 @@ class CardTemplateNotetypeTest : RobolectricTest() {
     }
 
     @Test
-    fun testTemplateChangeSerialization() {
-        // Create a list of changes with both ADD and DELETE types
-        val original =
-            arrayListOf(
-                TemplateChange(0, ADD),
-                TemplateChange(1, DELETE),
-                TemplateChange(2, ADD),
-            )
+    fun `deletion checks preserve database ordinals across additions and deletions`() {
+        val edited = CardTemplateNotetype(col.notetypes.basicAndReversed.deepClone())
+        edited.appendTemplate("Third")
+        edited.appendTemplate("Fourth")
+        edited.deleteTemplate(1)
+        edited.deleteTemplate(1)
 
-        // Serialize the list to bytes (this is what Bundle.putSerializable does)
-        val byteOutput = ByteArrayOutputStream()
-        ObjectOutputStream(byteOutput).use {
-            it.writeObject(original)
-        }
-        val bytes = byteOutput.toByteArray()
+        Assert.assertArrayEquals(intArrayOf(1, 0), edited.getDeleteDbOrds(0))
+        Assert.assertEquals(0, edited.getOriginalOrdinal(0))
+        assertNull("An unsaved addition must have no database ordinal", edited.getOriginalOrdinal(1))
+        Assert.assertTrue(CardTemplateNotetype.isOrdinalPendingAdd(edited, 1))
 
-        // Deserialize back from bytes (this is what Bundle.getSerializable does)
-        @Suppress("UNCHECKED_CAST")
-        val deserialized =
-            ObjectInputStream(ByteArrayInputStream(bytes)).use {
-                it.readObject()
-            } as ArrayList<TemplateChange>
-
-        // Verify the deserialized data matches the original
-        Assert.assertEquals("list size should match", original.size, deserialized.size)
-        for (i in original.indices) {
-            Assert.assertEquals("ordinal at $i", original[i].ordinal, deserialized[i].ordinal)
-            Assert.assertEquals("type at $i", original[i].type, deserialized[i].type)
-        }
+        val restored = CardTemplateNotetype.fromBundle(edited.toBundle())!!
+        Assert.assertArrayEquals(intArrayOf(1), restored.getDeleteDbOrds(1))
+        restored.deleteTemplate(1)
+        restored.appendTemplate("Replacement")
+        Assert.assertArrayEquals(intArrayOf(1, 0), restored.getDeleteDbOrds(0))
+        Assert.assertTrue(CardTemplateNotetype.isOrdinalPendingAdd(restored, 1))
     }
 
     @Test
-    fun testAddDeleteTracking() {
-        // Assume you start with a 2 template model (like "Basic (and reversed)")
-        // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
-        // ...and it should reduce to just removing the original 1st/2nd and adding the final as first
-        val tempNotetype = CardTemplateNotetype(NotetypeJson("{ \"foo\": \"bar\", \"tmpls\": [] }"))
+    fun `deletion checks retain the order of multiple original deletions`() {
+        val notetype = col.notetypes.basicAndReversed.deepClone()
+        for (name in listOf("Third", "Fourth")) {
+            notetype.templates.append(Notetypes.newTemplate(name))
+        }
+        Notetypes._updateTemplOrds(notetype)
+        val edited = CardTemplateNotetype(notetype)
+        edited.deleteTemplate(1)
+        edited.deleteTemplate(0)
 
-        tempNotetype.addTemplateChange(ADD, 3)
-        val expected1 = arrayOf(TemplateChange(3, ADD))
-        // 3 templates and one change now
-        assertTemplateChangesEqual(expected1, tempNotetype.templateChanges)
-        Assert.assertArrayEquals(intArrayOf(), tempNotetype.getDeleteDbOrds(3))
-
-        tempNotetype.addTemplateChange(DELETE, 2)
-        // 2 templates and two changes now
-        val expected2 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE))
-        assertTemplateChangesEqual(expected2, tempNotetype.templateChanges)
-        Assert.assertArrayEquals(intArrayOf(2, 0), tempNotetype.getDeleteDbOrds(0))
-
-        tempNotetype.addTemplateChange(DELETE, 1)
-        // 1 template and three changes now
-        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
-        val expected3 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE))
-        assertTemplateChangesEqual(expected3, tempNotetype.templateChanges)
-
-        tempNotetype.addTemplateChange(ADD, 2)
-        // 2 templates and 4 changes now
-        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
-        val expected4 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(2, ADD))
-        assertTemplateChangesEqual(expected4, tempNotetype.templateChanges)
-
-        // Make sure we can resurrect these changes across lifecycle
-        val outBundle = tempNotetype.toBundle()
-        assertTemplateChangesEqual(expected4, outBundle.getSerializableCompat("mTemplateChanges"))
-
-        // This is the hard part. We will delete a template we added so everything shifts.
-        // The template currently at ordinal 1 was added as template 3 at the start before it slid down on the deletes
-        // So the first template add should be negated by this delete, and the second template add should slide down to 1
-        tempNotetype.addTemplateChange(DELETE, 1)
-        // 1 template and 3 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
-        val expected5 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD))
-        assertTemplateChangesEqual(expected5, tempNotetype.templateChanges)
-
-        tempNotetype.addTemplateChange(ADD, 2)
-        // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
-        val expected6 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
-        assertTemplateChangesEqual(expected6, tempNotetype.templateChanges)
-
-        tempNotetype.addTemplateChange(ADD, 3)
-        // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
-        val expected7 =
-            arrayOf(
-                TemplateChange(2, DELETE),
-                TemplateChange(1, DELETE),
-                TemplateChange(1, ADD),
-                TemplateChange(2, ADD),
-                TemplateChange(3, ADD),
-            )
-        assertTemplateChangesEqual(expected7, tempNotetype.templateChanges)
-
-        tempNotetype.addTemplateChange(DELETE, 3)
-        // 1 template and 3 changes now (two deletes cancelled out adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
-        val expected8 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
-        assertTemplateChangesEqual(expected8, tempNotetype.templateChanges)
+        Assert.assertArrayEquals(intArrayOf(1, 0, 2), edited.getDeleteDbOrds(0))
+        Assert.assertEquals(2, edited.getOriginalOrdinal(0))
+        Assert.assertEquals(3, edited.getOriginalOrdinal(1))
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun assertTemplateChangesEqual(
-        expected: Array<TemplateChange>,
-        actual: Serializable?,
-    ) {
-        if (actual !is ArrayList<*>) {
-            Assert.fail("actual array null or not the correct type")
+    @Test
+    fun `all reposition destinations preserve the cards belonging to each template`() =
+        runTest {
+            val original = col.notetypes.basicAndReversed
+            col.notetypes.addTemplate(
+                original,
+                Notetypes.newTemplate("Third").apply {
+                    qfmt = "{{Front}} third"
+                    afmt = "{{Back}}"
+                },
+            )
+            val note = addBasicAndReversedNote()
+            val originalCards = note.cards().associate { it.id to it.template().name }
+            for (from in 0..2) {
+                for (to in 0..2) {
+                    if (from == to) continue
+                    val edited = CardTemplateNotetype(col.notetypes.get(original.id)!!.deepClone())
+                    val expectedNames = original.templatesNames.toMutableList()
+                    expectedNames.add(to, expectedNames.removeAt(from))
+                    edited.repositionTemplate(from, to)
+                    edited.saveToDatabase()
+
+                    Assert.assertEquals(expectedNames, col.notetypes.get(original.id)!!.templatesNames)
+                    Assert.assertEquals(originalCards, note.cards().associate { it.id to it.template().name })
+                    col.undo()
+                }
+            }
         }
-        Assert.assertEquals(
-            "arrays didn't have the same length?",
-            expected.size.toLong(),
-            (actual as ArrayList<TemplateChange>).size.toLong(),
-        )
-        for (i in expected.indices) {
-            val actualChange = actual[i]
-            Assert.assertEquals("ordinal at $i not correct?", expected[i].ordinal, actualChange.ordinal)
-            Assert.assertEquals("changeType at $i not correct?", expected[i].type, actualChange.type)
+
+    @Test
+    fun `mixed moves additions and deletions survive recreation and a failed save`() =
+        runTest {
+            val original = col.notetypes.basicAndReversed
+            val note = addBasicAndReversedNote()
+            val originalCards = note.cards().sortedBy { it.ord }
+            val edited = CardTemplateNotetype(original.deepClone())
+            edited.appendTemplate("New")
+            edited.getTemplate(2).apply {
+                qfmt = "{{Front}} new"
+                afmt = "{{Back}}"
+            }
+            edited.repositionTemplate(2, 0)
+            edited.deleteTemplate(2)
+            edited.repositionTemplate(1, 0)
+            Assert.assertArrayEquals(intArrayOf(1, 0), edited.getDeleteDbOrds(0))
+            Assert.assertTrue(CardTemplateNotetype.isOrdinalPendingAdd(edited, 1))
+            edited.getTemplate(0).qfmt = "{{Missing}}"
+
+            val restored = CardTemplateNotetype.fromBundle(edited.toBundle())!!
+            try {
+                restored.saveToDatabase()
+                Assert.fail("An unknown field must fail validation")
+            } catch (_: BackendException) {
+                Assert.assertEquals(originalCards.map { it.id }.toSet(), note.cids().toSet())
+            }
+            restored.getTemplate(0).qfmt = original.templates[0].qfmt
+            restored.saveToDatabase()
+
+            Assert.assertEquals(listOf("Card 1", "New"), col.notetypes.get(original.id)!!.templatesNames)
+            Assert.assertEquals(originalCards[0].id, note.cards().single { it.ord == 0 }.id)
+            Assert.assertFalse(note.cids().contains(originalCards[1].id))
+            Assert.assertEquals(2, note.cids().size)
+            col.undo()
+            Assert.assertEquals(originalCards.map { it.id }.toSet(), note.cids().toSet())
         }
+
+    private fun CardTemplateNotetype.appendTemplate(name: String) {
+        notetype.templates.append(Notetypes.newTemplate(name))
+        Notetypes._updateTemplOrds(notetype)
+        addNewTemplate()
+    }
+
+    private fun CardTemplateNotetype.deleteTemplate(ordinal: Int) {
+        removeTemplate(ordinal)
+        notetype.templates.remove(getTemplate(ordinal))
+        Notetypes._updateTemplOrds(notetype)
     }
 }

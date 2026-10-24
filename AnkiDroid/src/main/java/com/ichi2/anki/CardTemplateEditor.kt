@@ -344,7 +344,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             tempNoteType?.let { putAll(it.toBundle()) }
             putLong(STATE_NOTE_TYPE_ID, noteTypeId)
             putLong(STATE_NOTE_ID, noteId)
-            putInt(STATE_STARTING_TEMPLATE_ORDINAL, startingOrdId)
+            putInt(STATE_STARTING_TEMPLATE_ORDINAL, ord)
             putSerializable(STATE_TAB_TO_VIEW_ID, tabToViewId)
             putSerializable(STATE_TAB_TO_CURSOR_POSITION, tabToCursorPositions)
             super.onSaveInstanceState(this)
@@ -552,6 +552,39 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         val adapter = mainBinding.cardTemplateEditorPager.adapter ?: return null
         return supportFragmentManager.findFragmentByTag("f${adapter.getItemId(position)}") as? CardTemplateFragment
     }
+
+    private fun repositionTemplate(
+        from: CardOrdinal,
+        to: CardOrdinal,
+    ) {
+        if (from == to) return
+        val positions = (0 until tempNoteType!!.templateCount).toMutableList()
+        // Save the live cursor positions before the fragments are recreated at their new positions.
+        for (position in positions) {
+            templateFragment(position)?.takeIf { it.view != null }?.let { fragment ->
+                tabToCursorPositions[position]?.set(fragment.currentEditorViewId, fragment.binding.editText.selectionStart)
+            }
+        }
+        positions.add(to, positions.removeAt(from))
+        tabToCursorPositions = reorderTabState(tabToCursorPositions, positions)
+        tabToViewId = reorderTabState(tabToViewId, positions)
+        tempNoteType!!.repositionTemplate(from, to)
+
+        val pager = mainBinding.cardTemplateEditorPager
+        (pager.adapter as TemplatePagerAdapter).ordinalShift()
+        pager.adapter!!.notifyDataSetChanged()
+        pager.setCurrentItem(to, false)
+        loadTemplatePreviewerFragmentIfFragmented(to)
+        updateDiscardChangesCallback()
+    }
+
+    private fun <T> reorderTabState(
+        state: HashMap<Int, T>,
+        positions: List<Int>,
+    ): HashMap<Int, T> =
+        positions
+            .mapIndexedNotNull { newPosition, oldPosition -> state[oldPosition]?.let { newPosition to it } }
+            .toMap(HashMap())
 
     @get:VisibleForTesting
     val currentFragment: CardTemplateFragment?
@@ -951,14 +984,16 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         }
 
         private fun showRepositionDialog() {
+            if (noteTypeCreatesDynamicNumberOfNotes() || tempModel.templateCount < 2) return
+            val currentPosition = templateEditor.ord
             RepositionCardTemplateDialog.showInstance(
                 requireContext(),
-                templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
-                    .itemCount,
+                tempModel.templateCount,
             ) { newPosition ->
-                val currentPosition = templateEditor.ord
-                Timber.w("moving card template %d to %d", currentPosition, newPosition)
-                TODO("CardTemplateNotetype is a complex class and requires significant testing")
+                val newOrdinal = newPosition - 1
+                if (newOrdinal == currentPosition) return@showInstance
+                Timber.i("moving card template %d to %d", currentPosition, newOrdinal)
+                executeWithSyncCheck(Runnable { templateEditor.repositionTemplate(currentPosition, newOrdinal) })
             }
         }
 
@@ -1122,6 +1157,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         fun setupCommonMenu(menu: Menu) {
             menu.findItem(R.id.action_restore_to_default).title = TR.sentenceCase.restoreToDefault
             menu.findItem(R.id.action_card_browser_appearance).title = TR.sentenceCase.browserAppearance
+            menu.findItem(R.id.action_reposition).isVisible = !noteTypeCreatesDynamicNumberOfNotes() && tempModel.templateCount > 1
             if (noteTypeCreatesDynamicNumberOfNotes()) {
                 Timber.d("Editing cloze/occlusion note type, disabling add/delete card template and deck override functionality")
                 menu.findItem(R.id.action_add).isVisible = false
@@ -1579,7 +1615,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         ) {
             val templates = noteType.templates
             templates.append(newTemplate)
-            templateEditor.tempNoteType!!.addNewTemplate(newTemplate)
+            templateEditor.tempNoteType!!.addNewTemplate()
             templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
                 .notifyDataSetChanged()
             templateEditor.mainBinding.cardTemplateEditorPager.setCurrentItem(

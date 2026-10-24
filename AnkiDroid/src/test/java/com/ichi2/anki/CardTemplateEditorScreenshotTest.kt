@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -17,9 +18,13 @@ import com.ichi2.anki.common.utils.dp
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.insetsOf
 import com.ichi2.testutils.simulateKeyboard
+import com.ichi2.utils.getInputField
+import com.ichi2.utils.positiveButton
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 
 /**
  * Screenshot tests for [CardTemplateEditor]
@@ -27,6 +32,37 @@ import org.robolectric.RuntimeEnvironment
  * `./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot --tests "com.ichi2.anki.CardTemplateEditorScreenshotTest"`
  */
 class CardTemplateEditorScreenshotTest : ScreenshotTest() {
+    @Test
+    fun repositionFullSyncConfirmation() =
+        withCardTemplateEditor(col.notetypes.basicAndReversed) {
+            col.setSchemaModified()
+            col.db.execute("update col set ls = scm")
+            shadowOf(this).clickMenuItem(R.id.action_reposition)
+            advanceRobolectricLooper()
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.getInputField().setText("2")
+            dialog.positiveButton.performClick()
+            advanceRobolectricLooper()
+            captureScreen("reposition_full_sync_confirmation")
+        }
+
+    @Test
+    fun reposition() =
+        withCardTemplateEditor(col.notetypes.basicAndReversed) {
+            openOptionsMenu()
+            advanceRobolectricLooper()
+            captureScreen("reposition_menu")
+            closeOptionsMenu()
+            shadowOf(this).clickMenuItem(R.id.action_reposition)
+            advanceRobolectricLooper()
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.getInputField().setText("2")
+            captureScreen("reposition_dialog")
+            dialog.positiveButton.performClick()
+            advanceRobolectricLooper()
+            captureScreen("reposition_result")
+        }
+
     @Test
     fun basic() {
         val collectionBasicNoteTypeOriginal = getCurrentDatabaseNoteTypeCopy("Basic")
