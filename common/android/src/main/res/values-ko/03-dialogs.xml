@@ -26,7 +26,7 @@
     <string name="check_db_warning">시간이 오래 걸릴 수 있습니다. 계속할까요?</string>
     <string name="delete_deck_title">덱을 삭제할까요?</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">%1$s의 모든 카드를 삭제할까요? 이는 %2$d개의 카드가 있습니다</item>
+        <item quantity="other">%1$s의 모든 카드를 삭제할까요? 이곳에 %2$d개의 카드가 있습니다</item>
     </plurals>
     <string name="delete_cram_deck_message">필터링된 덱 %s을(를) 삭제하고 모든 카드를 원래 덱으로 돌려보낼까요?</string>
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
@@ -76,7 +76,7 @@
     <string name="dialog_positive_overwrite">덮어쓰기</string>
     <string name="dialog_positive_repair">복구</string>
     <string name="dialog_positive_replace">대체</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\n날짜 및 시간을 올바르게 설정하거나 자동 시간대를 활성화한 후 다시 동기화하세요. \n\n현재 기기 시간: %2$s</string>
     <string name="dialog_collection_path_not_dir">지정된 경로가 올바르지 않습니다.</string>
     <string name="dialog_invalid_custom_certificate">포함된 텍스트가 올바른 PEM 인코딩된 X509 인증서를 가지고 있지 않습니다</string>
     <string name="dialog_invalid_custom_certificate_title">인증서 인식 오류</string>
@@ -85,7 +85,7 @@
     <string name="check_media_warning">미디어가 클 경우 시간이 오래 걸릴 수 있습니다. 계속할까요?</string>
     <string name="check_media_message">미디어 점검 중&#8230;</string>
     <string name="check_media_adding_missing_tag">태그 추가 중&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">태그 추가됨</string>
     <string name="delete_media_message">미디어 삭제 중&#8230;</string>
     <string name="delete_media_result_title">삭제 결과</string>
     <plurals name="delete_media_result_message">
@@ -103,7 +103,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">오디오 녹음 권한이 거부됨</string>
     <string name="permission_denied">권한이 거부되었습니다.</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">마이크 권한이 거부되었습니다. 설정 앱에서 권한을 허용해주세요.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
@@ -114,7 +114,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">데이터베이스 잠김</string>
-    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">다른 AnkiDroid 앱이 이 컬렉션을 사용하고 있습니다. 앱이 실행되고 있지 않아도, 충돌이 발생할 수 있습니다. \n\n두 앱을 계속 사용하려면, 둘 중 하나의 앱의 고급 설정에서 \'%s\'를 변경하세요. \n\n지금 바로 이 앱을 사용하려면, 충돌이 발생하는 다른 앱을 강제 종료하세요.</string>
     <string name="incompatible_database_version_title">Incompatible Database Version</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
@@ -136,7 +136,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">언어 설정</string>
     <string name="locale_selection_dialog_summary">일부 다국어 키보드(예: Gboard)는 텍스트를 편집할 때 언어를 자동으로 변경할 수 있습니다.\n\n사용 중인 키보드에서 언어가 변경되지 않는다면, 키보드 제조사에 \"setImeHintLocales\" 기능 지원을 요청해 주세요.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">알 수 없는 언어 [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid 사용법</string>
     <string name="help_item_ankidroid_manual">AnkiDroid 매뉴얼</string>
@@ -234,7 +234,7 @@
     <string name="login_successful">로그인 성공</string>
     <string name="sync_now">지금 동기화할까요?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">카드 개수는 바뀌지 않습니다</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
     <string name="extra_cloze_deletions_removed">일반 노트 타입으로 변경할 경우, cloze 개수가 사용 가능한 카드 템플릿 수보다 많으면 초과된 카드는 삭제됩니다</string>
     <string name="different_note_types_selected">한 가지 노트 타입의 노트만 선택해 주세요</string>
@@ -248,15 +248,15 @@
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">상위 덱을 포함하여 카드가 속한 전체 덱%s</string>
     <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">상위 덱을 제외하고 카드가 속한 현재 덱%s</string>
     <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">노트%s의 태그</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">카드%s의 ID</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">카드 템플릿%s의 이름</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">노트 타입%s의 이름</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">에서</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">으로</string>
     <!-- Add profile dialog -->
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">프로필 이름</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">프로필 이름은 비어 있을 수 없습니다</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">프로필 이름은 %1$d 글자 이하여야 합니다</string>
 </resources>

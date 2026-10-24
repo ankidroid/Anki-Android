@@ -24,7 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="enabled" comment="Generic label for something that is turned on">Enabled</string>
+    <string name="enabled" comment="Generic label for something that is turned on">켜짐</string>
     <string name="disabled" comment="Generic label for something that is turned off">비활성화됨</string>
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d분</item>
@@ -54,7 +54,7 @@
     <string name="dangerous_js_api_denied_snackbar">보안 차단: 안전하지 않은 JavaScript 호출이 차단되었습니다.\n컬렉션의 모든 카드와 템플릿을 신뢰하는 경우, 고급 설정에서 이 차단을 해제할 수 있습니다.</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">카드에서 다른 앱으로 이동 허용</string>
-    <string name="allow_card_external_launch_summ">카드가 다른 앱을 열고, 의도치 않은 작업을 수행할 수 있습니다.\n컬렉션의 카드와 템플릿을 신뢰할 수 없는 경우 비활성화 하세요.</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
     <string name="card_external_launch_denied_snackbar">보안 차단: 다른 앱을 열 수 없습니다.\n컬렉션의 카드와 템플릿을 신뢰하는 경우, 고급 설정에서 차단을 해제할 수 있습니다.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">획 두께</string>
@@ -231,8 +231,8 @@
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
     <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
-    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
-    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
+    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">덱 없음</string>
+    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">리마인더 사용 불가</string>
     <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
     <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
     <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
@@ -240,10 +240,10 @@
     <!-- Add / edit reminder dialog -->
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">복습 리마인더 추가</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">복습 리마인더 편집</string>
-    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
-    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
-    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">시간:</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">덱:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">고급 설정</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">카드 한도:</string>
     <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
     <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>

@@ -26,15 +26,15 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Obrir el calaix</string>
     <string name="drawer_close">Tancar el calaix</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Nota desada</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Paquet de cartes:</string>
     <string name="CardEditorNoteDeck" comment="Label of the field choosing which deck a note\'s cards go into, in the note editor.">Paquet:</string>
     <string name="CardEditorModel">Tipus:</string>
     <string name="CardEditorTags">Etiquetes: %1$s</string>
     <string name="CardEditorCards">Cartes: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="edit_occlusions">Edita oclusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Enganxa des del porta-retalls</string>
     <string name="add_new_filter_tags">Afegir/filtrar etiquetes</string>
     <string name="add_tag" maxLength="28">Afegir etiqueta</string>
     <string name="check_all_tags" maxLength="28">Activar/desactivar totes les etiquetes</string>
@@ -45,15 +45,15 @@
     <string name="save_whiteboard" maxLength="28">Desar pissarra</string>
     <string name="enable_stylus" maxLength="28">Activa el mode de llapis</string>
     <string name="disable_stylus">Desactiva el mode de llapis</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">Esborrador</string>
     <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Esquerra</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">A baix</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Dreta</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Més opcions</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Traç</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
     <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Activar pissarra</string>
@@ -63,13 +63,13 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">Amaga la pissarra</string>
     <string name="clear_whiteboard" maxLength="28">Esborra la pissarra</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Amaga la barra d\'eines</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
     <string name="leech_notification">Fitxa marcada com a lapa</string>
     <string name="webview_crash_unknown">Error desconegut</string>
     <string name="webview_crash_unknwon_detailed">Això ha estat causat per un error intern a WebView</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">No hi ha prou memòria.</string>
     <string name="webview_crash_oom_details">El sistema ha finalitzat WebView. Això sol passar quan l’aplicació es queda sense memòria, sovint a causa de dades de grans dimensions.</string>
     <string name="webview_crash_nonfatal">El renderitzador de WebVieu s\'ha penjat. Causa %s</string>
     <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>

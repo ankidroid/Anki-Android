@@ -55,7 +55,7 @@
     <string name="dangerous_js_api_denied_snackbar">Sécurité: appel JavaScript non sécurisé bloqué.\nSi vous faites confiance à toutes les cartes et tous les modèles de votre collection, vous pouvez débloquer cette option dans les paramètres avancés.</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">Autoriser les cartes à lancer d’autres applications</string>
-    <string name="allow_card_external_launch_summ">Les cartes peuvent ouvrir d\'autres applications sur votre appareil, déclenchant des actions potentiellement indésirables.\nQuitter à moins que vous ne fassiez confiance à toutes les cartes et tous les modèles de votre collection.</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
     <string name="card_external_launch_denied_snackbar">Sécurité : La carte ne peut pas lancer d’autres applications.\nSi vous faites confiance à toutes les cartes et modèles de votre collection, vous pouvez débloquer cette option dans les paramètres avancés.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Largeur des traits</string>

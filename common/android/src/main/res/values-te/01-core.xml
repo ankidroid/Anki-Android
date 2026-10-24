@@ -97,7 +97,7 @@
     <string name="invalid_deck_name">చెల్లని డెక్ పేరు</string>
     <string name="studyoptions_congrats_finished">అభినందనలు! ఈ రోజుకి  మీరు పూర్తి చేసారు.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ప్రస్తుతానికి డెక్ పూర్తయింది! %s</string>
-    <string name="studyoptions_no_cards_due">ఎక్కువ కార్డులు లేవు</string>
+    <string name="studyoptions_no_cards_due">ఇప్పటికే చేయాల్సిన చీటిలు లేవు</string>
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">సమకాలీకరణ</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">మీరు సమకాలీకరణను రద్దు చేయాలనుకుంటున్నారా?</string>
@@ -108,7 +108,7 @@
     <string name="export_deck" maxLength="28">ఎగుమతి డెక్</string>
     <string name="export_collection">ఎగుమతి సేకరణ</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">కార్డ్ రకాలు</string>
+    <string name="title_activity_template_editor">చీటి రకాలు</string>
     <string name="card_template_editor_deck_override" maxLength="28">డెక్ ఓవర్‌రైడ్</string>
     <string name="card_template_editor_insert_field" maxLength="28">ఫీల్డ్‌ను చొప్పించండి</string>
     <string name="card_template_editor_select_field">ఫీల్డ్‌ను ఎంచుకోండి</string>
@@ -121,11 +121,11 @@
         <item quantity="one">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డు?</item>
         <item quantity="other">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డులు?</item>
     </plurals>
-    <string name="card_template_editor_save_error">కార్డ్ టెంప్లేట్ మార్పులను సేవ్ చేయడం సాధ్యపడలేదు: %s</string>
-    <string name="template_for_current_card_deleted">ప్రస్తుత కార్డ్ కోసం కార్డ్ రకం తొలగించబడింది.</string>
+    <string name="card_template_editor_save_error">చీటి టెంప్లేట్ మార్పులను సేవ్ చేయడం సాధ్యపడలేదు: %s</string>
+    <string name="template_for_current_card_deleted">ప్రస్తుత చీటి కోసం చీటి రకం తొలగించబడింది.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>
-    <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, కార్డులు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>
+    <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, చీటీలు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
     <string name="context_menu_anki_card_label">Anki card</string>
@@ -154,7 +154,7 @@
     <string name="storage_access_title">నిల్వ యాక్సెస్</string>
     <string name="storage_access_summary">యాప్‌ని అన్‌ఇన్‌స్టాల్ చేస్తే తొలగించబడని సురక్షిత ప్రదేశంలో మీ సేకరణను సేవ్ చేస్తుంది</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">అన్ని ఫైల్‌ల యాక్సెస్</string>
-    <string name="image_occlusion">చిత్రం ముగింపు</string>
+    <string name="image_occlusion">చిత్ర అక్లూషన్</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">మైక్రోఫోన్</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">మీ కార్డులకు సౌండ్ జోడించడానికి అనుమతిస్తది ఇంకా రివ్యూ చేసేటప్పుడు వాయిస్ ప్లేబాక్ కి అనుమతిస్తది</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">బ్యాక్గ్రౌండ్ మీడియా సింకింగ్ ను ప్రారంభింస్తుంది మరియు రివ్యూ రిమైండర్‌లను సృష్టించడానికి మిమ్మల్ని అనుమతిస్తుంది</string>
@@ -164,7 +164,7 @@
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ఖాతాను తీసివేయండి</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">తక్షణ కార్డ్</string>
+    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">తక్షణ చీటి</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
     <string name="permission_access_summary">Required for the app to work</string>

@@ -242,8 +242,8 @@
     <string name="edit_toolbar_item">Upravit položku nástrojové lišty</string>
     <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ji upravili nebo odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Text tlačítka je povinný</string>
+    <string name="before_after_text_requirement_error">Alespoň jedno HTML pole je povinné</string>
     <string name="note_editor_image_too_large">Obrázek je příliš velký, vložte ho prosím ručně</string>
     <string name="note_editor_video_too_large">Video je příliš velké, vložte ho prosím ručně</string>
     <string name="note_editor_audio_too_large">Zvukový soubor je příliš velký, vložte ho prosím ručně</string>
@@ -281,8 +281,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Rychlost</string>
+    <string name="download_time_left_label">Zbývající čas</string>
     <string name="deck_download_progress_message">Během stahování můžete používat jiné aplikace</string>
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
     <string name="external_storage_unavailable">Stahování přerušeno, externí úložiště není k dispozici</string>
@@ -389,9 +389,9 @@
     <!--Set up date-->
     <string name="set_due_date_day" comment="Used for setting due date">Den</string>
     <string name="set_due_date_date_range">Časové období</string>
-    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Již probíhá</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Změnit profil</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Upravit profil</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Odstranit profil</string>
 </resources>

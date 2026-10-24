@@ -49,13 +49,13 @@
     <string name="multimedia_editor_audio_view_create_failed">録音ツールバーを作成できません</string>
     <!-- Crop function-->
     <string name="crop_image">この画像をトリミングしますか？</string>
-    <string name="crop_button" maxLength="28">Crop</string>
+    <string name="crop_button" maxLength="28">クロップ</string>
     <string name="save_dialog_content">現在の画像サイズは%sMBですが、1MB未満にすることを推奨します。画像サイズを減らすため圧縮しますか？</string>
     <string name="select_image_failed">"画像の選択に失敗しました。もう一度試してください"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">フィールドの内容</string>
     <string name="crop_image_size_notice">画像のサイズが、トリミング用のエディタで処理できる大きさを超えています。画像サイズを変更してから、もう一度試してください。</string>
     <string name="reselect" maxLength="28">再選択</string>
-    <string name="waveform_button_description">Show audio waveform</string>
+    <string name="waveform_button_description">音声の波形を表示</string>
     <string name="field_content_description">フィールドの内容を表示</string>
     <string name="delete_audio_button_description">録音を削除</string>
 </resources>

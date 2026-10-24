@@ -138,7 +138,7 @@
     <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Обозреватель карточек</string>
-    <string name="context_menu_anki_card_label">Anki card</string>
+    <string name="context_menu_anki_card_label">Карточка Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Коллекции не могут быть объединены.\nКакую коллекцию вы хотите оставить?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

@@ -22,13 +22,13 @@
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Hantera fält</string>
     <!--Toasts-->
     <string name="toast_last_model">Du kan inte radera din sista anteckningstyp</string>
-    <string name="toast_last_field">Nottyper måste ha åtminstone ett fält</string>
+    <string name="toast_last_field">Anteckningstyper måste ha minst ett fält</string>
     <string name="toast_empty_name">Du måste ange ett namn</string>
     <string name="toast_duplicate_field">Fältnamnet används redan</string>
     <!--Plurals-->
     <plurals name="model_browser_of_type">
-        <item quantity="one">%d not</item>
-        <item quantity="other">%d noter</item>
+        <item quantity="one">%d anteckning</item>
+        <item quantity="other">%d anteckningar</item>
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Ta bort anteckningstyp</string>

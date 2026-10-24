@@ -30,12 +30,12 @@
     <string name="add_to_deck_decide_by_note_type">Dedueix pel tipus de nota</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Segueix el sistema</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Dia</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Nit</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Clar</string>
     <string name="day_theme_plain">Pla</string>
-    <string name="day_theme_eink">E-Ink</string>
+    <string name="day_theme_eink">Tinta electrònica</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Negre</string>
     <string name="night_theme_dark">Fosc</string>
@@ -49,7 +49,7 @@
     <string name="html_size_code_xx_large">immens</string>
     <!-- gestures_labels -->
     <string name="answer_easy" comment="Match Anki\'s translations: deckConfigAnswerAgain" maxLength="41">Resposta fàcil</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">Escolliu una pantalla d\'estudi</string>
     <string name="gesture_flag_red" maxLength="41">Canviar bandera vermella</string>
     <string name="gesture_flag_orange" maxLength="41">Canviar bandera taronja</string>
     <string name="gesture_flag_green" maxLength="41">Canviar bandera verda</string>

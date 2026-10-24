@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">ساندان قۇلۇپلانغان</string>
-    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">باشقا AnkiDroid ئەپ بۇ توپلامنى ئىشلىتىۋاتىدۇ. ئۇ كۆرۈنمەي ئىجرا قىلىۋاتقان بولسىمۇ توقۇنۇش كېلىپ چىقىشى مۇمكىن.\n\nبۇ ئىككى ئەپنى ئىشلىتىشنى داۋاملاشتۇرۇش ئۈچۈن، بىر ئەپنىڭ ئالىي تەڭشىكىدە «%s» نى ئۆزگەرتىڭ.\n\nبۇ ئەپنى ھازىر ئىشلىتىشتە، توقۇنۇشقان ئەپنى مەجبۇرىي توختىتىڭ.</string>
     <string name="incompatible_database_version_title">ماسلاشمايدىغان ساندان نەشرى</string>
     <string name="incompatible_database_version_summary">بۇ ساندان AnkiDroid تا ئىشلەيدىغان نەشرىدىن ئالىي نەشرى ئىكەن. ئۇنى ئېچىش ئۈچۈن AnkiDroid نى يۈكسەلتىڭ ياكى ساندان نەشرىنى تۆۋەنلىتىڭ\n\nقوللايدىغان نەشرى: %1$d\nساندان نەشرى: %2$d\n\nتۆۋەندىكى ئەسلىگە كەلتۈرۈش تاللانمىسى نۆۋەتتىكى توپلامنى قاپلىۋېتىدۇ، ماسلىشىشى مۇمكىن بولغان ساندان نەشرى:</string>
     <!-- Deck Picker Background-->
@@ -139,7 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">تىل تەڭشەك</string>
     <string name="locale_selection_dialog_summary">بەزى GBoard قا ئوخشاش كۆپ تىللىق ھەرپتاختا تېكىست تەھرىرلەۋاتقاندا تىل ئالماشتۇرۇشنى قوللايدۇ\n\nئەگەر ھەرپتاختىڭىز تىل ئالماشتۇرۇشنى قوللىمىسا ھەرپتاختا تارقاتقۇچىغا «كىرگۈزگۈچ تەھرىرلىگۈچنىڭ يەرلىك ئەسكەرتىش تەڭشەك» ئىقتىدارىنى ئىلتىماس قىلىڭ.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">يوچۇن تىل [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid نى ئىشلىتىش</string>
     <string name="help_item_ankidroid_manual">AnkiDroid قوللانمىسى</string>
