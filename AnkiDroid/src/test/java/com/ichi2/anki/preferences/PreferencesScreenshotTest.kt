@@ -120,6 +120,16 @@ class PreferencesScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun timeboxSettingsFragmentDisabled() =
+        runTest {
+            CollectionPreferences.setTimeboxTimeLimit(0.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(TimeboxSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("TimeboxSettingsFragment_disabled")
+            }
+        }
+
+    @Test
     fun timeboxSettingsFragmentEnabled() =
         runTest {
             CollectionPreferences.setTimeboxTimeLimit(20.toDuration(DurationUnit.MINUTES))
