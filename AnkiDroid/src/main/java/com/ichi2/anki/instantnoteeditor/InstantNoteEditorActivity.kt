@@ -18,6 +18,7 @@ import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -43,6 +44,8 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.withProgress
@@ -122,6 +125,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
         )
 
         setupErrorListeners()
+        observeProgress(viewModel) { progress -> getString(progress.messageRes) }
         prepareEditorDialog()
 
         registerDeckSelectedHandler(action = ::onDeckSelected)
@@ -377,6 +381,10 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
      * retrieves the field content, and saves the note
      */
     private fun checkAndSave() {
+        if (viewModel.progressManager.progress.value is ViewModelProgress.Active) {
+            Timber.i("Ignoring save while a note is saving")
+            return
+        }
         extractFieldValues()
 
         saveNoteWithProgress(skipClozeCheck = false)
@@ -521,11 +529,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
 
     private fun saveNoteWithProgress(skipClozeCheck: Boolean) {
         lifecycleScope.launch {
-            val result =
-                withProgress(resources.getString(CommonString.saving_facts)) {
-                    viewModel.checkAndSaveNote(skipClozeCheck = skipClozeCheck)
-                }
-            handleSaveNoteResult(result)
+            handleSaveNoteResult(viewModel.checkAndSaveNote(skipClozeCheck = skipClozeCheck))
         }
     }
 
@@ -652,3 +656,10 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
         SHOW_EDITOR_DIALOG,
     }
 }
+
+@get:StringRes
+private val InstantEditorProgress.messageRes: Int
+    get() =
+        when (this) {
+            InstantEditorProgress.SAVING_NOTE -> CommonString.saving_facts
+        }

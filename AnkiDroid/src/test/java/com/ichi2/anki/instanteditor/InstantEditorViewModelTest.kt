@@ -4,16 +4,20 @@
 package com.ichi2.anki.instanteditor
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.instantnoteeditor.InstantEditorProgress
 import com.ichi2.anki.instantnoteeditor.InstantEditorViewModel
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.instantnoteeditor.SaveNoteResult
 import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.progress.ViewModelProgress
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertIs
 
 @RunWith(AndroidJUnit4::class)
 class InstantEditorViewModelTest : RobolectricTest() {
@@ -101,6 +105,21 @@ class InstantEditorViewModelTest : RobolectricTest() {
             val result = checkAndSaveNote()
 
             assertEquals(CollectionManager.TR.addingTheFirstFieldIsEmpty(), saveNoteResult(result))
+        }
+
+    @Test
+    fun `saving a note reports progress`() =
+        runViewModelTest {
+            editorNote.setField(0, "{{c1::Hello}}")
+
+            progressManager.progress.test {
+                assertIs<ViewModelProgress.Idle>(awaitItem())
+                checkAndSaveNote()
+                val active = assertIs<ViewModelProgress.Active<InstantEditorProgress>>(awaitItem())
+                assertEquals(InstantEditorProgress.SAVING_NOTE, active.message)
+                assertIs<ViewModelProgress.Idle>(awaitItem())
+                expectNoEvents()
+            }
         }
 
     @Test
