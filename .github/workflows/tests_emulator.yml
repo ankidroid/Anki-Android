@@ -178,6 +178,9 @@ jobs:
       - name: Pin Build Time
         run: echo "ORG_GRADLE_PROJECT_buildTime=$(date +%s000)" >> "$GITHUB_ENV"
 
+      - name: Raise Gradle Heap
+        run: echo "org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8" >> "$GRADLE_USER_HOME/gradle.properties"
+
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
@@ -298,7 +301,7 @@ jobs:
         run: python3 .github/report_test_failures.py AnkiDroid/build/outputs/androidTest-results/connected adb-log.txt --title "Emulator test failures" --suite ":AnkiDroid:connectedPlayReleaseAndroidTest"
 
       - name: Build Release Smoke Test
-        run: TEST_RELEASE_BUILD=false ./gradlew packagePlayRelease :baselineprofile:packageBenchmarkBenchmark --daemon
+        run: TEST_RELEASE_BUILD=false ./gradlew packagePlayRelease :baselineprofile:packageBenchmarkBenchmark --daemon --stacktrace
 
       - name: Run Release Smoke Test
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
