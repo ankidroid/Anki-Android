@@ -51,6 +51,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
+ * @param validateOnInput when false, validate on confirmation instead of while editing
  */
 @Composable
 fun TextInputDialog(
@@ -69,18 +70,21 @@ fun TextInputDialog(
     helperText: String? = null,
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
+    validateOnInput: Boolean = true,
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
     }
     var hasUserEdited by rememberSaveable { mutableStateOf(false) }
-    val errorMessage = errorMessageFor(input.text)
-    val displayedError = errorMessage?.takeIf { hasUserEdited }
+    var submissionAttempted by rememberSaveable { mutableStateOf(false) }
+    val errorMessage = if (validateOnInput || submissionAttempted) errorMessageFor(input.text) else null
+    val displayedError = errorMessage?.takeIf { hasUserEdited || submissionAttempted }
     val supportingMessage = displayedError ?: helperText
-    val hasSupportingText = maxLengthCounter != null || supportingMessage != null
+    val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
 
     fun confirmIfValid() {
+        submissionAttempted = true
         if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
     AnkiDroidDialog(onDismissRequest = onDismissRequest) {
@@ -113,6 +117,7 @@ fun TextInputDialog(
                         if (input.text != proposed.text) {
                             input = transformInput(proposed)
                             hasUserEdited = true
+                            submissionAttempted = false
                         } else {
                             input = proposed
                         }
@@ -126,7 +131,7 @@ fun TextInputDialog(
                         } else {
                             {
                                 Row(Modifier.fillMaxWidth()) {
-                                    if (supportingMessage != null) {
+                                    if (supportingMessage != null || !validateOnInput) {
                                         Text(supportingMessage.orEmpty(), Modifier.weight(1f))
                                     } else {
                                         Spacer(Modifier.weight(1f))
@@ -146,7 +151,7 @@ fun TextInputDialog(
                     TextButton(onClick = onDismissRequest) { Text(dismissText) }
                     TextButton(
                         onClick = ::confirmIfValid,
-                        enabled = errorMessage == null,
+                        enabled = !validateOnInput || errorMessage == null,
                     ) { Text(confirmText) }
                 }
             }
