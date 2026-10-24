@@ -52,7 +52,7 @@
     <string name="sync_sanity_remote">Ekstern</string>
     <string name="one_way_sync_title" maxLength="41">Envejs-synkronisering</string>
     <string name="one_way_sync_confirmation">Envejs-synkronisering anmodet</string>
-    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
+    <string name="full_sync_confirmation">Den ønskede ændring vil kræve en fuld upload af databasen, næste gang du synkroniserer din samling. Hvis du har anmeldelser eller andre ændringer, der venter på en anden enhed, der ikke er synkroniseret her endnu, vil de gå tabt. Fortsæt?</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Synkronisering (envejs)</string>
     <string name="sync_menu_title_no_account">Synkronisér (log på)</string>

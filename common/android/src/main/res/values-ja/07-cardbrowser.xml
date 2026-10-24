@@ -106,8 +106,8 @@
          column name (e.g. "Front, ascending"); these strings are the direction half. -->
     <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">昇順</string>
     <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">降順</string>
-    <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">Selected</string>
+    <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">選択済み</string>
     <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">使用不可</string>
-    <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">Card content can\'t be sorted. Use Sort Field</string>
+    <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">問題または解答の表示内容全体では並べ替えできません。並べ替えフィールドを使用してください</string>
     <string name="card_browser_order_subtitle_cards_mode_only" comment="Fix for trying to sort on FSRS columns in Notes mode">カードモードでのみ使用可能です</string>
 </resources>

@@ -281,8 +281,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Скорость</string>
+    <string name="download_time_left_label">Пройденное время</string>
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="external_storage_unavailable">Загрузка прервана, внешняя память недоступна</string>
@@ -391,7 +391,7 @@
     <string name="set_due_date_date_range">Диапазон дат</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">уже выполняется</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Сменить профиль</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Редактировать профиль</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Удалить профиль</string>
 </resources>

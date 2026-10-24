@@ -55,7 +55,7 @@
     <string name="dangerous_js_api_denied_snackbar">بىخەتەرلىك: بىخەتەر بولمىغان JavaScript چاقىرىشى توسۇلدى.\nئەگەر توپلىمىڭىزدىكى بارلىق كارتا ۋە قېلىپقا ئىشەنسىڭىز، ئالىي تەڭشەكتە بۇ توسۇشنى چىقىرىۋېتەلەيسىز</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">كارتىنىڭ باشقا ئەپنى قوزغىتىشىغا يول قويىدۇ</string>
-    <string name="allow_card_external_launch_summ">كارتا ئۈسكۈنىڭىزدىكى باشقا ئەپنى ئاچالايدۇ، يوشۇرۇن ئويلاشمىغان مەشغۇلاتنى قوزغىتىشى مۇمكىن.\nتوپلىمىڭىزدىكى بارلىق كارتا ۋە قېلىپقا ئىشەنسىڭىز ئوچۇق، بولمىسا تاقاق قالدۇرۇڭ.</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
     <string name="card_external_launch_denied_snackbar">بىخەتەرلىك: كارتىنىڭ باشقا ئەپنى قوزغىتىشىنى توستى.\nئەگەر توپلىمىڭىزدىكى بارلىق كارتا ۋە قېلىپقا ئىشەنسىڭىز، ئالىي تەڭشەكتە بۇ توسۇشنى چىقىرىۋېتەلەيسىز</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">سىزىق توملۇقى</string>
@@ -312,7 +312,7 @@
     <string name="pref_cat_about_title" maxLength="41">ھەققىدە</string>
     <string name="contributors_title">تۆھپىكار</string>
     <string name="about_contributors_description"><![CDATA[بۇلار بىزنىڭ قالتىس <a href=\"%1$s\">تۆھپىكارلىرىمىز</a>. پىروگرامما تۈزۈش، تەرجىمە قىلىش، ئىئانە قىلىش ۋە  <a href=\"%2$s\">تېخىمۇ كۆپ</a> ئۇسۇللار ئارقىلىق AnkiDroid غا ياردەم قىلالايسىز!]]></string>
-    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[بۇلار بىزنىڭ قالتىس <a href=\"%1$s\">تۆھپىكارلىرىمىز</a>. پىروگرامما تۈزۈش، تەرجىمە قىلىش ۋە  <a href=\"%2$s\">تېخىمۇ كۆپ</a> ئۇسۇل ئارقىلىق AnkiDroid غا ياردەم قىلالايسىز!]]></string>
     <string name="license">ئىجازەتنامە</string>
     <string name="license_description"><![CDATA[مەزكۇر AnkiDroid نى <a href=\"%1$s\">GPL-3.0</a> ۋە <a href=\"%2$s\">AGPL-3.0</a> ئىجازىتىدە تارقىتىدۇ، ئەسلى مەنبە كودى <a href=\"%3$s\">GitHub</a> تا بار]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid نۇرغۇن ئوچۇق كودلۇق <a href=\"%1$s\">ئىجازەت</a>تە تارقىتىلىدىغان ئۈچىنچى تەرەپ ئامبار ۋە سىنبەلگىنىمۇ ئىشلىتىدۇ]]></string>

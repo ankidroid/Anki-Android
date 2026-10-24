@@ -103,7 +103,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
     <string name="permission_denied">権限が許可されていません</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">マイクへのアクセスが拒否されました。システムのアプリ設定でマイクを許可してください。</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
@@ -225,19 +225,19 @@
     <string name="tts_error_dialog_change_button_text">エンジンを変更</string>
     <string name="tts_error_dialog_supported_voices_button_text">読み上げオプション</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">もう一度ファイルをインポートしてください</string>
-    <string name="import_error_resolution_free_up_space">デバイスに十分な空き容量があることを確認してください</string>
-    <string name="import_error_resolution_check_internet">インターネットに接続されていることを確認してください</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">ファイルをもう一度インポートする</string>
+    <string name="import_error_resolution_free_up_space">デバイスに十分な空き容量があることを確認する</string>
+    <string name="import_error_resolution_check_internet">インターネットに接続していることを確認する</string>
+    <string name="import_error_resolution_copy_to_device">ファイルをデバイスに保存して、そのファイルでもう一度試す</string>
+    <string name="import_error_resolution_select_file">デバイスのファイル管理用アプリでファイルを開く</string>
     <!-- Post-login dialog -->
     <string name="login_successful">ログインに成功しました</string>
     <string name="sync_now">今すぐ同期しますか？</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">カード番号は変更されません</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
+    <string name="extra_cloze_deletions_removed">通常のノートタイプへ変更する際、穴埋め番号の数がカードテンプレートの数を上回ると、対応するテンプレートがないカードは削除されます。</string>
+    <string name="different_note_types_selected">ノートタイプが共通するノートを選択してください</string>
     <string name="error_no_changes_to_save">保存する変更がありません</string>
     <string name="choose_color">色を選択</string>
     <!-- Special Fields -->
@@ -253,8 +253,8 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">カードタイプの名前%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">ノートタイプの名前%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">変更前</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">変更後</string>
     <!-- Add profile dialog -->
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">プロファイル名</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">プロファイル名を空にすることはできません</string>

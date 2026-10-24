@@ -69,11 +69,11 @@
     <string name="leech_notification">Kort markerat som igel</string>
     <string name="webview_crash_unknown">Okänt fel</string>
     <string name="webview_crash_unknwon_detailed">Detta orsakades av ett internt fel i WebView</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">Slut på minne</string>
     <string name="webview_crash_oom_details">WebView avslutades av systemet. Detta händer vanligtvis när programmet får slut på minne, ofta på grund av stora teckensnitt eller media.</string>
     <string name="webview_crash_nonfatal">WebViewern kraschade. Orsak: %s</string>
-    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
+    <string name="webview_crash_fatal">Allvarligt fel: WebView-renderaren har kraschat. Orsak: %s</string>
+    <string name="webview_crash_loop_dialog_title">Fel vid rendering i System WebView</string>
     <string name="webview_crash_loop_dialog_content">WebViewern kunde inte hämta kortet \'%1$s\'.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Svep för att avbryta</string>
     <string name="filter_by_flags" maxLength="41">Flaggor</string>
@@ -85,18 +85,18 @@
     <string name="custom_study_loading_tags">Bygger lista över taggar&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d begravda</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d begravt</item>
+        <item quantity="other">+%d begravda</item>
     </plurals>
     <string name="studyoptions_total_new_label">Totalt antal nya kort</string>
     <string name="studyoptions_total_label">Totalt antal kort</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card" maxLength="28">Redigera not</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Redigera anteckning</string>
     <string name="discard">Kasta</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
-    <string name="note_editor_no_cards_created_all_fields">Den aktuella nottypen gav inga kort.\nVälj en annan nottyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Textluckor fungerar bara för nottypen Lucktext</string>
-    <string name="saving_facts">Sparar not</string>
+    <string name="note_editor_no_cards_created_all_fields">Den aktuella anteckningstypen producerade inga kort.\nVälj en annan anteckningstyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Textluckor fungerar bara för anteckningstypen Lucktext</string>
+    <string name="saving_facts">Sparar anteckning</string>
     <string name="saving_model">Sparar anteckningstyp</string>
     <string name="save" maxLength="28">Spara</string>
     <string name="close">Stäng</string>
@@ -121,7 +121,7 @@
         <item quantity="other">%1$d minuter</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
-    <string name="note_editor_copy_note" maxLength="28">Kopiera not</string>
+    <string name="note_editor_copy_note" maxLength="28">Kopiera anteckning</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Ompositionera</string>
     <string name="card_editor_reset_card" maxLength="28">Återställ framsteg</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Omplanera</string>
@@ -206,7 +206,7 @@
     <string name="valid_js_api_version">Ogiltig version av AnkiDroid JS API. Kontakta utvecklare %s, eller visa wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API uppdatering tillgänglig. Kontakta utvecklare %s, eller visa wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Visa</string>
-    <string name="anki_js_error_code">(Error code: %d)</string>
+    <string name="anki_js_error_code">(Felkod: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Kopierat till urklipp</string>
     <string name="about_ankidroid_error_copy_debug_info">Fel vid kopiering av felsökningsinformation till urklipp</string>
@@ -214,14 +214,14 @@
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Sök kortlekar</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
+    <string name="ankidroid_init_failed_webview_title">Allvarligt fel</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid använder sig av System WebView vilket inte är tillgängligt. Detta kan hända om systemet håller på att installera uppdateringar. Försök igen om några minuter.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid kan inte komma åt lagring på grund av ett Android-fel.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Teckenstorlek</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Visa verktygsfält</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Visa förhandsvisning</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Göm förhandsvisning</string>
     <string name="format_insert_bold">Formatera som fet</string>
     <string name="format_insert_italic">Formatera som kursiv</string>
     <string name="format_insert_underline">Formatera som understruken</string>
@@ -236,8 +236,8 @@
     <string name="edit_toolbar_item">Redigera objekt i verktygsfältet</string>
     <string name="toolbar_item_explain_edit_or_remove">Ange HTML som ska infogas före och efter den markerade texten\n\nTryck länge på ett verktyg för att redigera eller ta bort det</string>
     <string name="remove_toolbar_item">Ta bort objekt från verktygsfältet?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Knapptext krävs</string>
+    <string name="before_after_text_requirement_error">Åtminstone ett HTML-fält krävs</string>
     <string name="note_editor_image_too_large">Bilden är för stor, lägg till bilden manuellt</string>
     <string name="note_editor_video_too_large">Videofilen är för stor, lägg till videon manuellt</string>
     <string name="note_editor_audio_too_large">Ljudfilen är för stor, lägg till ljudet manuellt</string>
@@ -265,18 +265,18 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Hämta kortlek</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Öppna i webbläsare</string>
-    <string name="try_again">Try again</string>
+    <string name="try_again">Försök igen</string>
     <string name="cancel_download">Avbryt hämtning</string>
     <string name="cancel_download_question_title">Avbryt hämtning?</string>
     <string name="downloading_file">Hämtar %s</string>
-    <string name="import_deck">Import deck</string>
+    <string name="import_deck">Importera kortlek</string>
     <string name="something_wrong">Något gick fel, vänligen försök igen</string>
     <string name="download_failed">Hämtning misslyckades</string>
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Hastighet</string>
+    <string name="download_time_left_label">Återstående tid</string>
     <string name="deck_download_progress_message">Du kan använda andra appar medan nedladdningen pågår</string>
     <string name="check_network">Kontrollera din nätverksanslutning</string>
     <string name="external_storage_unavailable">Nedladdningen avbruten, det externa lagringsutrymmet är inte tillgängligt</string>
@@ -312,7 +312,7 @@
     <string name="intro_ankidroid_tagline_one">Studera mindre</string>
     <string name="intro_ankidroid_tagline_two">Kom ihåg mer</string>
     <string name="intro_short_ankidroid_explanation">Ankis kortschema sparar tid genom att stärka dina svagaste punkter och bevara dina starkaste</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Kom igång</string>
     <string name="intro_sync_from_ankiweb">Synka från AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid är inte initierat än. Öppna AnkiDroid och försök igen</string>
@@ -323,10 +323,10 @@
     <string name="deck_shortcut_doesnt_exist">Kortlek raderad. Ta bort genvägen</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kort</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Noter</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Anteckningar</string>
     <string name="truncate_content_help">Begränsa varje rads höjd i webbläsaren till de första 3 innehållsraderna</string>
     <string name="audio_saved">Inspelning sparad</string>
-    <string name="deleting_selected_notes">Raderar markerade noter</string>
+    <string name="deleting_selected_notes">Raderar markerade anteckningar</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tryck på en röst för att lyssna</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Röst bör installeras innan den används</string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Använd ändå</string>
@@ -354,15 +354,15 @@
     <string name="next_recording" comment="Description of a button to go to the next recording">Nästa</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Kan inte ta bort korttyp</string>
-    <string name="orphan_note_message">Om du tar bort denna kort typ så kommer det finnas noter utan kort.</string>
+    <string name="orphan_note_message">Om du tar bort denna korttyp så kommer det finnas anteckningar utan kort.</string>
     <string name="voice_not_supported">Röstfunktionalitet är stöttas inte. Försök en annan eller installera en röst motor.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Kortleksväljare</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Ta bort kortlek utan konfirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Välj nottyp</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Redigerare för anteckningar</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Välj anteckningstyp</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Taggredigerare</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Redigerare för kortmallar</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Ändra framsidesmallen</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Ändra baksidesmallen</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Ändra stil</string>
@@ -380,7 +380,7 @@
     <string name="set_due_date_date_range">Datumintervall</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Pågår redan</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Byt profil</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Redigera profil</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Radera profil</string>
 </resources>

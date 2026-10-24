@@ -41,15 +41,15 @@
     <string name="answering_error_title">Databasfel</string>
     <string name="answering_error_message">Ett fel uppstod när data skrevs till samlingen. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ den från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nAnnars kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
     <string name="answering_error_report">Rapportera fel</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Det finns inte nog med lagringsutrymme för att öppna AnkiDroid. Frigör lite utrymme för att fortsätta.</string>
     <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
     <string name="custom_study_new_extend">Öka/minska (”-3”) dagens nya kortgräns med</string>
     <string name="custom_study_rev_extend">Öka/minska (“-3”) dagens repetitionsgräns med</string>
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_ahead_description">Repetera kort som förfaller inom de närmaste:</string>
+    <string name="custom_study_preview">Förhandsvisa nya kort som lagts till under de senaste:</string>
     <string name="custom_study_tags">Välj x kort från kortleken:</string>
     <string name="storage_full_title">Lagring full</string>
     <string name="storage_almost_full_title">Lagring nästan full</string>
@@ -70,7 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Avsluta</string>
     <string name="dialog_continue">Fortsätt</string>
     <string name="dialog_processing">Bearbetar&#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">Tillåt</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapa</string>
     <string name="dialog_positive_delete" maxLength="28">Radera</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -78,16 +78,16 @@
     <string name="dialog_positive_overwrite">Skriv över</string>
     <string name="dialog_positive_repair">Reparera</string>
     <string name="dialog_positive_replace">Ersätt</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nKorrigera datum och tid, eller slå på automatisk datum och tid, och synkronisera sedan igen.\n\nDin enhets nuvarande tid är:%2$s</string>
     <string name="dialog_collection_path_not_dir">Den valda sökvägen är ogiltig</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Den angivna texten kan inte omvandlas till ett giltigt PEM-kodat X509-certifikat</string>
     <string name="dialog_invalid_custom_certificate_title">Kunde inte tolka certifikatet</string>
     <string name="dialog_updated_custom_certificate">Certifikat uppdaterat</string>
     <!-- Media checking -->
     <string name="check_media_warning">Detta kan ta lång tid med stora mediasamlingar. Fortsätt?</string>
     <string name="check_media_message">Kontrollerar media&#8230;</string>
     <string name="check_media_adding_missing_tag">Lägger till taggar&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Taggar tillagda</string>
     <string name="delete_media_message">Tar bort media&#8230;</string>
     <string name="delete_media_result_title">Raderingsresultat</string>
     <plurals name="delete_media_result_message">
@@ -106,7 +106,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Behörighet för ljudinspelning nekad</string>
     <string name="permission_denied">Åtkomst nekad</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Åtkomst till mikrofonen ej tillåten. Bevilja åtkomst i appens inställningar.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Fortsätt ändå</string>
     <string name="integrity_check_insufficient_space">Databaskontrollen använder en stor mängd tillfällig lagring.\n\nDet rekommenderas starkt att du har minst %s ledigt utrymme på din enhet innan du fortsätter.</string>
@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Databas låst</string>
-    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">En annan AnkiDroid-app använder denna samling. Det kan uppstå konflikter även när den inte verkar köras.\n\nFör att fortsätta använda båda apparna, ändra \'%s\' i en av apparnas Avancerade inställningar.\n\nFör att använda denna app nu, tvångsavsluta den andra appen.</string>
     <string name="incompatible_database_version_title">Inkompatibel databasversion</string>
     <string name="incompatible_database_version_summary">Databasen är en mer avancerad version än denna version av AnkiDroid kan arbeta med. Uppgradera AnkiDroid eller nedgradera databasen för att öppna den\n\nVersion som stöds: %1$d\nDatabasversion: %2$d\n\nFöljande återställningsalternativ kommer att skriva över din nuvarande samling, eventuellt med en kompatibel databasversion:</string>
     <!-- Deck Picker Background-->
@@ -139,7 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Ställ in språk</string>
     <string name="locale_selection_dialog_summary">Vissa flerspråkiga tangentbord, till exempel GBoard har stöd för att ändra språk vid redigering av text\n\nVänligen begär funktionen ”setImeHintLocales” från din tangentbordstillverkare om ditt tangentbord inte ändrar språk.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Okänt språk [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Hur man använder AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid-handboken</string>
@@ -169,7 +169,7 @@
     <string name="help_dialog_exception_report_sent">Rapporten har skickats!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">En automatisk synkronisering kan utlösas om %d sekund</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">En automatisk synkronisering kan utlösas om %d sekunder</item>
     </plurals>
     <string name="metered_sync_data_warning">Din internetleverantör kan ta ut pengar för dataanvändning</string>
@@ -209,7 +209,7 @@
         <item quantity="other">dagar</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
+        <item quantity="one">Nuvarande intervall: %d dag</item>
         <item quantity="other">Nuvarande intervall: %d dagar</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
@@ -244,27 +244,27 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Kortnumren kommer att bli oförändrade</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
-    <string name="choose_color">Choose color</string>
+    <string name="extra_cloze_deletions_removed">Om du byter till en vanlig anteckningstyp och det finns fler textluckor än tillgängliga kortmallar, kommer eventuella återstående kort att tas bort.</string>
+    <string name="different_note_types_selected">Välj endast anteckningar från en anteckningstyp.</string>
+    <string name="error_no_changes_to_save">Inga ändringar att spara</string>
+    <string name="choose_color">Välj färg</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fält</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Speciella fält</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_front_side_help">Innehållet i den främre mallen. Ljud spelas ej upp automatiskt</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Kortets kompletta kortlek, inklusive överordnade kortlekar%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Kortets nuvarande kortlek, exklusive överordnade kortlekar%s</string>
+    <string name="special_field_flag_help">Visar \'%1$s\', där %2$s är flaggans kod (%3$s\-%4$s\)</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Anteckningens taggar%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Kortets ID%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Kortmallens namn%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Anteckningstypens namn%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Från</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Till</string>
     <!-- Add profile dialog -->
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profilnamn</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profilnamnet kan inte vara tomt</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profilnamn måste vara %1$d eller färre tecken</string>
 </resources>

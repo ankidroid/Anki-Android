@@ -34,8 +34,8 @@
         <item quantity="other">%d cards due</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d minut tilbage</item>
+        <item quantity="other">%d minutter tilbage</item>
     </plurals>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
     <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>

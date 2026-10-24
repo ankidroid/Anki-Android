@@ -43,15 +43,15 @@
     <string name="updated_version">Aktualisiert auf Version %s</string>
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Whiteboard speichern</string>
-    <string name="enable_stylus" maxLength="28">Stylus Modus aktivieren</string>
-    <string name="disable_stylus">Stylus Modus deaktivieren</string>
+    <string name="enable_stylus" maxLength="28">Stylus-Modus aktivieren</string>
+    <string name="disable_stylus">Stylus-Modus deaktivieren</string>
     <string name="eraser" maxLength="28">Radierer</string>
     <string name="add_brush" maxLength="28">Pinsel hinzufügen</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Links</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Unten</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Rechts</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Mehr Optionen</string>
-    <string name="whiteboard_remove_brush_message">Bist du sicher, dass du diesen Pinsel von der Palette entfernen möchtest</string>
+    <string name="whiteboard_remove_brush_message">Bist du sicher, dass du diesen Pinsel von der Palette entfernen möchtest?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinte</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Strich</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus-Modus</string>
@@ -185,14 +185,14 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Hintergrund</string>
     <string name="remove_wallpaper_image" maxLength="41">Hintergrund entfernen</string>
-    <string name="remove_background_image">Sind Sie sicher dass sie den Hintergrund entfernen wollen?</string>
+    <string name="remove_background_image">Bist du sicher, dass du den Hintergrund entfernen möchtest?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Standards wiederherstellen</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Radier-Modus aktiviert</string>
     <string name="white_board_eraser_disabled">Radier-Modus deaktiviert</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
-    <string name="media_file_size_warning_title">Medium zu groß</string>
+    <string name="media_file_size_warning_title">Medien zu groß</string>
     <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Die Datei \"%1$s\" (%2$s) überschreitet das Limit von %3$s für AnkiWeb und kann nicht synchronisiert werden. Trotzdem hinzufügen?</string>
     <string name="media_file_size_add_anyway">Trotzdem hinzufügen?</string>
     <!-- Whiteboard save image message in the Study Screen -->
@@ -201,7 +201,7 @@
     <string name="title_whiteboard_editor" maxLength="28">Whiteboard-Editor</string>
     <string name="user_is_a_robot">Automatischer Test erkannt. Wenn Sie ein Mensch sind, wenden Sie sich an AnkiDroid-Support</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">Diese Karte verwendet AnkiDroid-Funktionen, die nicht  nicht unterstützt sind. Kontaktieren Sie den Entwickler %1$s oder sehen Sie sich das Wiki an. %2$s</string>
+    <string name="api_version_developer_contact">Diese Karteikarten verwendet AnkiDroid-Funktionen, die nicht unterstützt wird. Kontaktieren Sie den Entwickler %1$s oder sehen Sie sich das Wiki an. %2$s</string>
     <string name="invalid_json_data">Karte hat ungültige Daten angegeben. %s</string>
     <string name="valid_js_api_version">Ungültige AnkiDroid-JS-API-Version. Kontaktieren Sie den Entwickler %s, oder sehen Sie sich das Wiki an</string>
     <string name="update_js_api_version">AnkiDroid-JS-API-Aktualisierung verfügbar. Kontaktieren Sie den Entwickler %s oder sehen Sie sich das Wiki an</string>
@@ -220,15 +220,15 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Schriftgröße</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkzeug zeigen</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Kurze Übersicht</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Übersicht ausblenden</string>
     <string name="format_insert_bold">Als fett formatieren</string>
-    <string name="format_insert_italic">Kursiv formatieren</string>
+    <string name="format_insert_italic">Als Kursiv formatieren</string>
     <string name="format_insert_underline">Als Unterstrichen formatieren</string>
     <string name="insert_horizontal_line">Horizontale Linie einfügen</string>
     <string name="insert_heading">Überschift einfügen</string>
     <string name="format_font_size">Schriftgröße ändern</string>
-    <string name="insert_mathjax">Mathjax Formel Eingeben</string>
+    <string name="insert_mathjax">MathJax-Gleichung einfügen</string>
     <string name="note_editor_toolbar_icon">Schaltflächentext</string>
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
@@ -236,8 +236,8 @@
     <string name="edit_toolbar_item">Werkzeugleisten Element bearbeiten</string>
     <string name="toolbar_item_explain_edit_or_remove">Geben Sie den HTML-Code ein, der vor und nach dem ausgewählten Text eingefügt werden soll\n\nDrücken Sie lange auf ein Symbol in der Symbolleiste, um es zu entfernen</string>
     <string name="remove_toolbar_item">Werkzeugleisten Element entfernen?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button-Text ist benötigt</string>
+    <string name="before_after_text_requirement_error">Mindestens ein HTML-Eingabefeld ist erforderlich</string>
     <string name="note_editor_image_too_large">Das Bild ist zu groß, bitte fügen Sie das Bild manuell ein</string>
     <string name="note_editor_video_too_large">Die Videodatei ist zu groß, bitte fügen Sie das Video manuell ein</string>
     <string name="note_editor_audio_too_large">Die Audiodatei ist zu groß, bitte fügen Sie das Audio manuell ein</string>
@@ -246,7 +246,7 @@
     <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Erlauben Sie \"Startbildschrim-Verknüpfungen\" in den Systemeinstellungen damit %s Verknüpfungen hinzufügen kann</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid nicht, Verknüpfungen hinzuzufügen</string>
     <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sätze groß schreiben</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sätze großschreiben</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll-Werkzeugleiste</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
@@ -275,8 +275,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Geschwindigkeit</string>
+    <string name="download_time_left_label">Übrige Zeit</string>
     <string name="deck_download_progress_message">Während des Herunterladens können Sie andere Apps verwenden</string>
     <string name="check_network">Bitte überprüfen Sie die Netzverbindung</string>
     <string name="external_storage_unavailable">Download abgebrochen, externer Speicher nicht verfügbar</string>
@@ -293,7 +293,7 @@
     <string name="scoped_storage_learn_more">Erfahren Sie mehr</string>
     <string name="search_card_js_api_no_results">Suche lieferte keine Ergebnisse</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s ist kein gültiges JavaScript-Erweiterungspaket.</string>
+    <string name="not_valid_js_addon_package">%s ist kein gültiges JavaScript-Erweiterungspaket</string>
     <string name="could_not_create_dir">Verzeichnis %s konnte nicht erstellt werden</string>
     <string name="malicious_archive_entry_outside">Schädliches Archiv. Enthält Eintrag außerhalb des Zielverzeichnisses: %s</string>
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
@@ -314,14 +314,14 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Los geht’s</string>
     <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid ist noch nicht initialisiert. Bitte öffne die App nochmal und versuche erneut.</string>
+    <string name="app_not_initialized_new">AnkiDroid ist noch nicht initialisiert. Bitte öffne die App nochmal und versuche erneut</string>
     <!-- Deck Creation -->
     <string name="deck_created">Stapel wurde erstellt</string>
     <string name="deck_renamed">Stapel wurde umbenannt</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Stapel würde gelöscht. Bitte den Shortcut entfernen</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karteikarten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>
     <string name="truncate_content_help">Die Höhe jeder Zeile der Kartenübersicht anpassen, sodass nur die ersten 3 Zeilen des Inhalts zu sehen sind.</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
@@ -338,7 +338,7 @@
     <string name="deck_description_field_hint">Beschreibung</string>
     <string name="deck_description_saved">Beschreibung aktualisiert</string>
     <string name="format_deck_description_as_markdown">Als Markdown formatieren</string>
-    <string name="help_button_content_description">Hilfe für ‘%s ’ öffnen</string>
+    <string name="help_button_content_description">Hilfe für „%s“ öffnen</string>
     <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d Karte nicht mehr aufgeschoben</item>
@@ -347,7 +347,7 @@
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Position ändern</string>
     <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Nächste</string>
     <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Zurück</string>
-    <string name="start_recording">Datensatz</string>
+    <string name="start_recording">Aufnahme</string>
     <string name="stop_recording">Stopp</string>
     <string name="play_recording">Play</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Weiter</string>
@@ -365,8 +365,8 @@
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Vorderseiten template bearbeiten</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Rückseiten template bearbeiten</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Stil bearbeiten</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Template als markdown kopieren</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Browser-erscheinungsbild bearbeiten</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Template als Markdown kopieren</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Browser-Erscheinungsbild bearbeiten</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Benutzeraktion %s ist in diesem notiztyp nicht festgelegt. Bitte konfigurieren Sie es</string>
     <string name="feature_not_supported_by_study_screen">Diese Karte hat Funktionen, die vom neuen Lernbildschirm noch nicht unterstützt werden.</string>
     <string name="directory_inaccessible_info">Erfahren Sie hier %s mehr darüber, wie Sie den Zugriff wiederherstellen können, oder gehen Sie zu den Einstellungen, um den Sammlungsordner zu aktualisieren.</string>
@@ -379,7 +379,7 @@
     <string name="set_due_date_date_range">Datumsbereich</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Schon in Arbeit</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Profil wechseln</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Profil hinzufügen</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Profil löschen</string>
 </resources>

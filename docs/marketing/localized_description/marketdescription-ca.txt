@@ -1,6 +1,6 @@
 Memoritzeu qualsevol cosa amb AnkiDroid!
 
-AnkiDroid us permet aprendre conceptes de forma molt eficient, mostrant la fitxa just abans que l'oblideu. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+AnkiDroid us permet aprendre conceptes de forma molt eficient, mostrant la fitxa just abans que l'oblideu. És totalment compatible amb el programari de repetició espaiada Anki (inclús la sincronització), disponible per a Windows, Linux i MacOS.
 
 Estudieu tot tipus de temes on i quan vulgueu. Aprofiteu els temps morts en el viatge d'autobús, a la cua del supermercats o en qualsevol altra situació d'espera!
 
@@ -10,9 +10,9 @@ Afegiu material a través de l'aplicació d'escriptori Anki o directament a trav
 
 ★ Característiques principals:
 • contingut permès a les fitxes: text, imatges, sons, LaTeX
-• spaced repetition (AI-optimized FSRS algorithm)
+• repetició espaiada (l'algorisme de FSRS optimitzat amb IA)
 • integra síntesi de veu
-• more than 10,000 premade decks
+• més de 10.000 baralles preparades
 • giny del vostre progrés
 • estadístiques detallades
 • sincronització amb AnkiWeb

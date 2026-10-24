@@ -91,7 +91,7 @@
     <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií? Pokračovat?</string>
     <string name="check_media_message">Kontrolují se multimédia&#8230;</string>
     <string name="check_media_adding_missing_tag">Přidávání štítků&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Štítky přidány</string>
     <string name="delete_media_message">Odstraňují se multimédia&#8230;</string>
     <string name="delete_media_result_title">Výsledek odstraňování</string>
     <plurals name="delete_media_result_message">
@@ -112,7 +112,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>
     <string name="permission_denied">Oprávnění zamítnuto</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Oprávnění k mikrofonu bylo odepřeno. Prosím, povolte jej v nastavení aplikace.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
@@ -145,7 +145,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Nastavit jazyk</string>
     <string name="locale_selection_dialog_summary">Některé vícejazyčné klávesnice, např. GBoard podporují změnu jazyka při úpravách textu\n\nProsím požádejte výrobce klávesnice o funkci „setImeHintLocales“, pokud vaše klávesnice nepřepíná mezi jazyky.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Neznámý jazyk [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používání AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Příručka AnkiDroid</string>

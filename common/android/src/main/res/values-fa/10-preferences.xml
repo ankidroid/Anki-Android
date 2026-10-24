@@ -55,7 +55,7 @@
     <string name="dangerous_js_api_denied_snackbar">اخطار ایمنی: کد خطرناک جاوااسکریپتمسدود شد.\nچنانچه به همهٔ محتویات و قالب‌های کالکشن خود اعتماد دارید، می‌توانید این گزینه را در تنظیمات پیشرفته فعال کنید.</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">مجوز بازکردن برنامه‌های دیگر توسط کارت‌ها</string>
-    <string name="allow_card_external_launch_summ">کارت‌ها می‌توانند برنامه‌های دیگر را روی دستگاه شما باز کنند که ممکن است به اجرای اقدامات ناخواسته منجر شود.\nاین گزینه را خاموش نگه دارید، مگر اینکه به تمام کارت‌ها و قالب‌های موجود در مجموعهٔ خود اعتماد کامل داشته باشید.</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
     <string name="card_external_launch_denied_snackbar">هشدار امنیتی: کارت از اجرای برنامهٔ دیگر مسدود شد.\nاگر به تمام کارت‌ها و قالب‌های مجموعهٔ خود اعتماد دارید، می‌توانید این محدودیت را در تنظیمات پیشرفته فعال کنید.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">کلفتی خط</string>

@@ -26,7 +26,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Åbn panel</string>
     <string name="drawer_close">Luk panel</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Note gemt</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kortstak:</string>
     <string name="CardEditorNoteDeck" comment="Label of the field choosing which deck a note\'s cards go into, in the note editor.">Stak:</string>
@@ -45,12 +45,12 @@
     <string name="save_whiteboard" maxLength="28">Save whiteboard</string>
     <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">Viskelæder</string>
     <string name="add_brush" maxLength="28">Add brush</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Flere valgmuligheder</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
@@ -107,12 +107,12 @@
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Vend vandret</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Vend lodret</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%1$d card studied in %2$s</item>
+        <item quantity="one">%1$d kort gennemgået på %2$s</item>
         <item quantity="other">%1$d kort gennemgået på %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
@@ -137,9 +137,9 @@
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Tilføj %s til samling? Dette kan tage lang tid</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Fejl</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -171,7 +171,7 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Eksisterende tag “%1$s” valgt</string>
     <string name="tag_already_exists">Tag already exists</string>
-    <string name="error_name_exists">Name already exists</string>
+    <string name="error_name_exists">Navnet eksisterer allerede</string>
     <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
@@ -184,8 +184,8 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Baggrund</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_wallpaper_image" maxLength="41">Fjern baggrund</string>
+    <string name="remove_background_image">Er du sikker på, at du vil fjerne baggrunden?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
@@ -259,16 +259,16 @@
     <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Enter a valid email</string>
-    <string name="password_empty">Password is required</string>
+    <string name="password_empty">Adgangskode er påkrævet</string>
     <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
-    <string name="try_again">Try again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Åbn i browser</string>
+    <string name="try_again">Prøv igen</string>
+    <string name="cancel_download">Annuller download</string>
+    <string name="cancel_download_question_title">Annuller download?</string>
+    <string name="downloading_file">Downloader %s</string>
     <string name="import_deck">Import deck</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">Download failed</string>
@@ -276,11 +276,11 @@
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
     <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_time_left_label">Tid tilbage</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="check_network">Tjek venligst din internetforbindelse</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home" maxLength="28">Home</string>
+    <string name="home" maxLength="28">Hjem</string>
     <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -290,7 +290,7 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_learn_more">Få mere at vide</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
@@ -321,10 +321,10 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kort</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Noter</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="audio_saved">Recording saved</string>
+    <string name="audio_saved">Optagelse gemt</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
@@ -335,8 +335,8 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="deck_description_saved">Description updated</string>
+    <string name="deck_description_field_hint">Beskrivelse</string>
+    <string name="deck_description_saved">Beskrivelse opdateret</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Failed to copy</string>
@@ -345,12 +345,12 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Næste</string>
     <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
-    <string name="start_recording">Record</string>
+    <string name="start_recording">Optag</string>
     <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording" comment="Description of a button to go to the next recording">Next</string>
+    <string name="play_recording">Afspil</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Næste</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
@@ -375,11 +375,11 @@
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!--Set up date-->
-    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_day" comment="Used for setting due date">Dag</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Skift profil</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Rediger profil</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Slet profil</string>
 </resources>

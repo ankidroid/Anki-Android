@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Kan inte skapa verktygsfältet för inspelaren</string>
     <!-- Crop function-->
     <string name="crop_image">Vill du beskära den här bilden?</string>
-    <string name="crop_button" maxLength="28">Crop</string>
+    <string name="crop_button" maxLength="28">Beskär</string>
     <string name="save_dialog_content">Den nuvarande bildstorlek är %s MB. Gränsen för bildstorlek är 1 MB. Vill du komprimera bilden?</string>
     <string name="select_image_failed">"Det gick inte att välja bild. Försök igen"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Fältinnehåll</string>
