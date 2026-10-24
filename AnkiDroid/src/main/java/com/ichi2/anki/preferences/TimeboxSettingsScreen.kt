@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -125,9 +126,11 @@ fun TimeboxSettingsScreen(
                         .fillMaxSize()
                         .padding(contentPadding)
                         .consumeWindowInsets(contentPadding)
+                        .navigationBarsPadding()
                         .imePadding()
                         .verticalScroll(rememberScrollState())
-                        .padding(horizontal = 16.dp, vertical = if (isLandscape) 4.dp else 8.dp),
+                        .padding(horizontal = 16.dp, vertical = if (isLandscape) 4.dp else 8.dp)
+                        .padding(bottom = 32.dp),
             ) {
                 TimeboxMainSwitch(
                     isEnabled = isEnabled,
@@ -166,18 +169,8 @@ private fun TimeboxMainSwitch(
     modifier: Modifier = Modifier,
 ) {
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val containerColor =
-        if (isEnabled) {
-            MaterialTheme.colorScheme.primaryContainer
-        } else {
-            MaterialTheme.colorScheme.surfaceVariant
-        }
-    val contentColor =
-        if (isEnabled) {
-            MaterialTheme.colorScheme.onPrimaryContainer
-        } else {
-            MaterialTheme.colorScheme.onSurfaceVariant
-        }
+    val containerColor = MaterialTheme.colorScheme.surfaceVariant
+    val contentColor = MaterialTheme.colorScheme.onSurfaceVariant
 
     Surface(
         modifier =
