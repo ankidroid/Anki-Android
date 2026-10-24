@@ -6,7 +6,7 @@ package com.ichi2.anki.contextmenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Helper class to build a context menu for mouse right-click events.
@@ -46,7 +46,7 @@ open class MouseContextMenuHandler(
 
         viewGroup.addView(anchorView)
 
-        val popupMenu = PopupMenu(context, anchorView, 0, 0, R.style.OverflowMenuStyle)
+        val popupMenu = PopupMenu(context, anchorView, 0, 0, CommonR.style.OverflowMenuStyle)
 
         menuContentProvider.populateMenu(popupMenu.menu)
 

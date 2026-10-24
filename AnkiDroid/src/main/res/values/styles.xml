@@ -15,18 +15,6 @@
         <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
     </style>
 
-    <style name="OverflowMenuStyle" parent="Widget.Material3.PopupMenu.Overflow">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
-    </style>
-
-    <style name="PopupMenuStyle" parent="Widget.Material3.PopupMenu">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
-    </style>
-
-    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
-    </style>
-
     <style name="AnswerButton" parent="Widget.Material3.Button.ElevatedButton">
         <item name="android:padding">0dp</item>
         <item name="cornerRadius">@dimen/answer_button_corner_radius</item>
@@ -174,36 +162,6 @@
         <item name="android:background">@drawable/ic_gesture_tap</item>
     </style>
 
-    <!-- Snackbars -->
-    <style name="SnackbarStyle" parent="Widget.Material3.Snackbar">
-        <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>
-    </style>
-    <style name="SnackbarButtonStyle" parent="Widget.Material3.Button.TextButton.Snackbar">
-        <item name="android:textColor">?attr/snackbarButtonTextColor</item>
-    </style>
-
-    <!-- Switches -->
-    <style name="Preference.SwitchPreferenceCompat.Material3" parent="@style/Preference.SwitchPreferenceCompat.Material">
-        <item name="widgetLayout">@layout/preference_material_switch_widget</item>
-    </style>
-
-    <style name="SliderLabelStyle" parent="Widget.MaterialComponents.Tooltip">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SliderStyle" parent="Widget.Material3.Slider">
-        <item name="trackColorActive">@color/slider_active_track_color</item>
-        <item name="trackColorInactive">@color/slider_inactive_track_color</item>
-        <item name="haloColor">@color/slider_halo_color</item>
-        <item name="thumbColor">@color/slider_thumb_color</item>
-        <item name="labelStyle">@style/SliderLabelStyle</item>
-        <item name="tickVisible">false</item>
-    </style>
-
-    <style name="PreferenceThemeOverlay.AnkiDroid">
-        <item name="singleLineTitle">false</item>
-    </style>
-
     <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorAccent">?attr/progressDialogButtonTextColor</item>
         <item name="android:textColorPrimary">?android:attr/textColor</item>
@@ -219,12 +177,6 @@
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
     </style>
 
-    <style name="ThemeOverlay.AnkiDroid.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="dialogCornerRadius">@dimen/m3_alert_dialog_corner_size</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
-        <item name="android:windowBackground">@drawable/material_dialog_background</item>
-    </style>
-
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.FullScreen" parent="ThemeOverlay.AnkiDroid.AlertDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">false</item>
@@ -234,11 +186,6 @@
     <style name="TextAppearance.AnkiDroid.TopAppBar.Title" parent="TextAppearance.Material3.TitleMedium" />
 
     <style name="TextAppearance.AnkiDroid.TopAppBar.Subtitle" parent="TextAppearance.Material3.ActionBar.Subtitle" />
-
-    <style name="AnkiDroid.AlertDialog.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
-        <!-- Keep dialog body text consistent with the primary text color -->
-        <item name="android:textColor">?android:attr/textColor</item>
-    </style>
 
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
@@ -258,10 +205,6 @@
         <item name="android:alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
-    </style>
-
     <style name="Widget.AnkiDroid.CardView.Recording" parent="CardView">
         <item name="cardElevation">?attr/studyScreenElevation</item>
         <item name="cardPreventCornerOverlap">false</item>
@@ -279,16 +222,6 @@
         <item name="colorTertiaryContainer">?colorPrimary</item>
         <item name="colorOnTertiaryContainer">?colorOnPrimary</item>
         <item name="colorPrimaryContainer">?colorPrimary</item>
-    </style>
-
-    <!-- TODO remove this style when a proper 'colorOnPrimaryContainer' is set in themes, without
-           this override the user doesn't see the text selection highlight in TextInputLayouts -->
-    <style name="TextInputSelectionColorFixStyle" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.TextInputSelectionFix</item>
-    </style>
-
-    <style name="ThemeOverlay.TextInputSelectionFix" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
-        <item name="colorOnPrimaryContainer">?attr/editTextHighlightColor</item>
     </style>
 
     <!-- Applied to a TextInputLayout which should show the error outline, but not an error message. -->
@@ -318,11 +251,5 @@
         <item name="iconGravity">textEnd</item>
         <item name="iconTint">@color/sort_pill_content_color</item>
         <item name="backgroundTint">@color/sort_pill_background_color</item>
-    </style>
-
-    <style name="Widget.AnkiDroid.WhiteboardToolbarCard.Eink" parent="Widget.Material3.CardView.Elevated">
-        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
-        <item name="strokeColor">?attr/widgetStrokeColor</item>
-        <item name="cardElevation">0dp</item>
     </style>
 </resources>
