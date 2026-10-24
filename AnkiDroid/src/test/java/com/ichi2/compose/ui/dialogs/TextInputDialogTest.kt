@@ -6,11 +6,13 @@ package com.ichi2.compose.ui.dialogs
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -18,10 +20,13 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInputSelection
 import androidx.compose.ui.test.performTextReplacement
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.profiles.RenameProfileDialog
@@ -29,8 +34,12 @@ import com.ichi2.compose.theme.AnkiDroidTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
@@ -243,6 +252,35 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
 
         field.performTextReplacement("Changed")
         compose.onNodeWithText(validationError).assertIsDisplayed()
+    }
+
+    @Test
+    @Config(qualifiers = "w320dp-h320dp-port")
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `large text can scroll the input without losing the action buttons`() {
+        RuntimeEnvironment.setFontScale(2f)
+        var confirmed = false
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename tag",
+                    description = "Source tag: parent::Science",
+                    label = "Tag name",
+                    confirmText = "Rename",
+                    initialText = "History",
+                    onConfirm = { confirmed = true },
+                    onDismissRequest = {},
+                    validateOnInput = false,
+                )
+            }
+        }
+        val move = compose.onNodeWithText("Rename").assertIsDisplayed().assertHeightIsAtLeast(40.dp)
+        compose.onNodeWithText("Cancel").assertIsDisplayed().assertHeightIsAtLeast(40.dp)
+        val originalBounds = move.fetchSemanticsNode().boundsInWindow
+        compose.onNode(hasSetTextAction()).performScrollTo().assertIsDisplayed()
+        assertEquals(originalBounds, move.fetchSemanticsNode().boundsInWindow)
+        move.performTouchInput { click() }
+        assertTrue(confirmed)
     }
 
     private fun assertInitialSelection(
