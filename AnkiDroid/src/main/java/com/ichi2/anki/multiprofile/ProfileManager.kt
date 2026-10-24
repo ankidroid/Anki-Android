@@ -104,6 +104,8 @@ class ProfileManager private constructor(
      */
     fun getAllProfiles(): Map<ProfileId, ProfileMetadata> = profileRegistry.getAllProfiles()
 
+    fun wrap(context: Context): Context = activeProfileContext.wrap(context)
+
     private fun isNameTaken(
         name: ProfileName,
         ignoring: ProfileId? = null,
