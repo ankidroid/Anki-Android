@@ -44,7 +44,6 @@ import anki.search.BrowserRow
 import anki.search.BrowserRow.Color
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperUntil
 import com.ichi2.anki.browser.BrowserColumnKey
@@ -76,6 +75,7 @@ import com.ichi2.anki.browser.setColumn
 import com.ichi2.anki.browser.setSelectedDeck
 import com.ichi2.anki.browser.toRowSelection
 import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -111,9 +111,7 @@ import com.ichi2.testutils.withSplitPaneUi
 import com.ichi2.testutils.withSplitPaneUiAsync
 import com.ichi2.utils.LanguageUtil
 import io.mockk.every
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
-import io.mockk.unmockkObject
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.allOf
@@ -479,7 +477,7 @@ class CardBrowserTest : RobolectricTest() {
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
         try {
             mockkStatic(::isRunningAsUnitTest)
-            mockkObject(IntentHandler)
+            mockkStatic("com.ichi2.anki.common.storage.LegacyStorageKt")
 
             every { grantedStoragePermissions(any(), any()) } returns false
             every { isRunningAsUnitTest } returns false
@@ -491,7 +489,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("Activity should be finishing", cardBrowser.isFinishing)
         } finally {
             unmockkStatic(::isRunningAsUnitTest)
-            unmockkObject(IntentHandler)
+            unmockkStatic("com.ichi2.anki.common.storage.LegacyStorageKt")
         }
     }
 

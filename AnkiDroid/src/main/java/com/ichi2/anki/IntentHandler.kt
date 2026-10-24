@@ -29,7 +29,6 @@ import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
-import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment
@@ -394,25 +393,6 @@ class IntentHandler : AbstractIntentHandler() {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
             // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
             return !isInvalidViewIntent(intent)
-        }
-
-        /** Checks whether storage permissions are granted on the device. If the device is not using legacy storage,
-         *  it verifies if the app has been granted the necessary storage access permission.
-         *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
-         *
-         * @throws SystemStorageException if `getExternalFilesDir` returns null
-         */
-        fun grantedStoragePermissions(
-            context: Context,
-            showToast: Boolean,
-        ): Boolean {
-            val granted = grantedStoragePermissions(context)
-
-            if (!granted && showToast) {
-                showThemedToast(context, context.getString(CommonString.intent_handler_failed_no_storage_permission), false)
-            }
-
-            return granted
         }
 
         /** Whether this is the `anki://x-callback-url/browser` deep link that opens the [CardBrowser]. */

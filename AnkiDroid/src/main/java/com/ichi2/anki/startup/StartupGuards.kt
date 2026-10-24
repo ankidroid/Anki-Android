@@ -4,10 +4,13 @@ package com.ichi2.anki.startup
 
 import android.app.Activity
 import android.content.Intent
-import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.common.destinations.DeferredNavigation
+import com.ichi2.anki.common.destinations.LauncherDestination
+import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
+import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.exception.SystemStorageException
 import timber.log.Timber
 
@@ -63,7 +66,7 @@ private fun Activity.ensureStorageIsConfigured(): Boolean {
  * @throws SystemStorageException if `getExternalFilesDir` returns null
  */
 private fun Activity.ensureStoragePermissions(): Boolean {
-    if (IntentHandler.grantedStoragePermissions(this, showToast = true)) {
+    if (grantedStoragePermissions(this, showToast = true)) {
         return true
     }
     Timber.w("finishing activity. No storage permission")
@@ -80,8 +83,7 @@ private fun Activity.ensureStoragePermissions(): Boolean {
 fun Activity.redirectToMainEntryPoint() {
     Timber.i("redirecting to app start")
     startActivity(
-        Intent(this, IntentHandler::class.java).apply {
-            action = Intent.ACTION_MAIN
+        with(DeferredNavigation) { LauncherDestination.toIntent() }.apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         },
     )

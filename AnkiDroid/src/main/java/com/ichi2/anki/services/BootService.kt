@@ -11,11 +11,11 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
