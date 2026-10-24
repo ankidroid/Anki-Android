@@ -51,7 +51,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         FragmentLifecycleFixture("DeveloperOptions") { DeveloperOptionsFragment() },
         FragmentLifecycleFixture("SyncSettings") { SyncSettingsFragment() },
         FragmentLifecycleFixture("About") { AboutFragment() },
-        FragmentLifecycleFixture("ScheduleReminders", knownFailures = setOf(REMOVE)) { ScheduleRemindersFragment() },
+        FragmentLifecycleFixture("ScheduleReminders") { ScheduleRemindersFragment() },
         FragmentLifecycleFixture("FilteredDeckOptions") {
             FilteredDeckOptionsFragment()
         },
