@@ -73,7 +73,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
                 requestKey = "insert-field-test",
             )
         },
-        FragmentLifecycleFixture("BrowserColumns", host = CardBrowser::class.java, knownFailures = setOf(REMOVE, DESTROY_VIEW)) {
+        FragmentLifecycleFixture("BrowserColumns", host = CardBrowser::class.java) {
             BrowserColumnSelectionFragment.createInstance(CardsOrNotes.CARDS)
         },
     )
