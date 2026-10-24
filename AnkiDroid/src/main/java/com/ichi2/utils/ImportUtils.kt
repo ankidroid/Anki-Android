@@ -25,10 +25,9 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper
-import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.onSelectedCsvForImport
+import com.ichi2.anki.openImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -48,6 +47,20 @@ object ImportUtils {
     // A filename should be shortened if over this threshold
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
 
+    /**
+     * Resolve and cache the source, then start the text importer or store a package confirmation.
+     *
+     * Text importer launch happens before this method returns. Package confirmations must be
+     * dispatched by the caller or by DeckPicker when it resumes.
+     *
+     * @return The resolved source metadata and cached path, or details of a preparation or launch
+     * failure. Success does not mean that the file's contents have been imported.
+     */
+    fun handleFileImport(
+        activity: Activity,
+        intent: Intent,
+    ): ImportResult = FileImporter().handleFileImport(activity, intent)
+
     /** Resolve the source and select its importer without copying files or starting UI. */
     fun resolveImport(
         context: Context,
@@ -55,16 +68,15 @@ object ImportUtils {
     ): ImportResolution = FileImporter().resolveImport(context, intent)
 
     /**
-     * This code is used in multiple places to handle package imports
+     * Resolve the source and copy it to the cache synchronously on the calling thread.
+     * Does not launch UI or store a package confirmation.
      *
-     * @param context for use in resource resolution and path finding
-     * @param intent contains the file to import
-     * @return null if successful, otherwise error message
+     * @return The resolved source metadata and cached path, or details of a preparation failure.
      */
-    fun handleFileImport(
+    fun prepareImport(
         context: Context,
         intent: Intent,
-    ): ImportResult = FileImporter().handleFileImport(context, intent)
+    ): ImportResult = FileImporter().prepareImport(context, intent)
 
     /**
      * Makes a cached copy of the file selected on [intent] and returns its path
@@ -114,6 +126,62 @@ object ImportUtils {
 
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
+        /** See [ImportUtils.handleFileImport] for the UI and error handling contract. */
+        fun handleFileImport(
+            activity: Activity,
+            intent: Intent,
+        ): ImportResult {
+            Timber.i("IntentHandler/ User requested to view a file")
+            val extras = if (intent.extras == null) "none" else intent.extras!!.keySet().joinToString(", ")
+            Timber.i("Intent: %s. Data: %s", intent, extras)
+            return try {
+                val uri = getDataUri(intent)
+                if (uri == null) {
+                    ImportResult.Failure(activity.getString(CommonString.import_error_handle_exception))
+                } else {
+                    handleContentProviderFile(activity, uri, intent)
+                }
+            } catch (e: Exception) {
+                CrashReportService.sendExceptionReport(e, "handleFileImport")
+                Timber.e(e, "failed to handle import intent")
+                ImportResult.Failure(
+                    humanReadableMessage = activity.getString(CommonString.import_error_handle_exception, e.localizedMessage),
+                    exception = e,
+                )
+            }
+        }
+
+        /**
+         * Prepare the source, then start the text importer or store a package confirmation.
+         * Uses [intent] when supplied, otherwise creates an intent from [importPathUri].
+         *
+         * Preparation failures are returned. Exceptions from starting the importer or storing a
+         * confirmation propagate to the caller; [handleFileImport] converts them into [ImportResult.Failure].
+         */
+        fun handleContentProviderFile(
+            activity: Activity,
+            importPathUri: Uri,
+            intent: Intent? = null,
+        ): ImportResult =
+            prepareImport(activity, intent ?: Intent().setData(importPathUri)).also { result ->
+                if (result is ImportResult.Success) {
+                    activity.openImport(result)
+                }
+            }
+
+        fun isValidImportType(
+            context: Context,
+            importPathUri: Uri,
+        ): Boolean {
+            val fileName = getFileNameFromContentProvider(context, importPathUri)
+            return when {
+                isDeckPackage(fileName) -> true
+                isCollectionPackage(fileName) -> true
+                isValidTextOrDataFile(context, importPathUri) -> true
+                else -> false
+            }
+        }
+
         fun resolveImport(
             context: Context,
             intent: Intent,
@@ -164,45 +232,23 @@ object ImportUtils {
             }
         }
 
-        /**
-         * This code is used in multiple places to handle package imports
-         *
-         * @param context for use in resource resolution and path finding
-         * @param intent contains the file to import
-         * @return null if successful, otherwise error message
-         */
-        fun handleFileImport(
+        /** See [ImportUtils.prepareImport] for the preparation and result contract. */
+        fun prepareImport(
             context: Context,
             intent: Intent,
-        ): ImportResult {
-            // This intent is used for opening apkg package files
-            // We want to go immediately to DeckPicker, clearing any history in the process
-            Timber.i("IntentHandler/ User requested to view a file")
-            val extras = if (intent.extras == null) "none" else intent.extras!!.keySet().joinToString(", ")
-            Timber.i("Intent: %s. Data: %s", intent, extras)
-            return try {
-                handleFileImportInternal(context, intent)
+        ): ImportResult =
+            try {
+                when (val resolution = resolveImport(context, intent)) {
+                    is ImportResolution.Failure -> resolution.error
+                    is ImportResolution.ResolvedFile -> cacheImport(context, resolution)
+                }
             } catch (e: Exception) {
-                CrashReportService.sendExceptionReport(e, "handleFileImport")
-                Timber.e(e, "failed to handle import intent")
+                CrashReportService.sendExceptionReport(e, "prepareImport")
                 ImportResult.Failure(
                     humanReadableMessage = context.getString(CommonString.import_error_handle_exception, e.localizedMessage),
                     exception = e,
                 )
             }
-        }
-
-        private fun handleFileImportInternal(
-            context: Context,
-            intent: Intent,
-        ): ImportResult {
-            val importPathUri = getDataUri(intent)
-            return if (importPathUri != null) {
-                handleContentProviderFile(context, importPathUri, intent)
-            } else {
-                ImportResult.Failure(context.getString(CommonString.import_error_handle_exception))
-            }
-        }
 
         fun getFileCachedCopy(
             context: Context,
@@ -238,35 +284,29 @@ object ImportUtils {
             return getFileCachedCopy(context, uri)
         }
 
-        fun handleContentProviderFile(
+        private fun cacheImport(
             context: Context,
-            importPathUri: Uri,
-            intent: Intent? = null,
+            file: ImportResolution.ResolvedFile,
         ): ImportResult {
-            val file =
-                when (val resolution = resolveImport(context, intent ?: Intent().setData(importPathUri))) {
-                    is ImportResolution.Failure -> return resolution.error
-                    is ImportResolution.ResolvedFile -> resolution
-                }
-            if (file is ImportResolution.Text) {
-                (context as Activity).onSelectedCsvForImport(intent ?: Intent().setData(importPathUri))
-                return ImportResult.Success
-            }
-
             // Copy to temporary file
             val checkFile =
                 try {
                     context.cacheDir.withFileNameSafe(file.source.fileName)
                 } catch (_: SecurityException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
-                    Timber.e("Path traversal detected in handleContentProviderFile")
+                    Timber.e("Path traversal detected in cacheImport")
                     return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 } catch (_: IllegalArgumentException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
-                    Timber.e("Path traversal detected in handleContentProviderFile")
+                    Timber.e("Path traversal detected in cacheImport")
                     return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 }
-            val tempOutDir: String = Uri.fromFile(checkFile).encodedPath!!
+            // The package WebView/backend route expects encoded filenames on disk; CSV uses a raw path.
+            val tempOutDir =
+                when (file) {
+                    is ImportResolution.Text -> checkFile.absolutePath
+                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage -> Uri.fromFile(checkFile).encodedPath!!
+                }
 
             copyFileToCache(context, file.source.uri, tempOutDir).asErrorDetails()?.let { details ->
                 details.exceptionForReport?.let { CrashReportService.sendExceptionReport(it, "ImportUtils") }
@@ -276,21 +316,7 @@ object ImportUtils {
                     exception = details.userFacingException,
                 )
             }
-            sendShowImportFileDialogMsg(tempOutDir)
-            return ImportResult.Success
-        }
-
-        fun isValidImportType(
-            context: Context,
-            importPathUri: Uri,
-        ): Boolean {
-            val fileName = getFileNameFromContentProvider(context, importPathUri)
-            return when {
-                isDeckPackage(fileName) -> true
-                isCollectionPackage(fileName) -> true
-                isValidTextOrDataFile(context, importPathUri) -> true
-                else -> false
-            }
+            return ImportResult.Success(file, tempOutDir)
         }
 
         private fun isAnkiDatabase(filename: String?): Boolean = filename != null && hasExtension(filename, "anki2")
@@ -545,24 +571,6 @@ object ImportUtils {
                 }
             }
 
-            /**
-             * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-             * @param importPath path of to apkg file which will be imported
-             */
-            private fun sendShowImportFileDialogMsg(importPath: String) {
-                // Get the filename from the path
-                val filename = File(importPath).name
-
-                val dialogMessage =
-                    if (isCollectionPackage(filename)) {
-                        CollectionImportReplace(importPath)
-                    } else {
-                        CollectionImportAdd(importPath)
-                    }
-                // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-                DialogHandler.storeMessage(dialogMessage.toMessage())
-            }
-
             @SuppressLint("LocaleRootUsage")
             internal fun isDeckPackage(filename: String?): Boolean =
                 filename != null && filename.lowercase(Locale.ROOT).endsWith(".apkg") && "collection.apkg" != filename
@@ -632,7 +640,10 @@ object ImportUtils {
 }
 
 sealed class ImportResult {
-    data object Success : ImportResult()
+    data class Success(
+        val file: ImportResolution.ResolvedFile,
+        val path: String,
+    ) : ImportResult()
 
     data class Failure(
         val humanReadableMessage: String,

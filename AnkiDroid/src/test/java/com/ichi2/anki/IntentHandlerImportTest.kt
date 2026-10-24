@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.dialogs.utils.message
+import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import io.mockk.every
@@ -58,7 +59,11 @@ class IntentHandlerImportTest : RobolectricTest() {
 
     @Test
     fun `successful import finishes the intent handler`() {
-        every { ImportUtils.handleFileImport(any(), any()) } returns ImportResult.Success
+        every { ImportUtils.handleFileImport(any(), any()) } returns
+            ImportResult.Success(
+                ImportResolution.DeckPackage(ImportResolution.Source("content://import/deck.apkg".toUri(), "deck.apkg")),
+                "/cache/deck.apkg",
+            )
 
         assertTrue(launchImport().isFinishing)
     }
