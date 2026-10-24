@@ -41,9 +41,19 @@ object BrowserConfig {
 }
 
 object BrowserDefaults {
+    /**
+     * Default card columns shown in the Card Browser when the `activeCols` collection setting is absent.
+     *
+     * [source](https://github.com/ankitects/anki/blob/main/pylib/anki/browser.py)
+     */
     @LibAnkiAlias("CARD_COLUMNS")
     val CARD_COLUMNS: List<String> = listOf("noteFld", "template", "cardDue", "deck")
 
+    /**
+     * Default note columns shown in the Card Browser when the `activeNoteCols` collection setting is absent.
+     *
+     * [source](https://github.com/ankitects/anki/blob/main/pylib/anki/browser.py)
+     */
     @LibAnkiAlias("NOTE_COLUMNS")
     val NOTE_COLUMNS: List<String> = listOf("noteFld", "note", "template", "noteTags")
 }
