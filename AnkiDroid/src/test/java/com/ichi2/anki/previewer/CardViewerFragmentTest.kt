@@ -6,6 +6,7 @@ import android.os.Build
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
 import android.webkit.WebView
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
@@ -15,16 +16,19 @@ import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.assertOpenedUrl
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.registerWebBrowser
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.nullValue
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -67,6 +71,18 @@ class CardViewerFragmentTest : RobolectricTest() {
                 shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
                 targetContext.assertNoActivityStarted(url)
             }
+        }
+    }
+
+    @Test
+    fun `missing media warnings can be turned off`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.missing_media_warning_key), false) }
+        withCardViewerWebView { webView ->
+            val request = mockWebResourceRequest("http://$LOCALHOST/missing-image.jpg", mainFrame = false)
+            shadowOf(webView).webViewClient.onReceivedError(webView, request, mock(WebResourceError::class.java))
+            advanceRobolectricLooper()
+
+            assertThat(snackbarText, nullValue())
         }
     }
 
@@ -156,7 +172,7 @@ class CardViewerFragmentTest : RobolectricTest() {
             block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
         }
 
-    private fun withCardViewerWebView(block: (WebView) -> Unit) {
+    private fun withCardViewerWebView(block: CardViewerActivity.(WebView) -> Unit) {
         val note = addBasicAndReversedNote()
         val intent =
             PreviewerFragment.getIntent(
@@ -174,7 +190,7 @@ class CardViewerFragmentTest : RobolectricTest() {
                         .map { webViewLayout.getChildAt(it) }
                         .filterIsInstance<WebView>()
                         .single()
-                block(webView)
+                activity.block(webView)
             }
         }
     }

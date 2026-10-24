@@ -32,6 +32,7 @@ object AnalyticsConstants {
             R.string.double_tap_timeout_pref_key, // Double tap time interval (milliseconds)
             // ******************************** Sync ***************************************************
             R.string.sync_fetch_media_key, // Fetch media on sync
+            R.string.missing_media_warning_key, // Warn about missing media
             R.string.automatic_sync_choice_key, // Automatic synchronization
             R.string.sync_status_badge_key, // Display synchronization status
             R.string.metered_sync_key, // Allow sync on metered connections
