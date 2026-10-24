@@ -58,6 +58,12 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
             finish()
             return
         }
+        configurePermissions(permissionSet)
+        // only close the activity by tapping the continue button
+        onBackPressedDispatcher.addCallback {}
+    }
+
+    private fun configurePermissions(permissionSet: StoragePermissionSet) {
         val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         setFragmentResultListener(REQUEST_PERMISSIONS) { _, bundle ->
             val hasAllPermissions = bundle.getBoolean(RESULT_HAS_ALL_PERMISSIONS)
@@ -68,8 +74,6 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
         }
-        // only close the activity by tapping the continue button
-        onBackPressedDispatcher.addCallback {}
     }
 
     fun setContinueButtonEnabled(isEnabled: Boolean) {
