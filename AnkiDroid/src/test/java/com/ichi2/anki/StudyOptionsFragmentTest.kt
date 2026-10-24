@@ -143,13 +143,13 @@ class StudyOptionsFragmentTest : RobolectricTest() {
             activity.lifecycleScope
                 .launch {
                     // Main.immediate queues the nested refresh until this coroutine yields.
-                    activity.supportFragmentManager.commitNow {
-                        replace(R.id.studyoptions_fragment, removedFragment)
+                    activity.studyOptionsFragmentManager!!.commitNow {
+                        replace(R.id.studyoptions_content, removedFragment)
                     }
                     removedViewModel = removedFragment.viewModel
                     assertIs<StudyOptionsState.Loading>(removedViewModel.state)
-                    activity.supportFragmentManager.commitNow {
-                        replace(R.id.studyoptions_fragment, replacement)
+                    activity.studyOptionsFragmentManager!!.commitNow {
+                        replace(R.id.studyoptions_content, replacement)
                     }
                 }.join()
             advanceUntilIdle()
