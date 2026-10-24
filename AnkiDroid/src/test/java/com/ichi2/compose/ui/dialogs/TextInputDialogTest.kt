@@ -8,6 +8,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -123,6 +124,27 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
         assertEquals(validationsAfterSubmission, validations)
         field.performImeAction()
         assertEquals("Allowed", submitted)
+    }
+
+    @Test
+    fun `disabled confirmation also blocks the keyboard action`() {
+        var confirmations = 0
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    initialText = "Valid",
+                    enabled = false,
+                    onConfirm = { confirmations++ },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        compose.onNodeWithText("Confirm").assertIsNotEnabled()
+        compose.onNode(hasSetTextAction()).performImeAction()
+        assertEquals(0, confirmations)
     }
 
     @Test
