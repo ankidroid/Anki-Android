@@ -31,8 +31,10 @@ class ProfileManager private constructor(
 ) {
     private val profileContext = context.applicationContext ?: context
 
-    lateinit var activeProfileContext: Context
-        private set
+    private lateinit var activeProfile: ProfileContextWrapper
+
+    val activeProfileContext: Context
+        get() = activeProfile
 
     /**
      * Stores the Registry of all profiles (ID -> Display Name) and the
@@ -102,6 +104,8 @@ class ProfileManager private constructor(
      */
     fun getAllProfiles(): Map<ProfileId, ProfileMetadata> = profileRegistry.getAllProfiles()
 
+    fun wrap(context: Context): Context = activeProfile.wrap(context)
+
     /**
      * Generates a unique [ProfileId] that does not collide with existing profiles.
      *
@@ -162,7 +166,7 @@ class ProfileManager private constructor(
                     profileId = profileId,
                     profileBaseDir = profileBaseDir.file,
                 )
-            activeProfileContext = wrapper
+            activeProfile = wrapper
             ensureProfileCollectionPath(wrapper)
         } catch (e: Exception) {
             Timber.w(e, "Failed to load profile context for $profileId")
