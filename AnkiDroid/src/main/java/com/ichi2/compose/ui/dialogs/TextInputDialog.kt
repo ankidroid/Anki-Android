@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -126,7 +127,7 @@ fun TextInputDialog(
                         }
                     },
                     modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-                    label = { Text(label) },
+                    label = { Text(label, Modifier.testTag("text_input_label")) },
                     isError = displayedError != null,
                     supportingText =
                         if (!hasSupportingText) {

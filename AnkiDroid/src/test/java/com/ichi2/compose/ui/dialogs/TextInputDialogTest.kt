@@ -9,9 +9,12 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
@@ -33,6 +36,38 @@ import kotlin.test.assertNull
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    fun `field semantics retain the label and editable value`() {
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename tag",
+                    label = "Tag name",
+                    confirmText = "Rename",
+                    initialText = "History",
+                    initialSelection = TextRange(1, 3),
+                    errorMessageFor = { if (it.isBlank()) "Name required" else null },
+                    onConfirm = {},
+                    onDismissRequest = {},
+                )
+            }
+        }
+
+        val field = compose.onNode(hasSetTextAction())
+        field.assertTextContains("Tag name")
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("History")))
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.TextSelectionRange, TextRange(1, 3)))
+        field.assert(SemanticsMatcher.keyNotDefined(SemanticsProperties.ContentDescription))
+        compose.onNodeWithTag("text_input_label", useUnmergedTree = true).assertTextEquals("Tag name")
+
+        field.performTextReplacement("")
+
+        field.assertTextContains("Tag name")
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("")))
+        field.assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Error))
+        compose.onNodeWithText("Name required").assertIsDisplayed()
+    }
 
     @Test
     fun `the length counter uses the given length function`() {
