@@ -7,15 +7,21 @@ import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
+import anki.collection.OpChangesWithId
 import anki.notetypes.Notetype
+import anki.notetypes.StockNotetype
 import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.CombinedException
 import com.ichi2.anki.exception.ReportableException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.addNotetype
+import com.ichi2.anki.libanki.addNotetypeLegacy
+import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
+import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.removeNotetype
 import com.ichi2.anki.libanki.updateNotetype
 import com.ichi2.anki.notetype.ManageNoteTypesState.CardEditor
@@ -47,19 +53,50 @@ class ManageNoteTypesViewModel :
     fun refreshNoteTypes() {
         Timber.i("Refreshing list of notetypes")
         viewModelScope.launch {
+            progressManager.withProgress { loadNoteTypes() }
+        }
+    }
+
+    fun addStockNoteType(
+        newName: String,
+        kind: StockNotetype.Kind,
+    ) {
+        Timber.i("Adding notetype from stock kind $kind")
+        addNoteType { safeAddStockNoteType(kind, newName) }
+    }
+
+    fun cloneNoteType(
+        newName: String,
+        ntid: NoteTypeId,
+    ) {
+        Timber.i("Cloning notetype with id $ntid")
+        addNoteType { safeCloneNoteType(ntid, newName) }
+    }
+
+    private fun addNoteType(add: Collection.() -> Result<OpChangesWithId>) {
+        viewModelScope.launch {
             progressManager.withProgress {
-                withCol { safeGetNotetypeNameIdUseCount() }
+                withCol { add() }
                     .onFailure {
                         state.update { oldState ->
                             oldState.copy(error = ReportableException(it))
                         }
-                    }.onSuccess {
-                        state.update { oldState ->
-                            oldState.copy(noteTypes = it)
-                        }
-                    }
+                    }.onSuccess { loadNoteTypes() }
             }
         }
+    }
+
+    private suspend fun loadNoteTypes() {
+        withCol { safeGetNotetypeNameIdUseCount() }
+            .onFailure {
+                state.update { oldState ->
+                    oldState.copy(error = ReportableException(it))
+                }
+            }.onSuccess {
+                state.update { oldState ->
+                    oldState.copy(noteTypes = it)
+                }
+            }
     }
 
     fun filter(query: String) {
@@ -318,6 +355,32 @@ private fun Collection.safeRenameNoteType(
         val currentNoteType: Notetype = getNotetype(ntid)
         val renamedNotetype = currentNoteType.copy { this.name = newName }
         Result.success(updateNotetype(renamedNotetype))
+    } catch (exception: Exception) {
+        Result.failure(exception)
+    }
+
+private fun Collection.safeAddStockNoteType(
+    kind: StockNotetype.Kind,
+    newName: String,
+): Result<OpChangesWithId> =
+    try {
+        val updatedStandardNotetype = getStockNotetype(kind).apply { name = newName }
+        Result.success(addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype)))
+    } catch (exception: Exception) {
+        Result.failure(exception)
+    }
+
+private fun Collection.safeCloneNoteType(
+    ntid: NoteTypeId,
+    newName: String,
+): Result<OpChangesWithId> =
+    try {
+        val newNotetype =
+            getNotetype(ntid).copy {
+                id = 0
+                name = newName
+            }
+        Result.success(addNotetype(newNotetype))
     } catch (exception: Exception) {
         Result.failure(exception)
     }

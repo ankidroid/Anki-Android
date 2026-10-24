@@ -12,6 +12,7 @@ import com.ichi2.anki.RobolectricTest
 import kotlinx.coroutines.launch
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItem
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowDialog
@@ -44,5 +45,25 @@ class AddNewNotesTypeTest : RobolectricTest() {
             // empty string should disable it again
             nameInput.setText("")
             assertThat("OK button disabled for empty name", positiveButton.isEnabled, equalTo(false))
+        }
+
+    @Test
+    fun `adding a note type from the dialog shows it in the list`() =
+        runTest {
+            val activity = startRegularActivity<ManageNotetypes>()
+            activity.lifecycleScope.launch {
+                AddNewNotesType(activity).showAddNewNotetypeDialog()
+            }
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.findViewById<EditText>(R.id.notetype_new_name)!!.setText("My New Note Type")
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            val noteTypeNames =
+                activity.viewModel.state.value.noteTypes
+                    .map { it.name }
+            assertThat(noteTypeNames, hasItem("My New Note Type"))
         }
 }
