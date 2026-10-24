@@ -31,6 +31,7 @@ import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -43,6 +44,17 @@ import kotlin.time.Duration.Companion.seconds
     "Preserve RobolectricTest's scoped CollectionManager dispatcher when switching to JvmTest; tag operations must finish before assertions and teardown.",
 )
 class ManageTagsViewModelTest : RobolectricTest() {
+    @Test
+    fun `row equality preserves parent spelling while tag identity ignores case`() {
+        val original = tagListItem("parent::child", "child", 1, hasChildren = false, collapsed = false)
+        val renamed = original.copy(fullTagName = "PARENT::child")
+
+        assertEquals(original.fullTag, renamed.fullTag)
+        assertEquals(original.displayName, renamed.displayName)
+        assertNotEquals(original, renamed)
+        assertEquals("PARENT::child", renamed.fullTag.value)
+    }
+
     @Test
     fun `tagExists follows backend identity for hidden Unicode tags`() =
         runTest {

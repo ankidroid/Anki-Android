@@ -2,9 +2,6 @@
 
 package com.ichi2.anki.tags
 
-/** Unwraps [TagListItemState.fullTag] to a plain [String] for test assertions */
-internal val TagListItemState.fullTagName: String get() = fullTag.value
-
 internal val ManageTagsState.Content.visibleTagNames: List<String>
     get() = visibleNodes.map { it.fullTagName }
 
@@ -30,7 +27,7 @@ internal fun tagListItem(
     hasChildren: Boolean,
     collapsed: Boolean,
 ) = TagListItemState(
-    fullTag = TagName.asValid(fullTag),
+    fullTagName = fullTag,
     displayName = displayName,
     level = level,
     hasChildren = hasChildren,
