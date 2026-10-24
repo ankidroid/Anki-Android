@@ -5,13 +5,16 @@ package com.ichi2.compose.ui.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -29,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
@@ -98,65 +102,78 @@ fun TextInputDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
-                Text(
-                    title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = AlertDialogDefaults.titleContentColor,
-                    modifier = Modifier.padding(bottom = if (description == null) 16.dp else 8.dp),
-                )
-                if (description != null) {
+            Layout(modifier = Modifier.padding(24.dp), content = {
+                Column(Modifier.verticalScroll(rememberScrollState())) {
                     Text(
-                        description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = AlertDialogDefaults.textContentColor,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(bottom = 16.dp),
+                        title,
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = AlertDialogDefaults.titleContentColor,
+                        modifier = Modifier.padding(bottom = if (description == null) 16.dp else 8.dp),
                     )
-                }
-                OutlinedTextField(
-                    value = input,
-                    onValueChange = { proposed ->
-                        if (input.text != proposed.text) {
-                            input = transformInput(proposed)
-                            hasUserEdited = true
-                            submissionAttempted = false
-                        } else {
-                            input = proposed
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-                    label = { Text(label, Modifier.testTag("text_input_label")) },
-                    isError = displayedError != null,
-                    supportingText =
-                        if (!hasSupportingText) {
-                            null
-                        } else {
-                            {
-                                Row(Modifier.fillMaxWidth()) {
-                                    if (supportingMessage != null || !validateOnInput) {
-                                        Text(supportingMessage.orEmpty(), Modifier.weight(1f))
-                                    } else {
-                                        Spacer(Modifier.weight(1f))
-                                    }
-                                    if (maxLengthCounter != null) Text("${lengthOf(input.text)}/$maxLengthCounter")
-                                }
+                    if (description != null) {
+                        Text(
+                            description,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = AlertDialogDefaults.textContentColor,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(bottom = 16.dp),
+                        )
+                    }
+                    OutlinedTextField(
+                        value = input,
+                        onValueChange = { proposed ->
+                            if (input.text != proposed.text) {
+                                input = transformInput(proposed)
+                                hasUserEdited = true
+                                submissionAttempted = false
+                            } else {
+                                input = proposed
                             }
                         },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
-                )
-                Row(
+                        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                        label = { Text(label, Modifier.testTag("text_input_label")) },
+                        isError = displayedError != null,
+                        supportingText =
+                            if (!hasSupportingText) {
+                                null
+                            } else {
+                                {
+                                    Row(Modifier.fillMaxWidth()) {
+                                        if (supportingMessage != null || !validateOnInput) {
+                                            Text(supportingMessage.orEmpty(), Modifier.weight(1f))
+                                        } else {
+                                            Spacer(Modifier.weight(1f))
+                                        }
+                                        if (maxLengthCounter != null) Text("${lengthOf(input.text)}/$maxLengthCounter")
+                                    }
+                                }
+                            },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
+                    )
+                }
+                FlowRow(
                     modifier = Modifier.fillMaxWidth().padding(top = if (hasSupportingText) 8.dp else 24.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     TextButton(onClick = onDismissRequest) { Text(dismissText) }
                     TextButton(
                         onClick = ::confirmIfValid,
                         enabled = enabled && (!validateOnInput || errorMessage == null),
                     ) { Text(confirmText) }
+                }
+            }) { children, constraints ->
+                val actions = children[1].measure(constraints.copy(minHeight = 0))
+                val body =
+                    children[0].measure(
+                        constraints.copy(minHeight = 0, maxHeight = (constraints.maxHeight - actions.height).coerceAtLeast(0)),
+                    )
+                layout(constraints.maxWidth, body.height + actions.height) {
+                    body.placeRelative(0, 0)
+                    actions.placeRelative(0, body.height)
                 }
             }
             LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
