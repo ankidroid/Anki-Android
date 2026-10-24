@@ -272,7 +272,7 @@ class ManageTagsViewModel : ViewModel() {
                     val fullTag = if (parentFullTag.isEmpty()) child.name else "$parentFullTag::${child.name}"
                     result.add(
                         TagListItemState(
-                            fullTag = TagName.build(fullTag) ?: error("Invalid tag provided"),
+                            fullTagName = fullTag,
                             displayName = child.name,
                             level = child.level - 1,
                             hasChildren = child.childrenList.isNotEmpty(),
@@ -345,21 +345,23 @@ class ManageTagsViewModel : ViewModel() {
 }
 
 /**
- * A flattened representation of a tag for display in a RecyclerView.
+ * A flattened tag row. Equality includes the full spelling so UI updates reach Compose.
  *
- * @param fullTag full hierarchical tag path, e.g. "science::biology"
+ * @param fullTagName full hierarchical tag path, e.g. "science::biology"
  * @param displayName leaf name only, e.g. "biology"
  * @param level tree depth (0 = top-level)
  */
 data class TagListItemState(
-    val fullTag: TagName,
+    val fullTagName: String,
     val displayName: String,
     val level: Int,
     val hasChildren: Boolean,
     val collapsed: Boolean,
 ) {
+    val fullTag: TagName = requireNotNull(TagName.build(fullTagName))
+
     // cache the tag name to support fast case-insensitive searches
-    private val fullTagLower: String = fullTag.value.lowercase()
+    private val fullTagLower: String = fullTagName.lowercase()
 
     /** Case-insensitive check against the full tag path. [query] must be pre-lowercased. */
     fun containsLowercase(query: String): Boolean = fullTagLower.contains(query)
