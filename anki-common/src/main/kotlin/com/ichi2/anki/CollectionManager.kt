@@ -331,10 +331,23 @@ object CollectionManager {
      * If the collection is open, close it.
      */
     suspend fun ensureClosed() {
+        withClosedCollection {}
+    }
+
+    /**
+     * Closes the cached collection and runs [block] on the collection queue.
+     *
+     * Use when changing the collection path: another queued operation must not reopen the
+     * old collection between closing it and recording the new path.
+     * [block] must not call other methods which enter the collection queue.
+     */
+    suspend fun <T> withClosedCollection(
+        @WorkerThread block: () -> T,
+    ): T =
         withQueue {
             ensureClosedInner()
+            block()
         }
-    }
 
     /** See [ensureClosed]. This must only be run inside the queue. */
     private fun ensureClosedInner() {
