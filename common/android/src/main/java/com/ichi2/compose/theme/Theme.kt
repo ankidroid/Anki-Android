@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.withStyledAttributes
@@ -70,6 +71,7 @@ internal fun Context.toMaterial3ColorScheme(): ColorScheme {
     withStyledAttributes(attrs = R.styleable.ComposeTheme) {
         val isLight = getBoolean(R.styleable.ComposeTheme_isLightTheme, true)
         val base = if (isLight) lightColorScheme() else darkColorScheme()
+        val surface = color(R.styleable.ComposeTheme_colorSurface, base.surface)
         scheme =
             base.copy(
                 primary = color(R.styleable.ComposeTheme_colorPrimary, base.primary),
@@ -92,17 +94,35 @@ internal fun Context.toMaterial3ColorScheme(): ColorScheme {
                 onError = color(R.styleable.ComposeTheme_colorOnError, base.onError),
                 errorContainer = color(R.styleable.ComposeTheme_colorErrorContainer, base.errorContainer),
                 onErrorContainer = color(R.styleable.ComposeTheme_colorOnErrorContainer, base.onErrorContainer),
-                surface = color(R.styleable.ComposeTheme_colorSurface, base.surface),
+                surface = surface,
                 onSurface = color(R.styleable.ComposeTheme_colorOnSurface, base.onSurface),
                 surfaceVariant = color(R.styleable.ComposeTheme_colorSurfaceVariant, base.surfaceVariant),
                 onSurfaceVariant = color(R.styleable.ComposeTheme_colorOnSurfaceVariant, base.onSurfaceVariant),
                 outline = color(R.styleable.ComposeTheme_colorOutline, base.outline),
                 outlineVariant = color(R.styleable.ComposeTheme_colorOutlineVariant, base.outlineVariant),
-                surfaceContainer = color(R.styleable.ComposeTheme_colorSurfaceContainer, base.surfaceContainer),
-                surfaceContainerHigh = color(R.styleable.ComposeTheme_colorSurfaceContainerHigh, base.surfaceContainerHigh),
-                surfaceContainerHighest = color(R.styleable.ComposeTheme_colorSurfaceContainerHighest, base.surfaceContainerHighest),
-                surfaceContainerLow = color(R.styleable.ComposeTheme_colorSurfaceContainerLow, base.surfaceContainerLow),
-                surfaceContainerLowest = color(R.styleable.ComposeTheme_colorSurfaceContainerLowest, base.surfaceContainerLowest),
+                // XML container colors can be overlay tints. Compose uses these as standalone
+                // surfaces (including popup windows), which must not reveal the content behind them.
+                surfaceContainer = color(R.styleable.ComposeTheme_colorSurfaceContainer, base.surfaceContainer).compositeOver(surface),
+                surfaceContainerHigh =
+                    color(
+                        R.styleable.ComposeTheme_colorSurfaceContainerHigh,
+                        base.surfaceContainerHigh,
+                    ).compositeOver(surface),
+                surfaceContainerHighest =
+                    color(
+                        R.styleable.ComposeTheme_colorSurfaceContainerHighest,
+                        base.surfaceContainerHighest,
+                    ).compositeOver(surface),
+                surfaceContainerLow =
+                    color(
+                        R.styleable.ComposeTheme_colorSurfaceContainerLow,
+                        base.surfaceContainerLow,
+                    ).compositeOver(surface),
+                surfaceContainerLowest =
+                    color(
+                        R.styleable.ComposeTheme_colorSurfaceContainerLowest,
+                        base.surfaceContainerLowest,
+                    ).compositeOver(surface),
                 background = color(R.styleable.ComposeTheme_android_colorBackground, base.background),
             )
     }
