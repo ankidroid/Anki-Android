@@ -14,8 +14,10 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.getVisibleRows
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.sameInstance
@@ -73,6 +75,22 @@ class CardBrowserFragmentTest : RobolectricTest() {
                 searchView!!.editText.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
                 expectMostRecentItem()
             }
+        }
+
+    @Test
+    fun `filtered deck search escapes the deck name`() =
+        withCardBrowserFragment {
+            val deckId = addDeck("Chapter_1")
+            activityViewModel.searchRequestFlow.update { request ->
+                request.copyFilters { it.copy(decks = listOf(DeckNameId("Chapter_1", deckId))) }
+            }
+
+            // '_' is a single character wildcard, so an unescaped name also matches 'Chapter11'
+            assertThat(buildDeckNameSearch(), equalTo("""deck:Chapter\_1"""))
+
+            val selected = addBasicNote("In Chapter_1").apply { moveToDeck("Chapter_1") }
+            addBasicNote("In Chapter11").apply { moveToDeck("Chapter11") }
+            assertThat(col.findCards(buildDeckNameSearch()!!), equalTo(listOf(selected.firstCard().id)))
         }
 
     @Test
