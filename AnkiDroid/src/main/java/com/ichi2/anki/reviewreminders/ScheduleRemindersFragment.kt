@@ -36,17 +36,17 @@ import com.ichi2.anki.R
 import com.ichi2.anki.canUserAccessDeck
 import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.launchCatchingViewTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
-import com.ichi2.anki.runCatching
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.getParcelableCompat
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
@@ -56,7 +56,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
@@ -235,7 +234,7 @@ class ScheduleRemindersFragment :
         setContentInsets()
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
-        flowOfShowTroubleshooting.launchCollectionInLifecycleScope(::renderTroubleshootingSnackbar)
+        flowOfShowTroubleshooting.launchCollectionInViewLifecycleScope(::renderTroubleshootingSnackbar)
 
         // Set up recycler view
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -249,7 +248,7 @@ class ScheduleRemindersFragment :
         binding.recyclerView.adapter = adapter
 
         // Retrieve reminders based on the editing scope
-        launchCatchingTask { loadDatabaseRemindersIntoUI() }
+        launchCatchingViewTask { loadDatabaseRemindersIntoUI() }
 
         // If the user creates or edits a review reminder, the dialog for doing so opens
         // Once their changes are complete, the dialog closes and this fragment is reloaded
@@ -396,15 +395,13 @@ class ScheduleRemindersFragment :
     }
 
     private fun retrieveSubtitle(setSubtitle: (String?) -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            requireActivity().runCatching {
-                val subtitle =
-                    when (val scope = scheduleRemindersScope) {
-                        is ReviewReminderScope.Global -> null
-                        is ReviewReminderScope.DeckSpecific -> scope.getDeckName()
-                    }
-                setSubtitle(subtitle)
-            }
+        launchCatchingViewTask {
+            val subtitle =
+                when (val scope = scheduleRemindersScope) {
+                    is ReviewReminderScope.Global -> null
+                    is ReviewReminderScope.DeckSpecific -> scope.getDeckName()
+                }
+            setSubtitle(subtitle)
         }
     }
 
@@ -553,7 +550,7 @@ class ScheduleRemindersFragment :
         did: DeckId,
         callback: (deckName: String) -> Unit,
     ) {
-        launchCatchingTask {
+        launchCatchingViewTask {
             val deckName = cachedDeckNames.getOrPut(did) { withCol { decks.name(did) } }
             callback(deckName)
         }
@@ -568,7 +565,7 @@ class ScheduleRemindersFragment :
         did: DeckId,
         callback: (isDeckAccessible: Boolean) -> Unit,
     ) {
-        launchCatchingTask {
+        launchCatchingViewTask {
             val isDeckAccessible = canUserAccessDeck(did)
             Timber.d("Checked for whether deck with id %s can be accessed: %s", did, isDeckAccessible)
             callback(isDeckAccessible)

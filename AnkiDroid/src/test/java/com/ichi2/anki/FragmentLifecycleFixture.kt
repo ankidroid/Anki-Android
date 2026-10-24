@@ -3,7 +3,6 @@
 package com.ichi2.anki
 
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.FragmentLifecycleFixture.Transition.DESTROY_VIEW
 import com.ichi2.anki.FragmentLifecycleFixture.Transition.REMOVE
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.cardviewer.SingleCardSide
@@ -52,7 +51,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         FragmentLifecycleFixture("DeveloperOptions") { DeveloperOptionsFragment() },
         FragmentLifecycleFixture("SyncSettings") { SyncSettingsFragment() },
         FragmentLifecycleFixture("About") { AboutFragment() },
-        FragmentLifecycleFixture("ScheduleReminders", knownFailures = setOf(REMOVE, DESTROY_VIEW)) { ScheduleRemindersFragment() },
+        FragmentLifecycleFixture("ScheduleReminders", knownFailures = setOf(REMOVE)) { ScheduleRemindersFragment() },
         FragmentLifecycleFixture("FilteredDeckOptions") {
             FilteredDeckOptionsFragment()
         },
