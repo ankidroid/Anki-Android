@@ -157,6 +157,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
+import com.ichi2.anki.common.android.R as CommonR
 
 @Suppress("LeakingThis")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
@@ -511,7 +512,7 @@ open class Reviewer :
             }
             clearInsets(
                 topBar,
-                basePadding = resources.getDimensionPixelSize(R.dimen.side_margin),
+                basePadding = resources.getDimensionPixelSize(CommonR.dimen.side_margin),
                 top = if (fullscreenMode == FullScreenMode.BUTTONS_ONLY) topBarTop else null,
             )
         }

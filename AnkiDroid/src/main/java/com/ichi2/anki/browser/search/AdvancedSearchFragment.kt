@@ -20,7 +20,7 @@ import com.ichi2.anki.browser.search.AdvancedSearchFieldsTab.FieldSearch
 import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionData
 import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionType
 import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionType.InsertExample
-import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
+import com.ichi2.anki.common.android.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.FragmentAdvancedSearchBinding
 import com.ichi2.anki.databinding.ItemAdvancedSearchBinding
 import com.ichi2.anki.dialogs.FieldSelectionDialog
@@ -32,6 +32,7 @@ import com.ichi2.anki.utils.openUrl
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Helps a user build an advanced search string, explaining options listed in the
@@ -262,7 +263,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
      *
      * @see OptionData
      */
-    class SelectAdvancedSearchFragment : Fragment(R.layout.dialog_generic_recycler_view) {
+    class SelectAdvancedSearchFragment : Fragment(CommonR.layout.dialog_generic_recycler_view) {
         val binding by viewBinding(DialogGenericRecyclerViewBinding::bind)
 
         val data: List<OptionData>

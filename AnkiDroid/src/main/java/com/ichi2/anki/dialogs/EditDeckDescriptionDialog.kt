@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.databinding.DialogDeckDescriptionBinding
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
@@ -35,6 +34,7 @@ import com.ichi2.utils.show
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Allows a user to edit the [deck description][com.ichi2.anki.libanki.Deck.description]
@@ -115,7 +115,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
             setOnClickListener {
                 MaterialAlertDialogBuilder(requireContext()).show {
                     setTitle(binding.formatAsMarkdownInput.text)
-                    setIcon(R.drawable.ic_help_black_24dp)
+                    setIcon(CommonR.drawable.ic_help_black_24dp)
                     // FIXME: the upstream string unexpectedly contains newlines
                     setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
                 }

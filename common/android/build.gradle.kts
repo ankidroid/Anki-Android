@@ -11,6 +11,7 @@ plugins {
 configure<LibraryExtension> {
     namespace = "com.ichi2.anki.common.android"
     buildFeatures.buildConfig = true
+    buildFeatures.viewBinding = true
     testFixtures.enable = true
 }
 

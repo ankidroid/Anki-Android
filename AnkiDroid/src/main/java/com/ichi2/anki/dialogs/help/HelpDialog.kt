@@ -34,6 +34,7 @@ import com.ichi2.utils.createAndApply
 import com.ichi2.utils.customView
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * [DialogFragment] responsible for showing the help/support menus.
@@ -222,7 +223,7 @@ internal val mainHelpMenuItems =
         ),
         HelpItem(
             titleResId = CommonString.help_title_get_help,
-            iconResId = R.drawable.ic_help_black_24dp,
+            iconResId = CommonR.drawable.ic_help_black_24dp,
             analyticsId = LinkAction.OPENED_GET_HELP,
             id = 2,
         ),
@@ -274,7 +275,7 @@ internal val supportMenuItems =
         ),
         HelpItem(
             titleResId = CommonString.help_item_support_other_ankidroid,
-            iconResId = R.drawable.ic_help_black_24dp,
+            iconResId = CommonR.drawable.ic_help_black_24dp,
             analyticsId = LinkAction.OPENED_OTHER,
             id = 9,
             action = OpenUrlResource(R.string.link_contribution),
@@ -310,7 +311,7 @@ internal val childHelpMenuItems =
         ),
         HelpItem(
             titleResId = CommonString.help_item_ankidroid_faq,
-            iconResId = R.drawable.ic_help_black_24dp,
+            iconResId = CommonR.drawable.ic_help_black_24dp,
             analyticsId = LinkAction.OPENED_ANKIDROID_FAQ,
             id = 102,
             parentId = 1,

@@ -5,4 +5,5 @@
 <resources>
     <item type="id" name="root_layout"/>
     <item type="id" name="pending_snackbar"/>
+    <item type="id" name="dialog_text_input_layout"/>
 </resources>
