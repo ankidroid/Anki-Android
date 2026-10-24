@@ -1,18 +1,13 @@
 <!--
-  ~  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
-  ~
-  ~  This program is free software; you can redistribute it and/or modify it under
-  ~  the terms of the GNU General Public License as published by the Free Software
-  ~  Foundation; either version 3 of the License, or (at your option) any later
-  ~  version.
-  ~
-  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
-  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
-  ~
-  ~  You should have received a copy of the GNU General Public License along with
-  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
+  SPDX-License-Identifier: GPL-3.0-or-later AND Apache-2.0
+  SPDX-FileCopyrightText: Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Composite icon; the add_circle_outline badge is Apache-2.0; the surrounding icon is GPL-3.0-or-later.
+  SPDX-FileComment: Style: Filled (add_circle_outline badge only).
+  SPDX-FileComment: Modified: scaled and translated the add_circle_outline badge to the bottom right of the sigma.
+  SPDX-FileComment: The source of the sigma component has not been identified.
+  Badge source: https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/android/content/add_circle_outline/materialicons/black/res/drawable/baseline_add_circle_outline_24.xml
+-->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
