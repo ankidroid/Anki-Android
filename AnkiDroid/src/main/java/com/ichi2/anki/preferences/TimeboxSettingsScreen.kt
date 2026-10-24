@@ -53,6 +53,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -62,6 +63,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.compose.theme.AnkiDroidTheme
@@ -234,7 +236,9 @@ private fun TimeboxDurationCard(
     }
 
     val validRange = TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES
-    val unitSuffix = stringResource(CommonString.mins)
+    val count = textValue.toIntOrNull() ?: minutes
+    val safeCount = if (count in validRange) count else minutes
+    val unitSuffix = pluralStringResource(CommonPlurals.timebox_minutes_suffix, safeCount)
 
     val parsed = textValue.toIntOrNull()
     val isValid = parsed != null && parsed in validRange
@@ -269,6 +273,8 @@ private fun TimeboxDurationCard(
                         onSetMinutes(prevVal)
                         focusManager.clearFocus()
                     },
+                    modifier = Modifier.size(56.dp),
+                    shape = RoundedCornerShape(16.dp),
                     enabled = (textValue.toIntOrNull() ?: minutes) > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
                 ) {
                     Icon(
@@ -350,6 +356,8 @@ private fun TimeboxDurationCard(
                         onSetMinutes(nextVal)
                         focusManager.clearFocus()
                     },
+                    modifier = Modifier.size(56.dp),
+                    shape = RoundedCornerShape(16.dp),
                     enabled = (textValue.toIntOrNull() ?: minutes) < TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES,
                 ) {
                     Icon(
