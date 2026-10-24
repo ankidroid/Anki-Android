@@ -219,7 +219,7 @@ private class ScrollbarTestList(
     rowHeights: List<Int>,
 ) {
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val adapter = FixedHeightRowsAdapter(rowHeights)
+    private val adapter = ScrollbarTestRowsAdapter(rowHeights)
     private val recyclerView =
         RecyclerView(context).also {
             it.layoutManager = StableScrollbarLayoutManager(context)
@@ -302,7 +302,7 @@ private class ScrollbarTestList(
     }
 }
 
-private class FixedHeightRowsAdapter(
+private class ScrollbarTestRowsAdapter(
     var rowHeights: List<Int>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
