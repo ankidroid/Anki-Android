@@ -643,6 +643,8 @@ open class AnkiDroidApp :
         fun sharedPrefsOrNull(): SharedPreferences? =
             sharedPreferencesTestingOverride ?: if (isInitialized) instance.sharedPrefs() else null
 
+        fun wrapForActiveProfile(base: Context): Context = (base.applicationContext as? AnkiDroidApp)?.profileManager?.wrap(base) ?: base
+
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting
         var sentExceptionReportHack = false

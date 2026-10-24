@@ -29,6 +29,7 @@ import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -144,6 +145,28 @@ class ProfileManagerTest {
 
         val activeContext = manager.activeProfileContext
         assertTrue(activeContext.filesDir.absolutePath.contains(aliceId))
+    }
+
+    @Test
+    fun `wrap leaves Default contexts alone`() {
+        val manager = ProfileManager.create(context)
+        val activityBase = ContextWrapper(context)
+
+        assertSame(activityBase, manager.wrap(activityBase))
+    }
+
+    @Test
+    fun `wrap routes a context into the active profile`() {
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_wrap") }
+        val manager = ProfileManager.create(context)
+        val profileDir = File(appDataRoot, "p_wrap").apply { deleteRecursively() }
+
+        val wrapped = manager.wrap(ContextWrapper(context))
+
+        assertFalse("wrap must not touch the disk", profileDir.exists())
+        wrapped.getSharedPreferences("settings", Context.MODE_PRIVATE).edit(commit = true) { putString("key", "value") }
+        assertTrue(File(appDataRoot, "shared_prefs/profile_p_wrap_settings.xml").exists())
+        assertTrue(wrapped.filesDir.startsWith(profileDir))
     }
 
     @Test

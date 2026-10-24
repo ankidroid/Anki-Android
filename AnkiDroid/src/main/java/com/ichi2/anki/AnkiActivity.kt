@@ -157,6 +157,10 @@ open class AnkiActivity(
             }
         }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AnkiDroidApp.wrapForActiveProfile(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
