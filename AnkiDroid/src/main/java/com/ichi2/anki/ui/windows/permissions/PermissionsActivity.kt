@@ -37,7 +37,7 @@ import timber.log.Timber
  * To request optional permissions from the user, prefer [PermissionsBottomSheet].
  */
 class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
-    private val binding by viewBinding(ActivityPermissionsBinding::bind)
+    internal val binding by viewBinding(ActivityPermissionsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -80,7 +80,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         }
     }
 
-    fun setContinueButtonEnabled(isEnabled: Boolean) {
+    private fun setContinueButtonEnabled(isEnabled: Boolean) {
         binding.continueButton.isEnabled = isEnabled
     }
 
