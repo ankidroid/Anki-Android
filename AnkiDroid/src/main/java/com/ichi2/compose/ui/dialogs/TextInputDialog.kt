@@ -52,6 +52,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
  * @param validateOnInput when false, validate on confirmation instead of while editing
+ * @param enabled whether confirmation is allowed from the button or keyboard
  */
 @Composable
 fun TextInputDialog(
@@ -71,6 +72,7 @@ fun TextInputDialog(
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
     validateOnInput: Boolean = true,
+    enabled: Boolean = true,
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
@@ -84,6 +86,7 @@ fun TextInputDialog(
     val focusRequester = remember { FocusRequester() }
 
     fun confirmIfValid() {
+        if (!enabled) return
         submissionAttempted = true
         if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
@@ -151,7 +154,7 @@ fun TextInputDialog(
                     TextButton(onClick = onDismissRequest) { Text(dismissText) }
                     TextButton(
                         onClick = ::confirmIfValid,
-                        enabled = !validateOnInput || errorMessage == null,
+                        enabled = enabled && (!validateOnInput || errorMessage == null),
                     ) { Text(confirmText) }
                 }
             }
