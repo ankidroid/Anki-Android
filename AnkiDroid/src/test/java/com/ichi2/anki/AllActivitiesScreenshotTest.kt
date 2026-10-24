@@ -22,6 +22,7 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.shareddeck.SharedDecksActivity
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.AllPermissionsExplanationActivity
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
@@ -111,6 +112,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     AccountActivity::class.java,
                     // AllPermissionsExplanationScreenshotTest
                     AllPermissionsExplanationActivity::class.java,
+                    // PermissionsActivityScreenshotTest
+                    PermissionsActivity::class.java,
                     // CardTemplateEditorScreenshotTest
                     CardTemplateEditor::class.java,
                     // DeckPickerScreenshotTest
