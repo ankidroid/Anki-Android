@@ -58,13 +58,39 @@ Assisted-by: GPT-5.2
 Assisted-by: Claude Opus 4.5 [Proofreading/grammar]
 ```
 
-**GitHub comments** **must** use the `> [!NOTE]` 
- [alert](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
+**GitHub comments** **must** disclose AI tool use, typically using one of the following formats:
+
+```md
+Assisted-by: Claude Opus 5.5
+```
+
+```md
+[Summary of change]
+
+<details>
+
+<summary>Assisted-by: Claude Opus 5.5</summary>
+
+Details of change
+
+</details>
+```
+produces:
+
+[Summary of change]
+
+<details>
+
+<summary>Assisted-by: Claude Opus 5.5</summary>
+
+Details of change
+
+</details>
 
 ```md
 > [!NOTE]  
-> The following table was generated using Claude Opus 4.5 
+> The following table was generated using Claude Opus 5.5
 ```
 produces:
-> [!NOTE]  
-> The following table was generated using Claude Opus 4.5
+> [!NOTE]
+> The following table was generated using Claude Opus 5.5
