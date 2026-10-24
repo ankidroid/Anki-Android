@@ -93,8 +93,8 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
     // used to determine if a rotation has taken place
     private var initialRotation: Int = 0
 
-    val cardIds: List<Long>
-        get() = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+    val cardIds: List<Long>?
+        get() = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIdsOrNull()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,12 +102,14 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
             try {
                 this.cardIds
             } catch (e: IOException) {
-                // the file may be missing, or truncated if the write was interrupted
                 Timber.w(e, "Failed to read cardIds")
-                showThemedToast(requireContext(), CommonString.something_wrong, false)
-                dismiss()
-                return
+                null
             }
+        if (cardIds == null) {
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            dismiss()
+            return
+        }
 
         viewModel.init(cardIds)
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
@@ -278,7 +280,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                 Timber.d("Ignoring 'set due date' request: dialog is already open")
                 return
             }
-            val dialog = newInstance(IdsFile.getDirectory(activity), cardIds)
+            val dialog = newInstance(IdsFile.getDirectory(), cardIds)
             activity.showDialogFragment(dialog)
         }
 

@@ -5,13 +5,19 @@ package com.ichi2.anki.browser
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.utils.FileUtil
 import timber.log.Timber
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.time.Duration.Companion.days
 
 /**
  * Temporary file containing cards or note IDs to be passed in a Bundle.
@@ -31,7 +37,9 @@ class IdsFile(
      * @param directory parent directory of the file. Generally it should be [getDirectory]
      * @param ids ids to store
      */
-    constructor(directory: File, ids: List<Long>, purpose: Purpose) : this(path = createTempFile(purpose.prefix, ".tmp", directory).path) {
+    constructor(directory: File, ids: List<Long>, purpose: Purpose) : this(
+        path = createTempFile(purpose.prefix, ".tmp", ensureDirectory(directory)).path,
+    ) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(ids.size)
             for (id in ids) {
@@ -45,7 +53,7 @@ class IdsFile(
      *
      * @throws IOException if the file is missing or corrupt.
      */
-    fun getIds(): List<Long> =
+    private fun readIds(): List<Long> =
         FileInputStream(this).use { fileStream ->
             val inputStream = DataInputStream(fileStream.buffered())
             val size = inputStream.readInt()
@@ -55,6 +63,20 @@ class IdsFile(
                 throw IOException("Invalid IDs file length or count: $name")
             }
             List(size) { inputStream.readLong() }
+        }
+
+    /**
+     * Reads the IDs, or returns null if the snapshot is no longer available.
+     * An empty snapshot returns an empty list.
+     *
+     * @throws IOException if the file is corrupt or reading fails after opening it.
+     */
+    fun getIdsOrNull(): List<Long>? =
+        try {
+            readIds()
+        } catch (_: FileNotFoundException) {
+            Timber.w("ID snapshot is no longer available: %s", this)
+            null
         }
 
     override fun describeContents(): Int = 0
@@ -79,7 +101,66 @@ class IdsFile(
     }
 
     companion object {
-        fun getDirectory(context: Context): File = context.cacheDir
+        private const val DIRECTORY_NAME = "idsfiles"
+
+        /** Maximum age of a saved selection, including files still referenced by saved state. */
+        private val FILE_RETENTION = 7.days
+
+        /**
+         * Deletes snapshots older than [FILE_RETENTION], mostly files abandoned after process death.
+         *
+         * Called at startup on an IO dispatcher.
+         *
+         * Note: There is a slim chance that this will clear active snapshots, so downstream code
+         * must handle this possibility.
+         */
+        fun deleteStaleFiles(context: Context = appContext) {
+            // Do not create the snapshot directory just to clean it.
+            deleteStaleFiles(File(context.cacheDir, DIRECTORY_NAME))
+        }
+
+        @VisibleForTesting
+        internal fun deleteStaleFiles(directory: File) {
+            val cutoff = TimeManager.time.intTimeMS() - FILE_RETENTION.inWholeMilliseconds
+            val deleteCount =
+                FileUtil.listFilesOrEmpty(directory).count { file ->
+                    file.withCleanupErrorHandling {
+                        file.isStale(cutoff) && file.deleteWithLogging()
+                    }
+                }
+            Timber.i("Deleted %d expired ID snapshot(s)", deleteCount)
+        }
+
+        private fun File.isStale(cutoff: Long): Boolean {
+            val modified = lastModified()
+            return isFile && modified > 0 && modified < cutoff
+        }
+
+        private fun File.deleteWithLogging(): Boolean =
+            delete().also { deleted ->
+                if (!deleted) Timber.w("Unable to delete expired ID snapshot: %s", this)
+            }
+
+        private inline fun File.withCleanupErrorHandling(block: () -> Boolean): Boolean =
+            try {
+                block()
+            } catch (e: SecurityException) {
+                Timber.w(e, "Unable to access ID snapshot path: %s", this)
+                false
+            }
+
+        /**
+         * Returns the cache path for saved selections. The directory is created when writing a snapshot.
+         * Android may evict these files at any age; callers must continue handling missing snapshots.
+         */
+        fun getDirectory(context: Context = appContext): File = File(context.cacheDir, DIRECTORY_NAME)
+
+        private fun ensureDirectory(directory: File): File {
+            if (!directory.isDirectory && !directory.mkdirs() && !directory.isDirectory) {
+                throw IOException("Unable to create ID snapshot directory: $directory")
+            }
+            return directory
+        }
 
         @JvmField
         @Suppress("unused")

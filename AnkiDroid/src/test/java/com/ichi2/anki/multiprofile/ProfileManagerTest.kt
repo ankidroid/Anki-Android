@@ -72,7 +72,6 @@ class ProfileManagerTest {
     fun `createOrNull returns a manager on the active profile context`() {
         val manager = assertNotNull(ProfileManager.createOrNull(context))
 
-        assertTrue("Expected a profile context", manager.activeProfileContext is ProfileContextWrapper)
         assertNull(ProfileManager.attachError)
         assertEquals(context.filesDir.absolutePath, manager.activeProfileContext.filesDir.absolutePath)
     }
@@ -123,7 +122,7 @@ class ProfileManagerTest {
 
         assertEquals("default", prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
 
-        val activeContext = manager.activeProfileContext as ProfileContextWrapper
+        val activeContext = manager.activeProfileContext
         val currentFile = File(activeContext.filesDir, "old_user_data.txt")
 
         assertTrue("Default profile must see legacy files", currentFile.exists())

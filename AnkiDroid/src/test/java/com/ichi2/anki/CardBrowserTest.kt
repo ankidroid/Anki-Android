@@ -107,6 +107,7 @@ import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.testutils.parcelledCopy
 import com.ichi2.testutils.saveState
+import com.ichi2.testutils.targetContext
 import com.ichi2.testutils.withSplitPaneUi
 import com.ichi2.testutils.withSplitPaneUiAsync
 import com.ichi2.utils.LanguageUtil
@@ -137,6 +138,7 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -146,6 +148,7 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
@@ -155,6 +158,25 @@ class CardBrowserTest : RobolectricTest() {
         super.setUp()
         setCardBrowserFragmented(false)
         setUsingSearchView(false)
+    }
+
+    @Test
+    fun browserStartsWhenSnapshotDirectoryIsUnavailable() {
+        ensureCollectionLoadIsSynchronous()
+        addBasicNote("front", "back")
+        val directory = File(targetContext.cacheDir, "idsfiles")
+        if (directory.exists()) assertTrue(directory.deleteRecursively())
+        directory.writeText("occupied")
+        try {
+            Robolectric.buildActivity(CardBrowser::class.java).use { controller ->
+                val browser = controller.setup().get()
+                browser.waitForSearchResults()
+                assertEquals(1, browser.viewModel.rowCount)
+                assertEquals(false, browser.viewModel.isInMultiSelectMode)
+            }
+        } finally {
+            assertTrue(directory.delete())
+        }
     }
 
     @Test

@@ -1103,7 +1103,7 @@ class CardBrowserViewModelTest : JvmTest() {
             val data = queryPreviewIntentData()
             assertThat(data.currentIndex, equalTo(0))
 
-            data.idsFile.getIds().also { actualCardIds ->
+            assertNotNull(data.idsFile.getIdsOrNull()).also { actualCardIds ->
                 assertThat("previewing a note previews cards", actualCardIds, hasSize(5))
 
                 val firstCardIds =
@@ -1127,7 +1127,7 @@ class CardBrowserViewModelTest : JvmTest() {
         runViewModelTest(notes = 2) {
             val data = queryPreviewIntentData()
             assertThat(data.currentIndex, equalTo(0))
-            assertThat(data.idsFile.getIds(), hasSize(2))
+            assertThat(data.idsFile.getIdsOrNull(), hasSize(2))
         }
 
     @Test
@@ -1136,7 +1136,7 @@ class CardBrowserViewModelTest : JvmTest() {
             selectRowsWithPositions(0).also {
                 val data = queryPreviewIntentData()
                 assertThat(data.currentIndex, equalTo(0))
-                assertThat(data.idsFile.getIds(), hasSize(2))
+                assertThat(data.idsFile.getIdsOrNull(), hasSize(2))
             }
 
             selectNone()
@@ -1145,7 +1145,7 @@ class CardBrowserViewModelTest : JvmTest() {
             selectRowsWithPositions(1).also {
                 val data = queryPreviewIntentData()
                 assertThat(data.currentIndex, equalTo(1))
-                assertThat(data.idsFile.getIds(), hasSize(2))
+                assertThat(data.idsFile.getIdsOrNull(), hasSize(2))
             }
         }
 
@@ -1870,7 +1870,7 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("two rows are selected", selectedRows, hasSize(2))
 
             handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
-            val savedIds = handle.multiselectStateFile!!.getIds()
+            val savedIds = handle.multiselectStateFile!!.getIdsOrNull()
             val expectedIds = selectedRows.map { it.cardOrNoteId }
             assertThat("saved selection matches the rows", savedIds, containsInAnyOrder(*expectedIds.toTypedArray()))
         }
@@ -1908,6 +1908,20 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `saving multiselect state recreates an evicted snapshot directory`() {
+        val directory = File(createTransientDirectory(), "idsfiles").apply { mkdirs() }
+        runViewModelTest(notes = 2, initMode = InitMode.NO_DELAY, cacheDir = directory) {
+            selectRowAtPosition(1)
+            generateExpensiveSavedState()
+            assertTrue(directory.deleteRecursively())
+
+            val replacement = assertNotNull(generateExpensiveSavedState().multiselectStateFile)
+
+            assertEquals(selectedRows.map { it.cardOrNoteId }, replacement.getIdsOrNull())
+        }
+    }
+
+    @Test
     fun `failed replacement preserves restored multiselect state file`() {
         val handle = SavedStateHandle()
         runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
@@ -1915,17 +1929,17 @@ class CardBrowserViewModelTest : JvmTest() {
             handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
         }
         val restoredFile = assertNotNull(handle.multiselectStateFile)
-        val savedIds = restoredFile.getIds()
+        val savedIds = assertNotNull(restoredFile.getIdsOrNull())
 
-        // A missing cache directory makes the replacement write fail without affecting the old file.
+        // A file at the directory path prevents replacement without affecting the old snapshot.
         runViewModelTest(
             savedStateHandle = handle,
             initMode = InitMode.NO_DELAY,
-            cacheDir = File(createTransientDirectory(), "missing"),
+            cacheDir = File(createTransientDirectory(), "blocked").apply { writeText("occupied") },
         ) {
             assertThat("selection is restored", selectedRows, hasSize(1))
             assertFailsWith<IOException> { generateExpensiveSavedState() }
-            assertThat("previous snapshot remains readable", restoredFile.getIds(), equalTo(savedIds))
+            assertThat("previous snapshot remains readable", restoredFile.getIdsOrNull(), equalTo(savedIds))
         }
     }
 

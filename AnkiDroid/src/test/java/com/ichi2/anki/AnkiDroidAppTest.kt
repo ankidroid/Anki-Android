@@ -11,23 +11,33 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.multimedia.MultimediaArgsStorage
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import com.ichi2.anki.multiprofile.isPhoenixProcess
+import com.ichi2.anki.recorder.VoiceRecorder
 import io.mockk.every
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import java.io.File
+import java.io.IOException
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.time.Duration.Companion.days
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidAppTest {
@@ -115,6 +125,27 @@ class AnkiDroidAppTest {
     }
 
     @Test
+    fun `ID snapshots use base storage when no profile was loaded`() =
+        runBlocking {
+            val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+            val manager = app.profileManager
+            try {
+                app.profileManager = null
+                val directory = IdsFile.getDirectory()
+                assertEquals(frameworkBase.cacheDir, directory.parentFile)
+                val file = IdsFile(directory, listOf(42L), IdsFile.Purpose.PREVIEW)
+                assertEquals(listOf(42L), file.getIdsOrNull())
+                assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+
+                app.launchCacheCleanup().join()
+
+                assertFalse(file.exists())
+            } finally {
+                app.profileManager = manager
+            }
+        }
+
+    @Test
     fun `ACRA process skips the profile environment`() {
         mockkStatic(::isAcraSenderProcess)
         every { isAcraSenderProcess() } returns true
@@ -137,6 +168,73 @@ class AnkiDroidAppTest {
         assertNull(profileRegistry.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
         assertEquals(frameworkBase.filesDir, app.filesDir)
     }
+
+    @Test
+    fun `multimedia cleanup failure does not prevent voice recording cleanup`() =
+        runBlocking {
+            profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_cleanup_failure") }
+            val app = startApplication()
+            val recording =
+                File(VoiceRecorder.recordingsDirectory(app).apply { mkdirs() }, "ankidroid_audiorec-expired.3gp").apply {
+                    writeText("expired recording")
+                }
+            assertTrue(recording.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+            mockkObject(MultimediaArgsStorage.Companion)
+            every { MultimediaArgsStorage.create(any()) } throws IOException("unavailable multimedia storage")
+
+            app.launchCacheCleanup().join()
+
+            verify(exactly = 1) { MultimediaArgsStorage.create(app) }
+            assertFalse(recording.exists())
+        }
+
+    @Test
+    fun `multimedia cleanup failure does not prevent ID cleanup`() =
+        runBlocking {
+            profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_multimedia_id_cleanup") }
+            val app = startApplication()
+            val file = IdsFile(IdsFile.getDirectory(app), listOf(1L), IdsFile.Purpose.PREVIEW)
+            assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+            mockkObject(MultimediaArgsStorage.Companion)
+            every { MultimediaArgsStorage.create(any()) } throws IOException("unavailable multimedia storage")
+
+            app.launchCacheCleanup().join()
+
+            verify(exactly = 1) { MultimediaArgsStorage.create(app) }
+            assertFalse(file.exists())
+        }
+
+    @Test
+    fun `voice recording cleanup failure does not prevent ID cleanup`() =
+        runBlocking {
+            profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_voice_id_cleanup") }
+            val app = startApplication()
+            val file = IdsFile(IdsFile.getDirectory(app), listOf(1L), IdsFile.Purpose.PREVIEW)
+            assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+            val recordingsDirectory = VoiceRecorder.recordingsDirectory(app)
+            mockkObject(VoiceRecorder.Companion)
+            every { VoiceRecorder.removeExpiredRecordings(recordingsDirectory, any()) } throws IOException("unavailable recording storage")
+
+            app.launchCacheCleanup().join()
+
+            verify(exactly = 1) { VoiceRecorder.removeExpiredRecordings(recordingsDirectory, any()) }
+            assertFalse(file.exists())
+        }
+
+    @Test
+    fun `explicit cache cleanup uses the active profile's storage`() =
+        runBlocking {
+            for (profile in listOf("default", "p_first", "p_second")) {
+                profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, profile) }
+                val app = startApplication()
+                val directory = IdsFile.getDirectory(app)
+                assertEquals(app.cacheDir, directory.parentFile)
+                val file = IdsFile(directory, listOf(1L), IdsFile.Purpose.PREVIEW)
+                assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+                app.launchCacheCleanup().join()
+                assertFalse(file.exists(), "Cleanup missed $profile")
+            }
+        }
 
     private fun startApplication(): AnkiDroidApp =
         AttachableApp().apply {

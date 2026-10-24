@@ -99,9 +99,8 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             (dialog as? AlertDialog)?.positiveButton?.isEnabled = false
             binding.contentViewsGroup.isVisible = false
             binding.loadingViewsGroup.isVisible = true
-            val fetchNoteIdsResult = runCatching { idsFile.getIds() }
-            val noteIds = fetchNoteIdsResult.getOrNull()
-            if (fetchNoteIdsResult.isFailure || noteIds == null) {
+            val noteIds = runCatching { idsFile.getIdsOrNull() }.getOrNull()
+            if (noteIds == null) {
                 requireActivity().showSnackbar(CommonString.something_wrong)
                 dismiss()
                 return@launch
@@ -190,7 +189,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             context: Context,
             noteIds: List<NoteId>,
         ): FindAndReplaceDialogFragment {
-            val file = IdsFile(IdsFile.getDirectory(context), noteIds, IdsFile.Purpose.FIND_AND_REPLACE)
+            val file = IdsFile(IdsFile.getDirectory(), noteIds, IdsFile.Purpose.FIND_AND_REPLACE)
             return FindAndReplaceDialogFragment().apply {
                 arguments =
                     Bundle().apply {
