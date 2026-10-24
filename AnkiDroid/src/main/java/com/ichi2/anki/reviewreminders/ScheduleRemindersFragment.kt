@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -187,7 +188,7 @@ class ScheduleRemindersFragment :
     private val flowOfShowTroubleshooting: StateFlow<Boolean> by lazy {
         combine(troubleshootingViewModel.state, flowOfHasReminders) { state, hasReminders ->
             hasReminders && state.summaryStatus == SummaryStatus.Error
-        }.stateIn(lifecycleScope, SharingStarted.Eagerly, initialValue = false)
+        }.flowWithLifecycle(lifecycle).stateIn(lifecycleScope, SharingStarted.Eagerly, initialValue = false)
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
