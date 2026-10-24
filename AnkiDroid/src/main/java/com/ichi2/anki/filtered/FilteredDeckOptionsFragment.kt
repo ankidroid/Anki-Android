@@ -105,7 +105,6 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.filterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
         binding.secondFilterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
         bindLabels()
-        bindListeners()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             discardBackHandler,
@@ -158,6 +157,12 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                 }
             }
         }
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        // Restored text must not call into the view model before its initialization finishes.
+        bindListeners()
     }
 
     private fun setupMenuIfNeeded() {
