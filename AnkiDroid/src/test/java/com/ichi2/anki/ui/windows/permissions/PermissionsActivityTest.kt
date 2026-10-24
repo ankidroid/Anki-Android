@@ -10,7 +10,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.provider.Settings
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.edit
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
@@ -26,6 +25,7 @@ import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
@@ -41,6 +41,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
@@ -54,9 +55,10 @@ class PermissionsActivityTest : RobolectricTest() {
 
     @Test
     fun testOnClickingContinueActivityFinishes() {
+        grantPermissions(*ARBITRARY_PERMISSION_SET.permissions.toTypedArray())
         testActivity { activity ->
-            activity.setContinueButtonEnabled(true)
-            activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+            assertTrue(activity.binding.continueButton.isEnabled)
+            activity.binding.continueButton.performClick()
             assertThat("activity is finishing", activity.isFinishing)
         }
     }
@@ -69,8 +71,8 @@ class PermissionsActivityTest : RobolectricTest() {
         withManageExternalStorageInManifest {
             withAllFilesAccess {
                 testActivity(StoragePermissionSet.EXTERNAL_MANAGER) { activity ->
-                    activity.setContinueButtonEnabled(true)
-                    activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+                    assertTrue(activity.binding.continueButton.isEnabled)
+                    activity.binding.continueButton.performClick()
                     assertThat("activity is finishing", activity.isFinishing)
                 }
             }
@@ -98,7 +100,7 @@ class PermissionsActivityTest : RobolectricTest() {
 
         withManageExternalStorageInManifest {
             testActivity(StoragePermissionSet.EXTERNAL_MANAGER) { activity ->
-                assertFalse(activity.findViewById<AppCompatButton>(R.id.continue_button).isEnabled)
+                assertFalse(activity.binding.continueButton.isEnabled)
                 activity.findViewById<PermissionsItem>(R.id.all_files_permission).performClick()
 
                 val shadowActivity = shadowOf(activity)
