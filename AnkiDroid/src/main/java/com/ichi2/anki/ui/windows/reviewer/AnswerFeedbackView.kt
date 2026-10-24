@@ -79,6 +79,8 @@ class AnswerFeedbackView : AppCompatImageView {
                 override fun onAnimationRepeat(animation: Animation) {}
             },
         )
+        // The animation may be delayed if the row is not expanded before the first frame.
+        visibility = VISIBLE
         startAnimation(fadeIn)
     }
 }
