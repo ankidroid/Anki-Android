@@ -54,7 +54,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         FragmentLifecycleFixture("SyncSettings") { SyncSettingsFragment() },
         FragmentLifecycleFixture("About") { AboutFragment() },
         FragmentLifecycleFixture("ScheduleReminders", knownFailures = setOf(REMOVE, DESTROY_VIEW)) { ScheduleRemindersFragment() },
-        FragmentLifecycleFixture("FilteredDeckOptions", knownFailures = setOf(REMOVE, DESTROY_VIEW, RECREATE_VIEW)) {
+        FragmentLifecycleFixture("FilteredDeckOptions", knownFailures = setOf(RECREATE_VIEW)) {
             FilteredDeckOptionsFragment()
         },
         FragmentLifecycleFixture("MediaCheck") { MediaCheckFragment() },
