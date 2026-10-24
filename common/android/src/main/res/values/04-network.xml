@@ -47,4 +47,21 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="media_sync_status_title">Media sync</string>
+    <string name="media_sync_syncing_title">Media is syncing</string>
+    <string name="media_sync_syncing_summary">This can take a while</string>
+    <string name="media_sync_waiting_for_network_title">Waiting for a connection</string>
+    <string name="media_sync_waiting_for_network_summary">Media will sync when you’re back online</string>
+    <string name="media_sync_waiting_for_wifi_title">Waiting for Wi-Fi</string>
+    <string name="media_sync_waiting_for_wifi_summary">You’re on mobile data</string>
+    <string name="media_sync_off_title">Media sync is off</string>
+    <string name="media_sync_off_summary">‘Fetch media on sync’ is set to Never</string>
+    <string name="media_sync_not_recorded_title">Media hasn’t synced yet</string>
+    <string name="media_sync_not_recorded_summary">Sync to bring your media up to date</string>
+    <string name="media_sync_incomplete_title">Media sync incomplete</string>
+    <string name="media_sync_incomplete_summary" comment="%s is a date and time, for example ‘Oct 24, 14:02’">Last attempt %s</string>
+    <string name="media_sync_up_to_date_title">Media is up to date</string>
+    <string name="media_sync_up_to_date_summary" comment="%s is a date and time, for example ‘Oct 24, 14:02’">Last synced %s</string>
+    <string name="media_sync_not_logged_in_summary">Media syncs with your AnkiWeb account</string>
+    <string name="media_sync_now" comment="Button in the media sync sheet. It syncs media only">Sync now</string>
 </resources>

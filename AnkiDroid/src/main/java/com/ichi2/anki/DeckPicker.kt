@@ -187,6 +187,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.study.currentDeckStudyState
+import com.ichi2.anki.sync.MediaSyncBottomSheet
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.sync.syncStatus
@@ -1296,6 +1297,11 @@ open class DeckPicker :
         val progressIndicator =
             syncItem.actionView
                 ?.findViewById<LinearProgressIndicator>(R.id.progress_indicator)
+        (MenuItemCompat.getActionProvider(syncItem) as? SyncActionProvider)
+            ?.setLongClickAction(getString(CommonString.media_sync_status_title)) {
+                Timber.i("DeckPicker:: Sync button long pressed")
+                showMediaSyncStatus()
+            }
 
         val workManager = WorkManager.getInstance(this)
         val flow = workManager.getWorkInfosForUniqueWorkFlow(UniqueWorkNames.SYNC_MEDIA)
@@ -1313,6 +1319,11 @@ open class DeckPicker :
                     }
                 }
             }
+    }
+
+    private fun showMediaSyncStatus() {
+        if (supportFragmentManager.findFragmentByTag(MediaSyncBottomSheet.TAG) != null) return
+        MediaSyncBottomSheet().show(supportFragmentManager, MediaSyncBottomSheet.TAG)
     }
 
     private fun setupSearchIcon(menuItem: MenuItem) {
@@ -1479,9 +1490,7 @@ open class DeckPicker :
                 toolbarSearchItem?.collapseActionView()
                 val actionProvider = MenuItemCompat.getActionProvider(item) as? SyncActionProvider
                 if (actionProvider?.isProgressShown == true) {
-                    launchCatchingTask {
-                        monitorMediaSync(this@DeckPicker)
-                    }
+                    showMediaSyncStatus()
                 } else {
                     sync()
                 }
