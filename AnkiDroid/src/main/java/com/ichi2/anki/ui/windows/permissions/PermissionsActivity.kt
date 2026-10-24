@@ -64,13 +64,17 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     }
 
     private fun configurePermissions(permissionSet: StoragePermissionSet) {
-        val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         setFragmentResultListener(REQUEST_PERMISSIONS) { _, bundle ->
             val hasAllPermissions = bundle.getBoolean(RESULT_HAS_ALL_PERMISSIONS)
             setContinueButtonEnabled(hasAllPermissions)
         }
         setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ -> decideStorageAndFinish() }
 
+        showPermissionsFragment(permissionSet)
+    }
+
+    private fun showPermissionsFragment(permissionSet: StoragePermissionSet) {
+        val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
         }
