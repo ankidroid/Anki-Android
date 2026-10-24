@@ -786,8 +786,7 @@ class DeckPickerTest : RobolectricTest() {
                 DeckPickerEx::class.java,
                 Intent(),
             )
-        val studyOptionsFragment =
-            deckPickerEx.supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) as StudyOptionsFragment?
+        val studyOptionsFragment = deckPickerEx.fragment
         assertThat(
             "Study options should show on start on tablet",
             studyOptionsFragment,
@@ -1071,7 +1070,7 @@ class DeckPickerTest : RobolectricTest() {
             reminders.navigateUp()
 
             assertNotNull(fragment)
-            assertEquals(0, supportFragmentManager.backStackEntryCount)
+            assertEquals(0, studyOptionsFragmentManager!!.backStackEntryCount)
         }
 
     @Test
@@ -1083,7 +1082,7 @@ class DeckPickerTest : RobolectricTest() {
             advanceRobolectricLooper()
 
             assertEquals(anotherDeck, assertNotNull(fragment).viewModel.selectedDeckId)
-            assertEquals(0, supportFragmentManager.backStackEntryCount)
+            assertEquals(0, studyOptionsFragmentManager!!.backStackEntryCount)
         }
 
     @Test
@@ -1159,13 +1158,13 @@ class DeckPickerTest : RobolectricTest() {
             for (deckId in listOf(1L, anotherDeck)) {
                 val studyOptions = assertNotNull(fragment)
                 studyOptions.layoutScroll().scrollTo(0, 200)
-                val savedState = supportFragmentManager.saveFragmentInstanceState(studyOptions)
+                val savedState = studyOptions.parentFragmentManager.saveFragmentInstanceState(studyOptions)
                 viewModel.selectDeck(deckId).join()
                 advanceRobolectricLooper()
 
                 // Recreate the fragment from its saved state, including its view hierarchy.
                 val restored = StudyOptionsFragment().apply { setInitialSavedState(savedState) }
-                supportFragmentManager.commitNow { replace(R.id.studyoptions_fragment, restored) }
+                studyOptionsFragmentManager!!.commitNow { replace(R.id.studyoptions_content, restored) }
                 advanceRobolectricLooper()
 
                 assertEquals(deckId, restored.viewModel.selectedDeckId)
@@ -1178,7 +1177,7 @@ class DeckPickerTest : RobolectricTest() {
     private fun DeckPicker.makeStudyOptionsScrollable() {
         val studyOptionsView = assertNotNull(fragment).requireView()
         studyOptionsView.findViewById<ScrollView>(R.id.studyoptions_scrollview).getChildAt(0).minimumHeight = 10000
-        supportFragmentManager.registerFragmentLifecycleCallbacks(
+        studyOptionsFragmentManager!!.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
                 override fun onFragmentViewCreated(
                     fm: FragmentManager,
@@ -1213,7 +1212,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     private val DeckPicker.sidePanel
-        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
+        get() = studyOptionsFragmentManager?.findFragmentById(R.id.studyoptions_content)
 
     private suspend fun DeckPicker.reloadDecks() {
         viewModel.reloadDeckCounts().join()
