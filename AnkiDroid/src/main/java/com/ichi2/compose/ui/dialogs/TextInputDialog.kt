@@ -30,8 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
@@ -42,6 +44,8 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * the View based `AlertDialog.input(...)` helper.
  *
  * @param onConfirm called with the text, but only while it is valid
+ * @param initialText initial value shown in the field
+ * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
  * @param errorMessageFor error to show for the current input, null when valid
  */
 @Composable
@@ -53,19 +57,22 @@ fun TextInputDialog(
     onDismissRequest: () -> Unit,
     dismissText: String = stringResource(CommonString.dialog_cancel),
     initialText: String = "",
+    initialSelection: TextRange = TextRange(initialText.length),
     maxLengthCounter: Int? = null,
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
 ) {
-    var text by rememberSaveable { mutableStateOf(initialText) }
+    var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
+    }
     var hasUserEdited by rememberSaveable { mutableStateOf(false) }
-    val errorMessage = errorMessageFor(text)
+    val errorMessage = errorMessageFor(input.text)
     val displayedError = errorMessage?.takeIf { hasUserEdited }
     val focusRequester = remember { FocusRequester() }
 
     fun confirmIfValid() {
-        if (errorMessageFor(text) == null) onConfirm(text)
+        if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
     AnkiDroidDialog(onDismissRequest = onDismissRequest) {
         Surface(
@@ -82,10 +89,14 @@ fun TextInputDialog(
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
                 OutlinedTextField(
-                    value = text,
-                    onValueChange = {
-                        text = it
-                        hasUserEdited = true
+                    value = input,
+                    onValueChange = { proposed ->
+                        if (input.text != proposed.text) {
+                            input = proposed
+                            hasUserEdited = true
+                        } else {
+                            input = proposed
+                        }
                     },
                     modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                     label = { Text(label) },
@@ -101,7 +112,7 @@ fun TextInputDialog(
                                     } else {
                                         Spacer(Modifier.weight(1f))
                                     }
-                                    if (maxLengthCounter != null) Text("${lengthOf(text)}/$maxLengthCounter")
+                                    if (maxLengthCounter != null) Text("${lengthOf(input.text)}/$maxLengthCounter")
                                 }
                             }
                         },
