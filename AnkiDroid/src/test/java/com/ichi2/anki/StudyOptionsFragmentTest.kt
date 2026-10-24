@@ -9,7 +9,9 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +23,7 @@ import com.ichi2.testutils.ext.triggerDeckNotFoundInLimitsMap
 import com.ichi2.testutils.launchFragmentInContainer
 import com.ichi2.testutils.withFragment
 import com.ichi2.utils.neutralButton
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
@@ -35,6 +38,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
@@ -113,6 +117,25 @@ class StudyOptionsFragmentTest : RobolectricTest() {
                 col.decks.select(anotherDeck)
                 refreshAndAwait()
                 assertEquals(0, scroll.scrollY)
+            }
+        }
+
+    @Test
+    fun `returning from another panel keeps a single progress observer`() =
+        runTest {
+            withStudyOptions {
+                val firstView = requireView()
+
+                parentFragmentManager.commit {
+                    replace(android.R.id.content, Fragment())
+                    addToBackStack(null)
+                }
+                parentFragmentManager.executePendingTransactions()
+                parentFragmentManager.popBackStackImmediate()
+
+                assertNotSame(firstView, requireView())
+                val progress = viewModel.progressManager.progress as MutableStateFlow<*>
+                assertEquals(1, progress.subscriptionCount.value)
             }
         }
 
