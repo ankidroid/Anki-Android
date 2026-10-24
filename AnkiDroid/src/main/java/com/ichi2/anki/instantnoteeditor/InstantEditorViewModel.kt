@@ -20,6 +20,8 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,8 +38,11 @@ import kotlin.math.max
  */
 class InstantEditorViewModel :
     ViewModel(),
-    OnErrorListener {
+    OnErrorListener,
+    HasProgress<InstantEditorProgress> {
     override val onError = MutableSharedFlow<String>()
+
+    override val progressManager = ProgressManager<InstantEditorProgress>()
 
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
     val instantEditorError = MutableSharedFlow<String?>()
@@ -123,20 +128,21 @@ class InstantEditorViewModel :
      * @param skipClozeCheck Indicates whether to skip the cloze field check.
      * @return A [SaveNoteResult] indicating the outcome of the operation.
      */
-    suspend fun checkAndSaveNote(skipClozeCheck: Boolean = false): SaveNoteResult {
-        if (skipClozeCheck) {
-            return saveNote()
-        }
+    suspend fun checkAndSaveNote(skipClozeCheck: Boolean = false): SaveNoteResult =
+        progressManager.withProgress(InstantEditorProgress.SAVING_NOTE) {
+            if (skipClozeCheck) {
+                return@withProgress saveNote()
+            }
 
-        val note = editorNote
-        val result = checkNoteFieldsResponse(note)
-        if (result is NoteFieldsCheckResult.Failure) {
-            return SaveNoteResult.Warning(result.localizedMessage)
+            val note = editorNote
+            val result = checkNoteFieldsResponse(note)
+            if (result is NoteFieldsCheckResult.Failure) {
+                return@withProgress SaveNoteResult.Warning(result.localizedMessage)
+            }
+            Timber.d("Note fields check successful, saving note")
+            instantEditorError.emit(null)
+            saveNote()
         }
-        Timber.d("Note fields check successful, saving note")
-        instantEditorError.emit(null)
-        return saveNote()
-    }
 
     /** Adds the note to the collection.
      * @return If the operation is successful, returns [SaveNoteResult.Success],
@@ -407,6 +413,10 @@ class InstantEditorViewModel :
             }
         currentClozeMode.value = newMode
     }
+}
+
+enum class InstantEditorProgress {
+    SAVING_NOTE,
 }
 
 /**
