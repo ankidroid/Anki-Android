@@ -32,6 +32,10 @@ You may be banned from the repository if this occurs a second time.
   request template.
 * Contributions that make nontrivial use of AI tools **must** be labelled, with the tool version.
 
+#### Exceptions
+
+AI-generated issues may be submitted at a maintainer's discretion.
+
 ### Handling Questions about AI Use
 
 If you are not sure whether a tool or workflow counts as AI usage under this policy, please ask
