@@ -47,6 +47,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
  * @param errorMessageFor error to show for the current input, null when valid
+ * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param transformInput applied to text edits, not cursor-only changes
  */
 @Composable
@@ -63,6 +64,7 @@ fun TextInputDialog(
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
+    helperText: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -71,6 +73,8 @@ fun TextInputDialog(
     var hasUserEdited by rememberSaveable { mutableStateOf(false) }
     val errorMessage = errorMessageFor(input.text)
     val displayedError = errorMessage?.takeIf { hasUserEdited }
+    val supportingMessage = displayedError ?: helperText
+    val hasSupportingText = maxLengthCounter != null || supportingMessage != null
     val focusRequester = remember { FocusRequester() }
 
     fun confirmIfValid() {
@@ -104,13 +108,13 @@ fun TextInputDialog(
                     label = { Text(label) },
                     isError = displayedError != null,
                     supportingText =
-                        if (displayedError == null && maxLengthCounter == null) {
+                        if (!hasSupportingText) {
                             null
                         } else {
                             {
                                 Row(Modifier.fillMaxWidth()) {
-                                    if (displayedError != null) {
-                                        Text(displayedError, Modifier.weight(1f))
+                                    if (supportingMessage != null) {
+                                        Text(supportingMessage.orEmpty(), Modifier.weight(1f))
                                     } else {
                                         Spacer(Modifier.weight(1f))
                                     }
@@ -123,7 +127,7 @@ fun TextInputDialog(
                     keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = if (hasSupportingText) 8.dp else 24.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 ) {
                     TextButton(onClick = onDismissRequest) { Text(dismissText) }
