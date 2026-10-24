@@ -851,6 +851,28 @@ class ManageTagsViewModelTest : RobolectricTest() {
             }
         }
 
+    /**
+     * Detects a fix for [Anki issue 5870](https://github.com/ankitects/anki/issues/5870) so
+     * [UserMessage.UnusedTagNotMoved] and its handling can be removed. Call native reparent directly
+     * because [moveTagTree] currently implements moves using rename.
+     */
+    @Test
+    fun `backend reparent still requires UnusedTagNotMoved`() =
+        runTest {
+            val sourceTags = setOf("parent::child", "parent::child::leaf")
+            addUnusedTags(*sourceTags.toTypedArray())
+            assertEquals(sourceTags, col.tags.all().toSet())
+
+            col.tags.reparent(listOf("parent::child"), "target")
+
+            assertEquals(
+                sourceTags,
+                col.tags.all().toSet(),
+                "Anki issue 5870 changed: update moveTagTree to use the fixed backend operation " +
+                    "and remove ${UserMessage.UnusedTagNotMoved}.",
+            )
+        }
+
     @Test
     fun `moving an unused subtree preserves tags and the previous undo action`() =
         runTest {
@@ -858,11 +880,15 @@ class ManageTagsViewModelTest : RobolectricTest() {
             withViewModel {
                 val before = col.tags.all().toSet()
                 val undoBefore = col.undoStatus()
-                moveTag("parent::child", "target").join()
-                assertThat(col.tags.all().toSet(), equalTo(before))
-                assertEquals(undoBefore.undo, col.undoStatus().undo)
-                assertEquals(undoBefore.redo, col.undoStatus().redo)
-                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(0)))
+                for (destination in listOf("target", null)) {
+                    moveTag("parent::child", destination).join()
+                    assertThat(col.tags.all().toSet(), equalTo(before))
+                    assertEquals(undoBefore.undo, col.undoStatus().undo)
+                    assertEquals(undoBefore.redo, col.undoStatus().redo)
+                    val pending = pendingMessages.value.single()
+                    assertThat(pending.message, equalTo(UserMessage.UnusedTagNotMoved))
+                    messageShown(pending.id)
+                }
                 col.undo()
                 assertEquals(before, col.getNote(note.id).tags.toSet())
                 col.redo()

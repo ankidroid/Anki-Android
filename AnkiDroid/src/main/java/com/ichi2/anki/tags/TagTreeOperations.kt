@@ -40,8 +40,7 @@ internal fun Collection.moveTagTree(
     newParent: TagName?,
 ): OpChangesWithCount {
     require(newParent == null || !newParent.isSameOrDescendantOf(tag)) { "A tag cannot be moved under itself" }
-    val leaf = tag.value.substringAfterLast("::")
-    val destination = TagName.build(newParent?.let { "${it.value}::$leaf" } ?: leaf)!!
+    val destination = tag.withParent(newParent)
     if (destination == tag) return opChangesWithCount { }
     // Moving one subtree is a prefix rename. The backend reparent operation also rejects
     // valid sibling prefixes (e.g. parent::a beneath parent::ab).

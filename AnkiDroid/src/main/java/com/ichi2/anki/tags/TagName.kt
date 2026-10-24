@@ -97,6 +97,12 @@ class TagName private constructor(
     }
 }
 
+/** Returns this tag's path under [parent], or at the top level when the parent is null. */
+internal fun TagName.withParent(parent: TagName?): TagName {
+    val leaf = value.substringAfterLast("::")
+    return requireNotNull(TagName.build(parent?.let { "${it.value}::$leaf" } ?: leaf))
+}
+
 // Extension methods serve two purposes: removing `.value` from the call site
 // and ensuring that collection operation lambdas return `OpChanges`
 // Having Timber.d as a final call means the Lambda returns `Unit`, which is converted to `Any`
