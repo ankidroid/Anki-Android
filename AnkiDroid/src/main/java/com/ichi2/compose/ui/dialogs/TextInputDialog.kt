@@ -34,6 +34,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
@@ -48,6 +49,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
  * @param errorMessageFor error to show for the current input, null when valid
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
+ * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
  */
 @Composable
@@ -65,6 +67,7 @@ fun TextInputDialog(
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
     helperText: String? = null,
+    description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -92,8 +95,18 @@ fun TextInputDialog(
                     title,
                     style = MaterialTheme.typography.headlineSmall,
                     color = AlertDialogDefaults.titleContentColor,
-                    modifier = Modifier.padding(bottom = 16.dp),
+                    modifier = Modifier.padding(bottom = if (description == null) 16.dp else 8.dp),
                 )
+                if (description != null) {
+                    Text(
+                        description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = AlertDialogDefaults.textContentColor,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                    )
+                }
                 OutlinedTextField(
                     value = input,
                     onValueChange = { proposed ->
