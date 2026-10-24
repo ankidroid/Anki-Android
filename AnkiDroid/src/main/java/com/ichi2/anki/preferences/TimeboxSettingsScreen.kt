@@ -77,6 +77,7 @@ import com.ichi2.anki.common.android.R as CommonR
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimeboxSettingsScreen(
+    isLoading: Boolean,
     isEnabled: Boolean,
     minutes: Int,
     onToggleEnabled: (Boolean) -> Unit,
@@ -84,7 +85,6 @@ fun TimeboxSettingsScreen(
     onDecrement: () -> Unit,
     onSetMinutes: (Int) -> Unit,
     onNavigateUp: () -> Unit,
-    isLoading: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -396,6 +396,7 @@ private fun TimeboxHelpSection(modifier: Modifier = Modifier) {
 private fun TimeboxSettingsScreenEnabledPreview() {
     AnkiDroidTheme {
         TimeboxSettingsScreen(
+            isLoading = false,
             isEnabled = true,
             minutes = 20,
             onToggleEnabled = {},
@@ -412,6 +413,7 @@ private fun TimeboxSettingsScreenEnabledPreview() {
 private fun TimeboxSettingsScreenDisabledPreview() {
     AnkiDroidTheme {
         TimeboxSettingsScreen(
+            isLoading = false,
             isEnabled = false,
             minutes = 20,
             onToggleEnabled = {},
