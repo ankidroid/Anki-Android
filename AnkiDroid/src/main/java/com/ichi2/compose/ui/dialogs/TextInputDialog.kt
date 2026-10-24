@@ -58,132 +58,78 @@ fun TextInputDialog(
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
 ) {
-    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
-        TextInputDialogCard(
-            title = title,
-            label = label,
-            confirmText = confirmText,
-            onConfirm = onConfirm,
-            onDismissRequest = onDismissRequest,
-            dismissText = dismissText,
-            initialText = initialText,
-            maxLengthCounter = maxLengthCounter,
-            lengthOf = lengthOf,
-            capitalization = capitalization,
-            errorMessageFor = errorMessageFor,
-        )
-    }
-}
-
-/** The dialog card itself. Metrics match Material3's own AlertDialog. */
-@Composable
-private fun TextInputDialogCard(
-    title: String,
-    label: String,
-    confirmText: String,
-    onConfirm: (String) -> Unit,
-    onDismissRequest: () -> Unit,
-    dismissText: String,
-    initialText: String,
-    maxLengthCounter: Int?,
-    lengthOf: (String) -> Int,
-    capitalization: KeyboardCapitalization,
-    errorMessageFor: (String) -> String?,
-) {
     var text by rememberSaveable { mutableStateOf(initialText) }
     var hasUserEdited by rememberSaveable { mutableStateOf(false) }
     val errorMessage = errorMessageFor(text)
     val displayedError = errorMessage?.takeIf { hasUserEdited }
+    val focusRequester = remember { FocusRequester() }
 
     fun confirmIfValid() {
         if (errorMessageFor(text) == null) onConfirm(text)
     }
-
-    val focusRequester = remember { FocusRequester() }
-
-    Surface(
-        modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
-        shape = AlertDialogDefaults.shape,
-        color = AlertDialogDefaults.containerColor,
-        tonalElevation = AlertDialogDefaults.TonalElevation,
-    ) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.headlineSmall,
-                color = AlertDialogDefaults.titleContentColor,
-                modifier = Modifier.padding(bottom = 16.dp),
-            )
-            OutlinedTextField(
-                value = text,
-                onValueChange = {
-                    text = it
-                    hasUserEdited = true
-                },
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                label = { Text(label) },
-                isError = displayedError != null,
-                supportingText =
-                    if (displayedError == null && maxLengthCounter == null) {
-                        null
-                    } else {
-                        {
-                            Row(modifier = Modifier.fillMaxWidth()) {
-                                if (displayedError != null) {
-                                    Text(displayedError, modifier = Modifier.weight(1f))
-                                } else {
-                                    Spacer(modifier = Modifier.weight(1f))
-                                }
-                                if (maxLengthCounter != null) {
-                                    Text("${lengthOf(text)}/$maxLengthCounter")
+    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
+        Surface(
+            modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
+            shape = AlertDialogDefaults.shape,
+            color = AlertDialogDefaults.containerColor,
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = AlertDialogDefaults.titleContentColor,
+                    modifier = Modifier.padding(bottom = 16.dp),
+                )
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = {
+                        text = it
+                        hasUserEdited = true
+                    },
+                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                    label = { Text(label) },
+                    isError = displayedError != null,
+                    supportingText =
+                        if (displayedError == null && maxLengthCounter == null) {
+                            null
+                        } else {
+                            {
+                                Row(Modifier.fillMaxWidth()) {
+                                    if (displayedError != null) {
+                                        Text(displayedError, Modifier.weight(1f))
+                                    } else {
+                                        Spacer(Modifier.weight(1f))
+                                    }
+                                    if (maxLengthCounter != null) Text("${lengthOf(text)}/$maxLengthCounter")
                                 }
                             }
-                        }
-                    },
-                singleLine = true,
-                keyboardOptions =
-                    KeyboardOptions(
-                        capitalization = capitalization,
-                        imeAction = ImeAction.Done,
-                    ),
-                keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
-            )
-            LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
-            ) {
-                TextButton(onClick = onDismissRequest) {
-                    Text(dismissText)
-                }
-                TextButton(
-                    onClick = ::confirmIfValid,
-                    enabled = errorMessage == null,
+                        },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 ) {
-                    Text(confirmText)
+                    TextButton(onClick = onDismissRequest) { Text(dismissText) }
+                    TextButton(
+                        onClick = ::confirmIfValid,
+                        enabled = errorMessage == null,
+                    ) { Text(confirmText) }
                 }
             }
+            LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
         }
     }
 }
 
+/** @see TextInputDialog */
 @DialogPreviews
 @Composable
 private fun TextInputDialogPreview() {
     AnkiDroidPreview {
-        TextInputDialog(
-            title = "Rename deck",
-            label = "Deck name",
-            confirmText = "Rename",
-            onConfirm = {},
-            onDismissRequest = {},
-            maxLengthCounter = 50,
-        )
+        TextInputDialog("Rename deck", "Deck name", "Rename", {}, {}, maxLengthCounter = 50)
     }
 }
