@@ -244,12 +244,12 @@ class DeckAdapter(
                 CommonR.attr.collapseRef,
             )
         val ta = context.obtainStyledAttributes(attrs)
-        zeroCountColor = ta.getColor(0, context.getColor(R.color.black))
-        newCountColor = ta.getColor(1, context.getColor(R.color.black))
-        learnCountColor = ta.getColor(2, context.getColor(R.color.black))
-        reviewCountColor = ta.getColor(3, context.getColor(R.color.black))
+        zeroCountColor = ta.getColor(0, context.getColor(CommonR.color.black))
+        newCountColor = ta.getColor(1, context.getColor(CommonR.color.black))
+        learnCountColor = ta.getColor(2, context.getColor(CommonR.color.black))
+        reviewCountColor = ta.getColor(3, context.getColor(CommonR.color.black))
         rowCurrentDrawable = ta.getResourceId(4, 0)
-        deckNameDefaultColor = ta.getColor(5, context.getColor(R.color.black))
+        deckNameDefaultColor = ta.getColor(5, context.getColor(CommonR.color.black))
         deckNameDynColor = ta.getColor(6, context.getColor(CommonR.color.material_blue_A700))
         expandImage = ta.getDrawableOrThrow(7)
         expandImage.isAutoMirrored = true

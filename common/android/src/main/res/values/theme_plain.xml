@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
+    <color name="theme_plain_primary">#9E9E9E</color>
+    <color name="theme_plain_primary_dark">#616161</color>
+    <color name="theme_plain_primary_light">#F5F5F5</color>
+    <color name="theme_plain_accent">#607D8B</color>
+    <color name="theme_plain_primary_text">#212121</color>
+</resources>
