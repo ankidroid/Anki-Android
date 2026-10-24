@@ -92,6 +92,8 @@ class ProfileContextWrapper private constructor(
         return super.getSharedPreferences("$prefix$name", mode)
     }
 
+    fun wrap(base: Context): Context = if (profileId.isDefault()) base else ProfileContextWrapper(base, profileId, profileBaseDir)
+
     /**
      * Creates the directories required for the Context Wrapper.
      *
