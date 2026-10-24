@@ -108,6 +108,14 @@
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
     <string name="sync_account_summ_logged_out">Not logged in</string>
+    <string name="media_sync_status_title" maxLength="41">Media sync</string>
+    <string name="media_sync_status_syncing">Syncing…</string>
+    <string name="media_sync_status_waiting_for_network">Waiting for a connection</string>
+    <string name="media_sync_status_waiting_for_wifi">Waiting for Wi-Fi</string>
+    <string name="media_sync_status_off" comment="Media sync status in the Sync settings, shown when ‘Fetch media on sync’ is set to Never">Off</string>
+    <string name="media_sync_status_not_recorded">No media sync recorded yet</string>
+    <string name="media_sync_status_failed" comment="%s is a date and time, for example ‘Oct 24, 14:02’">Incomplete. Last attempt %s</string>
+    <string name="media_sync_status_completed" comment="%s is a date and time, for example ‘Oct 24, 14:02’">Up to date. Last synced %s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>

@@ -18,6 +18,7 @@ import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
@@ -269,6 +270,19 @@ open class PrefsRepository protected constructor(
 
     val shouldFetchMedia: ShouldFetchMedia
         get() = getEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+
+    val lastMediaSyncTime: EpochMilliseconds by longPref(CommonPreferenceKey.last_media_sync_time_key, defaultValue = 0L)
+    val lastMediaSyncFailed by booleanPref(CommonPreferenceKey.last_media_sync_failed_key, defaultValue = false)
+
+    fun recordMediaSync(
+        time: EpochMilliseconds,
+        failed: Boolean,
+    ) {
+        sharedPrefs.edit {
+            putLong(key(CommonPreferenceKey.last_media_sync_time_key), time)
+            putBoolean(key(CommonPreferenceKey.last_media_sync_failed_key), failed)
+        }
+    }
 
     var networkTimeoutSecs by intPref(R.string.sync_io_timeout_secs_key, defaultValue = 60)
 
