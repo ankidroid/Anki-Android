@@ -25,9 +25,6 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -40,6 +37,7 @@ import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.cancelable
@@ -49,7 +47,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.launch
 import java.util.Locale.getDefault
 
 /**
@@ -113,56 +110,50 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
             viewLifecycleOwner,
             discardBackHandler,
         )
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.hasUnsavedChanges.collect { status ->
-                discardBackHandler.isEnabled = status
-            }
+        viewModel.hasUnsavedChanges.launchCollectionInViewLifecycleScope { status ->
+            discardBackHandler.isEnabled = status
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        is Initializing -> {
-                            if (state.throwable != null) {
-                                // we can't recover from an initialization error so just exit
-                                AlertDialog.Builder(requireActivity()).show {
-                                    setTitle(CommonString.import_title_error)
-                                    message(text = state.throwable.toString())
-                                    cancelable(false)
-                                    positiveButton(CommonString.dialog_exit) { requireActivity().finish() }
-                                }
-                            } else {
-                                binding.loadingIndicator.isVisible = true
-                                binding.scrollView.isVisible = false
-                            }
+        viewModel.state.launchCollectionInViewLifecycleScope { state ->
+            when (state) {
+                is Initializing -> {
+                    if (state.throwable != null) {
+                        // we can't recover from an initialization error so just exit
+                        AlertDialog.Builder(requireActivity()).show {
+                            setTitle(CommonString.import_title_error)
+                            message(text = state.throwable.toString())
+                            cancelable(false)
+                            positiveButton(CommonString.dialog_exit) { requireActivity().finish() }
                         }
+                    } else {
+                        binding.loadingIndicator.isVisible = true
+                        binding.scrollView.isVisible = false
+                    }
+                }
 
-                        is DeckBuilt -> {
-                            // TODO desktop doesn't do this but maybe also show a toast here?
-                            // the filtered deck is built/updated so exit the screen
-                            requireActivity().finish()
-                        }
+                is DeckBuilt -> {
+                    // TODO desktop doesn't do this but maybe also show a toast here?
+                    // the filtered deck is built/updated so exit the screen
+                    requireActivity().finish()
+                }
 
-                        is FilteredDeckOptions -> {
-                            setupMenuIfNeeded()
-                            // the button is hidden initially until we load the data
-                            binding.btnBuild.isVisible = true
-                            bindState(state)
-                            // show any errors we might have
-                            if (state.throwable != null) {
-                                AlertDialog.Builder(requireActivity()).show {
-                                    title(CommonString.import_title_error)
-                                    message(text = state.throwable.message)
-                                    positiveButton(CommonString.dialog_ok)
-                                    setOnDismissListener { viewModel.clearError() }
-                                }
-                                return@collect
-                            }
-                            if (state.browserQuery != null) {
-                                navigate(BrowserDestination.Search(query = state.browserQuery, allDecks = false))
-                                viewModel.clearSearchInBrowser()
-                            }
+                is FilteredDeckOptions -> {
+                    setupMenuIfNeeded()
+                    // the button is hidden initially until we load the data
+                    binding.btnBuild.isVisible = true
+                    bindState(state)
+                    // show any errors we might have
+                    if (state.throwable != null) {
+                        AlertDialog.Builder(requireActivity()).show {
+                            title(CommonString.import_title_error)
+                            message(text = state.throwable.message)
+                            positiveButton(CommonString.dialog_ok)
+                            setOnDismissListener { viewModel.clearError() }
                         }
+                        return@launchCollectionInViewLifecycleScope
+                    }
+                    if (state.browserQuery != null) {
+                        navigate(BrowserDestination.Search(query = state.browserQuery, allDecks = false))
+                        viewModel.clearSearchInBrowser()
                     }
                 }
             }
