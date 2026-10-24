@@ -6,25 +6,30 @@ import android.os.Build
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.assertOpenedUrl
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.registerWebBrowser
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.nullValue
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -67,6 +72,31 @@ class CardViewerFragmentTest : RobolectricTest() {
                 shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
                 targetContext.assertNoActivityStarted(url)
             }
+        }
+    }
+
+    @Test
+    fun `a missing media file shows the missing media snackbar`() {
+        withCardViewerWebView { webView ->
+            val request = mockWebResourceRequest("http://$LOCALHOST/missing-image.jpg", mainFrame = false)
+            shadowOf(webView).webViewClient.onReceivedHttpError(webView, request, httpError(404, "Not Found"))
+            advanceRobolectricLooper()
+
+            assertThat(
+                snackbarText,
+                equalTo(targetContext.getString(CommonString.card_viewer_missing_media)),
+            )
+        }
+    }
+
+    @Test
+    fun `failed POST requests are not reported as missing media`() {
+        withCardViewerWebView { webView ->
+            val request = mockWebResourceRequest("http://$LOCALHOST/_anki/setSchedulingStates", mainFrame = false, method = "POST")
+            shadowOf(webView).webViewClient.onReceivedHttpError(webView, request, httpError(500, "Internal Error"))
+            advanceRobolectricLooper()
+
+            assertThat(snackbarText, nullValue())
         }
     }
 
@@ -145,6 +175,11 @@ class CardViewerFragmentTest : RobolectricTest() {
         }
     }
 
+    private fun httpError(
+        statusCode: Int,
+        reasonPhrase: String,
+    ) = WebResourceResponse(null, null, statusCode, reasonPhrase, emptyMap(), null)
+
     private fun audioCaptureRequest(): PermissionRequest =
         mock(PermissionRequest::class.java).also {
             whenever(it.resources).thenReturn(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
@@ -156,7 +191,7 @@ class CardViewerFragmentTest : RobolectricTest() {
             block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
         }
 
-    private fun withCardViewerWebView(block: (WebView) -> Unit) {
+    private fun withCardViewerWebView(block: CardViewerActivity.(WebView) -> Unit) {
         val note = addBasicAndReversedNote()
         val intent =
             PreviewerFragment.getIntent(
@@ -174,7 +209,7 @@ class CardViewerFragmentTest : RobolectricTest() {
                         .map { webViewLayout.getChildAt(it) }
                         .filterIsInstance<WebView>()
                         .single()
-                block(webView)
+                activity.block(webView)
             }
         }
     }
