@@ -94,6 +94,10 @@ object SavedSearches {
  *
  * Ordering is NOT preserved in Anki Desktop. Searches are ordered based on the name and are
  * case-sensitive
+ *
+ * Evaluates to an empty list when the `savedFilters` collection config key is absent.
+ *
+ * [source](https://github.com/ankitects/anki/blob/main/pylib/anki/collection.py)
  */
 var Config.savedFilters: List<SavedSearch>
     get() =

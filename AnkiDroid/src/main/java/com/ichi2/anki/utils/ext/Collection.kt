@@ -20,6 +20,10 @@ fun Collection.setUserFlagForCards(
 
 /**
  * The `Custom scheduling` global setting in deck options.
+ *
+ * The default for `CARD_STATE_CUSTOMIZER` is `""` (empty string) upstream.
+ *
+ * [source](https://github.com/ankitects/anki/blob/main/rslib/src/config/string.rs)
  */
 var Collection.cardStateCustomizer: String
     get() = config.getString(ConfigKey.String.CARD_STATE_CUSTOMIZER)
