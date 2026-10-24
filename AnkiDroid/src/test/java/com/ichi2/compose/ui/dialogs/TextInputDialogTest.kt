@@ -7,10 +7,13 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInputSelection
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.text.AnnotatedString
@@ -23,6 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
@@ -79,6 +83,46 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
 
         field.performTextInputSelection(TextRange(1, 3))
         assertEquals(1, transformations)
+    }
+
+    @Test
+    fun `deferred validation rejects invalid submission and allows retry`() {
+        var validations = 0
+        var submitted: String? = null
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    initialText = "Invalid",
+                    validateOnInput = false,
+                    errorMessageFor = {
+                        validations++
+                        if (it == "Allowed") null else "Invalid name"
+                    },
+                    onConfirm = { submitted = it },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        compose.onNodeWithText("Confirm").assertIsEnabled()
+        compose.onNodeWithText("Invalid name").assertDoesNotExist()
+        field.performTextReplacement("Still invalid")
+        assertEquals(0, validations)
+
+        compose.onNodeWithText("Confirm").performClick()
+        compose.onNodeWithText("Invalid name").assertIsDisplayed()
+        compose.onNodeWithText("Confirm").assertIsEnabled()
+        assertNull(submitted)
+
+        val validationsAfterSubmission = validations
+        field.performTextReplacement("Allowed")
+        compose.onNodeWithText("Invalid name").assertDoesNotExist()
+        assertEquals(validationsAfterSubmission, validations)
+        field.performImeAction()
+        assertEquals("Allowed", submitted)
     }
 
     @Test
