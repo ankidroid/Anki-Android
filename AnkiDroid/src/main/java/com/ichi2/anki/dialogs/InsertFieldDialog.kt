@@ -32,7 +32,7 @@ import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
+import com.ichi2.anki.common.android.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogInsertFieldBinding
 import com.ichi2.anki.databinding.ItemInsertSpecialFieldBinding
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_FIELD_NAMES
@@ -46,6 +46,7 @@ import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.themes.Themes
 import dev.androidbroadcast.vbpd.viewBinding
 import org.jetbrains.annotations.VisibleForTesting
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Dialog fragment used to show the fields that the user can insert in the card editor. This
@@ -169,7 +170,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
         override fun getItemCount() = 2
     }
 
-    class SelectBasicFieldFragment : Fragment(R.layout.dialog_generic_recycler_view) {
+    class SelectBasicFieldFragment : Fragment(CommonR.layout.dialog_generic_recycler_view) {
         val viewModel by viewModels<InsertFieldDialogViewModel>(
             ownerProducer = { requireParentFragment() as InsertFieldDialog },
         )
@@ -207,7 +208,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
         }
     }
 
-    class SelectSpecialFieldFragment : Fragment(R.layout.dialog_generic_recycler_view) {
+    class SelectSpecialFieldFragment : Fragment(CommonR.layout.dialog_generic_recycler_view) {
         val viewModel by viewModels<InsertFieldDialogViewModel>(
             ownerProducer = { requireParentFragment() as InsertFieldDialog },
         )

@@ -23,6 +23,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Edge-to-edge inset handling for the legacy [Reviewer].
@@ -72,7 +73,7 @@ class ReviewerInsetsTest : RobolectricTest() {
                 equalTo(48.dp.toPx(targetContext)),
             )
 
-            val sideMargin = targetContext.resources.getDimensionPixelSize(R.dimen.side_margin)
+            val sideMargin = targetContext.resources.getDimensionPixelSize(CommonR.dimen.side_margin)
             assertThat(
                 "the counts bar keeps its side margin past the cutout",
                 reviewer.countsBar.paddingLeft,

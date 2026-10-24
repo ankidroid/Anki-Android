@@ -5,8 +5,6 @@ package com.ichi2.utils
 import android.app.Activity
 import android.content.Context
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import com.ichi2.anki.compat.showSoftInput
 
@@ -20,20 +18,6 @@ object AndroidUiUtils {
     fun Activity?.showSoftInput() {
         val currentFocus = this?.currentFocus ?: return
         currentFocus.showSoftInput()
-    }
-
-    /**
-     * This method is used for setting the focus on an EditText which is used in a dialog
-     * and for opening the keyboard.
-     * @param view The EditText which requires the focus to be set.
-     * @param window The window where the view is present.
-     */
-    fun setFocusAndOpenKeyboard(
-        view: View,
-        window: Window,
-    ) {
-        view.requestFocus()
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     }
 
     /**

@@ -12,6 +12,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
@@ -26,13 +27,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R
+import com.ichi2.anki.common.android.databinding.DialogAlertDialogCheckboxBinding
+import com.ichi2.anki.common.android.databinding.DialogAlertDialogTitleWithHelpBinding
+import com.ichi2.anki.common.android.databinding.DialogGenericRecyclerViewBinding
+import com.ichi2.anki.common.android.databinding.DialogListviewMessageBinding
 import com.ichi2.anki.common.utils.android.HandlerUtils.executeOnMainThread
 import com.ichi2.anki.common.utils.android.getResFromAttr
-import com.ichi2.anki.databinding.DialogAlertDialogCheckboxBinding
-import com.ichi2.anki.databinding.DialogAlertDialogTitleWithHelpBinding
-import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
-import com.ichi2.anki.databinding.DialogListviewMessageBinding
 import timber.log.Timber
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
@@ -332,7 +333,8 @@ fun AlertDialog.input(
 
     getInputField().apply {
         if (displayKeyboard) {
-            AndroidUiUtils.setFocusAndOpenKeyboard(this, window!!)
+            requestFocus()
+            window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
 
         inputType?.let { this.inputType = it }

@@ -21,6 +21,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class BrowserHeaderVisibilityRegressionTest : RobolectricTest() {
@@ -49,7 +50,7 @@ class BrowserHeaderVisibilityRegressionTest : RobolectricTest() {
             assertTrue((requireActivity() as CardBrowser).onKeyUp(KeyEvent.KEYCODE_S, shortcut))
             advanceRobolectricLooper()
             val dialog = parentFragmentManager.fragments.filterIsInstance<SavedBrowserSearchesDialogFragment>().single()
-            val list = assertNotNull(dialog.requireDialog().findViewById<RecyclerView>(R.id.dialog_recycler_view))
+            val list = assertNotNull(dialog.requireDialog().findViewById<RecyclerView>(CommonR.id.dialog_recycler_view))
             assertNotNull(list.findViewHolderForAdapterPosition(0)).itemView.performClick()
             awaitSearch()
 
