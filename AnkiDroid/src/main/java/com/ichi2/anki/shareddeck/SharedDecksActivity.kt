@@ -15,7 +15,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -33,7 +32,8 @@ import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.utils.FileNameAndExtension
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -45,7 +45,9 @@ import kotlin.random.Random
  *
  * @see SharedDecksDownloadFragment
  */
-class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
+class SharedDecksActivity :
+    AnkiActivity(R.layout.activity_shared_decks),
+    OnWebViewRecreatedListener {
     private val binding by viewBinding(ActivitySharedDecksBinding::bind)
     lateinit var downloadManager: DownloadManager
 
@@ -67,7 +69,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
      * an extra entry in the history since the previous page would not get cleared.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal inner class SharedDeckWebViewClient : WebViewClient() {
+    internal inner class SharedDeckWebViewClient : SafeWebViewClient() {
         private var redirectTimes = 0
 
         override fun doUpdateVisitedHistory(
@@ -250,7 +252,11 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                 }
             }
         }
-        binding.webView.webViewClient = webViewClient
+        binding.webView.setWebViewClient(webViewClient)
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        setupWebView()
     }
 
     /** Applies edge-to-edge insets for the screen */
@@ -301,7 +307,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
     }
 
     override fun onDestroy() {
-        SafeWebViewLayout.destroyWebView(binding.webView)
+        binding.webView.safeDestroy()
         super.onDestroy()
     }
 }
