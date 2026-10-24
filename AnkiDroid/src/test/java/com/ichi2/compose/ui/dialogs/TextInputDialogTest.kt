@@ -22,6 +22,7 @@ import com.ichi2.compose.theme.AnkiDroidTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
@@ -47,6 +48,37 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
         compose.onNode(hasSetTextAction()).performTextReplacement(" abc ")
 
         compose.onNodeWithText("3/3").assertIsDisplayed()
+    }
+
+    @Test
+    fun `input transformation runs only for text edits`() {
+        var transformations = 0
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    initialText = "Initial",
+                    transformInput = {
+                        transformations++
+                        it.copy(text = it.text.uppercase())
+                    },
+                    onConfirm = {},
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextInputSelection(TextRange.Zero)
+        assertEquals(0, transformations)
+
+        field.performTextReplacement("mixed")
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("MIXED")))
+        assertEquals(1, transformations)
+
+        field.performTextInputSelection(TextRange(1, 3))
+        assertEquals(1, transformations)
     }
 
     @Test

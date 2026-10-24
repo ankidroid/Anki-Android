@@ -47,6 +47,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
  * @param errorMessageFor error to show for the current input, null when valid
+ * @param transformInput applied to text edits, not cursor-only changes
  */
 @Composable
 fun TextInputDialog(
@@ -62,6 +63,7 @@ fun TextInputDialog(
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
+    transformInput: (TextFieldValue) -> TextFieldValue = { it },
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
@@ -92,7 +94,7 @@ fun TextInputDialog(
                     value = input,
                     onValueChange = { proposed ->
                         if (input.text != proposed.text) {
-                            input = proposed
+                            input = transformInput(proposed)
                             hasUserEdited = true
                         } else {
                             input = proposed
