@@ -26,8 +26,10 @@ You may be banned from the repository if this occurs a second time.
 ### Contributors
 
 * You **must** be able to explain all your contributions.
-* AI tools **should not** be used to produce GitHub comments, including filling in the pull request 
-  template.
+* When acting as a reviewer, you **may** use AI tools to produce code review comments. Prefer a
+  summary, with the exact AI-generated wording in a `<details>` block.
+* AI tools **should not** be used to produce other GitHub comments, including filling in the pull
+  request template.
 * Contributions that make nontrivial use of AI tools **must** be labelled, with the tool version.
 
 ### Handling Questions about AI Use
