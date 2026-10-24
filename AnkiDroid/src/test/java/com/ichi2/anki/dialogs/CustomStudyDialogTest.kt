@@ -4,9 +4,13 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import android.os.Looper
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -15,9 +19,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -26,6 +33,7 @@ import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.customStudyDefaultsResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -48,14 +56,18 @@ import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.launchFragment
 import com.ichi2.testutils.uninitializeField
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.textAsIntOrNull
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThan
+import org.hamcrest.Matchers.nullValue
 import org.intellij.lang.annotations.Language
 import org.junit.Before
 import org.junit.Ignore
@@ -197,6 +209,144 @@ class CustomStudyDialogTest : RobolectricTest() {
                     .check(matches(withText(reviewExtendByValue.toString())))
             }
         }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'extend limits' dialogs are titled 'Extend daily limits' and confirm with 'Increase'`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) { dialog ->
+                onView(withText("Extend daily limits"))
+                    .inRoot(isDialog())
+                    .check(matches(isDisplayed()))
+                assertThat("$option positive button", dialog.positiveButton.text.toString(), equalTo("Increase"))
+            }
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'extend limits' descriptions do not mention decreasing the limit`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) {
+                assertThat("$option description", binding.detailsText2.text.toString(), not(containsString("decrease")))
+            }
+        }
+    }
+
+    @Test
+    fun `'extend limits' dialogs show the available cards below the input`() {
+        mapOf(
+            ContextMenuOption.EXTEND_NEW to { defaultsOfDefaultDeck.labelForNewQueueAvailable() },
+            ContextMenuOption.EXTEND_REV to { defaultsOfDefaultDeck.labelForReviewQueueAvailable() },
+        ).forEach { (option, expectedLabel) ->
+            withExtendLimitsDialog(option) {
+                val root = binding.root
+                val availableCards =
+                    assertNotNull(
+                        root.children.firstOrNull { it is TextView && it.isVisible && it.text.toString() == expectedLabel() },
+                        "$option available cards label",
+                    )
+                val input =
+                    generateSequence<View>(binding.detailsEditText2Layout) { it.parent as? View }
+                        .first { it.parent == root }
+                assertThat(
+                    "$option available cards label is below the input",
+                    root.indexOfChild(availableCards),
+                    greaterThan(root.indexOfChild(input)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `'extend limits' steppers change the value by 1`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) {
+                val initial = assertNotNull(binding.detailsEditText2.textAsIntOrNull(), "$option initial value")
+
+                onStepper(CommonString.plus_sign).perform(click())
+                assertThat("$option after +", binding.detailsEditText2.text.toString(), equalTo("${initial + 1}"))
+
+                onStepper(CommonString.minus_sign).perform(click())
+                onStepper(CommonString.minus_sign).perform(click())
+                assertThat("$option after -", binding.detailsEditText2.text.toString(), equalTo("${initial - 1}"))
+            }
+        }
+    }
+
+    @Test
+    fun `'extend limits' stepper treats an empty value as 0`() {
+        withExtendLimitsDialog(ContextMenuOption.EXTEND_NEW) {
+            onSubscreenEditText().perform(replaceText(""))
+            onStepper(CommonString.plus_sign).perform(click())
+            assertThat(binding.detailsEditText2.text.toString(), equalTo("1"))
+        }
+    }
+
+    @Test
+    fun `steppers are not shown outside of 'extend limits'`() {
+        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) {
+            shadowOf(Looper.getMainLooper()).idle()
+            onView(allOf(withContentDescription(CommonString.plus_sign), isDisplayed()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+            onView(allOf(withContentDescription(CommonString.minus_sign), isDisplayed()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+        }
+    }
+
+    @Test
+    fun `boundary values validate correctly across study modes`() {
+        // STUDY_FORGOT boundary values: 0 (invalid), 1 (valid), 30 (valid), 31 (invalid)
+        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) { fragment ->
+            val dialog = fragment.dialog as AlertDialog
+
+            onSubscreenEditText().perform(replaceText("0"))
+            assertThat("0 in STUDY_FORGOT is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+            assertThat(
+                "0 error in STUDY_FORGOT",
+                fragment.binding.detailsEditText2Layout.error
+                    ?.toString(),
+                containsString("1"),
+            )
+
+            onSubscreenEditText().perform(replaceText("1"))
+            assertThat("1 in STUDY_FORGOT is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+            assertThat("1 error in STUDY_FORGOT is null", fragment.binding.detailsEditText2Layout.error, nullValue())
+
+            onSubscreenEditText().perform(replaceText("30"))
+            assertThat("30 in STUDY_FORGOT is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+            assertThat("30 error in STUDY_FORGOT is null", fragment.binding.detailsEditText2Layout.error, nullValue())
+
+            onSubscreenEditText().perform(replaceText("31"))
+            assertThat("31 in STUDY_FORGOT is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+            assertThat(
+                "31 error in STUDY_FORGOT",
+                fragment.binding.detailsEditText2Layout.error
+                    ?.toString(),
+                containsString("30"),
+            )
+        }
+
+        // EXTEND_NEW boundary values: -99999 (valid), 0 (invalid), 99999 (valid), 100000 (invalid)
+        withExtendLimitsDialog(ContextMenuOption.EXTEND_NEW) { dialog ->
+            onSubscreenEditText().perform(replaceText("-99999"))
+            assertThat("-99999 in EXTEND_NEW is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+            assertThat("-99999 error is null", binding.detailsEditText2Layout.error, nullValue())
+
+            onSubscreenEditText().perform(replaceText("0"))
+            assertThat("0 in EXTEND_NEW is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+
+            onSubscreenEditText().perform(replaceText("99999"))
+            assertThat("99999 in EXTEND_NEW is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+            assertThat("99999 error is null", binding.detailsEditText2Layout.error, nullValue())
+
+            onSubscreenEditText().perform(replaceText("100000"))
+            assertThat("100000 in EXTEND_NEW is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+            assertThat("100000 error in EXTEND_NEW", binding.detailsEditText2Layout.error?.toString(), containsString("99999"))
+        }
+    }
 
     @Test
     fun `creating a tags custom session uses selected card state`() =
@@ -491,10 +641,95 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
 
     @Test
+    fun `'preview' positive button is disabled on open when no cards were added recently`() =
+        runTest {
+            addBasicNote()
+            col.db.execute(
+                "UPDATE cards SET id = id - ${40L * 24 * 60 * 60 * 1000} WHERE id > 0",
+            )
+
+            withStudyPreviewDialog { dialog ->
+                assertThat(
+                    "disabled on open when nothing matches",
+                    dialog.positiveButton.isEnabled,
+                    equalTo(false),
+                )
+                assertThat(
+                    binding.detailsEditText2Layout.error?.toString(),
+                    equalTo(TR.customStudyNoCardsMatchedTheCriteriaYou()),
+                )
+            }
+        }
+
+    @Test
     @Config(qualifiers = "en")
     fun `'review ahead' suffix matches the typed value after a dialog on top closes`() =
         withTypedInputCoveredByAnotherDialog(ContextMenuOption.STUDY_AHEAD, typed = "2") {
             assertThat(binding.detailsEditText2Layout.suffixText.toString(), equalTo("days"))
+        }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'preview' shows a day or days suffix`() {
+        withStudyPreviewDialog {
+            val layout = binding.detailsEditText2Layout
+            assertThat("default of 1 day", layout.suffixText.toString(), equalTo("day"))
+
+            onSubscreenEditText().perform(replaceText("2"))
+            assertThat(layout.suffixText.toString(), equalTo("days"))
+
+            onSubscreenEditText().perform(replaceText("1"))
+            assertThat(layout.suffixText.toString(), equalTo("day"))
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'preview' positive button text is 'Create'`() {
+        withStudyPreviewDialog { dialog ->
+            assertThat(dialog.positiveButton.text.toString(), equalTo("Create"))
+        }
+    }
+
+    @Test
+    fun `'preview' and 'review ahead' hide the empty first label`() {
+        withStudyPreviewDialog {
+            assertThat("preview", binding.detailsText1.isVisible, equalTo(false))
+        }
+        withStudyAheadDialog {
+            assertThat("review ahead", binding.detailsText1.isVisible, equalTo(false))
+        }
+    }
+
+    @Test
+    fun `'preview' disables Create when no cards match the criteria`() =
+        runTest {
+            addBasicNote()
+
+            withStudyPreviewDialog { dialog ->
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("enabled for a recently added card", dialog.positiveButton.isEnabled, equalTo(true))
+                assertThat(binding.detailsEditText2Layout.error, nullValue())
+
+                onSubscreenEditText().perform(replaceText("0"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("disabled for 0 days", dialog.positiveButton.isEnabled, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `'review ahead' validates the default value on open - shared path guard`() =
+        runTest {
+            addBasicNote().firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today + 30
+            }
+
+            withStudyAheadDialog { dialog ->
+                assertThat("review-ahead: disabled when nothing matches", dialog.positiveButton.isEnabled, equalTo(false))
+            }
         }
 
     /** Adds a note to [deckName] whose card is due tomorrow */
@@ -551,6 +786,23 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
     }
 
+    /** Opens the 'preview' subscreen for [deckId] and runs [block] once the dialog is shown */
+    private fun withStudyPreviewDialog(
+        deckId: DeckId = Consts.DEFAULT_DECK_ID,
+        block: CustomStudyDialog.(dialog: AlertDialog) -> Unit,
+    ) = withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_PREVIEW, deckId = deckId)) { fragment ->
+        shadowOf(Looper.getMainLooper()).idle()
+        fragment.block(fragment.dialog as AlertDialog)
+    }
+
+    private fun withExtendLimitsDialog(
+        option: ContextMenuOption,
+        block: CustomStudyDialog.(dialog: AlertDialog) -> Unit,
+    ) = withCustomStudyFragment(args = argumentsDisplayingSubscreen(option)) { fragment ->
+        shadowOf(Looper.getMainLooper()).idle()
+        fragment.block(fragment.dialog as AlertDialog)
+    }
+
     private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
         mockk<Collection>(relaxed = true) {
             every { sched } returns
@@ -592,6 +844,10 @@ class CustomStudyDialogTest : RobolectricTest() {
 
     private fun onSubscreenEditText() =
         onView(withId(R.id.details_edit_text_2))
+            .inRoot(isDialog())
+
+    private fun onStepper(contentDescription: Int) =
+        onView(withContentDescription(contentDescription))
             .inRoot(isDialog())
 
     private fun CustomStudyDialog.submitSubscreenData() =
