@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.android.asCoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -26,6 +27,22 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class InstantNoteEditorActivityTest : RobolectricTest() {
+    @Test
+    fun `tapping Save twice while the note is saving adds one note`() =
+        runTest {
+            startInstantNoteEditor("{{c1::Hello}} world")
+            val notesBefore = col.noteCount()
+
+            withCollectionAccessOn(StandardTestDispatcher(testScheduler)) {
+                repeat(2) {
+                    onView(withId(R.id.action_save_note)).inRoot(isDialog()).perform(click())
+                }
+            }
+            advanceUntilIdle()
+
+            assertEquals("notes added", notesBefore + 1, col.noteCount())
+        }
+
     @Test
     fun `back while the note is saving does not close the editor`() =
         runTest {

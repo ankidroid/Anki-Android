@@ -44,6 +44,7 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.startup.ensureStorageIsReady
@@ -380,6 +381,10 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
      * retrieves the field content, and saves the note
      */
     private fun checkAndSave() {
+        if (viewModel.progressManager.progress.value is ViewModelProgress.Active) {
+            Timber.i("Ignoring save while a note is saving")
+            return
+        }
         extractFieldValues()
 
         saveNoteWithProgress(skipClozeCheck = false)
