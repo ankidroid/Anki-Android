@@ -139,6 +139,7 @@ import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.RecyclerFastScroller
+import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
@@ -375,7 +376,7 @@ class CardBrowserFragment :
             )
         cardsListView.adapter = cardsAdapter
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = StableScrollbarLayoutManager(requireContext())
         cardsListView.layoutManager = layoutManager
         cardsListView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
 
