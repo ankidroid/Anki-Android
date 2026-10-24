@@ -53,15 +53,15 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.compose.theme.AnkiDroidTheme
@@ -186,6 +186,7 @@ private fun TimeboxMainSwitch(
         shape = RoundedCornerShape(28.dp),
         color = containerColor,
     ) {
+        val switchLabel = stringResource(CommonString.use_timebox)
         Row(
             modifier =
                 Modifier
@@ -195,7 +196,7 @@ private fun TimeboxMainSwitch(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = stringResource(CommonString.use_timebox),
+                text = switchLabel,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = contentColor,
@@ -204,6 +205,10 @@ private fun TimeboxMainSwitch(
             Switch(
                 checked = isEnabled,
                 onCheckedChange = onToggleEnabled,
+                modifier =
+                    Modifier.semantics {
+                        contentDescription = switchLabel
+                    },
             )
         }
     }
@@ -229,12 +234,7 @@ private fun TimeboxDurationCard(
     }
 
     val validRange = TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES
-    val count = textValue.toIntOrNull() ?: minutes
-    val safeCount = if (count in validRange) count else minutes
-    val unitSuffix =
-        pluralStringResource(CommonPlurals.pref_summ_minutes, safeCount, safeCount)
-            .replace(safeCount.toString(), "")
-            .trim()
+    val unitSuffix = stringResource(CommonString.mins)
 
     val parsed = textValue.toIntOrNull()
     val isValid = parsed != null && parsed in validRange
@@ -281,12 +281,13 @@ private fun TimeboxDurationCard(
                     value = textValue,
                     onValueChange = { input ->
                         val digits = input.filter { it.isDigit() }
-                        val filtered =
+                        val noLeadingZeros =
                             if (digits.length > 1 && digits.startsWith("0")) {
-                                digits.trimStart('0')
+                                digits.trimStart('0').ifEmpty { "0" }
                             } else {
-                                digits.take(3)
+                                digits
                             }
+                        val filtered = noLeadingZeros.take(3)
                         textValue = filtered
                         val p = filtered.toIntOrNull()
                         if (p != null && p in validRange) {
