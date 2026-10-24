@@ -35,6 +35,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -566,11 +567,12 @@ class ProgressObserverTest : RobolectricTest() {
         val gate = CompletableDeferred<Unit>()
         active.viewModel.runOp(gate)
         idleMainLooper(SHOW_DELAY * 2)
+        val dialog = assertNotNull(activity.loadingDialog())
 
         activity.supportFragmentManager.commitNow { add(ProgressObservingFragment(), "idle") }
         idleMainLooper(SHOW_DELAY * 2)
 
-        assertNotNull(activity.loadingDialog())
+        assertSame(dialog, activity.loadingDialog())
         gate.complete(Unit)
     }
 
@@ -642,6 +644,97 @@ class ProgressObserverTest : RobolectricTest() {
         idleMainLooper(SHOW_DELAY * 2)
         assertTrue(activity.touchesBlocked())
         assertNotNull(activity.loadingDialog(), "earlier operation still needs visible progress")
+        firstGate.complete(Unit)
+    }
+
+    @Test
+    fun `review - created idle fragment must not retain completed dialog`() {
+        val activity = startActivity().get()
+        val active = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(active, "active") }
+        val gate = CompletableDeferred<Unit>()
+        active.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        val idle = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(idle, "idle")
+            setMaxLifecycle(idle, Lifecycle.State.CREATED)
+        }
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertFalse(activity.touchesBlocked())
+        assertNull(activity.loadingDialog(), "an idle CREATED fragment must not retain a completed operation's dialog")
+    }
+
+    @Test
+    fun `review - remaining owner restores its message and cancel listener`() {
+        val activity = startActivity().get()
+        val first = ProgressObservingFragment()
+        val second = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(first, "first")
+            add(second, "second")
+        }
+        val firstGate = CompletableDeferred<Unit>()
+        var cancelled = false
+        val firstOp = launchOp(firstGate, message = "first", onCancel = { cancelled = true }, manager = first.viewModel.progressManager)
+        idleMainLooper(SHOW_DELAY * 2)
+        val secondGate = CompletableDeferred<Unit>()
+        val secondOp = launchOp(secondGate, message = "second", onCancel = {}, manager = second.viewModel.progressManager)
+        idleMainLooper(SHOW_DELAY * 2)
+        secondGate.complete(Unit)
+        idleMainLooper(SHOW_DELAY * 2)
+        activity.loadingDialog()!!.requireDialog().cancel()
+        idleMainLooper(Duration.ZERO)
+        assertTrue(cancelled, "cancel must reach the remaining active owner")
+        firstGate.complete(Unit)
+        firstOp.cancel()
+        secondOp.cancel()
+    }
+
+    @Test
+    fun `review - recreation with idle created fragment leaves no orphan dialog`() {
+        val controller = startActivity()
+        val idle = ProgressObservingFragment()
+        val active = ProgressObservingFragment()
+        controller.get().supportFragmentManager.commitNow {
+            add(idle, "idle")
+            setMaxLifecycle(idle, Lifecycle.State.CREATED)
+            add(active, "active")
+        }
+        val gate = CompletableDeferred<Unit>()
+        active.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        controller.recreate()
+        idleMainLooper(SHOW_DELAY * 2)
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertFalse(controller.get().touchesBlocked())
+        assertNull(controller.get().loadingDialog(), "restored idle fragment must not retain completed dialog")
+    }
+
+    @Test
+    fun `a holder leaving while the activity is stopped is safe`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        val first = ProgressObservingFragment()
+        val second = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(first, "first")
+            add(second, "second")
+        }
+        val firstGate = CompletableDeferred<Unit>()
+        first.viewModel.runOp(firstGate)
+        second.viewModel.runOp(CompletableDeferred())
+        idleMainLooper(SHOW_DELAY * 2)
+
+        controller.pause().stop()
+        activity.supportFragmentManager.commitNow(allowStateLoss = true) { remove(second) }
+        idleMainLooper(SHOW_DELAY)
+        controller.start().resume()
+        idleMainLooper(SHOW_DELAY)
+
+        assertNotNull(activity.loadingDialog())
         firstGate.complete(Unit)
     }
 

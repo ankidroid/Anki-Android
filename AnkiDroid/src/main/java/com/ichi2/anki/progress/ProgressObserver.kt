@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withStarted
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.dialogs.LoadingDialogFragment
 import com.ichi2.anki.dialogs.showLoadingDialog
@@ -47,6 +48,8 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
 ) {
     val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
     var holdingDialog = false
+    var reshowDialog: (() -> Unit)? = null
+    val dialogHolder: () -> Unit = { reshowDialog?.invoke() }
     val ownerLifecycle = owner.lifecycle
     var backBlock: OnBackPressedCallback? = null
 
@@ -66,16 +69,26 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     fun holdDialog() {
         if (holdingDialog) return
         holdingDialog = true
-        supportFragmentManager.addDialogHold(dialogTag)
+        supportFragmentManager.addDialogHolder(dialogTag, dialogHolder)
     }
 
     fun releaseDialog() {
         if (!holdingDialog) return
         holdingDialog = false
-        supportFragmentManager.removeDialogHold(dialogTag)
+        supportFragmentManager.removeDialogHolder(dialogTag, dialogHolder)
     }
 
-    if (supportFragmentManager.findFragmentByTag(dialogTag) != null) holdDialog()
+    val restoringDialog =
+        !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) &&
+            supportFragmentManager.findFragmentByTag(dialogTag) != null
+    if (restoringDialog) {
+        holdDialog()
+        ownerLifecycle.coroutineScope.launch {
+            lifecycle.withStarted {
+                if (!ownerLifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) releaseDialog()
+            }
+        }
+    }
 
     ownerLifecycle.coroutineScope.launch {
         try {
@@ -101,8 +114,13 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                         pendingShow = null
                     }
 
+                reshowDialog = {
+                    pendingShow?.cancel()
+                    pendingShow = showDialogAfter(Duration.ZERO)
+                }
                 val progress =
                     viewModel.progressManager.progress.onCompletion {
+                        reshowDialog = null
                         pendingShow?.cancel()
                         unblockInput()
                         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) releaseDialog()
@@ -133,21 +151,26 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     }
 }
 
-private val dialogHolds = WeakHashMap<FragmentManager, MutableMap<String, Int>>()
+private val dialogHolders = WeakHashMap<FragmentManager, MutableMap<String, MutableList<() -> Unit>>>()
 
-private fun FragmentManager.addDialogHold(tag: String) {
-    val holds = dialogHolds.getOrPut(this) { mutableMapOf() }
-    holds[tag] = (holds[tag] ?: 0) + 1
+private fun FragmentManager.addDialogHolder(
+    tag: String,
+    reshow: () -> Unit,
+) {
+    dialogHolders.getOrPut(this) { mutableMapOf() }.getOrPut(tag) { mutableListOf() }.add(reshow)
 }
 
-private fun FragmentManager.removeDialogHold(tag: String) {
-    val holds = dialogHolds[this] ?: return
-    val count = holds[tag] ?: return
-    if (count > 1) {
-        holds[tag] = count - 1
+private fun FragmentManager.removeDialogHolder(
+    tag: String,
+    reshow: () -> Unit,
+) {
+    val holders = dialogHolders[this]?.get(tag) ?: return
+    holders.remove(reshow)
+    if (holders.isNotEmpty()) {
+        holders.last().invoke()
         return
     }
-    holds.remove(tag)
+    dialogHolders[this]?.remove(tag)
     (findFragmentByTag(tag) as? DialogFragment)?.dismissAllowingStateLoss()
 }
 
