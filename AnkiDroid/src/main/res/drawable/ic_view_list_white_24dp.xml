@@ -1,3 +1,10 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled
+  SPDX-FileComment: Historical Material Icons view_list geometry, before the left margin changed.
+  Source: https://raw.githubusercontent.com/google/material-design-icons/3.0.1/action/svg/production/ic_view_list_24px.svg
+-->
 <vector android:height="24dp" android:tint="?attr/colorControlNormal"
     android:viewportHeight="24.0" android:viewportWidth="24.0"
     android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
