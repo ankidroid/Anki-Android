@@ -504,6 +504,63 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `expansion is immediate and rapid taps persist in order without blocking actions`() =
+        runTest {
+            addTags("science::biology", "history::ancient")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val expand = toggleCollapsed("science")
+                    assertFalse(expand.isCompleted)
+                    assertFalse(loadedState.isWorking)
+                    assertTrue("science::biology" in loadedState.visibleTagNames)
+
+                    val collapse = toggleCollapsed("science")
+                    assertFalse(collapse.isCompleted)
+                    assertFalse(loadedState.isWorking)
+                    assertFalse("science::biology" in loadedState.visibleTagNames)
+
+                    toggleCollapsed("history")
+                    assertTrue("history::ancient" in loadedState.visibleTagNames)
+                    // Reloading must wait for every queued preference save.
+                    refreshTags().join()
+                }
+                assertEquals(listOf("history", "history::ancient", "science"), loadedState.visibleTagNames)
+                assertFalse(loadedState.isWorking)
+            }
+        }
+
+    @Test
+    fun `deleting a tag waits for expansion saves so they cannot recreate it`() =
+        runTest {
+            addTags("science::biology", "history")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    toggleCollapsed("science")
+                    toggleCollapsed("science")
+                    removeTag("science").join()
+                }
+                assertEquals(listOf("history"), loadedState.visibleTagNames)
+                assertEquals(listOf("history"), col.tags.all())
+            }
+        }
+
+    @Test
+    fun `failed expansion save retains the visible hierarchy and reports the error`() =
+        runTest {
+            addTags("science::biology")
+            withViewModel {
+                withLockedCollection { toggleCollapsed("science").join() }
+                assertEquals(listOf("science", "science::biology"), loadedState.visibleTagNames)
+                assertFalse(loadedState.isWorking)
+                assertIs<CollectionLockedException>(loadedState.error)
+                toggleCollapsed("science").join()
+                assertNull(loadedState.error)
+                refreshTags().join()
+                assertEquals(listOf("science"), loadedState.visibleTagNames)
+            }
+        }
+
+    @Test
     fun `toggleCollapsed expands a collapsed tag`() =
         runTest {
             addTags("science::biology", "science::chemistry")

@@ -55,6 +55,7 @@ class ManageTagsViewModel : ViewModel() {
     private var tagList: List<TagListItemState> = emptyList()
 
     private var tagOperation: Job? = null
+    private var expansionSave: Job? = null
 
     init {
         refreshTags()
@@ -87,44 +88,59 @@ class ManageTagsViewModel : ViewModel() {
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
 
-    /** Returns the visible node for [tag], or null with a warning if not found or not loaded */
-    private fun findVisibleNode(tag: TagName): TagListItemState? {
+    /** Finds a tag in the cached hierarchy. */
+    private fun findTagNode(tag: TagName): TagListItemState? {
         val loaded = state.value as? ManageTagsState.Content
         if (loaded == null) {
-            Timber.w("findVisibleNode called while not loaded")
+            Timber.w("findTagNode called while not loaded")
             return null
         }
-        return loaded.visibleNodes.firstOrNull { it.fullTag == tag }.also {
+        return tagList.firstOrNull { it.fullTag == tag }.also {
             if (it == null) {
-                Timber.w("Tag not found in visible nodes")
+                Timber.w("Tag not found in hierarchy")
                 Timber.d("Tag: %s", tag)
             }
         }
     }
 
     /**
-     * Expands or collapses [tag] in the tree. Persists the state to the backend.
+     * Expands or collapses [tag] immediately, then saves the preference without a busy state.
+     * Saves run in tap order; a save failure leaves the visible hierarchy intact and reports the error.
      *
      * PERF: ~55ms to process 10k+ tags on my M1; ~350ms to process 10k+ tags in CI
      *
      * @see Tags.setCollapsed
      */
-    fun toggleCollapsed(tag: TagName) =
-        launchTagOperation {
-            val node =
-                findVisibleNode(tag) ?: run {
-                    messageQueue.enqueue(UserMessage.UnexpectedError)
-                    return@launchTagOperation
+    fun toggleCollapsed(tag: TagName): Job {
+        tagOperation?.takeUnless { it.isCompleted }?.let { return it }
+        val previousSave = expansionSave
+        val operation =
+            viewModelScope.launch(start = CoroutineStart.LAZY) {
+                val node =
+                    findTagNode(tag) ?: run {
+                        messageQueue.enqueue(UserMessage.UnexpectedError)
+                        return@launch
+                    }
+                val newCollapsed = !node.collapsed
+                tagList =
+                    tagList.map {
+                        if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
+                    }
+                updateState { it.copy(visibleNodes = computeVisibleNodes(searchQuery.value), error = null) }
+                previousSave?.join()
+                try {
+                    withCol { tags.setCollapsed(node.fullTag, newCollapsed) }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Timber.w(e, "Saving tag expansion failed")
+                    updateState { it.copy(error = e) }
                 }
-            val newCollapsed = !node.collapsed
-            withCol { tags.setCollapsed(node.fullTag, newCollapsed) }
-            // Update the in-memory list with the new collapsed state
-            tagList =
-                tagList.map {
-                    if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
-                }
-            updateState { it.copy(visibleNodes = computeVisibleNodes(searchQuery.value)) }
-        }
+            }
+        expansionSave = operation
+        operation.start()
+        return operation
+    }
 
     /**
      * Deletes [tag] and its children from all notes.
@@ -200,7 +216,14 @@ class ManageTagsViewModel : ViewModel() {
         }
 
         // set 'tagOperation' before executing
-        val operation = viewModelScope.launch(start = CoroutineStart.LAZY) { runTagOperation(block) }
+        val operation =
+            viewModelScope.launch(start = CoroutineStart.LAZY) {
+                runTagOperation {
+                    // Finish preference saves before a reload or a mutation can rename/remove their tags.
+                    expansionSave?.join()
+                    block()
+                }
+            }
         tagOperation = operation
         // calls from observers will now find this job
         operation.start()
