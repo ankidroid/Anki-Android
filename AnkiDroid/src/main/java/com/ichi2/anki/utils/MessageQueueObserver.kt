@@ -3,15 +3,18 @@
 
 package com.ichi2.anki.utils
 
+import androidx.activity.ComponentDialog
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.withStarted
 import com.ichi2.anki.utils.MessageQueue.Message
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -22,12 +25,17 @@ fun <T> Fragment.observeMessages(
     messages: StateFlow<List<Message<T>>>,
     acknowledge: (MessageId) -> Unit,
     show: suspend (T) -> Unit,
+) = viewLifecycleOwner.observeMessages(messages, acknowledge, show)
+
+fun <T> LifecycleOwner.observeMessages(
+    messages: StateFlow<List<Message<T>>>,
+    acknowledge: (MessageId) -> Unit,
+    show: suspend (T) -> Unit,
 ) {
-    val owner = viewLifecycleOwner
-    owner.lifecycleScope.launch {
-        owner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+    lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.CREATED) {
             messages.mapNotNull { it.firstOrNull() }.collect { pending ->
-                owner.withStarted {}
+                withStarted {}
                 show(pending.message)
                 acknowledge(pending.id)
             }
@@ -42,4 +50,8 @@ suspend fun AlertDialog.Builder.showAndAwaitDismissal(block: AlertDialog.Builder
         val dialog = setOnDismissListener { continuation.resume(Unit) }.show()
         continuation.invokeOnCancellation { dialog.dismiss() }
     }
+}
+
+suspend fun ComponentDialog.awaitDismissal() {
+    lifecycle.currentStateFlow.first { it == Lifecycle.State.DESTROYED }
 }
