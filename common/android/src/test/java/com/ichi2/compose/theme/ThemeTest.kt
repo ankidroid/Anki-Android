@@ -11,9 +11,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ApplicationProvider
 import com.ichi2.anki.common.android.R
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.NightTheme
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -31,6 +34,23 @@ class ThemeTest {
     private val appContext: Context get() = ApplicationProvider.getApplicationContext()
 
     private fun themed(themeRes: Int) = ContextThemeWrapper(appContext, themeRes)
+
+    @Test
+    @Config(sdk = [24, Config.TARGET_SDK])
+    fun `surface containers are opaque in every app theme`() {
+        for (theme in DayTheme.entries + NightTheme.entries) {
+            val scheme = themed(theme.styleResId).toMaterial3ColorScheme()
+            for (color in listOf(
+                scheme.surfaceContainer,
+                scheme.surfaceContainerHigh,
+                scheme.surfaceContainerHighest,
+                scheme.surfaceContainerLow,
+                scheme.surfaceContainerLowest,
+            )) {
+                assertEquals(1f, color.alpha, "${theme.name}: popup surfaces must hide underlying content")
+            }
+        }
+    }
 
     @Test
     fun `light theme bridges colorPrimary to scheme primary`() {
