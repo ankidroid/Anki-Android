@@ -84,7 +84,6 @@ class StudyOptionsViewModel : ViewModel() {
             buriedReview = tree.reviewCount - study.reviewCardsAvailable
         }
         val isDynamic = study.kind == DeckKind.Filtered
-        val fullName = deck.getString("name")
         val description =
             if (isDynamic) {
                 null
@@ -119,18 +118,18 @@ class StudyOptionsViewModel : ViewModel() {
             when {
                 study.isEmptyRegularDeck ->
                     StudyOptionsState.Empty(
-                        deckName = fullName,
+                        deckName = deck.name,
                         data = data,
                     )
                 study.availability == StudyAvailability.NoCardsAvailable ->
                     StudyOptionsState.Congrats(
-                        deckName = fullName,
+                        deckName = deck.name,
                         isDynamic = isDynamic,
                         data = data,
                     )
                 else ->
                     StudyOptionsState.StudyOptions(
-                        deckName = fullName,
+                        deckName = deck.name,
                         deckDescription = description,
                         isDynamic = isDynamic,
                         data = data,
