@@ -3,18 +3,18 @@
 package com.ichi2.anki.export
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
+import android.widget.Spinner
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import anki.cards.cardIds
@@ -30,24 +30,27 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.removeSafely
-import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.DialogExportOptionsBinding
+import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.exportApkgPackage
 import com.ichi2.anki.exportCollectionPackage
 import com.ichi2.anki.exportSelectedCards
 import com.ichi2.anki.exportSelectedNotes
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
@@ -61,6 +64,10 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
     @VisibleForTesting
     internal lateinit var binding: DialogExportOptionsBinding
         private set
+
+    private var selectedDeck: SelectableDeck? = null
+
+    private var deckSelection: Job? = null
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
@@ -83,7 +90,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         }
         val extraDid = arguments?.getLong(ARG_DECK_ID, -1) // 0 is for "All decks"
         val extraType: ExportType? = arguments?.getSerializableCompat(ARG_TYPE)
-        initializeDecks(extraDid)
+        initializeDecks(savedInstanceState?.getParcelableCompat(STATE_SELECTED_DECK), extraDid)
         // start with the option for exporting a collection like on desktop unless we received a
         // deck id or a type of selection(plus selected ids), in this case preselect apkg export
         if ((extraDid != null && extraDid != -1L) || extraType != null) {
@@ -100,7 +107,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             .negativeButton(CommonString.dialog_cancel)
             .positiveButton(text = TR.actionsExport()) {
                 val selectedIndex = binding.exportTypeSelector.selectedItemPosition
-                // just to be safe, if not exporting a collection and the decks spinner is not
+                // just to be safe, if not exporting a collection and the deck selector is not
                 // enabled(the user was really fast or fetching the decks is delayed for some
                 // reason) then simply return
                 if (selectedIndex != 0 && !binding.deckSelector.isEnabled) return@positiveButton
@@ -113,55 +120,59 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             }.create()
     }
 
-    /**
-     * @param did the target deck id
-     * @return returns the position of the deck with id inside the decks adapter or defaults to
-     * 0("All decks") if a position wasn't found
-     */
-    private fun findDeckPosition(did: DeckId): Int {
-        var position = 0
-        val adapter = binding.deckSelector.adapter as DeckDisplayAdapter
-        while (position < adapter.count) {
-            if (adapter.getItem(position).id == did) {
-                return position
-            }
-            position++
-        }
-        return if (position >= adapter.count) 0 else position
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        selectedDeck?.let { outState.putParcelable(STATE_SELECTED_DECK, it) }
     }
 
     /**
      * Asynchronously initializes the decks selector. Expects to be called after the views were
      * initialized.
      *
-     * @param selectedDeck the id of deck to select from the list of decks
+     * @param savedDeck the deck selected before a configuration change
+     * @param deckId the id of the deck to select, "All decks" is selected if there is no such deck
      */
-    private fun initializeDecks(selectedDeck: DeckId? = null) {
+    private fun initializeDecks(
+        savedDeck: SelectableDeck?,
+        deckId: DeckId?,
+    ) {
+        childFragmentManager.setFragmentResultListener(REQUEST_EXPORT_DECK, this) { _, bundle ->
+            bundle.getParcelableCompat<SelectableDeck>(DeckSelectionDialog.RESULT_SELECTED_DECK)?.let(::showSelectedDeck)
+        }
+        binding.deckSelector.setOnClickListener {
+            if (deckSelection?.isActive == true) return@setOnClickListener
+            deckSelection = startDeckSelection(asChild = true, requestKey = REQUEST_EXPORT_DECK)
+        }
+        ViewCompat.setAccessibilityDelegate(
+            binding.deckSelector,
+            object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfoCompat,
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info.className = Spinner::class.java.name
+                    info.setCanOpenPopup(true)
+                }
+            },
+        )
         lifecycleScope.launch {
             binding.deckSelector.isEnabled = false
-            // add "All decks" option on first position to replicate desktop
-            val allDecks =
-                mutableListOf(
-                    DeckNameId(
-                        TR.sentenceCase.allDecks,
-                        ALL_DECKS_ID,
-                    ),
-                )
-            allDecks.addAll(withCol { decks.allNamesAndIds(false) })
-            binding.deckSelector.adapter =
-                DeckDisplayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    allDecks,
-                ).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                }
-            if (selectedDeck != null) {
-                binding.deckSelector.setSelection(findDeckPosition(selectedDeck))
-            }
+            val deck =
+                savedDeck
+                    ?: withCol { decks.allNamesAndIds(false) }
+                        .firstOrNull { it.id == deckId }
+                        ?.let { SelectableDeck.Deck(it) }
+                    ?: SelectableDeck.AllDecks
+            showSelectedDeck(deck)
             binding.loadingDecksIndicator.isVisible = false
             binding.deckSelector.isEnabled = true
         }
+    }
+
+    private fun showSelectedDeck(deck: SelectableDeck) {
+        selectedDeck = deck
+        binding.deckSelector.text = deck.getFullDisplayName(requireContext())
     }
 
     private fun DialogExportOptionsBinding.initializeCommonUi(): Unit =
@@ -304,7 +315,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                 when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
                     ExportType.Notes, ExportType.Cards -> CollectionManager.TR.exportingSelectedNotes()
                     // notes/cards weren't selected so export the chosen deck(s)
-                    null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
+                    null -> requireNotNull(selectedDeck).getFullDisplayName(requireContext())
                 },
             )
         return filename.value
@@ -361,16 +372,11 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                 exportLimit { cardIds = cardIds { this.cids.addAll(ids) } }
             }
             // notes/cards weren't selected so export the chosen decks
-            null -> {
-                val deckNameId =
-                    (binding.deckSelector.adapter as DeckDisplayAdapter)
-                        .getItem(binding.deckSelector.selectedItemPosition)
-                if (deckNameId.id == ALL_DECKS_ID) {
-                    exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
-                } else {
-                    exportLimit { this.deckId = deckNameId.id }
+            null ->
+                when (val deck = requireNotNull(selectedDeck)) {
+                    SelectableDeck.AllDecks -> exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
+                    is SelectableDeck.Deck -> exportLimit { this.deckId = deck.deckId }
                 }
-            }
         }
 
     /** Attempt to delete the associated [IdsFile] and logs the result */
@@ -384,36 +390,6 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         File(requireActivity().externalCacheDir, "export").also {
             it.mkdirs()
         }
-
-    /**
-     * An extension of [ArrayAdapter] which handles displaying a list of [DeckNameId] by their names
-     * and which can also be queried for the [DeckNameId] for a position through [ArrayAdapter.getItem].
-     */
-    private class DeckDisplayAdapter(
-        context: Context,
-        @LayoutRes rowLayout: Int,
-        private val decks: List<DeckNameId>,
-    ) : ArrayAdapter<DeckNameId>(context, rowLayout, decks) {
-        override fun getItem(position: Int): DeckNameId = decks[position]
-
-        override fun getView(
-            position: Int,
-            convertView: View?,
-            parent: ViewGroup,
-        ): View =
-            super.getView(position, convertView, parent).apply {
-                findViewById<TextView>(android.R.id.text1).text = decks[position].name
-            }
-
-        override fun getDropDownView(
-            position: Int,
-            convertView: View?,
-            parent: ViewGroup,
-        ): View =
-            super.getDropDownView(position, convertView, parent).apply {
-                findViewById<TextView>(android.R.id.text1).text = decks[position].name
-            }
-    }
 
     /**
      * Holds information about the type of export.
@@ -449,6 +425,8 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         private const val ARG_DECK_ID = "arg_deck_id"
         private const val ARG_TYPE = "arg_type"
         private const val ARG_IDS_FILE = "arg_ids_file"
+        private const val REQUEST_EXPORT_DECK = "request_export_deck"
+        private const val STATE_SELECTED_DECK = "selected_deck"
 
         /**
          * Create a new instance of this dialog without any initial constraints(for example when

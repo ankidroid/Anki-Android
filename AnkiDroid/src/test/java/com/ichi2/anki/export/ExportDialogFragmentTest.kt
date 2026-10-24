@@ -3,7 +3,10 @@
 package com.ichi2.anki.export
 
 import android.content.DialogInterface
+import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragment
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -18,19 +21,34 @@ import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.utils.ext.requireParcelable
+import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.anki.withDeckPicker
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -195,6 +213,116 @@ class ExportDialogFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `deck selector opens the deck selection dialog`() {
+        onDeckExportDialog { scenario ->
+            scenario.onFragment { fragment ->
+                fragment.binding.deckSelector.performClick()
+                advanceRobolectricLooper()
+                val deckSelectionDialog = fragment.childFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG)
+                assertNotNull(deckSelectionDialog)
+                assertTrue(deckSelectionDialog.requireArguments().getBoolean(DeckSelectionDialog.ARG_ALLOW_ALL, false))
+                assertTrue(deckSelectionDialog.requireArguments().getBoolean(DeckSelectionDialog.ARG_ALLOW_FILTERED, false))
+            }
+        }
+    }
+
+    @Test
+    fun `deck selected in the deck selection dialog is kept on recreation`() {
+        addDeck("Chosen")
+        onDeckExportDialog { scenario ->
+            onView(withId(R.id.deck_selector)).inRoot(isDialog()).perform(click())
+            advanceRobolectricLooper()
+            onView(withText("Chosen")).inRoot(isDialog()).perform(click())
+            advanceRobolectricLooper()
+            onView(withId(R.id.deck_selector)).inRoot(isDialog()).check(matches(withText("Chosen")))
+
+            scenario.recreate()
+            advanceRobolectricLooper()
+            onView(withId(R.id.deck_selector)).inRoot(isDialog()).check(matches(withText("Chosen")))
+        }
+    }
+
+    @Test
+    fun `filtered deck can be selected as the export source`() {
+        addDynamicDeck("Filtered export source")
+        onDeckExportDialog {
+            onView(withId(R.id.deck_selector)).inRoot(isDialog()).perform(click())
+            advanceRobolectricLooper()
+            onView(withText("Filtered export source")).inRoot(isDialog()).perform(click())
+            advanceRobolectricLooper()
+            onView(withId(R.id.deck_selector)).inRoot(isDialog()).check(matches(withText("Filtered export source")))
+        }
+    }
+
+    @Test
+    fun `deck selector exposes its control role and popup to accessibility services`() =
+        onDeckExportDialog { scenario ->
+            scenario.onFragment { fragment ->
+                val node = fragment.binding.deckSelector.createAccessibilityNodeInfo()
+                assertEquals(Spinner::class.java.name, node.className.toString(), "Deck selection must expose a control role")
+                assertTrue(node.canOpenPopup(), "Deck selection must announce that it opens a popup")
+            }
+        }
+
+    @Test
+    fun `deck created through export is visible after cancelling export`() =
+        onExportDialogOverDeckPicker { deckPicker, export ->
+            assertTrue(export.binding.deckSelector.performClick())
+            advanceRobolectricLooper()
+            val picker = assertIs<DeckSelectionDialog>(export.childFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG))
+            val toolbar = assertNotNull(picker.requireDialog().findViewById<Toolbar>(R.id.toolbar))
+            assertTrue(toolbar.menu.performIdentifierAction(R.id.action_add_deck, 0))
+            advanceRobolectricLooper()
+
+            val creation = assertIs<AlertDialog>(ShadowDialog.getLatestDialog())
+            creation.input = "Created from export"
+            creation.positiveButton.performClick()
+            advanceRobolectricLooper()
+            val createdId = assertNotNull(col.decks.idForName("Created from export"))
+
+            (export.requireDialog() as AlertDialog).negativeButton.performClick()
+            advanceRobolectricLooper()
+            val adapter = deckPicker.deckPickerBinding.decks.adapter as DeckAdapter
+            advanceRobolectricLooperUntil(
+                lazyMessage = { "Deck created through export was saved but never appeared in the deck list" },
+            ) {
+                adapter.currentList.any { it.did == createdId }
+            }
+        }
+
+    @Test
+    fun `cancelling export while the deck selector loads does not show an error`() =
+        onExportDialogOverDeckPicker { _, export ->
+            assertTrue(export.binding.deckSelector.isEnabled)
+
+            // Hold collection access so export can be dismissed before the deck picker opens.
+            holdingCollectionAccess { scheduler ->
+                assertTrue(export.binding.deckSelector.performClick())
+                assertNull(export.childFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG))
+                assertIs<AlertDialog>(export.requireDialog()).negativeButton.performClick()
+                advanceRobolectricLooper()
+                assertFalse(export.isAdded)
+
+                // RobolectricTest fails if the delayed task attempts to show an error dialog.
+                scheduler.advanceUntilIdle()
+                advanceRobolectricLooper()
+            }
+        }
+
+    @Test
+    fun `double tap while the decks load opens one deck dialog`() =
+        onExportDialogOverDeckPicker { _, export ->
+            holdingCollectionAccess { scheduler ->
+                assertTrue(export.binding.deckSelector.performClick())
+                assertTrue(export.binding.deckSelector.performClick())
+                scheduler.advanceUntilIdle()
+                advanceRobolectricLooper()
+            }
+            export.childFragmentManager.executePendingTransactions()
+            assertEquals(1, export.childFragmentManager.fragments.count { it is DeckSelectionDialog })
+        }
+
+    @Test
     fun `ids file is not removed on a configuration change`() {
         val fragment =
             ExportDialogFragment.newInstance(
@@ -219,6 +347,36 @@ class ExportDialogFragmentTest : RobolectricTest() {
         launchFragment<ExportDialogFragment>(
             themeResId = R.style.Theme_Light,
         ).use { scenario -> scenario.onFragment { action(it) } }
+
+    private fun onDeckExportDialog(action: (FragmentScenario<ExportDialogFragment>) -> Unit) {
+        ensureCollectionLoadIsSynchronous()
+        launchFragment<ExportDialogFragment>(
+            fragmentArgs = ExportDialogFragment.newInstance(DEFAULT_DECK_ID).arguments,
+            themeResId = R.style.Theme_Light,
+        ).use { scenario ->
+            advanceRobolectricLooper()
+            action(scenario)
+        }
+    }
+
+    private fun onExportDialogOverDeckPicker(action: (DeckPicker, ExportDialogFragment) -> Unit) =
+        withDeckPicker(1, withCards = true) { deckPicker ->
+            val export = ExportDialogFragment.newInstance(DEFAULT_DECK_ID)
+            export.show(deckPicker.supportFragmentManager, "export")
+            deckPicker.supportFragmentManager.executePendingTransactions()
+            advanceRobolectricLooper()
+            action(deckPicker, export)
+        }
+
+    private fun holdingCollectionAccess(block: (TestCoroutineScheduler) -> Unit) {
+        val queue = StandardTestDispatcher()
+        val previousQueue = CollectionManager.setTestDispatcher(queue, useReentrantLock = false)
+        try {
+            block(queue.scheduler)
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
 
     companion object {
         private const val ARG_IDS_FILE = "arg_ids_file"
