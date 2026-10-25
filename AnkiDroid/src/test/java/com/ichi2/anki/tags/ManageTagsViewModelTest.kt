@@ -453,6 +453,34 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `search preserves collapsed matches and allows manual expansion`() =
+        runTest {
+            addTags("a::b::c::d", "other")
+            withViewModel {
+                filter("a")
+                assertEquals(listOf("a"), loadedState.visibleTagNames)
+                assertTrue(loadedState.visibleNodes.first().collapsed)
+
+                toggleCollapsed("a").join()
+                assertEquals(listOf("a", "a::b"), loadedState.visibleTagNames)
+                assertTrue(loadedState.visibleNodes[1].collapsed)
+
+                filter("c")
+                assertEquals(listOf("a", "a::b", "a::b::c"), loadedState.visibleTagNames)
+
+                filter("")
+                assertEquals(listOf("a", "a::b", "other"), loadedState.visibleTagNames)
+                assertTrue(loadedState.visibleNodes[1].collapsed)
+
+                filter("a")
+                toggleCollapsed("a").join()
+                assertEquals(listOf("a"), loadedState.visibleTagNames)
+                refreshTags().join()
+                assertEquals(listOf("a"), loadedState.visibleTagNames)
+            }
+        }
+
+    @Test
     fun `filter shows ancestors of matching nested tags`() =
         runTest {
             addTags("science::biology", "history")
