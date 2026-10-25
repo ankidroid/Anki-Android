@@ -32,15 +32,15 @@ import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
-import com.ichi2.anki.pages.toIntent
-import com.ichi2.anki.preferences.toIntent
 import com.ichi2.anki.progress.blockTouches
 import com.ichi2.anki.progress.unblockTouches
 import com.ichi2.anki.snackbar.showSnackbar
@@ -758,7 +758,7 @@ data class CrashReportData(
                 // if we're in the error dialog, we have no context of the deck which caused the exception
                 // assume it's the current deck
                 val openCurrentDeckOptions = DeckOptionsDestination.fromCurrentDeck()
-                context.startActivity(openCurrentDeckOptions.toIntent(context))
+                context.startActivity(with(DeferredNavigation) { openCurrentDeckOptions.toIntent() })
                 // dismiss the dialog - the user should have resolved the issue
                 return true
             }
@@ -773,7 +773,7 @@ data class CrashReportData(
 
             override suspend fun execute(context: Context): Boolean {
                 Timber.i("Opening 'Advanced settings'")
-                context.startActivity(PreferencesDestination.Advanced.toIntent(context))
+                context.startActivity(with(DeferredNavigation) { PreferencesDestination.Advanced.toIntent() })
                 return true
             }
         }
