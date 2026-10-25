@@ -96,6 +96,8 @@ import com.ichi2.anki.common.utils.HashUtil
 import com.ichi2.anki.common.utils.android.digit
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
+import com.ichi2.anki.common.utils.ext.addingDefaultsMode
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
@@ -154,6 +156,7 @@ import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.convertToHtmlNewline
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -785,6 +788,12 @@ class NoteEditorFragment :
             }
             // A restored selection takes precedence over the original launch destination.
             deckId = deckId.ifZero { requireArguments().getLong(EXTRA_DID) }
+            if (deckId == 0L && caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD &&
+                col.config.addingDefaultsMode == AddingDefaultsMode.USE_CURRENT_DECK
+            ) {
+                // Sharing has its own destination; adding notes must not change the study deck.
+                deckId = Prefs.lastSharedDeckId
+            }
             val deck = col.decks.getLegacy(deckId)
             if (deck == null || deck.isFiltered) {
                 deckId = defaults.deckId
@@ -1294,13 +1303,17 @@ class NoteEditorFragment :
     }
 
     private suspend fun saveNoteWithProgress() {
+        val destinationDeckId = deckId
         // adding current note to collection
         val changes =
             requireActivity().withProgress(resources.getString(CommonString.saving_facts)) {
                 undoableOp {
-                    addNote(editorNote!!, deckId)
+                    addNote(editorNote!!, destinationDeckId)
                 }
             }
+        if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD) {
+            Prefs.lastSharedDeckId = destinationDeckId
+        }
         // update UI based on the result, noOfAddedCards
         onNoteAdded(changes.count)
     }

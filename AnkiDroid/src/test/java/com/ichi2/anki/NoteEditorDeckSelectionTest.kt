@@ -17,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -30,23 +31,29 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
         col.config.addingDefaultsMode = mode
     }
 
-    private fun share(text: String) =
-        openNoteEditorWithArgs(
-            Bundle().apply { putString(Intent.EXTRA_TEXT, text) },
-            Intent.ACTION_SEND,
-        )
+    private fun share(
+        text: String,
+        deckId: DeckId? = null,
+    ) = openNoteEditorWithArgs(
+        Bundle().apply {
+            putString(Intent.EXTRA_TEXT, text)
+            deckId?.let { putLong(NoteEditorFragment.EXTRA_DID, it) }
+        },
+        Intent.ACTION_SEND,
+    )
 
     private fun NoteEditorFragment.select(did: DeckId) {
         onDeckSelected(SelectableDeck.Deck(did, col.decks.name(did)))
     }
 
     @Test
-    fun `successive shares use the study deck in current-deck mode`() =
+    fun `successive shares remember the destination without changing the study deck`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
             val a = addDeck("Study A", setAsSelected = true)
             val b = addDeck("Add B")
             val first = share("first share")
+            assertEquals(a, first.deckId)
             val activity = first.requireActivity()
             first.select(b)
             first.saveNote()
@@ -54,7 +61,8 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
             assertTrue(activity.isFinishing)
             assertEquals(listOf(b), col.findCards("").map { col.getCard(it).did })
             assertEquals(a, col.decks.selected())
-            assertEquals(a, share("second share").deckId)
+            assertEquals(b, share("second share").deckId)
+            assertEquals(a, openAdd().deckId)
         }
 
     @Test
@@ -75,6 +83,127 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
             val second = share("second share")
             assertEquals(ntid, second.editorNote!!.noteTypeId)
             assertEquals(b, second.deckId)
+        }
+
+    private suspend fun saveSharedNote(deckId: DeckId) {
+        val editor = share("saved share")
+        val activity = editor.requireActivity()
+        editor.select(deckId)
+        editor.saveNote()
+        advanceRobolectricLooper()
+        assertTrue(activity.isFinishing)
+    }
+
+    @Test
+    fun `in-app additions do not replace the shared destination`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            val study = addDeck("Study", setAsSelected = true)
+            val shared = addDeck("Shared")
+            val inApp = addDeck("In app")
+            saveSharedNote(shared)
+
+            val editor = openAdd(inApp)
+            editor.setFieldValueFromUi(0, "added in app")
+            editor.saveNote()
+            advanceRobolectricLooper()
+
+            assertEquals(2, col.noteCount())
+            assertEquals(shared, share("next share").deckId)
+            assertEquals(study, col.decks.selected())
+        }
+
+    @Test
+    fun `canceling a share does not replace the saved destination`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            addDeck("Study", setAsSelected = true)
+            val saved = addDeck("Saved")
+            val canceled = addDeck("Canceled")
+            saveSharedNote(saved)
+
+            val editor = share("canceled share")
+            editor.select(canceled)
+            editor.requireActivity().finish()
+
+            assertEquals(1, col.noteCount())
+            assertEquals(saved, share("next share").deckId)
+        }
+
+    @Test
+    fun `a failed share does not replace the saved destination`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            addDeck("Study", setAsSelected = true)
+            val saved = addDeck("Saved")
+            val failed = addDeck("Failed")
+            saveSharedNote(saved)
+
+            val editor = share("")
+            editor.select(failed)
+            editor.saveNote()
+            advanceRobolectricLooper()
+            assertNotNull(editor.addNoteErrorMessage)
+            assertFalse(editor.requireActivity().isFinishing)
+            editor.requireActivity().finish()
+
+            assertEquals(1, col.noteCount())
+            assertEquals(saved, share("next share").deckId)
+        }
+
+    @Test
+    fun `a deleted shared destination falls back to the study deck`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            val study = addDeck("Study", setAsSelected = true)
+            val deleted = addDeck("Deleted")
+            saveSharedNote(deleted)
+            col.decks.remove(listOf(deleted))
+
+            assertEquals(study, share("next share").deckId)
+        }
+
+    @Test
+    fun `note-type defaults take precedence over the last shared destination`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            addDeck("Study", setAsSelected = true)
+            val shared = addDeck("Shared")
+            val remembered = addDeck("Remembered")
+            saveSharedNote(shared)
+            col.config.addingDefaultsMode = AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
+            val reversed = col.notetypes.basicAndReversed
+            col.addNote(col.newNote(reversed).apply { fields[0] = "saved reversed" }, remembered)
+
+            val editor = share("next share")
+            assertEquals(reversed.id, editor.editorNote!!.noteTypeId)
+            assertEquals(remembered, editor.deckId)
+        }
+
+    @Test
+    fun `an explicit share destination takes precedence over the last shared deck`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            addDeck("Study", setAsSelected = true)
+            saveSharedNote(addDeck("Shared"))
+
+            assertEquals(1L, share("explicit share", deckId = 1L).deckId)
+        }
+
+    @Test
+    fun `selected text uses the last shared destination`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            addDeck("Study", setAsSelected = true)
+            val shared = addDeck("Shared")
+            saveSharedNote(shared)
+
+            val editor =
+                openNoteEditorWithArgs(
+                    Bundle().apply { putString(Intent.EXTRA_PROCESS_TEXT, "selected text") },
+                    Intent.ACTION_PROCESS_TEXT,
+                )
+            assertEquals(shared, editor.deckId)
         }
 
     @Test
