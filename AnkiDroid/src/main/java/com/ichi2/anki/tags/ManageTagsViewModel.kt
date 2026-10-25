@@ -309,7 +309,8 @@ class ManageTagsViewModel : ViewModel() {
         /**
          * Filters a flat tag list to items matching [searchQuery] (case-insensitive substring),
          * plus their ancestors to preserve hierarchy.
-         * Collapsed nodes are expanded if their children match, ensuring leaf matches are visible.
+         * Expands ancestors only when a match reaches a child's own name. A match inherited
+         * from a parent's name preserves the subtree's existing collapsed state.
          *
          * O(n*d) where n = number of tags and d = maximum tag depth.
          */
@@ -320,26 +321,28 @@ class ManageTagsViewModel : ViewModel() {
         ): List<TagListItemState> {
             val queryLowercase = searchQuery.lowercase()
             val visibleTags = mutableSetOf<String>()
-            val parentsWithVisibleChildren = mutableSetOf<String>()
+            val ancestorsToExpand = mutableSetOf<String>()
             for (item in allNodes) {
                 if (item.containsLowercase(queryLowercase)) {
                     visibleTags.add(item.fullTag.value)
+                    val expandAncestors = item.matchesOwnComponent(queryLowercase)
                     for (ancestor in item.fullTag.ancestors) {
                         visibleTags.add(ancestor)
-                        parentsWithVisibleChildren.add(ancestor)
+                        if (expandAncestors) ancestorsToExpand.add(ancestor)
                     }
                 }
             }
-            return allNodes
-                .filter { it.fullTag.value in visibleTags }
-                .map {
-                    // expand a collapsed parent if a child matches the search
-                    if (it.collapsed && it.fullTag.value in parentsWithVisibleChildren) {
-                        it.copy(collapsed = false)
-                    } else {
-                        it
+            val filteredNodes =
+                allNodes
+                    .filter { it.fullTag.value in visibleTags }
+                    .map {
+                        if (it.collapsed && it.fullTag.value in ancestorsToExpand) {
+                            it.copy(collapsed = false)
+                        } else {
+                            it
+                        }
                     }
-                }
+            return applyCollapsedVisibility(filteredNodes)
         }
     }
 }
@@ -365,6 +368,13 @@ data class TagListItemState(
 
     /** Case-insensitive check against the full tag path. [query] must be pre-lowercased. */
     fun containsLowercase(query: String): Boolean = fullTagLower.contains(query)
+
+    /** Whether pre-lowercased [query] reaches this tag's own name or its preceding separator. */
+    fun matchesOwnComponent(query: String): Boolean {
+        val matchStart = fullTagLower.lastIndexOf(query)
+        // Include the separator so a query such as "parent::" reveals its immediate children.
+        return matchStart >= 0 && matchStart + query.length > fullTagLower.lastIndexOf("::")
+    }
 }
 
 sealed class ManageTagsState {
