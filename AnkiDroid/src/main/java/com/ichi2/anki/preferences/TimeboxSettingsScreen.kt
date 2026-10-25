@@ -8,6 +8,8 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,12 +32,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -51,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -68,6 +73,7 @@ import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.ThemePreviews
 import androidx.appcompat.R as AppCompatR
 import com.ichi2.anki.common.android.R as CommonR
@@ -170,7 +176,7 @@ private fun TimeboxMainSwitch(
 ) {
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     val containerColor = MaterialTheme.colorScheme.surfaceVariant
-    val contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val contentColor = timeboxContentColor()
 
     Surface(
         modifier =
@@ -235,6 +241,23 @@ private fun TimeboxDurationCard(
 
     val parsed = textValue.toIntOrNull()
     val isValid = parsed != null && parsed in validRange
+    val isError = textValue.isNotEmpty() && !isValid
+    val controlBorder = MaterialTheme.widgetBorder
+    val inputBorder =
+        controlBorder?.let {
+            if (isError) BorderStroke(it.width, MaterialTheme.colorScheme.error) else it
+        }
+    val inputContainerColor = if (controlBorder != null) MaterialTheme.colorScheme.surface else Color.Transparent
+    val buttonColors =
+        if (controlBorder != null) {
+            IconButtonDefaults.outlinedIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                disabledContainerColor = MaterialTheme.colorScheme.surface,
+            )
+        } else {
+            IconButtonDefaults.filledTonalIconButtonColors()
+        }
 
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -251,14 +274,14 @@ private fun TimeboxDurationCard(
             Text(
                 text = stringResource(CommonString.time_limit_label),
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = timeboxContentColor(),
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                FilledTonalIconButton(
+                OutlinedIconButton(
                     onClick = {
                         val currentVal = textValue.toIntOrNull() ?: minutes
                         val prevVal = (currentVal - 1).coerceIn(validRange)
@@ -268,6 +291,8 @@ private fun TimeboxDurationCard(
                     },
                     modifier = Modifier.size(56.dp),
                     shape = RoundedCornerShape(16.dp),
+                    colors = buttonColors,
+                    border = controlBorder,
                     enabled = (textValue.toIntOrNull() ?: minutes) > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
                 ) {
                     Icon(
@@ -296,7 +321,13 @@ private fun TimeboxDurationCard(
                     modifier =
                         Modifier
                             .width(136.dp)
-                            .onFocusChanged { focusState ->
+                            .then(
+                                if (inputBorder != null) {
+                                    Modifier.border(inputBorder, RoundedCornerShape(12.dp))
+                                } else {
+                                    Modifier
+                                },
+                            ).onFocusChanged { focusState ->
                                 if (!focusState.isFocused) {
                                     val p = textValue.toIntOrNull()
                                     if (p != null && p in validRange) {
@@ -310,10 +341,16 @@ private fun TimeboxDurationCard(
                         Text(
                             text = unitSuffix,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = timeboxContentColor(),
                         )
                     },
                     shape = RoundedCornerShape(12.dp),
+                    colors =
+                        OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = inputContainerColor,
+                            unfocusedContainerColor = inputContainerColor,
+                            errorContainerColor = inputContainerColor,
+                        ),
                     textStyle =
                         LocalTextStyle.current.copy(
                             textAlign = TextAlign.Start,
@@ -321,7 +358,7 @@ private fun TimeboxDurationCard(
                             fontSize = 18.sp,
                         ),
                     singleLine = true,
-                    isError = textValue.isNotEmpty() && !isValid,
+                    isError = isError,
                     keyboardOptions =
                         KeyboardOptions(
                             keyboardType = KeyboardType.Number,
@@ -341,7 +378,7 @@ private fun TimeboxDurationCard(
                         ),
                 )
 
-                FilledTonalIconButton(
+                OutlinedIconButton(
                     onClick = {
                         val currentVal = textValue.toIntOrNull() ?: minutes
                         val nextVal = (currentVal + 1).coerceIn(validRange)
@@ -351,6 +388,8 @@ private fun TimeboxDurationCard(
                     },
                     modifier = Modifier.size(56.dp),
                     shape = RoundedCornerShape(16.dp),
+                    colors = buttonColors,
+                    border = controlBorder,
                     enabled = (textValue.toIntOrNull() ?: minutes) < TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES,
                 ) {
                     Icon(
@@ -378,7 +417,7 @@ private fun TimeboxHelpSection(modifier: Modifier = Modifier) {
         Icon(
             painter = painterResource(R.drawable.ic_outline_info_24),
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = timeboxContentColor(),
             modifier =
                 Modifier
                     .padding(top = 2.dp, end = 12.dp)
@@ -387,11 +426,19 @@ private fun TimeboxHelpSection(modifier: Modifier = Modifier) {
         Text(
             text = stringResource(CommonString.pref_timebox_help_summary),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = timeboxContentColor(),
             lineHeight = 20.sp,
         )
     }
 }
+
+@Composable
+private fun timeboxContentColor(): Color =
+    if (MaterialTheme.widgetBorder != null) {
+        MaterialTheme.colorScheme.onSurface
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
 
 @ThemePreviews
 @Composable
