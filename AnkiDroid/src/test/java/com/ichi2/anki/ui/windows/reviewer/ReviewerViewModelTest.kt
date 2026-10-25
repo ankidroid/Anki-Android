@@ -11,6 +11,7 @@ import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -80,6 +81,40 @@ class ReviewerViewModelTest : RobolectricTest() {
                 cancelAndIgnoreRemainingEvents()
             }
         return assertNotNull(Jsoup.parseBodyFragment(html).selectFirst("input#typeans"))
+    }
+
+    @Test
+    fun `burying a card shows the next question once`() = runTest { assertShowsNextQuestionOnce(ViewerAction.BURY_CARD) }
+
+    @Test
+    fun `burying a note shows the next question once`() = runTest { assertShowsNextQuestionOnce(ViewerAction.BURY_NOTE) }
+
+    @Test
+    fun `suspending a card shows the next question once`() = runTest { assertShowsNextQuestionOnce(ViewerAction.SUSPEND_CARD) }
+
+    @Test
+    fun `suspending a note shows the next question once`() = runTest { assertShowsNextQuestionOnce(ViewerAction.SUSPEND_NOTE) }
+
+    @Test
+    fun `deleting a note shows the next question once`() = runTest { assertShowsNextQuestionOnce(ViewerAction.DELETE) }
+
+    private suspend fun TestScope.assertShowsNextQuestionOnce(action: ViewerAction) {
+        addBasicNote("one", "1")
+        addBasicNote("two", "2")
+        val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+
+        viewModel.eval
+            .filter { it.startsWith("_showQuestion(") }
+            .test {
+                viewModel.onPageFinished(false)
+                advanceUntilIdle()
+                awaitItem()
+
+                viewModel.executeAction(action)
+                advanceUntilIdle()
+                assertTrue(awaitItem().contains("two"))
+                expectNoEvents()
+            }
     }
 
     @Test
