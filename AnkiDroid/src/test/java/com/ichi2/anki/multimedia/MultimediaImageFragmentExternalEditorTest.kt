@@ -29,16 +29,20 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
+import com.ichi2.anki.ui.internationalization.BackendTranslations
 import com.ichi2.testutils.ShadowFileProviderPathStrategy
-import com.ichi2.testutils.ShadowPreviewTranslations
 import com.ichi2.testutils.launchFragmentInContainer
 import com.ichi2.testutils.parcelledCopy
 import com.ichi2.testutils.saveState
 import com.ichi2.testutils.withFragment
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import kotlinx.coroutines.job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -54,7 +58,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.assertContentEquals
 
 @RunWith(AndroidJUnit4::class)
-@Config(shadows = [ShadowFileProviderPathStrategy::class, ShadowPreviewTranslations::class])
+@Config(shadows = [ShadowFileProviderPathStrategy::class])
 class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val composeRule = createEmptyComposeRule()
@@ -66,6 +70,14 @@ class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = 
     fun setUpEditor() {
         clearFileProviderRoots()
         resultProvider = EditorResultProvider.register()
+        // These tests use multiple SDK/graphics sandboxes, which cannot share the native backend.
+        mockkObject(BackendTranslations)
+        every { BackendTranslations.studyingEdit() } returns PreviewTranslations.studyingEdit()
+    }
+
+    @After
+    fun resetTranslations() {
+        unmockkObject(BackendTranslations)
     }
 
     @Test

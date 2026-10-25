@@ -145,6 +145,22 @@ jobs:
           maximum-size: 12GB
           disk-root: "C:"
 
+      # PROBE (#22766): Windows gets a pagefile above; give Linux swap too
+      - name: Configure Linux swap (probe)
+        if: runner.os == 'Linux'
+        run: |
+          echo "Before:"
+          free -m
+          swapon --show
+          echo "vm.swappiness=$(cat /proc/sys/vm/swappiness)"
+          sudo fallocate -l 8G /swapfile-ci
+          sudo chmod 600 /swapfile-ci
+          sudo mkswap /swapfile-ci
+          sudo swapon /swapfile-ci
+          echo "After:"
+          free -m
+          swapon --show
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 50
@@ -178,7 +194,43 @@ jobs:
 
         # update workflows/README.md when modifying this step
       - name: Run Unit Tests
+        if: runner.os != 'Linux'
         run: ./gradlew jacocoUnitTestReport --daemon
+
+      # PROBE (#22766): same command, logging memory, swap and memory pressure every 30s
+      - name: Run Unit Tests (memory probe)
+        if: runner.os == 'Linux'
+        run: |
+          probe() {
+            set +e
+            n=0
+            while true; do
+              mem=$(free -m | awk '/^Mem:/ {printf "used=%sM avail=%sM", $3, $7} /^Swap:/ {printf " swap=%sM/%sM", $3, $2}')
+              psi=$(awk '{printf "%s:%s ", $1, $2}' /proc/pressure/memory)
+              echo "PROBE $(date -u +%H:%M:%S) $mem psi[$psi]"
+              if [ $((n % 4)) -eq 0 ]; then
+                ps -eo rss=,args= --sort=-rss | head -6 | while read -r rss args; do
+                  name=$(echo "$args" | grep -oE "Gradle Test Executor [0-9]+|GradleDaemon|KotlinCompileDaemon|Runner\.[A-Za-z]+" | head -1)
+                  echo "PROBE   $((rss / 1024))M ${name:-${args:0:60}}"
+                done
+              fi
+              n=$((n + 1))
+              sleep 30
+            done
+          }
+          probe &
+          PROBE_PID=$!
+          trap 'pkill -P "$PROBE_PID"; kill "$PROBE_PID" 2>/dev/null' EXIT
+          ./gradlew jacocoUnitTestReport --daemon
+
+      - name: Report memory (probe)
+        if: always() && runner.os == 'Linux'
+        run: |
+          free -m
+          swapon --show
+          grep -E '^(pswpin|pswpout) ' /proc/vmstat
+          cat /proc/pressure/memory
+          sudo dmesg | grep -iE 'out of memory|oom-kill|killed process' | tail -5 || true
 
 
       # Only runs:
@@ -187,7 +239,8 @@ jobs:
       # This is not run on the 'happy' CI path as it's a rare de-flake, and would unnecessarily slow
       #  down CI
       - name: De-flake EmptyApplication Tests (schedule/manual run only)
-        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.iteration == 1 && matrix.os == 'ubuntu-latest'
+        # PROBE (#22766): skipped so manual probe runs only measure the main unit test step
+        if: false && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.iteration == 1 && matrix.os == 'ubuntu-latest'
         run: ./gradlew testFullDebugUnitTest -PemptyApplication --daemon
 
       # Compile the extra release variant once per scheduled run, keeping PR checks unchanged.
