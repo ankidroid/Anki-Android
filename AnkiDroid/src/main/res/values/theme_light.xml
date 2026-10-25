@@ -13,7 +13,7 @@
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
         <item name="colorSecondaryContainer">#C1E7FF</item>
         <item name="colorSurfaceVariant">#D6ECFA</item>
-        <item name="colorOnSurfaceVariant">#36566F</item>
+        <item name="colorOnSurfaceVariant">#555555</item>
         <item name="colorOutlineVariant">#9BBDD4</item>
         <item name="colorTertiary">#006DA8</item>
         <item name="colorOnTertiary">#FFFFFF</item>
