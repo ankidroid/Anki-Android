@@ -38,6 +38,7 @@ import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionRepo
 import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -352,6 +353,12 @@ open class AnkiDroidApp :
             val ankiDroidDir =
                 try {
                     ensureCollectionPathSet(this)
+                    if (CollectionHelper.storageDecision(this.sharedPrefs()) != StorageDecision.Decided) {
+                        // a fresh install without access to public storage: the user
+                        // decides via the permission screen (see ensureCollectionPathSet)
+                        Timber.i("skipping AnkiDroid directory init: storage is undecided")
+                        return@setup
+                    }
                     CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 } catch (e: SystemStorageException) {
                     fatalInitializationError = FatalInitializationError.StorageError(e)
