@@ -92,7 +92,6 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 // ============================================================================
 
 (() => {
-    const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
     const GESTURE_TIMEOUT = 800;
     const TOUCH_SLOP = 10;
@@ -182,7 +181,7 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
                 if (elapsed > MULTI_TOUCH_TIMEOUT || hadMovedPastSlop) {
                     return;
                 }
-                window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
+                sendGesture("multiFingerTap", { touchCount });
                 return;
             }
 
@@ -196,21 +195,32 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             }
 
             // Swipes and tap detection
-            const scrollDirection = getScrollDirection(event.target);
-            const params = new URLSearchParams({
+            sendGesture("tapOrSwipe", {
                 x: Math.round(endX),
                 y: Math.round(endY),
                 deltaX: Math.round(endX - startX),
                 deltaY: Math.round(endY - startY),
                 time: Date.now(),
+                scrollDirection: getScrollDirection(event.target),
             });
-            if (scrollDirection !== null) {
-                params.append("scrollDirection", scrollDirection);
-            }
-            window.location.href = `${SCHEME}://tapOrSwipe/?${params.toString()}`;
         },
         { passive: true },
     );
+
+    /**
+     * Sends the gesture data to be handled by the app.
+     * @param {"multiFingerTap"|"tapOrSwipe"} endpoint
+     * @param {Object} data
+     */
+    function sendGesture(endpoint, data) {
+        fetch(`ankidroid/${endpoint}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).catch(err => console.log("Failed to send gesture:", err));
+    }
 
     function resetTouches() {
         maxTouchCount = 0;
