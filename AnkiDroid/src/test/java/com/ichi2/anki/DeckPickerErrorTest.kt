@@ -14,6 +14,7 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
 import anki.decks.SetDeckCollapsedRequest
+import anki.scheduler.UnburyDeckRequest
 import app.cash.turbine.test
 import com.google.protobuf.ByteString
 import com.ichi2.anki.backend.DatabaseCorruption
@@ -344,6 +345,66 @@ class DeckPickerErrorTest : RobolectricTest() {
             assertErrorShown()
             val visibleDecks = deckPicker.viewModel.flowOfDeckList.value.data
             assertTrue(visibleDecks.any { it.did == deckId })
+        }
+    }
+
+    @Test
+    fun `corruption while opening deck options opens recovery dialog`() {
+        var failedDeck: DeckId? = null
+        useBackend {
+            object : Backend() {
+                override fun getDeckLegacy(did: Long): ByteString =
+                    if (did == failedDeck) {
+                        throw BackendDbCorruptException(backendError { message = "database disk image is malformed" })
+                    } else {
+                        super.getDeckLegacy(did)
+                    }
+            }
+        }
+        val deckId = addDeck("Deck")
+        val previouslyDetected = DatabaseCorruption.isDetected
+        DatabaseCorruption.isDetected = false
+        try {
+            withDeckPicker(deckCount = 0) { deckPicker ->
+                throwOnShowError = false
+                failedDeck = deckId
+                deckPicker.viewModel.openDeckOptions(deckId)
+
+                advanceRobolectricLooperUntil {
+                    DatabaseCorruption.isDetected &&
+                        deckPicker.supportFragmentManager.fragments.any { it is DatabaseErrorDialog }
+                }
+            }
+        } finally {
+            DatabaseCorruption.isDetected = previouslyDetected
+        }
+    }
+
+    @Test
+    fun `failed unbury while stopped shows an error on resume`() {
+        useBackend {
+            object : Backend() {
+                override fun unburyDeck(
+                    deckId: Long,
+                    mode: UnburyDeckRequest.Mode,
+                ): OpChanges = throw failure
+            }
+        }
+        val deckId = addDeck("Deck")
+
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            throwOnShowError = false
+            val lifecycle = deckPicker.lifecycle as LifecycleRegistry
+            lifecycle.currentState = Lifecycle.State.CREATED
+            advanceRobolectricLooperUntil { deckPicker.viewModel.onError.subscriptionCount.value == 0 }
+            try {
+                val job = deckPicker.viewModel.unburyDeck(deckId)
+                advanceRobolectricLooperUntil { job.isCompleted }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.RESUMED
+            }
+
+            assertErrorShown()
         }
     }
 

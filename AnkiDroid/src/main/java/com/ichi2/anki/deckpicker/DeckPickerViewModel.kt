@@ -26,6 +26,7 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -229,7 +230,7 @@ class DeckPickerViewModel :
 
     /** Prepares a confirmation dialog for deleting the selected deck. */
     fun requestDeleteDeckConfirmation() =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             val request =
                 withCol {
                     val deck = decks.current()
@@ -244,13 +245,13 @@ class DeckPickerViewModel :
         }
 
     fun requestRenameSelectedDeck() =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             val deckId = withCol { decks.selected() }
             flowOfRenameDeck.emit(deckId)
         }
 
     fun requestStudySelectedDeck() =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             val deckId = withCol { decks.selected() }
             flowOfStudyDeck.emit(deckId)
         }
@@ -383,7 +384,7 @@ class DeckPickerViewModel :
     }
 
     fun browseCards(deckId: DeckId) =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             withCol { decks.select(deckId) }
             flowOfNavigate.emit(BrowserDestination.ToDeck(deckId))
         }
@@ -391,7 +392,7 @@ class DeckPickerViewModel :
     fun addNote(
         deckId: DeckId?,
         setAsCurrent: Boolean,
-    ) = launchCatchingIO {
+    ) = launchCatchingTask(ioDispatcher) {
         if (deckId != null && setAsCurrent) {
             withCol { decks.select(deckId) }
         }
@@ -426,7 +427,7 @@ class DeckPickerViewModel :
     /**
      * Opens the Manage Note Types screen.
      */
-    fun openManageNoteTypes() = launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
+    fun openManageNoteTypes() = launchCatchingTask(ioDispatcher) { flowOfDestination.emit(ManageNoteTypesDestination()) }
 
     /**
      * Opens study options for the provided deck
@@ -437,14 +438,14 @@ class DeckPickerViewModel :
     fun openDeckOptions(
         deckId: DeckId,
         isFiltered: Boolean? = null,
-    ) = launchCatchingIO {
+    ) = launchCatchingTask(ioDispatcher) {
         // open cram options if filtered deck, otherwise open regular options
         val filtered = isFiltered ?: withCol { decks.isFiltered(deckId) }
         flowOfNavigate.emit(DeckOptionsDestination(deckId = deckId, isFiltered = filtered))
     }
 
     fun unburyDeck(deckId: DeckId) =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             undoableOp<OpChanges> { sched.unburyDeck(deckId) }
         }
 
@@ -569,7 +570,7 @@ class DeckPickerViewModel :
      * Requests export for the specified deck
      */
     fun exportDeck(deckId: DeckId) =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             flowOfExportDeck.emit(deckId)
         }
 
@@ -596,7 +597,7 @@ class DeckPickerViewModel :
      * Prepares data for creating a deck shortcut
      */
     fun createIcon(deckId: DeckId) =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             val (shortLabel, longLabel) =
                 withCol {
                     val fullName = decks.name(deckId)
@@ -616,7 +617,7 @@ class DeckPickerViewModel :
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
     fun disableDeckAndChildrenShortcuts(deckId: DeckId) =
-        launchCatchingIO {
+        launchCatchingTask(ioDispatcher) {
             val deckTreeDids = dueTree?.find(deckId)?.map { it.did.toString() } ?: emptyList()
             flowOfDisableShortcuts.emit(deckTreeDids)
         }
