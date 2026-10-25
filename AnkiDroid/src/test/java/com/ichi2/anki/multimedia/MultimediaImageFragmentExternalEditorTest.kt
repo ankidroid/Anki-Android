@@ -39,6 +39,7 @@ import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import kotlinx.coroutines.job
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
@@ -60,8 +61,14 @@ import kotlin.test.assertContentEquals
 @RunWith(AndroidJUnit4::class)
 @Config(shadows = [ShadowFileProviderPathStrategy::class])
 class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = false) {
+    // v2's default StandardTestDispatcher queues composition, then runTest joins that
+    // scope from the Robolectric main thread with an infinite Compose timeout.
+    // collectAsStateWithLifecycle resumes through Dispatchers.Main, which is a
+    // looper message. Nothing drains the looper while the test thread is inside
+    // joinBlocking, so Robolectric's 60s TimeoutRule kills the test. Unconfined
+    // resumes those continuations on the caller instead of posting them.
     @get:Rule
-    val composeRule = createEmptyComposeRule()
+    val composeRule = createEmptyComposeRule(UnconfinedTestDispatcher())
 
     private val editedImage = editorResultImageBytes()
     private lateinit var resultProvider: EditorResultProvider
