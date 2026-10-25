@@ -152,12 +152,9 @@ abstract class NavigationDrawerActivity(
     fun navDrawerIsReady(): Boolean = navigationView != null
 
     // Navigation drawer initialisation
-    @Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
     protected fun initNavigationDrawer(mainView: View = findViewById(android.R.id.content)) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         drawerLayout = mainView.findViewById(R.id.drawer_layout)
-        // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
-        window.statusBarColor = getColor(CommonR.color.transparent)
         drawerLayout.setStatusBarBackgroundColor(
             MaterialColors.getColor(
                 this,
