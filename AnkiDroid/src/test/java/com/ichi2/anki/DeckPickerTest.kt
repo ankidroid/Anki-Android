@@ -354,7 +354,7 @@ class DeckPickerTest : RobolectricTest() {
             val selected = col.decks.selected()
             lateinit var deckPicker: DeckPicker
             withDeckPicker(deckCount = 0) { deckPicker = it }
-            advanceRobolectricLooperUntil { deckPicker.dueTree?.find(other) != null }
+            deckPicker.awaitVisibleDecks(listOf(deleted, other))
 
             val deletion =
                 withQueuedCollectionAccess {
