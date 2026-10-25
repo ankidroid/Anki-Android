@@ -3,12 +3,12 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.view.ViewConfiguration
-import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.clamp
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -59,22 +59,22 @@ class GestureParser(
      *
      * @param rawGesture The gesture data sent by `ankidroid-reviewer.js`.
      * @param scale The current scale of the WebView.
-     * @param webView The source WebView, used to access its current scroll and size properties.
+     * @param webViewLayout The source WebView layout, used to access its current scroll and size properties.
      * @return The parsed [Gesture], or `null` if the gesture is invalid or should be ignored.
      */
     fun parse(
         rawGesture: RawGesture,
         scale: Float,
-        webView: WebView,
+        webViewLayout: SafeWebViewLayout,
         block: (Gesture?) -> Unit,
     ) {
         val webViewState =
             WebViewState(
                 scale = scale,
-                scrollX = webView.scrollX,
-                scrollY = webView.scrollY,
-                width = webView.measuredWidth,
-                height = webView.measuredHeight,
+                scrollX = webViewLayout.webViewScrollX,
+                scrollY = webViewLayout.webViewScrollY,
+                width = webViewLayout.measuredWidth,
+                height = webViewLayout.measuredHeight,
             )
         parseInternal(rawGesture, webViewState, block)
     }
