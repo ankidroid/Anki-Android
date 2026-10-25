@@ -50,6 +50,7 @@
     <!-- Crop function-->
     <string name="crop_image">بۇ سۈرەتنى قايچىلامسىز؟</string>
     <string name="crop_button" maxLength="28">كەس</string>
+    <string name="external_image_editor_no_changes">No changes were returned.</string>
     <string name="save_dialog_content">نۆۋەتتىكى سۈرەتنىڭ چوڭلۇقى ‏‎%s‪‎‏MB‬. كۆۈلدىكى سۈرەت چوڭلۇقىنىڭ چېكى ‪1MB‬. پىرىسلامسىز؟</string>
     <string name="select_image_failed">"سۈرەت تاللىيالمىدى، قايتا سىناڭ"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">بۆلەك مەزمۇنى</string>

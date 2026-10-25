@@ -167,6 +167,13 @@
     <string name="use_current" maxLength="41">新卡片的默认牌组</string>
     <string name="learn_cutoff" maxLength="41">提前学习的限制</string>
     <string name="time_limit" maxLength="41">限制每次学习的时长</string>
+    <string name="timeboxing" maxLength="41">时间盒</string>
+    <string name="use_timebox" maxLength="41">使用时间盒</string>
+    <string name="time_limit_label" maxLength="41">时间限制</string>
+    <plurals name="timebox_minutes_suffix">
+        <item quantity="other">分钟</item>
+    </plurals>
+    <string name="pref_timebox_help_summary">时间盒将您的学习过程分为较短的小节，以此帮您保持专注。当达到单次时限时，您将会看到您学习了多少张卡片，并可以选择休息或是继续。</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d 时</item>

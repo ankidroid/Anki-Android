@@ -50,6 +50,7 @@
     <!-- Crop function-->
     <string name="crop_image">Θέλετε να περικόψετε αυτή την εικόνα;</string>
     <string name="crop_button" maxLength="28">Crop</string>
+    <string name="external_image_editor_no_changes">No changes were returned.</string>
     <string name="save_dialog_content">Το τρέχον μέγεθος εικόνας είναι %sMB. Το προεπιλεγμένο όριο μεγέθους εικόνας είναι 1MB. Θέλετε να το περικόψετε;</string>
     <string name="select_image_failed">"Η επιλογή εικόνας απέτυχε, Παρακαλώ προσπαθήστε ξανά"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Περιεχόμενα Πεδίου</string>

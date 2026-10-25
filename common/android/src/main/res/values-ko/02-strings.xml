@@ -217,7 +217,10 @@
     <string name="ankidroid_init_failed_storage">Android 오류로 인해 AnkiDroid가 저장소에 접근할 수 없습니다.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">글꼴 크기</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">도구 모음 표시</string>
+    <string name="note_editor_toolbar_layout" maxLength="28">Toolbar layout</string>
+    <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
+    <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
+    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
     <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
     <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
     <string name="format_insert_bold">굵게</string>
@@ -245,7 +248,6 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">홈 화면에 AnkiDroid 바로 가기를 추가할 수 없습니다.</string>
     <string name="create_shortcut_error">바로가기 생성 오류: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">대문자로 시작</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">도구 모음 스크롤</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
     <string name="dialog_hint_certificate">인증서</string>
@@ -330,7 +332,7 @@
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">인터넷</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">설치</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">TTS 설정 열기 실패</string>
-    <string name="shared_decks_login_required">카드 덱을 더 다운로드하려면 로그인해 주세요</string>
+    <string name="shared_decks_ankiweb_login_limit">Shared decks are hosted on AnkiWeb, a free service separate from AnkiDroid. AnkiWeb asks you to log in to continue.</string>
     <string name="deck_description_field_hint">설명</string>
     <string name="deck_description_saved">설명이 업데이트되었습니다.</string>
     <string name="format_deck_description_as_markdown">마크다운 형식</string>

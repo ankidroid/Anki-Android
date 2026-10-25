@@ -24,36 +24,36 @@
   -->
 <resources>
     <string name="youre_offline">Oflaynsiz</string>
-    <string name="sync_error">Sinxronlash xatoligi</string>
+    <string name="sync_error">Sinxronlaş xatoligi</string>
     <string name="vague_error" comment="Network error dialog title">Xatolik</string>
-    <string name="retry">Qayta urinib koʻrish</string>
-    <string name="menu_get_shared_decks">Dasta yuklab olish</string>
+    <string name="retry">Qayta urinib köriş</string>
+    <string name="menu_get_shared_decks">Dasta yuklab oliş</string>
     <string name="connection_error_message">Tarmoq xatoligi yuz berdi</string>
-    <string name="not_logged_in_title">AnkiWebʼga kirish</string>
-    <string name="login_create_account_message">Bulut sinxronizatsiya xizmatidan foydalanish uchun uchinchi tomonning akkauntiga kirishingiz kerak. Akkauntni keyingi bosqichda yaratishingiz mumkin.</string>
+    <string name="not_logged_in_title">AnkiWebʼga kiriş</string>
+    <string name="login_create_account_message">Bulut sinxronizatsiya xizmatidan foydalaniş uçun uçinçi tomonning akkauntiga kirişingiz kerak. Akkauntni keyingi bosqiçda yaratişingiz mumkin.</string>
     <!-- MyAccount.kt -->
-    <string name="username">E-pochta manzili</string>
+    <string name="username">E-poçta manzili</string>
     <string name="password">Parol</string>
-    <string name="sign_up_description">AnkiWeb akkauntingiz yoʻqmi? U bepul!</string>
-    <string name="sign_up_not_affiliated">Eslatma: AnkiWeb AnkiDroid bilan bogʻliq emas</string>
-    <string name="sign_up">Roʻyxatdan oʻtish</string>
-    <string name="logged_as">Shu orqali tizimga kirgansiz</string>
-    <string name="reset_password">Parolni tiklash</string>
-    <string name="lost_mail_instructions">E-pochtangizni unutdingizmi?</string>
+    <string name="sign_up_description">AnkiWeb akkauntingiz yöqmi? U bepul!</string>
+    <string name="sign_up_not_affiliated">Eslatma: AnkiWeb AnkiDroid bilan boğliq emas</string>
+    <string name="sign_up">Röyxatdan ötiş</string>
+    <string name="logged_as">Şu orqali tizimga kirgansiz</string>
+    <string name="reset_password">Parolni tiklaş</string>
+    <string name="lost_mail_instructions">E-poçtangizni unutdingizmi?</string>
     <string name="sign_in">Tizimga kirilmoqda</string>
     <!-- AndroidManifest.xml -->
     <string name="sync_title">Sinxronizatsiya</string>
-    <string name="sync_log_uploading_message">Qurilmadan toʻliq sinxronizatsiya</string>
+    <string name="sync_log_uploading_message">Qurilmadan töliq sinxronizatsiya</string>
     <string name="sync_database_acknowledge">Kolleksiya sinxronlandi</string>
     <string name="col_synced_media_in_background">Kolleksiya sinxronlandi. Media fayllar orqa fonda sinxronlanmoqda.</string>
-    <string name="sync_corrupt_database">Maʼlumotlar bazangiz buzilgan. Iltimos, sinxronlashdan oldin uni tuzating.\n\nMaʼlumotlar bazasini tuzatish haqida maʼlumot olish uchun %s sahifasiga oʻting.</string>
+    <string name="sync_corrupt_database">Maʼlumotlar bazangiz buzilgan. Iltimos, sinxronlaşdan oldin uni tuzating.\n\nMaʼlumotlar bazasini tuzatiş haqida maʼlumot oliş uçun %s sahifasiga öting.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Mahalliy</string>
     <string name="sync_sanity_remote">Masofaviy</string>
-    <string name="one_way_sync_title" maxLength="41">Bir tomonlama sinxronlash</string>
-    <string name="one_way_sync_confirmation">Bir tomonlama sinxronlash soʻraldi</string>
-    <string name="full_sync_confirmation">Soʻralgan oʻzgartirish kolleksiyangizni keyingi sinxronlashda maʼlumotlar bazasini toʻliq yuklashni talab qiladi. Agar boshqa qurilmangizda takrorlashlar yoki boshqa oʻzgarishlar boʻlsa va bu qurilma bilan sinxronlanmagan boʻlsa, ular yoʻqoladi. Davom ettirilsinmi?</string>
+    <string name="one_way_sync_title" maxLength="41">Bir tomonlama sinxronlaş</string>
+    <string name="one_way_sync_confirmation">Bir tomonlama sinxronlaş söraldi</string>
+    <string name="full_sync_confirmation">Söralgan özgartiriş kolleksiyangizni keyingi sinxronlaşda maʼlumotlar bazasini töliq yuklaşni talab qiladi. Agar boşqa qurilmangizda takrorlaşlar yoki boşqa özgarişlar bölsa va bu qurilma bilan sinxronlanmagan bölsa, ular yöqoladi. Davom ettirilsinmi?</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sinxronlash (bir tomonlama)</string>
-    <string name="sync_menu_title_no_account">Sinxronlash (tizimga kirish)</string>
+    <string name="sync_menu_title_one_way_sync">Sinxronlaş (bir tomonlama)</string>
+    <string name="sync_menu_title_no_account">Sinxronlaş (tizimga kiriş)</string>
 </resources>

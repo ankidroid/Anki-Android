@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
-    <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar arttırın/azaltın (“-3”)</string>
-    <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar arttırın/azaltın (“-3”)</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead_description">Şu kadar zaman içinde sırası gelecek kartları çalış:</string>
     <string name="custom_study_preview">Son (day) içinde eklenen yeni kartları önizle</string>
@@ -228,6 +228,8 @@
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
     <string name="compress">Sıkıştır</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
     <string name="tts_error_dialog_title">Dil desteklenmiyor</string>
     <string name="tts_error_dialog_reason_text"><b>%1$s</b> metin okuma motoru şu dili desteklemiyor: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Motor değiştir</string>
@@ -263,7 +265,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Bundan</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">Buna</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profil adı</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profil adı boş olamaz</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profil adı %1$d veya daha az karakter olmalıdır</string>

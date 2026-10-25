@@ -43,8 +43,8 @@
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
     <string name="intent_aedict_empty">\'기본값\' 카테고리가 비어 있습니다</string>
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>
-    <string name="custom_study_new_extend">오늘의 새로운 카드 제한을 (“-3”) 만큼 증가/감소시키기</string>
-    <string name="custom_study_rev_extend">오늘의 복습 제한을 (“-3”) 만큼 증가/감소시키기</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">최근 x일 동안 잊혀진 복습 카드:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preview new cards added in the last:</string>
@@ -220,6 +220,8 @@
     <string name="webview_update_message">system WebView 버전이 낮아 일부 기능이 동작하지 않을 수 있습니다. 업데이트가 필요합니다. \n\n현재 버전: %1$d\n최소 필요 버전: %2$d</string>
     <string name="compress">압축</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
     <string name="tts_error_dialog_title">언어 미지원</string>
     <string name="tts_error_dialog_reason_text">TTS 엔진 <b>%1$s</b> 가 다음 언어를 지원하지 않습니다: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">엔진 바꾸기</string>
@@ -255,7 +257,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">에서</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">으로</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">프로필 이름</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">프로필 이름은 비어 있을 수 없습니다</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">프로필 이름은 %1$d 글자 이하여야 합니다</string>

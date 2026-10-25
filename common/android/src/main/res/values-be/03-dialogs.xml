@@ -49,8 +49,8 @@
     <string name="repair_deck_dialog">Вы сапраўды хочаце аднавіць базу даных?\n\nПерад спробай па яе аднаўленні, будзе створана копія ў  падпапцы \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
-    <string name="custom_study_new_extend">Павялічыць/паменшыць (“-3”) абмежаванні новых картак на сёння</string>
-    <string name="custom_study_rev_extend">Павялічыць/паменшыць (“-3”) абмежаванні паўтарэння новых картак на сёння</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preview new cards added in the last:</string>
@@ -244,6 +244,8 @@
     <string name="webview_update_message">Сістэма WebView састарэла. Некаторыя функцыі будуць працаваць некарэктна. Неабходна абнаўленне.\n\nБягучая версія: %1$d\nМінімальна неабходная версія: %2$d</string>
     <string name="compress">Сціснуць</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
     <string name="tts_error_dialog_title">Мова не падтрымліваецца</string>
     <string name="tts_error_dialog_reason_text">Рухавік пераўтварэння тэксту ў голас <b>%1$s</b> не падтрымлівае наступную мову: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Змяніць рухавік</string>
@@ -279,7 +281,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">З</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">На</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Назва профілю</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Назва профілю не можа быць пустой</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Назва профілю павінна змяшчаць %1$d сімв. або менш</string>

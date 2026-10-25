@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
     <string name="intent_aedict_empty">Kategorie »Standard« ist leer</string>
     <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
-    <string name="custom_study_new_extend">Heutigen Tageshöchstwerts für neue Karten erhöhen („3“) oder verringern („-3“) um</string>
-    <string name="custom_study_rev_extend">Heutigen Tageshöchstwerts für Wiederholungskarten erhöhen („3“) oder verringern („-3“) um</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
     <string name="custom_study_ahead_description">Karteikarten, die zur Wiederholung fällig sind in den nächsten:</string>
     <string name="custom_study_preview">Vorschau der neuen Karteikarten. Hinzugefügt:</string>
@@ -228,6 +228,8 @@
     <string name="webview_update_message">Das System-WebView ist veraltet. Einige Funktionen werden nicht korrekt funktionieren. Bitte aktualisieren Sie es.\n\nInstallierte Version: %1$d\nMindestanforderung: %2$d</string>
     <string name="compress">Komprimieren</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
     <string name="tts_error_dialog_title">Sprache nicht unterstützt</string>
     <string name="tts_error_dialog_reason_text">Die Text-zu-Sprache-Engine <b>%1$s</b> unterstützt die folgende Sprache nicht: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Engine ändern</string>
@@ -263,7 +265,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Von</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">Zu</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profilname</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Der Profilname darf nicht leer sein</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Der Profilname darf nur maximal %1$d Zeichen lang sein</string>

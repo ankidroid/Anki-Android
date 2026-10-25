@@ -43,8 +43,8 @@
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
     <string name="intent_aedict_category">向 AnkiDroid 中添加卡牌需要删除所有 Notepad 类别，或者添加“默认”类别。</string>
-    <string name="custom_study_new_extend">增加/减少（“-3”）今天的新卡片限制</string>
-    <string name="custom_study_rev_extend">增加/减少（“-3”）今天的复习卡片限制</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
     <string name="custom_study_ahead_description">复习接下去多久到期的卡片：</string>
     <string name="custom_study_preview">预览过去 x 天内添加的新卡片：</string>
@@ -220,6 +220,8 @@
     <string name="webview_update_message">系统 WebView 已过时。有些功能将无法正常工作。请更新它。\n\n已安装版本： %1$d\n所需最低版本： %2$d</string>
     <string name="compress">压缩</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">未安装文本转语音引擎</string>
+    <string name="tts_no_engine_message">安装一个为您的设备提供文本转语音引擎的应用程序</string>
     <string name="tts_error_dialog_title">不支持的语言</string>
     <string name="tts_error_dialog_reason_text">文本转语音引擎 <b>%1$s</b>不支持下列语言：<b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">更改引擎</string>
@@ -255,7 +257,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">从</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">到</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">重命名配置文件</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">配置方案名称</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">配置方案名称不能为空</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">配置文件名称长度必须是 %1$d 个字符或更短</string>

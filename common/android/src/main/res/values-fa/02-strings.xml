@@ -221,7 +221,10 @@
 خطا.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">اندازه فونت</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">نمایش نوار ابزار</string>
+    <string name="note_editor_toolbar_layout" maxLength="28">Toolbar layout</string>
+    <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
+    <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
+    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
     <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
     <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
     <string name="format_insert_bold">قالب‌حروف به‌صورت پررنگ</string>
@@ -249,7 +252,6 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">صفحه اصلی شما به AnkiDroid اجازه میانبور اضافه کردن نمیدهد</string>
     <string name="create_shortcut_error">خطا در افزودن میانبُر: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">جملات را با حروف بزرگ بنویس</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">پیمایش نوار ابزار</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">لینک</string>
     <string name="dialog_hint_certificate">گواهی امنیتی</string>
@@ -336,7 +338,7 @@
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">اینترنت</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">نصب شود</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">باز کردن تنظیمات متن به گفتار ناموفق بود</string>
-    <string name="shared_decks_login_required">لطفا وارد حساب کاربری خود شوید که دسته های بیشتری را دانلود کنید</string>
+    <string name="shared_decks_ankiweb_login_limit">Shared decks are hosted on AnkiWeb, a free service separate from AnkiDroid. AnkiWeb asks you to log in to continue.</string>
     <string name="deck_description_field_hint">توضیحات</string>
     <string name="deck_description_saved">توضیح به‌روز شد</string>
     <string name="format_deck_description_as_markdown">قالب‌بندی به فرمت مارک‌داون</string>

@@ -171,6 +171,16 @@
     <string name="use_current" maxLength="41">Колода для нових карт</string>
     <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
+    <string name="timeboxing" maxLength="41">Timeboxing</string>
+    <string name="use_timebox" maxLength="41">Use timebox</string>
+    <string name="time_limit_label" maxLength="41">Time limit</string>
+    <plurals name="timebox_minutes_suffix">
+        <item quantity="one">min</item>
+        <item quantity="few">mins</item>
+        <item quantity="many">mins</item>
+        <item quantity="other">mins</item>
+    </plurals>
+    <string name="pref_timebox_help_summary">Timeboxing divides your study into shorter sessions to help you stay focused. When the time limit is reached, you\'ll see how many cards you studied and can choose to take a break or continue.</string>
     <string name="day_offset_with_description" maxLength="41">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d година після опівночі</item>
