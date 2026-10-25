@@ -10,7 +10,7 @@ import com.ichi2.anki.common.storage.StorageDecision
  * Who chooses the [AnkiDroidFolder] on a fresh install.
  *
  * Declared per [StoragePermissionSet] ([StoragePermissionSet.storagePolicy]) and applied by
- * [ensureCollectionPathSet].
+ * [maybeSetDefaultCollectionPath].
  */
 sealed interface StoragePolicy {
     /** Only one folder is possible, so it is persisted on startup. */

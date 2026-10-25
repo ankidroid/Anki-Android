@@ -30,8 +30,8 @@ import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.startup.StoragePolicy
-import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.anki.startup.folderToPersist
+import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.LegacyNotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
@@ -55,11 +55,11 @@ object InitialActivity {
      * [StorageDecision] undecided. Startup calls this once permissions are granted, so a
      * deferred decision is recorded before the collection is opened.
      *
-     * @see ensureCollectionPathSet
+     * @see maybeSetDefaultCollectionPath
      */
     fun decideStorageIfUndecided(context: Context) {
         try {
-            ensureCollectionPathSet(context)
+            maybeSetDefaultCollectionPath(context)
         } catch (e: SystemStorageException) {
             // startup continues: getStartupFailureType reports the undecided state
             Timber.w(e, "unable to choose a default collection path")

@@ -68,8 +68,8 @@ import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.startup.configureBackendTemporaryDirectory
-import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
+import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.anki.widget.RECURRING_WIDGETS
 import com.ichi2.utils.ExceptionUtil
@@ -352,10 +352,10 @@ open class AnkiDroidApp :
             //  is not considered to be a fatal error, unless the directory itself is not writable.
             val ankiDroidDir =
                 try {
-                    ensureCollectionPathSet(this)
+                    maybeSetDefaultCollectionPath(this)
                     if (CollectionHelper.storageDecision(this.sharedPrefs()) != StorageDecision.Decided) {
                         // a fresh install without access to public storage: the user
-                        // decides via the permission screen (see ensureCollectionPathSet)
+                        // decides via the permission screen (see maybeSetDefaultCollectionPath)
                         Timber.i("skipping AnkiDroid directory init: storage is undecided")
                         return@setup
                     }
