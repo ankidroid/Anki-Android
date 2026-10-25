@@ -17,6 +17,7 @@ import com.ichi2.anki.common.preferences.AnimationPreferences
 import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
@@ -238,6 +239,14 @@ open class PrefsRepository protected constructor(
     // ****************************************** General ****************************************** //
 
     val exitViaDoubleTapBack by booleanPref(R.string.exit_via_double_tap_back_key, false)
+
+    // ****************************************** Editing ****************************************** //
+
+    /**
+     * Last deck successfully used when saving note data from a 'share' intent,
+     * or zero if no destination has been saved.
+     */
+    var lastSharedDeckId: DeckId by longPref(R.string.last_shared_deck_id_key, defaultValue = 0L)
 
     // ****************************************** Sync ****************************************** //
 
