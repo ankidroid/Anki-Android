@@ -7,7 +7,7 @@ import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.initializeWidgetRepository
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.settings.PrefsRepository
-import com.ichi2.anki.startup.ensureCollectionPathSet
+import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.widget.AnkiDroidWidgetSmall
 import com.ichi2.widget.WidgetStatus
@@ -22,5 +22,5 @@ fun registerTestApplicationSingletons() {
     initializeWidgetRepository()
     WidgetStatus.register(PrefsRepository(application)) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
     Animations.setPreferencesProvider { context -> PrefsRepository(context) }
-    ensureCollectionPathSet(application)
+    maybeSetDefaultCollectionPath(application)
 }

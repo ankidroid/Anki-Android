@@ -40,7 +40,7 @@ class SetupStorageTest : RobolectricTest() {
 
     /**
      * Reading the collection path must not silently choose and persist a default:
-     * that decision belongs to startup ([ensureCollectionPathSet]).
+     * that decision belongs to startup ([maybeSetDefaultCollectionPath]).
      */
     @Test
     fun `reading the collection path throws when unset`() {
@@ -84,19 +84,19 @@ class SetupStorageTest : RobolectricTest() {
     }
 
     @Test
-    fun `ensureCollectionPathSet persists a default when unset and storage is accessible`() {
+    fun `maybeSetDefaultCollectionPath persists a default when unset and storage is accessible`() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
-        withAllFilesAccess { ensureCollectionPathSet(targetContext) }
+        withAllFilesAccess { maybeSetDefaultCollectionPath(targetContext) }
 
         assertTrue(!collectionPath.isNullOrEmpty(), "a default collection path should be set")
     }
 
     @Test
-    fun `ensureCollectionPathSet does not overwrite an existing value`() {
+    fun `maybeSetDefaultCollectionPath does not overwrite an existing value`() {
         prefs.edit { putString(CollectionHelper.PREF_COLLECTION_PATH, "/a/custom/path") }
 
-        ensureCollectionPathSet(targetContext)
+        maybeSetDefaultCollectionPath(targetContext)
 
         assertEquals("/a/custom/path", collectionPath)
     }
@@ -107,7 +107,7 @@ class SetupStorageTest : RobolectricTest() {
     fun `Android 10 - public storage is persisted before permissions are granted`() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
-        ensureCollectionPathSet(targetContext)
+        maybeSetDefaultCollectionPath(targetContext)
 
         assertEquals(publicCollectionPath, collectionPath)
     }
@@ -117,7 +117,7 @@ class SetupStorageTest : RobolectricTest() {
     fun `Android 10 - public storage is persisted once permissions are granted`() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
-        withWritePermissions { ensureCollectionPathSet(targetContext) }
+        withWritePermissions { maybeSetDefaultCollectionPath(targetContext) }
 
         assertEquals(publicCollectionPath, collectionPath)
     }
@@ -128,7 +128,7 @@ class SetupStorageTest : RobolectricTest() {
     fun `full build - public storage is persisted before 'All files access' is granted`() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
-        withManageExternalStorageInManifest { ensureCollectionPathSet(targetContext) }
+        withManageExternalStorageInManifest { maybeSetDefaultCollectionPath(targetContext) }
 
         assertEquals(publicCollectionPath, collectionPath)
     }
@@ -139,7 +139,7 @@ class SetupStorageTest : RobolectricTest() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
         withManageExternalStorageInManifest {
-            withAllFilesAccess { ensureCollectionPathSet(targetContext) }
+            withAllFilesAccess { maybeSetDefaultCollectionPath(targetContext) }
         }
 
         assertEquals(publicCollectionPath, collectionPath)

@@ -141,7 +141,7 @@ object CollectionHelper {
      * when [getCurrentAnkiDroidDirectory] can return a directory rather than throwing.
      *
      * The user is not asked yet: until the dedicated setup flow exists (#19552), the 'decision'
-     * is made on their behalf during startup by `ensureCollectionPathSet` (app module), so this
+     * is made on their behalf during startup by `maybeSetDefaultCollectionPath` (app module), so this
      * is [StorageDecision.Decided] by the time the collection is opened.
      *
      * @param preferences the preferences the collection path will be read from: pass the same
@@ -163,7 +163,7 @@ object CollectionHelper {
      *
      * @throws StorageNotConfiguredException if no collection path has been set
      * ([PREF_COLLECTION_PATH] is unset): a default is chosen during startup by
-     * `ensureCollectionPathSet` (app module)
+     * `maybeSetDefaultCollectionPath` (app module)
      * @throws SystemStorageException if startup failed to choose a default collection path
      * ([systemStorageFailure])
      */
@@ -179,7 +179,7 @@ object CollectionHelper {
      *
      * @throws StorageNotConfiguredException if no collection path has been set
      * ([PREF_COLLECTION_PATH] is unset): a default is chosen during startup by
-     * `ensureCollectionPathSet` (app module)
+     * `maybeSetDefaultCollectionPath` (app module)
      * @throws SystemStorageException if startup failed to choose a default collection path
      * ([systemStorageFailure])
      */
