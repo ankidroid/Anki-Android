@@ -145,21 +145,13 @@ jobs:
           maximum-size: 12GB
           disk-root: "C:"
 
-      # PROBE (#22766): Windows gets a pagefile above; give Linux swap too
-      - name: Configure Linux swap (probe)
+      # PROBE (#22766): control run, keep the runner's default swap
+      - name: Show Linux swap (probe)
         if: runner.os == 'Linux'
         run: |
-          echo "Before:"
           free -m
           swapon --show
           echo "vm.swappiness=$(cat /proc/sys/vm/swappiness)"
-          sudo fallocate -l 8G /swapfile-ci
-          sudo chmod 600 /swapfile-ci
-          sudo mkswap /swapfile-ci
-          sudo swapon /swapfile-ci
-          echo "After:"
-          free -m
-          swapon --show
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
