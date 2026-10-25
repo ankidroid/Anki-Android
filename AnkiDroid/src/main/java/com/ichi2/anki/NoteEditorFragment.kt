@@ -1261,37 +1261,36 @@ class NoteEditorFragment :
     // SAVE NOTE METHODS
     // ----------------------------------------------------------------------------
 
-    @KotlinCleanup("return early and simplify if possible")
     private fun onNoteAdded(count: Int) {
-        var closeEditorAfterSave = false
-        var closeIntent: Intent? = null
         changed = true
         sourceText = null
+        if (caller == NoteEditorCaller.NOTEEDITOR || caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD || aedictIntent) {
+            // Do not queue field or preview updates for an activity which is about to finish.
+            val closeIntent = Intent()
+            if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD) {
+                closeIntent.putExtra(EXTRA_ID, requireArguments().getString(EXTRA_ID))
+            }
+            if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD || aedictIntent) {
+                showThemedToast(requireContext(), CommonString.note_message, shortLength = true)
+            }
+            closeNoteEditor(closeIntent)
+            return
+        }
+
         fieldState.clearHiddenFields()
         refreshNoteData(FieldChangeType.onNoteAdded(shouldReplaceNewlines()))
         // backend text ends with dot
         val successMessage = TR.importingCardsAdded(count).replace(".", "")
         showSnackbar(successMessage, Snackbar.LENGTH_SHORT)
 
-        if (caller == NoteEditorCaller.NOTEEDITOR || aedictIntent) {
-            closeEditorAfterSave = true
-        } else if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD) {
-            closeEditorAfterSave = true
-            closeIntent = Intent().apply { putExtra(EXTRA_ID, requireArguments().getString(EXTRA_ID)) }
-        } else if (!editFields!!.isEmpty()) {
+        if (!editFields!!.isEmpty()) {
             editFields!!.first().focusWithKeyboard()
         }
 
-        if (closeEditorAfterSave) {
-            if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD || aedictIntent) {
-                showThemedToast(requireContext(), CommonString.note_message, shortLength = true)
-            }
-            closeNoteEditor(closeIntent ?: Intent())
-        } else {
-            // Reset check for changes to fields
-            isFieldEdited = false
-            isTagsEdited = false
-        }
+        // Reset check for changes to fields
+        isFieldEdited = false
+        isTagsEdited = false
+        delegate?.onNoteSaved()
     }
 
     private suspend fun saveNoteWithProgress() {
@@ -1304,7 +1303,6 @@ class NoteEditorFragment :
             }
         // update UI based on the result, noOfAddedCards
         onNoteAdded(changes.count)
-        delegate?.onNoteSaved()
     }
 
     @VisibleForTesting
@@ -1399,7 +1397,6 @@ class NoteEditorFragment :
             closeNoteEditorAfterSave()
             return
         }
-        delegate?.onNoteSaved()
     }
 
     /**
