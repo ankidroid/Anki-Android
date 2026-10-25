@@ -84,10 +84,10 @@ class SetupStorageTest : RobolectricTest() {
     }
 
     @Test
-    fun `ensureCollectionPathSet persists a default when unset`() {
+    fun `ensureCollectionPathSet persists a default when unset and storage is accessible`() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
-        ensureCollectionPathSet(targetContext)
+        withAllFilesAccess { ensureCollectionPathSet(targetContext) }
 
         assertTrue(!collectionPath.isNullOrEmpty(), "a default collection path should be set")
     }
