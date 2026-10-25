@@ -18,7 +18,7 @@
         <item name="android:windowBackground">@color/material_theme_grey</item>
         <item name="colorSecondaryContainer">#3C5A6E</item>
         <item name="colorSurfaceVariant">#263E50</item>
-        <item name="colorOnSurfaceVariant">#B6D8EF</item>
+        <item name="colorOnSurfaceVariant">#D4D4D4</item>
         <item name="colorOutlineVariant">#5B819B</item>
         <item name="colorTertiary">#78CAFF</item>
         <item name="colorOnTertiary">#00324D</item>
