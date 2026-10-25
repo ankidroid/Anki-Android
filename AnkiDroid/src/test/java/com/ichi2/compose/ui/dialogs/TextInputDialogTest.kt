@@ -3,6 +3,8 @@
 
 package com.ichi2.compose.ui.dialogs
 
+import android.view.animation.AnimationUtils
+import android.view.animation.Transformation
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
@@ -37,6 +39,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
+import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -281,6 +284,42 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
         assertEquals(originalBounds, move.fetchSemanticsNode().boundsInWindow)
         move.performTouchInput { click() }
         assertTrue(confirmed)
+    }
+
+    @Test
+    fun `dialog opening and closing fade without moving the card`() {
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(title = "Rename tag", label = "Tag name", confirmText = "OK", onConfirm = {}, onDismissRequest = {})
+            }
+        }
+        compose.waitForIdle()
+        val window = requireNotNull(ShadowDialog.getLatestDialog().window)
+        val animations =
+            targetContext.obtainStyledAttributes(
+                window.attributes.windowAnimations,
+                intArrayOf(
+                    android.R.attr.windowEnterAnimation,
+                    android.R.attr.windowExitAnimation,
+                ),
+            )
+        try {
+            for (index in 0..1) {
+                val animation = AnimationUtils.loadAnimation(targetContext, animations.getResourceId(index, 0))
+                animation.initialize(320, 240, 320, 640)
+                animation.startTime = 0
+                val frame = Transformation()
+                for (time in listOf(0L, animation.duration / 2, animation.duration)) {
+                    animation.getTransformation(time, frame)
+                    assertTrue(frame.matrix.isIdentity, "Dialog moved at $time ms")
+                    if (time == 0L) assertEquals(if (index == 0) 0f else 1f, frame.alpha)
+                    if (time == animation.duration) assertEquals(if (index == 0) 1f else 0f, frame.alpha)
+                    frame.clear()
+                }
+            }
+        } finally {
+            animations.recycle()
+        }
     }
 
     private fun assertInitialSelection(

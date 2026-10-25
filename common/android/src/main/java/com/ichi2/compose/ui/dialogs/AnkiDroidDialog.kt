@@ -7,10 +7,14 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
+import com.ichi2.anki.common.android.R
 
 /**
  * A [BasicAlertDialog] whose content renders inline in Compose previews.
@@ -41,7 +45,15 @@ fun AnkiDroidDialog(
             onDismissRequest = onDismissRequest,
             modifier = modifier,
             properties = properties,
-            content = content,
-        )
+        ) {
+            val window = (LocalView.current.parent as DialogWindowProvider).window
+            // A slide here competes with initial field focus and keyboard positioning.
+            SideEffect {
+                if (window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
+                    window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
+                }
+            }
+            content()
+        }
     }
 }
