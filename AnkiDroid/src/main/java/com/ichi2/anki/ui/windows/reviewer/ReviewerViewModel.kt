@@ -350,7 +350,7 @@ class ReviewerViewModel(
     private suspend fun deleteNote() {
         val cardId = currentCard.await().id
         val noteCount =
-            undoableOp {
+            undoableOp(handler = this) {
                 removeNotes(cardIds = listOf(cardId))
             }.count
         actionFeedbackFlow.emit(TR.browsingCardsDeleted(noteCount))
@@ -360,7 +360,7 @@ class ReviewerViewModel(
     private suspend fun buryCard() {
         val cardId = currentCard.await().id
         val noteCount =
-            undoableOp {
+            undoableOp(handler = this) {
                 sched.buryCards(cids = listOf(cardId))
             }.count
         actionFeedbackFlow.emit(TR.studyingCardsBuried(noteCount))
@@ -370,7 +370,7 @@ class ReviewerViewModel(
     private suspend fun buryNote() {
         val noteId = currentCard.await().nid
         val noteCount =
-            undoableOp {
+            undoableOp(handler = this) {
                 sched.buryNotes(nids = listOf(noteId))
             }.count
         actionFeedbackFlow.emit(TR.studyingCardsBuried(noteCount))
@@ -379,7 +379,7 @@ class ReviewerViewModel(
 
     private suspend fun suspendCard() {
         val cardId = currentCard.await().id
-        undoableOp {
+        undoableOp(handler = this) {
             sched.suspendCards(ids = listOf(cardId))
         }.count
         actionFeedbackFlow.emit(TR.studyingCardSuspended())
@@ -388,7 +388,7 @@ class ReviewerViewModel(
 
     private suspend fun suspendNote() {
         val noteId = currentCard.await().nid
-        undoableOp {
+        undoableOp(handler = this) {
             sched.suspendNotes(ids = listOf(noteId))
         }
         actionFeedbackFlow.emit(TR.studyingNoteSuspended())
