@@ -219,7 +219,10 @@
     <string name="ankidroid_init_failed_storage">AnkiDroid kann aufgrund eines Android-Fehlers nicht auf den Speicher zugreifen.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Schriftgröße</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkzeug zeigen</string>
+    <string name="note_editor_toolbar_layout" maxLength="28">Toolbar layout</string>
+    <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
+    <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
+    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
     <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Kurze Übersicht</string>
     <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Übersicht ausblenden</string>
     <string name="format_insert_bold">Als fett formatieren</string>
@@ -247,7 +250,6 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid nicht, Verknüpfungen hinzuzufügen</string>
     <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sätze großschreiben</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll-Werkzeugleiste</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
     <string name="dialog_hint_certificate">Zertifikat</string>
@@ -334,7 +336,7 @@
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Installieren</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Die Text-zu-Sprache Einstellungen konnten nicht geöffnet werden</string>
-    <string name="shared_decks_login_required">Bitte melde dich an, um weitere Stapel herunterzuladen</string>
+    <string name="shared_decks_ankiweb_login_limit">Shared decks are hosted on AnkiWeb, a free service separate from AnkiDroid. AnkiWeb asks you to log in to continue.</string>
     <string name="deck_description_field_hint">Beschreibung</string>
     <string name="deck_description_saved">Beschreibung aktualisiert</string>
     <string name="format_deck_description_as_markdown">Als Markdown formatieren</string>

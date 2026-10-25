@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">நீங்கள் உண்மையில் தரவுத்தளத்தைச் சரிசெய்ய முயற்சிக்க விரும்புகிறீர்களா?\n\nமுயற்சியைத் தொடங்கும் முன், \"%s\" என்ற துணைக் கோப்புறையில் ஒரு நகல் உருவாக்கப்படும்.</string>
     <string name="intent_aedict_empty">\"இயல்புநிலை\" வகை காலியாக உள்ளது</string>
     <string name="intent_aedict_category">AnkiDroid இல் கார்டுகளைச் சேர்க்க அனைத்து நோட்பேட் வகைகளையும் அகற்றவும் அல்லது \"இயல்புநிலை\" என்று பெயரிடப்பட்ட ஒன்றைச் சேர்க்கவும்</string>
-    <string name="custom_study_new_extend">இன்றைய புதிய அட்டை வரம்பை அதிகரிக்க/குறைக்கவும் (\"-3\").</string>
-    <string name="custom_study_rev_extend">இன்றைய மதிப்பாய்வு வரம்பை அதிகரிக்கவும்/குறைக்கவும் (\"-3\").</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">கடந்த x நாட்களில் மறக்கப்பட்ட மதிப்பாய்வு அட்டைகள்:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preview new cards added in the last:</string>
@@ -228,6 +228,8 @@
     <string name="webview_update_message">WebView அமைப்பு காலாவதியானது. சில அம்சங்கள் சரியாக வேலை செய்யாது. தயவுசெய்து அதைப் புதுப்பிக்கவும்.\n\nநிறுவப்பட்ட பதிப்பு: %1$d\nகுறைந்தபட்ச தேவையான பதிப்பு: %2$d</string>
     <string name="compress">சுருக்கவும்</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
     <string name="tts_error_dialog_title">மொழி ஆதரிக்கப்படவில்லை</string>
     <string name="tts_error_dialog_reason_text">உரையிலிருந்து பேச்சு இயந்திரம் <b>%1$s</b> பின்வரும் மொழியை ஆதரிக்காது: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">இயந்திரத்தை மாற்றவும்</string>
@@ -263,7 +265,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>

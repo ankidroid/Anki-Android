@@ -50,6 +50,7 @@
     <!-- Crop function-->
     <string name="crop_image">നിങ്ങൾക്ക് ഈ ചിത്രം ക്രോപ്പ് ചെയ്യണോ?</string>
     <string name="crop_button" maxLength="28">Crop</string>
+    <string name="external_image_editor_no_changes">No changes were returned.</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"ചിത്രം തിരഞ്ഞെടുക്കുന്നതിൽ പരാജയപ്പെട്ടു, വീണ്ടും ശ്രമിക്കുക
 "</string>

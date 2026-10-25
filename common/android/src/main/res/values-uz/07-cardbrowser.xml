@@ -25,77 +25,77 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d ta karta koʻrsatilgan</item>
-        <item quantity="other">%d ta karta koʻrsatilgan</item>
+        <item quantity="one">%d ta karta körsatilgan</item>
+        <item quantity="other">%d ta karta körsatilgan</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d ta qayd koʻrsatilgan</item>
-        <item quantity="other">%d ta qayd koʻrsatilgan</item>
+        <item quantity="one">%d ta qayd körsatilgan</item>
+        <item quantity="other">%d ta qayd körsatilgan</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Qaydni oʻchirish</item>
-        <item quantity="other">Qaydlarni oʻchirish</item>
+        <item quantity="one">Qaydni öçiriş</item>
+        <item quantity="other">Qaydlarni öçiriş</item>
     </plurals>
-    <string name="delete_card_title">Qayd oʻchirilsinmi?</string>
-    <string name="card_browser_show_marked" maxLength="28">Belgilanganlarni filtrlash</string>
-    <string name="card_browser_show_suspended" maxLength="28">Toʻxtatilganlarni filtrlash</string>
-    <string name="card_browser_search_by_tag" maxLength="28">Teg boʻyicha filtrlash</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Baryoq boʻyicha filtrlash</string>
+    <string name="delete_card_title">Qayd öçirilsinmi?</string>
+    <string name="card_browser_show_marked" maxLength="28">Belgilanganlarni filtrlaş</string>
+    <string name="card_browser_show_suspended" maxLength="28">Töxtatilganlarni filtrlaş</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Teg böyiça filtrlaş</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Baryoq böyiça filtrlaş</string>
     <string name="card_browser_list_my_searches" maxLength="28">Qidiruvlarim</string>
-    <string name="card_browser_list_my_searches_save" maxLength="28">Qidiruvni saqlash</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Qidiruvni saqlaş</string>
     <string name="card_browser_list_my_searches_title">Saqlangan qidiruvni tanlang</string>
-    <string name="card_browser_list_my_searches_new_name">Qidiruv uchun nom</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Qidiruvni nomsiz saqlab boʻlmaydi</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Bu nom allaqachon mavjud</string>
+    <string name="card_browser_list_my_searches_new_name">Qidiruv uçun nom</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Qidiruvni nomsiz saqlab bölmaydi</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Bu nom allaqaçon mavjud</string>
     <string name="card_browser_list_my_searches_successful_save">Qidiruv saqlandi</string>
-    <string name="card_browser_list_my_searches_successful_deleted">Qidiruv oʻchirildi</string>
-    <string name="no_note_to_edit">Tahrirlash uchun qayd yoʻq</string>
-    <string name="card_browser_list_my_searches_remove_content">“%1$s” oʻchirilsinmi?</string>
-    <string name="card_browser_change_display_order" maxLength="28">Koʻrsatish tartibini oʻzgartirish</string>
+    <string name="card_browser_list_my_searches_successful_deleted">Qidiruv öçirildi</string>
+    <string name="no_note_to_edit">Tahrirlaş uçun qayd yöq</string>
+    <string name="card_browser_list_my_searches_remove_content">“%1$s” öçirilsinmi?</string>
+    <string name="card_browser_change_display_order" maxLength="28">Körsatiş tartibini özgartiriş</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Qidiruv</string>
     <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Qidiruv</string>
-    <string name="card_browser_change_display_order_title">Koʻrsatish tartibini oʻzgartirish</string>
+    <string name="card_browser_change_display_order_title">Körsatiş tartibini özgartiriş</string>
     <string name="card_details_tags">Teglar</string>
-    <string name="manage_browser_column">Ustunni boshqarish</string>
-    <string name="no_columns_available">Tanlab boʻladigan ustun yoʻq</string>
-    <string name="card_browser_select_all" maxLength="28">Barchasini tanlash</string>
-    <string name="card_browser_select_none" maxLength="28">Hech qaysini tanlama</string>
-    <string name="card_browser_no_cards_in_deck">‘%s’ dastasida hech qanday karta topilmadi</string>
-    <string name="card_browser_search_all_decks">Barcha dastalarni qidirish</string>
+    <string name="manage_browser_column">Ustunni boşqariş</string>
+    <string name="no_columns_available">Tanlab böladigan ustun yöq</string>
+    <string name="card_browser_select_all" maxLength="28">Barçasini tanlaş</string>
+    <string name="card_browser_select_none" maxLength="28">Heç qaysini tanlama</string>
+    <string name="card_browser_no_cards_in_deck">‘%s’ dastasida heç qanday karta topilmadi</string>
+    <string name="card_browser_search_all_decks">Barça dastalarni qidiriş</string>
     <string name="card_browser_unknown_deck_name">Nomaʼlum</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Tarkibini qisqartirish</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Tarkibini qisqartiriş</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Bugun  ‘0 %1$s’, ertaga ‘1 %2$s’, va hokazo&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Kartani eksport qilish</item>
-        <item quantity="other">Kartalarni eksport qilish</item>
+        <item quantity="one">Kartani eksport qiliş</item>
+        <item quantity="other">Kartalarni eksport qiliş</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Qaydni eksport qilish</item>
-        <item quantity="other">Qaydlarni eksport qilish</item>
+        <item quantity="one">Qaydni eksport qiliş</item>
+        <item quantity="other">Qaydlarni eksport qiliş</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d ta karta oʻchirildi</item>
-        <item quantity="other">%d ta karta oʻchirildi</item>
+        <item quantity="one">%d ta karta öçirildi</item>
+        <item quantity="other">%d ta karta öçirildi</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Teglarni tahrirlash dialogi</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Tartib dialogini koʻrsatish</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Teglarni tahrirlaş dialogi</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Tartib dialogini körsatiş</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Ustunlar</string>
-    <string name="browse_manage_columns">Ustunlarni boshqarish</string>
+    <string name="browse_manage_columns">Ustunlarni boşqariş</string>
     <string name="user_active_columns">Faol</string>
     <string name="user_potential_columns">Mavjud</string>
-    <string name="include_column">Ustunni qoʻshish</string>
-    <string name="exclude_column">Ustunni chiqarish</string>
-    <string name="save_changes_message">Iltimos, avval oʻzgartirishlaringizni saqlang</string>
+    <string name="include_column">Ustunni qöşiş</string>
+    <string name="exclude_column">Ustunni çiqariş</string>
+    <string name="save_changes_message">Iltimos, avval özgartirişlaringizni saqlang</string>
     <string name="browser_find_replace_loading_fields">Maydonlar nomlari olinmoqda&#8230;</string>
     <!-- Search history -->
-    <string name="card_browser_see_more">Koʻproq koʻrish</string>
-    <string name="card_browser_see_less">Kamroq koʻrish</string>
+    <string name="card_browser_see_more">Köproq köriş</string>
+    <string name="card_browser_see_less">Kamroq köriş</string>
     <!-- Sort Order -->
     <string name="card_browser_order_no_sorting_title" comment="Title of the \'no sorting\' row in the Choose Display Order bottom sheet">Tartibsiz</string>
     <string name="card_browser_order_no_sorting_subtitle" comment="Subtitle for the \'no sorting\' row noting that no-sort is faster than sorted queries">Tezroq</string>
-    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. \'Card Type\')">%1$s boʻyicha tartiblash</string>
+    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. \'Card Type\')">%1$s böyiça tartiblaş</string>
     <string name="card_browser_order_subtitle_text_ascending" comment="Sort direction subtitle for text columns when ascending (A before Z)">A–Z</string>
     <string name="card_browser_order_subtitle_text_descending" comment="Sort direction subtitle for text columns when descending (Z before A)">Z–A</string>
     <string name="card_browser_order_subtitle_numeric_ascending" comment="Sort direction subtitle for numeric columns when ascending (smallest value first)">Low to high</string>

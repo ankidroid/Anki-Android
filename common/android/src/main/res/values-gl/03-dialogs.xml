@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
     <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
     <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
-    <string name="custom_study_new_extend">Aumentar/diminuír (“-3”) o límite de novas tarxetas en</string>
-    <string name="custom_study_rev_extend">Aumentar/diminuír (\"-3\") o límite de repasos actual en</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">Repasar as tarxetas esquecidas nos últimos x días:</string>
     <string name="custom_study_ahead_description">Repasar as tarxetas pendentes nos vindeiros:</string>
     <string name="custom_study_preview">Previsualizar as tarxetas novas engadidas nos últimos:</string>
@@ -228,6 +228,8 @@
     <string name="webview_update_message">O WebView do sistema está desactualizado. Algunhas funcións non funcionarán correctamente. Por favor, actualízao.\n\nVersión instalada: %1$d\nVersión mínima requirida: %2$d</string>
     <string name="compress">Comprimir</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">Non hai ningún motor de texto a voz instalado</string>
+    <string name="tts_no_engine_message">Instala unha aplicación que proporcione un motor de texto a voz para o teu dispositivo.</string>
     <string name="tts_error_dialog_title">Lingua non compatíbel</string>
     <string name="tts_error_dialog_reason_text">O motor de texto a voz <b>%1$s</b> non é compatíbel co seguinte idioma: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Mudar motor</string>
@@ -263,7 +265,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Desde</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">Ata</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Renomear perfil</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Nome do perfil</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">O nome do perfil non pode estar baleiro</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">O nome do perfil debe ter %1$d caracteres ou menos</string>

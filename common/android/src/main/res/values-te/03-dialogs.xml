@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
-    <string name="custom_study_new_extend">నేటి కొత్త కార్డ్ పరిమితిని పెంచండి/తగ్గించండి (\"-3\").</string>
-    <string name="custom_study_rev_extend">నేటి సమీక్ష పరిమితిని పెంచడం/తగ్గించడం (\"-3\").</string>
+    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_increase">Increase</string>
     <string name="custom_study_forgotten">గత x రోజుల్లో రిజిస్టర్డ్ కార్డులను మర్చిపోయారు:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preview new cards added in the last:</string>
@@ -228,6 +228,8 @@
     <string name="webview_update_message">సిస్టమ్ WebView పాతది. కొన్ని ఫీచర్‌లు సరిగ్గా పని చేయవు. దయచేసి దీన్ని అప్‌డేట్ చేయండి.\n\nఇన్‌స్టాల్ చేసిన వెర్షన్: %1$d\nకనీసం అవసరమైన వెర్షన్: %2$d</string>
     <string name="compress">కుదించుము</string>
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
     <string name="tts_error_dialog_title">భాషకు మద్దతు లేదు</string>
     <string name="tts_error_dialog_reason_text">టెక్స్ట్ టు స్పీచ్ ఇంజిన్ <b>%1$s</b> కింది భాషకు మద్దతు ఇవ్వదు: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">ఇంజిన్ మార్చండి</string>
@@ -263,7 +265,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
-    <!-- Add profile dialog -->
+    <!-- Add and rename profile dialogs -->
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>

@@ -57,7 +57,7 @@
     <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">Povolit kartám spouštět jiné aplikace</string>
-    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="allow_card_external_launch_summ">Karty mohou otevírat jiné aplikace na vašem zařízení, což může spustit potenciálně nežádoucí akce.\nWebové odkazy mohou stále otevírat jiné aplikace, i když je toto nastavení vypnuto.\nPonechte vypnuté, pokud nedůvěřujete všem kartám a šablonám ve vaší kolekci.</string>
     <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Šířka tahu</string>
@@ -170,6 +170,16 @@
     <string name="use_current" maxLength="41">Balíček pro nové karty</string>
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
+    <string name="timeboxing" maxLength="41">Timeboxing</string>
+    <string name="use_timebox" maxLength="41">Use timebox</string>
+    <string name="time_limit_label" maxLength="41">Time limit</string>
+    <plurals name="timebox_minutes_suffix">
+        <item quantity="one">min</item>
+        <item quantity="few">mins</item>
+        <item quantity="many">mins</item>
+        <item quantity="other">mins</item>
+    </plurals>
+    <string name="pref_timebox_help_summary">Timeboxing divides your study into shorter sessions to help you stay focused. When the time limit is reached, you\'ll see how many cards you studied and can choose to take a break or continue.</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hodina po půlnoci</item>
@@ -227,7 +237,7 @@
          ################################## Review reminders ###################################
          ####################################################################################### -->
     <!-- Entry points -->
-    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
+    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Upomínky opakování</string>
     <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
     <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
     <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
@@ -238,29 +248,29 @@
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
     <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
-    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
-    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
-    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
-    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
-    <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
-    <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Successfully edited review reminder</string>
+    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Balíček nenalezen</string>
+    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Upomínky nejsou k dispozici</string>
+    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Opravit</string>
+    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Nová upomínka opakování byla úspěšně přidána</string>
+    <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Upomínka opakování byla úspěšně odstraněna</string>
+    <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Upomínka opakování byla úspěšně upravena</string>
     <!-- Add / edit reminder dialog -->
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">Přidat upomínku opakování</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">Upravit upomínku opakování</string>
-    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
-    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
-    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
-    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
-    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Čas:</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Balíček:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Pokročilé nastavení</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Práh karet:</string>
+    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Neposílejte mi oznámení, pokud je méně než tento počet karet ke zkoušení</string>
+    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Upozornit mě pouze v případě, že dnes nebyly opakovány žádné karty</string>
     <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
     <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
     <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
     <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
     <!-- Reminder troubleshooting screen -->
-    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Reminders are unavailable.</string>
-    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Reminders may not work correctly.</string>
-    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Your reminders should work as expected.</string>
+    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Upomínky nejsou k dispozici.</string>
+    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Upomínky nemusí fungovat správně.</string>
+    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Vaše upomínky by měly fungovat podle očekávání.</string>
     <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
     <!-- Troubleshooting check titles -->
     <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>

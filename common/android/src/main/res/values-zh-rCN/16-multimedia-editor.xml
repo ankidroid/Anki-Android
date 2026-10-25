@@ -50,6 +50,7 @@
     <!-- Crop function-->
     <string name="crop_image">您想裁剪此图像吗？</string>
     <string name="crop_button" maxLength="28">裁切</string>
+    <string name="external_image_editor_no_changes">No changes were returned.</string>
     <string name="save_dialog_content">当前图像大小是 %sMB。默认图像大小限制是 1MB。您想压缩它吗？</string>
     <string name="select_image_failed">"选择图像失败，请重试"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">字段目录</string>

@@ -168,7 +168,15 @@
     <string name="show_eta_summ">Amosar o tempo restante</string>
     <string name="use_current" maxLength="41">Baralla para as tarxetas novas</string>
     <string name="learn_cutoff" maxLength="41">Aprender por diante do límite</string>
-    <string name="time_limit" maxLength="41">Límite de tempo do Timebox</string>
+    <string name="time_limit" maxLength="41">Límite de tempo dos bloques</string>
+    <string name="timeboxing" maxLength="41">Bloques de tempo</string>
+    <string name="use_timebox" maxLength="41">Usar bloques de tempo</string>
+    <string name="time_limit_label" maxLength="41">Límite de tempo</string>
+    <plurals name="timebox_minutes_suffix">
+        <item quantity="one">min</item>
+        <item quantity="other">min</item>
+    </plurals>
+    <string name="pref_timebox_help_summary">Os bloques de tempo dividen o teu estudo en sesións máis curtas para axudarche a manter a concentración. Cando se acade o límite de tempo, verás cantas tarxetas estudaches e poderás escoller entre facer unha pausa ou continuar.</string>
     <string name="day_offset_with_description" maxLength="41">Comezo do día seguinte</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hora despois da medianoite</item>
