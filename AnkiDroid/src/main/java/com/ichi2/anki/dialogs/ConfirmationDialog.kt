@@ -37,6 +37,9 @@ class ConfirmationDialog : DialogFragment() {
                 .getString(ARG_POSITIVE_BUTTON_TEXT)
                 .ifNullOrEmpty { getString(CommonString.dialog_ok) }
 
+    private val requestKey: String?
+        get() = requireArguments().getString(ARG_REQUEST_KEY)
+
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
 
@@ -48,6 +51,7 @@ class ConfirmationDialog : DialogFragment() {
             title = "",
             message = message,
             positiveButtonText = null,
+            requestKey = null,
         )
     }
 
@@ -56,11 +60,21 @@ class ConfirmationDialog : DialogFragment() {
         message: String,
         positiveButtonText: String? = null,
     ) {
+        setArgs(title, message, positiveButtonText, requestKey = null)
+    }
+
+    fun setArgs(
+        title: String?,
+        message: String,
+        positiveButtonText: String? = null,
+        requestKey: String?,
+    ) {
         arguments =
             Bundle().apply {
                 putString(ARG_MESSAGE, message)
                 putString(ARG_TITLE, title)
                 putString(ARG_POSITIVE_BUTTON_TEXT, positiveButtonText)
+                putString(ARG_REQUEST_KEY, requestKey)
             }
     }
 
@@ -76,8 +90,28 @@ class ConfirmationDialog : DialogFragment() {
         AlertDialog.Builder(requireContext()).create {
             title(text = title)
             message(text = message)
-            positiveButton(text = positiveButtonText) { confirm.run() }
-            negativeButton(CommonString.dialog_cancel) { cancel.run() }
+            positiveButton(text = positiveButtonText) {
+                val key = requestKey
+                if (key != null) {
+                    parentFragmentManager.setFragmentResult(
+                        key,
+                        Bundle().apply { putBoolean(RESULT_CONFIRMED, true) },
+                    )
+                } else {
+                    confirm.run()
+                }
+            }
+            negativeButton(CommonString.dialog_cancel) {
+                val key = requestKey
+                if (key != null) {
+                    parentFragmentManager.setFragmentResult(
+                        key,
+                        Bundle().apply { putBoolean(RESULT_CONFIRMED, false) },
+                    )
+                } else {
+                    cancel.run()
+                }
+            }
         }
 
     companion object {
@@ -91,5 +125,11 @@ class ConfirmationDialog : DialogFragment() {
 
         /** Optional text for the positive button. Default: "OK" */
         private const val ARG_POSITIVE_BUTTON_TEXT = "positiveButtonText"
+
+        /** Optional Fragment Result request key. */
+        private const val ARG_REQUEST_KEY = "requestKey"
+
+        /** Key for the Boolean confirmation result returned by the dialog. */
+        const val RESULT_CONFIRMED = "confirmed"
     }
 }

@@ -73,7 +73,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     private val binding by viewBinding(ActivityNoteTypeFieldEditorBinding::bind)
 
     // Position of the current field selected
-    private var currentPos = 0
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var currentPos = 0
     private var fieldNameInput: EditText? = null
 
     // Backing field for [notetype]. Not with _ because it's only allowed for public field.
@@ -100,7 +101,20 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         if (!ensureStorageIsReady()) {
             return
         }
+        if (savedInstanceState != null) {
+            currentPos = savedInstanceState.getInt(KEY_CURRENT_POS, 0)
+        }
         setContentView(R.layout.activity_note_type_field_editor)
+        setFragmentResultListener(REQUEST_DELETE_FIELD) { _, bundle ->
+            if (bundle.getBoolean(ConfirmationDialog.RESULT_CONFIRMED)) {
+                getColUnsafe.modSchema(check = false)
+                deleteField()
+                supportFragmentManager.popBackStackImmediate(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
+                )
+            }
+        }
         enableToolbar()
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
@@ -131,6 +145,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             }
             dismissAllDialogFragments()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_CURRENT_POS, currentPos)
     }
 
     // ----------------------------------------------------------------------------
@@ -278,18 +297,6 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm =
-            Runnable {
-                getColUnsafe.modSchema(check = false)
-                deleteField()
-
-                // This ensures that the context menu closes after the field has been deleted
-                supportFragmentManager.popBackStackImmediate(
-                    null,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
-                )
-            }
-
         if (fieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(CommonString.toast_last_field), true)
         } else {
@@ -301,15 +308,19 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                         title = fieldName,
                         message = resources.getString(CommonString.field_delete_warning),
                         positiveButtonText = getString(CommonString.dialog_positive_delete),
+                        requestKey = REQUEST_DELETE_FIELD,
                     )
-                    it.setConfirm(confirm)
                     showDialogFragment(it)
                 }
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 ConfirmationDialog().let {
-                    it.setConfirm(confirm)
-                    it.setArgs(resources.getString(CommonString.full_sync_confirmation))
+                    it.setArgs(
+                        title = null,
+                        message = resources.getString(CommonString.full_sync_confirmation),
+                        positiveButtonText = null,
+                        requestKey = REQUEST_DELETE_FIELD,
+                    )
                     showDialogFragment(it)
                 }
             }
@@ -583,6 +594,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     companion object {
         const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
         const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
+        private const val REQUEST_DELETE_FIELD = "request_delete_field"
+        private const val KEY_CURRENT_POS = "key_current_pos"
     }
 }
 
