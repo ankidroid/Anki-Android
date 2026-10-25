@@ -673,11 +673,13 @@ open class AnkiActivity(
             activitySuperOnCreate = { state -> super.onCreate(state) },
         )
 
-    /** @see Window.setNavigationBarColor */
-    @Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
+    /**
+     * @see Window.setNavigationBarColor
+     */
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
+        @Suppress("DEPRECATION")
         window.navigationBarColor = getColorFromAttr(this, attr)
     }
 
