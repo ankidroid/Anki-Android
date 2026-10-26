@@ -22,6 +22,9 @@ SPDX-FileComment: See docs/licenses/ANKI_STAR_LICENSE.md
 
 AnkiDroid's star adaptation, copied from [f6267972c9](https://github.com/ankidroid/Anki-Android/blob/f6267972c97577cb82bd2857f4f81dfb04b7742e/AnkiDroid/src/main/res/drawable-mdpi/logo_star_144dp.png).
 
+> [!NOTE]
+> For the full AnkiDroid logo, see [LOGO_LICENSE.md](LOGO_LICENSE.md).
+
 ## Timeline
 
 | Date | Event | Source |

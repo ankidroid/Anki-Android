@@ -1,0 +1,15 @@
+Public-domain declaration for Tom Svoboda's AnkiDroid logo contribution
+
+Author: Tom Svoboda
+Date: 8 February 2026
+Source: https://groups.google.com/g/anki-android/c/yUJQWSEWfNQ/m/6KuUAW6AAwAJ
+
+In response to Arthur Milchior's request to confirm or clarify the licence
+of his AnkiDroid logo design, Tom Svoboda stated:
+
+"yes, I confirm that the logo is shared under Public Domain terms."
+
+This identifier records that declaration for Tom Svoboda's own contribution.
+The inherited Anki artwork and subsequent contributors' modifications retain
+their separate copyright and licensing terms. The declaration does not name
+CC0 or another Creative Commons licence.
