@@ -45,6 +45,7 @@ import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class CoroutineHelpersRobolectricTest : RobolectricTest() {
@@ -264,7 +265,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
             throwOnShowError = false
             val controller = Robolectric.buildActivity(FragmentActivity::class.java).also(::saveControllerForCleanup)
             val activity = controller.create().get()
-            activity.setTheme(R.style.Theme_Light)
+            activity.setTheme(CommonR.style.Theme_Light)
 
             activity.launchCatchingTask { withCol { } }
             advanceRobolectricLooper()
@@ -295,7 +296,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
             throwOnShowError = false
             val controller = Robolectric.buildActivity(FragmentActivity::class.java).also(::saveControllerForCleanup)
             val activity = controller.create().get()
-            activity.setTheme(R.style.Theme_Light)
+            activity.setTheme(CommonR.style.Theme_Light)
 
             activity.launchCatchingTask { withCol { } }
             advanceRobolectricLooper()

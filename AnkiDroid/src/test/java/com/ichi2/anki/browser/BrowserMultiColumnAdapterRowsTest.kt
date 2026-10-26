@@ -8,16 +8,16 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class BrowserMultiColumnAdapterRowsTest : RobolectricTest() {
-    private val browserContext by lazy { ContextThemeWrapper(targetContext, R.style.Theme_Light) }
+    private val browserContext by lazy { ContextThemeWrapper(targetContext, CommonR.style.Theme_Light) }
 
     @Test
     fun `scroll during search refresh does not crash - Issue 17759`() =

@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
@@ -17,6 +16,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class TagsArrayAdapterSelectionTest : RobolectricTest() {
@@ -54,7 +54,7 @@ class TagsArrayAdapterSelectionTest : RobolectricTest() {
         block: TagSelection.() -> Unit,
     ) {
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(R.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_Light)
             val activity = controller.setup().get()
             val recycler = RecyclerView(activity)
             recycler.layoutManager = LinearLayoutManager(activity)

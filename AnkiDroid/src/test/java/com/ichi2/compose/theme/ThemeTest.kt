@@ -35,7 +35,7 @@ class ThemeTest {
 
     @Test
     fun `light theme bridges colorPrimary to scheme primary`() {
-        val scheme = themed(R.style.Theme_Light).toMaterial3ColorScheme()
+        val scheme = themed(CommonR.style.Theme_Light).toMaterial3ColorScheme()
         val expected = ContextCompat.getColor(appContext, CommonR.color.material_light_blue_500)
         assertEquals(expected, scheme.primary.toArgb())
     }
@@ -49,7 +49,7 @@ class ThemeTest {
 
     @Test
     fun `plain theme produces a different primary than light theme`() {
-        val light = themed(R.style.Theme_Light).toMaterial3ColorScheme()
+        val light = themed(CommonR.style.Theme_Light).toMaterial3ColorScheme()
         val plain = themed(R.style.Theme_Light_Plain).toMaterial3ColorScheme()
         assertNotEquals(
             light.primary.toArgb(),
@@ -71,7 +71,7 @@ class ThemeTest {
 
     @Test
     fun `light theme uses lightColorScheme as base for unspecified slots`() {
-        val scheme = themed(R.style.Theme_Light).toMaterial3ColorScheme()
+        val scheme = themed(CommonR.style.Theme_Light).toMaterial3ColorScheme()
         val lightDefaults = lightColorScheme()
         // inverseSurface is not overridden by Theme_Light, so it should come from the base
         assertEquals(lightDefaults.inverseSurface.toArgb(), scheme.inverseSurface.toArgb())
@@ -87,7 +87,7 @@ class ThemeTest {
 
     @Test
     fun `light theme bridges fab_normal to the fab container color`() {
-        val context = themed(R.style.Theme_Light)
+        val context = themed(CommonR.style.Theme_Light)
         val colors = context.toAnkiDroidColors(context.toMaterial3ColorScheme())
         val expected = ContextCompat.getColor(appContext, CommonR.color.material_light_blue_700)
         assertEquals(expected, colors.fabContainer.toArgb())
@@ -102,7 +102,7 @@ class ThemeTest {
 
     @Test
     fun `fab content color follows the theme onPrimary`() {
-        val context = themed(R.style.Theme_Light)
+        val context = themed(CommonR.style.Theme_Light)
         val scheme = context.toMaterial3ColorScheme()
         assertEquals(scheme.onPrimary.toArgb(), context.toAnkiDroidColors(scheme).onFab.toArgb())
     }

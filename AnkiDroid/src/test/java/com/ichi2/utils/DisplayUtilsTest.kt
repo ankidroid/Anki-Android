@@ -16,7 +16,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.R
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import org.junit.Test
@@ -25,6 +24,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [29, 30, 36], application = EmptyApplication::class)
@@ -69,7 +69,7 @@ class DisplayUtilsTest {
     private fun withDialog(block: (AlertDialog) -> Unit) {
         Robolectric.buildActivity(Activity::class.java).use { controller ->
             val activity = controller.get()
-            activity.setTheme(R.style.Theme_Light)
+            activity.setTheme(CommonR.style.Theme_Light)
             controller.setup()
             val dialog = AlertDialog.Builder(activity).setView(EditText(activity)).create()
             try {

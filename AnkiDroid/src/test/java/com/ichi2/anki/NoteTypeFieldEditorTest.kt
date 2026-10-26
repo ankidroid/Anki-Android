@@ -16,6 +16,7 @@ import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class NoteTypeFieldEditorTest(
@@ -88,7 +89,7 @@ class NoteTypeFieldEditorTest(
         fieldNameInput: EditText,
         fieldOperationType: FieldOperationType,
     ): AlertDialog =
-        AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
+        AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_Light)).show {
             positiveButton(text = "") {
                 try {
                     val noteTypeName = "Basic"

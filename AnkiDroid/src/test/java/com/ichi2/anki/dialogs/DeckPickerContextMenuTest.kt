@@ -14,7 +14,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.R
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -30,6 +29,7 @@ import org.junit.runner.RunWith
 import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest {
@@ -168,7 +168,7 @@ class DeckPickerContextMenuTest {
     }
 
     private fun launch(arguments: Bundle) =
-        launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light).also {
+        launch(DeckPickerContextMenu::class.java, arguments, CommonR.style.Theme_Light).also {
             scenariosForCleanup.add(it)
         }
 

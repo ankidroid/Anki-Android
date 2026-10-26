@@ -14,7 +14,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.R
 import com.ichi2.testutils.EmptyApplication
 import org.junit.Before
 import org.junit.Test
@@ -32,7 +31,7 @@ import com.ichi2.anki.common.android.R as CommonR
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
 class SnackbarsTest {
-    private val context = ContextThemeWrapper(ApplicationProvider.getApplicationContext<Context>(), R.style.Theme_Light)
+    private val context = ContextThemeWrapper(ApplicationProvider.getApplicationContext<Context>(), CommonR.style.Theme_Light)
     private val host = CoordinatorLayout(context)
     private val looper = shadowOf(Looper.getMainLooper())
 

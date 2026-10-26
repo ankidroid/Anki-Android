@@ -7,7 +7,6 @@ import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.RESULT_INSERTED_FIELD
@@ -27,6 +26,7 @@ import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import com.ichi2.anki.common.android.R as CommonR
 
 /** Tests for [InsertFieldDialog] */
 @RunWith(AndroidJUnit4::class)
@@ -81,7 +81,7 @@ class InsertFieldDialogTest : RobolectricTest() {
         val requestKey = "insert_field"
         launchFragment<InsertFieldDialog>(
             fragmentArgs = InsertFieldDialog.newInstance(listOf("Front", "Back"), metadata, requestKey).requireArguments(),
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
         ).use { scenario ->
             scenario.onFragment { dialog ->
                 val results = mutableListOf<String>()

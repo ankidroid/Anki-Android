@@ -26,6 +26,7 @@ import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class HelpDialogTest {
@@ -212,7 +213,7 @@ class HelpDialogTest {
     private fun withHelpDialog(block: (FragmentScenario<HelpDialog>) -> Unit) {
         launchFragment<HelpDialog>(
             fragmentArgs = HelpDialog.newHelpInstance().arguments,
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
         ).use(block)
     }
 }
