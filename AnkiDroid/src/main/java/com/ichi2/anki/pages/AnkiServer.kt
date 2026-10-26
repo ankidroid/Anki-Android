@@ -24,7 +24,7 @@ open class AnkiServer(
             Method.POST -> {
                 val uri = session.uri
                 Timber.d("POST: Requested %s", uri)
-                // NanoHTTPD closes the connection on body read failures by default
+                // NanoHTTPD responds and closes the connection if the body is rejected or can't be read
                 val inputBytes = getSessionBytes(session)
                 try {
                     val data = runBlocking { postHandler.handlePostRequest(PostRequestUri(uri), inputBytes) }
@@ -63,8 +63,18 @@ open class AnkiServer(
         const val ANKIDROID_PREFIX = "/ankidroid/"
         const val ANKIDROID_JS_PREFIX = "/jsapi/"
 
+        /**
+         * @throws NanoHTTPD.ResponseException if the content-length is missing, or isn't
+         * ASCII digits within [Int]. NanoHTTPD sends its status and closes the connection
+         */
         fun getSessionBytes(session: IHTTPSession): ByteArray {
-            val contentLength = session.headers["content-length"]!!.toInt()
+            val header =
+                session.headers["content-length"]
+                    ?: throw ResponseException(Response.Status.LENGTH_REQUIRED, "content-length is required")
+            // RFC 9110: 1*DIGIT. toIntOrNull alone accepts a sign and non-ASCII digits
+            val contentLength =
+                header.takeIf { it.isNotEmpty() && it.all { char -> char in '0'..'9' } }?.toIntOrNull()
+                    ?: throw ResponseException(Response.Status.BAD_REQUEST, "invalid content-length: $header")
             val bytes = ByteArray(contentLength)
             DataInputStream(session.inputStream).readFully(bytes)
             return bytes

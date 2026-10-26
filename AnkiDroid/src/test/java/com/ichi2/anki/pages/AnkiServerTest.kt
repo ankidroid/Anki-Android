@@ -4,6 +4,8 @@ package com.ichi2.anki.pages
 
 import fi.iki.elonen.NanoHTTPD.IHTTPSession
 import fi.iki.elonen.NanoHTTPD.Method
+import fi.iki.elonen.NanoHTTPD.Response.Status
+import fi.iki.elonen.NanoHTTPD.ResponseException
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -75,14 +77,49 @@ class AnkiServerTest {
         assertContentEquals(byteArrayOf(), AnkiServer.getSessionBytes(session))
     }
 
+    @Test
+    fun `a missing content length is rejected without dispatching`() {
+        assertRejected(contentLengthHeader = null, Status.LENGTH_REQUIRED)
+    }
+
+    @Test
+    fun `an invalid content length is rejected without dispatching`() {
+        // lengths beyond Int can't be allocated, and must not be truncated
+        val beyondInt = listOf((Int.MAX_VALUE + 1L).toString(), Long.MAX_VALUE.toString())
+        // HTTP only allows ASCII digits; "١" is ARABIC-INDIC DIGIT ONE
+        val notAsciiDigits = listOf("+1", "-0", " 1", "١")
+        for (header in listOf("abc", "-1", "") + beyondInt + notAsciiDigits) {
+            assertRejected(contentLengthHeader = header, Status.BAD_REQUEST)
+        }
+    }
+
+    private fun assertRejected(
+        contentLengthHeader: String?,
+        expected: Status,
+    ) {
+        val session = postSession(ByteArrayInputStream(byteArrayOf(1, 2, 3)), contentLengthHeader)
+        val handler = mock<PostRequestHandler>()
+
+        val message = "content-length: $contentLengthHeader"
+        val exception = assertFailsWith<ResponseException>(message) { AnkiServer(handler).serve(session) }
+
+        assertEquals(expected, exception.status, message)
+        verifyNoInteractions(handler)
+    }
+
     private fun postSession(
         stream: InputStream,
         contentLength: Int,
+    ): IHTTPSession = postSession(stream, contentLength.toString())
+
+    private fun postSession(
+        stream: InputStream,
+        contentLengthHeader: String?,
     ): IHTTPSession =
         mock {
             on { method } doReturn Method.POST
             on { uri } doReturn "/_anki/test"
-            on { headers } doReturn mapOf("content-length" to contentLength.toString())
+            on { headers } doReturn listOfNotNull(contentLengthHeader?.let { "content-length" to it }).toMap()
             on { inputStream } doReturn stream
         }
 }
