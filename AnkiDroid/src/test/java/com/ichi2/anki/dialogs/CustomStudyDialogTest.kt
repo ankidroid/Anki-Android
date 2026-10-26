@@ -38,8 +38,10 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.REQUEST_SELECT_TAGS
@@ -516,6 +518,43 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
                 """.trimIndent()
             assertThat(customStudy, isJsonHolderEqual(expected))
+        }
+
+    /** Issue 22801: the activity owns the operation, so it can finish after the dialog is removed. */
+    @Test
+    fun `custom study completes after its dialog is dismissed`() =
+        runTest {
+            addBasicNote()
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_PREVIEW)) { fragment ->
+                val activity = fragment.requireActivity()
+                val manager = fragment.parentFragmentManager
+                val preferences = activity.sharedPrefs()
+                val collection = col
+                var result: CustomStudyAction? = null
+                manager.setFragmentResultListener(CustomStudyAction.REQUEST_KEY, activity) { _, bundle ->
+                    result = CustomStudyAction.fromBundle(bundle)
+                }
+                val collectionScheduler = TestCoroutineScheduler()
+                val previousDispatcher =
+                    CollectionManager.setTestDispatcher(StandardTestDispatcher(collectionScheduler), useReentrantLock = false)
+                try {
+                    fragment.submitSubscreenData()
+                    runCurrent()
+                    assertFalse(collection.decks.current().isFiltered)
+
+                    fragment.dismissNow()
+                    assertNull(fragment.activity)
+                    collectionScheduler.runCurrent()
+                    runCurrent()
+                    advanceRobolectricLooper()
+
+                    assertTrue(collection.decks.current().isFiltered)
+                    assertEquals(CustomStudyAction.CUSTOM_STUDY_SESSION, result)
+                    assertEquals(1, preferences.getInt("previewDays", -1))
+                } finally {
+                    CollectionManager.setTestDispatcher(previousDispatcher)
+                }
+            }
         }
 
     @Test
