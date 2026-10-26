@@ -42,7 +42,7 @@ class ThemeTest {
 
     @Test
     fun `dark theme bridges colorPrimary to scheme primary`() {
-        val scheme = themed(R.style.Theme_Dark).toMaterial3ColorScheme()
+        val scheme = themed(CommonR.style.Theme_Dark).toMaterial3ColorScheme()
         val expected = ContextCompat.getColor(appContext, CommonR.color.material_blue_400)
         assertEquals(expected, scheme.primary.toArgb())
     }
@@ -60,8 +60,8 @@ class ThemeTest {
 
     @Test
     fun `black theme produces a different surface than dark theme`() {
-        val dark = themed(R.style.Theme_Dark).toMaterial3ColorScheme()
-        val black = themed(R.style.Theme_Dark_Black).toMaterial3ColorScheme()
+        val dark = themed(CommonR.style.Theme_Dark).toMaterial3ColorScheme()
+        val black = themed(CommonR.style.Theme_Dark_Black).toMaterial3ColorScheme()
         assertNotEquals(
             dark.surface.toArgb(),
             black.surface.toArgb(),
@@ -79,7 +79,7 @@ class ThemeTest {
 
     @Test
     fun `dark theme uses darkColorScheme as base for unspecified slots`() {
-        val scheme = themed(R.style.Theme_Dark).toMaterial3ColorScheme()
+        val scheme = themed(CommonR.style.Theme_Dark).toMaterial3ColorScheme()
         val darkDefaults = darkColorScheme()
         // inverseSurface is not overridden by Theme_Dark, so it should come from the base
         assertEquals(darkDefaults.inverseSurface.toArgb(), scheme.inverseSurface.toArgb())
@@ -95,7 +95,7 @@ class ThemeTest {
 
     @Test
     fun `black theme bridges its own fab_normal to the fab container color`() {
-        val context = themed(R.style.Theme_Dark_Black)
+        val context = themed(CommonR.style.Theme_Dark_Black)
         val colors = context.toAnkiDroidColors(context.toMaterial3ColorScheme())
         assertEquals(0xFF303030.toInt(), colors.fabContainer.toArgb())
     }
