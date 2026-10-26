@@ -25,7 +25,6 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
@@ -66,7 +65,6 @@ import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getIntOrNull
-import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.coMeasureTime
@@ -160,31 +158,36 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         tagsToInclude: List<String> = emptyList(),
         tagsToExclude: List<String> = emptyList(),
     ) {
-        requireActivity().launchCatchingTask(
+        // The activity owns this operation, which can outlive the dialog.
+        val activity = requireActivity()
+        val fragmentManager = parentFragmentManager
+        val deckId = viewModel.deckId
+        val preferences = activity.sharedPrefs()
+        activity.launchCatchingTask(
             // net.ankiweb.rsdroid.BackendException: No cards matched the criteria you provided.
             // TODO (Backend#256: make this BackendCustomStudyException)
             skipCrashReport = { it is BackendException },
         ) {
-            withProgress {
+            activity.withProgress {
                 try {
-                    val action = customStudy(viewModel.deckId, option, cardsAmount, kind, tagsToInclude, tagsToExclude)
-                    setFragmentResult(
+                    val action = customStudy(deckId, option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+                    fragmentManager.setFragmentResult(
                         CustomStudyAction.REQUEST_KEY,
                         Bundle().apply { putInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION, action.ordinal) },
                     )
 
                     // Save the default values (not in upstream).
                     when (option) {
-                        STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", cardsAmount) }
-                        STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", cardsAmount) }
-                        STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", cardsAmount) }
-                        STUDY_TAGS -> sharedPrefs().edit { putInt("amountOfCards", cardsAmount) }
+                        STUDY_FORGOT -> preferences.edit { putInt("forgottenDays", cardsAmount) }
+                        STUDY_AHEAD -> preferences.edit { putInt("aheadDays", cardsAmount) }
+                        STUDY_PREVIEW -> preferences.edit { putInt("previewDays", cardsAmount) }
+                        STUDY_TAGS -> preferences.edit { putInt("amountOfCards", cardsAmount) }
                         EXTEND_NEW, EXTEND_REV -> {
                             // The backend provides the default value.
                         }
                     }
                 } finally {
-                    requireActivity().dismissAllDialogFragments()
+                    activity.dismissAllDialogFragments()
                 }
             }
         }
