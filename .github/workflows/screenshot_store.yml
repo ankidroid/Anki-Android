@@ -42,6 +42,9 @@ on:
 
 permissions: {}
 
+env:
+  JAVA_TOOL_OPTIONS: -Dkotlin.daemon.options=autoshutdownIdleSeconds=10
+
 jobs:
   store-screenshot-test:
     # On PRs, this verifies the workflow runs on `main`, it's not a store
