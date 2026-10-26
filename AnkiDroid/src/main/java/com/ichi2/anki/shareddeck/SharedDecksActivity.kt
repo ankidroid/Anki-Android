@@ -97,7 +97,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                 binding.webView.clearHistory()
                 isReturningAfterLogin = false
             }
-            onBackPressedCallback.isEnabled = binding.webView.canGoBack() || pagesBeforeLogin.isNotEmpty()
+            updateBackPressedCallback()
             if (url?.startsWith(AFTER_LOGIN_URL) == true && isLoggedInToAnkiWeb()) {
                 returnToSharedDecks()
             }
@@ -111,6 +111,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             if (shouldHistoryBeCleared) {
                 binding.webView.clearHistory()
                 shouldHistoryBeCleared = false
+                updateBackPressedCallback()
             }
             super.onPageFinished(view, url)
         }
@@ -209,6 +210,10 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
     private fun returnTo(url: String) {
         isReturningAfterLogin = true
         binding.webView.loadUrl(url)
+    }
+
+    private fun updateBackPressedCallback() {
+        onBackPressedCallback.isEnabled = binding.webView.canGoBack() || pagesBeforeLogin.isNotEmpty()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

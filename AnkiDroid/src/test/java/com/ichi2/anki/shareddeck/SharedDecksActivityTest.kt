@@ -212,6 +212,11 @@ class SharedDecksActivityTest : RobolectricTest() {
             Shadows.shadowOf(webView).pushEntryToHistory(url)
         }
         webViewClient.doUpdateVisitedHistory(webView, url, false)
+        webViewClient.onPageFinished(webView, url)
+        // Robolectric clears every history entry; real WebView keeps the current page.
+        if (webView.copyBackForwardList().size == 0) {
+            Shadows.shadowOf(webView).pushEntryToHistory(url)
+        }
     }
 
     private fun SharedDecksActivity.pressBack() {
