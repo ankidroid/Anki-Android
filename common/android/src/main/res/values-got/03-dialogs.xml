@@ -96,7 +96,7 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">𐌰𐌻𐌻𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃</string>
-    <string name="tags_dialog_option_new_cards">𐌽𐌹𐍅𐌹</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not ever been reviewed yet">𐌽𐌹𐍅𐌹</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">𐌽𐌰𐌿𐌷</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">𐌱𐌹𐌲𐌹𐍄𐌰𐌽𐌳𐌰 𐌻𐌰𐌿𐍃𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃&#8230;</string>

@@ -96,7 +96,7 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Të gjitha kartat</string>
-    <string name="tags_dialog_option_new_cards">Të rejat</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not ever been reviewed yet">Të rejat</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pritet</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Po gjen karta boshe&#8230;</string>

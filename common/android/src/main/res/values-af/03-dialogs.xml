@@ -96,7 +96,7 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Alle kaarte</string>
-    <string name="tags_dialog_option_new_cards">Nuut</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not ever been reviewed yet">Nuut</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Verskuldig</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Tans besig om leë kaarte te vind&#8230;</string>

@@ -96,7 +96,7 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">सर्व कार्डे</string>
-    <string name="tags_dialog_option_new_cards">नवीन</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not ever been reviewed yet">नवीन</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">देय</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">रिक्त कार्ड शोधत आहे &#8230;</string>
