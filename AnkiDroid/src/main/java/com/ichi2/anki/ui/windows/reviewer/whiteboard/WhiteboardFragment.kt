@@ -206,13 +206,7 @@ class WhiteboardFragment :
             bindingMap.onGenericMotionEvent(event)
         }
         binding.whiteboardView.setOnMultiTouchListener { touchNumber ->
-            val gesture =
-                when (touchNumber) {
-                    2 -> Gesture.TWO_FINGER_TAP
-                    3 -> Gesture.THREE_FINGER_TAP
-                    4 -> Gesture.FOUR_FINGER_TAP
-                    else -> return@setOnMultiTouchListener
-                }
+            val gesture = Gesture.multiFingerTap(touchNumber) ?: return@setOnMultiTouchListener
             val result = onGesture(gesture)
             if (!result) {
                 gestureFallbackListener?.invoke(gesture)

@@ -59,6 +59,17 @@ enum class Gesture(
             // (Not only the empty prefix (""), but also the space in the middle (" ") is not shown.)
             // Related to #17090
         }
+
+    companion object {
+        /** @return the gesture of tapping with [touchCount] fingers, or `null` if there's none */
+        fun multiFingerTap(touchCount: Int): Gesture? =
+            when (touchCount) {
+                2 -> TWO_FINGER_TAP
+                3 -> THREE_FINGER_TAP
+                4 -> FOUR_FINGER_TAP
+                else -> null
+            }
+    }
 }
 
 /**
