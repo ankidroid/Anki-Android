@@ -16,7 +16,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.withStarted
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -29,9 +28,10 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.REQUEST_PERMISSIONS
+import com.ichi2.anki.ui.windows.permissions.PermissionsViewModel.StorageCompletion
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
 import timber.log.Timber
@@ -54,8 +54,9 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     private val viewModel: PermissionsViewModel by viewModels { PermissionsViewModel.factory(application) }
     private lateinit var requestedPermissions: StoragePermissionSet
     private lateinit var permissionSet: StoragePermissionSet
-    private val changingStorage: Boolean
-        get() = viewModel.storageChange != null
+    private val completingStorage: Boolean
+        get() = viewModel.storageCompletion != null
+    private var completionObserver: Job? = null
     private val storagePathListener =
         OnSharedPreferenceChangeListener { _, key ->
             if (key == CollectionHelper.PREF_COLLECTION_PATH && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && !isFinishing) {
@@ -82,15 +83,15 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         }
         requestedPermissions = requested
         // Android may restore the original public-storage request after the private choice was saved.
-        permissionSet = if (changingStorage) requestedPermissions else currentPermissions()
-        if (permissionSet != requestedPermissions && !changingStorage && permissionSet.hasRequiredPermissions(this)) {
+        permissionSet = if (viewModel.choosingAppFolder) requestedPermissions else currentPermissions()
+        if (permissionSet != requestedPermissions && !completingStorage && permissionSet.hasRequiredPermissions(this)) {
             finish()
             return
         }
         configurePermissions()
         // Back must not bypass the required permissions.
         onBackPressedDispatcher.addCallback {}
-        viewModel.storageChange?.let(::observeStorageChange)
+        viewModel.storageCompletion?.let(::observeStorageCompletion)
     }
 
     override fun onResume() {
@@ -111,20 +112,14 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ ->
             refreshPermissions()
             // Accept a later public choice even while app-folder creation is still running.
-            if (permissionSet.hasRequiredPermissions(this)) decideStorageAndFinish()
+            if (permissionSet.hasRequiredPermissions(this)) completeStorageChoice()
         }
 
         showPermissionsFragment()
         binding.continueButton.setOnClickListener {
-            if (changingStorage) return@setOnClickListener
+            if (completingStorage) return@setOnClickListener
             refreshPermissions()
-            if (permissionSet.hasRequiredPermissions(this)) {
-                decideStorageAndFinish()
-                return@setOnClickListener
-            }
-            if (viewModel.canChooseAppPrivateStorage(permissionSet)) {
-                useAppPrivateStorage()
-            }
+            completeStorageChoice()
         }
         refreshPermissions()
     }
@@ -143,17 +138,17 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         if (isFinishing) return
         // A previous task's worker can save the private path after its ViewModel has been cleared.
         // Our own setup keeps its choice visible until the completion handler consumes the result.
-        val currentPermissions = if (changingStorage) requestedPermissions else currentPermissions()
+        val currentPermissions = if (viewModel.choosingAppFolder) requestedPermissions else currentPermissions()
         if (permissionSet != currentPermissions) {
             permissionSet = currentPermissions
             showPermissionsFragment()
         }
         val hasRequiredPermissions = permissionSet.hasRequiredPermissions(this)
         val canUseAppFolder = !hasRequiredPermissions && viewModel.canChooseAppPrivateStorage(permissionSet)
-        val showAppFolderChoice = changingStorage || canUseAppFolder
+        val showAppFolderChoice = viewModel.choosingAppFolder || canUseAppFolder
         binding.privateStorageExplanation.isVisible = showAppFolderChoice
         binding.continueButton.apply {
-            isEnabled = !changingStorage && (hasRequiredPermissions || canUseAppFolder)
+            isEnabled = !completingStorage && (hasRequiredPermissions || canUseAppFolder)
             setText(if (showAppFolderChoice) CommonString.use_app_folder else CommonString.dialog_continue)
         }
         binding.headline.setText(
@@ -161,60 +156,44 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         )
     }
 
-    private fun useAppPrivateStorage() {
-        if (changingStorage) return
-        if (viewModel.collectionPath != null || !viewModel.canChooseAppPrivateStorage(permissionSet)) {
-            refreshPermissions()
-            return
-        }
-        val change = viewModel.useAppPrivateStorage(permissionSet)
+    private fun completeStorageChoice() {
+        val completion = viewModel.completeStorageChoice(permissionSet)
         refreshPermissions()
-        observeStorageChange(change)
+        completion?.let(::observeStorageCompletion)
     }
 
-    private fun observeStorageChange(change: Deferred<Boolean>) {
-        launchCatchingTask {
-            try {
-                val changed = change.await()
-                withStarted {
-                    if (changed) {
-                        permissionSet = currentPermissions()
-                        if (permissionSet.hasRequiredPermissions(this@PermissionsActivity)) {
-                            finish()
-                        } else {
-                            // Internet may have been revoked after the storage path was saved.
-                            showPermissionsFragment()
+    private fun observeStorageCompletion(completion: StorageCompletion) {
+        // A later choice replaces the observer, while its old worker may still finish on the collection queue.
+        completionObserver?.cancel()
+        completionObserver =
+            launchCatchingTask {
+                try {
+                    val accepted = completion.result.await()
+                    withStarted {
+                        if (accepted) {
+                            permissionSet = currentPermissions()
+                            if (permissionSet.hasRequiredPermissions(this@PermissionsActivity)) {
+                                finish()
+                            } else {
+                                // Internet may have been revoked after the storage path was saved.
+                                showPermissionsFragment()
+                            }
                         }
                     }
-                }
-            } catch (e: SystemStorageException) {
-                Timber.w(e, "unable to obtain an app-private directory")
-                withStarted { showThemedToast(this@PermissionsActivity, CommonString.something_wrong, false) }
-            } catch (e: StorageAccessException) {
-                Timber.w(e, "unable to create an app-private directory")
-                withStarted { showThemedToast(this@PermissionsActivity, CommonString.something_wrong, false) }
-            } finally {
-                // A destroyed activity must leave the result for its replacement to consume.
-                if (currentCoroutineContext().isActive) {
-                    viewModel.storageChangeHandled(change)
-                    if (!isFinishing) refreshPermissions()
+                } catch (e: SystemStorageException) {
+                    Timber.w(e, "unable to obtain an app-private directory")
+                    withStarted { showThemedToast(this@PermissionsActivity, CommonString.something_wrong, false) }
+                } catch (e: StorageAccessException) {
+                    Timber.w(e, "unable to create an app-private directory")
+                    withStarted { showThemedToast(this@PermissionsActivity, CommonString.something_wrong, false) }
+                } finally {
+                    // A destroyed activity must leave the result for its replacement to consume.
+                    if (currentCoroutineContext().isActive) {
+                        viewModel.storageCompletionHandled(completion)
+                        if (!isFinishing) refreshPermissions()
+                    }
                 }
             }
-        }
-    }
-
-    /**
-     * Records the storage decision and closes the screen: the granted permissions
-     * determine the default collection path.
-     *
-     * Called on 'Continue', or when the fragment reports [REQUEST_PERMISSIONS_GRANTED].
-     * Preserves an existing collection path.
-     *
-     * @see InitialActivity.decideStorageIfUndecided
-     */
-    private fun decideStorageAndFinish() {
-        InitialActivity.decideStorageIfUndecided(this)
-        finish()
     }
 
     companion object {

@@ -40,8 +40,13 @@ import kotlin.test.assertTrue
 @Config(sdk = [Build.VERSION_CODES.R])
 class PermissionsActivityConcurrentChoiceTest : RobolectricTest() {
     @Test
+    fun `granting storage permission supersedes app folder setup`() = checkPublicChoice()
+
+    @Test
+    fun `granting storage permission after rotation supersedes app folder setup`() = checkPublicChoice(rotate = true)
+
     @SuppressLint("InlinedApi") // The class's @Config guarantees API 30 for the Settings action.
-    fun `granting storage permission supersedes app folder setup`() {
+    private fun checkPublicChoice(rotate: Boolean = false) {
         targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
         val settingsScreen = ComponentName("com.android.settings", "AllFilesAccessSettings")
         shadowOf(targetContext.packageManager).apply {
@@ -73,11 +78,15 @@ class PermissionsActivityConcurrentChoiceTest : RobolectricTest() {
                     )
                 saveControllerForCleanup(controller)
                 controller.setup()
-                val activity = controller.get()
-                activity.binding.continueButton.performClick()
+                controller
+                    .get()
+                    .binding.continueButton
+                    .performClick()
                 advanceRobolectricLooper()
                 assertTrue(workerPaused.await(10, TimeUnit.SECONDS))
 
+                if (rotate) controller.recreate()
+                val activity = controller.get()
                 val fragment = activity.binding.fragmentContainer.getFragment<PermissionsStartingAt30Fragment>()
                 FragmentPermissionsStartingAt30Binding.bind(fragment.requireView()).allFilesPermission.performClick()
                 val settingsIntent = assertNotNull(shadowOf(activity).nextStartedActivityForResult).intent
