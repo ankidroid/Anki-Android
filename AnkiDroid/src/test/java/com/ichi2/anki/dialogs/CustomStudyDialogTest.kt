@@ -100,6 +100,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
@@ -1208,7 +1209,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         addBasicNote()
         val customStudy = CustomStudyDialog().apply { arguments = argumentsDisplayingSubscreen(option) }
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(R.style.Base_Theme_Light)
+            controller.get().setTheme(CommonR.style.Base_Theme_Light)
             val activity = controller.setup().get()
             activity.showDialogFragment(customStudy)
             onSubscreenEditText().perform(replaceText(typed))

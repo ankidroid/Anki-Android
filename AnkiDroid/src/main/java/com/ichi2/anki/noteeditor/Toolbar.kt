@@ -51,6 +51,7 @@ import com.ichi2.utils.title
 import timber.log.Timber
 import java.util.Objects
 import kotlin.math.ceil
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Handles the toolbar inside [com.ichi2.anki.NoteEditorFragment]
@@ -189,7 +190,7 @@ class Toolbar : FrameLayout {
     ): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
-        val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light)
+        val themeContext: Context = ContextThemeWrapper(context, CommonR.style.Theme_Light)
         val d = VectorDrawableCompat.create(context.resources, drawable, themeContext.theme)
         return insertItem(id, d, block)
     }

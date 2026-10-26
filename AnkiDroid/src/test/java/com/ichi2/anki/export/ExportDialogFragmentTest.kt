@@ -32,6 +32,7 @@ import org.robolectric.shadows.ShadowToast
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class ExportDialogFragmentTest : RobolectricTest() {
@@ -48,7 +49,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
                 // APKG, notes as text, and cards as text all need the original selection.
                 for (exportFormat in 1..3) {
                     val args = ExportDialogFragment.newInstance(targetContext.cacheDir, type, listOf(1L)).requireArguments()
-                    launchFragment<ExportDialogFragment>(fragmentArgs = args, themeResId = R.style.Theme_Light).use { scenario ->
+                    launchFragment<ExportDialogFragment>(fragmentArgs = args, themeResId = CommonR.style.Theme_Light).use { scenario ->
                         advanceRobolectricLooper()
                         scenario.onFragment { fragment ->
                             fragment.binding.exportTypeSelector.setSelection(exportFormat)
@@ -207,7 +208,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
         launchFragment<ExportDialogFragment>(
             fragmentArgs = fragment.arguments,
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
         ).use { scenario ->
             scenario.recreate()
             assertTrue(idsFile.exists(), "ids file must survive a configuration change")
@@ -217,7 +218,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
     /** Launches [ExportDialogFragment] and executes [action] on the fragment. */
     private fun onExportDialog(action: ExportDialogFragment.() -> Unit) =
         launchFragment<ExportDialogFragment>(
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
         ).use { scenario -> scenario.onFragment { action(it) } }
 
     companion object {

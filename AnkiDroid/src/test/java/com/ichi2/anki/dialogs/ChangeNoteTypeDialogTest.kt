@@ -22,6 +22,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class ChangeNoteTypeDialogTest : RobolectricTest() {
@@ -103,7 +104,7 @@ class ChangeNoteTypeDialogTest : RobolectricTest() {
     ) {
         launchFragment<ChangeNoteTypeDialog>(
             fragmentArgs = Bundle().apply { putLongArray(ARG_NOTE_IDS, longArrayOf(noteId)) },
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
         ).use { scenario -> scenario.onFragment { action(it) } }
     }
 }

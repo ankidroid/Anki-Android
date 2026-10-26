@@ -21,6 +21,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerAnalyticsOptInDialogTest {
@@ -54,7 +55,7 @@ class DeckPickerAnalyticsOptInDialogTest {
     @Test
     fun `cancelling does not change the opt-in state`() {
         launchFragment<DeckPickerAnalyticsOptInDialog>(
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
             initialState = Lifecycle.State.RESUMED,
         ).onFragment { fragment ->
             (fragment.dialog as AlertDialog).cancel()
@@ -65,7 +66,7 @@ class DeckPickerAnalyticsOptInDialogTest {
 
     private fun showDialog(optIn: Boolean) {
         launchFragment<DeckPickerAnalyticsOptInDialog>(
-            themeResId = R.style.Theme_Light,
+            themeResId = CommonR.style.Theme_Light,
             initialState = Lifecycle.State.RESUMED,
         )
         // the checkbox starts unticked, so only opting in needs a click

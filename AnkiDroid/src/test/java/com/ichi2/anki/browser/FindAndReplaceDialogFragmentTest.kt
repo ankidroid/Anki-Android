@@ -32,6 +32,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class FindAndReplaceDialogFragmentTest : RobolectricTest() {
@@ -49,7 +50,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
                     arguments = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) }
                 }
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(R.style.Theme_Light)
+                controller.get().setTheme(CommonR.style.Theme_Light)
                 val activity = controller.setup().get()
                 activity.setContentView(CoordinatorLayout(activity).apply { id = R.id.root_layout })
                 fragment.show(activity.supportFragmentManager, "find-replace")
@@ -109,7 +110,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
                 .launch(
                     fragmentClass = FindAndReplaceDialogFragment::class.java,
                     fragmentArgs = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) },
-                    themeResId = R.style.Theme_Light,
+                    themeResId = CommonR.style.Theme_Light,
                 ).use { scenario ->
                     scenario.onFragment { fragment ->
                         advanceUntilIdle()
@@ -149,7 +150,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
             .launch(
                 fragmentClass = FindAndReplaceDialogFragment::class.java,
                 fragmentArgs = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) },
-                themeResId = R.style.Theme_Light,
+                themeResId = CommonR.style.Theme_Light,
             ).use { scenario -> scenario.onFragment { fragment -> fragment.action() } }
     }
 

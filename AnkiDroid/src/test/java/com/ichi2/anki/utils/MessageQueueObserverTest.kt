@@ -12,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.EmptyAnkiActivity
 import kotlinx.coroutines.CompletableDeferred
@@ -26,6 +25,7 @@ import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class MessageQueueObserverTest : RobolectricTest() {
@@ -62,7 +62,7 @@ class MessageQueueObserverTest : RobolectricTest() {
         runTest {
             val waiting =
                 launch(start = CoroutineStart.UNDISPATCHED) {
-                    AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).showAndAwaitDismissal {}
+                    AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_Light)).showAndAwaitDismissal {}
                 }
             val dialog = ShadowDialog.getLatestDialog()
 

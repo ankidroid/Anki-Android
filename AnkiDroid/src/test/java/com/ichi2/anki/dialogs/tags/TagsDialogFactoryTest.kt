@@ -4,7 +4,6 @@ package com.ichi2.anki.dialogs.tags
 
 import androidx.fragment.app.FragmentActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.tags.TagsDialog.DialogType
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
@@ -18,6 +17,7 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotSame
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogFactoryTest : RobolectricTest() {
@@ -67,7 +67,7 @@ class TagsDialogFactoryTest : RobolectricTest() {
         runTest {
             ensureCollectionLoadIsSynchronous()
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(R.style.Base_Theme_Light)
+                controller.get().setTheme(CommonR.style.Base_Theme_Light)
                 val activity = controller.setup().get()
                 val factory = TagsDialogFactory(mock()).attachToActivity<TagsDialogFactory>(activity)
                 block(activity, factory)
