@@ -115,7 +115,7 @@ material = "1.14.0"
 mockitoInline = "5.2.0"
 mockitoKotlin = "6.4.0"
 mockk = "1.14.11"
-okhttp = "5.5.0"
+okhttp = "5.5.1"
 # https://github.com/JakeWharton/ProcessPhoenix/releases
 processPhoenix = "3.0.0"
 # https://github.com/protocolbuffers/protobuf/releases
