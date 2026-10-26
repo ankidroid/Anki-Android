@@ -68,6 +68,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withStarted
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
@@ -137,6 +138,7 @@ import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
@@ -233,8 +235,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import net.ankiweb.rsdroid.Translations
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import timber.log.Timber
@@ -498,6 +502,31 @@ open class DeckPicker :
             x = request.x,
             y = request.y,
         )
+    }
+
+    private fun findDatabaseRecovery() =
+        supportFragmentManager.fragments.firstOrNull {
+            it is DatabaseErrorDialog && it.lifecycle.currentState != Lifecycle.State.DESTROYED
+        }
+
+    private suspend fun awaitDatabaseRecovery() {
+        while (true) {
+            val recovery = findDatabaseRecovery() ?: return
+            recovery.lifecycle.currentStateFlow.first { it == Lifecycle.State.DESTROYED }
+            yield()
+        }
+    }
+
+    private suspend fun withStartedAfterRecovery(block: () -> Unit) {
+        do {
+            awaitDatabaseRecovery()
+            val recoveryOpened =
+                withStarted {
+                    val opened = findDatabaseRecovery() != null
+                    if (!opened) block()
+                    opened
+                }
+        } while (recoveryOpened)
     }
 
     // ----------------------------------------------------------------------------
@@ -1000,11 +1029,15 @@ open class DeckPicker :
         }
 
         fun onError(errorMessage: String) {
-            AlertDialog
-                .Builder(this)
-                .setTitle(CommonString.vague_error)
-                .setMessage(errorMessage)
-                .show()
+            launchCatchingTask {
+                withStartedAfterRecovery {
+                    AlertDialog
+                        .Builder(this@DeckPicker)
+                        .setTitle(CommonString.vague_error)
+                        .setMessage(errorMessage)
+                        .show()
+                }
+            }
         }
 
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
@@ -1023,7 +1056,11 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
         viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
-        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { showException(it)?.awaitDismissal() }
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
+            var dialog: AlertDialog? = null
+            withStartedAfterRecovery { dialog = showException(error) }
+            dialog?.awaitDismissal()
+        }
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().launchCollectionInLifecycleScope(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)

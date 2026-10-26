@@ -211,6 +211,74 @@ class DeckPickerErrorTest : RobolectricTest() {
     }
 
     @Test
+    fun `error message waits until database recovery is closed`() =
+        withCorruptDeletionRecovery { deckPicker, recovery ->
+            val recoveryDialog = recovery.requireDialog()
+            deckPicker.viewModel.onError.tryEmit("Backup failed")
+            advanceRobolectricLooper()
+            assertSame(recoveryDialog, ShadowDialog.getLatestDialog())
+
+            recovery.dismiss()
+            advanceRobolectricLooperUntil {
+                val latest = ShadowDialog.getLatestDialog()
+                latest !== recoveryDialog && latest?.isShowing == true
+            }
+            assertEquals("Backup failed", getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `error message waiting for recovery is not shown while stopped`() =
+        withCorruptDeletionRecovery { deckPicker, recovery ->
+            val recoveryDialog = recovery.requireDialog()
+            deckPicker.viewModel.onError.tryEmit("Backup failed")
+            advanceRobolectricLooper()
+
+            val lifecycle = deckPicker.lifecycle as LifecycleRegistry
+            lifecycle.currentState = Lifecycle.State.CREATED
+            try {
+                recovery.dismiss()
+                advanceRobolectricLooper()
+                assertSame(recoveryDialog, ShadowDialog.getLatestDialog())
+            } finally {
+                lifecycle.currentState = Lifecycle.State.RESUMED
+            }
+            advanceRobolectricLooperUntil {
+                val latest = ShadowDialog.getLatestDialog()
+                latest !== recoveryDialog && latest?.isShowing == true
+            }
+            assertEquals("Backup failed", getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `error message waits for a recovery dialog opened while stopped`() =
+        withCorruptDeletionRecovery { deckPicker, recovery ->
+            deckPicker.viewModel.onError.tryEmit("Backup failed")
+            advanceRobolectricLooper()
+            val lifecycle = deckPicker.lifecycle as LifecycleRegistry
+            lifecycle.currentState = Lifecycle.State.CREATED
+            recovery.dismiss()
+            advanceRobolectricLooper()
+            deckPicker.showDatabaseErrorDialog(DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
+            advanceRobolectricLooper()
+            val nextRecovery =
+                deckPicker.supportFragmentManager.fragments
+                    .filterIsInstance<DatabaseErrorDialog>()
+                    .single()
+            val nextRecoveryDialog = nextRecovery.requireDialog()
+
+            lifecycle.currentState = Lifecycle.State.RESUMED
+            advanceRobolectricLooper()
+            assertSame(nextRecoveryDialog, ShadowDialog.getLatestDialog())
+
+            nextRecovery.dismiss()
+            advanceRobolectricLooperUntil {
+                val latest = ShadowDialog.getLatestDialog()
+                latest !== nextRecoveryDialog && latest?.isShowing == true
+            }
+            assertEquals("Backup failed", getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
     fun `failed deck deletion shows an error`() {
         useBackend {
             object : Backend() {
@@ -480,6 +548,34 @@ class DeckPickerErrorTest : RobolectricTest() {
             expectNoEvents()
         }
         assertEquals(1, viewModel.pendingErrors.value.size)
+    }
+
+    private fun withCorruptDeletionRecovery(block: (DeckPicker, DatabaseErrorDialog) -> Unit) {
+        val corruption = BackendDbCorruptException(backendError { message = "database disk image is malformed" })
+        var corrupt = false
+        useBackend {
+            object : Backend() {
+                override fun removeDecks(dids: Iterable<Long>): OpChangesWithCount = throw corruption
+
+                override fun deckTree(now: Long): DeckTreeNode = if (corrupt) throw corruption else super.deckTree(now)
+            }
+        }
+        val deckId = addDeck("Deck")
+        val previouslyDetected = DatabaseCorruption.isDetected
+        DatabaseCorruption.isDetected = false
+        try {
+            withDeckPicker(deckCount = 0) { deckPicker ->
+                throwOnShowError = false
+                corrupt = true
+                val deletion = deckPicker.deleteDeck(deckId)
+                val recoveries = { deckPicker.supportFragmentManager.fragments.filterIsInstance<DatabaseErrorDialog>() }
+                advanceRobolectricLooperUntil { deletion.isCompleted && recoveries().any { it.dialog?.isShowing == true } }
+
+                block(deckPicker, recoveries().single())
+            }
+        } finally {
+            DatabaseCorruption.isDetected = previouslyDetected
+        }
     }
 
     private fun DeckPicker.selectContextMenuOption(
