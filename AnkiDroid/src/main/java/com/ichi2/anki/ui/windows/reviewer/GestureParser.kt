@@ -201,16 +201,11 @@ class GestureParser(
     }
 
     private fun getMultiTouchGesture(rawGesture: RawGesture.MultiTouch): Gesture? {
-        val touchCount = rawGesture.touchCount
-        return when (touchCount) {
-            2 -> Gesture.TWO_FINGER_TAP
-            3 -> Gesture.THREE_FINGER_TAP
-            4 -> Gesture.FOUR_FINGER_TAP
-            else -> {
-                Timber.w("Invalid multi-finger tap count %d", touchCount)
-                null
-            }
+        val gesture = Gesture.multiFingerTap(rawGesture.touchCount)
+        if (gesture == null) {
+            Timber.w("Invalid multi-finger tap count %d", rawGesture.touchCount)
         }
+        return gesture
     }
 
     /** Encapsulates the state of the WebView relevant for gesture parsing. */
