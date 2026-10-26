@@ -17,6 +17,6 @@ enum class DayTheme(
     override val styleResId: Int,
 ) : Theme {
     LIGHT(CommonR.string.theme_light_value, CommonR.style.Theme_Light),
-    PLAIN(CommonR.string.theme_plain_value, R.style.Theme_Light_Plain),
+    PLAIN(CommonR.string.theme_plain_value, CommonR.style.Theme_Light_Plain),
     EINK(CommonR.string.theme_eink_scheme_value, R.style.Theme_Light_Eink),
 }
