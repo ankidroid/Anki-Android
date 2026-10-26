@@ -724,9 +724,10 @@ android {
     }
 }
 
-configurations.configureEach {
+configurations.matching { it.name.endsWith("CompileClasspath") || it.name.endsWith("RuntimeClasspath") }.configureEach {
     resolutionStrategy {
-        // Timber has this as a dependency but they are not up to date. We want to force our version.
+        // Keep app dependencies such as Timber on our annotations version. Changing Kotlin's
+        // compiler classpath creates an extra compiler daemon and increases peak memory use.
         force(libs.jetbrains.annotations)
     }
 }
