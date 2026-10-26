@@ -1301,15 +1301,8 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("Issue 22065: search task starts while activity is finishing")
     fun `deck id is remembered - issue 15072`() =
         runTest {
-            // WARN: This doesn't mirror reality due to the use of coroutines
-            // in the issue, selectDeckAndSave() was called AFTER the search had been performed
-            // due to this being called immediately in a test-based context
-
-            // We're going to move this functionality entirely to the ViewModel over the next few weeks
-            // so this test should be updated and working after the refactorings are completed
             addBasicNote().moveToDeck("First")
             addBasicNote().moveToDeck("Second")
 
@@ -1319,6 +1312,8 @@ class CardBrowserTest : RobolectricTest() {
                 viewModel.setSelectedDeck(secondDeckId)
                 assertThat(viewModel.deckId, equalTo(secondDeckId))
                 finish()
+                // Pending search updates must not start tasks for the finishing browser.
+                advanceRobolectricLooper()
             }
 
             browserWithNoNewCards.apply {
