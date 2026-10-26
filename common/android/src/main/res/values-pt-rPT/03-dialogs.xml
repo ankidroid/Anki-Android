@@ -96,7 +96,7 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Todas as fichas</string>
-    <string name="tags_dialog_option_new_cards">Nova</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not ever been reviewed yet">Nova</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendentes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">A encontrar fichas vazias&#8230;</string>

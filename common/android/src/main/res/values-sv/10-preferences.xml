@@ -259,6 +259,7 @@
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Avisera mig endast om inga granskningar har gjorts idag</string>
     <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Ange ett helt antal kort</string>
     <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">Tröskeln måste vara minst 0</string>
+    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">Count these cards toward the threshold:</string>
     <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Ta bort denna påminnelse?</string>
     <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">Denna åtgärd kan inte ångras.</string>
     <!-- Reminder troubleshooting screen -->

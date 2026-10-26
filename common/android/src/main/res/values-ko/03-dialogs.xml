@@ -93,7 +93,7 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">모든 카드</string>
-    <string name="tags_dialog_option_new_cards">신규</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not ever been reviewed yet">신규</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">예정</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">빈 카드를 찾는 중&#8230;</string>
