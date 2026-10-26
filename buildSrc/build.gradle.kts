@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
@@ -30,6 +31,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    // Show nested Gradle build failures from TestKit in CI logs.
+    testLogging.exceptionFormat = TestExceptionFormat.FULL
     // Rerun the path guard if the app build file is moved.
     inputs.files("../AnkiDroid/build.gradle.kts")
     // The screenshot fixture uses the same Android SDK as the main build.
