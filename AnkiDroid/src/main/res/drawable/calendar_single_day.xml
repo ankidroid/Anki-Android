@@ -1,4 +1,9 @@
 <!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled (modified calendar_today icon).
+  Base source: https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/android/action/calendar_today/materialicons/black/res/drawable/baseline_calendar_today_24.xml
+
   ~ Copyright 2xxx, Google Material Design Icons
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
