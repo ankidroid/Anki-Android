@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.input
@@ -17,6 +16,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
 import java.util.function.Consumer
+import com.ichi2.anki.common.android.R as CommonR
 
 // TODO: Pass optional validation condition i.e. Positive button not enabled if condition is true
 open class IntegerDialog : AnalyticsDialogFragment() {
@@ -52,7 +52,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
                 positiveButton(CommonString.dialog_ok)
                 negativeButton(CommonString.dialog_cancel)
                 setMessage(requireArguments().getString("content"))
-                setView(R.layout.dialog_generic_text_input)
+                setView(CommonR.layout.dialog_generic_text_input)
             }.input(
                 hint = requireArguments().getString("prompt"),
                 inputType = InputType.TYPE_CLASS_NUMBER,

@@ -18,6 +18,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.ThreadUtils.sleep
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * This file contains utility methods to interact with the DeckPicker.
@@ -51,7 +52,7 @@ fun createDeckWithUniqueName(): String {
     val deckName = "TestDeck$testString"
     onView(withId(R.id.fab_main)).perform(click())
     onView(withId(R.id.add_deck_button)).perform(click())
-    onView(withId(R.id.dialog_text_input)).perform(typeText(deckName))
+    onView(withId(CommonR.id.dialog_text_input)).perform(typeText(deckName))
     onView(withText(CommonString.dialog_ok)).perform(click())
     return deckName
 }

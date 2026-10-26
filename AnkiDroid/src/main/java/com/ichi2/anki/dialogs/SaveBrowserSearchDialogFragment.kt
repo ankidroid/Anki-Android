@@ -11,7 +11,6 @@ import androidx.fragment.app.setFragmentResult
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.RESULT_SEARCH_QUERY
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.RESULT_SEARCH_QUERY_NAME
@@ -23,6 +22,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Dialog that allows the user to save searches made in [CardBrowser] to make them available for
@@ -42,7 +42,7 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
                 title(text = getString(CommonString.card_browser_list_my_searches_save))
                 positiveButton(CommonString.dialog_ok)
                 negativeButton(CommonString.dialog_cancel)
-                setView(R.layout.dialog_generic_text_input)
+                setView(CommonR.layout.dialog_generic_text_input)
             }.input(
                 hint = getString(CommonString.card_browser_list_my_searches_new_name),
                 allowEmpty = false,

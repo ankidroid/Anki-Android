@@ -7,12 +7,12 @@ import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import com.ichi2.anki.common.android.R as CommonR
 
 class RepositionCardTemplateDialog {
     companion object {
@@ -38,7 +38,7 @@ class RepositionCardTemplateDialog {
                         }
                         negativeButton(CommonString.dialog_cancel)
                         setMessage(CollectionManager.TR.cardTemplatesEnterNewCardPosition1(numberOfTemplates))
-                        setView(R.layout.dialog_generic_text_input)
+                        setView(CommonR.layout.dialog_generic_text_input)
                     }.input(
                         inputType = InputType.TYPE_CLASS_NUMBER,
                         displayKeyboard = true,

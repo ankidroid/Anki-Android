@@ -399,7 +399,7 @@ class TagsDialog : AnalyticsDialogFragment {
                     title(text = getString(CommonString.add_tag))
                     positiveButton(CommonString.menu_add)
                     negativeButton(CommonString.dialog_cancel)
-                    setView(R.layout.dialog_generic_text_input)
+                    setView(CommonR.layout.dialog_generic_text_input)
                 }.input(
                     hint = TR.actionsName().dropLastWhile { it == ':' },
                     inputType = InputType.TYPE_CLASS_TEXT,
