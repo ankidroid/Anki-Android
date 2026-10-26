@@ -152,7 +152,7 @@ We have a limited amount of time to spend on the project. We are trying our best
         * Incidental changes (lint, refactorings) should be in separate commits
         * Whitespace changes should be reverted  
 3. Write a PR description
-    * Our [PR template]((https://github.com/david-allison/Anki-Android/blob/contributing-md/.github/pull_request_template.md)) **must** be filled (unless trivial). Create PRs using GitHub so this template will be present in the PR Description area, ready for you to fill in with information about your work.
+    * Our [PR template](https://github.com/ankidroid/Anki-Android/blob/main/.github/pull_request_template.md) **must** be filled (unless trivial). Create PRs using GitHub so this template will be present in the PR Description area, ready for you to fill in with information about your work.
 
 Writing automated tests helps reviewers be more confident that your change is correct. This is currently 
  optional but recommended, and should reduce the number of rounds of reviews.
