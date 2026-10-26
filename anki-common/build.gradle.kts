@@ -28,6 +28,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.sqlite.framework)
+    implementation(libs.google.material)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.jakewharton.timber)
     implementation(libs.kotlinx.coroutines.core)
