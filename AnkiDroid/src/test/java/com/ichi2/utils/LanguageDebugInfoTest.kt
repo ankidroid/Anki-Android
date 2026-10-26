@@ -6,7 +6,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.DebugInfoService
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendFactory
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -15,6 +17,13 @@ import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class LanguageDebugInfoTest : RobolectricTest() {
+    @Before
+    override fun setUp() {
+        super.setUp()
+        LanguageUtil.setDefaultBackendLanguages()
+        runBlocking { CollectionManager.discardBackend() }
+    }
+
     @Test
     @Config(qualifiers = "zn")
     fun `language debug info reports the backend fallback locale`() {
