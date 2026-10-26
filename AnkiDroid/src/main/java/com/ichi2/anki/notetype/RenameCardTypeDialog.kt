@@ -6,13 +6,13 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.utils.ValidationResult
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import com.ichi2.anki.common.android.R as CommonR
 
 class RenameCardTypeDialog {
     companion object {
@@ -35,7 +35,7 @@ class RenameCardTypeDialog {
                     title(CommonString.rename_card_type)
                     positiveButton(CommonString.rename) { }
                     negativeButton(CommonString.dialog_cancel)
-                    setView(R.layout.dialog_generic_text_input)
+                    setView(CommonR.layout.dialog_generic_text_input)
                 }.input(
                     hint = CollectionManager.TR.actionsNewName().removeSuffix(":"),
                     displayKeyboard = true,

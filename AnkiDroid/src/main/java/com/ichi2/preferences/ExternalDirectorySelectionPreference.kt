@@ -16,7 +16,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.preference.ListPreference
 import androidx.preference.ListPreferenceDialogFragmentCompat
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.runCatchingWithLog
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
@@ -29,6 +28,7 @@ import timber.log.Timber
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Lets the user pick the AnkiDroid directory from a list of detected storage
@@ -148,7 +148,7 @@ class FullWidthListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat
             .Builder(context)
             .show {
                 setTitle(CommonString.pref_enter_custom_path)
-                setView(R.layout.dialog_generic_text_input)
+                setView(CommonR.layout.dialog_generic_text_input)
                 positiveButton(android.R.string.ok)
                 negativeButton(android.R.string.cancel)
             }.input(

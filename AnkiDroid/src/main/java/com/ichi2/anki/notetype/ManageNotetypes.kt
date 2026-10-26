@@ -60,6 +60,7 @@ import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
     @VisibleForTesting
@@ -291,7 +292,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                             viewModel.rename(state.id, userInput)
                         }
                         negativeButton(CommonString.dialog_cancel)
-                        setView(R.layout.dialog_generic_text_input)
+                        setView(CommonR.layout.dialog_generic_text_input)
                     }.input(
                         hint = TR.deckConfigNamePrompt(),
                         prefill = state.name,

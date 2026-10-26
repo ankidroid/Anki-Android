@@ -67,6 +67,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
+import com.ichi2.anki.common.android.R as CommonR
 
 @NeedsTest("perform one action, then another")
 class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_editor) {
@@ -408,7 +409,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                     }
                     negativeButton(CommonString.dialog_cancel)
                     setMessage(TR.fieldsNewPosition1(numberOfTemplates))
-                    setView(R.layout.dialog_generic_text_input)
+                    setView(CommonR.layout.dialog_generic_text_input)
                 }.input(
                     prefill = (currentPos + 1).toString(),
                     inputType = InputType.TYPE_CLASS_NUMBER,

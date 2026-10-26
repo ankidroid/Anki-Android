@@ -8,7 +8,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.LoadingDialogFragment
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -22,6 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class ManageNotetypesTest : RobolectricTest() {
@@ -40,7 +40,7 @@ class ManageNotetypesTest : RobolectricTest() {
             ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
 
             val dialog = ShadowDialog.getLatestDialog() as AlertDialog
-            val nameInput = dialog.findViewById<EditText>(R.id.dialog_text_input)!!
+            val nameInput = dialog.findViewById<EditText>(CommonR.id.dialog_text_input)!!
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
 
             // whitespace-only should disable the Rename button

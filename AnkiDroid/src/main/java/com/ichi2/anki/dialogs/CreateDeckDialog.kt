@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -27,6 +26,7 @@ import com.ichi2.utils.show
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * A dialog which manages the creation of decks, subdecks and filtered decks.
@@ -97,7 +97,7 @@ class CreateDeckDialog(
                         onPositiveButtonClicked()
                     }
                     negativeButton(CommonString.dialog_cancel)
-                    setView(R.layout.dialog_generic_text_input)
+                    setView(CommonR.layout.dialog_generic_text_input)
                 }.input(
                     hint = textInputHint,
                     prefill = initialDeckName,
