@@ -2,13 +2,17 @@
 
 package com.ichi2.anki
 
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.backendError
+import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
@@ -93,6 +97,39 @@ class DeckPickerFurtherReviewTest : RobolectricTest() {
             }
         } finally {
             DatabaseCorruption.isDetected = previouslyDetected
+        }
+    }
+
+    @Test
+    fun `a created deck remains visible when selecting it fails`() {
+        var failSelection = false
+        useBackend {
+            object : Backend() {
+                override fun setCurrentDeck(did: Long): OpChanges = if (failSelection) throw failure else super.setCurrentDeck(did)
+            }
+        }
+        val existing = addDeck("Existing")
+        withDeckPicker(deckCount = 0) { picker ->
+            picker.awaitVisibleDecks(listOf(existing))
+            advanceRobolectricLooperUntil { picker.viewModel.loadDeckCounts?.isCompleted == true }
+            throwOnShowError = false
+            failSelection = true
+            picker.showCreateDeckDialog()
+            (ShadowDialog.getLatestDialog() as AlertDialog).apply {
+                input = "New deck"
+                performPositiveClick()
+            }
+            advanceRobolectricLooperUntil {
+                picker.viewModel.pendingErrors.value
+                    .isNotEmpty()
+            }
+            ShadowDialog.getLatestDialog().dismiss()
+            advanceRobolectricLooperUntil {
+                picker.viewModel.pendingErrors.value
+                    .isEmpty()
+            }
+            val created = col.decks.byName("New deck")!!.id
+            picker.awaitVisibleDecks(listOf(existing, created))
         }
     }
 

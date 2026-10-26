@@ -29,6 +29,7 @@ import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.startDeletingEmptyCards
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.testutils.BackupManagerTestUtilities
 import kotlinx.coroutines.Job
@@ -211,6 +212,18 @@ class DeckPickerErrorTest : RobolectricTest() {
     }
 
     @Test
+    fun `corrupt deletion does not queue a second recovery prompt`() =
+        withCorruptDeletionRecovery { deckPicker, _ ->
+            advanceRobolectricLooperUntil { deckPicker.viewModel.loadDeckCounts?.isCompleted == true }
+            advanceRobolectricLooper()
+
+            assertTrue(
+                deckPicker.viewModel.pendingErrors.value
+                    .isEmpty(),
+            )
+        }
+
+    @Test
     fun `error message waits until database recovery is closed`() =
         withCorruptDeletionRecovery { deckPicker, recovery ->
             val recoveryDialog = recovery.requireDialog()
@@ -346,6 +359,25 @@ class DeckPickerErrorTest : RobolectricTest() {
             assertErrorShown()
         }
     }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `failed filtered deck rebuild still shows the deck it selected`() =
+        assertFailedFilteredDeckActionShowsSelection(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD) { failing ->
+            object : Backend() {
+                override fun rebuildFilteredDeck(did: Long): OpChangesWithCount =
+                    if (failing()) throw failure else super.rebuildFilteredDeck(did)
+            }
+        }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `failed filtered deck emptying still shows the deck it selected`() =
+        assertFailedFilteredDeckActionShowsSelection(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY) { failing ->
+            object : Backend() {
+                override fun emptyFilteredDeck(did: Long): OpChanges = if (failing()) throw failure else super.emptyFilteredDeck(did)
+            }
+        }
 
     @Test
     fun `failed selection of a new deck shows an error`() {
@@ -548,6 +580,28 @@ class DeckPickerErrorTest : RobolectricTest() {
             expectNoEvents()
         }
         assertEquals(1, viewModel.pendingErrors.value.size)
+    }
+
+    private fun assertFailedFilteredDeckActionShowsSelection(
+        option: DeckPickerContextMenuOption,
+        backend: (failing: () -> Boolean) -> Backend,
+    ) {
+        var failing = false
+        useBackend { backend { failing } }
+        addNoteToDeck(DEFAULT_DECK_ID)
+        val filtered = addDynamicDeck("Filtered")
+        col.decks.select(DEFAULT_DECK_ID)
+
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            throwOnShowError = false
+            advanceRobolectricLooperUntil { deckPicker.fragment?.viewModel?.selectedDeckId == DEFAULT_DECK_ID }
+            failing = true
+            deckPicker.selectContextMenuOption(option, filtered)
+
+            assertErrorShown()
+            assertEquals(filtered, col.decks.selected())
+            advanceRobolectricLooperUntil { deckPicker.fragment?.viewModel?.selectedDeckId == filtered }
+        }
     }
 
     private fun withCorruptDeletionRecovery(block: (DeckPicker, DatabaseErrorDialog) -> Unit) {
