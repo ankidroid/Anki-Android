@@ -32,6 +32,40 @@ import org.robolectric.annotation.Config
 @Category(EmptyApplicationCategory::class)
 class StableScrollbarLayoutManagerTest {
     @Test
+    fun `tall initial rows calibrate to actual content height`() {
+        val rows = List(30) { TALL_ROW } + List(60) { SHORT_ROW }
+        val list = ScrollbarTestList(rows)
+        list.scrollToEndCollecting { list.thumb.height }
+        assertThat(list.scrollRange, equalTo(rows.sum()))
+    }
+
+    @Test
+    fun `calibration does not depend on scroll step size`() {
+        val rows = List(30) { TALL_ROW } + List(60) { SHORT_ROW }
+        val incremental = ScrollbarTestList(rows)
+        val singleStep = ScrollbarTestList(rows)
+        incremental.scrollToEndCollecting { incremental.thumb.height }
+        singleStep.scrollBy(rows.sum())
+        assertThat(incremental.scrollRange, equalTo(singleStep.scrollRange))
+    }
+
+    @Test
+    fun `calibrated range is invalidated when an individual offscreen row changes height`() {
+        val rows = List(90) { SHORT_ROW }
+        val list = ScrollbarTestList(rows)
+        list.scrollToEndCollecting { list.thumb.height }
+        assertThat(list.scrollRange, equalTo(rows.sum()))
+        list.scrollToStartCollecting { list.thumb.height }
+        val changedRows = rows.toMutableList().apply { this[lastIndex] = TALL_ROW }
+        list.updateRowHeights(changedRows, changedRows.lastIndex)
+        list.scrollToEndCollecting { list.thumb.height }
+        // Visiting every row again must allow the changed height to be measured.
+        list.scrollToStartCollecting { list.thumb.height }
+        list.scrollToEndCollecting { list.thumb.height }
+        assertThat(list.scrollRange, equalTo(changedRows.sum()))
+    }
+
+    @Test
     fun `thumb never moves backwards when the initial rows are taller`() {
         val list = ScrollbarTestList(List(30) { TALL_ROW } + List(60) { SHORT_ROW })
 
@@ -271,6 +305,15 @@ private class ScrollbarTestList(
     }
 
     fun notifyRowChanged(position: Int) = adapter.notifyItemChanged(position)
+
+    fun updateRowHeights(
+        rowHeights: List<Int>,
+        position: Int,
+    ) {
+        adapter.rowHeights = rowHeights
+        adapter.notifyItemChanged(position)
+        layout()
+    }
 
     fun reanchor() {
         val lm = recyclerView.layoutManager as StableScrollbarLayoutManager
