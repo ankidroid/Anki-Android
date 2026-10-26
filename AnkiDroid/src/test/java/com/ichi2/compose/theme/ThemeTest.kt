@@ -10,7 +10,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ApplicationProvider
-import com.ichi2.anki.R
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -50,7 +49,7 @@ class ThemeTest {
     @Test
     fun `plain theme produces a different primary than light theme`() {
         val light = themed(CommonR.style.Theme_Light).toMaterial3ColorScheme()
-        val plain = themed(R.style.Theme_Light_Plain).toMaterial3ColorScheme()
+        val plain = themed(CommonR.style.Theme_Light_Plain).toMaterial3ColorScheme()
         assertNotEquals(
             light.primary.toArgb(),
             plain.primary.toArgb(),
