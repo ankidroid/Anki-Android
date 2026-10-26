@@ -1153,6 +1153,9 @@ class CardBrowserFragment :
 
         @NeedsTest("displayed filter")
         fun onSearchSubmitted(value: SearchRequest) {
+            // Queued search updates can arrive after finish(), before the lifecycle stops.
+            if (activity?.isFinishing == true) return
+
             // WARN: This changes the text when the SearchView is open
             launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
 
