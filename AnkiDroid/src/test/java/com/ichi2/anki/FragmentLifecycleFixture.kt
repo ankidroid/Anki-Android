@@ -3,7 +3,6 @@
 package com.ichi2.anki
 
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.FragmentLifecycleFixture.Transition.REMOVE
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
@@ -56,7 +55,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
             FilteredDeckOptionsFragment()
         },
         FragmentLifecycleFixture("MediaCheck") { MediaCheckFragment() },
-        FragmentLifecycleFixture("ManageSpace", knownFailures = setOf(REMOVE)) { ManageSpaceFragment() },
+        FragmentLifecycleFixture("ManageSpace") { ManageSpaceFragment() },
         FragmentLifecycleFixture("ChangeNoteType") {
             ChangeNoteTypeDialog.newInstance(listOf(addBasicNote().id))
         },
