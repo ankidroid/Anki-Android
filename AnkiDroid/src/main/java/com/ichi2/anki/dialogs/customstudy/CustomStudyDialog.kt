@@ -167,7 +167,22 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         ) {
             withProgress {
                 try {
-                    customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+                    val action = customStudy(viewModel.deckId, option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+                    setFragmentResult(
+                        CustomStudyAction.REQUEST_KEY,
+                        Bundle().apply { putInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION, action.ordinal) },
+                    )
+
+                    // Save the default values (not in upstream).
+                    when (option) {
+                        STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", cardsAmount) }
+                        STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", cardsAmount) }
+                        STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", cardsAmount) }
+                        STUDY_TAGS -> sharedPrefs().edit { putInt("amountOfCards", cardsAmount) }
+                        EXTEND_NEW, EXTEND_REV -> {
+                            // The backend provides the default value.
+                        }
+                    }
                 } finally {
                     requireActivity().dismissAllDialogFragments()
                 }
@@ -599,17 +614,18 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     // TODO cram kind and the included/excluded tags lists are only relevant for STUDY_TAGS and
     //  should be included in the option to not leak in the method's api
     private suspend fun customStudy(
+        deckId: DeckId,
         contextMenuOption: ContextMenuOption,
         userEntry: Int,
         cramKind: CramKind,
         tagsSelectedForInclude: List<String>,
         tagsSelectedForExclude: List<String>,
-    ) {
+    ): CustomStudyAction {
         Timber.i("Custom study: $contextMenuOption; input = $userEntry")
 
         val request =
             customStudyRequest {
-                deckId = viewModel.deckId
+                this.deckId = deckId
                 when (contextMenuOption) {
                     EXTEND_NEW -> newLimitDelta = userEntry
                     EXTEND_REV -> reviewLimitDelta = userEntry
@@ -630,26 +646,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             }
 
         undoableOp { sched.customStudy(request) }
-        val action =
-            when (contextMenuOption) {
-                EXTEND_NEW, EXTEND_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
-                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS -> CustomStudyAction.CUSTOM_STUDY_SESSION
-            }
-
-        setFragmentResult(
-            CustomStudyAction.REQUEST_KEY,
-            Bundle().apply { putInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION, action.ordinal) },
-        )
-
-        // save the default values (not in upstream)
-        when (contextMenuOption) {
-            STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", userEntry) }
-            STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", userEntry) }
-            STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", userEntry) }
-            EXTEND_NEW, EXTEND_REV -> {
-                // Nothing to do in ankidroid. The default value is provided by the backend.
-            }
-            STUDY_TAGS -> sharedPrefs().edit { putInt("amountOfCards", userEntry) }
+        return when (contextMenuOption) {
+            EXTEND_NEW, EXTEND_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
+            STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS -> CustomStudyAction.CUSTOM_STUDY_SESSION
         }
     }
 
