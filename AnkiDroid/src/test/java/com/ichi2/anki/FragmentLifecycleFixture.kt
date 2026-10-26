@@ -30,8 +30,6 @@ class FragmentLifecycleFixture(
     private val name: String,
     val host: Class<out AnkiActivity> = AnkiActivity::class.java,
     val hasFragmentView: Boolean = true,
-    // Confirmed failures in the startup stress test. Remove each entry when its failure is fixed.
-    val knownFailures: Set<Transition> = emptySet(),
     val create: RobolectricTest.() -> Fragment,
 ) {
     enum class Transition { REMOVE, DESTROY_VIEW, RECREATE_VIEW }
