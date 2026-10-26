@@ -12,7 +12,6 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
 import com.ichi2.anki.BackupManager
@@ -32,6 +31,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.CoroutineScope
@@ -233,15 +233,6 @@ class ManageSpaceFragment : SettingsFragment() {
 
         adjustDeleteEverythingStringsDependingOnCollectionLocation(deleteEverythingPreference)
 
-        listOf(
-            viewModel.flowOfDeleteUnusedMediaSize to deleteUnusedMediaPreference,
-            viewModel.flowOfDeleteCollectionSize to deleteCollectionPreference,
-            viewModel.flowOfDeleteEverythingSize to deleteEverythingPreference,
-            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference,
-        ).forEach { (flowOfSize, preference) ->
-            lifecycleScope.launch { flowOfSize.collect { size -> preference.setWidgetTextBy(size) } }
-        }
-
         observeProgress(viewModel) { progress -> getString(progress.messageRes) }
     }
 
@@ -252,6 +243,16 @@ class ManageSpaceFragment : SettingsFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.apply {
             title = getString(CommonString.pref__manage_space__screen_title)
+        }
+
+        listOf(
+            viewModel.flowOfDeleteUnusedMediaSize to R.string.pref_delete_media_key,
+            viewModel.flowOfDeleteCollectionSize to R.string.pref_delete_collection_key,
+            viewModel.flowOfDeleteEverythingSize to R.string.pref_delete_everything_key,
+            viewModel.flowOfDeleteBackupsSize to R.string.pref_delete_backups_key,
+        ).forEach { (flowOfSize, key) ->
+            val preference = requirePreference<TextWidgetPreference>(key)
+            flowOfSize.launchCollectionInViewLifecycleScope { size -> preference.setWidgetTextBy(size) }
         }
     }
 
