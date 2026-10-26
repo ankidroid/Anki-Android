@@ -60,6 +60,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.requireActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -159,7 +160,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         tagsToExclude: List<String> = emptyList(),
     ) {
         // The activity owns this operation, which can outlive the dialog.
-        val activity = requireActivity()
+        val activity = requireActivity(simpleName = true)
         val fragmentManager = parentFragmentManager
         val deckId = viewModel.deckId
         val preferences = activity.sharedPrefs()
