@@ -20,6 +20,9 @@ on:
   schedule:
     - cron: '42 12 * * 1'
 
+env:
+  JAVA_TOOL_OPTIONS: -Dkotlin.daemon.options=autoshutdownIdleSeconds=10
+
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})

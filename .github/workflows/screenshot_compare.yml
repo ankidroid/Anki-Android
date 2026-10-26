@@ -27,6 +27,9 @@ on:
 
 permissions: {}
 
+env:
+  JAVA_TOOL_OPTIONS: -Dkotlin.daemon.options=autoshutdownIdleSeconds=10
+
 jobs:
   compare-screenshot-test:
     name: compare

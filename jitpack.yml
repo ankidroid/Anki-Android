@@ -18,4 +18,4 @@ before_install:
 
 # We can do the absolute minimum to build the API module, no need to build AnkiDroid module
 install:
-    - ./gradlew :api:publishToMavenLocal
+    - JAVA_TOOL_OPTIONS=-Dkotlin.daemon.options=autoshutdownIdleSeconds=10 ./gradlew :api:publishToMavenLocal
