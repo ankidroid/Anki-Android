@@ -481,6 +481,54 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `search-expanded ancestors can collapse and expand regardless of saved state`() =
+        runTest {
+            addTags("parent::child")
+            for (initiallyCollapsed in listOf(true, false)) {
+                col.tags.setCollapsed(TagName.asValid("parent"), initiallyCollapsed)
+                withViewModel {
+                    filter("child")
+                    assertFalse(loadedState.visibleNodes.first().collapsed)
+
+                    toggleCollapsed("PARENT").join()
+                    assertEquals(listOf("parent"), loadedState.visibleTagNames)
+                    assertTrue(loadedState.visibleNodes.single().collapsed)
+                    filter("child")
+                    refreshTags().join()
+                    assertEquals(listOf("parent"), loadedState.visibleTagNames)
+                    assertTrue(ManageTagsViewModel.flattenTree(col.tags.tree()).first().collapsed)
+
+                    toggleCollapsed("parent").join()
+                    assertEquals(listOf("parent", "parent::child"), loadedState.visibleTagNames)
+                    assertFalse(loadedState.visibleNodes.first().collapsed)
+                    assertFalse(ManageTagsViewModel.flattenTree(col.tags.tree()).first().collapsed)
+                }
+            }
+        }
+
+    @Test
+    fun `changing search reveals matches beneath manually collapsed ancestors`() =
+        runTest {
+            addTags("parent::child::leaf")
+            withViewModel {
+                filter("leaf")
+                toggleCollapsed("parent::child").join()
+                assertEquals(listOf("parent", "parent::child"), loadedState.visibleTagNames)
+                assertTrue(loadedState.visibleNodes.last().collapsed)
+
+                filter("lea")
+                assertEquals(listOf("parent", "parent::child", "parent::child::leaf"), loadedState.visibleTagNames)
+                assertFalse(loadedState.visibleNodes[1].collapsed)
+
+                filter("")
+                assertEquals(listOf("parent"), loadedState.visibleTagNames)
+                toggleCollapsed("parent").join()
+                assertEquals(listOf("parent", "parent::child"), loadedState.visibleTagNames)
+                assertTrue(loadedState.visibleNodes.last().collapsed)
+            }
+        }
+
+    @Test
     fun `filter shows ancestors of matching nested tags`() =
         runTest {
             addTags("science::biology", "history")
