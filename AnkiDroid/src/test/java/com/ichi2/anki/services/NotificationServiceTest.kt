@@ -45,13 +45,21 @@ import org.junit.runner.RunWith
 import java.util.Calendar
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class NotificationServiceTest : RobolectricTest() {
     companion object {
-        private val yesterday = MockTime(TimeManager.time.intTimeMS() - 1.days.inWholeMilliseconds)
-        private val today = MockTime(TimeManager.time.intTimeMS())
+        // Keep reminder times away from midnight in the local time zone.
+        private val today =
+            MockTime(
+                MockTime(2025, Calendar.JANUARY, 2, 12, 0, 0, 0, 0)
+                    .calendar()
+                    .apply { set(Calendar.HOUR_OF_DAY, 12) }
+                    .timeInMillis,
+            )
+        private val yesterday = MockTime(today.intTimeMS() - 1.days.inWholeMilliseconds)
     }
 
     private lateinit var context: Context
@@ -68,6 +76,11 @@ class NotificationServiceTest : RobolectricTest() {
         every { ReviewReminderAlarmManager.scheduleReviewReminderNotification(any(), any(), any()) } returns Unit
         Prefs.newReviewRemindersEnabled = true
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
+
+        // Keep the native scheduler aligned with the mock review timestamps
+        val scheduler = col.sched
+        mockkObject(scheduler)
+        every { scheduler.dayCutoff } returns today.intTime() + 16.hours.inWholeSeconds
     }
 
     @After
