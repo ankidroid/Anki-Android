@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.withStyledAttributes
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.R
 
 /**
  * Wraps [content] in a Material3 [MaterialTheme] populated from the currently
