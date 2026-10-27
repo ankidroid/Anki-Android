@@ -34,6 +34,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.spy
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
@@ -50,6 +51,14 @@ import kotlin.test.assertNull
 class ImportUtilsTest : RobolectricTest() {
     private lateinit var originalCrashReporter: CrashReporter
     private val crashReporter = mock(CrashReporter::class.java)
+    private val packageMimeTypes =
+        mapOf(
+            "application/apkg" to ImportResolution.DeckPackage::class,
+            "application/x-apkg" to ImportResolution.DeckPackage::class,
+            "application/vnd.anki" to ImportResolution.DeckPackage::class,
+            "application/colpkg" to ImportResolution.CollectionPackage::class,
+            "application/x-colpkg" to ImportResolution.CollectionPackage::class,
+        )
 
     @Before
     fun captureCrashReports() {
@@ -241,6 +250,101 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     @Test
+    fun `specific package MIME types take precedence over text metadata`() {
+        for ((packageMime, expectedType) in packageMimeTypes) {
+            for (filename in listOf("notes.csv", "notes.tsv", "notes.txt", "download", "download.zip", "")) {
+                for ((intentMime, providerMime) in listOf(
+                    packageMime to "text/plain",
+                    "text/plain" to packageMime,
+                    packageMime to "text/csv",
+                    "text/csv" to packageMime,
+                    null to packageMime,
+                    "application/octet-stream" to packageMime,
+                )) {
+                    val resolution = resolveWithMetadata(filename, intentMime, providerMime)
+
+                    assertEquals("$filename, intent=$intentMime, provider=$providerMime", expectedType, resolution::class)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `specific package MIME types provide a fallback filename`() {
+        for ((packageMime, expectedType) in packageMimeTypes) {
+            for ((intentMime, providerMime) in listOf(packageMime to "text/plain", "text/plain" to packageMime, null to packageMime)) {
+                val resolution = assertIs<ImportResolution.ResolvedFile>(resolveWithMetadata(null, intentMime, providerMime))
+
+                assertEquals(expectedType, resolution::class)
+                val extension = if (expectedType == ImportResolution.CollectionPackage::class) "colpkg" else "apkg"
+                assertEquals("unknown_filename.$extension", resolution.source.fileName)
+            }
+        }
+    }
+
+    @Test
+    fun `package filenames determine the package kind before MIME hints`() {
+        for ((filename, expectedType) in listOf(
+            "deck.apkg" to ImportResolution.DeckPackage::class,
+            "legacy.APKG" to ImportResolution.DeckPackage::class,
+            "backup.colpkg" to ImportResolution.CollectionPackage::class,
+            "collection.apkg" to ImportResolution.CollectionPackage::class,
+        )) {
+            for (packageMime in packageMimeTypes.keys) {
+                assertEquals(expectedType, resolveWithMetadata(filename, packageMime, packageMime)::class)
+            }
+        }
+    }
+
+    @Test
+    fun `intent package MIME wins when the provider supplies another package MIME`() {
+        assertIs<ImportResolution.DeckPackage>(resolveWithMetadata("download", "application/apkg", "application/colpkg"))
+        assertIs<ImportResolution.CollectionPackage>(resolveWithMetadata("download", "application/colpkg", "application/apkg"))
+    }
+
+    @Test
+    fun `generic MIME types do not identify named files as Anki packages`() {
+        for (mime in listOf("application/octet-stream", "application/zip", "text/plain")) {
+            assertIs<ImportResolution.Text>(resolveWithMetadata("notes.csv", mime, mime))
+        }
+        for (mime in listOf("application/octet-stream", "application/zip")) {
+            assertIs<ImportResolution.Failure>(resolveWithMetadata("download", mime, mime))
+        }
+        assertIs<ImportResolution.Text>(resolveWithMetadata("download", "text/plain", "text/plain"))
+    }
+
+    @Test
+    fun `nameless ZIP fallback defers to a specific package MIME`() {
+        assertIs<ImportResolution.DeckPackage>(resolveWithMetadata(null, "application/zip", null))
+        val collection =
+            assertIs<ImportResolution.CollectionPackage>(resolveWithMetadata(null, "application/zip", "application/colpkg"))
+        assertEquals("unknown_filename.colpkg", collection.source.fileName)
+    }
+
+    @Test
+    fun `unavailable provider MIME does not invalidate usable filenames or an intent package MIME`() {
+        val context = mockContextWithMime(null)
+        whenever(context.contentResolver.getType(any())).thenThrow(SecurityException("MIME metadata is unavailable"))
+        val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/document/123".toUri(), "text/plain")
+
+        assertIs<ImportResolution.Text>(TestFileImporter("notes.csv").resolveImport(context, intent))
+        assertIs<ImportResolution.DeckPackage>(TestFileImporter("deck.apkg").resolveImport(context, intent))
+
+        intent.setDataAndType(intent.data, "application/apkg")
+        assertIs<ImportResolution.DeckPackage>(TestFileImporter("download").resolveImport(context, intent))
+        assertIs<ImportResolution.DeckPackage>(TestFileImporter(null).resolveImport(context, intent))
+    }
+
+    private fun resolveWithMetadata(
+        filename: String?,
+        intentMime: String?,
+        providerMime: String?,
+    ): ImportResolution {
+        val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/document/123".toUri(), intentMime)
+        return TestFileImporter(filename).resolveImport(mockContextWithMime(providerMime), intent)
+    }
+
+    @Test
     fun cjkNamesAreConvertedToUnicode() {
         // NOTE: I don't know whether this still needs to exist, but it was added as this previously crashes
         // and I would have added a regression without checking the history.
@@ -378,7 +482,7 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     @Test
-    fun onlyValidTextOrDataMimeTypesReturnTrue() {
+    fun onlySupportedTextMimeTypesSelectTheTextImporter() {
         val uri = "content://com.example".toUri()
         val validMimeTypes =
             listOf(
@@ -399,21 +503,21 @@ class ImportUtilsTest : RobolectricTest() {
 
         for (mime in validMimeTypes) {
             val context = mockContextWithMime(mime)
-            val isValid = ImportUtils.isValidTextOrDataFile(context, uri)
-            assertTrue("Expected MIME to be accepted: $mime", isValid)
+            val resolution = TestFileImporter("notes").resolveImport(context, Intent(Intent.ACTION_VIEW, uri))
+            assertIs<ImportResolution.Text>(resolution, "Expected text MIME to be accepted: $mime")
         }
 
         for (mime in invalidMimeTypes) {
             val context = mockContextWithMime(mime)
-            val isValid = ImportUtils.isValidTextOrDataFile(context, uri)
-            assertFalse("Expected MIME to be rejected: $mime", isValid)
+            val resolution = TestFileImporter("notes").resolveImport(context, Intent(Intent.ACTION_VIEW, uri))
+            assertIs<ImportResolution.Failure>(resolution, "Expected unsupported MIME to be rejected: $mime")
         }
     }
 
     private fun mockContextWithMime(mimeType: String?): Context {
         val resolver = mock(ContentResolver::class.java)
         whenever(resolver.getType(any())).thenReturn(mimeType)
-        val context = mock(Context::class.java)
+        val context = spy(targetContext)
         whenever(context.contentResolver).thenReturn(resolver)
         return context
     }

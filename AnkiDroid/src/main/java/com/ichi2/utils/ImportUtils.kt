@@ -101,14 +101,6 @@ object ImportUtils {
     fun isFileAValidDeck(fileName: String): Boolean =
         FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
 
-    fun isValidTextOrDataFile(
-        context: Context,
-        uri: Uri,
-    ): Boolean {
-        val mimeType = context.contentResolver.getType(uri)
-        return mimeType in MimeTypeUtils.CSV_TSV_MIME_TYPES
-    }
-
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
         fun resolveImport(
@@ -134,10 +126,24 @@ object ImportUtils {
             val uri =
                 getDataUri(intent)
                     ?: return ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_log_no_apkg)))
+            val intentMimeType = intent.resolveMimeType()
+            val providerMimeType by lazy {
+                try {
+                    context.contentResolver.getType(uri)
+                } catch (e: Exception) {
+                    Timber.w(e, "Could not resolve import MIME type")
+                    null
+                }
+            }
+            val packageMimeType by lazy {
+                val packageTypes = MimeTypeUtils.APKG_MIME_TYPES + MimeTypeUtils.COLPKG_MIME_TYPES
+                intentMimeType.takeIf { it in packageTypes } ?: providerMimeType.takeIf { it in packageTypes }
+            }
             val providedName =
                 getFileNameFromContentProvider(context, uri)
-                    ?: when (intent.type) {
-                        "application/apkg", "application/zip" -> "unknown_filename.apkg"
+                    ?: when {
+                        packageMimeType in MimeTypeUtils.COLPKG_MIME_TYPES -> "unknown_filename.colpkg"
+                        packageMimeType in MimeTypeUtils.APKG_MIME_TYPES || intentMimeType == "application/zip" -> "unknown_filename.apkg"
                         else -> return ImportResolution.Failure(
                             ImportResult.Failure(
                                 context.getString(CommonString.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"),
@@ -147,11 +153,13 @@ object ImportUtils {
             val filename = validateFileName(providedName)
             val source = ImportResolution.Source(uri, filename)
             return when {
-                // Providers and sending apps can label binary Anki packages as text.
+                // Package filenames and specific package MIME types take precedence over text hints.
                 isCollectionPackage(filename) -> ImportResolution.CollectionPackage(source)
                 isDeckPackage(filename) -> ImportResolution.DeckPackage(source)
+                packageMimeType in MimeTypeUtils.COLPKG_MIME_TYPES -> ImportResolution.CollectionPackage(source)
+                packageMimeType in MimeTypeUtils.APKG_MIME_TYPES -> ImportResolution.DeckPackage(source)
                 getExtension(filename).lowercase() in listOf("csv", "tsv", "txt") ||
-                    intent.resolveMimeType() in MimeTypeUtils.CSV_TSV_MIME_TYPES || isValidTextOrDataFile(context, uri) ->
+                    intentMimeType in MimeTypeUtils.CSV_TSV_MIME_TYPES || providerMimeType in MimeTypeUtils.CSV_TSV_MIME_TYPES ->
                     ImportResolution.Text(source)
                 isAnkiDatabase(filename) ->
                     ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_error_load_imported_database)))

@@ -4,6 +4,9 @@
 package com.ichi2.anki.utils
 
 object MimeTypeUtils {
+    val APKG_MIME_TYPES = setOf("application/apkg", "application/x-apkg", "application/vnd.anki")
+    val COLPKG_MIME_TYPES = setOf("application/colpkg", "application/x-colpkg")
+
     val CSV_TSV_MIME_TYPES =
         arrayOf(
             "text/comma-separated-values",
