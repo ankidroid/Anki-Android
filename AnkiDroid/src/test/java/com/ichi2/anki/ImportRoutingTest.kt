@@ -34,10 +34,12 @@ import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import net.ankiweb.rsdroid.BackendException
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -50,6 +52,7 @@ import java.io.File
 import java.lang.ref.WeakReference
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
@@ -116,6 +119,61 @@ class ImportRoutingTest : RobolectricTest() {
                     assertNull(shadowOf(activity).nextStartedActivity, "Package import should not launch the CSV page")
                 }
             }
+        }
+
+    @Test
+    fun `specific package MIME imports a deck with a text or missing filename`() =
+        runTest {
+            val source = exportPackage()
+            val activity = activity()
+            for (name in listOf("notes.csv", "download", null)) {
+                for ((providerMime, intentMime) in listOf("text/plain" to "application/apkg", "application/apkg" to "text/plain")) {
+                    val intent = provideFile(source, providerMime, displayName = name, intentMimeType = intentMime)
+                    val result = assertIs<ImportResult.Success>(ImportUtils.prepareImport(activity, intent))
+
+                    assertIs<ImportResolution.DeckPackage>(result.file)
+                    activity.openImport(result)
+
+                    assertPackageImport(source)
+                    assertNull(shadowOf(activity).nextStartedActivity)
+                }
+            }
+        }
+
+    @Test
+    fun `specific collection MIME keeps replacement confirmation with a text or missing filename`() =
+        runTest {
+            addBasicNote()
+            val backups = tempFolder.newFolder("backups")
+            assertTrue(col.createBackup(backups.path, force = true, waitForCompletion = true))
+            val source = assertNotNull(backups.listFiles()).single()
+            for (name in listOf("notes.csv", "download", null)) {
+                for ((providerMime, intentMime) in listOf("text/plain" to "application/colpkg", "application/colpkg" to "text/plain")) {
+                    val activity = launchImport(provideFile(source, providerMime, displayName = name, intentMimeType = intentMime))
+
+                    val message = packageConfirmation()
+                    assertIs<ImportUtils.CollectionImportReplace>(DialogHandlerMessage.fromMessage(message))
+                    assertContentEquals(source.readBytes(), File(assertNotNull(message.data.getString("importPath"))).readBytes())
+                    assertEquals(DeckPicker::class.java.name, shadowOf(activity).nextStartedActivity.component?.className)
+                }
+            }
+        }
+
+    @Test
+    fun `text mislabeled as a package is rejected by the package importer`() =
+        runTest {
+            val source = tempFolder.newFile("notes.apkg").apply { writeText("front,back\nhello,world\n") }
+            val activity = activity()
+            val result = assertIs<ImportResult.Success>(ImportUtils.prepareImport(activity, provideFile(source, "text/plain")))
+
+            assertIs<ImportResolution.DeckPackage>(result.file)
+            activity.openImport(result)
+            val message = packageConfirmation()
+            assertIs<ImportUtils.CollectionImportAdd>(DialogHandlerMessage.fromMessage(message))
+            assertFailsWith<BackendException> {
+                col.importAnkiPackage(assertNotNull(message.data.getString("importPath")), ImportAnkiPackageOptions.getDefaultInstance())
+            }
+            assertNull(shadowOf(activity).nextStartedActivity)
         }
 
     @Test
