@@ -347,7 +347,7 @@ class NotificationServiceTest : RobolectricTest() {
     @Test
     fun `triggering with reviews today and onlyNotifyIfNoReviews is true should not fire notification`() =
         runTest {
-            val did1 = addDeck("Deck", setAsSelected = true).withNote()
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
             ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
@@ -364,7 +364,7 @@ class NotificationServiceTest : RobolectricTest() {
     @Test
     fun `triggering with reviews today and onlyNotifyIfNoReviews is false should fire notification`() =
         runTest {
-            val did1 = addDeck("Deck", setAsSelected = true).withNote()
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = false)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = false)
             ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
@@ -399,7 +399,7 @@ class NotificationServiceTest : RobolectricTest() {
     @Test
     fun `triggering with review yesterday but none today should fire notification regardless of onlyNotifyIfNoReviews`() =
         runTest {
-            val did1 = addDeck("Deck", setAsSelected = true).withNote()
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
 
             val reviewReminderDeckSpecific =
