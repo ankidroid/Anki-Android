@@ -6,7 +6,6 @@ package com.ichi2.utils
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.pm.PackageInfoCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.common.android.ApplicationContextInitializer
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
@@ -17,28 +16,6 @@ import timber.log.Timber
  * Created by Tim on 11/04/2015.
  */
 object VersionUtils {
-    /**
-     * Get package name as defined in the manifest.
-     */
-    val appName: String
-        get() {
-            var pkgName = AnkiDroidApp.TAG
-            val context: Context = applicationInstance ?: return AnkiDroidApp.TAG
-            try {
-                val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY)
-                if (pInfo == null) {
-                    Timber.w("Couldn't find package named %s", context.packageName)
-                    return pkgName
-                }
-                pInfo.applicationInfo?.let {
-                    pkgName = context.getString(it.labelRes)
-                }
-            } catch (e: PackageManager.NameNotFoundException) {
-                Timber.e(e, "Couldn't find package named %s", context.packageName)
-            }
-            return pkgName
-        }
-
     /**
      * Get the package versionName as defined in the manifest.
      */
