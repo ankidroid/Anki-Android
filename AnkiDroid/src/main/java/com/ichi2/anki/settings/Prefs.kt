@@ -19,7 +19,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.SharedPreferencesProvider
-import com.ichi2.anki.preferences.TimeboxSettingsViewModel
+import com.ichi2.anki.preferences.TimeboxTimeLimit
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -390,7 +390,7 @@ open class PrefsRepository protected constructor(
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
     var customTimeboxLimit by intPref(
         R.string.custom_timebox_limit_key,
-        defaultValue = TimeboxSettingsViewModel.DEFAULT_TIMEBOX_MINUTES,
+        defaultValue = TimeboxTimeLimit.DEFAULT_TIMEBOX_MINUTES,
     )
 
     val swipeSensitivity: Float
