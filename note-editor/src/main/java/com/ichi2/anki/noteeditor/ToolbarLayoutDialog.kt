@@ -50,11 +50,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.noteeditor.presentation.ToolbarLayoutMode
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.Theme
 import com.ichi2.compose.ui.dialogs.AnkiDroidDialog
+import com.ichi2.compose.ui.preview.AnkiDroidPreview
+import com.ichi2.compose.ui.preview.AnkiDroidThemeProvider
 import com.ichi2.anki.common.android.R as CommonR
 
 /** Lets the user choose a scrolling, stacked or hidden [ToolbarLayoutMode] for the note editor. */
@@ -270,4 +276,64 @@ private fun PreviewIcon(
         modifier = modifier.size(20.dp).padding(2.dp),
         tint = MaterialTheme.colorScheme.onSurface,
     )
+}
+
+@Preview(name = "Scroll")
+@Composable
+private fun ToolbarLayoutDialogPreview(
+    @PreviewParameter(AnkiDroidThemeProvider::class) theme: Theme,
+) {
+    AnkiDroidPreview(theme = theme) {
+        ToolbarLayoutDialog(
+            selected = ToolbarLayoutMode.SCROLL,
+            onSelect = {},
+            onDismiss = {},
+            showSelectionBackground = theme != DayTheme.EINK,
+        )
+    }
+}
+
+@Preview(name = "Stack")
+@Composable
+private fun ToolbarLayoutDialogStackPreview(
+    @PreviewParameter(AnkiDroidThemeProvider::class) theme: Theme,
+) {
+    AnkiDroidPreview(theme = theme) {
+        ToolbarLayoutDialog(
+            selected = ToolbarLayoutMode.STACK,
+            onSelect = {},
+            onDismiss = {},
+            showSelectionBackground = theme != DayTheme.EINK,
+        )
+    }
+}
+
+@Preview(name = "Hidden")
+@Composable
+private fun ToolbarLayoutDialogHiddenPreview(
+    @PreviewParameter(AnkiDroidThemeProvider::class) theme: Theme,
+) {
+    AnkiDroidPreview(theme = theme) {
+        ToolbarLayoutDialog(
+            selected = ToolbarLayoutMode.HIDDEN,
+            onSelect = {},
+            onDismiss = {},
+            showSelectionBackground = theme != DayTheme.EINK,
+        )
+    }
+}
+
+@Preview(name = "Large text - short window", widthDp = 320, heightDp = 240, fontScale = 2f)
+@Composable
+private fun ToolbarLayoutDialogLargeTextPreview(
+    @PreviewParameter(AnkiDroidThemeProvider::class) theme: Theme,
+) {
+    AnkiDroidPreview(theme = theme) {
+        ToolbarLayoutDialog(
+            selected = ToolbarLayoutMode.HIDDEN,
+            onSelect = {},
+            onDismiss = {},
+            showSelectionBackground = theme != DayTheme.EINK,
+        )
+    }
 }
