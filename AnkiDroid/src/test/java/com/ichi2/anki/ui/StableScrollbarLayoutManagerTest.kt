@@ -32,6 +32,16 @@ import org.robolectric.annotation.Config
 @Category(EmptyApplicationCategory::class)
 class StableScrollbarLayoutManagerTest {
     @Test
+    fun `thumb never moves backwards on a short mixed height list`() {
+        val list = ScrollbarTestList(List(4) { 800 } + List(4) { 200 })
+
+        val tops = list.scrollToEndCollecting { list.thumb.top }
+        val backwardsStep = tops.zipWithNext().firstOrNull { (before, after) -> after < before }
+
+        assertThat("thumb moved backwards: $backwardsStep", backwardsStep, nullValue())
+    }
+
+    @Test
     fun `tall initial rows calibrate to actual content height`() {
         val rows = List(30) { TALL_ROW } + List(60) { SHORT_ROW }
         val list = ScrollbarTestList(rows)

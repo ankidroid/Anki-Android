@@ -151,8 +151,9 @@ class StableScrollbarLayoutManager(
         val range = measuredRange ?: return
         if (range.calibrated) return
         val lastRow = findViewByPosition(findLastVisibleItemPosition()) ?: return
-        val heightSoFar = scrolled + getDecoratedBottom(lastRow) - paddingTop
-        val estimate = (heightSoFar.toFloat() / (getPosition(lastRow) + 1) * state.itemCount).toInt()
+        val visibleBottom = minOf(getDecoratedBottom(lastRow), height - paddingBottom)
+        val rowsSoFar = getPosition(lastRow) + 1 - fractionOutside(lastRow, getDecoratedBottom(lastRow) - visibleBottom)
+        val estimate = ((scrolled + visibleBottom - paddingTop) / rowsSoFar * state.itemCount).roundToInt()
         if (estimate < range.range) measuredRange = range.copy(range = estimate)
     }
 
