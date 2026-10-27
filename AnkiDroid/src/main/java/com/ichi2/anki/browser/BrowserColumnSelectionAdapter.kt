@@ -125,7 +125,7 @@ class BrowserColumnSelectionAdapter(
             binding.buttonToggleColumn.apply {
                 // NICE_TO_HAVE: animate between + and -
                 val isExclude = absoluteAdapterPosition < positionOfAvailableHeading
-                setImageResource(if (isExclude) R.drawable.ic_remove else CommonR.drawable.ic_add)
+                setImageResource(if (isExclude) CommonR.drawable.ic_remove else CommonR.drawable.ic_add)
 
                 val label = context.getString(if (isExclude) CommonString.exclude_column else CommonString.include_column)
                 contentDescription = label

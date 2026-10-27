@@ -296,7 +296,7 @@ private fun TimeboxDurationCard(
                     enabled = (textValue.toIntOrNull() ?: minutes) > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_remove),
+                        painter = painterResource(CommonR.drawable.ic_remove),
                         contentDescription = stringResource(CommonString.minus_sign),
                     )
                 }
