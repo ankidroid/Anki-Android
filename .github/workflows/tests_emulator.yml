@@ -301,7 +301,7 @@ jobs:
         run: python3 .github/report_test_failures.py AnkiDroid/build/outputs/androidTest-results/connected adb-log.txt --title "Emulator test failures" --suite ":AnkiDroid:connectedPlayReleaseAndroidTest"
 
       - name: Build Release Smoke Test
-        run: TEST_RELEASE_BUILD=false ./gradlew packagePlayRelease :baselineprofile:packageBenchmarkBenchmark --daemon
+        run: TEST_RELEASE_BUILD=false ./gradlew packagePlayRelease :baselineprofile:packageBenchmarkBenchmark --daemon --stacktrace
 
       - name: Run Release Smoke Test
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
@@ -319,7 +319,7 @@ jobs:
           script: |
             bash .github/disable_art_metrics.sh
             bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
-            TEST_RELEASE_BUILD=false bash .github/with_emulator_cleanup.sh ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon
+            TEST_RELEASE_BUILD=false bash .github/with_emulator_cleanup.sh ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon --stacktrace
 
       - name: Configure NDK tools PATH for alignment checking
         run: |
