@@ -7,20 +7,15 @@ import android.content.Context
 import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import androidx.core.content.withStyledAttributes
-import androidx.core.widget.TextViewCompat
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
-import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.R
-import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
-import com.ichi2.utils.setPaddingRelative
+import com.ichi2.utils.numberRangeTitle
 import timber.log.Timber
-import com.google.android.material.R as MaterialR
 
 open class NumberRangePreferenceCompat
     @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
@@ -165,30 +160,7 @@ open class NumberRangePreferenceCompat
             override fun onPrepareDialogBuilder(builder: androidx.appcompat.app.AlertDialog.Builder) {
                 super.onPrepareDialogBuilder(builder)
 
-                val titleText = preference.dialogTitle ?: preference.title
-                if (titleText.isNullOrEmpty()) {
-                    return
-                }
-                // Use a custom MaterialTextView to match the title text appearance and padding,
-                // as seen in other dialogs (e.g. "Create deck"). The default TextView renders
-                // the title too small and inconsistent with Material dialog standards.
-                val tv =
-                    MaterialTextView(requireContext()).apply {
-                        text = titleText
-                        setPaddingRelative(start = 24.dp, top = 20.dp, end = 24.dp, bottom = 8.dp)
-
-                        val outValue = TypedValue()
-                        val hasStyle =
-                            context.theme.resolveAttribute(MaterialR.attr.materialAlertDialogTitleTextStyle, outValue, true)
-                        val styleRes = if (hasStyle) outValue.resourceId else 0
-                        if (styleRes != 0) {
-                            TextViewCompat.setTextAppearance(this, styleRes)
-                        } else {
-                            TextViewCompat.setTextAppearance(this, MaterialR.style.TextAppearance_Material3_HeadlineSmall)
-                        }
-                    }
-
-                builder.setCustomTitle(tv)
+                builder.numberRangeTitle(preference.dialogTitle ?: preference.title, requireContext())
             }
 
             /**
