@@ -4,6 +4,7 @@ package com.ichi2.anki.previewer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.common.Flaky
@@ -73,6 +74,47 @@ class TemplatePreviewerViewModelTest : JvmTest() {
             assertNotEquals(ord1, ord2)
         }
     }
+
+    @Test
+    fun `empty cloze cards of an existing note are shown - Issue 20919`() =
+        runTest {
+            val note = addClozeNote("{{c1::foo}} {{c2::bar}}")
+            // c2 is removed in the note editor, but its card still exists
+            val arguments =
+                TemplatePreviewerArguments(
+                    notetypeFile = NotetypeFile(tempDirectory.root, note.notetype),
+                    fields = listOf("{{c1::foo}} bar", ""),
+                    tags = emptyList(),
+                    id = note.id,
+                )
+            createViewModel(arguments).run {
+                assertThat(getTemplateNames(), equalTo(cardNames(1, 2)))
+                assertThat(cardsWithEmptyFronts!!.await(), equalTo(listOf(false, true)))
+            }
+        }
+
+    @Test
+    fun `selected tab matches the previewed card if a cloze was removed - Issue 20919`() =
+        runTest {
+            val note = addClozeNote("{{c1::foo}} {{c2::bar}}").update { setItem("Text", "foo {{c2::bar}}") }
+            // the template editor previews the first card of cloze note types
+            val arguments =
+                TemplatePreviewerArguments(
+                    notetypeFile = NotetypeFile(tempDirectory.root, note.notetype),
+                    fields = note.fields,
+                    tags = note.tags,
+                    id = note.id,
+                    ord = 0,
+                    fillEmpty = true,
+                )
+            createViewModel(arguments).run {
+                assertThat(getTemplateNames(), equalTo(cardNames(1, 2)))
+                assertThat(getCurrentTabIndex(), equalTo(0))
+                assertThat(cardsWithEmptyFronts!!.await(), equalTo(listOf(true, false)))
+            }
+        }
+
+    private fun cardNames(vararg cardNumbers: Int) = cardNumbers.map { TR.cardTemplatesCard(it) }
 
     private fun runClozeTest(
         ord: Int = 0,
