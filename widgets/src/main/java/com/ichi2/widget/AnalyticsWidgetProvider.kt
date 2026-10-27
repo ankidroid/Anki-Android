@@ -10,7 +10,11 @@ import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.storage.grantedStoragePermissions
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
@@ -74,12 +78,19 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        if (runCatching { grantedStoragePermissions(context) }.getOrNull() != true) {
-            Timber.w("Opening widget ${this.javaClass.name} without storage access")
-            return
+        val widgetName = javaClass.name
+        applicationScope.launch {
+            val hasStorageAccess =
+                withContext(Dispatchers.IO) {
+                    runCatching { grantedStoragePermissions(context) }.getOrNull() == true
+                }
+            if (!hasStorageAccess) {
+                Timber.w("Opening widget $widgetName without storage access")
+                return@launch
+            }
+            Timber.d("$widgetName: performUpdate")
+            performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds))
         }
-        Timber.d("${this.javaClass.name}: performUpdate")
-        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds))
     }
 
     /**
