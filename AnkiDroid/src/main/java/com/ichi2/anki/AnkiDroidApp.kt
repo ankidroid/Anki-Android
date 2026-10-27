@@ -40,6 +40,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.utils.android.SdCard
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
@@ -205,7 +206,7 @@ open class AnkiDroidApp :
             LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
         Timber.plant(ReminderLogTree(this))
-        if (BuildConfig.ENABLE_LEAK_CANARY) {
+        if (BuildConfig.ENABLE_LEAK_CANARY && !isRobolectric) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
             LeakCanaryConfiguration.disable()
