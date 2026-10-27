@@ -19,6 +19,7 @@ import com.ichi2.anki.multiprofile.isPhoenixProcess
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import leakcanary.AppWatcher
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -84,6 +86,11 @@ class AnkiDroidAppTest {
             app.baseContext.javaClass.name,
             "ActivityThread.handleReceiver casts the application's base context to ContextImpl",
         )
+    }
+
+    @Test
+    fun `LeakCanary stays off in unit tests`() {
+        assertFalse(AppWatcher.isInstalled)
     }
 
     @Test
