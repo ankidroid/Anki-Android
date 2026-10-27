@@ -4,27 +4,123 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Context
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper.getMainLooper
+import android.os.SystemClock
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.widget.Spinner
 import androidx.fragment.app.testing.launchFragment
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
 import androidx.viewpager2.widget.ViewPager2
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog.Companion.ARG_NOTE_IDS
 import com.ichi2.anki.libanki.NoteId
 import org.hamcrest.Matchers.equalTo
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import java.time.Duration
 
 @RunWith(AndroidJUnit4::class)
 class ChangeNoteTypeDialogTest : RobolectricTest() {
+    private var touchDownTime = 0L
+
+    @Test
+    fun `tapping the destination note type presses and clicks the card`() =
+        withChangeNoteTypeDialog(addBasicNote().id) {
+            val card = requireView().findViewById<ViewGroup>(R.id.to_card)
+            var clicks = 0
+            card.setOnClickListener { clicks++ }
+            touchDestination(MotionEvent.ACTION_DOWN)
+            shadowOf(getMainLooper()).idleFor(Duration.ofMillis(ViewConfiguration.getTapTimeout().toLong()))
+            assertTrue("The whole card shows pressed feedback", card.isPressed)
+            touchDestination(MotionEvent.ACTION_UP)
+            shadowOf(getMainLooper()).idle()
+            assertThat(clicks, equalTo(1))
+        }
+
+    @Test
+    fun `dragging outside the destination card cancels its click`() =
+        withChangeNoteTypeDialog(addBasicNote().id) {
+            val card = requireView().findViewById<ViewGroup>(R.id.to_card)
+            var clicks = 0
+            card.setOnClickListener { clicks++ }
+            touchDestination(MotionEvent.ACTION_DOWN)
+            touchDestination(MotionEvent.ACTION_MOVE, outside = true)
+            assertFalse("Dragging away clears the ripple", card.isPressed)
+            touchDestination(MotionEvent.ACTION_UP, outside = true)
+            shadowOf(getMainLooper()).idle()
+            assertThat(clicks, equalTo(0))
+        }
+
+    @Test
+    fun `cancelling a destination touch clears the pressed state without clicking`() =
+        withChangeNoteTypeDialog(addBasicNote().id) {
+            val card = requireView().findViewById<ViewGroup>(R.id.to_card)
+            var clicks = 0
+            card.setOnClickListener { clicks++ }
+            touchDestination(MotionEvent.ACTION_DOWN)
+            touchDestination(MotionEvent.ACTION_CANCEL)
+            shadowOf(getMainLooper()).idle()
+            assertFalse(card.isPressed)
+            assertThat(clicks, equalTo(0))
+        }
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // View.getTooltipText
+    fun `destination card tooltip follows the selected note type`() =
+        withChangeNoteTypeDialog(addBasicNote().id) {
+            val card = requireView().findViewById<View>(R.id.to_card)
+            assertThat(card.tooltipText?.toString(), equalTo("Basic"))
+            selectNoteType("Cloze")
+            assertThat(card.tooltipText?.toString(), equalTo("Cloze"))
+        }
+
+    @Test
+    fun `long pressing the destination note type does not click the card`() =
+        withChangeNoteTypeDialog(addBasicNote().id) {
+            val card = requireView().findViewById<ViewGroup>(R.id.to_card)
+            var clicks = 0
+            card.setOnClickListener { clicks++ }
+            touchDestination(MotionEvent.ACTION_DOWN)
+            shadowOf(getMainLooper()).idleFor(Duration.ofMillis(ViewConfiguration.getLongPressTimeout().toLong() + 1))
+            touchDestination(MotionEvent.ACTION_UP)
+            shadowOf(getMainLooper()).idle()
+            assertThat(clicks, equalTo(0))
+        }
+
+    private fun ChangeNoteTypeDialog.touchDestination(
+        action: Int,
+        outside: Boolean = false,
+    ) {
+        val card = requireView().findViewById<ViewGroup>(R.id.to_card)
+        val spinner = requireView().findViewById<Spinner>(R.id.dest_note_type_spinner)
+        val bounds = Rect()
+        spinner.selectedView.getDrawingRect(bounds)
+        card.offsetDescendantRectToMyCoords(spinner.selectedView, bounds)
+        val x = if (outside) -100f else bounds.exactCenterX()
+        val y = bounds.exactCenterY()
+        val time = SystemClock.uptimeMillis()
+        if (action == MotionEvent.ACTION_DOWN) touchDownTime = time
+        val event = MotionEvent.obtain(touchDownTime, time, action, x, y, 0)
+        try {
+            card.dispatchTouchEvent(event)
+        } finally {
+            event.recycle()
+        }
+    }
+
     /**
      * #20944: with an accessibility service enabled, a Spinner reports its initial selection.
      * A template selection is meaningless for cloze, and used to be fatal
