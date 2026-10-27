@@ -181,6 +181,11 @@ jobs:
       - name: Pin Build Time
         run: echo "ORG_GRADLE_PROJECT_buildTime=$(date +%s000)" >> "$GITHUB_ENV"
 
+      - name: Raise Gradle Heap
+        # The release smoke build can run out of heap while packaging (#22741).
+        # Every Gradle step in this job shares one daemon, so this applies to all of them.
+        run: echo "org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8" >> "$GRADLE_USER_HOME/gradle.properties"
+
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
