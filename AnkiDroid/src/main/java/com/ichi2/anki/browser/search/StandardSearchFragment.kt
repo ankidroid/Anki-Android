@@ -23,6 +23,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.SearchHistoryItems
 import com.ichi2.anki.browser.toUserSpannable
+import com.ichi2.anki.common.utils.ellipsize
 import com.ichi2.anki.databinding.FragmentStandardSearchBinding
 import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
 import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
@@ -263,8 +264,9 @@ class StandardSearchFragment :
                     }
 
                 val item = getItem(position)!!
-                binding.title.text = item.name
-                binding.content.text = item.query
+                // Bound the preview before layout to avoid ANRs on very large saved searches.
+                binding.title.text = item.name.ellipsize(MAX_SAVED_SEARCH_PREVIEW_LENGTH)
+                binding.content.text = item.query.ellipsize(MAX_SAVED_SEARCH_PREVIEW_LENGTH)
 
                 binding.root.setOnClickListener { viewModel.submitSavedSearch(item) }
                 binding.insertSavedSearch.setOnClickListener { viewModel.applySavedSearch(item) }
@@ -302,6 +304,8 @@ class StandardSearchFragment :
 
     companion object {
         const val TAG = "STANDARD"
+
+        private const val MAX_SAVED_SEARCH_PREVIEW_LENGTH = 500
     }
 }
 
