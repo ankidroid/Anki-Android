@@ -4,6 +4,7 @@ package com.ichi2.anki.previewer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.testutils.JvmTest
@@ -11,6 +12,8 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
 import io.mockk.spyk
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
@@ -113,6 +116,48 @@ class TemplatePreviewerViewModelTest : JvmTest() {
                 assertThat(cardsWithEmptyFronts!!.await(), equalTo(listOf(true, false)))
             }
         }
+
+    @Test
+    fun `previewed card is listed after card 1 is deleted - Issue 20919`() =
+        runTest {
+            createViewModel(previewWithDeletedCard1()).run {
+                assertThat(getTemplateNames(), equalTo(cardNames(2)))
+                assertThat(getCurrentTabIndex(), equalTo(0))
+                assertThat(currentCard.await().ord, equalTo(1))
+            }
+        }
+
+    @Test
+    fun `page shows a listed card if it loads before the cloze cards - Issue 20919`() =
+        runTest {
+            val arguments = previewWithDeletedCard1()
+            // collection work waits for the scheduler, so the page finishes loading first
+            val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+            try {
+                val viewModel = createViewModel(arguments)
+                viewModel.onPageFinished(isAfterRecreation = false)
+                val shownCard = viewModel.currentCard
+                advanceUntilIdle()
+                assertThat(shownCard.await().ord, equalTo(1))
+            } finally {
+                CollectionManager.setTestDispatcher(previousQueue)
+            }
+        }
+
+    /** The template editor previewing a cloze note whose card 1 was deleted by 'Empty Cards' */
+    private fun previewWithDeletedCard1(): TemplatePreviewerArguments {
+        val note = addClozeNote("{{c1::foo}} {{c2::bar}}").update { setItem("Text", "foo {{c2::bar}}") }
+        col.removeCardsAndOrphanedNotes(listOf(note.cards(col).single { it.ord == 0 }.id))
+        // the template editor previews the first card of cloze note types
+        return TemplatePreviewerArguments(
+            notetypeFile = NotetypeFile(tempDirectory.root, note.notetype),
+            fields = note.fields,
+            tags = note.tags,
+            id = note.id,
+            ord = 0,
+            fillEmpty = true,
+        )
+    }
 
     private fun cardNames(vararg cardNumbers: Int) = cardNumbers.map { TR.cardTemplatesCard(it) }
 

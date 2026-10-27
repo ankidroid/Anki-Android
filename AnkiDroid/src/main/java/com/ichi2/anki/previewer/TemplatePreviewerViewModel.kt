@@ -77,19 +77,6 @@ class TemplatePreviewerViewModel(
                     tags = arguments.tags.toMutableList()
                 }
             }
-        currentCard =
-            asyncIO {
-                val note = note.await()
-                withCol {
-                    note.ephemeralCard(
-                        col = this,
-                        ord = ordFlow.value,
-                        customNoteType = notetype,
-                        fillEmpty = fillEmpty,
-                        deckId = arguments.deckId,
-                    )
-                }
-            }
         if (isCloze) {
             val clozeNumbers =
                 asyncIO {
@@ -101,7 +88,12 @@ class TemplatePreviewerViewModel(
                     val note = note.await()
                     // cards of removed clozes are kept until 'Empty Cards' is used
                     val existingCardOrds = withCol { note.cards(this) }.map { it.ord }
-                    (clozeNumbers.await().map { it - 1 } + existingCardOrds).distinct().sorted()
+                    val cardOrds = (clozeNumbers.await().map { it - 1 } + existingCardOrds).distinct().sorted()
+                    // the requested card may not exist, e.g. the template editor requests the first card
+                    if (cardOrds.isNotEmpty() && ordFlow.value !in cardOrds) {
+                        ordFlow.value = cardOrds.first()
+                    }
+                    cardOrds
                 }
             clozeOrds = ords
             templateNames =
@@ -136,6 +128,21 @@ class TemplatePreviewerViewModel(
                     }
                 }
         }
+        currentCard =
+            asyncIO {
+                // a cloze card is only selected after its ords are loaded
+                clozeOrds?.await()
+                val note = note.await()
+                withCol {
+                    note.ephemeralCard(
+                        col = this,
+                        ord = ordFlow.value,
+                        customNoteType = notetype,
+                        fillEmpty = fillEmpty,
+                        deckId = arguments.deckId,
+                    )
+                }
+            }
     }
 
     /* *********************************************************************************************
@@ -151,6 +158,8 @@ class TemplatePreviewerViewModel(
             return
         }
         launchCatchingIO {
+            // a cloze card is only selected after its ords are loaded
+            clozeOrds?.await()
             ordFlow.collectLatest { ord ->
                 currentCard =
                     asyncIO {
