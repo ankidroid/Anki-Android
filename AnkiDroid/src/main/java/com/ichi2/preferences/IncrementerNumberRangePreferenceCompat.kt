@@ -12,7 +12,7 @@ import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.databinding.DialogIncrementerPreferenceBinding
-import com.ichi2.anki.ui.NonLeadingZeroInputFilter
+import com.ichi2.utils.NonLeadingZeroInputFilter
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
 
