@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.core.content.withStyledAttributes
-import com.ichi2.anki.common.android.R as CommonR
+import com.ichi2.anki.common.android.R
 
 /** The XML theme's widget outline; e-ink uses it to distinguish white surfaces. */
 val MaterialTheme.widgetBorder: BorderStroke?
@@ -21,7 +21,7 @@ val MaterialTheme.widgetBorder: BorderStroke?
         val density = LocalDensity.current
         return remember(context, density) {
             var border: BorderStroke? = null
-            context.withStyledAttributes(attrs = intArrayOf(CommonR.attr.widgetStrokeWidth, CommonR.attr.widgetStrokeColor)) {
+            context.withStyledAttributes(attrs = intArrayOf(R.attr.widgetStrokeWidth, R.attr.widgetStrokeColor)) {
                 val width = with(density) { getDimension(0, 0f).toDp() }
                 if (width > 0.dp) {
                     border = BorderStroke(width, Color(getColor(1, android.graphics.Color.TRANSPARENT)))
