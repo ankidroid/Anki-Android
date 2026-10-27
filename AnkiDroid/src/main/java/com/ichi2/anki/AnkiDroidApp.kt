@@ -33,6 +33,7 @@ import com.ichi2.anki.common.android.getCurrentLocaleTag
 import com.ichi2.anki.common.android.withAppLocale
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.appName
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
@@ -187,6 +188,7 @@ open class AnkiDroidApp :
         }
 
         ApplicationContextInitializer.setInstance(this)
+        appName = getString(R.string.app_name)
 
         initializeAcraCrashReporter()
         initializeNavigator()

@@ -15,6 +15,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.getSystemService
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.appName
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.snackbar.canProperlyShowSnackbars
 import com.ichi2.anki.snackbar.showSnackbar
@@ -163,7 +164,7 @@ private fun Context.copyTextToClipboard(text: TruncatedString): Boolean {
     return try {
         clipboardManager.setPrimaryClip(
             ClipData.newPlainText(
-                "${VersionUtils.appName} v${VersionUtils.pkgVersionName}",
+                "$appName v${VersionUtils.pkgVersionName}",
                 text.value,
             ),
         )
