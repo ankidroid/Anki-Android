@@ -54,6 +54,9 @@ class ManageTagsViewModel : ViewModel() {
     /** Cached flat list of all tags, rebuilt when the backend tree changes */
     private var tagList: List<TagListItemState> = emptyList()
 
+    /** Explicit collapses override search expansion until the query changes. */
+    private val searchCollapsedTags = mutableSetOf<TagName>()
+
     private var tagOperation: Job? = null
     private var expansionSave: Job? = null
 
@@ -74,6 +77,7 @@ class ManageTagsViewModel : ViewModel() {
      * of having a filtered tag selected.
      */
     fun filter(query: String) {
+        if (query != searchQuery.value) searchCollapsedTags.clear()
         searchQuery.value = query
         updateState { loaded ->
             loaded.copy(
@@ -88,14 +92,14 @@ class ManageTagsViewModel : ViewModel() {
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
 
-    /** Finds a tag in the cached hierarchy. */
+    /** Finds a tag using its displayed expansion state when visible. */
     private fun findTagNode(tag: TagName): TagListItemState? {
         val loaded = state.value as? ManageTagsState.Content
         if (loaded == null) {
             Timber.w("findTagNode called while not loaded")
             return null
         }
-        return tagList.firstOrNull { it.fullTag == tag }.also {
+        return (loaded.visibleNodes.firstOrNull { it.fullTag == tag } ?: tagList.firstOrNull { it.fullTag == tag }).also {
             if (it == null) {
                 Timber.w("Tag not found in hierarchy")
                 Timber.d("Tag: %s", tag)
@@ -122,6 +126,9 @@ class ManageTagsViewModel : ViewModel() {
                         return@launch
                     }
                 val newCollapsed = !node.collapsed
+                if (searchQuery.value.isNotBlank()) {
+                    if (newCollapsed) searchCollapsedTags.add(node.fullTag) else searchCollapsedTags.remove(node.fullTag)
+                }
                 tagList =
                     tagList.map {
                         if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
@@ -264,7 +271,7 @@ class ManageTagsViewModel : ViewModel() {
             applyCollapsedVisibility(tagList)
         } else {
             // collapsed nodes can be re-expanded if searchQuery matches the leaf nodes
-            applySearchFilter(tagList, searchQuery)
+            applySearchFilter(tagList, searchQuery, searchCollapsedTags)
         }
 
     /** Applies [transform] only if the current state is [ManageTagsState.Content]; no-ops otherwise */
@@ -334,6 +341,7 @@ class ManageTagsViewModel : ViewModel() {
          * plus their ancestors to preserve hierarchy.
          * Expands ancestors only when a match reaches a child's own name. A match inherited
          * from a parent's name preserves the subtree's existing collapsed state.
+         * [manuallyCollapsedTags] prevents search from reopening tags collapsed by the user.
          *
          * O(n*d) where n = number of tags and d = maximum tag depth.
          */
@@ -341,6 +349,7 @@ class ManageTagsViewModel : ViewModel() {
         fun applySearchFilter(
             allNodes: List<TagListItemState>,
             searchQuery: String,
+            manuallyCollapsedTags: Set<TagName> = emptySet(),
         ): List<TagListItemState> {
             val queryLowercase = searchQuery.lowercase()
             val visibleTags = mutableSetOf<String>()
@@ -359,7 +368,7 @@ class ManageTagsViewModel : ViewModel() {
                 allNodes
                     .filter { it.fullTag.value in visibleTags }
                     .map {
-                        if (it.collapsed && it.fullTag.value in ancestorsToExpand) {
+                        if (it.collapsed && it.fullTag.value in ancestorsToExpand && it.fullTag !in manuallyCollapsedTags) {
                             it.copy(collapsed = false)
                         } else {
                             it
