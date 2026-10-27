@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
+import com.ichi2.anki.browser.setColumn
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
@@ -29,6 +31,23 @@ import org.robolectric.RuntimeEnvironment
  * `./gradlew :AnkiDroid:verifyRoborazziPlayDebug -Pscreenshot --tests "com.ichi2.anki.CardBrowserScreenshotTest"`
  */
 class CardBrowserScreenshotTest : ScreenshotTest() {
+    @Test
+    fun `long browser cells wrap when collapsed and expanded - Issue 22827`() =
+        runTest {
+            val text = "A long paragraph of card text. ".repeat(2000)
+            addBasicNote(text, text)
+            val browser = getBrowserWithNotes(noteCount = 0)
+            browser.viewModel.setColumn(1, ANSWER)
+            advanceRobolectricLooper()
+            browser.waitForSearchResults()
+
+            for ((truncated, state) in listOf(true to "collapsed", false to "expanded", true to "collapsed_again")) {
+                browser.viewModel.setTruncated(truncated).join()
+                advanceRobolectricLooper()
+                captureScreen("long_cells_$state")
+            }
+        }
+
     @Test
     fun cardBrowserWith30Notes() =
         withCardBrowser(noteCount = 50) { browser ->
