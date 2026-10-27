@@ -96,16 +96,24 @@ class TemplatePreviewerViewModel(
                     val note = note.await()
                     withCol { clozeNumbersInNote(note) }
                 }
-            clozeOrds =
+            val ords =
                 asyncIO {
-                    clozeNumbers.await().map { it - 1 }
+                    val note = note.await()
+                    // cards of removed clozes are kept until 'Empty Cards' is used
+                    val existingCardOrds = withCol { note.cards(this) }.map { it.ord }
+                    (clozeNumbers.await().map { it - 1 } + existingCardOrds).distinct().sorted()
                 }
+            clozeOrds = ords
             templateNames =
                 asyncIO {
                     val tr = CollectionManager.TR
-                    clozeNumbers.await().map { tr.cardTemplatesCard(it) }
+                    ords.await().map { tr.cardTemplatesCard(it + 1) }
                 }
-            cardsWithEmptyFronts = null
+            cardsWithEmptyFronts =
+                asyncIO {
+                    val ordsInFields = clozeNumbers.await().map { it - 1 }
+                    ords.await().map { it !in ordsInFields }
+                }
         } else {
             clozeOrds = null
             templateNames = CompletableDeferred(notetype.templatesNames)
@@ -198,8 +206,10 @@ class TemplatePreviewerViewModel(
         }
 
     suspend fun getSafeClozeOrd(): CardOrdinal {
-        val ords = clozeOrds?.await() ?: return 0
-        return if (ords.isEmpty()) 0 else ordFlow.value.coerceIn(0, ords.size - 1)
+        if (clozeOrds == null) return 0
+        clozeOrds.await()
+        // the previewer is recreated on the same card, e.g. after an edit
+        return ordFlow.value
     }
 
     fun updateContent(
