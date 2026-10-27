@@ -4,6 +4,8 @@ package com.ichi2.anki.preferences
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.CollectionPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +24,9 @@ data class TimeboxUiState(
 /**
  * State holder for [TimeboxSettingsFragment] and [TimeboxSettingsScreen].
  */
-class TimeboxSettingsViewModel : ViewModel() {
+class TimeboxSettingsViewModel(
+    private val prefs: PrefsRepository = Prefs,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(TimeboxUiState())
     val uiState: StateFlow<TimeboxUiState> = _uiState.asStateFlow()
 
@@ -34,7 +38,14 @@ class TimeboxSettingsViewModel : ViewModel() {
         viewModelScope.launch {
             val limitMinutes = CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)
             val isEnabled = limitMinutes > 0
-            val minutes = if (isEnabled) limitMinutes else DEFAULT_TIMEBOX_MINUTES
+            val minutes =
+                if (isEnabled) {
+                    val clamped = limitMinutes.coerceIn(MIN_TIMEBOX_MINUTES, MAX_TIMEBOX_MINUTES)
+                    prefs.customTimeboxLimit = clamped
+                    clamped
+                } else {
+                    prefs.customTimeboxLimit.coerceIn(MIN_TIMEBOX_MINUTES, MAX_TIMEBOX_MINUTES)
+                }
             _uiState.value =
                 TimeboxUiState(
                     isLoading = false,
@@ -47,7 +58,6 @@ class TimeboxSettingsViewModel : ViewModel() {
     fun toggleEnabled(enabled: Boolean) {
         _uiState.update { it.copy(isEnabled = enabled) }
         viewModelScope.launch {
-            // TODO: Follow-up issue: persist the old non-zero time limit in Android storage when disabled so the value is restored on re-enabling
             val minutesToSave = if (enabled) _uiState.value.minutes else 0
             CollectionPreferences.setTimeboxTimeLimit(minutesToSave.toDuration(DurationUnit.MINUTES))
         }
@@ -56,6 +66,7 @@ class TimeboxSettingsViewModel : ViewModel() {
     fun setMinutes(newMinutes: Int) {
         val clamped = newMinutes.coerceIn(MIN_TIMEBOX_MINUTES, MAX_TIMEBOX_MINUTES)
         _uiState.update { it.copy(minutes = clamped) }
+        prefs.customTimeboxLimit = clamped
         if (_uiState.value.isEnabled) {
             viewModelScope.launch {
                 CollectionPreferences.setTimeboxTimeLimit(clamped.toDuration(DurationUnit.MINUTES))
