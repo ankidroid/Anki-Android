@@ -72,7 +72,7 @@ class PermissionsActivityStorageSetupTest : RobolectricTest() {
                 assertEquals(getResourceString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
                 assertNull(collectionPath)
                 assertFalse(activity.isFinishing)
-                assertTrue(activity.binding.continueButton.isEnabled)
+                assertTrue(activity.binding.continueWithoutAccess.isEnabled)
             } finally {
                 unmockkObject(CollectionHelper)
             }
@@ -83,7 +83,7 @@ class PermissionsActivityStorageSetupTest : RobolectricTest() {
     }
 
     private fun useAppFolder(activity: PermissionsActivity) {
-        activity.binding.continueButton.performClick()
+        activity.chooseAppFolder()
         advanceRobolectricLooper()
     }
 

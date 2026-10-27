@@ -118,10 +118,7 @@ class PermissionsActivityTaskReplacementTest : RobolectricTest() {
                     )
                 saveControllerForCleanup(original)
                 original.setup()
-                original
-                    .get()
-                    .binding.continueButton
-                    .performClick()
+                original.get().chooseAppFolder()
                 advanceRobolectricLooper()
                 assertTrue(workerPaused.await(10, TimeUnit.SECONDS))
                 original.pause().stop()

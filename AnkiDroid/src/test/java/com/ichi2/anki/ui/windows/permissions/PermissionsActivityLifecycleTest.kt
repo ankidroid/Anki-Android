@@ -104,16 +104,13 @@ class PermissionsActivityLifecycleTest : RobolectricTest() {
 
                 fun assertChoiceUnchanged() {
                     val activity = controller.get()
-                    assertEquals(getResourceString(CommonString.use_app_folder), activity.binding.continueButton.text)
-                    assertEquals(getResourceString(CommonString.permissions_screen_optional_headline), activity.binding.headline.text)
-                    assertTrue(activity.binding.privateStorageExplanation.isVisible)
+                    assertEquals(getResourceString(CommonString.allow_file_access), activity.binding.continueButton.text)
+                    assertEquals(getResourceString(CommonString.storage_setup_title), activity.binding.headline.text)
+                    assertTrue(activity.binding.storagePermissionExplanation.isVisible)
                     assertSame(originalFragment, activity.supportFragmentManager.findFragmentById(R.id.fragment_container))
                 }
 
-                controller
-                    .get()
-                    .binding.continueButton
-                    .performClick()
+                controller.get().chooseAppFolder()
                 advanceRobolectricLooper()
                 assertTrue(workerPaused.await(10, TimeUnit.SECONDS), "The storage worker must reach the preference write")
                 if (writeBeforePause) {
@@ -132,9 +129,10 @@ class PermissionsActivityLifecycleTest : RobolectricTest() {
                     controller.pause().stop().saveInstanceState(Bundle())
                 }
                 val binding = controller.get().binding
-                assertFalse(binding.continueButton.isEnabled)
-                assertEquals(getResourceString(CommonString.use_app_folder), binding.continueButton.text)
-                assertTrue(binding.privateStorageExplanation.isVisible)
+                assertFalse(binding.continueWithoutAccess.isEnabled)
+                assertTrue(binding.continueButton.isEnabled)
+                assertEquals(getResourceString(CommonString.allow_file_access), binding.continueButton.text)
+                assertTrue(binding.storagePermissionExplanation.isVisible)
                 allowWorkerToFinish.countDown()
                 runBlocking { CollectionManager.ensureClosed() }
                 advanceRobolectricLooper()
@@ -145,9 +143,9 @@ class PermissionsActivityLifecycleTest : RobolectricTest() {
                     }
                     assertFalse(recreated.isFinishing)
                     assertNull(targetContext.sharedPrefs().getString(CollectionHelper.PREF_COLLECTION_PATH, null))
-                    assertTrue(recreated.binding.continueButton.isEnabled)
-                    assertEquals(getResourceString(CommonString.use_app_folder), recreated.binding.continueButton.text)
-                    recreated.binding.continueButton.performClick()
+                    assertTrue(recreated.binding.continueWithoutAccess.isEnabled)
+                    assertEquals(getResourceString(CommonString.allow_file_access), recreated.binding.continueButton.text)
+                    recreated.chooseAppFolder()
                     advanceRobolectricLooper()
                 }
                 if (pauseAt == StorageChangePause.AFTER_WRITE_WHILE_STOPPED) {

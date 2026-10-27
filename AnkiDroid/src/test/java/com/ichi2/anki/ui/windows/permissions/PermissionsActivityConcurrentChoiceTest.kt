@@ -15,7 +15,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
-import com.ichi2.anki.databinding.FragmentPermissionsStartingAt30Binding
 import com.ichi2.anki.selectStoragePermissions
 import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.withAllFilesAccess
@@ -78,17 +77,13 @@ class PermissionsActivityConcurrentChoiceTest : RobolectricTest() {
                     )
                 saveControllerForCleanup(controller)
                 controller.setup()
-                controller
-                    .get()
-                    .binding.continueButton
-                    .performClick()
+                controller.get().chooseAppFolder()
                 advanceRobolectricLooper()
                 assertTrue(workerPaused.await(10, TimeUnit.SECONDS))
 
                 if (rotate) controller.recreate()
                 val activity = controller.get()
-                val fragment = activity.binding.fragmentContainer.getFragment<PermissionsStartingAt30Fragment>()
-                FragmentPermissionsStartingAt30Binding.bind(fragment.requireView()).allFilesPermission.performClick()
+                activity.binding.continueButton.performClick()
                 val settingsIntent = assertNotNull(shadowOf(activity).nextStartedActivityForResult).intent
                 assertEquals(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, settingsIntent.action)
                 controller.pause().stop()

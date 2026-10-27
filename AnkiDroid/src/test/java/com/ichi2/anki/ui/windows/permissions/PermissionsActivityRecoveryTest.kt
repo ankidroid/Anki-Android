@@ -24,7 +24,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import org.robolectric.shadows.ShadowDialog
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -49,7 +48,6 @@ class PermissionsActivityRecoveryTest : RobolectricTest() {
                     activity.binding.continueButton.performClick()
                     advanceRobolectricLooper()
 
-                    assertNull(ShadowDialog.getLatestDialog(), "An existing collection must not be offered a storage reset")
                     assertEquals(originalPath, collectionPath)
                     assertFalse(activity.isFinishing)
                     assertContinueRequiresPermission(activity)
@@ -98,7 +96,6 @@ class PermissionsActivityRecoveryTest : RobolectricTest() {
                 activity.binding.continueButton.performClick()
                 advanceRobolectricLooper()
 
-                assertNull(ShadowDialog.getLatestDialog(), "Internet denial must not open the storage warning")
                 assertEquals(originalPath, collectionPath)
                 assertFalse(activity.isFinishing)
                 assertContinueRequiresPermission(activity)
@@ -118,9 +115,9 @@ class PermissionsActivityRecoveryTest : RobolectricTest() {
                 scenario.moveToState(Lifecycle.State.RESUMED)
                 scenario.onActivity { activity ->
                     assertTrue(activity.binding.continueButton.isEnabled)
-                    assertEquals(getResourceString(CommonString.use_app_folder), activity.binding.continueButton.text)
-                    assertTrue(activity.binding.privateStorageExplanation.isVisible)
-                    activity.binding.continueButton.performClick()
+                    assertEquals(getResourceString(CommonString.allow_file_access), activity.binding.continueButton.text)
+                    assertTrue(activity.binding.storagePermissionExplanation.isVisible)
+                    activity.chooseAppFolder()
                     advanceRobolectricLooper()
 
                     assertTrue(activity.isFinishing)
@@ -161,9 +158,11 @@ class PermissionsActivityRecoveryTest : RobolectricTest() {
         withManageExternalStorageInManifest {
             withPermissionsScreen { scenario ->
                 scenario.onActivity { activity ->
+                    val skipButton = activity.binding.continueWithoutAccess
+                    assertTrue(skipButton.isEnabled)
                     val originalPath = File(publicCollectionPath, "chosen-by-another-task").path
                     targetContext.sharedPrefs().edit { putString(CollectionHelper.PREF_COLLECTION_PATH, originalPath) }
-                    activity.binding.continueButton.performClick()
+                    skipButton.performClick()
                     advanceRobolectricLooper()
 
                     assertEquals(originalPath, collectionPath)
@@ -180,8 +179,10 @@ class PermissionsActivityRecoveryTest : RobolectricTest() {
         withManageExternalStorageInManifest {
             withPermissionsScreen { scenario ->
                 scenario.onActivity { activity ->
+                    val skipButton = activity.binding.continueWithoutAccess
+                    assertTrue(skipButton.isEnabled)
                     denyPermissions(Manifest.permission.INTERNET)
-                    activity.binding.continueButton.performClick()
+                    skipButton.performClick()
                     advanceRobolectricLooper()
 
                     assertNull(collectionPath)
@@ -199,7 +200,8 @@ class PermissionsActivityRecoveryTest : RobolectricTest() {
 
     private fun assertContinueRequiresPermission(activity: PermissionsActivity) {
         assertFalse(activity.binding.continueButton.isEnabled)
-        assertFalse(activity.binding.privateStorageExplanation.isVisible)
+        assertFalse(activity.binding.storagePermissionExplanation.isVisible)
+        assertFalse(activity.binding.continueWithoutAccess.isVisible)
         assertEquals(getResourceString(CommonString.dialog_continue), activity.binding.continueButton.text)
     }
 

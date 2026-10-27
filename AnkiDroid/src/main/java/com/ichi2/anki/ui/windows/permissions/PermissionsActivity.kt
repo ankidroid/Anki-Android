@@ -5,12 +5,17 @@ package com.ichi2.anki.ui.windows.permissions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.withStarted
@@ -21,7 +26,9 @@ import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.isLegacyStorage
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.exception.StorageAccessException
@@ -56,6 +63,10 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     private lateinit var permissionSet: StoragePermissionSet
     private val completingStorage: Boolean
         get() = viewModel.storageCompletion != null
+    private val showStorageSetup: Boolean
+        get() =
+            viewModel.choosingAppFolder ||
+                (!permissionSet.hasRequiredPermissions(this) && viewModel.canChooseAppPrivateStorage(permissionSet))
     private var completionObserver: Job? = null
     private val storagePathListener =
         OnSharedPreferenceChangeListener { _, key ->
@@ -108,6 +119,9 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     }
 
     private fun configurePermissions() {
+        binding.permissionsScrollArea.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            binding.storageSetupGradient.translationY = -scrollY.toFloat()
+        }
         setFragmentResultListener(REQUEST_PERMISSIONS) { _, _ -> refreshPermissions() }
         setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ ->
             refreshPermissions()
@@ -117,9 +131,19 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
 
         showPermissionsFragment()
         binding.continueButton.setOnClickListener {
-            if (completingStorage) return@setOnClickListener
             refreshPermissions()
-            completeStorageChoice()
+            if (permissionSet.hasRequiredPermissions(this)) {
+                completeStorageChoice()
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && showStorageSetup) {
+                (supportFragmentManager.findFragmentById(R.id.fragment_container) as? PermissionsStartingAt30Fragment)
+                    ?.requestStoragePermission()
+            }
+        }
+        binding.continueWithoutAccess.setOnClickListener {
+            refreshPermissions()
+            if (!completingStorage && viewModel.canChooseAppPrivateStorage(permissionSet)) {
+                completeStorageChoice()
+            }
         }
         refreshPermissions()
     }
@@ -145,15 +169,47 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         }
         val hasRequiredPermissions = permissionSet.hasRequiredPermissions(this)
         val canUseAppFolder = !hasRequiredPermissions && viewModel.canChooseAppPrivateStorage(permissionSet)
-        val showAppFolderChoice = viewModel.choosingAppFolder || canUseAppFolder
-        binding.privateStorageExplanation.isVisible = showAppFolderChoice
-        binding.continueButton.apply {
-            isEnabled = !completingStorage && (hasRequiredPermissions || canUseAppFolder)
-            setText(if (showAppFolderChoice) CommonString.use_app_folder else CommonString.dialog_continue)
+        val showStorageSetup = showStorageSetup
+        binding.storageSetupArtwork.isVisible = showStorageSetup && resources.configuration.screenHeightDp >= 480
+        binding.storageSetupGradient.isVisible = binding.storageSetupArtwork.isVisible
+        binding.permissionsSpacer.isVisible = !showStorageSetup
+        binding.storagePermissionExplanation.isVisible = showStorageSetup
+        binding.fragmentContainer.isVisible = !showStorageSetup
+        binding.permissionsScrollArea.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            matchConstraintMaxWidth = if (showStorageSetup) 480.dp.toPx(this@PermissionsActivity) else 0
         }
-        binding.headline.setText(
-            if (showAppFolderChoice) CommonString.permissions_screen_optional_headline else CommonString.permissions_screen_headline,
+        val actionPadding = (if (showStorageSetup) 32 else 16).dp.toPx(this)
+        binding.permissionActions.updatePadding(
+            left = actionPadding,
+            right = actionPadding,
+            top = if (showStorageSetup) 0 else actionPadding,
+            bottom = 16.dp.toPx(this),
         )
+        binding.continueWithoutAccess.apply {
+            isVisible = showStorageSetup
+            isEnabled = !completingStorage && canUseAppFolder
+        }
+        binding.continueButton.apply {
+            minHeight = (if (showStorageSetup) 56 else 48).dp.toPx(this@PermissionsActivity)
+            isEnabled = showStorageSetup || (!completingStorage && hasRequiredPermissions)
+            setText(if (showStorageSetup) CommonString.allow_file_access else CommonString.dialog_continue)
+        }
+        binding.headline.apply {
+            setTextAppearance(
+                if (showStorageSetup) {
+                    com.google.android.material.R.style.TextAppearance_Material3_HeadlineLarge
+                } else {
+                    com.google.android.material.R.style.TextAppearance_Material3_HeadlineSmall
+                },
+            )
+            setTypeface(typeface, if (showStorageSetup) Typeface.BOLD else Typeface.NORMAL)
+            setTextColor(getColorFromAttr(this@PermissionsActivity, android.R.attr.textColorPrimary))
+            updatePadding(
+                top = 32.dp.toPx(this@PermissionsActivity),
+                bottom = (if (showStorageSetup) 12 else 32).dp.toPx(this@PermissionsActivity),
+            )
+            setText(if (showStorageSetup) CommonString.storage_setup_title else CommonString.permissions_screen_headline)
+        }
     }
 
     private fun completeStorageChoice() {

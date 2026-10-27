@@ -55,22 +55,26 @@ class PermissionsActivityScreenshotTest : ScreenshotTest() {
     }
 
     @Test
-    fun `storage permission and app folder explanation`(
+    fun `file access request`(
         @TestParameter("EXTERNAL_MANAGER") permissionSet: StoragePermissionSet,
+        @TestParameter landscape: Boolean,
     ) {
+        setOrientation(landscape)
         targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
         withPermissionsScreen(permissionSet) { activity ->
             assertFalse(permissionSet.hasRequiredPermissions(activity))
-            assertTrue(activity.binding.privateStorageExplanation.isVisible)
+            assertTrue(activity.binding.storagePermissionExplanation.isVisible)
             assertTrue(activity.binding.continueButton.isEnabled)
-            assertEquals(getResourceString(CommonString.use_app_folder), activity.binding.continueButton.text)
-            val name = permissionSet.name.lowercase()
+            assertEquals(getResourceString(CommonString.allow_file_access), activity.binding.continueButton.text)
+            assertTrue(activity.binding.continueWithoutAccess.isVisible)
+            assertFalse(activity.binding.fragmentContainer.isVisible)
+            val name = permissionSet.name.lowercase() + if (landscape) "_landscape" else ""
             captureScreen(name)
         }
     }
 
     @Test
-    fun `storage choices remain reachable with large text in a short window`(
+    fun `file access explanation and actions remain reachable with large text in a short window`(
         @TestParameter("EXTERNAL_MANAGER") permissionSet: StoragePermissionSet,
         @TestParameter("320", "600") heightDp: Int,
     ) {
@@ -78,31 +82,26 @@ class PermissionsActivityScreenshotTest : ScreenshotTest() {
         RuntimeEnvironment.setFontScale(2f)
         targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
         withPermissionsScreen(permissionSet) { activity ->
-            val name = "app_folder_large_text_$heightDp"
-            val fragment = activity.binding.fragmentContainer.getFragment<PermissionsStartingAt30Fragment>()
-            val permissionSwitch =
-                FragmentPermissionsStartingAt30Binding
-                    .bind(
-                        fragment.requireView(),
-                    ).allFilesPermission.binding.switchWidget
-            assertCanScrollTo(permissionSwitch)
-            captureScreen("${name}_permission")
-
-            // The warning can be taller than the viewport; both its first and last lines must be reachable.
-            val explanation = activity.binding.privateStorageExplanation
+            val name = "storage_setup_large_text_$heightDp"
+            val explanation = activity.binding.storagePermissionExplanation
             assertCanScrollTo(explanation, Rect(0, 0, explanation.width, explanation.paddingTop + explanation.lineHeight))
-            captureScreen("${name}_warning_start")
+            captureScreen("${name}_explanation")
             assertCanScrollTo(
                 explanation,
-                Rect(0, explanation.height - explanation.paddingBottom - explanation.lineHeight, explanation.width, explanation.height),
+                Rect(
+                    0,
+                    explanation.height - explanation.paddingBottom - explanation.lineHeight,
+                    explanation.width,
+                    explanation.height - explanation.paddingBottom,
+                ),
             )
-            captureScreen("${name}_warning_end")
+            captureScreen("${name}_explanation_end")
 
             val button = activity.binding.continueButton
             assertTrue(button.isEnabled)
-            val visibleBounds = Rect()
-            assertTrue(button.getLocalVisibleRect(visibleBounds))
-            assertEquals(Rect(0, 0, button.width, button.height), visibleBounds)
+            assertCanScrollTo(button)
+            assertCanScrollTo(activity.binding.continueWithoutAccess)
+            captureScreen("${name}_actions")
         }
     }
 
