@@ -2,6 +2,8 @@ name: 🛠️ Conflict Scan
 
 on:
   push:
+    branches:
+      - '**'
   schedule:
   - cron: "0 * * * *"
 
