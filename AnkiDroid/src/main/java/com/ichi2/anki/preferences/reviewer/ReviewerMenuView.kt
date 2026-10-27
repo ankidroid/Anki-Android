@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences.reviewer
 
 import android.content.Context
@@ -31,8 +18,9 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.databinding.ViewReviewerMenuBinding
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
 import kotlinx.coroutines.launch
 
@@ -45,7 +33,7 @@ import kotlinx.coroutines.launch
  *
  * It also initializes itself, which makes possible to see it in Android Studio layout previews.
  *
- * @see [R.layout.reviewer_menu_item]
+ * @see [R.layout.item_reviewer_menu]
  */
 class ReviewerMenuView : LinearLayout {
     private val repository = ReviewerMenuRepository(context.sharedPrefs())
@@ -87,14 +75,14 @@ class ReviewerMenuView : LinearLayout {
         for (action in submenuActions) {
             val subMenu = findItem(action.parentMenu!!.menuId)?.subMenu ?: continue
             subMenu.add(Menu.NONE, action.menuId, Menu.NONE, action.title(context))?.apply {
-                action.drawableRes?.let { setIcon(it) }
+                action.drawableRes?.let { setIconRes(context, it) }
             }
         }
     }
 
     suspend fun setFlagTitles() {
         val submenu = findItem(R.id.action_flag)?.subMenu ?: return
-        for ((flag, name) in Flag.queryDisplayNames()) {
+        for ((flag, name) in Flag.queryDisplayNames(context)) {
             submenu.findItem(flag.id)?.title = name
         }
     }
@@ -114,7 +102,7 @@ class ReviewerMenuView : LinearLayout {
                     menu.add(Menu.NONE, action.menuId, Menu.NONE, title)
                 }
             with(menuItem) {
-                action.drawableRes?.let { setIcon(it) }
+                action.drawableRes?.let { setIconRes(context, it) }
                 setShowAsAction(menuActionType)
             }
         }

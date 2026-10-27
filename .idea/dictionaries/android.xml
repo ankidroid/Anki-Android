@@ -9,6 +9,8 @@
       <w>ENOENT</w>
       <w>FILESIZE</w>
       <w>ONEPLUS</w>
+      <w>Roborazzi</w>
+      <w>Supernote</w>
       <w>allempty</w>
       <w>apkgfileprovider</w>
       <w>asynctasks</w>
@@ -22,12 +24,14 @@
       <w>customtabs</w>
       <w>fileprovider</w>
       <w>fonipa</w>
+      <w>foojay</w>
       <w>funcs</w>
       <w>greylist</w>
       <w>greylisted</w>
       <w>gtxt</w>
       <w>instanceof</w>
       <w>keypress</w>
+      <w>kotlinc</w>
       <w>librsdroid</w>
       <w>longclick</w>
       <w>mediaplayer</w>

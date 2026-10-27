@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
@@ -23,7 +10,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import com.ichi2.anki.R
-import com.ichi2.utils.HandlerUtils
+import com.ichi2.anki.common.android.Animations
+import com.ichi2.anki.utils.postDelayed
+import kotlin.time.Duration.Companion.milliseconds
 
 class AnswerFeedbackView : AppCompatImageView {
     constructor(context: Context) : this(context, null)
@@ -36,8 +25,6 @@ class AnswerFeedbackView : AppCompatImageView {
     /**
      * Shows the feedback for one second
      * with a quick fade in, brief hold, then gentle fade out.
-     *
-     * TODO handle "safeDisplay" setting
      */
     fun toggle() {
         clearAnimation()
@@ -45,6 +32,18 @@ class AnswerFeedbackView : AppCompatImageView {
         fadeOutRunnable?.let {
             handler.removeCallbacks(it)
             fadeOutRunnable = null
+        }
+
+        if (!Animations.areAnimationsEnabled(context)) {
+            visibility = VISIBLE
+            fadeOutRunnable =
+                Runnable {
+                    visibility = GONE
+                    fadeOutRunnable = null
+                }.also {
+                    handler.postDelayed(it, 800.milliseconds)
+                }
+            return
         }
 
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_in)
@@ -80,6 +79,8 @@ class AnswerFeedbackView : AppCompatImageView {
                 override fun onAnimationRepeat(animation: Animation) {}
             },
         )
+        // The animation may be delayed if the row is not expanded before the first frame.
+        visibility = VISIBLE
         startAnimation(fadeIn)
     }
 }

@@ -2,7 +2,6 @@
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
  * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
- * Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General private License as published by the Free Software
@@ -47,7 +46,7 @@ import anki.import_export.ImportAnkiPackageOptions
 import anki.import_export.ImportCsvRequest
 import anki.import_export.ImportResponse
 import anki.import_export.csvMetadataRequest
-import anki.notes.AddNoteRequest
+import anki.notes.addNoteRequest
 import anki.scheduler.stateOrNull
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
@@ -77,9 +76,15 @@ import com.ichi2.anki.libanki.sched.DummyScheduler
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
+import com.ichi2.anki.libanki.utils.capitalizePy
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.BackendException.BackendDbException
+import net.ankiweb.rsdroid.BackendException.BackendFatalError
 import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import net.ankiweb.rsdroid.exceptions.BackendIoException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.io.File
@@ -101,6 +106,17 @@ data class ComputedMemoryState(
     val stability: Float? = null,
     val difficulty: Float? = null,
     val decay: Float? = null,
+)
+
+/**
+ * [Upstream Python definition](https://github.com/ankitects/anki/blob/754ce3a25f608010c0249e074e5d7fe95bda035f/pylib/anki/collection.py#L132-L135).
+ *
+ * Converted to the generated protobuf [anki.notes.AddNoteRequest] for backend calls.
+ */
+@LibAnkiAlias("AddNoteRequest")
+data class AddNoteRequest(
+    val note: Note,
+    val deckId: DeckId,
 )
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -395,18 +411,30 @@ class Collection(
      */
 
     /**
-     * (Maybe) create a colpkg backup, while keeping the collection open. If the
-     * configured backup interval has not elapsed, and force=false, no backup will be created,
-     * and this routine will return false.
+     * (Maybe) create a colpkg backup, while keeping the collection open.
      *
-     * There must not be an active transaction.
-     *
-     * If `waitForCompletion` is true, block until the backup completes. Otherwise this routine
-     * returns quickly, and the backup can be awaited on a background thread with awaitBackupCompletion()
-     * to check for success.
+     * Any active database transaction must be committed or rolled back before creating a backup.
      *
      * Backups are automatically expired according to the user's settings.
+     *
+     * @param force Bypass the configured minimum backup interval. Unchanged collections are
+     * still skipped, even when this is `true`.
+     * @param waitForCompletion If `true`, block until the backup completes and propagate any failure.
+     * Otherwise, a `true` return value only means the backup started; call [awaitBackupCompletion]
+     * on a background thread to wait for completion and receive any background failure.
+     * @return `false` if the collection has not changed since the last backup, or if [force] is
+     * `false` and the minimum backup interval has not elapsed. Otherwise, `true`.
+     * A `false` result indicates a skipped backup; failures throw instead.
+     * @throws BackendDbException if a database transaction is active, reading collection metadata
+     * fails, the write-ahead log cannot be flushed into the database before copying it, or creating
+     * the backup's temporary compatibility database fails.
+     * @throws BackendIoException if the collection file or backup directory cannot be read,
+     * or backup/temporary files cannot be created or written, for example because of missing
+     * permissions or insufficient disk space.
+     * @throws BackendException if a previous unawaited backup failed. Its original exception is
+     * rethrown before attempting another backup.
      */
+    @CheckResult
     @LibAnkiAlias("create_backup")
     fun createBackup(
         backupFolder: String,
@@ -428,7 +456,10 @@ class Collection(
      * failed, and the status has not yet been checked. On failure, an error is only returned
      * once; subsequent calls are a no-op until another backup is run.
      *
-     * @throws Exception if backup creation failed, no-op after first throw
+     * @throws BackendException propagates the backup task's original exception, such as
+     * [BackendIoException] if the backup archive cannot be written or the backup directory cannot
+     * be read, or [BackendDbException] if creating the temporary compatibility database fails.
+     * The failure is reported only once; subsequent calls are a no-op until another backup runs.
      */
     @LibAnkiAlias("await_backup_completion")
     fun awaitBackupCompletion() {
@@ -641,12 +672,17 @@ class Collection(
 
     @CheckResult
     @LibAnkiAlias("nextID")
-    @RustCleanup("Python returns 'Any' - may fail for Double?")
-    @Deprecated("not implemented", level = DeprecationLevel.HIDDEN)
     fun nextId(
         type: String,
         inc: Boolean = true,
-    ): Long = TODO()
+    ): Long {
+        val cType = "next" + type.capitalizePy()
+        val id = config.get(cType) ?: 1L
+        if (inc) {
+            config.set(cType, id + 1L)
+        }
+        return id
+    }
 
     /*
      * Notes
@@ -661,6 +697,21 @@ class Collection(
     @LibAnkiAlias("new_note")
     fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
 
+    /**
+     * Adds the provided note to deck: [deckId].
+     *
+     * Updates:
+     * - [defaultDeckForNoteType] if 'Decide by Note Type' is set.
+     * - [defaultsForAdding] for [deckId], OR if 'Decide by Note Type' is set.
+     *
+     * Unchanged:
+     * - [Decks.selected]
+     *
+     * @return An [OpChangesWithCount], where the count is the number of generated **cards**.
+     * @throws BackendInvalidInputException if the note type is missing, the number of fields does
+     * not match the note type, or card generation needs a fallback and Default is missing or filtered.
+     * @throws BackendFatalError if [Note.id] is nonzero.
+     */
     @LibAnkiAlias("add_note")
     fun addNote(
         note: Note,
@@ -671,17 +722,31 @@ class Collection(
         return out.changes
     }
 
+    /**
+     * Add notes in a single undoable operation, updating their IDs on success.
+     *
+     * - [`pylib` implementation](https://github.com/ankitects/anki/blob/754ce3a25f608010c0249e074e5d7fe95bda035f/pylib/anki/collection.py#L544-L558)
+     *
+     * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException if any notes are invalid.
+     * The batch is rolled back if this occurs.
+     */
     @LibAnkiAlias("add_notes")
-    @RustCleanup("Implement")
-    @Deprecated("Needs implementation", level = DeprecationLevel.HIDDEN)
-    fun addNotes(requests: List<AddNoteRequest>): OpChanges? = TODO()
-//    {
-//        val out = backend.addNotes(requests = requests)
-//        for ((idx, request) in requests.withIndex()) {
-//            request.note!!.id = out.getNids(idx)
-//        }
-//        return out.changes
-//    }
+    fun addNotes(requests: List<AddNoteRequest>): OpChanges {
+        val out =
+            backend.addNotes(
+                requests =
+                    requests.map { request ->
+                        addNoteRequest {
+                            note = request.note.toBackendNote()
+                            deckId = request.deckId
+                        }
+                    },
+            )
+        for ((idx, request) in requests.withIndex()) {
+            request.note.id = out.getNids(idx)
+        }
+        return out.changes
+    }
 
     @LibAnkiAlias("remove_notes")
     @RustCleanup("remove cids and pass in []")
@@ -713,9 +778,17 @@ class Collection(
     fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
 
     /**
-     * Get starting deck and notetype for add screen.
-     * An option in the preferences controls whether this will be based on the current deck
-     * or current notetype.
+     * Returns the initial deck and note type for the Add screen.
+     *
+     * Use both values together. For note-type changes, prefer [defaultDeckForNoteType].
+     *
+     * Selection behavior based on [ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK]:
+     * - **Enabled**: Prioritizes the deck, then its last recorded note type (fallback: current or first available).
+     * - **Disabled**: Prioritizes the current note type (or first available), then its last recorded valid deck.
+     *
+     * Deck fallback chain: Selected non-filtered deck -> [currentReviewCard]'s deck -> [Default][Decks.getDefault].
+     *
+     * @see <a href="https://github.com/ankitects/anki/blob/e64c6b1aee3e8d668fb8bbe084beada8e070d985/rslib/src/adding.rs#L13-L97">Upstream defaults_for_adding</a>
      */
     @CheckResult
     @LibAnkiAlias("defaults_for_adding")
@@ -725,12 +798,18 @@ class Collection(
     }
 
     /**
-     * If 'change deck depending on notetype' is enabled in the preferences,
-     * return the last deck used with the provided notetype, if any..
+     * Returns the last requested deck recorded by [addNote] for [noteTypeId], if that deck still
+     * exists and is not filtered.
+     *
+     * Returns `null` in [current-deck mode][ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK] or when
+     * there is no usable recorded deck; the editor should then keep its current deck.
+     *
+     * The note type's existence is not checked.
+     *
+     * @see <a href="https://github.com/ankitects/anki/blob/e64c6b1aee3e8d668fb8bbe084beada8e070d985/rslib/src/adding.rs#L99-L116">Upstream default_deck_for_notetype</a>
      */
     @CheckResult
     @LibAnkiAlias("default_deck_for_notetype")
-    @RustCleanup("check if the == 0L logic is necessary")
     fun defaultDeckForNoteType(noteTypeId: NoteTypeId): DeckId? {
         if (config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
             return null
@@ -941,6 +1020,7 @@ class Collection(
      * and [SearchNode]
      * @throws IllegalArgumentException if [stringsOrSearchNodes] is empty or it has entries which
      * aren't a [String] or a [SearchNode]
+     * @throws BackendSearchException if the search is invalid (`and` as a query; `flag:12`)
      */
     // TODO consider implementing a custom dsl for this method, see comments in #19677
     @LibAnkiAlias("build_search_string")
@@ -1184,18 +1264,41 @@ class Collection(
      * directly mutating the database).
      */
     @LibAnkiAlias("undo")
-    fun undo(): OpChangesAfterUndo = backend.undo()
+    fun undo(): OpChangesAfterUndo {
+        val out = backend.undo()
+        if (out.changes.notetype) {
+            notetypes.clearCache()
+        }
+        return out
+    }
 
     /**
      * Returns result of backend redo operation, or throws UndoEmpty.
      */
     @RustCleanup("document exception")
     @LibAnkiAlias("redo")
-    fun redo(): OpChangesAfterUndo = backend.redo()
+    fun redo(): OpChangesAfterUndo {
+        val out = backend.redo()
+        if (out.changes.notetype) {
+            notetypes.clearCache()
+        }
+        return out
+    }
 
-    @Deprecated("Not implemented")
     @LibAnkiAlias("op_made_changes")
-    fun opMadeChanges(changes: OpChanges): Nothing = TODO()
+    fun opMadeChanges(changes: OpChanges): Boolean =
+        changes.card ||
+            changes.note ||
+            changes.deck ||
+            changes.tag ||
+            changes.notetype ||
+            changes.config ||
+            changes.deckConfig ||
+            changes.mtime ||
+            changes.browserTable ||
+            changes.browserSidebar ||
+            changes.studyQueues ||
+            changes.noteText
 
     /**
      * Return undo status if undo available on backend.
@@ -1492,6 +1595,9 @@ class Collection(
 
     @NotInPyLib
     fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)
+
+    @NotInPyLib
+    fun getCustomColoursRaw(input: ByteArray): ByteArray = backend.getCustomColoursRaw(input = input)
 }
 
 @NotInPyLib

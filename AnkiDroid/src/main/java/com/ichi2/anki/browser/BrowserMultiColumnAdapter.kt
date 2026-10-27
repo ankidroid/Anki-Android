@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -29,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.graphics.drawable.toDrawable
@@ -39,16 +26,19 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.darkenColor
+import com.ichi2.anki.common.utils.android.lightenColorAbsolute
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.common.utils.ext.replaceWith
-import com.ichi2.anki.databinding.BrowserColumnCellBinding
-import com.ichi2.anki.databinding.CardItemBrowserBinding
-import com.ichi2.anki.utils.android.darkenColor
-import com.ichi2.anki.utils.android.lightenColorAbsolute
+import com.ichi2.anki.common.utils.ext.setBitFlag
+import com.ichi2.anki.databinding.ItemCardBrowserBinding
+import com.ichi2.anki.databinding.ViewBrowserColumnCellBinding
 import com.ichi2.themes.Themes
 import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.math.abs
+import com.ichi2.anki.common.android.R as CommonR
 
 typealias RowIsSelected = Boolean
 
@@ -57,7 +47,7 @@ typealias RowIsSelected = Boolean
  *
  * This has two states: regular and multi-select
  *
- * @see R.layout.card_item_browser
+ * @see R.layout.item_card_browser
  */
 class BrowserMultiColumnAdapter(
     private val context: Context,
@@ -69,13 +59,19 @@ class BrowserMultiColumnAdapter(
     val fontSizeScalePercent =
         sharedPrefs().getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
 
-    private val rowCollection: BrowserRowCollection
-        get() = viewModel.cards
+    // Search updates must not change the adapter's rows before RecyclerView is notified.
+    private var rows: List<CardOrNoteId> = viewModel.cards.toList()
+
+    @MainThread
+    fun refreshRows() {
+        rows = viewModel.cards.toList()
+        notifyDataSetChanged()
+    }
 
     private var originalTextSize = -1.0f
 
     inner class MultiColumnViewHolder(
-        private val binding: CardItemBrowserBinding,
+        private val binding: ItemCardBrowserBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         var id: CardOrNoteId? = null
 
@@ -93,7 +89,7 @@ class BrowserMultiColumnAdapter(
                 // recreate the columns and the dividers
                 columnViews.replaceWith(
                     (1..value).map { index ->
-                        BrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
+                        ViewBrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
                     },
                 )
 
@@ -169,10 +165,7 @@ class BrowserMultiColumnAdapter(
             require(pressedColor != color)
             val rippleDrawable =
                 RippleDrawable(
-                    ColorStateList(
-                        arrayOf(intArrayOf(android.R.attr.state_pressed)),
-                        intArrayOf(pressedColor),
-                    ),
+                    ColorStateList.valueOf(pressedColor),
                     color.toDrawable(),
                     null,
                 )
@@ -207,12 +200,7 @@ class BrowserMultiColumnAdapter(
         }
 
         private fun TextView.setStrikeThrough(strikeThrough: Boolean) {
-            paintFlags =
-                if (strikeThrough) {
-                    paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                } else {
-                    paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                }
+            paintFlags = paintFlags.setBitFlag(Paint.STRIKE_THRU_TEXT_FLAG, enabled = strikeThrough)
         }
 
         private fun TextView.setupTextSize() {
@@ -234,23 +222,17 @@ class BrowserMultiColumnAdapter(
         viewType: Int,
     ): MultiColumnViewHolder {
         val layoutInflater = LayoutInflater.from(context)
-        val binding = CardItemBrowserBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemCardBrowserBinding.inflate(layoutInflater, parent, false)
         return MultiColumnViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = rowCollection.size
+    override fun getItemCount(): Int = rows.size
 
     override fun onBindViewHolder(
         holder: MultiColumnViewHolder,
         position: Int,
     ) {
-        val id =
-            try {
-                rowCollection[position]
-            } catch (e: Exception) {
-                Timber.w(e)
-                return
-            }
+        val id = rows[position]
 
         try {
             val (row, isSelected) = viewModel.transformBrowserRow(id)
@@ -263,13 +245,22 @@ class BrowserMultiColumnAdapter(
                 )
             holder.numberOfColumns = row.cellsCount
 
+            val edgePadding = 8.dp.toPx(context)
+            val innerPadding = 4.dp.toPx(context)
+
             for (i in 0 until row.cellsCount) {
-                holder.columnViews[i].text = renderColumn(i)
+                holder.columnViews[i].apply {
+                    text = renderColumn(i)
+                    val startPadding = if (i == 0) edgePadding else innerPadding
+                    val endPadding = if (i == row.cellsCount - 1) edgePadding else innerPadding
+                    setPaddingRelative(startPadding, paddingTop, endPadding, paddingBottom)
+                }
             }
             holder.setIsSelected(isSelected)
             val rowColor =
-                if (viewModel.focusedRow == id) {
-                    ThemeUtils.getThemeAttrColor(context, R.attr.focusedRowBackgroundColor)
+                // This only highlights in fragmented mode
+                if (viewModel.paneRow == id) {
+                    ThemeUtils.getThemeAttrColor(context, CommonR.attr.focusedRowBackgroundColor)
                 } else {
                     backendColorToColor(row.color)
                 }
@@ -299,9 +290,9 @@ class BrowserMultiColumnAdapter(
             Color.COLOR_FLAG_TURQUOISE -> context.getColor(Flag.TURQUOISE.browserColorRes!!)
             Color.COLOR_FLAG_PURPLE -> context.getColor(Flag.PURPLE.browserColorRes!!)
 
-            Color.COLOR_SUSPENDED -> ThemeUtils.getThemeAttrColor(context, R.attr.suspendedColor)
-            Color.COLOR_MARKED -> ThemeUtils.getThemeAttrColor(context, R.attr.markedColor)
-            Color.COLOR_BURIED -> ThemeUtils.getThemeAttrColor(context, R.attr.buriedColor)
+            Color.COLOR_SUSPENDED -> ThemeUtils.getThemeAttrColor(context, CommonR.attr.suspendedColor)
+            Color.COLOR_MARKED -> ThemeUtils.getThemeAttrColor(context, CommonR.attr.markedColor)
+            Color.COLOR_BURIED -> ThemeUtils.getThemeAttrColor(context, CommonR.attr.buriedColor)
 
             Color.COLOR_DEFAULT, Color.UNRECOGNIZED ->
                 ThemeUtils.getThemeAttrColor(context, android.R.attr.colorBackground)

@@ -1,19 +1,5 @@
-/*
- *  Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
- *  Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
 
 package com.ichi2.anki.widget.cardanalysis
 
@@ -28,8 +14,9 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.widgets.R
 import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
@@ -90,7 +77,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             // first setup of the widget, no deck selected so deck name view should be empty
             onView(withId(R.id.deck_name)).check(matches(withText("")))
             // select dialog already open, select deck 1
-            onView(withText(R.string.select_deck_title))
+            onView(withText(CommonString.select_deck_title))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
             onView(withText(TEST_DECK_NAME1)).inRoot(isDialog()).perform(click())
@@ -129,7 +116,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             // no selection yet
             onView(withId(R.id.deck_name)).check(matches(withText("")))
             // cancel deck selection
-            onView(withText(R.string.dialog_cancel)).inRoot(isDialog()).perform(click())
+            onView(withText(CommonString.dialog_cancel)).inRoot(isDialog()).perform(click())
             // still no deck selected, so deck name should still be empty
             onView(withId(R.id.deck_name)).check(matches(withText("")))
             // set configuration as done

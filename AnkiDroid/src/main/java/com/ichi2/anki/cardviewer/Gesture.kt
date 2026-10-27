@@ -1,26 +1,11 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.cardviewer
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import com.ichi2.anki.R
-import com.ichi2.anki.cardviewer.TapGestureMode.FOUR_POINT
-import com.ichi2.anki.cardviewer.TapGestureMode.NINE_POINT
+import com.ichi2.anki.CommonString
 
 /**
  * https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)
@@ -44,24 +29,24 @@ enum class Gesture(
     @get:JvmName("getResourceId") val resourceId: Int,
     private val displayPrefix: String = GESTURE_PREFIX,
 ) {
-    SWIPE_UP(R.string.gestures_swipe_up),
-    SWIPE_DOWN(R.string.gestures_swipe_down),
-    SWIPE_LEFT(R.string.gestures_swipe_left),
-    SWIPE_RIGHT(R.string.gestures_swipe_right),
-    DOUBLE_TAP(R.string.gestures_double_tap),
-    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left),
-    TAP_TOP(R.string.gestures_tap_top),
-    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right),
-    TAP_LEFT(R.string.gestures_tap_left),
-    TAP_CENTER(R.string.gestures_corner_tap_middle_center),
-    TAP_RIGHT(R.string.gestures_tap_right),
-    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left),
-    TAP_BOTTOM(R.string.gestures_tap_bottom),
-    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right),
-    TWO_FINGER_TAP(R.string.gestures_two_finger_tap),
-    THREE_FINGER_TAP(R.string.gestures_three_finger_tap),
-    FOUR_FINGER_TAP(R.string.gestures_four_finger_tap),
-    SHAKE(R.string.gestures_shake, SHAKE_GESTURE_PREFIX),
+    SWIPE_UP(CommonString.gestures_swipe_up),
+    SWIPE_DOWN(CommonString.gestures_swipe_down),
+    SWIPE_LEFT(CommonString.gestures_swipe_left),
+    SWIPE_RIGHT(CommonString.gestures_swipe_right),
+    DOUBLE_TAP(CommonString.gestures_double_tap),
+    TAP_TOP_LEFT(CommonString.gestures_corner_tap_top_left),
+    TAP_TOP(CommonString.gestures_tap_top),
+    TAP_TOP_RIGHT(CommonString.gestures_corner_tap_top_right),
+    TAP_LEFT(CommonString.gestures_tap_left),
+    TAP_CENTER(CommonString.gestures_corner_tap_middle_center),
+    TAP_RIGHT(CommonString.gestures_tap_right),
+    TAP_BOTTOM_LEFT(CommonString.gestures_corner_tap_bottom_left),
+    TAP_BOTTOM(CommonString.gestures_tap_bottom),
+    TAP_BOTTOM_RIGHT(CommonString.gestures_corner_tap_bottom_right),
+    TWO_FINGER_TAP(CommonString.gestures_two_finger_tap),
+    THREE_FINGER_TAP(CommonString.gestures_three_finger_tap),
+    FOUR_FINGER_TAP(CommonString.gestures_four_finger_tap),
+    SHAKE(CommonString.gestures_shake, SHAKE_GESTURE_PREFIX),
     ;
 
     fun toDisplayString(context: Context): String =

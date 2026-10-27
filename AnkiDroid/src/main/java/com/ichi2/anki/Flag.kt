@@ -1,20 +1,8 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
+import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
@@ -23,7 +11,9 @@ import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag.Companion.queryDisplayNames
+import com.ichi2.anki.common.utils.ext.flagLabels
 import com.ichi2.anki.common.utils.ext.getStringOrNull
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -79,15 +69,18 @@ enum class Flag(
      *
      * @see queryDisplayNames - more efficient
      */
-    private fun displayName(labels: FlagLabels): String {
+    private fun displayName(
+        labels: FlagLabels,
+        context: Context,
+    ): String {
         // NONE may not be renamed
-        if (this == NONE) return defaultDisplayName()
-        return labels.getLabel(this) ?: defaultDisplayName()
+        if (this == NONE) return defaultDisplayName(context)
+        return labels.getLabel(this) ?: defaultDisplayName(context)
     }
 
-    private fun defaultDisplayName(): String =
+    private fun defaultDisplayName(context: Context): String =
         when (this) {
-            NONE -> TR.browsingNoFlag()
+            NONE -> with(context) { TR.sentenceCase.noFlag }
             RED -> TR.actionsFlagRed()
             ORANGE -> TR.actionsFlagOrange()
             GREEN -> TR.actionsFlagGreen()
@@ -144,16 +137,19 @@ enum class Flag(
     fun toSearchNode(): SearchNode = searchNode { flag = toSearchValue() }
 
     companion object {
+        val MAX_CODE: Int = entries.maxOf { it.code }
+        val MIN_CODE: Int = entries.minOf { it.code }
+
         fun fromCode(code: Int) = Flag.entries.first { it.code == code }
 
         /**
          * @return A mapping from each [Flag] to its display name (optionally user-defined)
          */
-        suspend fun queryDisplayNames(): Map<Flag, String> {
+        suspend fun queryDisplayNames(context: Context): Map<Flag, String> {
             // load user-defined flag labels from the collection
             val labels = FlagLabels.loadFromColConfig()
             // either map to user-provided name, or translated name
-            return Flag.entries.associateWith { it.displayName(labels) }
+            return Flag.entries.associateWith { it.displayName(labels, context) }
         }
     }
 }
@@ -178,12 +174,12 @@ private value class FlagLabels(
     ) {
         value.put(flag.code.toString(), newName)
         withCol {
-            config.set("flagLabels", value)
+            config.flagLabels = value
         }
     }
 
     companion object {
-        suspend fun loadFromColConfig() = FlagLabels(withCol { config.getObject("flagLabels", JSONObject()) })
+        suspend fun loadFromColConfig() = FlagLabels(withCol { config.flagLabels })
     }
 }
 

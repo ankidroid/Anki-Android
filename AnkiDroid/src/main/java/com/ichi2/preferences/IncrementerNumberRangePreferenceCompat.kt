@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2021 Tushar Bhatt <tbhatt312@gmail.com>
- * Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tushar Bhatt <tbhatt312@gmail.com>
 
 package com.ichi2.preferences
 
@@ -23,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import androidx.core.widget.doAfterTextChanged
-import com.ichi2.anki.R
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.databinding.DialogIncrementerPreferenceBinding
+import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
 
@@ -70,7 +58,7 @@ class IncrementerNumberRangePreferenceCompat :
                     // This should not be possible but just in case, recover with a valid minimum from superclass
                     numberRangePreference.min
                 }
-
+            editText.filters += NonLeadingZeroInputFilter
             // Validate the final value, not individual character changes
             editText.doAfterTextChanged { updateButtonState() }
 
@@ -81,6 +69,7 @@ class IncrementerNumberRangePreferenceCompat :
         override fun onStart() {
             super.onStart()
             positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
+            positiveButton?.text = TR.actionsSave()
 
             // Rerun validation now that we have the OK button reference
             updateButtonState()
@@ -158,14 +147,14 @@ class IncrementerNumberRangePreferenceCompat :
                 }
                 ValidationResult.OVERFLOW -> {
                     binding.decrementButton.isEnabled = true
-                    binding.textInputLayout.error = getString(R.string.maximum_value_is, numberRangePreference.max)
+                    binding.textInputLayout.error = getString(CommonString.maximum_value_is, numberRangePreference.max)
                 }
                 ValidationResult.UNDERFLOW -> {
                     binding.incrementButton.isEnabled = true
-                    binding.textInputLayout.error = getString(R.string.minimum_value_is, numberRangePreference.min)
+                    binding.textInputLayout.error = getString(CommonString.minimum_value_is, numberRangePreference.min)
                 }
                 ValidationResult.INVALID -> {
-                    binding.textInputLayout.error = getString(R.string.invalid_value)
+                    binding.textInputLayout.error = getString(CommonString.invalid_value)
                 }
                 ValidationResult.EMPTY -> {
                     // Empty input is invalid for submission, but doesn't warrant an error message yet

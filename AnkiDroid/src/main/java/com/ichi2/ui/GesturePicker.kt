@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.ui
 
@@ -26,7 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureListener
 import com.ichi2.anki.databinding.ViewGesturePickerBinding
@@ -41,14 +27,14 @@ import timber.log.Timber
  * The spinner aids discoverability of [Gesture.DOUBLE_TAP]
  * as it is not explained in [GestureDisplay].
  */
-class GesturePicker(
+open class GesturePicker(
     ctx: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(ctx, attributeSet, defStyleAttr),
     WarningDisplay,
     ShakeDetector.Listener {
-    private val binding: ViewGesturePickerBinding
+    protected val binding: ViewGesturePickerBinding
     override val warningTextView get() = binding.warning
 
     private var onGestureListener: GestureListener? = null
@@ -89,12 +75,12 @@ class GesturePicker(
 
     private fun allGestures(): List<GestureWrapper> = (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
 
-    private fun availableGestures() = binding.gestureDisplay.availableValues()
+    protected open fun availableGestures() = binding.gestureDisplay.availableValues()
 
     inner class GestureWrapper(
         val gesture: Gesture?,
     ) {
-        override fun toString(): String = gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
+        override fun toString(): String = gesture?.toDisplayString(context) ?: resources.getString(CommonString.gestures_none)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

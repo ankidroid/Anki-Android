@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
@@ -28,9 +15,15 @@ class CardAppearance(
     private val cardZoom: Int,
     private val imageZoom: Int,
     private val centerVertically: Boolean,
+    private val fontScale: Float,
 ) {
     /** Below could be in a better abstraction.  */
     fun appendCssStyle(style: StringBuilder) {
+        // Preserve the system font size while scaling text and em-based layout together.
+        if (fontScale != 1f) {
+            style.append("html { zoom: $fontScale }\n")
+        }
+
         // Zoom cards
         if (cardZoom != 100) {
             style.append("body { zoom: ${cardZoom / 100.0} }\n")
@@ -81,11 +74,12 @@ class CardAppearance(
         fun create(
             customFonts: ReviewerCustomFonts,
             preferences: SharedPreferences,
+            fontScale: Float,
         ): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)
             val centerVertically = preferences.getBoolean("centerVertically", false)
-            return CardAppearance(customFonts, cardZoom, imageZoom, centerVertically)
+            return CardAppearance(customFonts, cardZoom, imageZoom, centerVertically, fontScale)
         }
 
         fun fixBoldStyle(content: String): String {

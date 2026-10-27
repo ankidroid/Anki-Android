@@ -1,29 +1,41 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.utils
 
 import android.content.Context
 import androidx.annotation.CheckResult
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.android.showThemedToast
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.Collections
+import java.util.IdentityHashMap
 
 object ExceptionUtil {
+    /** This throwable followed lazily by its causes. Cyclic chains repeat instances indefinitely. */
+    internal val Throwable.causeChain: Sequence<Throwable>
+        get() = generateSequence(this) { it.cause }
+
+    /**
+     * Produces a sequence of this throwable and all throwables reachable through
+     * [Throwable.cause] or [Throwable.getSuppressed].
+     */
+    internal fun Throwable.causesAndSuppressed(): Sequence<Throwable> =
+        sequence {
+            val seen = Collections.newSetFromMap(IdentityHashMap<Throwable, Boolean>())
+            val pending = ArrayDeque<Throwable>()
+            pending.add(this@causesAndSuppressed)
+            while (pending.isNotEmpty()) {
+                val throwable = pending.removeLast()
+                if (!seen.add(throwable)) continue
+                yield(throwable)
+                // Visit causes first so shared suppressed references cannot truncate the cause chain.
+                pending.addAll(throwable.suppressed)
+                throwable.cause?.let { pending.add(it) }
+            }
+        }
+
     @CheckResult
     fun getExceptionMessage(e: Throwable?): String = getExceptionMessage(e, "\n")
 
@@ -64,7 +76,7 @@ object ExceptionUtil {
             CrashReportService.sendExceptionReport(e, origin)
             showThemedToast(
                 context,
-                context.getString(R.string.multimedia_editor_something_wrong),
+                context.getString(CommonString.multimedia_editor_something_wrong),
                 true,
             )
         }

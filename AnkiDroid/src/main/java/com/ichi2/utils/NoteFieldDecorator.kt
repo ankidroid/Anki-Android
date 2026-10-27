@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2020 Mike Hardy <github@mikehardy.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2020 Mike Hardy <github@mikehardy.net>
 
 @file:Suppress("SpellCheckingInspection")
 
@@ -62,6 +49,17 @@ object NoteFieldDecorator {
             "jro5atnl",
             "FuevquneTbry",
             "Nxfunl0701",
+            "ivpvbhfNrtvf",
+            "gurqebvqqvi",
+            "OenlnaQFB",
+            "pevgvpnyNL",
+            "fnawnlfnetnz",
+            "krabaaa4j",
+            "revpyv3690",
+            "Unm3-wbyg",
+            "fabjgvzrtynff",
+            "hfre1823",
+            "MbeaUnqAbPubvpr",
         )
 
     fun aplicaHuevo(fieldText: String?): String? {
@@ -81,23 +79,17 @@ object NoteFieldDecorator {
         if (huevo.isNullOrEmpty()) {
             return huevo
         }
-        val revuelto = StringBuilder()
-        for (element in huevo) {
-            var c = element
-            when (c) {
-                in 'a'..'m' -> {
-                    c += 13.toChar().code
+        return buildString {
+            for (element in huevo) {
+                var revuelto = element
+                when (revuelto) {
+                    in 'a'..'m' -> revuelto += 13
+                    in 'A'..'M' -> revuelto += 13
+                    in 'n'..'z' -> revuelto -= 13
+                    in 'N'..'Z' -> revuelto -= 13
                 }
-                in 'A'..'M' -> {
-                    c += 13.toChar().code
-                }
-                in 'n'..'z' -> {
-                    c -= 13.toChar().code
-                }
-                in 'N'..'Z' -> c -= 13.toChar().code
+                append(revuelto)
             }
-            revuelto.append(c)
         }
-        return revuelto.toString()
     }
 }

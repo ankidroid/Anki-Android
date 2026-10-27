@@ -1,21 +1,9 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.pages
 
 import android.graphics.Bitmap
+import android.net.Uri
 import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -23,6 +11,7 @@ import android.webkit.WebView
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.AssetHelper.guessMimeType
@@ -30,27 +19,65 @@ import com.ichi2.utils.toRGBHex
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Base WebViewClient to be used on [PageFragment]
  */
 open class PageWebViewClient : SafeWebViewClient() {
+    /**
+     * The URL of the trusted local server.
+     *
+     * Allows us to distinguish our URLs from URLs served by other origins.
+     *
+     * Without this, another app could host on localhost, and we could not tell them apart:
+     *
+     * - http://127.0.0.1:12345/graphs
+     * - http://127.0.0.1:22345/graphs
+     *
+     * SECURITY: Set this via [PageFragment], this must never be inferred from page navigation.
+     */
+    internal var serverUrl: Uri? = null
+
     val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
+
+    private fun isInternalUrl(url: Uri): Boolean =
+        serverUrl?.let { url.scheme == it.scheme && url.encodedAuthority == it.encodedAuthority } == true
+
+    /**
+     * Keeps bundled routes in this WebView and opens external HTTP(S) main-frame links outside it.
+     *
+     * WebView skips this callback for POST navigations and app-initiated [WebView.loadUrl] calls.
+     */
+    override fun shouldOverrideUrlLoading(
+        view: WebView?,
+        request: WebResourceRequest?,
+    ): Boolean {
+        val url = request?.url ?: return true
+        if (isInternalUrl(url)) {
+            return SvelteKitPage.fromPath(url.path.orEmpty()) == null
+        }
+        if (request.isForMainFrame && url.scheme in listOf("http", "https")) {
+            view?.context?.openUrl(url)
+        }
+        return true
+    }
 
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest,
     ): WebResourceResponse? {
         val path = request.url.path
-        if (request.method != "GET" || path == null) return null
+        if (request.method != "GET" || path == null || !isInternalUrl(request.url)) return null
         if (path == "/favicon.png") {
             return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
 
+        val page = SvelteKitPage.fromPath(path)
         val assetPath =
             if (path.startsWith("/_app/")) {
                 "backend/sveltekit/app/${path.substring(6)}"
-            } else if (isSvelteKitPage(path.substring(1))) {
+            } else if (page != null) {
                 "backend/sveltekit/index.html"
             } else {
                 return null
@@ -58,7 +85,14 @@ open class PageWebViewClient : SafeWebViewClient() {
 
         try {
             val mimeType = guessMimeType(assetPath)
-            val inputStream = view.context.assets.open(assetPath)
+            val inputStream =
+                view.context.assets.open(assetPath).let { asset ->
+                    if (page?.disableCsp == true) {
+                        removeBundledCsp(asset)
+                    } else {
+                        asset
+                    }
+                }
             val response = WebResourceResponse(mimeType, null, inputStream)
             if ("immutable" in path) {
                 response.responseHeaders = mapOf("Cache-Control" to "max-age=31536000")
@@ -110,21 +144,13 @@ open class PageWebViewClient : SafeWebViewClient() {
     }
 }
 
-fun isSvelteKitPage(path: String): Boolean {
-    val pageName = path.substringBefore("/")
-    return when (pageName) {
-        "graphs",
-        "congrats",
-        "card-info",
-        "change-notetype",
-        "deck-options",
-        "import-anki-package",
-        "import-csv",
-        "import-page",
-        "image-occlusion",
-        -> true
-        else -> false
-    }
+private val SVELTEKIT_CSP_META = Regex("""<meta http-equiv="content-security-policy" content="[^"]*">""")
+
+/** Reads and closes [asset], returning the HTML without its bundled CSP meta tag. */
+private fun removeBundledCsp(asset: InputStream): InputStream {
+    val html = asset.bufferedReader().use { reader -> reader.readText() }
+    val htmlWithoutCsp = html.replace(SVELTEKIT_CSP_META, "")
+    return htmlWithoutCsp.byteInputStream()
 }
 
 fun WebView.evaluateAfterDOMContentLoaded(

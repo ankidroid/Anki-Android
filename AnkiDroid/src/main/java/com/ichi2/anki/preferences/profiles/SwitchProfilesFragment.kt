@@ -1,42 +1,69 @@
-/*
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.preferences.profiles
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.compose.theme.AnkiDroidTheme
+import timber.log.Timber
 
 /**
- * A [Fragment] that allows the user to switch between different profiles.
+ * Lets the user switch between profiles.
+ *
+ * Thin host for the Compose [SwitchProfilesScreen]. Stays a Fragment because
+ * preference_headers.xml launches it by class name.
  */
-class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles) {
-    override fun onViewCreated(
-        view: View,
+class SwitchProfilesFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-            setTitle("Switch profile")
-            setNavigationOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+    ): View {
+        val profileManager = AnkiDroidApp.instance.profileManager
+        if (profileManager == null) {
+            Timber.w("Profile environment unavailable, closing the switch profile screen")
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            if (parentFragmentManager.backStackEntryCount > 0) {
+                parentFragmentManager.popBackStack()
+            } else {
+                requireActivity().finish()
+            }
+            return View(requireContext())
+        }
+        val viewModel: SwitchProfilesViewModel by viewModels { SwitchProfilesViewModel.factory(profileManager) }
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AnkiDroidTheme {
+                    val profiles by viewModel.profiles.collectAsStateWithLifecycle()
+                    val isAddProfileDialogVisible by viewModel.isAddProfileDialogVisible.collectAsStateWithLifecycle()
+                    val profileBeingRenamed by viewModel.profileBeingRenamed.collectAsStateWithLifecycle()
+                    SwitchProfilesScreen(
+                        profiles = profiles,
+                        isAddProfileDialogVisible = isAddProfileDialogVisible,
+                        profileBeingRenamed = profileBeingRenamed,
+                        onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
+                        onAddProfileClick = viewModel::showAddProfileDialog,
+                        onAddProfileConfirm = viewModel::addProfile,
+                        onAddProfileDismiss = viewModel::dismissAddProfileDialog,
+                        onEditProfile = viewModel::showRenameProfileDialog,
+                        onRenameProfileConfirm = viewModel::renameProfile,
+                        onRenameProfileDismiss = viewModel::dismissRenameProfileDialog,
+                        onDeleteProfile = viewModel::deleteProfile,
+                    )
+                }
             }
         }
     }

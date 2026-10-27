@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2022 Ali Ahnaf <aliahnaf327@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see http://www.gnu.org/licenses/>.
- *
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ali Ahnaf <aliahnaf327@gmail.com>
 
 package com.ichi2.anki
 
@@ -39,43 +25,43 @@ class MyAccountTest : RobolectricTest() {
 
     @Test
     fun testLoginEmailPasswordProvided() {
-        val scenario = launchFragmentInContainer<LoginFragment>()
+        launchFragmentInContainer<LoginFragment>().use { scenario ->
+            scenario.onFragment { fragment ->
+                val testPassword = "randomStrongPassword"
+                val testEmail = "random.email@example.com"
 
-        scenario.onFragment { fragment ->
-            val testPassword = "randomStrongPassword"
-            val testEmail = "random.email@example.com"
+                fragment.view?.findViewById<TextInputEditText>(R.id.username)?.setText(testEmail)
+                fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
 
-            fragment.view?.findViewById<TextInputEditText>(R.id.username)?.setText(testEmail)
-            fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
-
-            val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
-            assertEquals(loginButton?.isEnabled, true)
+                val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
+                assertEquals(loginButton?.isEnabled, true)
+            }
         }
     }
 
     @Test
     fun testLoginFailsNoEmailProvided() {
-        val scenario = launchFragmentInContainer<LoginFragment>()
+        launchFragmentInContainer<LoginFragment>().use { scenario ->
+            scenario.onFragment { fragment ->
+                val testPassword = "randomStrongPassword"
 
-        scenario.onFragment { fragment ->
-            val testPassword = "randomStrongPassword"
-
-            fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
-            val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
-            assertFalse(loginButton?.isEnabled == true)
+                fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
+                val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
+                assertFalse(loginButton?.isEnabled == true)
+            }
         }
     }
 
     @Test
     fun testLoginFailsNoPasswordProvided() {
-        val scenario = launchFragmentInContainer<LoginFragment>()
+        launchFragmentInContainer<LoginFragment>().use { scenario ->
+            scenario.onFragment { fragment ->
+                val testEmail = "random.email@example.com"
 
-        scenario.onFragment { fragment ->
-            val testEmail = "random.email@example.com"
-
-            fragment.view?.findViewById<TextInputEditText>(R.id.username)?.setText(testEmail)
-            val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
-            assertFalse(loginButton?.isEnabled == true)
+                fragment.view?.findViewById<TextInputEditText>(R.id.username)?.setText(testEmail)
+                val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
+                assertFalse(loginButton?.isEnabled == true)
+            }
         }
     }
 }

@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.account
 
@@ -28,7 +14,10 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -40,13 +29,18 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
-import com.ichi2.anki.account.AccountActivity.Companion.START_FROM_DECKPICKER
+import com.ichi2.anki.account.AccountActivity.Companion.ARG_START_FOR_RESULT
 import com.ichi2.anki.dialogs.help.HelpDialog
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.getEndpoint
+import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.isCompactWidth
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
@@ -61,7 +55,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LoginFragment : Fragment(R.layout.my_account) {
+class LoginFragment : Fragment(R.layout.fragment_my_account) {
     private val viewModel: LoginViewModel by viewModels()
 
     private lateinit var username: TextInputEditText
@@ -76,13 +70,14 @@ class LoginFragment : Fragment(R.layout.my_account) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setupEdgeToEdge(view)
 
         val toolbar: MaterialToolbar = view.findViewById(R.id.toolbar)
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)
 
         activity.supportActionBar?.apply {
-            title = TR.preferencesAccount().toSentenceCase(R.string.sync_account)
+            title = TR.sentenceCase.ankiWebAccount
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
@@ -97,9 +92,35 @@ class LoginFragment : Fragment(R.layout.my_account) {
         password = view.findViewById(R.id.password)
         loginLogo = view.findViewById(R.id.login_logo)
         loginButton = view.findViewById(R.id.login_button)
+        loginButton.text = TR.sentenceCase.logIn
 
         initListeners()
         initObservers()
+    }
+
+    /** Applies edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge(view: View) {
+        val toolbarContainer = view.findViewById<View>(R.id.toolbar_container)
+        val content = view.findViewById<View>(R.id.account_content)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            val withKeyboard =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout() or
+                        WindowInsetsCompat.Type.ime(),
+                )
+            toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            content.updatePadding(
+                left = bars.left,
+                right = bars.right,
+                bottom = maxOf(withKeyboard.bottom, insets.bottomCornerClearance(content)),
+            )
+            insets
+        }
     }
 
     private fun login() {
@@ -214,7 +235,7 @@ class LoginFragment : Fragment(R.layout.my_account) {
                     is LoginState.Success -> {
                         Timber.i("Login Successful")
                         val activity = requireActivity()
-                        val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
+                        val isForResult = arguments?.getBoolean(ARG_START_FOR_RESULT) ?: false
 
                         // If the user explicitly came from a sync prompt (onboarding/pressing sync)
                         // then their intent was to sync after login success
@@ -226,7 +247,15 @@ class LoginFragment : Fragment(R.layout.my_account) {
                         showLoginSuccessDialog()
                     }
                     is LoginState.Error -> {
-                        showSnackbar(text = state.exception.message.toString())
+                        when (val exception = state.exception) {
+                            // the locked-collection guidance is too long for a snackbar
+                            is CollectionLockedException ->
+                                requireContext().showError(
+                                    exception.localizedMessage!!,
+                                    exception.toCrashReportData(requireContext(), reportException = false),
+                                )
+                            else -> showSnackbar(text = exception.message.toString())
+                        }
                     }
                     is LoginState.Idle -> { /* Not needed */ }
                 }
@@ -270,11 +299,11 @@ class LoginFragment : Fragment(R.layout.my_account) {
 
         MaterialAlertDialogBuilder(requireContext()).show {
             Timber.i("Showing dialog: 'Sync now?'")
-            setTitle(R.string.login_successful)
+            setTitle(CommonString.login_successful)
             setIcon(R.drawable.ic_sync)
-            setMessage(R.string.sync_now)
-            positiveButton(R.string.button_sync) { openDeckPickerAndSync() }
-            negativeButton(R.string.dialog_continue) { showLoggedInView() }
+            setMessage(CommonString.sync_now)
+            positiveButton(CommonString.button_sync) { openDeckPickerAndSync() }
+            negativeButton(CommonString.dialog_continue) { showLoggedInView() }
             setOnCancelListener { showLoggedInView() }
         }
     }
@@ -299,7 +328,7 @@ class LoginFragment : Fragment(R.layout.my_account) {
         lifecycleScope.launch {
             requireActivity().withProgress(
                 extractProgress = {
-                    text = getString(R.string.sign_in)
+                    text = getString(CommonString.sign_in)
                 },
                 onCancel = { backend -> backend.setWantsAbort() },
             ) {

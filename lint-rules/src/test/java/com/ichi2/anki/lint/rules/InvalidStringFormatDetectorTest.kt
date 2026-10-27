@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2022 Divyansh Dwivedi <justdvnsh2208@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Divyansh Dwivedi <justdvnsh2208@gmail.com>
 
 package com.ichi2.anki.lint.rules
 
@@ -23,6 +10,95 @@ import org.junit.Test
 
 /** Test for [InvalidStringFormatDetectorTest] */
 class InvalidStringFormatDetectorTest {
+    @Test
+    fun `invalid plural item is reported once`() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .files(
+                TestFiles.xml(
+                    "res/values/strings.xml",
+                    """
+                    <resources>
+                        <plurals name="cards">
+                            <item quantity="one">%D card</item>
+                            <item quantity="other">%d cards</item>
+                        </plurals>
+                    </resources>
+                    """.trimIndent(),
+                ),
+            ).issues(InvalidStringFormatDetector.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
+    @Test
+    fun `invalid string-array item is reported once`() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .files(
+                TestFiles.xml(
+                    "res/values/strings.xml",
+                    """
+                    <resources>
+                        <string-array name="cards">
+                            <item>%D card</item>
+                            <item>%d cards</item>
+                        </string-array>
+                    </resources>
+                    """.trimIndent(),
+                ),
+            ).issues(InvalidStringFormatDetector.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
+    @Test
+    fun `string-array item with misplaced percent sign is reported`() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .files(
+                TestFiles.xml(
+                    "res/values/strings.xml",
+                    """
+                    <resources>
+                        <string-array name="progress">
+                            <item>I have completed% %s cards</item>
+                        </string-array>
+                    </resources>
+                    """.trimIndent(),
+                ),
+            ).issues(InvalidStringFormatDetector.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
+    @Test
+    fun `valid string-array is not reported`() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .files(
+                TestFiles.xml(
+                    "res/values/strings.xml",
+                    """
+                    <resources>
+                        <string-array name="cards">
+                            <item>%d card</item>
+                            <item>%1${'$'}d of %2${'$'}d cards</item>
+                            <item>100%%</item>
+                            <item>no format specifier</item>
+                        </string-array>
+                    </resources>
+                    """.trimIndent(),
+                ),
+            ).issues(InvalidStringFormatDetector.ISSUE)
+            .run()
+            .expectClean()
+    }
+
     @Language("XML")
     private val invalid =
         """<resources>

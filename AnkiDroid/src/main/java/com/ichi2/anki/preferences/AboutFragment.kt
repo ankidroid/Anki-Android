@@ -1,41 +1,34 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.Info
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.AboutLayoutBinding
+import com.ichi2.anki.common.destinations.ChangelogDestination
+import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.databinding.FragmentAboutBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.Fsrs
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.IntentUtil
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
@@ -47,8 +40,26 @@ import java.util.Date
 import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
-class AboutFragment : Fragment(R.layout.about_layout) {
-    private val binding by viewBinding(AboutLayoutBinding::bind)
+class AboutFragment : Fragment(R.layout.fragment_about) {
+    @VisibleForTesting
+    val binding by viewBinding(FragmentAboutBinding::bind)
+
+    private val aboutContributorsSpannable: CharSequence
+        get() {
+            val contributorsLink = getString(R.string.link_contributors)
+            val contributingGuideLink = getString(R.string.link_contribution)
+            val strRes =
+                if (BuildConfig.SHOW_DONATE_LINKS) {
+                    CommonString.about_contributors_description
+                } else {
+                    CommonString.about_contributors_description_no_donate
+                }
+            return getString(
+                strRes,
+                contributorsLink,
+                contributingGuideLink,
+            ).parseAsHtml()
+        }
 
     override fun onViewCreated(
         view: View,
@@ -71,10 +82,8 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         binding.appLogo.setOnClickListener(DeveloperOptionsSecretClickListener(this))
 
         // Contributors text
-        val contributorsLink = getString(R.string.link_contributors)
-        val contributingGuideLink = getString(R.string.link_contribution)
         binding.contributorsDescription.apply {
-            text = getString(R.string.about_contributors_description, contributorsLink, contributingGuideLink).parseAsHtml()
+            text = aboutContributorsSpannable
             movementMethod = LinkMovementMethod.getInstance()
         }
 
@@ -86,17 +95,22 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         binding.licenseDescription.apply {
             text =
                 (
-                    getString(R.string.license_description, gplLicenseLink, agplLicenseLink, sourceCodeLink) + "<br>" +
-                        getString(R.string.other_licenses, dependencyLicenseLink)
+                    getString(CommonString.license_description, gplLicenseLink, agplLicenseLink, sourceCodeLink) + "<br>" +
+                        getString(CommonString.other_licenses, dependencyLicenseLink)
                 ).parseAsHtml()
             movementMethod = LinkMovementMethod.getInstance()
         }
 
         // Donate text
-        val donateLink = getString(R.string.link_opencollective_donate)
-        binding.donateDescription.apply {
-            text = getString(R.string.donate_description, donateLink).parseAsHtml()
-            movementMethod = LinkMovementMethod.getInstance()
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            val donateLink = getString(R.string.link_opencollective_donate)
+            binding.donateDescription.apply {
+                text = getString(CommonString.donate_description, donateLink).parseAsHtml()
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+        } else {
+            binding.aboutDonateTitle.isVisible = false
+            binding.donateDescription.isVisible = false
         }
 
         binding.rateAnkiDroid.setOnClickListener {
@@ -104,13 +118,10 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         }
 
         binding.openChangelog.setOnClickListener {
-            val openChangelogIntent =
-                Intent(requireContext(), Info::class.java).apply {
-                    putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-                }
-            startActivity(openChangelogIntent)
+            navigate(ChangelogDestination)
         }
 
+        binding.copyDebugInfo.text = TR.sentenceCase.copyDebugInfo
         binding.copyDebugInfo.setOnClickListener { copyDebugInfo() }
     }
 
@@ -124,8 +135,8 @@ class AboutFragment : Fragment(R.layout.about_layout) {
                     DebugInfoService.getDebugInfo(requireContext())
                 }
             requireContext().copyToClipboard(
-                debugInfo,
-                failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
+                TruncatedString.from(debugInfo),
+                failureMessageId = CommonString.about_ankidroid_error_copy_debug_info,
             )
         }
     }
@@ -154,11 +165,11 @@ class AboutFragment : Fragment(R.layout.about_layout) {
          */
         fun showEnableDeveloperOptionsDialog(context: Context) {
             AlertDialog.Builder(context).show {
-                setTitle(R.string.dev_options_enabled_pref)
+                setTitle(CommonString.dev_options_enabled_pref)
                 setIcon(R.drawable.ic_warning)
-                setMessage(R.string.dev_options_warning)
-                setPositiveButton(R.string.dialog_ok) { _, _ -> enableDeveloperOptions(context) }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> clickCount = 0 }
+                setMessage(CommonString.dev_options_warning)
+                setPositiveButton(CommonString.dialog_ok) { _, _ -> enableDeveloperOptions(context) }
+                setNegativeButton(CommonString.dialog_cancel) { _, _ -> clickCount = 0 }
                 setCancelable(false)
             }
         }

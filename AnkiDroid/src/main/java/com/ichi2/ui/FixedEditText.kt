@@ -1,6 +1,4 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 3 of the License, or (at your option) any later
@@ -41,23 +39,39 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.R
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 open class FixedEditText : AppCompatEditText {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    /**
+     * Request raw keyboard input without disabling this view's cursor or input connection.
+     *
+     * Call [InputMethodManager.restartInput] after changing this flag if the keyboard is
+     * already connected.
+     *
+     * @see applyNoSuggest
+     */
+    var noSuggest: Boolean = false
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? =
+        super.onCreateInputConnection(outAttrs).applyNoSuggest(outAttrs, noSuggest)
+
     init {
         val highlightColor =
             MaterialColors.getColor(
                 context,
-                R.attr.editTextHighlightColor,
+                CommonR.attr.editTextHighlightColor,
                 "#99CCFF".toColorInt(), // light blue color for fallback just-in-case
             )
         setHighlightColor(highlightColor)

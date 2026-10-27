@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.instanteditor
 
@@ -69,7 +55,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
             toggleAllClozeDeletions(sentenceArray)
 
             assertEquals("all cloze deletions are removed", clozeDeletionCount, 0)
-            assertEquals("cloze number is reset if there are no clozes", currentClozeNumber, 1)
+            assertEquals("cloze number is reset if there are no clozes", currentClozeNumber.value, 1)
         }
 
     @Test
@@ -83,11 +69,11 @@ class InstantEditorViewModelTest : RobolectricTest() {
             // disable cloze on the first 2, leaving "this" as {{c3::
             toggleClozeDeletions(sentenceArray, 0, 1)
 
-            assertEquals("cloze number is 'Current Cloze Number + 1'", currentClozeNumber, 4)
+            assertEquals("cloze number is 'Current Cloze Number + 1'", currentClozeNumber.value, 4)
 
             // remove the remaining cloze all clozes
             toggleClozeDeletion(sentenceArray, 2)
-            assertEquals("cloze number is reset if all clozes are removed", currentClozeNumber, 1)
+            assertEquals("cloze number is reset if all clozes are removed", currentClozeNumber.value, 1)
         }
 
     @Test
@@ -211,6 +197,108 @@ class InstantEditorViewModelTest : RobolectricTest() {
             val cleanWord = getCleanClozeWords(expectedCloze)
 
             assertEquals(word, cleanWord)
+        }
+
+    @Test
+    fun `cloze numbering continues from existing clozes`() =
+        runViewModelTest {
+            val text =
+                "This is the {{c1::first cloze}}. " +
+                    "This should be the {{c2::second cloze}}. " +
+                    "Similarly, this one as {{c3::third cloze}}."
+
+            setClozeFieldText(text)
+
+            val result = buildClozeText("fourth")
+
+            assertEquals("{{c4::fourth}}", result)
+        }
+
+    @Test
+    fun `removing a cloze does not reset numbering`() =
+        runViewModelTest {
+            val text = "{{c1::first}} {{c2::second}} {{c3::third}}"
+
+            setClozeFieldText(text)
+
+            val words = getWordsFromFieldText().toMutableList()
+
+            words[1] = buildClozeText(words[1]) // remove c2
+
+            val result = buildClozeText("fourth")
+
+            assertEquals("{{c4::fourth}}", result)
+        }
+
+    @Test
+    fun `toggling cloze mode does not reset numbering`() =
+        runViewModelTest {
+            val text = "{{c1::first}} {{c2::second}} {{c3::third}}"
+
+            setClozeFieldText(text)
+
+            toggleClozeMode() // switch to NO_INCREMENT mode
+            toggleClozeMode() // switch back to INCREMENT mode
+
+            val result = buildClozeText("fourth")
+
+            assertEquals("{{c4::fourth}}", result)
+        }
+
+    @Test
+    fun `toggle from increment to no_increment adjusts cloze counter`() =
+        runViewModelTest {
+            val text = "This is {{c1::first}} and {{c2::second}}"
+            setClozeFieldText(text)
+
+            assertEquals(3, currentClozeNumber.value)
+
+            toggleClozeMode() // switch to NO_INCREMENT mode
+            assertEquals(2, currentClozeNumber.value)
+
+            toggleClozeMode() // switch back to INCREMENT mode
+            assertEquals(3, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `setClozeFieldText does not increment in NO_INCREMENT mode`() =
+        runViewModelTest {
+            toggleClozeMode() // switch to NO_INCREMENT mode
+
+            val text = "{{c1::first}} {{c2::second}}"
+            setClozeFieldText(text)
+
+            assertEquals(2, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `setClozeFieldText increments in INCREMENT mode`() =
+        runViewModelTest {
+            val text = "{{c1::first}} {{c2::second}}"
+            setClozeFieldText(text)
+
+            assertEquals(3, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `toggling cloze mode with no clozes keeps cloze number at 1`() =
+        runViewModelTest {
+            assertEquals(1, currentClozeNumber.value)
+
+            toggleClozeMode() // INCREMENT -> NO_INCREMENT
+            assertEquals(1, currentClozeNumber.value)
+
+            toggleClozeMode() // NO_INCREMENT -> INCREMENT
+            assertEquals(1, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `toggling cloze mode multiple times with no clozes keeps cloze number at 1`() =
+        runViewModelTest {
+            repeat(5) {
+                toggleClozeMode()
+            }
+            assertEquals(1, currentClozeNumber.value)
         }
 
     private fun runViewModelTest(

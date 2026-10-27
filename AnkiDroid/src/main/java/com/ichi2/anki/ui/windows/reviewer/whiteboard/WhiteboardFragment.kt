@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.annotation.SuppressLint
@@ -20,13 +7,17 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.PopupWindow
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
@@ -34,37 +25,56 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
+import com.ichi2.anki.android.back.doubleBackPressCallback
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.utils.android.systemIsInNightMode
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.databinding.FragmentWhiteboardBinding
 import com.ichi2.anki.databinding.PopupBrushOptionsBinding
 import com.ichi2.anki.databinding.PopupEraserOptionsBinding
+import com.ichi2.anki.preferences.reviewer.WhiteboardAction
+import com.ichi2.anki.reviewer.BindingMap
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.themes.Themes
-import com.ichi2.utils.dp
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
 import com.ichi2.utils.toRGBAHex
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import kotlin.math.roundToInt
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Fragment that displays a whiteboard and its controls.
  */
 class WhiteboardFragment :
     Fragment(R.layout.fragment_whiteboard),
-    PopupMenu.OnMenuItemClickListener {
-    private val viewModel: WhiteboardViewModel by viewModels {
+    PopupMenu.OnMenuItemClickListener,
+    DispatchKeyEventListener {
+    @VisibleForTesting
+    internal val viewModel: WhiteboardViewModel by viewModels {
         WhiteboardViewModel.factory(AnkiDroidApp.sharedPrefs())
     }
 
     val binding by viewBinding(FragmentWhiteboardBinding::bind)
+    private lateinit var bindingMap: BindingMap<ReviewerBinding, WhiteboardAction>
+    private var doubleBackCallback: OnBackPressedCallback? = null
 
     private var eraserPopup: PopupWindow? = null
     private var brushConfigPopup: PopupWindow? = null
+
+    /** Called when no bindings used the triggered gestures */
+    var gestureFallbackListener: ((Gesture) -> Unit)? = null
 
     override fun onViewCreated(
         view: View,
@@ -72,16 +82,61 @@ class WhiteboardFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isNightMode = Themes.systemIsInNightMode(requireContext())
+        val isNightMode = systemIsInNightMode(requireContext())
         viewModel.loadState(isNightMode)
 
         setupUI()
         observeViewModel(binding.whiteboardView)
+        setupDoubleBackPress()
 
+        binding.whiteboardView.isStylusButtonOverriding = viewModel.isStylusOverriding
         binding.whiteboardView.onNewPath = viewModel::addPath
         binding.whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
-        binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsAtPoint
+        binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsToPoint
         binding.whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
+        binding.whiteboardView.onStylusButtonStateChanged = { isPressed ->
+            viewModel.setStylusButtonPressed(isPressed)
+            binding.whiteboardView.activeTool = viewModel.activeTool.value
+            binding.whiteboardToolbar.updateSelection(
+                viewModel.activeBrushIndex.value,
+                viewModel.activeTool.value is WhiteboardTool.Eraser,
+            )
+        }
+    }
+
+    private fun setupDoubleBackPress() {
+        doubleBackCallback =
+            doubleBackPressCallback(
+                enabled = computeDoubleBackEnabled(),
+                onFirstBack = { showSnackbar(CommonString.back_pressed_once, Snackbar.LENGTH_SHORT) },
+                shouldReEnable = { computeDoubleBackEnabled() },
+            ).also {
+                requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it)
+            }
+        // Keep the callback in sync as the inputs change (host toggling drawing mode,
+        // hidden state changes from the reviewer's show/hide transactions).
+        viewModel.isDrawing
+            .onEach { doubleBackCallback?.isEnabled = computeDoubleBackEnabled() }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun computeDoubleBackEnabled(): Boolean {
+        val isUsingGesturesNavigation = context?.let { compat.isUsingSystemGestureNavigation(it) } == true
+        return !viewModel.isDrawing.value && !isHidden && isUsingGesturesNavigation
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        doubleBackCallback?.isEnabled = computeDoubleBackEnabled()
+    }
+
+    /**
+     * Switches the whiteboard into "drawing" mode, where the host owns back
+     * navigation (e.g. a discard-changes dialog) and the reviewer's "go back again
+     * to exit" snackbar is suppressed.
+     */
+    fun setDrawingMode(drawing: Boolean) {
+        viewModel.isDrawing.value = drawing
     }
 
     private fun setupUI() {
@@ -110,7 +165,7 @@ class WhiteboardFragment :
         toolbar.undoButton.setOnClickListener { viewModel.undo() }
         toolbar.redoButton.setOnClickListener { viewModel.redo() }
         toolbar.eraserButton.setOnClickListener {
-            if (viewModel.isEraserActive.value) {
+            if (viewModel.activeTool.value is WhiteboardTool.Eraser) {
                 toolbar.eraserButton.isChecked = true
                 if (eraserPopup?.isShowing == true) {
                     eraserPopup?.dismiss()
@@ -123,7 +178,7 @@ class WhiteboardFragment :
         }
 
         toolbar.onBrushClick = { view, index ->
-            if (viewModel.activeBrushIndex.value == index && !viewModel.isEraserActive.value) {
+            if (viewModel.activeBrushIndex.value == index && viewModel.activeTool.value !is WhiteboardTool.Eraser) {
                 showBrushConfigurationPopup(view, index)
             } else {
                 viewModel.setActiveBrush(index)
@@ -135,17 +190,45 @@ class WhiteboardFragment :
                 showRemoveColorDialog(index)
             } else {
                 Timber.i("Tried to remove the last brush of the whiteboard")
-                showSnackbar(R.string.cannot_remove_last_brush_message)
+                showSnackbar(CommonString.cannot_remove_last_brush_message)
             }
         }
 
-        viewModel.canUndo.onEach { toolbar.undoButton.isEnabled = it }.launchIn(lifecycleScope)
-        viewModel.canRedo.onEach { toolbar.redoButton.isEnabled = it }.launchIn(lifecycleScope)
+        viewModel.canUndo.onEach { toolbar.undoButton.isEnabled = it }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.canRedo.onEach { toolbar.redoButton.isEnabled = it }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         binding.whiteboardToolbar.onToolbarVisibilityChanged = { isShown ->
             viewModel.setIsToolbarShown(isShown)
         }
+
+        bindingMap = BindingMap(sharedPrefs(), WhiteboardAction.entries, viewModel)
+        binding.root.setOnGenericMotionListener { _, event ->
+            bindingMap.onGenericMotionEvent(event)
+        }
+        binding.whiteboardView.setOnMultiTouchListener { touchNumber ->
+            val gesture =
+                when (touchNumber) {
+                    2 -> Gesture.TWO_FINGER_TAP
+                    3 -> Gesture.THREE_FINGER_TAP
+                    4 -> Gesture.FOUR_FINGER_TAP
+                    else -> return@setOnMultiTouchListener
+                }
+            val result = onGesture(gesture)
+            if (!result) {
+                gestureFallbackListener?.invoke(gesture)
+            }
+        }
     }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (isHidden || event.action != KeyEvent.ACTION_DOWN) return false
+        return bindingMap.onKeyDown(event)
+    }
+
+    fun onScreenShake(): Boolean = !isHidden && onGesture(Gesture.SHAKE)
+
+    /** Handles gestures detected on the whiteboard or on the card beneath it in stylus mode. */
+    fun onGesture(gesture: Gesture): Boolean = bindingMap.onGesture(gesture)
 
     /**
      * Sets up observers for the ViewModel's flows.
@@ -153,62 +236,48 @@ class WhiteboardFragment :
     private fun observeViewModel(whiteboardView: WhiteboardView) {
         val toolbar = binding.whiteboardToolbar
 
-        viewModel.paths.onEach(whiteboardView::setHistory).launchIn(lifecycleScope)
+        viewModel.paths.onEach(whiteboardView::setHistory).launchIn(viewLifecycleOwner.lifecycleScope)
 
-        combine(
-            viewModel.brushColor,
-            viewModel.activeStrokeWidth,
-        ) { color, width ->
-            whiteboardView.setCurrentBrush(color, width)
-        }.launchIn(lifecycleScope)
+        viewModel.activeTool
+            .onEach { tool ->
+                whiteboardView.activeTool = tool
+                val isEraser = tool is WhiteboardTool.Eraser
+                toolbar.updateSelection(viewModel.activeBrushIndex.value, isEraser)
+                toolbar.eraserButton.updateState(isEraser, viewModel.eraser.mode, viewModel.eraser.width)
+                if (!isEraser) {
+                    eraserPopup?.dismiss()
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        combine(
-            viewModel.isEraserActive,
-            viewModel.eraserMode,
-            viewModel.eraserDisplayWidth,
-        ) { isActive, mode, width ->
-            whiteboardView.isEraserActive = isActive
-            toolbar.eraserButton.updateState(isActive, mode, width)
-            whiteboardView.eraserMode = mode
-            if (!isActive) {
-                eraserPopup?.dismiss()
-            }
-        }.launchIn(lifecycleScope)
+        viewModel.activeBrushIndex
+            .onEach { index ->
+                toolbar.updateSelection(index, viewModel.activeTool.value is WhiteboardTool.Eraser)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.brushes
             .onEach { brushesInfo ->
-                toolbar.setBrushes(brushesInfo, viewModel.activeBrushIndex.value, viewModel.isEraserActive.value)
-            }.launchIn(lifecycleScope)
-
-        viewModel.activeBrushIndex
-            .onEach {
-                toolbar.updateSelection(it, viewModel.isEraserActive.value)
-            }.launchIn(lifecycleScope)
-
-        viewModel.isEraserActive
-            .onEach {
-                toolbar.updateSelection(viewModel.activeBrushIndex.value, it)
-            }.launchIn(lifecycleScope)
+                toolbar.setBrushes(brushesInfo, viewModel.activeBrushIndex.value, viewModel.activeTool.value is WhiteboardTool.Eraser)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.isStylusOnlyMode
             .onEach { isEnabled ->
                 whiteboardView.isStylusOnlyMode = isEnabled
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.toolbarAlignment
             .onEach { alignment ->
                 toolbar.setAlignment(alignment)
                 updateToolbarPosition(alignment)
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.isToolbarShown
             .onEach { isShown ->
                 if (isShown) {
-                    showToolbar()
+                    toolbar.show()
                 } else {
-                    hideToolbar()
+                    toolbar.hide()
                 }
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     /**
@@ -216,7 +285,7 @@ class WhiteboardFragment :
      */
     private fun showAddColorDialog() {
         requireContext()
-            .showColorPickerDialog(viewModel.brushColor.value) { color ->
+            .showColorPickerDialog(viewModel.currentBrushColor) { color ->
                 Timber.i("Added brush with color ${color.toRGBAHex()}")
                 viewModel.addBrush(color)
             }
@@ -228,11 +297,11 @@ class WhiteboardFragment :
     private fun showRemoveColorDialog(index: Int) {
         AlertDialog
             .Builder(requireContext())
-            .setMessage(R.string.whiteboard_remove_brush_message)
-            .setPositiveButton(R.string.dialog_remove) { dialog, _ ->
+            .setMessage(CommonString.whiteboard_remove_brush_message)
+            .setPositiveButton(CommonString.dialog_remove) { dialog, _ ->
                 Timber.i("Removed brush of index %d", index)
                 viewModel.removeBrush(index)
-            }.setNegativeButton(R.string.dialog_cancel, null)
+            }.setNegativeButton(CommonString.dialog_cancel, null)
             .show()
     }
 
@@ -283,7 +352,15 @@ class WhiteboardFragment :
 
         brushConfigPopup =
             PopupWindow(popupBrushBinding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        brushConfigPopup?.elevation = resources.getDimension(R.dimen.study_screen_elevation)
+
+        val typedValue = TypedValue()
+        val hasAttr = requireContext().theme.resolveAttribute(CommonR.attr.studyScreenElevation, typedValue, true)
+        brushConfigPopup?.elevation =
+            if (hasAttr && typedValue.type == TypedValue.TYPE_DIMENSION) {
+                typedValue.getDimension(resources.displayMetrics)
+            } else {
+                0f
+            }
         brushConfigPopup?.setOnDismissListener {
             brushConfigPopup = null
         }
@@ -299,7 +376,7 @@ class WhiteboardFragment :
      */
     private fun showChangeColorDialog() {
         requireContext()
-            .showColorPickerDialog(viewModel.brushColor.value) { color ->
+            .showColorPickerDialog(viewModel.currentBrushColor) { color ->
                 viewModel.updateBrushColor(color)
                 brushConfigPopup?.dismiss()
             }
@@ -312,16 +389,16 @@ class WhiteboardFragment :
         val inflater = LayoutInflater.from(requireContext())
         val eraserWidthBinding = PopupEraserOptionsBinding.inflate(inflater)
 
-        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraserDisplayWidth.value
+        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraser.width
         eraserWidthBinding.eraserWidthSlider.addOnChangeListener { _, value, fromUser ->
-            if (fromUser) viewModel.setActiveStrokeWidth(value)
+            if (fromUser) viewModel.setEraserStrokeWidth(value)
         }
         eraserWidthBinding.eraserWidthSlider.setLabelFormatter { value: Float ->
             value.roundToInt().toString()
         }
 
         eraserWidthBinding.eraserModeToggleGroup.clearOnButtonCheckedListeners()
-        when (viewModel.eraserMode.value) {
+        when (viewModel.eraser.mode) {
             EraserMode.STROKE -> eraserWidthBinding.eraserModeToggleGroup.check(R.id.eraser_mode_stroke)
             EraserMode.INK -> eraserWidthBinding.eraserModeToggleGroup.check(R.id.eraser_mode_ink)
         }
@@ -330,14 +407,11 @@ class WhiteboardFragment :
                 when (checkedId) {
                     R.id.eraser_mode_stroke -> {
                         viewModel.setEraserMode(EraserMode.STROKE)
-                        eraserWidthBinding.eraserWidthSlider.value =
-                            viewModel.strokeEraserStrokeWidth.value
+                        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraser.strokeEraserWidth
                     }
-
                     R.id.eraser_mode_ink -> {
                         viewModel.setEraserMode(EraserMode.INK)
-                        eraserWidthBinding.eraserWidthSlider.value =
-                            viewModel.inkEraserStrokeWidth.value
+                        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraser.inkWidth
                     }
                 }
             }
@@ -346,7 +420,7 @@ class WhiteboardFragment :
         eraserPopup = PopupWindow(eraserWidthBinding.root, 280.dp.toPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT, true)
         eraserPopup?.elevation = 8f
         eraserPopup?.setOnDismissListener {
-            binding.whiteboardToolbar.updateSelection(viewModel.activeBrushIndex.value, viewModel.isEraserActive.value)
+            binding.whiteboardToolbar.updateSelection(viewModel.activeBrushIndex.value, viewModel.activeTool.value is WhiteboardTool.Eraser)
             eraserPopup = null
         }
 
@@ -365,18 +439,6 @@ class WhiteboardFragment :
                     ToolbarAlignment.LEFT -> Gravity.LEFT or Gravity.CENTER_VERTICAL
                     ToolbarAlignment.RIGHT -> Gravity.RIGHT or Gravity.CENTER_VERTICAL
                 }
-        }
-    }
-
-    private fun showToolbar() {
-        binding.whiteboardToolbar.post {
-            binding.whiteboardToolbar.show()
-        }
-    }
-
-    private fun hideToolbar() {
-        binding.whiteboardToolbar.post {
-            binding.whiteboardToolbar.hide()
         }
     }
 
@@ -413,4 +475,15 @@ class WhiteboardFragment :
      * @return whether the whiteboard is completely empty, including the undo and redo stacks.
      */
     fun isEmpty(): Boolean = !viewModel.canUndo.value && !viewModel.canRedo.value
+
+    /**
+     * Emits `true` when the whiteboard is empty (cannot undo or redo) and `false` otherwise.
+     * Useful for hosts that need to react to content changes, e.g. to toggle a back-press
+     * callback's `isEnabled`.
+     */
+    val isEmptyFlow: Flow<Boolean>
+        get() =
+            combine(viewModel.canUndo, viewModel.canRedo) { canUndo, canRedo ->
+                !canUndo && !canRedo
+            }
 }

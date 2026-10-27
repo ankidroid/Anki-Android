@@ -1,26 +1,13 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
 import android.view.ViewConfiguration
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.cardviewer.TapGestureMode.Companion.fromPreference
+import com.ichi2.anki.common.android.appContext
 import timber.log.Timber
 import kotlin.math.abs
 import kotlin.math.floor
@@ -39,7 +26,7 @@ class GestureMapper {
         // Else, when Robolectric executes in the CI it accesses AnkiDroidApp.getInstance before it exists #9173
         if (VIEW_CONFIGURATION == null) {
             // Set good default values for swipe detection
-            VIEW_CONFIGURATION = ViewConfiguration.get(AnkiDroidApp.instance)
+            VIEW_CONFIGURATION = ViewConfiguration.get(appContext)
             DEFAULT_SWIPE_MIN_DISTANCE = VIEW_CONFIGURATION!!.scaledPagingTouchSlop
             DEFAULT_SWIPE_THRESHOLD_VELOCITY = VIEW_CONFIGURATION!!.scaledMinimumFlingVelocity
         }

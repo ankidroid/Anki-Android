@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs.viewmodel
 
@@ -20,12 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AndroidTtsVoice
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.TtsVoices
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.dialogs.tryDisplayLocalizedName
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.libanki.TtsVoice
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -36,6 +23,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * @see [com.ichi2.anki.dialogs.TtsVoicesDialogFragment]
@@ -170,7 +158,7 @@ class TtsVoicesViewModel : ViewModel() {
                 // and don't perform updates when no changes occur
                 Timber.v("voice list refreshed")
                 ttsVoiceListStatus.emit(LoadVoiceStatus.Success(voices))
-                delay(2_000)
+                delay(2.seconds)
             }
         }
         addCloseable {
@@ -197,8 +185,8 @@ class TtsVoicesViewModel : ViewModel() {
     fun copyToClipboard(voice: TtsVoice) {
         // At least in API 33, we do not need to display a snackbar, as the Android OS already
         // displays the copied text
-        AnkiDroidApp.instance.copyToClipboard(
-            text = voice.toString(),
+        appContext.copyToClipboard(
+            text = TruncatedString.from(voice.toString()),
         )
     }
 

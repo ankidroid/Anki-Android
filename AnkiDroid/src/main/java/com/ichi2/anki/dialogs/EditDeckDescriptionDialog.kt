@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs
 
@@ -21,16 +7,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.databinding.DialogDeckDescriptionBinding
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
@@ -48,6 +34,7 @@ import com.ichi2.utils.show
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Allows a user to edit the [deck description][com.ichi2.anki.libanki.Deck.description]
@@ -79,8 +66,8 @@ class EditDeckDescriptionDialog : DialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .create {
                 setView(binding.root)
-                positiveButton(R.string.save)
-                negativeButton(R.string.close)
+                positiveButton(CommonString.save)
+                negativeButton(CommonString.close)
             }.apply {
                 alertDialog = this
                 setOnShowListener {
@@ -89,6 +76,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                     handleOutsideTouch(binding) { viewModel.onBackRequested() }
                 }
                 setCanceledOnTouchOutside(false)
+                // TODO: Use DialogFragment.isCancelable and retain 'Back' handling
                 setCancelable(false)
                 onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
                 show()
@@ -123,14 +111,22 @@ class EditDeckDescriptionDialog : DialogFragment() {
         // setup 'Format as Markdown' help
         binding.markdownFormattingHelp.apply {
             contentDescription =
-                getString(R.string.help_button_content_description, getString(R.string.format_deck_description_as_markdown))
+                getString(CommonString.help_button_content_description, getString(CommonString.format_deck_description_as_markdown))
             setOnClickListener {
                 MaterialAlertDialogBuilder(requireContext()).show {
                     setTitle(binding.formatAsMarkdownInput.text)
-                    setIcon(R.drawable.ic_help_black_24dp)
+                    setIcon(CommonR.drawable.ic_help_black_24dp)
                     // FIXME: the upstream string unexpectedly contains newlines
                     setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
                 }
+            }
+        }
+
+        with(binding.deckDescriptionInput) {
+            doAfterTextChanged {
+                // avoid an additional layout pass in the same frame as
+                // TextInputLayout's internal requestLayout(), which causes shaking
+                (this.parent as? View)?.post { requestLayout() }
             }
         }
 
@@ -146,7 +142,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                         DismissType.ClosedWithoutSaving -> requireActivity().dismissAllDialogFragments()
                         DismissType.Saved -> {
                             requireActivity().dismissAllDialogFragments()
-                            showSnackbar(R.string.deck_description_saved)
+                            showSnackbar(CommonString.deck_description_saved)
                             // notify DeckPicker to invalidate its toolbar menu, otherwise the undo
                             // action to revert the description change is not going to be visible
                             // when there are no other undo actions
@@ -204,9 +200,9 @@ class EditDeckDescriptionDialog : DialogFragment() {
         fun newInstance(deckId: DeckId): EditDeckDescriptionDialog =
             EditDeckDescriptionDialog().apply {
                 arguments =
-                    bundleOf(
-                        EditDeckDescriptionDialogViewModel.ARG_DECK_ID to deckId,
-                    )
+                    Bundle().apply {
+                        putLong(EditDeckDescriptionDialogViewModel.ARG_DECK_ID, deckId)
+                    }
             }
     }
 }

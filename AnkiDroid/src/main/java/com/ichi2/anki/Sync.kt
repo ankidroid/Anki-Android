@@ -1,36 +1,31 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
 
 package com.ichi2.anki
 
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import anki.sync.SyncAuth
+import androidx.work.NetworkType
+import anki.collection.Progress
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.sync.MediaSync
+import com.ichi2.anki.sync.MeteredSyncPermission
+import com.ichi2.anki.sync.MeteredSyncPolicy
+import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.fullUploadOrDownload
+import com.ichi2.anki.sync.syncCollection
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
@@ -46,9 +41,10 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
 
 object SyncPreferences {
-    const val CURRENT_SYNC_URI = "currentSyncUri"
+    const val PREF_CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
 }
@@ -71,7 +67,7 @@ fun syncAuth(): SyncAuth? {
                 this.endpoint = resolvedEndpoint
             }
             this.ioTimeoutSecs = Prefs.networkTimeoutSecs
-        }
+        }.let(::SyncAuth)
     }
 }
 
@@ -93,39 +89,74 @@ fun getEndpoint(): String? {
  */
 fun isLoggedIn(): Boolean = !Prefs.hkey.isNullOrEmpty()
 
-fun millisecondsSinceLastSync() = TimeManager.time.intTimeMS() - Prefs.lastSyncTime
+/** Elapsed milliseconds since the last manual or automatic sync attempt. */
+fun millisecondsSinceLastSyncAttempt() = TimeManager.time.intTimeMS() - Prefs.lastSyncTime
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
     syncMedia: Boolean,
+    meteredSyncPermission: MeteredSyncPermission = MeteredSyncPermission.USE_PREFERENCES,
 ) {
     val auth = syncAuth() ?: return
+    val mediaNetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true, permission = meteredSyncPermission)
     val deckPicker = this
     launchCatchingTask {
         try {
             try {
                 when (conflict) {
-                    ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
-                    ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
+                    ConflictResolution.FULL_DOWNLOAD ->
+                        handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
+                    ConflictResolution.FULL_UPLOAD ->
+                        handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
                     null -> {
-                        handleNormalSync(deckPicker, auth, syncMedia)
+                        handleNormalSync(deckPicker, auth, syncMedia, mediaNetworkType)
                     }
                 }
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 // auth failed; log out
                 updateLogin("", "")
                 throw exc
+            } catch (exc: BackendSyncException) {
+                if (exc.isClockOffException()) {
+                    showSyncErrorDialog(
+                        SyncErrorDialog.Type.DIALOG_SYNC_CLOCK_OFF,
+                        exc.localizedMessage,
+                    )
+                    return@launchCatchingTask
+                }
+
+                if (exc.isCollectionTooLargeException()) {
+                    showSyncErrorDialog(
+                        SyncErrorDialog.Type.DIALOG_COLLECTION_TOO_LARGE,
+                        exc.localizedMessage,
+                    )
+                    return@launchCatchingTask
+                }
+
+                throw exc
             }
             withCol { notetypes.clearCache() }
             notifySubscribersAllValuesChanged(deckPicker)
             refreshState()
         } finally {
-            // Always update last sync time to prevent infinite retry loops
-            // when sync fails (e.g., collection too large). See issue #19776
             setLastSyncTimeToNow()
         }
     }
 }
+
+/** The backend currently exposes ClockIncorrect as a localized sync error message. */
+private fun BackendSyncException.isClockOffException(): Boolean =
+    try {
+        message == TR.syncClockOff()
+    } catch (_: Throwable) {
+        false
+    }
+
+private val collectionTooLargeDetailsRegex =
+    Regex("""\b\d+(?:\.\d{2})?(?: MB)? > \d+(?:\.\d{2})?(?: MB)?\b""")
+
+private fun BackendSyncException.isCollectionTooLargeException(): Boolean =
+    message?.let { collectionTooLargeDetailsRegex.containsMatchIn(it) } == true
 
 fun updateLogin(
     username: String,
@@ -144,6 +175,7 @@ private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     syncMedia: Boolean,
+    mediaNetworkType: NetworkType,
 ) {
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
@@ -155,9 +187,12 @@ private suspend fun handleNormalSync(
                 }
             },
             onCancel = ::cancelSync,
-            manualCancelButton = R.string.dialog_cancel,
+            manualCancelButton = CommonString.dialog_cancel,
         ) {
-            withCol {
+            withColExclusive(
+                operation = CollectionOperation.SYNC,
+                onCancel = ::cancelSync,
+            ) {
                 syncCollection(auth2, syncMedia = false) // media is synced by SyncMediaWorker
             }
         }
@@ -165,11 +200,7 @@ private suspend fun handleNormalSync(
     if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
         Timber.i("sync endpoint updated")
         Prefs.currentSyncUri = output.newEndpoint
-        auth2 =
-            syncAuth {
-                this.hkey = auth.hkey
-                endpoint = output.newEndpoint
-            }
+        auth2 = auth.withEndpoint(output.newEndpoint)
     }
     val mediaUsn =
         if (syncMedia) {
@@ -184,24 +215,25 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // scheduler version may have changed
             withCol { _loadScheduler() }
-            val message = if (syncMedia) R.string.col_synced_media_in_background else R.string.sync_database_acknowledge
+            val message = if (syncMedia) CommonString.col_synced_media_in_background else CommonString.sync_database_acknowledge
             deckPicker.showSyncLogMessage(message, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
-                SyncMediaWorker.start(deckPicker, auth2)
+                SyncMediaWorker.start(deckPicker, auth2, mediaNetworkType)
             }
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth2, mediaUsn)
+            handleDownload(deckPicker, auth2, mediaUsn, mediaNetworkType)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth2, mediaUsn)
+            handleUpload(deckPicker, auth2, mediaUsn, mediaNetworkType)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
             deckPicker.mediaUsnOnConflict = mediaUsn
+            deckPicker.mediaNetworkTypeOnConflict = mediaNetworkType
             deckPicker.showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION)
         }
 
@@ -216,9 +248,11 @@ private suspend fun handleNormalSync(
 
 private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
     {
-        if (progress.hasFullSync()) {
-            text = title
-            amount = progress.fullSync.run { Pair(transferred, total) }
+        fun Progress.FullSync.toAmount() = ProgressContext.Amount(transferred.toLong(), total.toLong())
+
+        text = title
+        if (progress.hasFullSync() && progress.fullSync.total > 0) {
+            amount = progress.fullSync.toAmount()
         }
     }
 
@@ -226,60 +260,86 @@ private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     mediaUsn: Int?,
+    mediaNetworkType: NetworkType,
 ) {
     Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
+        progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync,
+        manualCancelButton = CommonString.dialog_cancel,
     ) {
-        withCol {
+        withColExclusive(
+            operation = CollectionOperation.FULL_DOWNLOAD,
+            onCancel = ::cancelSync,
+        ) {
             try {
-                createBackup(
-                    BackupManager.getBackupDirectoryFromCollection(colDb),
-                    force = true,
-                    waitForCompletion = true,
-                )
+                val created =
+                    createBackup(
+                        BackupManager.getBackupDirectoryFromCollection(colDb),
+                        force = true,
+                        waitForCompletion = true,
+                    )
+                if (!created) {
+                    Timber.i("Sync: Backup skipped before full download: collection unchanged")
+                }
                 close(downgrade = false, forFullSync = true)
-                fullUploadOrDownload(auth, upload = false, serverUsn = mediaUsn)
+                // Media starts through SyncMediaWorker so WorkManager can enforce network constraints.
+                fullUploadOrDownload(
+                    auth,
+                    upload = false,
+                    mediaSync = MediaSync.Skip,
+                )
             } finally {
                 reopen(afterFullSync = true)
             }
         }
         deckPicker.refreshState()
         if (mediaUsn != null) {
-            SyncMediaWorker.start(deckPicker, auth)
+            SyncMediaWorker.start(deckPicker, auth, mediaNetworkType)
         }
     }
 
     Timber.i("Full Download Completed")
-    deckPicker.showSyncLogMessage(R.string.backup_one_way_sync_from_server, "")
+    deckPicker.showSyncLogMessage(CommonString.backup_one_way_sync_from_server, "")
 }
 
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     mediaUsn: Int?,
+    mediaNetworkType: NetworkType,
 ) {
     Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
+        progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync,
+        manualCancelButton = CommonString.dialog_cancel,
     ) {
-        withCol {
+        withColExclusive(
+            operation = CollectionOperation.FULL_UPLOAD,
+            onCancel = ::cancelSync,
+        ) {
             close(downgrade = false, forFullSync = true)
             try {
-                fullUploadOrDownload(auth, upload = true, serverUsn = mediaUsn)
+                // Media starts through SyncMediaWorker so WorkManager can enforce network constraints.
+                fullUploadOrDownload(
+                    auth,
+                    upload = true,
+                    mediaSync = MediaSync.Skip,
+                )
             } finally {
                 reopen(afterFullSync = true)
             }
         }
         deckPicker.refreshState()
         if (mediaUsn != null) {
-            SyncMediaWorker.start(deckPicker, auth)
+            SyncMediaWorker.start(deckPicker, auth, mediaNetworkType)
         }
     }
     Timber.i("Full Upload Completed")
-    deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
+    deckPicker.showSyncLogMessage(CommonString.sync_log_uploading_message, "")
 }
 
 fun cancelMediaSync(backend: Backend) {
@@ -308,9 +368,9 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
         withContext(Dispatchers.Main) {
             AlertDialog
                 .Builder(deckPicker)
-                .setTitle(TR.syncMediaLogTitle().toSentenceCase(deckPicker, R.string.sentence_sync_media_log))
+                .setTitle(with(deckPicker) { TR.sentenceCase.mediaSyncLog })
                 .setMessage("")
-                .setPositiveButton(R.string.dialog_continue) { _, _ ->
+                .setPositiveButton(CommonString.dialog_continue) { _, _ ->
                     scope.cancel()
                 }.setNegativeButton(TR.syncAbortButton()) { _, _ ->
                     isAborted = true
@@ -330,7 +390,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
                 }
                 val text = resp.progress.run { "$added\n$removed\n$checked" }
                 dialog.setMessage(text)
-                delay(100)
+                delay(100.milliseconds)
             }
             showMessage(if (isAborted) TR.syncMediaAborted() else TR.syncMediaComplete())
         } catch (_: BackendInterruptedException) {
@@ -358,7 +418,7 @@ fun DeckPicker.showSyncLogMessage(
         showSimpleNotification(
             res.getString(R.string.app_name),
             res.getString(messageResource),
-            Channel.SYNC,
+            NotificationChannel.SYNC,
         )
     } else {
         if (syncMessage.isNullOrEmpty()) {
@@ -370,6 +430,7 @@ fun DeckPicker.showSyncLogMessage(
     }
 }
 
+/** Starts the retry delay after every sync attempt, regardless of outcome. */
 fun setLastSyncTimeToNow() {
     Prefs.lastSyncTime = TimeManager.time.intTimeMS()
 }

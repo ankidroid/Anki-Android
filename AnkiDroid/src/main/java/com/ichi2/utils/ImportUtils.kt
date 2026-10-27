@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>
 
 package com.ichi2.utils
 
@@ -22,29 +9,36 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Message
 import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.exception.ManuallyReportedException
-import com.ichi2.anki.onSelectedCsvForImport
+import com.ichi2.anki.openImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.MimeTypeUtils
+import com.ichi2.utils.IntentUtil.resolveMimeType
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Locale
@@ -54,16 +48,35 @@ object ImportUtils {
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
 
     /**
-     * This code is used in multiple places to handle package imports
+     * Resolve and cache the source, then start the text importer or store a package confirmation.
      *
-     * @param context for use in resource resolution and path finding
-     * @param intent contains the file to import
-     * @return null if successful, otherwise error message
+     * Text importer launch happens before this method returns. Package confirmations must be
+     * dispatched by the caller or by DeckPicker when it resumes.
+     *
+     * @return The resolved source metadata and cached path, or details of a preparation or launch
+     * failure. Success does not mean that the file's contents have been imported.
      */
     fun handleFileImport(
+        activity: Activity,
+        intent: Intent,
+    ): ImportResult = FileImporter().handleFileImport(activity, intent)
+
+    /** Resolve the source and select its importer without copying files or starting UI. */
+    fun resolveImport(
         context: Context,
         intent: Intent,
-    ): ImportResult = FileImporter().handleFileImport(context, intent)
+    ): ImportResolution = FileImporter().resolveImport(context, intent)
+
+    /**
+     * Resolve the source and copy it to the cache synchronously on the calling thread.
+     * Does not launch UI or store a package confirmation.
+     *
+     * @return The resolved source metadata and cached path, or details of a preparation failure.
+     */
+    fun prepareImport(
+        context: Context,
+        intent: Intent,
+    ): ImportResult = FileImporter().prepareImport(context, intent)
 
     /**
      * Makes a cached copy of the file selected on [intent] and returns its path
@@ -103,71 +116,157 @@ object ImportUtils {
     fun isFileAValidDeck(fileName: String): Boolean =
         FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
 
-    @NeedsTest("Verify that only valid text or data file MIME types return true")
     fun isValidTextOrDataFile(
         context: Context,
         uri: Uri,
     ): Boolean {
         val mimeType = context.contentResolver.getType(uri)
-        return mimeType in
-            listOf(
-                "text/plain",
-                "text/comma-separated-values",
-                "text/tab-separated-values",
-                "text/csv",
-                "text/tsv",
-            )
+        return mimeType in MimeTypeUtils.CSV_TSV_MIME_TYPES
     }
 
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
-        /**
-         * This code is used in multiple places to handle package imports
-         *
-         * @param context for use in resource resolution and path finding
-         * @param intent contains the file to import
-         * @return null if successful, otherwise error message
-         */
+        /** See [ImportUtils.handleFileImport] for the UI and error handling contract. */
         fun handleFileImport(
-            context: Context,
+            activity: Activity,
             intent: Intent,
         ): ImportResult {
-            // This intent is used for opening apkg package files
-            // We want to go immediately to DeckPicker, clearing any history in the process
             Timber.i("IntentHandler/ User requested to view a file")
             val extras = if (intent.extras == null) "none" else intent.extras!!.keySet().joinToString(", ")
             Timber.i("Intent: %s. Data: %s", intent, extras)
             return try {
-                handleFileImportInternal(context, intent)
+                val uri = getDataUri(intent)
+                if (uri == null) {
+                    ImportResult.Failure(activity.getString(CommonString.import_error_handle_exception))
+                } else {
+                    handleContentProviderFile(activity, uri, intent)
+                }
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
                 ImportResult.Failure(
-                    humanReadableMessage = context.getString(R.string.import_error_handle_exception, e.localizedMessage),
+                    humanReadableMessage = activity.getString(CommonString.import_error_handle_exception, e.localizedMessage),
                     exception = e,
                 )
             }
         }
 
-        private fun handleFileImportInternal(
+        /**
+         * Prepare the source, then start the text importer or store a package confirmation.
+         * Uses [intent] when supplied, otherwise creates an intent from [importPathUri].
+         *
+         * Preparation failures are returned. Exceptions from starting the importer or storing a
+         * confirmation propagate to the caller; [handleFileImport] converts them into [ImportResult.Failure].
+         */
+        fun handleContentProviderFile(
+            activity: Activity,
+            importPathUri: Uri,
+            intent: Intent? = null,
+        ): ImportResult =
+            prepareImport(activity, intent ?: Intent().setData(importPathUri)).also { result ->
+                if (result is ImportResult.Success) {
+                    activity.openImport(result)
+                }
+            }
+
+        fun isValidImportType(
             context: Context,
-            intent: Intent,
-        ): ImportResult {
-            val importPathUri = getDataUri(intent)
-            return if (importPathUri != null) {
-                handleContentProviderFile(context, importPathUri, intent)
-            } else {
-                ImportResult.Failure(context.getString(R.string.import_error_handle_exception))
+            importPathUri: Uri,
+        ): Boolean {
+            val fileName = getFileNameFromContentProvider(context, importPathUri)
+            return when {
+                isDeckPackage(fileName) -> true
+                isCollectionPackage(fileName) -> true
+                isValidTextOrDataFile(context, importPathUri) -> true
+                else -> false
             }
         }
 
-        @NeedsTest("Check file name is absolute")
+        fun resolveImport(
+            context: Context,
+            intent: Intent,
+        ): ImportResolution =
+            try {
+                resolveImportInternal(context, intent)
+            } catch (e: Exception) {
+                Timber.w(e, "Could not resolve import source")
+                ImportResolution.Failure(
+                    ImportResult.Failure(
+                        humanReadableMessage = context.getString(CommonString.import_error_handle_exception, e.localizedMessage),
+                        exception = e,
+                    ),
+                )
+            }
+
+        private fun resolveImportInternal(
+            context: Context,
+            intent: Intent,
+        ): ImportResolution {
+            val uri =
+                getDataUri(intent)
+                    ?: return ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_log_no_apkg)))
+            val providedName =
+                getFileNameFromContentProvider(context, uri)
+                    ?: when (intent.type) {
+                        "application/apkg", "application/zip" -> "unknown_filename.apkg"
+                        else -> return ImportResolution.Failure(
+                            ImportResult.Failure(
+                                context.getString(CommonString.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"),
+                            ),
+                        )
+                    }
+            val filename = validateFileName(providedName)
+            val source = ImportResolution.Source(uri, filename)
+            return when {
+                getExtension(filename).lowercase() in listOf("csv", "tsv", "txt") ||
+                    intent.resolveMimeType() in MimeTypeUtils.CSV_TSV_MIME_TYPES || isValidTextOrDataFile(context, uri) ->
+                    ImportResolution.Text(source)
+                isCollectionPackage(filename) -> ImportResolution.CollectionPackage(source)
+                isDeckPackage(filename) -> ImportResolution.DeckPackage(source)
+                isAnkiDatabase(filename) ->
+                    ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_error_load_imported_database)))
+                else ->
+                    ImportResolution.Failure(
+                        ImportResult.Failure(context.getString(CommonString.import_error_not_apkg_extension, filename)),
+                    )
+            }
+        }
+
+        /** See [ImportUtils.prepareImport] for the preparation and result contract. */
+        fun prepareImport(
+            context: Context,
+            intent: Intent,
+        ): ImportResult =
+            try {
+                when (val resolution = resolveImport(context, intent)) {
+                    is ImportResolution.Failure -> resolution.error
+                    is ImportResolution.ResolvedFile -> cacheImport(context, resolution)
+                }
+            } catch (e: Exception) {
+                CrashReportService.sendExceptionReport(e, "prepareImport")
+                ImportResult.Failure(
+                    humanReadableMessage = context.getString(CommonString.import_error_handle_exception, e.localizedMessage),
+                    exception = e,
+                )
+            }
+
         fun getFileCachedCopy(
             context: Context,
             uri: Uri,
         ): String? {
             val filename = validateFileName(getFileNameFromContentProvider(context, uri) ?: return null)
-            val tempFile = File(context.cacheDir, filename)
+            val tempFile =
+                try {
+                    context.cacheDir.withFileNameSafe(filename)
+                } catch (_: SecurityException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in getFileCachedCopy")
+                    return null
+                } catch (_: IllegalArgumentException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in getFileCachedCopy")
+                    return null
+                }
             return when (val result = copyFileToCache(context, uri, tempFile.absolutePath)) {
                 is CacheFileResult.Success -> result.path
                 else -> null
@@ -185,107 +284,78 @@ object ImportUtils {
             return getFileCachedCopy(context, uri)
         }
 
-        fun handleContentProviderFile(
+        private fun cacheImport(
             context: Context,
-            importPathUri: Uri,
-            intent: Intent? = null,
+            file: ImportResolution.ResolvedFile,
         ): ImportResult {
-            // Note: intent.getData() can be null. Use data instead.
-            if (!isValidImportType(context, importPathUri)) {
-                return ImportResult.Failure(context.getString(R.string.import_log_no_apkg))
-            }
-            // Get the original filename from the content provider URI
-            var filename = getFileNameFromContentProvider(context, importPathUri)
-            // Hack to fix bug where ContentResolver not returning filename correctly
-            if (filename == null) {
-                when (intent?.type) {
-                    "application/apkg", "application/zip" -> {
-                        // Set a dummy filename if MIME type provided or is a valid zip file
-                        filename = "unknown_filename.apkg"
-                        Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
-                    }
-
-                    else -> {
-                        Timber.e("Could not retrieve filename from ContentProvider")
-                        CrashReportService.sendExceptionReport(
-                            RuntimeException("Could not import apkg from ContentProvider"),
-                            "IntentHandler.java",
-                            "apkg import failed; mime type ${intent?.type}",
-                        )
-                        return ImportResult.Failure(
-                            AnkiDroidApp.appResources.getString(
-                                R.string.import_error_content_provider,
-                                AnkiDroidApp.manualUrl + "#importing",
-                            ),
-                        )
-                    }
-                }
-            }
-            if (isValidTextOrDataFile(context, importPathUri)) {
-                (context as Activity).onSelectedCsvForImport(intent!!)
-                return ImportResult.Success
-            } else if (!isValidPackageName(filename)) {
-                return if (isAnkiDatabase(filename)) {
-                    // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
-                    // but for now, show a "nice" error.
-                    ImportResult.Failure(context.resources.getString(R.string.import_error_load_imported_database))
-                } else {
-                    // Don't import if file doesn't have an Anki package extension
-                    ImportResult.Failure(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
-                }
-            }
-
             // Copy to temporary file
-            filename = validateFileName(filename)
-            val tempOutDir: String = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+            val checkFile =
+                try {
+                    context.cacheDir.withFileNameSafe(file.source.fileName)
+                } catch (_: SecurityException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in cacheImport")
+                    return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
+                } catch (_: IllegalArgumentException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in cacheImport")
+                    return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
+                }
+            // The package WebView/backend route expects encoded filenames on disk; CSV uses a raw path.
+            val tempOutDir =
+                when (file) {
+                    is ImportResolution.Text -> checkFile.absolutePath
+                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage -> Uri.fromFile(checkFile).encodedPath!!
+                }
 
-            copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
-                CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
+            copyFileToCache(context, file.source.uri, tempOutDir).asErrorDetails()?.let { details ->
+                details.exceptionForReport?.let { CrashReportService.sendExceptionReport(it, "ImportUtils") }
                 return ImportResult.Failure(
                     title = details.buildTitle(context),
                     humanReadableMessage = details.buildHumanReadableMessage(context),
                     exception = details.userFacingException,
                 )
             }
-            sendShowImportFileDialogMsg(tempOutDir)
-            return ImportResult.Success
-        }
-
-        fun isValidImportType(
-            context: Context,
-            importPathUri: Uri,
-        ): Boolean {
-            val fileName = getFileNameFromContentProvider(context, importPathUri)
-            return when {
-                isDeckPackage(fileName) -> true
-                isCollectionPackage(fileName) -> true
-                isValidTextOrDataFile(context, importPathUri) -> true
-                else -> false
-            }
+            return ImportResult.Success(file, tempOutDir)
         }
 
         private fun isAnkiDatabase(filename: String?): Boolean = filename != null && hasExtension(filename, "anki2")
 
-        @NeedsTest("Add test for the fallback, ensure the fallback filename \"file_<timestamp>.<ext>\" is produced when decoding fails")
+        /**
+         * Uses the last path segment ([File.name]) so directory components cannot escape the
+         * destination. Empty names, `.`, and `..` become `unnamed_file`. Leading dots on a real
+         * filename are preserved (e.g. `.hidden.apkg`, `..apkg`).
+         */
+        @CheckResult
+        private fun sanitizeFileName(fileName: String): String {
+            val sanitized = File(fileName).name
+            return if (sanitized.isEmpty() || sanitized == "." || sanitized == "..") {
+                "unnamed_file"
+            } else {
+                sanitized
+            }
+        }
+
         private fun validateFileName(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
+            val sanitized = sanitizeFileName(fileName)
             return try {
-                val encoded = URLEncoder.encode(fileName, "UTF-8")
+                val encoded = URLEncoder.encode(sanitized, "UTF-8")
                 if (encoded.length <= FILE_NAME_SHORTENING_THRESHOLD) {
                     Timber.d("No filename truncation necessary")
-                    fileName
+                    sanitized
                 } else {
                     Timber.d("Filename was longer than %d, shortening", FILE_NAME_SHORTENING_THRESHOLD)
                     // take 90 instead of 100 so we don't get the extension
                     val substringLength = FILE_NAME_SHORTENING_THRESHOLD - 10
                     val shortenedFileName = encoded.take(substringLength) + "..." + getExtension(fileName)
-                    Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName)
+                    Timber.d("Shortened filename")
                     // if we don't decode, % is double-encoded
-                    URLDecoder.decode(shortenedFileName, "UTF-8")
+                    sanitizeFileName(URLDecoder.decode(shortenedFileName, "UTF-8"))
                 }
             } catch (e: Exception) {
-                Timber.w(e, "Failed to shorten file: %s", fileName)
-                "file_${TimeManager.time.intTimeMS()}.${getExtension(fileName)}"
+                Timber.w(e, "Failed to shorten file")
+                sanitizeFileName("file_${TimeManager.time.intTimeMS()}.${getExtension(fileName)}")
             }
         }
 
@@ -311,7 +381,7 @@ object ImportUtils {
                     ).use { cursor ->
                         if (cursor != null && cursor.moveToFirst()) {
                             filename = cursor.getString(0)
-                            Timber.d("handleFileImport() Importing from content provider: %s", filename)
+                            Timber.d("Resolved import filename from content provider: %s", filename)
                         }
                     }
             } catch (e: Exception) {
@@ -328,7 +398,7 @@ object ImportUtils {
         ) {
             // Use applicationScope: IntentHandler calls this and does not have a lifecycleScope
             fun copyDebugInfo(debugInfo: String) =
-                AnkiDroidApp.applicationScope.launch {
+                applicationScope.launch {
                     Timber.i("copying debug info to clipboard")
                     val stringToCopy =
                         buildString {
@@ -337,23 +407,23 @@ object ImportUtils {
                             appendLine(DebugInfoService.getDebugInfo(activity))
                         }
 
-                    AnkiDroidApp.instance.copyToClipboard(stringToCopy)
+                    appContext.copyToClipboard(TruncatedString.from(stringToCopy))
                 }
 
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
-            val title = failure.title ?: activity.getString(R.string.import_title_error)
+            val title = failure.title ?: activity.getString(CommonString.import_title_error)
             val dialog =
                 AlertDialog.Builder(activity).show {
                     title(text = title)
                     message(text = failure.humanReadableMessage)
                     setCancelable(false)
-                    positiveButton(R.string.dialog_ok) {
+                    positiveButton(CommonString.dialog_ok) {
                         if (exitActivity) {
                             activity.finish()
                         }
                     }
                     if (failure.toDebugInfo() != null) {
-                        negativeButton(R.string.feedback_copy_debug)
+                        negativeButton(text = with(activity) { TR.sentenceCase.copyDebugInfo })
                     }
                 }
             // 'copy' should not close the dialog
@@ -376,13 +446,39 @@ object ImportUtils {
             tempPath: String,
         ): CacheFileResult =
             try {
-                context.contentResolver.openInputStreamSafe(data)?.use { input ->
-                    CompatHelper.compat.copyFile(input, tempPath)
-                    CacheFileResult.Success(tempPath)
+                context.contentResolver.openInputStreamSafe(data)?.let { input ->
+                    copyToCache(input, tempPath)
                 } ?: run {
                     Timber.w("Content provider crashed")
                     CacheFileResult.ContentProviderCrashed
                 }
+            } catch (e: FileNotFoundException) {
+                // The selected file may have been deleted since the provider returned its URI.
+                Timber.w(e, "Import source file is unavailable")
+                CacheFileResult.SourceFileUnavailable(e)
+            } catch (e: IllegalStateException) {
+                if (e.message?.contains("pending/trashed") == true) {
+                    Timber.w(e, "Import source file is pending or trashed")
+                    CacheFileResult.SourceFileUnavailable(e)
+                } else {
+                    Timber.w("Could not open import source")
+                    CacheFileResult.Error(e)
+                }
+            } catch (e: Exception) {
+                Timber.w("Could not open import source")
+                CacheFileResult.Error(e)
+            }
+
+        /**
+         * Returns [CacheFileResult.Error] for any [Exception] while copying or closing [input].
+         */
+        private fun copyToCache(
+            input: InputStream,
+            tempPath: String,
+        ): CacheFileResult =
+            try {
+                input.use { CompatHelper.compat.copyFile(it, tempPath) }
+                CacheFileResult.Success(tempPath)
             } catch (e: Exception) {
                 Timber.w("Could not copy file to %s", tempPath)
                 CacheFileResult.Error(e)
@@ -397,6 +493,10 @@ object ImportUtils {
                 val exception: Exception,
             ) : CacheFileResult()
 
+            data class SourceFileUnavailable(
+                val exception: Exception,
+            ) : CacheFileResult()
+
             data object ContentProviderCrashed : CacheFileResult()
 
             fun asErrorDetails(): CacheErrorDetails? =
@@ -407,6 +507,11 @@ object ImportUtils {
                             exceptionForReport = exception,
                             userFacingException = exception,
                         )
+                    is SourceFileUnavailable ->
+                        CacheErrorDetails(
+                            exceptionForReport = null,
+                            userFacingException = exception,
+                        )
                     is ContentProviderCrashed ->
                         CacheErrorDetails(
                             exceptionForReport = ManuallyReportedException("Content provider crashed"),
@@ -415,10 +520,10 @@ object ImportUtils {
                 }
 
             data class CacheErrorDetails(
-                val exceptionForReport: Exception,
+                val exceptionForReport: Exception?,
                 val userFacingException: Exception?,
             ) {
-                fun buildTitle(context: Context) = context.getString(R.string.import_error_copy_to_cache_title)
+                fun buildTitle(context: Context) = context.getString(CommonString.import_error_copy_to_cache_title)
 
                 fun buildHumanReadableMessage(context: Context) =
                     buildString {
@@ -438,7 +543,7 @@ object ImportUtils {
                                     appendLine("\u2022 $line")
                                 }
                             }
-                        append(context.getString(R.string.import_error_copy_to_cache_explanation, suggestedFixes))
+                        append(context.getString(CommonString.import_error_copy_to_cache_explanation, suggestedFixes))
                     }
             }
         }
@@ -464,24 +569,6 @@ object ImportUtils {
                     }
                     else -> null
                 }
-            }
-
-            /**
-             * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-             * @param importPath path of to apkg file which will be imported
-             */
-            private fun sendShowImportFileDialogMsg(importPath: String) {
-                // Get the filename from the path
-                val filename = File(importPath).name
-
-                val dialogMessage =
-                    if (isCollectionPackage(filename)) {
-                        CollectionImportReplace(importPath)
-                    } else {
-                        CollectionImportAdd(importPath)
-                    }
-                // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-                DialogHandler.storeMessage(dialogMessage.toMessage())
             }
 
             @SuppressLint("LocaleRootUsage")
@@ -519,7 +606,7 @@ object ImportUtils {
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = bundleOf("importPath" to importPath)
+                data = Bundle().apply { putString("importPath", importPath) }
                 what = this@CollectionImportReplace.what
             }
 
@@ -542,7 +629,7 @@ object ImportUtils {
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = bundleOf("importPath" to importPath)
+                data = Bundle().apply { putString("importPath", importPath) }
                 what = this@CollectionImportAdd.what
             }
 
@@ -553,7 +640,10 @@ object ImportUtils {
 }
 
 sealed class ImportResult {
-    data object Success : ImportResult()
+    data class Success(
+        val file: ImportResolution.ResolvedFile,
+        val path: String,
+    ) : ImportResult()
 
     data class Failure(
         val humanReadableMessage: String,

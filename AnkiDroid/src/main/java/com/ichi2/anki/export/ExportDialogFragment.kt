@@ -1,20 +1,10 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.export
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -22,25 +12,29 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import anki.cards.cardIds
 import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import anki.notes.noteIds
-import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.browser.removeSafely
+import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.DialogExportOptionsBinding
 import com.ichi2.anki.exportApkgPackage
 import com.ichi2.anki.exportCollectionPackage
@@ -50,18 +44,33 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.ui.BasicItemSelectedListener
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
+import java.io.IOException
 
 /**
  * Shows the possible options for exporting(collection, decks or notes/card selection).
  * Intended to replicate the desktop UI.
  */
-class ExportDialogFragment : DialogFragment() {
-    private lateinit var binding: DialogExportOptionsBinding
+class ExportDialogFragment : AnalyticsDialogFragment() {
+    @VisibleForTesting
+    internal lateinit var binding: DialogExportOptionsBinding
+        private set
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        // onDismiss is also called on a configuration change (from onDestroyView), in which case
+        // the dialog is recreated with the same arguments and still needs the ids file
+        if (activity?.isChangingConfigurations == true) return
+        if (arguments?.containsKey(ARG_IDS_FILE) == true) {
+            removeIdsFile()
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogExportOptionsBinding.inflate(requireActivity().layoutInflater, null, false)
@@ -86,9 +95,10 @@ class ExportDialogFragment : DialogFragment() {
         }
         return AlertDialog
             .Builder(requireActivity())
+            .setTitle(TR.actionsExport())
             .setView(binding.root)
-            .negativeButton(R.string.dialog_cancel)
-            .positiveButton(R.string.dialog_ok) {
+            .negativeButton(CommonString.dialog_cancel)
+            .positiveButton(text = TR.actionsExport()) {
                 val selectedIndex = binding.exportTypeSelector.selectedItemPosition
                 // just to be safe, if not exporting a collection and the decks spinner is not
                 // enabled(the user was really fast or fetching the decks is delayed for some
@@ -96,9 +106,9 @@ class ExportDialogFragment : DialogFragment() {
                 if (selectedIndex != 0 && !binding.deckSelector.isEnabled) return@positiveButton
                 when (ExportConfiguration.from(selectedIndex)) {
                     ExportConfiguration.Collection -> handleCollectionExport()
-                    ExportConfiguration.Apkg -> handleAnkiPackageExport()
-                    ExportConfiguration.Notes -> handleNotesInPlainTextExport()
-                    ExportConfiguration.Cards -> handleCardsInPlainTextExport()
+                    ExportConfiguration.Apkg -> withExportLimit(::handleAnkiPackageExport)
+                    ExportConfiguration.Notes -> withExportLimit(::handleNotesInPlainTextExport)
+                    ExportConfiguration.Cards -> withExportLimit(::handleCardsInPlainTextExport)
                 }
             }.create()
     }
@@ -133,7 +143,7 @@ class ExportDialogFragment : DialogFragment() {
             val allDecks =
                 mutableListOf(
                     DeckNameId(
-                        requireActivity().getString(R.string.card_browser_all_decks),
+                        TR.sentenceCase.allDecks,
                         ALL_DECKS_ID,
                     ),
                 )
@@ -167,10 +177,10 @@ class ExportDialogFragment : DialogFragment() {
                         requireActivity(),
                         android.R.layout.simple_spinner_item,
                         listOf(
-                            "${exportingAnkiCollectionPackage()} (.colpkg)",
-                            "${exportingAnkiDeckPackage()} (.apkg)",
-                            "${exportingNotesInPlainText()} (.txt)",
-                            "${exportingCardsInPlainText()} (.txt)",
+                            "${sentenceCase.ankiCollectionPackage} (.colpkg)",
+                            "${sentenceCase.ankiDeckPackage} (.apkg)",
+                            "${sentenceCase.notesInPlainText} (.txt)",
+                            "${sentenceCase.cardsInPlainText} (.txt)",
                         ),
                     ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
                 adapter = exportTypesAdapter
@@ -185,7 +195,6 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting a collection.
      */
-    @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun DialogExportOptionsBinding.initializeCollectionExportUi() =
         with(CollectionManager.TR) {
             collectionIncludeMedia.text = exportingIncludeMedia()
@@ -195,7 +204,6 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting an Anki package.
      */
-    @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun DialogExportOptionsBinding.initializeApkgExportUi() =
         with(CollectionManager.TR) {
             apkgIncludeMedia.text = exportingIncludeMedia()
@@ -257,22 +265,30 @@ class ExportDialogFragment : DialogFragment() {
         requireAnkiActivity().exportCollectionPackage(exportPath, includeMedia, legacy)
     }
 
-    private fun handleAnkiPackageExport() {
-        val limits = buildExportLimit()
-        var packagePrefix = getNonCollectionNamePrefix()
-        // files can't have `/` in their names
-        packagePrefix = packagePrefix.replace("/", "_")
+    private fun withExportLimit(export: (ExportLimit) -> Unit) {
+        val exportLimit =
+            try {
+                buildExportLimit()
+            } catch (e: IOException) {
+                Timber.w(e, "Failed to read export IDs")
+                showThemedToast(requireContext(), CommonString.something_wrong, false)
+                return
+            }
+        export(exportLimit)
+    }
+
+    private fun handleAnkiPackageExport(exportLimit: ExportLimit) {
         val exportPath =
             File(
                 getExportRootFile(),
-                "$packagePrefix-${getTimestamp(TimeManager.time)}.apkg",
+                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.apkg",
             ).path
         requireAnkiActivity().exportApkgPackage(
             exportPath = exportPath,
             withScheduling = binding.apkgIncludeSchedule.isChecked,
             withDeckConfigs = binding.apkgIncludeDeckConfigs.isChecked,
             withMedia = binding.apkgIncludeMedia.isChecked,
-            limit = limits,
+            limit = exportLimit,
             legacy = binding.apkgExportLegacy.isChecked,
         )
     }
@@ -281,15 +297,20 @@ class ExportDialogFragment : DialogFragment() {
      * Builds the prefix for the name of the exported file. This will be  either a deck's name or a
      * localized "SelectedNotes" text.
      */
-    private fun getNonCollectionNamePrefix(): String =
-        when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
-            ExportType.Notes, ExportType.Cards -> CollectionManager.TR.exportingSelectedNotes()
-            // notes/cards weren't selected so export the chosen deck(s)
-            null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
-        }
+    // TODO: return [Filename] once the construction of export paths is refactored
+    private fun getNonCollectionNamePrefix(): String {
+        val filename =
+            Filename.sanitize(
+                when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
+                    ExportType.Notes, ExportType.Cards -> CollectionManager.TR.exportingSelectedNotes()
+                    // notes/cards weren't selected so export the chosen deck(s)
+                    null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
+                },
+            )
+        return filename.value
+    }
 
-    private fun handleNotesInPlainTextExport() {
-        val exportLimit = buildExportLimit()
+    private fun handleNotesInPlainTextExport(exportLimit: ExportLimit) {
         val exportPath =
             File(
                 getExportRootFile(),
@@ -306,8 +327,7 @@ class ExportDialogFragment : DialogFragment() {
         )
     }
 
-    private fun handleCardsInPlainTextExport() {
-        val exportLimit = buildExportLimit()
+    private fun handleCardsInPlainTextExport(exportLimit: ExportLimit) {
         val exportPath =
             File(
                 getExportRootFile(),
@@ -330,19 +350,15 @@ class ExportDialogFragment : DialogFragment() {
     private fun buildExportLimit(): ExportLimit =
         when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
             ExportType.Notes -> {
-                val selectedNotesIds =
-                    arguments?.let {
-                        BundleCompat.getParcelableArrayList(it, ARG_EXPORTED_IDS, Long::class.java)
-                    } ?: error("Requested export for selected notes but no notes ids were passed in!")
-                exportLimit { noteIds = noteIds { this.noteIds.addAll(selectedNotesIds.toList()) } }
+                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+
+                exportLimit { noteIds = noteIds { this.noteIds.addAll(ids) } }
             }
 
             ExportType.Cards -> {
-                val selectedCardIds =
-                    arguments?.let {
-                        BundleCompat.getParcelableArrayList(it, ARG_EXPORTED_IDS, Long::class.java)
-                    } ?: error("Requested export for selected cards but no cards ids were passed in!")
-                exportLimit { cardIds = cardIds { this.cids.addAll(selectedCardIds) } }
+                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+
+                exportLimit { cardIds = cardIds { this.cids.addAll(ids) } }
             }
             // notes/cards weren't selected so export the chosen decks
             null -> {
@@ -356,6 +372,13 @@ class ExportDialogFragment : DialogFragment() {
                 }
             }
         }
+
+    /** Attempt to delete the associated [IdsFile] and logs the result */
+    private fun removeIdsFile() {
+        val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE)
+
+        idsFile.removeSafely("ExportDialogFragment")
+    }
 
     private fun getExportRootFile() =
         File(requireActivity().externalCacheDir, "export").also {
@@ -425,7 +448,7 @@ class ExportDialogFragment : DialogFragment() {
     companion object {
         private const val ARG_DECK_ID = "arg_deck_id"
         private const val ARG_TYPE = "arg_type"
-        private const val ARG_EXPORTED_IDS = "arg_exported_ids"
+        private const val ARG_IDS_FILE = "arg_ids_file"
 
         /**
          * Create a new instance of this dialog without any initial constraints(for example when
@@ -438,21 +461,24 @@ class ExportDialogFragment : DialogFragment() {
          */
         fun newInstance(did: DeckId) =
             ExportDialogFragment().apply {
-                arguments = bundleOf(ARG_DECK_ID to did)
+                arguments = Bundle().apply { putLong(ARG_DECK_ID, did) }
             }
 
         /**
          * Create a new instance of this dialog targeting a selection of cards or notes for export.
          */
         fun newInstance(
+            idsFileDirectory: File,
             type: ExportType,
             ids: List<Long>,
         ) = ExportDialogFragment().apply {
+            val idsFile = IdsFile(idsFileDirectory, ids, IdsFile.Purpose.EXPORT)
+
             arguments =
-                bundleOf(
-                    ARG_TYPE to type,
-                    ARG_EXPORTED_IDS to ids,
-                )
+                Bundle().apply {
+                    putSerializable(ARG_TYPE, type)
+                    putParcelable(ARG_IDS_FILE, idsFile)
+                }
         }
     }
 }

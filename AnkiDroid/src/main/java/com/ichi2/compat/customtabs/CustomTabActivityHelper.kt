@@ -1,84 +1,91 @@
-//noinspection MissingCopyrightHeader #8659
-// Copyright 2015 Google Inc. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright 2015 Google Inc. All Rights Reserved.
+
 package com.ichi2.compat.customtabs
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.CheckResult
+import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
+import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.net.toUri
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.anki.snackbar.showSnackbar
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
  * This is a helper class to manage the connection to the Custom Tabs Service.
+ * @param scope the activity's main-thread lifecycle scope
  */
-class CustomTabActivityHelper : ServiceConnectionCallback {
+@UiThread
+class CustomTabActivityHelper(
+    private val scope: CoroutineScope,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+) : ServiceConnectionCallback {
     private var customTabsSession: CustomTabsSession? = null
     private var client: CustomTabsClient? = null
     private var connection: CustomTabsServiceConnection? = null
+    private var customTabsProviderInfo: String? = null
+    private var initializationJob: Job? = null
 
     /**
      * Unbinds the Activity from the Custom Tabs Service.
      * @param activity the activity that is connected to the service.
      */
     fun unbindCustomTabsService(activity: Activity) {
-        if (connection == null) return
-        connection.let { activity.unbindService(it!!) }
-        client = null
-        customTabsSession = null
+        onServiceDisconnected()
+        connection?.let { activity.unbindService(it) }
         connection = null
+        customTabsProviderInfo = null
     }
 
     /**
-     * Creates or retrieves an exiting CustomTabsSession.
+     * Returns the prepared session, or `null` if none is available.
      *
-     * @return a CustomTabsSession.
+     * Custom tabs can open without a session, so do not wait for this if it is unavailable.
      */
     val session: CustomTabsSession?
-        get() {
-            if (client == null) {
-                customTabsSession = null
-            } else if (customTabsSession == null) {
-                customTabsSession = client!!.newSession(null)
-            }
-            return customTabsSession
-        }
+        get() = customTabsSession
 
     /**
      * Binds the Activity to the Custom Tabs Service.
      * @param activity the activity to be bound to the service.
      */
     fun bindCustomTabsService(activity: Activity) {
-        if (client != null) return
+        if (connection != null) return
+        customTabsProviderInfo = null
         try {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
+            customTabsProviderInfo = getProviderInfo(activity, packageName)
             connection = ServiceConnection(this)
             CustomTabsClient.bindCustomTabsService(activity, packageName, connection!!)
         } catch (e: SecurityException) {
-            Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
+            Timber.w(e, "CustomTabsService bind attempt failed, using fallback. %s", customTabsProviderInfo)
             CrashReportService.sendExceptionReport(
                 e = e,
                 origin = "bindCustomTabsService",
+                additionalInfo = customTabsProviderInfo,
                 onlyIfSilent = true,
             )
             disableCustomTabHandler()
@@ -90,43 +97,96 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
         sCustomTabsFailed = true
         client = null
         customTabsSession = null
-        connection = null
+        // connection should be set to null in `onStop`
+        customTabsProviderInfo = null
+    }
+
+    private fun getProviderInfo(
+        context: Context,
+        packageName: String,
+    ): String {
+        val packageInfo = runCatching { context.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) }.getOrNull()
+        val version =
+            packageInfo?.let {
+                val versionCode = runCatching { PackageInfoCompat.getLongVersionCode(it) }.getOrNull()
+                "${it.versionName ?: "unknown"} (${versionCode ?: "unknown"})"
+            }
+        return "Custom Tabs provider: $packageName, version: ${version ?: "unknown"}"
     }
 
     /**
+     * Preloads a URL for future loading.
+     *
      * @see CustomTabsSession.mayLaunchUrl
-     * @return true if call to mayLaunchUrl was accepted.
      */
     fun mayLaunchUrl(
-        uri: Uri?,
-        extras: Bundle?,
-        otherLikelyBundles: List<Bundle?>?,
-    ): Boolean {
-        if (client == null) return false
-        val session = session ?: return false
-        return session.mayLaunchUrl(uri, extras, otherLikelyBundles)
-    }
-
-    override fun onServiceConnected(client: CustomTabsClient) {
-        try {
-            this.client = client
-            try {
-                this.client!!.warmup(0L)
-            } catch (e: IllegalStateException) {
-                // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
-                // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
-                Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits")
+        url: String,
+        extras: Bundle? = null,
+        otherLikelyBundles: List<Bundle?>? = null,
+    ) {
+        scope.launch {
+            // must be on the main thread
+            val cachedSession = session
+            val success =
+                withContext(ioDispatcher) {
+                    cachedSession?.mayLaunchUrl(url.toUri(), extras, otherLikelyBundles) == true
+                }
+            if (!success) {
+                Timber.w("Couldn't preload url: %s", url)
             }
-            session
-        } catch (e: SecurityException) {
-            // #6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
-            // the IllegalStateException was a failure, but could be continued from
-            Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
-            disableCustomTabHandler()
         }
     }
 
+    override fun onServiceConnected(client: CustomTabsClient) {
+        onServiceDisconnected()
+        this.client = client
+        initializationJob =
+            scope.launch {
+                try {
+                    customTabsSession =
+                        withContext(ioDispatcher) {
+                            warmup(client)
+                            // Cancelling cannot interrupt Binder IPC. Don't start another call after stopping.
+                            ensureActive()
+                            client.newSession(null)
+                        }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: RuntimeException) {
+                    // A late failure from a cancelled connection must not disable its replacement.
+                    currentCoroutineContext().ensureActive()
+                    handleInitializationFailure(e)
+                }
+            }
+    }
+
+    @WorkerThread
+    private fun warmup(client: CustomTabsClient) {
+        try {
+            client.warmup(0L)
+        } catch (e: IllegalStateException) {
+            // Issue 5337 - some browsers don't adhere to Android 8 background limits.
+            // Warmup failure shouldn't be fatal.
+            Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits")
+        }
+    }
+
+    private fun handleInitializationFailure(e: RuntimeException) {
+        Timber.w(e, "CustomTabsService bind attempt failed, using fallback. %s", customTabsProviderInfo)
+        CrashReportService.sendExceptionReport(
+            e = e,
+            origin = "CustomTabActivityHelper::onServiceConnected",
+            additionalInfo = customTabsProviderInfo,
+            onlyIfSilent = true,
+        )
+        // TODO: https://github.com/ankidroid/Anki-Android/issues/21708
+        // Edge throws on a cold bind. Retry in the future instead of disabling the feature
+        disableCustomTabHandler()
+    }
+
     override fun onServiceDisconnected() {
+        initializationJob?.cancel()
+        initializationJob = null
         client = null
         customTabsSession = null
     }
@@ -184,7 +244,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
                     customTabsIntent.launchUrl(activity, uri)
                 } catch (ex: ActivityNotFoundException) {
                     Timber.w("No app found to handle opening an external url from CustomTabsActivityHelper")
-                    activity.showSnackbar(R.string.activity_start_failed)
+                    activity.showSnackbar(CommonString.activity_start_failed)
                 }
             }
         }

@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.previewer
 
 import android.content.Context
@@ -21,8 +8,8 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -41,7 +28,7 @@ import org.intellij.lang.annotations.Language
  */
 @Language("HTML")
 fun stdHtml(
-    context: Context = AnkiDroidApp.instance,
+    context: Context = appContext,
     extraJsAssets: List<String> = emptyList(),
     nightMode: Boolean = false,
 ): String {
@@ -53,12 +40,13 @@ fun stdHtml(
     val canvasColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.colorBackground).toRGBHex()
     val fgColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.textColor).toRGBHex()
     val colors = ":root$rootNightMode { --canvas: $canvasColor; --fg: $fgColor; }"
+    // Preserve the system font size while scaling text and em-based layout together.
+    val fontScale = context.resources.configuration.fontScale
+    val fontScaleCss = if (fontScale != 1f) "html { zoom: $fontScale }" else ""
 
     val jsAssets: List<String> =
         listOf(
             "backend/js/jquery.min.js",
-            "backend/js/mathjax.js",
-            "backend/js/vendor/mathjax/tex-chtml-full.js",
             "backend/js/reviewer.js",
             "scripts/ankidroid-cardviewer.js",
         ) + extraJsAssets
@@ -78,10 +66,11 @@ fun stdHtml(
             <style>
                 .night-mode button { --canvas: #606060; --fg: #eee; }
                 $colors
+                $fontScaleCss
             </style>
         </head>
         <body class="${bodyClass()}">
-            <div id="qa"></div>
+            <div id="qa" dir="auto"></div>
             $jsTxt
         </body>
         </html>
@@ -108,5 +97,6 @@ fun MaterialCardView.setFrameStyle() {
         }
         cardElevation = 0F
         shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
+        strokeWidth = 0
     }
 }

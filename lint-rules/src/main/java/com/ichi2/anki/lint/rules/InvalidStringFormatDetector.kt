@@ -1,20 +1,5 @@
-/*
- *  Copyright (c) 2022 Divyansh Dwivedi <justdvnsh2208@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-@file:Suppress("UnstableApiUsage")
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Divyansh Dwivedi <justdvnsh2208@gmail.com>
 
 package com.ichi2.anki.lint.rules
 
@@ -34,7 +19,6 @@ import com.ichi2.anki.lint.utils.Constants.ANKI_XML_SEVERITY
 import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
-import java.util.EnumSet
 import java.util.regex.Pattern
 
 /**
@@ -74,9 +58,9 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         private val INVALID_CAPITALIZATION = Pattern.compile("(?<!%)%[^%a-zA-Z]*[DFNOGC].*").toRegex()
     }
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean = EnumSet.of(ResourceFolderType.VALUES).contains(folderType)
+    override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
 
-    override fun getApplicableElements() = listOf(TAG_STRING, TAG_PLURALS)
+    override fun getApplicableElements() = listOf(TAG_STRING, TAG_PLURALS, TAG_STRING_ARRAY)
 
     override fun visitElement(
         context: XmlContext,
@@ -90,18 +74,15 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                 val isStringResource =
                     (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
                         TAG_STRING == element.localName
-                val isStringArrayOrPlurals =
+                val isItem =
                     child.nodeType == Node.ELEMENT_NODE &&
-                        (
-                            TAG_STRING_ARRAY == element.localName ||
-                                TAG_PLURALS == element.localName
-                        )
+                        (TAG_PLURALS == element.localName || TAG_STRING_ARRAY == element.localName)
 
                 if (isStringResource) {
                     checkText(context, element, child.nodeValue)
-                } else if (isStringArrayOrPlurals) {
+                } else if (isItem) {
                     val sb = StringBuilder()
-                    StringFormatDetector.addText(sb, element)
+                    StringFormatDetector.addText(sb, child)
                     if (sb.isNotEmpty()) {
                         checkText(context, element, sb.toString())
                     }
@@ -114,6 +95,8 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         element: Element,
         text: String,
     ) {
+        if ('%' !in text) return
+
         text.split(" ").forEach {
             if (it.matches(INVALID_FORMAT_PATTERN) && it != "XXX%") {
                 val location = context.createLocationHandle(element).resolve()

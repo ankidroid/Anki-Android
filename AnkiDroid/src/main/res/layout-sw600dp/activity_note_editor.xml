@@ -7,8 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar" />
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/appBarColor">
+
+            <include layout="@layout/include_toolbar" />
+        </FrameLayout>
+        <com.ichi2.anki.ui.ResizablePaneLayout
             android:id="@+id/note_editor_xl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,6 +49,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
-        </LinearLayout>
+        </com.ichi2.anki.ui.ResizablePaneLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,37 +1,39 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bytehamster.lib.preferencesearch.PreferenceItem
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.requireAccessibleJavaField
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
 import org.robolectric.Robolectric
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class PrefsSearchBarTest : RobolectricTest() {
     @Test
+    fun `indexed resources resolve with legacy reminders`() = assertIndexedResources(newReviewRemindersEnabled = false)
+
+    @Test
+    fun `indexed resources resolve with new reminders`() = assertIndexedResources(newReviewRemindersEnabled = true)
+
     @Suppress("UNCHECKED_CAST")
-    fun `All indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes`() {
+    private fun assertIndexedResources(newReviewRemindersEnabled: Boolean) {
+        Prefs.newReviewRemindersEnabled = newReviewRemindersEnabled
         // TODO try mocking the activity
         val preferencesActivity = getPreferencesActivity()
         val searchConfig = SearchConfiguration(preferencesActivity)
@@ -63,8 +65,16 @@ class PrefsSearchBarTest : RobolectricTest() {
                 .plus(prefItemsResIds)
                 .distinct() as List<Int>
 
-        // Check if all indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes
+        assertEquals(newReviewRemindersEnabled, R.xml.preferences_review_reminders in allResIds)
+        assertEquals(!newReviewRemindersEnabled, R.xml.preferences_notifications in allResIds)
+
+        // Check both the normal settings mapping and the custom review reminders destination.
         for (resId in allResIds) {
+            if (resId == R.xml.preferences_review_reminders) {
+                assertReviewRemindersDestination(preferencesActivity)
+                continue
+            }
+
             val fragment = getFragmentFromXmlRes(resId)
 
             val resName = targetContext.resources.getResourceName(resId)
@@ -86,13 +96,27 @@ class PrefsSearchBarTest : RobolectricTest() {
         }
     }
 
+    private fun assertReviewRemindersDestination(activity: PreferencesActivity) {
+        val result =
+            mock<SearchPreferenceResult> {
+                on { resourceFile } doReturn R.xml.preferences_review_reminders
+            }
+        activity.onSearchResultClicked(result)
+        advanceRobolectricLooper()
+
+        val preferences = activity.fragment as PreferencesFragment
+        assertIs<ScheduleRemindersFragment>(preferences.childFragmentManager.findFragmentById(R.id.settings_container))
+    }
+
     private fun getPreferencesActivity(): PreferencesActivity {
-        val intent = PreferencesActivity.getIntent(targetContext)
-        return Robolectric
-            .buildActivity(PreferencesActivity::class.java, intent)
-            .create()
-            .start()
-            .resume()
-            .get()
+        val intent = PreferencesDestination.Root.toIntent(targetContext)
+        val controller =
+            Robolectric
+                .buildActivity(PreferencesActivity::class.java, intent)
+                .create()
+                .start()
+                .resume()
+        saveControllerForCleanup(controller)
+        return controller.get()
     }
 }

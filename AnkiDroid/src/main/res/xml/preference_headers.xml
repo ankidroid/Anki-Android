@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-~ Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-
-
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+  -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -74,8 +61,9 @@
 
     <!-- Review Reminders -->
     <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.reviewreminders.ScheduleRemindersFragment"
         android:key="@string/pref_review_reminders_screen_key"
-        android:title="Review reminders"
+        android:title="@string/review_reminders_title"
         android:icon="@drawable/ic_notifications"
         app:summaryEntries="@array/review_reminders_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
@@ -84,7 +72,6 @@
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AppearanceSettingsFragment"
         android:key="@string/pref_appearance_screen_key"
-        android:title="@string/pref_cat_appearance"
         android:icon="@drawable/ic_color_lens_white_24dp"
         app:summaryEntries="@array/appearance_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
@@ -92,7 +79,7 @@
     <!-- Switch Profile Preferences  -->
     <com.ichi2.preferences.HeaderPreference
         android:key="@string/pref_switch_profile_screen_key"
-        android:title="Switch Profile"
+        android:title="@string/switch_profile"
         android:icon="@drawable/ic_switch_profile"
         android:fragment="com.ichi2.anki.preferences.profiles.SwitchProfilesFragment" />
 

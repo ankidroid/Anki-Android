@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -21,6 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -32,8 +20,8 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         return AlertDialog.Builder(requireContext()).create {
             setTitle(notificationTitle)
             setMessage(notificationMessage)
-            setPositiveButton(R.string.dialog_ok) { _, _ ->
-                activity?.dismissSimpleMessageDialog(requireArguments().getBoolean(ARGS_RELOAD))
+            setPositiveButton(CommonString.dialog_ok) { _, _ ->
+                activity?.dismissSimpleMessageDialog(requireArguments().getBoolean(ARG_RELOAD))
             }
         }
     }
@@ -53,7 +41,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override val notificationTitle: String
         get() {
-            val title = requireArguments().getString(ARGS_TITLE)!!
+            val title = requireArguments().getString(ARG_TITLE)!!
             return if ("" != title) {
                 title
             } else {
@@ -63,21 +51,21 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String?
         get() {
-            return requireArguments().getString(ARGS_MESSAGE)
+            return requireArguments().getString(ARG_MESSAGE)
         }
 
     companion object {
         /** The title of the notification/dialog */
-        private const val ARGS_TITLE = "title"
+        private const val ARG_TITLE = "arg_title"
 
         /** The content of the notification/dialog */
-        private const val ARGS_MESSAGE = "message"
+        private const val ARG_MESSAGE = "arg_message"
 
         /**
          * If the calling activity should be reloaded when 'OK' is pressed.
          * @see dismissSimpleMessageDialog
          */
-        private const val ARGS_RELOAD = "reload"
+        private const val ARG_RELOAD = "arg_reload"
 
         fun newInstance(
             title: String,
@@ -86,9 +74,9 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         ): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
-            args.putString(ARGS_TITLE, title)
-            args.putString(ARGS_MESSAGE, message)
-            args.putBoolean(ARGS_RELOAD, reload)
+            args.putString(ARG_TITLE, title)
+            args.putString(ARG_MESSAGE, message)
+            args.putBoolean(ARG_RELOAD, reload)
             f.arguments = args
             return f
         }

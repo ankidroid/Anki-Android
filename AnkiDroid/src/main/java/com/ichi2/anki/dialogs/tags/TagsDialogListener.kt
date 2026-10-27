@@ -1,27 +1,14 @@
-/*
- Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.dialogs.tags
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import java.util.ArrayList
 
 @KotlinCleanup("make selectedTags and indeterminateTags non-null")
 interface TagsDialogListener {
@@ -43,14 +30,14 @@ interface TagsDialogListener {
 
     fun <F> F.registerFragmentResultReceiver() where F : Fragment, F : TagsDialogListener {
         parentFragmentManager.setFragmentResultListener(
-            ON_SELECTED_TAGS_KEY,
+            REQUEST_SELECT_TAGS,
             this,
         ) { _: String?, bundle: Bundle ->
             val selectedTags: List<String> =
-                bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
+                bundle.getStringArrayList(RESULT_SELECTED_TAGS)!!
             val indeterminateTags: List<String> =
-                bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)!!
-            val option = bundle.getSerializableCompat<CardStateFilter>(ON_SELECTED_TAGS__OPTION)!!
+                bundle.getStringArrayList(RESULT_INDETERMINATE_TAGS)!!
+            val option = bundle.getSerializableCompat<CardStateFilter>(RESULT_CARD_STATE_FILTER)!!
             onSelectedTags(selectedTags, indeterminateTags, option)
         }
     }
@@ -65,17 +52,17 @@ interface TagsDialogListener {
                 ) {
                     val bundle =
                         Bundle().apply {
-                            putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
-                            putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
-                            putSerializable(ON_SELECTED_TAGS__OPTION, stateFilter)
+                            putStringArrayList(RESULT_SELECTED_TAGS, ArrayList(selectedTags))
+                            putStringArrayList(RESULT_INDETERMINATE_TAGS, ArrayList(indeterminateTags))
+                            putSerializable(RESULT_CARD_STATE_FILTER, stateFilter)
                         }
-                    fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
+                    fragmentManager.setFragmentResult(REQUEST_SELECT_TAGS, bundle)
                 }
             }
 
-        const val ON_SELECTED_TAGS_KEY = "ON_SELECTED_TAGS_KEY"
-        const val ON_SELECTED_TAGS__SELECTED_TAGS = "SELECTED_TAGS"
-        const val ON_SELECTED_TAGS__INDETERMINATE_TAGS = "INDETERMINATE_TAGS"
-        const val ON_SELECTED_TAGS__OPTION = "OPTION"
+        const val REQUEST_SELECT_TAGS = "ON_SELECTED_TAGS_KEY"
+        const val RESULT_SELECTED_TAGS = "SELECTED_TAGS"
+        const val RESULT_INDETERMINATE_TAGS = "INDETERMINATE_TAGS"
+        const val RESULT_CARD_STATE_FILTER = "OPTION"
     }
 }

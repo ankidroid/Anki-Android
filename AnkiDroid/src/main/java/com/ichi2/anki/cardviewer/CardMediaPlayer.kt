@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.cardviewer
 
@@ -23,13 +9,13 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
 import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsPlayer
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.storage.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.libanki.AvTag
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.SoundOrVideoTag
@@ -53,6 +39,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 import java.io.Closeable
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Handles the two ways an Anki card defines sound:
@@ -98,7 +85,7 @@ class CardMediaPlayer : Closeable {
         this.mediaErrorListener = mediaErrorListener
         this.soundTagPlayer =
             SoundTagPlayer(
-                soundUriBase = getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance)),
+                soundUriBase = getMediaBaseUrl(getMediaDirectory(appContext)),
                 videoPlayer = VideoPlayer(javascriptEvaluator),
             )
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(scope) }
@@ -127,9 +114,9 @@ class CardMediaPlayer : Closeable {
     var playAvTagsJob: Job? = null
     val isPlaying get() = playAvTagsJob != null
 
-    private var onMediaGroupCompleted: (() -> Unit)? = null
+    private var onMediaGroupCompleted: (suspend () -> Unit)? = null
 
-    fun setOnMediaGroupCompletedListener(listener: (() -> Unit)?) {
+    fun setOnMediaGroupCompletedListener(listener: (suspend () -> Unit)?) {
         onMediaGroupCompleted = listener
     }
 
@@ -331,7 +318,7 @@ class CardMediaPlayer : Closeable {
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
         val player =
-            withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
+            withTimeoutOrNull(TTS_PLAYER_TIMEOUT) {
                 ttsPlayer.await()
             }
         if (player == null) {
@@ -354,7 +341,7 @@ class CardMediaPlayer : Closeable {
     }
 
     companion object {
-        private const val TTS_PLAYER_TIMEOUT_MS = 2_500L
+        private val TTS_PLAYER_TIMEOUT = 2_500.milliseconds
     }
 }
 

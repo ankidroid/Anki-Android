@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.multimedia
 
@@ -23,30 +9,39 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.format.Formatter
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.content.IntentCompat
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentMultimediaImageBinding
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_LIMIT
 import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_SAVE_MAX_WIDTH
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
@@ -55,9 +50,13 @@ import com.ichi2.anki.multimedia.MultimediaUtils.createNewCacheImageFile
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.convertToString
 import com.ichi2.anki.utils.ext.toBase64Png
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.utils.savedStateViewModelFactory
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
+import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.imagecropper.ImageCropper
-import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
+import com.ichi2.imagecropper.ImageCropper.Companion.EXTRA_CROP_IMAGE_RESULT
 import com.ichi2.utils.BitmapUtil
 import com.ichi2.utils.ExifUtil
 import com.ichi2.utils.FileUtil
@@ -67,8 +66,11 @@ import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -79,16 +81,41 @@ import java.text.NumberFormat
 private const val SVG_IMAGE = "image/svg+xml"
 
 @NeedsTest("Ensure correct option is executed i.e. gallery or camera")
-class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_image) {
-    private val binding by viewBinding(FragmentMultimediaImageBinding::bind)
+class MultimediaImageFragment :
+    MultimediaFragment(R.layout.fragment_multimedia_image),
+    OnWebViewRecreatedListener {
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentMultimediaImageBinding::bind)
+
+    /** The image on screen, re-rendered if the WebView's render process dies */
+    private var previewedImage: Uri? = null
 
     override val title: String
-        get() = resources.getString(R.string.multimedia_editor_popup_image)
+        get() = resources.getString(CommonString.multimedia_editor_popup_image)
 
     private lateinit var selectedImageOptions: ImageOptions
 
     /** Keeps track of the process in case `Don't keep activities` in turned on*/
     private var hasStartedImageSelection = false
+
+    private val externalEditorViewModel by viewModels<ExternalImageEditorViewModel> {
+        savedStateViewModelFactory { state ->
+            ExternalImageEditorViewModel(
+                state,
+                ExternalImageEditor(requireContext().applicationContext, File(requireNotNull(ankiCacheDirectory))),
+            )
+        }
+    }
+
+    private val externalImageEditor get() = externalEditorViewModel.editor
+
+    @VisibleForTesting
+    internal val isExternalEditPending get() = externalEditorViewModel.state.value != null
+
+    private val externalEditorLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            externalEditorViewModel.readResult(result)
+        }
 
     /**
      * Launches an activity to pick an image from the device's gallery.
@@ -96,17 +123,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
-                    if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
-                    }
+                    cancelIfEmpty()
                 }
 
                 Activity.RESULT_OK -> {
@@ -117,7 +138,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         return@registerForActivityResult
                     }
 
-                    val selectedImage = getImageUri(data)
+                    val selectedImage = PickedImage(data).trustedUri
+                    if (selectedImage == null) {
+                        showSnackbar(getString(CommonString.select_image_failed))
+                        return@registerForActivityResult
+                    }
                     handleSelectImageIntent(selectedImage)
                 }
             }
@@ -128,17 +153,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private val drawingActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
                     // If user didn't draw, return the indexValue as a result and finish the activity
-                    if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
-                    }
+                    cancelIfEmpty()
                 }
 
                 Activity.RESULT_OK -> {
@@ -156,15 +175,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     @NeedsTest("Works fine without permission as we use Camera as feature")
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
+            if (view == null) return@registerForActivityResult
             hasStartedImageSelection = false
             when {
                 !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
-                    val resultData =
-                        Intent().apply {
-                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                        }
-                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                    requireActivity().finish()
+                    cancelIfEmpty()
                 }
 
                 isPictureTaken -> {
@@ -175,6 +190,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 else -> {
                     Timber.d("Camera aborted or some interruption, restoring multimedia data")
                     viewModel.restoreMultimedia()
+                    viewModel.currentMultimediaPath.value?.let(::updateAndDisplayImageSize)
+                    viewModel.currentMultimediaUri.value?.let(::previewImage)
                 }
             }
         }
@@ -182,16 +199,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     /** Launches an activity to crop the image, using the [ImageCropper] */
     private val imageCropperLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_OK -> {
                     result.data?.let {
                         val cropResultData =
-                            IntentCompat.getParcelableExtra(
-                                it,
-                                CROP_IMAGE_RESULT,
-                                ImageCropper.CropResultData::class.java,
-                            )
+                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(EXTRA_CROP_IMAGE_RESULT)
                         Timber.d("Cropped image data: $cropResultData")
 
                         if (cropResultData?.uriPath == null || cropResultData.uriContent == null) return@registerForActivityResult
@@ -207,56 +221,59 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             }
         }
 
-    /**
-     * Lazily initialized instance of MultimediaMenu.
-     * The instance is created only when first accessed.
-     */
-    private val multimediaMenu by lazy {
-        MultimediaMenuProvider(
-            menuResId = R.menu.multimedia_menu,
-            onCreateMenuCondition = { menu ->
-
-                setMenuItemIcon(menu.findItem(R.id.action_restart), R.drawable.ic_replace_image)
-                lifecycleScope.launch {
-                    viewModel.currentMultimediaUri.collectLatest { uri ->
-                        menu.findItem(R.id.action_crop).isVisible = uri != null
-                    }
-                }
-            },
-        ) { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_crop -> {
-                    viewModel.saveMultimediaForRevert(
-                        imagePath = viewModel.currentMultimediaPath.value,
-                        imageUri = viewModel.currentMultimediaUri.value,
-                    )
-                    requestCrop()
-                    true
-                }
-
-                R.id.action_restart -> {
-                    when (selectedImageOptions) {
-                        ImageOptions.GALLERY -> {
-                            openGallery()
+    private fun setupImageActions() {
+        binding.imageActions.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AnkiDroidTheme {
+                    val imageUri by viewModel.currentMultimediaUri.collectAsStateWithLifecycle()
+                    val externalEdit by externalEditorViewModel.state.collectAsStateWithLifecycle()
+                    val editorAvailability =
+                        remember(viewModel, externalImageEditor) {
+                            viewModel.currentMultimediaPath.map { image ->
+                                image?.let { externalImageEditor.canEdit(it) } ?: false
+                            }
                         }
-
-                        ImageOptions.CAMERA -> {
+                    val hasExternalEditor by editorAvailability.collectAsStateWithLifecycle(
+                        initialValue = false,
+                        minActiveState = Lifecycle.State.RESUMED,
+                    )
+                    ImageEditorToolbar(
+                        hasImage = imageUri != null,
+                        hasExternalEditor = hasExternalEditor,
+                        enabled = externalEdit == null,
+                        replaceIcon =
+                            when (selectedImageOptions) {
+                                ImageOptions.GALLERY -> R.drawable.ic_photo_library
+                                ImageOptions.CAMERA -> R.drawable.ic_camera
+                                ImageOptions.DRAWING -> R.drawable.ic_draw_filled
+                            },
+                        onReplace = ::replaceImage,
+                        onCrop = {
                             viewModel.saveMultimediaForRevert(
                                 imagePath = viewModel.currentMultimediaPath.value,
                                 imageUri = viewModel.currentMultimediaUri.value,
                             )
-                            dispatchCamera()
-                        }
-
-                        ImageOptions.DRAWING -> {
-                            openDrawingCanvas()
-                        }
-                    }
-                    true
+                            requestCrop()
+                        },
+                        onEditExternally = ::requestExternalEdit,
+                    )
                 }
-
-                else -> false
             }
+        }
+    }
+
+    private fun replaceImage() {
+        when (selectedImageOptions) {
+            ImageOptions.GALLERY -> openGallery()
+            ImageOptions.CAMERA -> {
+                viewModel.saveMultimediaForRevert(
+                    imagePath = viewModel.currentMultimediaPath.value,
+                    imageUri = viewModel.currentMultimediaUri.value,
+                )
+                dispatchCamera()
+            }
+            ImageOptions.DRAWING -> openDrawingCanvas()
         }
     }
 
@@ -267,8 +284,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(requireContext(), "temp-photos")
         if (ankiCacheDirectory == null) {
             Timber.e("createUI() failed to get cache directory")
-            showErrorDialog(errorMessage = resources.getString(R.string.multimedia_editor_failed))
+            showErrorDialog(errorMessage = resources.getString(CommonString.multimedia_editor_failed))
             return
+        }
+
+        externalEditorViewModel.state.value?.originalPath?.let(::File)?.let {
+            viewModel.updateCurrentMultimediaPath(it)
+            viewModel.updateCurrentMultimediaUri(getUriForFile(it))
         }
 
         arguments?.let {
@@ -281,10 +303,33 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupMenu(multimediaMenu)
+        setupImageActions()
+        observeExternalEdit()
 
-        handleImageUri()
-        setupDoneButton()
+        setupWebView()
+        val currentImage = viewModel.currentMultimediaPath.value
+        if (currentImage != null) {
+            previewImage(getUriForFile(currentImage))
+            updateAndDisplayImageSize(currentImage)
+        } else {
+            handleImageUri()
+        }
+    }
+
+    @NeedsTest("Verify the webview background color is transparent and matches the app theme")
+    private fun setupWebView() {
+        binding.multimediaWebView.setWebViewClient(SafeWebViewClient())
+        binding.multimediaWebView.setBackgroundColor(Color.TRANSPARENT)
+    }
+
+    /**
+     * [SafeWebViewLayout] only replaces the crashed [WebView], so the client and the preview
+     * have to be applied again.
+     */
+    override fun onWebViewRecreated(webView: WebView) {
+        Timber.i("restoring the image preview after a render process crash")
+        setupWebView()
+        previewedImage?.let { previewImage(it) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -292,12 +337,22 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         outState.putBoolean("HAS_STARTED_IMAGE_SELECTION", hasStartedImageSelection)
     }
 
-    private fun handleImageUri() {
-        fun processExternalImage(uri: Uri): Uri? = internalizeUri(uri)?.let { Uri.fromFile(it) }
+    override fun onDestroy() {
+        if (isRemoving || activity?.isFinishing == true) {
+            externalEditorViewModel.discard()
+        }
+        super.onDestroy()
+    }
 
-        if (imageUri != null) {
-            val internalUri = imageUri?.let { processExternalImage(it) }
-            handleSelectImageIntent(internalUri)
+    private fun handleImageUri() {
+        val currentImageUri = viewModel.currentMultimediaUri.value
+        if (currentImageUri != null) {
+            // The launch URI is only the initial image; cropping or replacement may have changed it.
+            previewImage(currentImageUri)
+            binding.imageFileSize.text = Formatter.formatFileSize(requireContext(), viewModel.selectedMediaFileSize)
+        } else if (imageUri != null) {
+            // a content:// or a file:// already in our cache; resolveUriToFile handles both
+            handleSelectImageIntent(imageUri)
         } else {
             handleSelectedImageOptions()
         }
@@ -327,32 +382,22 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
     }
 
-    private fun setupDoneButton() {
-        binding.actionDone.setOnClickListener {
-            Timber.d("MultimediaImageFragment:: Done button pressed")
-            if (viewModel.selectedMediaFileSize == 0L) {
-                Timber.d("Image length is not valid")
-                return@setOnClickListener
-            }
-            if (viewModel.selectedMediaFileSize > IMAGE_LIMIT) {
-                showLargeFileCropDialog(viewModel.selectedMediaFileSize)
-                return@setOnClickListener
-            }
-            finishAddingImage()
+    internal fun onDone() {
+        Timber.d("MultimediaImageFragment:: Done button pressed")
+        if (isExternalEditPending) return
+        if (viewModel.selectedMediaFileSize == 0L) {
+            Timber.d("Image length is not valid")
+            return
         }
+        if (viewModel.selectedMediaFileSize > IMAGE_LIMIT) {
+            showLargeFileCropDialog(viewModel.selectedMediaFileSize)
+            return
+        }
+        finishAddingImage()
     }
 
     private fun finishAddingImage() {
-        field.mediaFile = viewModel.currentMultimediaPath.value
-        field.hasTemporaryMedia = true
-
-        val resultData =
-            Intent().apply {
-                putExtra(MULTIMEDIA_RESULT, field)
-                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-            }
-        requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-        requireActivity().finish()
+        finishWithMedia()
     }
 
     private fun openGallery() {
@@ -361,7 +406,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             pickImageLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
             Timber.w(e, "MultimediaImageFragment:: No app found to select image")
-            showSnackbar(R.string.activity_start_failed)
+            showSnackbar(CommonString.activity_start_failed)
         }
     }
 
@@ -392,7 +437,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 cameraLauncher.launch(photoURI)
             } catch (e: ActivityNotFoundException) {
                 Timber.w(e, "MultimediaImageFragment:: No camera found")
-                showSnackbar(R.string.activity_start_failed)
+                showSnackbar(CommonString.activity_start_failed)
             }
         }
     }
@@ -401,7 +446,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         val imageUri =
             BundleCompat.getParcelable(
                 intent.extras!!,
-                DrawingFragment.IMAGE_PATH_KEY,
+                DrawingFragment.EXTRA_IMAGE_PATH,
                 Uri::class.java,
             )
 
@@ -443,7 +488,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         viewModel.currentMultimediaUri.value?.let { previewImage(it) }
         updateAndDisplayImageSize(imageFile)
 
-        showCropDialog(getString(R.string.crop_image))
+        showCropDialog(getString(CommonString.crop_image))
     }
 
     private fun updateAndDisplayImageSize(imageUri: String) {
@@ -459,24 +504,24 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         val numberFormat = NumberFormat.getInstance()
         // length is in bits, other elements have MB, convert to MB
         val size = numberFormat.format(length / 1000000.0)
-        val message = getString(R.string.save_dialog_content, size)
+        val message = getString(CommonString.save_dialog_content, size)
         showCompressImageDialog(message)
     }
 
     private fun showCompressImageDialog(message: String) {
         AlertDialog.Builder(requireActivity()).show {
             message(text = message)
-            positiveButton(R.string.compress) {
+            positiveButton(CommonString.compress) {
                 viewModel.currentMultimediaPath.value.let {
                     if (it == null) return@positiveButton
                     if (!rotateAndCompress(it)) {
                         Timber.d("Unable to compress the clicked image")
-                        showErrorDialog(errorMessage = resources.getString(R.string.multimedia_editor_image_compression_failed))
+                        showErrorDialog(errorMessage = resources.getString(CommonString.multimedia_editor_image_compression_failed))
                         return@positiveButton
                     }
                 }
             }
-            negativeButton(R.string.dialog_no) {
+            negativeButton(CommonString.dialog_no) {
                 finishAddingImage()
             }
         }
@@ -490,10 +535,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
         AlertDialog.Builder(requireActivity()).show {
             message(text = message)
-            positiveButton(R.string.dialog_yes) {
+            positiveButton(CommonString.dialog_yes) {
                 requestCrop()
             }
-            negativeButton(R.string.dialog_no)
+            negativeButton(CommonString.dialog_no)
         }
     }
 
@@ -537,19 +582,34 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         updateAndDisplayImageSize(imagePath)
     }
 
-    /**
-     * Resolves a [Uri] to a [File] on internal storage.
-     *
-     * If the URI is a content URI, it is internalized by copying its contents to internal storage.
-     * If the URI is already a file URI, it is directly converted to a [File] object.
-     *
-     * @param uri The URI to resolve.
-     * @return The corresponding [File], or `null` if the URI is invalid or unsupported.
-     */
-    private fun resolveUriToFile(uri: Uri): File? {
-        return when (uri.scheme) {
-            ContentResolver.SCHEME_FILE -> File(uri.path ?: return null)
+    /** Resolves [uri] to a local [File], internalizing content URIs but accepting file URIs only
+     *  from our own cache. */
+    @VisibleForTesting
+    internal fun resolveUriToFile(uri: Uri): File? =
+        when (uri.scheme) {
+            ContentResolver.SCHEME_FILE -> cachedFileOrNull(uri)
             else -> internalizeUri(uri)
+        }
+
+    /** The [File] for a `file://` [uri], but only when it's inside our own cache. A picked or shared
+     *  file:// is otherwise untrusted: we'd read it with our UID and attach it as media. */
+    private fun cachedFileOrNull(uri: Uri): File? {
+        val file = uri.path?.let(::File) ?: return null
+        if (!file.isInsideAppCache()) {
+            Timber.w("rejected file:// outside the cache")
+            return null
+        }
+        return file
+    }
+
+    /** Canonical-path check so a `..` in the URI can't climb out of the cache. */
+    private fun File.isInsideAppCache(): Boolean {
+        val cacheRoot = context?.cacheDir?.canonicalFile ?: return false
+        return try {
+            generateSequence(canonicalFile) { it.parentFile }.any { it == cacheRoot }
+        } catch (e: IOException) {
+            Timber.w(e, "isInsideAppCache() failed to canonicalize %s", this)
+            false
         }
     }
 
@@ -560,6 +620,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      * @param imageUri The URI of the selected image.
      */
     private fun previewImage(imageUri: Uri) {
+        previewedImage = imageUri
         val mimeType = context?.contentResolver?.getType(imageUri)
 
         // Get the WebView and set it visible
@@ -581,15 +642,24 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      *
      * @param imageUri The URI of the SVG image.
      */
-    private fun WebView.loadSvgImage(imageUri: Uri) {
-        val svgData = loadSvgFromUri(imageUri)
-        if (svgData != null) {
-            Timber.i("Selected image is an SVG.")
+    private fun SafeWebViewLayout.loadSvgImage(imageUri: Uri) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val svgData = withContext(Dispatchers.IO) { loadSvgFromUri(imageUri) }
+                if (svgData != null) {
+                    Timber.i("Selected image is an SVG.")
 
-            loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
-        } else {
-            Timber.w("Failed to load SVG from URI")
-            showErrorInWebView()
+                    loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
+                } else {
+                    Timber.w("Failed to load SVG from URI")
+                    showErrorInWebView()
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Error loading SVG preview")
+                showErrorInWebView()
+            }
         }
     }
 
@@ -598,16 +668,15 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      *
      * @param imageUri The URI of the non-SVG image.
      */
-    private fun WebView.loadImage(imageUri: Uri) {
+    private fun SafeWebViewLayout.loadImage(imageUri: Uri) {
         Timber.i("Loading non-SVG image using WebView")
 
         try {
-            val internalFile = internalizeUri(imageUri)?.takeIf { it.exists() }
+            // Reuse the selected file for its FileProvider URI: importing it could copy it onto itself.
+            val selectedFile = viewModel.currentMultimediaPath.value?.takeIf { getUriForFile(it) == imageUri }
+            val internalFile = (selectedFile ?: cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
             if (internalFile == null) {
-                Timber.w(
-                    "loadImage() unable to internalize image from Uri %s",
-                    imageUri,
-                )
+                Timber.w("loadImage() unable to resolve image from Uri %s", imageUri)
                 showSomethingWentWrong()
                 return
             }
@@ -657,6 +726,51 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         binding.multimediaWebView.loadDataWithBaseURL(null, errorHtml, "text/html", "UTF-8", null)
     }
 
+    @VisibleForTesting
+    internal fun requestExternalEdit() {
+        viewModel.currentMultimediaPath.value?.let(externalEditorViewModel::prepare)
+    }
+
+    private fun observeExternalEdit() {
+        fun handleEditState(edit: ExternalImageEditorViewModel.Edit?) {
+            (activity as? MultimediaActivity)?.isImageEditorBusy = edit != null
+            when (edit) {
+                is ExternalImageEditorViewModel.Edit.Ready -> {
+                    externalEditorViewModel.launched()
+                    hasStartedImageSelection = true
+                    try {
+                        externalEditorLauncher.launch(edit.intent)
+                    } catch (e: ActivityNotFoundException) {
+                        Timber.w(e, "No app found to edit image")
+                        externalEditorViewModel.launchFailed()
+                    }
+                }
+                is ExternalImageEditorViewModel.Edit.Finished -> {
+                    edit.acceptedPath?.let(::File)?.let { accepted ->
+                        val uri = getUriForFile(accepted)
+                        viewModel.updateCurrentMultimediaPath(accepted)
+                        viewModel.updateCurrentMultimediaUri(uri)
+                        updateAndDisplayImageSize(accepted)
+                        previewImage(uri)
+                    }
+                    edit.error?.let { showSnackbar(it) }
+                    if (edit.unchanged) {
+                        showSnackbar(CommonString.external_image_editor_no_changes)
+                    }
+                    hasStartedImageSelection = false
+                    externalEditorViewModel.consumed()
+                }
+                else -> Unit
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                externalEditorViewModel.state.collect(::handleEditState)
+            }
+        }
+    }
+
     private fun requestCrop() {
         val imageUri = viewModel.currentMultimediaUri.value ?: return
         Timber.i("launching crop")
@@ -676,9 +790,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun loadSvgFromUri(uri: Uri): String? =
         try {
-            context?.contentResolver?.openInputStreamSafe(uri)?.use { inputStream ->
-                inputStream.convertToString()
-            }
+            // our own cache file reads directly; openInputStreamSafe blocks /data
+            val inputStream =
+                cachedFileOrNull(uri)?.inputStream()
+                    ?: context?.contentResolver?.openInputStreamSafe(uri)
+            inputStream?.use { it.convertToString() }
         } catch (e: Exception) {
             Timber.w(e, "Error reading SVG from URI")
             null
@@ -773,15 +889,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             showSomethingWentWrong()
             null
         }
-    }
-
-    private fun getImageUri(data: Intent): Uri? {
-        Timber.d("getImageUri for data %s", data)
-        val uri = data.data
-        if (uri == null) {
-            showSnackbar(getString(R.string.select_image_failed))
-        }
-        return uri
     }
 
     companion object {

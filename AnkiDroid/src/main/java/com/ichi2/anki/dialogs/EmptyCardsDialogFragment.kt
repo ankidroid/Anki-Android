@@ -1,26 +1,9 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *  Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Insets
@@ -40,7 +23,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -48,8 +30,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import anki.card_rendering.EmptyCardsReport
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.databinding.DialogEmptyCardsBinding
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchFailure
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchResult
@@ -57,8 +42,7 @@ import com.ichi2.anki.dialogs.EmptyCardsUiState.SearchingForEmptyCards
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.emptyCids
-import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.withProgress
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -71,7 +55,7 @@ import timber.log.Timber
  * A dialog that searches for empty cards and presents the user with the option to delete them.
  * A user may 'keep notes', which retains the first card of each note, even if the note is empty.
  */
-class EmptyCardsDialogFragment : DialogFragment() {
+class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
     private val viewModel by viewModels<EmptyCardsViewModel>()
 
     private lateinit var binding: DialogEmptyCardsBinding
@@ -86,8 +70,8 @@ class EmptyCardsDialogFragment : DialogFragment() {
         return AlertDialog
             .Builder(requireContext())
             .show {
-                setTitle(TR.emptyCardsWindowTitle().toSentenceCase(R.string.sentence_empty_cards))
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setTitle(TR.sentenceCase.emptyCardsTitle)
+                setPositiveButton(CommonString.dialog_ok) { _, _ ->
                     val state = viewModel.uiState.value
                     if (state is EmptyCardsSearchResult) {
                         // this dialog is only shown from DeckPicker so we use it directly to avoid
@@ -100,7 +84,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
                         )
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                setNegativeButton(CommonString.dialog_cancel) { _, _ ->
                     Timber.i("Empty cards dialog cancelled")
                 }
                 setView(binding.root)
@@ -117,12 +101,12 @@ class EmptyCardsDialogFragment : DialogFragment() {
                 viewModel.uiState.collect { state ->
                     when (state) {
                         is SearchingForEmptyCards -> {
-                            binding.loadingMessage.text = getString(R.string.emtpy_cards_finding)
+                            binding.loadingMessage.text = getString(CommonString.emtpy_cards_finding)
                             binding.loadingContainer.isVisible = true
                             binding.emptyCardsResultsContainer.isVisible = false
                             (dialog as? AlertDialog)?.positiveButton?.apply {
                                 isEnabled = false
-                                text = getString(R.string.dialog_ok)
+                                text = getString(CommonString.dialog_ok)
                             }
                         }
 
@@ -135,7 +119,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
                                 // nothing to delete so also hide the preserve notes check box
                                 binding.keepNotesWithNoValidCards.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
-                                    getString(R.string.dialog_ok)
+                                    getString(CommonString.dialog_ok)
                                 (dialog as? AlertDialog)?.negativeButton?.visibility = View.GONE
                             } else {
                                 binding.reportScrollView.updateViewHeight()
@@ -146,7 +130,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
                                 binding.keepNotesWithNoValidCards.isVisible = true
                                 binding.emptyReportMessage.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
-                                    getString(R.string.dialog_positive_delete)
+                                    getString(CommonString.dialog_positive_delete)
                                 binding.emptyCardsResultsContainer.isVisible = true
                             }
                             (dialog as? AlertDialog)?.positiveButton?.isEnabled = true
@@ -156,9 +140,9 @@ class EmptyCardsDialogFragment : DialogFragment() {
                             // the dialog is informational so there's nothing to do but show the
                             // error and exit
                             AlertDialog.Builder(requireActivity()).show {
-                                title(R.string.vague_error)
+                                title(CommonString.vague_error)
                                 message(text = state.throwable.toString())
-                                positiveButton(R.string.dialog_ok) { }
+                                positiveButton(CommonString.dialog_ok) { }
                             }
                             dismissNow()
                         }
@@ -178,7 +162,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
         AnkiNidTag.parseFromReport(spannableReport).forEach { tag ->
             // make nid clickable
             spannableReport.setSpan(
-                BrowserSearchByNidSpan(requireContext(), tag.nid),
+                BrowserSearchByNidSpan(requireActivity(), tag.nid),
                 tag.matchedNid.range.first,
                 tag.matchedNid.range.last + 1,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
@@ -249,14 +233,11 @@ class EmptyCardsDialogFragment : DialogFragment() {
      * @see CardBrowser
      */
     private class BrowserSearchByNidSpan(
-        val context: Context,
+        val activity: Activity,
         val nid: NoteId,
     ) : ClickableSpan() {
         override fun onClick(widget: View) {
-            val browserSearchIntent = Intent(context, CardBrowser::class.java)
-            browserSearchIntent.putExtra("search_query", "nid:$nid")
-            browserSearchIntent.putExtra("all_decks", true)
-            context.startActivity(browserSearchIntent)
+            with(activity) { navigate(BrowserDestination.Search(query = "nid:$nid", allDecks = true)) }
         }
     }
 
@@ -316,8 +297,6 @@ fun DeckPicker.startDeletingEmptyCards(
         keepNotes,
     )
     launchCatchingTask {
-        withProgress(TR.emptyCardsDeleting()) {
-            viewModel.deleteEmptyCards(report, keepNotes).join()
-        }
+        viewModel.deleteEmptyCards(report, keepNotes).join()
     }
 }

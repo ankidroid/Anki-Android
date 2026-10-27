@@ -1,27 +1,21 @@
-/*
- * Copyright (c) 2024 voczi <dev@voczi.com>
- * Copyright (c) 2024 Mike Hardy <github@mikehardy.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 voczi <dev@voczi.com>
+// SPDX-FileCopyrightText: Copyright (c) 2024 Mike Hardy <github@mikehardy.net>
+
 package com.ichi2.anki.servicelayer
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.exception.SanitizedThrowable
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.utils.ExceptionUtil.causeChain
+import com.ichi2.utils.ExceptionUtil.causesAndSuppressed
+import net.ankiweb.rsdroid.BackendException.BackendSchedulerUpgradeRequiredException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncServerMessageException
 import timber.log.Timber
+import java.util.Collections
+import java.util.IdentityHashMap
 
 object ThrowableFilterService {
     @FunctionalInterface
@@ -36,11 +30,15 @@ object ThrowableFilterService {
                 Timber.w("unexpected: thread was null")
                 return@FilteringExceptionHandler
             }
-            if (shouldDiscardThrowable(throwable)) {
-                Timber.i("discarding throwable")
-                return@FilteringExceptionHandler
-            }
-            originalUncaughtExceptionHandler?.uncaughtException(thread, throwable)
+            val reportable =
+                if (shouldDiscardThrowable(throwable)) {
+                    // Retain diagnostic class names and frames without exposing private messages.
+                    Timber.i("sanitizing uncaught throwable")
+                    SanitizedThrowable.from(throwable)
+                } else {
+                    throwable
+                }
+            originalUncaughtExceptionHandler?.uncaughtException(thread, reportable)
         }
 
     fun initialize() {
@@ -49,7 +47,7 @@ object ThrowableFilterService {
     }
 
     /**
-     * We want to filter any exceptions with PII, then chain to other handlers
+     * Sanitize filtered uncaught exceptions before delegating to the reporting handlers.
      */
     @Synchronized
     @VisibleForTesting
@@ -80,19 +78,24 @@ object ThrowableFilterService {
         initialize()
     }
 
+    /**
+     * Whether a handled report should be discarded. Uncaught errors are sanitized instead, so they
+     * can still reach the reporting handlers.
+     */
     fun shouldDiscardThrowable(t: Throwable): Boolean {
-        // Note that an exception may have a nested BackendSyncException,
-        // so we check if it is safe from PII despite also filtering by type
-        return exceptionIsUnwanted(t) || !t.safeFromPII()
+        // PII-bearing exceptions may be nested or suppressed. ACRA's stack-trace hashing also
+        // assumes the main cause chain is acyclic, so circular causes cannot be reported as-is.
+        return exceptionIsUnwanted(t) || !t.safeFromPII() || t.hasCyclicCause()
     }
 
-    // There are few exception types that are common, but are unwanted in
-    // our analytics or crash report service because they are not actionable
+    // These common types are noise in handled reports. Uncaught instances still indicate crashes
+    // and must reach reporting after sanitization.
     fun exceptionIsUnwanted(t: Throwable): Boolean {
         Timber.v("exceptionIsUnwanted - examining %s", t.javaClass.simpleName)
         when (t) {
             is BackendNetworkException -> return true
             is BackendSyncException -> return true
+            is BackendSchedulerUpgradeRequiredException -> return true
             is StorageAccessException -> return true
         }
         Timber.v("exceptionIsUnwanted - exception was wanted")
@@ -100,12 +103,14 @@ object ThrowableFilterService {
     }
 
     /**
-     * Checks if the [Throwable] is safe from Personally Identifiable Information (PII)
+     * Checks this throwable, its causes and suppressed exceptions for known PII-bearing types.
      * @return `false` if the [Throwable] contains PII, otherwise `true`
      */
-    fun Throwable.safeFromPII(): Boolean {
-        if (this.containsPIINonRecursive()) return false
-        return this.cause?.safeFromPII() != false
+    fun Throwable.safeFromPII(): Boolean = causesAndSuppressed().none { it.containsPIINonRecursive() }
+
+    private fun Throwable.hasCyclicCause(): Boolean {
+        val seen = Collections.newSetFromMap(IdentityHashMap<Throwable, Boolean>())
+        return causeChain.any { !seen.add(it) }
     }
 
     private fun Throwable.containsPIINonRecursive(): Boolean {

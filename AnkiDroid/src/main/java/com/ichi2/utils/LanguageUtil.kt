@@ -1,31 +1,22 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 package com.ichi2.utils
 
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.backend.AnkiBackendLanguage
+import com.ichi2.anki.backend.getLocales
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
+import timber.log.Timber
 import java.util.Locale
 
 /**
@@ -326,10 +317,13 @@ object LanguageUtil {
 
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
-    /** If locale is not provided, the current locale will be used. */
+    /**
+     * If locale is not provided, the current locale will be used.
+     * If conversion fails, passes the original tag to rslib for its own parsing and language fallback.
+     */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
         val langCode =
-            languageTag ?: AnkiDroidApp.instance
+            languageTag ?: appContext
                 .sharedPrefs()
                 .getString("language", SYSTEM_LANGUAGE_TAG)!!
 
@@ -339,17 +333,12 @@ object LanguageUtil {
             } else {
                 langCode
             }
-        BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(localeLanguage))
-    }
-
-    private fun languageTagToBackendCode(languageTag: String): String =
-        when (languageTag) {
-            "heb" -> "he"
-            "ind" -> "id"
-            "tgl" -> "tl"
-            "hi" -> "hi-IN"
-            else -> languageTag
+        val backendLanguage = AnkiBackendLanguage.fromLanguageTag(localeLanguage)
+        if (backendLanguage == null) {
+            Timber.w("Could not normalize language tag '%s'; passing it to rslib unchanged", localeLanguage)
         }
+        BackendFactory.defaultLanguages = listOf(backendLanguage?.value ?: localeLanguage)
+    }
 
     /** @return string defined with [stringRes] on the specified [locale] */
     fun Context.getStringByLocale(
@@ -370,14 +359,28 @@ object LanguageUtil {
     ): String = requireContext().getStringByLocale(stringRes, locale, *formatArgs)
 
     /**
-     * This should always be called after Activity.onCreate()
-     * @return locale language tag of the app configured language
-     */
-    fun getCurrentLocaleTag(): String = AppCompatDelegate.getApplicationLocales().toLanguageTags()
-
-    /**
      * Returns the character to use when separating a list; `, ` in English
      * Uses ListFormatter on API 26+ to dynamically get the locale-specific separator
      */
-    fun getListSeparator(context: Context): String = CompatHelper.compat.getListSeparator(context)
+    fun getListSeparator(context: Context): String =
+        CompatHelper.compat.getListSeparator(context, context.getString(CommonString.list_separator))
+
+    /**
+     * Wraps the provided string in Unicode isolation markers (FSI and PDI) to ensure bidirectional markers
+     * within the string are isolated.
+     */
+    fun withUnicodeIsolation(s: String): String = "\u2068$s\u2069"
 }
+
+data class LanguageDebugInfo(
+    val systemLocale: String?,
+    val appLocale: String?,
+    val backendLocales: List<String>?,
+)
+
+fun getLanguageDebugInfo(context: Context): LanguageDebugInfo =
+    LanguageDebugInfo(
+        systemLocale = runCatching { LanguageUtil.getSystemLocale().toLanguageTag() }.getOrNull(),
+        appLocale = runCatching { context.sharedPrefs().getString("language", LanguageUtil.SYSTEM_LANGUAGE_TAG) }.getOrNull(),
+        backendLocales = runCatching { CollectionManager.getBackend().getLocales().all }.getOrNull(),
+    )

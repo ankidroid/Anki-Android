@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2022 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.notetype
 
 import android.content.Context
@@ -23,10 +10,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ItemManageNoteTypeBinding
 import com.ichi2.anki.notetype.NoteTypesAdapter.NoteTypeViewHolder
 import com.ichi2.anki.utils.ext.usingStyledAttributes
+import com.ichi2.anki.common.android.R as CommonR
 
 private val notetypeNamesAndCountDiff =
     object : DiffUtil.ItemCallback<NoteTypeItemState>() {
@@ -103,7 +92,7 @@ internal class NoteTypesAdapter(
                 getResourceId(0, 0)
             }
         private val selectedNoteTypeBackground: Int =
-            context.usingStyledAttributes(null, intArrayOf(R.attr.currentDeckBackground)) {
+            context.usingStyledAttributes(null, intArrayOf(CommonR.attr.currentDeckBackground)) {
                 getResourceId(0, 0)
             }
 
@@ -145,7 +134,7 @@ internal class NoteTypesAdapter(
             binding.noteName.text = state.name
             binding.noteUseCount.text =
                 context.resources.getQuantityString(
-                    R.plurals.model_browser_of_type,
+                    CommonPlurals.model_browser_of_type,
                     state.useCount,
                     state.useCount,
                 )

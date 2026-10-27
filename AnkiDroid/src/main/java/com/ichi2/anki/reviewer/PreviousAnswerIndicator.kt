@@ -1,25 +1,11 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.reviewer
 
 import android.widget.TextView
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.R
-import com.ichi2.utils.HandlerUtils.newHandler
+import com.ichi2.anki.common.utils.android.HandlerUtils.newHandler
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * A visual element in the top bar showing a number of colored dots based on the previous answer
@@ -52,19 +38,19 @@ class PreviousAnswerIndicator(
         when (rating) {
             Rating.AGAIN -> {
                 chosenAnswerText.text = "\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_red_500))
+                chosenAnswerText.setTextColor(getColor(CommonR.color.material_red_500))
             }
             Rating.HARD -> {
                 chosenAnswerText.text = "\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_blue_grey_600))
+                chosenAnswerText.setTextColor(getColor(CommonR.color.material_blue_grey_600))
             }
             Rating.GOOD -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_green_500))
+                chosenAnswerText.setTextColor(getColor(CommonR.color.material_green_500))
             }
             Rating.EASY -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_light_blue_500))
+                chosenAnswerText.setTextColor(getColor(CommonR.color.material_light_blue_500))
             }
             Rating.UNRECOGNIZED -> {}
         }

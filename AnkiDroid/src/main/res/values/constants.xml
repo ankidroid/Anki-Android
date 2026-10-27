@@ -1,19 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation,DuplicateCrowdInStrings">
 
     <!--
@@ -77,6 +66,7 @@
     <string-array name="day_theme_labels">
         <item>@string/day_theme_light</item>
         <item>@string/day_theme_plain</item>
+        <item>@string/day_theme_eink</item>
     </string-array>
     <string-array name="night_theme_labels">
         <item>@string/night_theme_black</item>
@@ -116,8 +106,10 @@
     <string name="link_manual_ar">https://docs.ankidroid.org/manual-ar.html</string>
     <string name="link_manual_note_format_toolbar">https://docs.ankidroid.org/manual.html#noteFormattingToolbar</string>
     <string name="link_manual_browser_find_replace">https://docs.ankiweb.net/browsing.html#find-and-replace</string>
+    <string name="link_sync_conflict_help">https://docs.ankidroid.org/#AnkiWebConflicts</string>
     <string name="link_user_actions_help">https://docs.ankidroid.org/#userActions</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
+    <string name="link_faq_tts_no_engine">https://github.com/ankidroid/Anki-Android/wiki/FAQ#no-text-to-speech-engine-installed</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="link_third_party_api_apps">https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
@@ -150,6 +142,7 @@
     <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
     <string name="link_scheduler_upgrade_faq">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating-to-v2-from-v1</string>
     <string name="link_help_searching">https://docs.ankiweb.net/searching.html#simple-searches</string>
+    <string name="link_filtered_decks_help">https://docs.ankiweb.net/filtered-decks.html</string>
 
     <string-array name="add_to_cur_values">
         <item>0</item>
@@ -171,29 +164,6 @@
         <item>@string/theme_follow_system</item>
         <item>@string/theme_day</item>
         <item>@string/theme_night</item>
-    </string-array>
-
-    <string name="theme_follow_system_value">0</string>
-    <string name="theme_day_scheme_value">1</string>
-    <string name="theme_night_scheme_value">2</string>
-
-    <string name="theme_light_value">1</string>
-    <string name="theme_plain_value">2</string>
-    <string name="theme_black_value">3</string>
-    <string name="theme_dark_value">4</string>
-
-    <string-array name="app_theme_values">
-        <item>@string/theme_follow_system_value</item>
-        <item>@string/theme_day_scheme_value</item>
-        <item>@string/theme_night_scheme_value</item>
-    </string-array>
-    <string-array name="day_theme_values">
-        <item>@string/theme_light_value</item>
-        <item>@string/theme_plain_value</item>
-    </string-array>
-    <string-array name="night_theme_values">
-        <item>@string/theme_black_value</item>
-        <item>@string/theme_dark_value</item>
     </string-array>
 
     <string-array name="sync_media_entries">
@@ -280,7 +250,6 @@
     </string-array>
 
     <string-array name="sync_summary_entries">
-        <item>@string/sync_account</item>
         <item>@string/automatic_sync_choice</item>
     </string-array>
 
@@ -296,8 +265,8 @@
     </string-array>
 
     <string-array name="review_reminders_summary_entries">
-        <item>App-wide</item>
-        <item>Deck-specific</item>
+        <item>@string/review_reminders_summary_app_wide</item>
+        <item>@string/review_reminders_summary_deck_specific</item>
     </string-array>
 
     <string-array name="appearance_summary_entries">
@@ -321,11 +290,18 @@
         <item>@string/pref_cat_plugins</item>
     </string-array>
 
-    <!-- Sample deck names and for Deck Picker Widget layout in widget picker screen
-       These strings are marked as `translatable=false` because translating them would defeat the purpose of the example, which relies on specific language usage.-->
-    <string name="deck1Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">English</string>
-    <string name="deck2Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">Español</string>
-    <string name="deck3Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">日本語</string>
+    <!-- Related settings -->
+    <string name="fragment_controls_preferences" tools:ignore="TranslationTypo">com.ichi2.anki.preferences.ControlsSettingsFragment</string>
+    <string name="fragment_accessibility_preferences" tools:ignore="TranslationTypo">com.ichi2.anki.preferences.AccessibilitySettingsFragment</string>
+
+    <string-array name="study_screen_related_titles">
+        <item>@string/pref_cat_controls</item>
+        <item>@string/accessibility</item>
+    </string-array>
+    <string-array name="study_screen_related_fragments">
+        <item>@string/fragment_controls_preferences</item>
+        <item>@string/fragment_accessibility_preferences</item>
+    </string-array>
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
     <string-array name="answer_buttons_position" translatable="false">
@@ -344,11 +320,15 @@
     </string-array>
 
     <string name="manage_external_storage_permission">android.permission.MANAGE_EXTERNAL_STORAGE</string>
+    <string name="manage_internet_permission">android.permission.INTERNET</string>
     <string-array name="legacy_storage_permissions">
         <item>android.permission.READ_EXTERNAL_STORAGE</item>
         <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
     </string-array>
     <string name="post_notification_permission">android.permission.POST_NOTIFICATIONS</string>
+
+    <!-- See LEGACY_POST_NOTIFICATIONS. -->
+    <string name="legacy_post_notification_permission">NOTIFICATIONS_BEFORE_API_33_DUMMY_SENTINEL</string>
     <string name="record_audio_permission">android.permission.RECORD_AUDIO</string>
 
 

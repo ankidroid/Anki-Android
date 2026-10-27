@@ -1,18 +1,6 @@
-/*
- Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.dialogs.tags
 
 import com.ichi2.utils.TagsUtil.compareTag
@@ -42,17 +30,23 @@ class TagsList(
     /**
      * A Set containing the currently selected tags
      */
-    private val checkedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
+    private val checkedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
-     * A Set containing the tags with indeterminate state
+     * Tags present on some notes, plus unchecked ancestors of selected tags.
      */
     private val indeterminateTags: MutableSet<String>
+
+    /** Tags present on some notes whose own selection has not been changed by the user. */
+    private val partiallySelectedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
      * List of all available tags
      */
     private val allTags: UniqueArrayList<String>
+
+    /** Tags or selection have changed since the last sort. */
+    private var needsSort = true
 
     init {
         this.checkedTags.addAll(checkedTags)
@@ -61,14 +55,21 @@ class TagsList(
         indeterminateTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
         if (uncheckedTags != null) {
             this.allTags.addAll(uncheckedTags)
-            // intersection between mCheckedTags and uncheckedTags
-            indeterminateTags.addAll(this.checkedTags)
-            val uncheckedSet: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
-            uncheckedSet.addAll(uncheckedTags)
-            indeterminateTags.retainAll(uncheckedSet)
+            for (tag in uncheckedTags) {
+                val checkedTag = findCheckedTagIgnoringCase(tag) ?: continue
+                indeterminateTags.add(checkedTag)
+            }
             this.checkedTags.removeAll(indeterminateTags)
         }
+        partiallySelectedTags.addAll(indeterminateTags)
         prepareTagHierarchy()
+    }
+
+    /** Returns the matching checked tag with its stored spelling, or `null` if absent. */
+    private fun findCheckedTagIgnoringCase(tag: String): String? {
+        // O(log n); returns "Biology" for a "biology" search or vice versa
+        val candidate = checkedTags.ceiling(tag) ?: return null
+        return candidate.takeIf { it.equals(tag, ignoreCase = true) }
     }
 
     /**
@@ -107,6 +108,17 @@ class TagsList(
      */
     fun isIndeterminate(tag: String): Boolean = indeterminateTags.contains(tag)
 
+    /** Whether the tag itself is partially selected, independently of its descendants. */
+    internal fun isPartiallySelected(tag: String): Boolean = partiallySelectedTags.contains(tag)
+
+    /** Checks the complete selection, including descendants hidden by the dialog's filter. */
+    internal fun hasSelectedDescendants(tag: String): Boolean {
+        val prefix = "$tag::"
+        // Descendants are contiguous in these case-insensitive sets; only the first candidate is needed.
+        return checkedTags.ceiling(prefix)?.startsWith(prefix, ignoreCase = true) == true ||
+            partiallySelectedTags.ceiling(prefix)?.startsWith(prefix, ignoreCase = true) == true
+    }
+
     /**
      * Adds a tag to the list if it is not already present.
      * If the tag is hierarchical, its ancestors will also be added temporarily.
@@ -118,6 +130,7 @@ class TagsList(
         if (!allTags.add(tag)) {
             return false
         }
+        needsSort = true
         addAncestors(tag)
         return true
     }
@@ -139,9 +152,11 @@ class TagsList(
             return false
         }
         indeterminateTags.remove(tag)
+        partiallySelectedTags.remove(tag)
         if (!checkedTags.add(tag)) {
             return false
         }
+        needsSort = true
         if (processAncestors) {
             markAncestorsIndeterminate(tag)
         }
@@ -155,7 +170,14 @@ class TagsList(
      * @return true if the tag changed its check status
      * false if the tag was already unchecked or not in the list
      */
-    fun uncheck(tag: String): Boolean = indeterminateTags.remove(tag) || checkedTags.remove(tag)
+    fun uncheck(tag: String): Boolean {
+        partiallySelectedTags.remove(tag)
+        val changed = indeterminateTags.remove(tag) || checkedTags.remove(tag)
+        if (changed) {
+            needsSort = true
+        }
+        return changed
+    }
 
     /**
      * Mark a tag as indeterminate tag
@@ -169,7 +191,11 @@ class TagsList(
             return false
         }
         checkedTags.remove(tag)
-        return indeterminateTags.add(tag)
+        val changed = indeterminateTags.add(tag)
+        if (changed) {
+            needsSort = true
+        }
+        return changed
     }
 
     /**
@@ -180,7 +206,9 @@ class TagsList(
      * @return true if this tag list changed as a result of the call
      */
     fun toggleAllCheckedStatuses(): Boolean {
+        needsSort = true
         indeterminateTags.clear()
+        partiallySelectedTags.clear()
         if (allTags.size == checkedTags.size) {
             checkedTags.clear()
             return true
@@ -219,6 +247,9 @@ class TagsList(
      */
     fun copyOfIndeterminateTagList(): List<String> = ArrayList(indeterminateTags)
 
+    /** Tags whose original per-note selection must be preserved when saving, excluding display-only ancestors. */
+    internal fun copyOfPartiallySelectedTagList(): List<String> = ArrayList(partiallySelectedTags)
+
     /**
      * @return return a copy of all tags list
      */
@@ -232,7 +263,9 @@ class TagsList(
         for (tag in allTags) {
             addAncestors(tag)
         }
-        for (tag in checkedTags) {
+        // Partially selected descendants also need their ancestors prioritized and expanded.
+        // Take a snapshot because marking ancestors modifies indeterminateTags.
+        for (tag in checkedTags + indeterminateTags) {
             markAncestorsIndeterminate(tag)
         }
     }
@@ -265,21 +298,32 @@ class TagsList(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        val sortedList =
-            allTags.toList().sortedWith { lhs: String?, rhs: String? ->
-                val lhsRoot = getTagRoot(lhs!!)
-                val rhsRoot = getTagRoot(rhs!!)
-                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-                if (lhsChecked != rhsChecked) {
-                    if (lhsChecked) -1 else 1
-                } else {
-                    compareTag(lhs, rhs)
-                }
+        if (!needsSort) {
+            return
+        }
+        // Splitting tags and looking up root selection inside the comparator repeats this work
+        // for every comparison. Compute the keys once per tag instead.
+        val sortKeys =
+            allTags.associateWith { tag ->
+                val root = getTagRoot(tag)
+                SortKey(tag.split("::"), isChecked(root) || isIndeterminate(root))
             }
-        allTags.clear()
-        allTags.addAll(sortedList)
+        allTags.sortWith { lhs, rhs ->
+            val lhsKey = sortKeys.getValue(lhs)
+            val rhsKey = sortKeys.getValue(rhs)
+            if (lhsKey.isSelected != rhsKey.isSelected) {
+                if (lhsKey.isSelected) -1 else 1
+            } else {
+                compareTag(lhsKey.parts, rhsKey.parts)
+            }
+        }
+        needsSort = false
     }
+
+    private class SortKey(
+        val parts: List<String>,
+        val isSelected: Boolean,
+    )
 
     /**
      * @return Iterator over all tags

@@ -1,22 +1,10 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
@@ -31,6 +19,8 @@ import kotlin.test.assertTrue
 class BindingTest {
     @Test
     fun modifierKeys_Are_Loaded() {
+        // TODO: Stub a nonzero key code or Unicode character and assert that bindings is not empty.
+        // The mock currently produces no bindings, so the assertion loop in testModifierKeys never runs.
         testModifierKeys("shift", KeyEvent::isShiftPressed, Binding.ModifierKeys::shiftMatches)
         testModifierKeys("ctrl", KeyEvent::isCtrlPressed) { k, ctrlPressed -> k.ctrl == ctrlPressed }
         testModifierKeys("alt", KeyEvent::isAltPressed) { k, altPressed -> k.alt == altPressed }
@@ -40,7 +30,42 @@ class BindingTest {
     fun unicodeKeyIsLoaded() {
         val binding = unicodeCharacter('a')
 
-        assertThat(binding.unicodeCharacter, equalTo('a'))
+        assertThat(binding.unicodeCharacter, equalTo(BindingUnicodeCharacter('a')))
+    }
+
+    @Test
+    fun `valid unicode input retains modifiers`() {
+        val event =
+            mock<KeyEvent> {
+                on { keyCode } doReturn KeyEvent.KEYCODE_8
+                on { getUnicodeChar(anyInt()) } doReturn '*'.code
+                on { isShiftPressed } doReturn true
+                on { isCtrlPressed } doReturn true
+                on { isAltPressed } doReturn true
+            }
+        val binding = Binding.possibleKeyBindings(event).filterIsInstance<Binding.UnicodeCharacter>().single()
+
+        assertEquals(BindingUnicodeCharacter('*'), binding.unicodeCharacter)
+        assertTrue(binding.modifierKeys.shift)
+        assertTrue(binding.modifierKeys.ctrl)
+        assertTrue(binding.modifierKeys.alt)
+    }
+
+    @Test
+    fun `forbidden unicode input retains the keycode binding and modifiers`() {
+        val event =
+            mock<KeyEvent> {
+                on { keyCode } doReturn KeyEvent.KEYCODE_BACKSLASH
+                on { getUnicodeChar(anyInt()) } doReturn MappableBinding.PREF_SEPARATOR.code
+                on { isShiftPressed } doReturn true
+                on { isCtrlPressed } doReturn true
+                on { isAltPressed } doReturn true
+            }
+
+        assertEquals(
+            listOf(KeyCode(KeyEvent.KEYCODE_BACKSLASH, allModifierKeys())),
+            Binding.possibleKeyBindings(event),
+        )
     }
 
     @Test
@@ -52,11 +77,32 @@ class BindingTest {
 
     @Test
     fun testUnicodeToString() {
-        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode('Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode(Binding.ModifierKeys.ctrl(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode(Binding.ModifierKeys.shift(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode(Binding.ModifierKeys.alt(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode(allModifierKeys(), 'Ä').toString())
+        val character = BindingUnicodeCharacter('Ä')
+        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode(character).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode(character, Binding.ModifierKeys.ctrl()).toString())
+        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode(character, Binding.ModifierKeys.shift()).toString())
+        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode(character, Binding.ModifierKeys.alt()).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode(character, allModifierKeys()).toString())
+    }
+
+    @Test
+    fun `plus unicode binding roundtrips with every modifier combination`() {
+        val modifiers =
+            listOf(
+                Binding.ModifierKeys.none(),
+                Binding.ModifierKeys.ctrl(),
+                Binding.ModifierKeys.alt(),
+                Binding.ModifierKeys.shift(),
+                Binding.ModifierKeys(ctrl = true, alt = true),
+                Binding.ModifierKeys(ctrl = true, shift = true),
+                Binding.ModifierKeys(alt = true, shift = true),
+                allModifierKeys(),
+            )
+        for (modifierKeys in modifiers) {
+            val binding = Binding.unicode(BindingUnicodeCharacter('+'), modifierKeys)
+
+            assertEquals(binding.toString(), binding, Binding.fromString(binding.toString()))
+        }
     }
 
     @Test
@@ -65,15 +111,9 @@ class BindingTest {
     }
 
     @Test
-    fun testUnknownToString() {
-        // This seems sensible - serialising an unknown will mean that nothing is saved.
-        assertThat(Binding.unknown().toString(), equalTo(""))
-    }
-
-    @Test
     fun testModifierKeysEquality() {
         val one = Binding.AppDefinedModifierKeys.allowShift()
-        val two = Binding.ModifierKeys(shift = true, ctrl = false, alt = false)
+        val two = Binding.ModifierKeys(shift = true)
 
         assertTrue(one.shiftMatches(true))
         assertTrue(one.shiftMatches(false))
@@ -133,13 +173,13 @@ class BindingTest {
             return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.UnicodeCharacter>().first()
         }
 
-        fun keyCode(keyCode: Int): Binding.KeyCode {
+        fun keyCode(keyCode: Int): KeyCode {
             val mock =
                 mock<KeyEvent> {
                     on { getKeyCode() } doReturn keyCode
                 }
 
-            return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.KeyCode>().first()
+            return Binding.possibleKeyBindings(mock).filterIsInstance<KeyCode>().first()
         }
     }
 }

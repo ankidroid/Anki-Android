@@ -1,27 +1,15 @@
-/*
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.recorder
 
 import android.media.MediaRecorder
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -33,14 +21,18 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-class AudioRecorderTest : RobolectricTest() {
+@Category(EmptyApplicationCategory::class)
+class AudioRecorderTest : AndroidTest {
     private val mockMediaRecorder = mockk<MediaRecorder>(relaxed = true)
 
     private fun createRecorder(): AudioRecorder {
@@ -141,5 +133,50 @@ class AudioRecorderTest : RobolectricTest() {
 
         assertEquals(customFile.absolutePath, audioRecorder.currentFile?.absolutePath)
         verify { mockMediaRecorder.setOutputFile(customFile.absolutePath) }
+    }
+
+    @Test
+    fun `stop should delete temp file if not kept`() {
+        val audioRecorder = createRecorder()
+        audioRecorder.start()
+
+        val tempFile = audioRecorder.currentFile
+        assertTrue("Temp file should exist", tempFile?.exists() ?: false)
+
+        audioRecorder.stop(keepFile = false)
+        assertFalse(tempFile?.exists() ?: true)
+    }
+
+    @Test
+    fun `close() while recording temp file should delete the file`() {
+        val audioRecorder = createRecorder()
+        audioRecorder.start()
+        val tempFile = audioRecorder.currentFile
+
+        assertTrue("Temp file should exist", tempFile?.exists() ?: false)
+
+        audioRecorder.close()
+
+        assertFalse(tempFile?.exists() ?: true, "Temp file should be cleaned up on close")
+        verify { mockMediaRecorder.release() }
+    }
+
+    @Test
+    fun `recording after a failed stop should still work and clean up`() {
+        every { mockMediaRecorder.stop() } throws RuntimeException("stop failed")
+
+        val audioRecorder = createRecorder()
+        audioRecorder.start()
+        val firstFile = audioRecorder.currentFile
+
+        audioRecorder.stop()
+
+        assertFalse(firstFile?.exists() ?: true, "File should be deleted if recorder.stop() fails")
+        assertFalse(audioRecorder.isRecording)
+
+        // Ensure we can start again immediately
+        audioRecorder.start()
+        assertTrue(audioRecorder.isRecording)
+        assertNotNull(audioRecorder.currentFile)
     }
 }

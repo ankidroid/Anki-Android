@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -20,6 +7,8 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -36,10 +25,10 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val message =
             if (isFilteredDeck) {
-                resources.getString(R.string.delete_cram_deck_message, "<b>$deckName</b>")
+                resources.getString(CommonString.delete_cram_deck_message, "<b>$deckName</b>")
             } else {
                 resources.getQuantityString(
-                    R.plurals.delete_deck_message,
+                    CommonPlurals.delete_deck_message,
                     totalCards,
                     "<b>$deckName</b>",
                     totalCards,
@@ -48,17 +37,17 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         return AlertDialog
             .Builder(requireActivity())
-            .setTitle(R.string.delete_deck_title)
+            .setTitle(CommonString.delete_deck_title)
             .setMessage(
                 HtmlCompat.fromHtml(
                     message,
                     HtmlCompat.FROM_HTML_MODE_LEGACY,
                 ),
             ).setIcon(R.drawable.ic_warning)
-            .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
+            .setPositiveButton(CommonString.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
                 activity?.dismissAllDialogFragments()
-            }.setNegativeButton(R.string.dialog_cancel) { _, _ ->
+            }.setNegativeButton(CommonString.dialog_cancel) { _, _ ->
                 activity?.dismissAllDialogFragments()
             }.create()
     }

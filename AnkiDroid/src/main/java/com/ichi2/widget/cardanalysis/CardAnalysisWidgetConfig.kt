@@ -1,43 +1,41 @@
-/*
- *  Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
- *  Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
 
 package com.ichi2.widget.cardanalysis
 
 import android.appwidget.AppWidgetManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import androidx.core.os.BundleCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updateMargins
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
-import com.ichi2.anki.databinding.ActivityCardAnalysisWidgetConfigBinding
-import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.showThemedToast
-import com.ichi2.anki.utils.ext.unregisterReceiverSilently
+import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.widgets.R
+import com.ichi2.anki.widgets.databinding.ActivityCardAnalysisWidgetConfigBinding
 import com.ichi2.anki.withProgress
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget.Companion.EXTRA_SELECTED_DECK_ID
+import com.ichi2.widget.getAppWidgetManager
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
@@ -58,9 +56,7 @@ import timber.log.Timber
  * @see CardAnalysisWidget
  * @see CardAnalysisWidgetPreferences
  */
-class CardAnalysisWidgetConfig :
-    AnkiActivity(R.layout.activity_card_analysis_widget_config),
-    DeckSelectionListener {
+class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_widget_config) {
     private val binding by viewBinding(ActivityCardAnalysisWidgetConfigBinding::bind)
 
     private var appWidgetId = INVALID_APPWIDGET_ID
@@ -73,10 +69,16 @@ class CardAnalysisWidgetConfig :
         }
         super.onCreate(savedInstanceState)
 
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
-
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.content) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            val params = binding.content.layoutParams as ViewGroup.MarginLayoutParams
+            params.updateMargins(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
         preferences = CardAnalysisWidgetPreferences(this)
         appWidgetId = intent.getAppWidgetId()
         if (appWidgetId == INVALID_APPWIDGET_ID) {
@@ -88,28 +90,26 @@ class CardAnalysisWidgetConfig :
             deck =
                 BundleCompat.getParcelable(
                     savedInstanceState,
-                    KEY_DECK,
+                    STATE_DECK,
                     SelectableDeck.Deck::class.java,
                 )
             binding.deckName.text = deck?.name
         } else {
             loadContent()
         }
-        binding.changeBtn.setOnClickListener {
-            launchCatchingTask {
-                withProgress { showDeckSelectionDialog() }
-            }
-        }
+        binding.changeBtn.text = TR.sentenceCase.selectDeck
+        binding.changeBtn.setOnClickListener { showDeckSelectionDialog() }
         binding.doneBtn.setOnClickListener { close() }
         registerReceiver(
             widgetRemovedReceiver,
             IntentFilter(AppWidgetManager.ACTION_APPWIDGET_DELETED),
         )
+        registerDeckSelectedHandler(action = ::onDeckSelected)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(KEY_DECK, deck)
+        outState.putParcelable(STATE_DECK, deck)
     }
 
     override fun onDestroy() {
@@ -117,9 +117,9 @@ class CardAnalysisWidgetConfig :
         unregisterReceiverSilently(widgetRemovedReceiver)
     }
 
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    private fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null || deck !is SelectableDeck.Deck?) {
-            showThemedToast(this, R.string.something_wrong, false)
+            showThemedToast(this, CommonString.something_wrong, false)
             setResult(RESULT_CANCELED)
             finish()
             return
@@ -143,7 +143,7 @@ class CardAnalysisWidgetConfig :
                     Timber.w("CardAnalysisWidgetConfig: collection is empty")
                     showThemedToast(
                         this@CardAnalysisWidgetConfig,
-                        R.string.no_cards_placeholder_title,
+                        CommonString.no_cards_placeholder_title,
                         false,
                     )
                     finish()
@@ -154,27 +154,22 @@ class CardAnalysisWidgetConfig :
                     showDeckSelectionDialog()
                 } else {
                     deck = SelectableDeck.Deck.fromId(selectedDeckId)
-                    binding.deckName.text = deck?.name ?: getString(R.string.select_deck)
+                    binding.deckName.text = deck?.name ?: TR.sentenceCase.selectDeck
                 }
             }
         }
     }
 
-    private suspend fun showDeckSelectionDialog() {
-        val decks = SelectableDeck.fromCollection(includeFiltered = true)
-        val dialog =
-            DeckSelectionDialog.newInstance(
-                title = getString(R.string.select_deck_title),
-                summaryMessage = null,
-                keepRestoreDefaultButton = false,
-                decks = decks,
-            )
-        if (!supportFragmentManager.isStateSaved) {
-            dialog.show(supportFragmentManager, "DeckSelectionDialog")
-        }
+    private fun showDeckSelectionDialog() {
+        startDeckSelection(
+            title = getString(CommonString.select_deck_title),
+            allowAll = false,
+            skipEmptyDefault = true,
+        )
     }
 
     private fun updateWidget() {
+        val appWidgetManager = getAppWidgetManager(this) ?: return
         val updateIntent =
             Intent(this, CardAnalysisWidget::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
@@ -184,7 +179,6 @@ class CardAnalysisWidgetConfig :
 
         sendBroadcast(updateIntent)
 
-        val appWidgetManager = AppWidgetManager.getInstance(this)
         CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
     }
 
@@ -196,12 +190,12 @@ class CardAnalysisWidgetConfig :
 
     /** BroadcastReceiver to handle widget removal. */
     private val widgetRemovedReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context?,
-                intent: Intent?,
+        object : AnkiBroadcastReceiver() {
+            override fun onReceiveBroadcast(
+                context: Context,
+                intent: Intent,
             ) {
-                if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
+                if (intent.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
                     return
                 }
 
@@ -215,6 +209,6 @@ class CardAnalysisWidgetConfig :
         }
 
     companion object {
-        private const val KEY_DECK = "key_deck"
+        private const val STATE_DECK = "key_deck"
     }
 }

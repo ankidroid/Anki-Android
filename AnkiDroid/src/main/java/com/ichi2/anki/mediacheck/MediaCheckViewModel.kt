@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.mediacheck
 
@@ -23,53 +9,104 @@ import anki.media.CheckMediaResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
+
+/** The operation [MediaCheckViewModel] is running, shown as a progress message by the UI. */
+enum class MediaCheckProgress {
+    CHECKING_MEDIA,
+    ADDING_TAGS,
+    DELETING_MEDIA,
+}
+
+/** The outcome of a [MediaCheckViewModel] operation, which the UI shows and then acknowledges. */
+sealed interface MediaCheckMessage {
+    data class TagsAdded(
+        val notesUpdated: Int,
+    ) : MediaCheckMessage
+
+    data class MediaDeleted(
+        val count: Int,
+    ) : MediaCheckMessage
+
+    data object TrashEmptied : MediaCheckMessage
+
+    data object TrashRestored : MediaCheckMessage
+
+    data class Failed(
+        val exception: Exception,
+    ) : MediaCheckMessage
+}
 
 @NeedsTest("Test the media check process i.e. the buttons and views")
-class MediaCheckViewModel : ViewModel() {
-    private val _mediaCheckResult = MutableStateFlow<CheckMediaResponse?>(null)
-    val mediaCheckResult: StateFlow<CheckMediaResponse?> = _mediaCheckResult
+class MediaCheckViewModel :
+    ViewModel(),
+    HasProgress<MediaCheckProgress> {
+    override val progressManager = ProgressManager<MediaCheckProgress>()
 
-    private val deletedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
-    private val taggedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
+    val mediaCheckResult: StateFlow<CheckMediaResponse?>
+        field = MutableStateFlow<CheckMediaResponse?>(null)
 
-    val deletedFiles: Int
-        get() = deletedFilesCount.value
+    private val messageQueue = MessageQueue<MediaCheckMessage>()
 
-    val taggedFiles: Int
-        get() = taggedFilesCount.value
+    val pendingMessages = messageQueue.messages
 
-    // TODO: Move progress notifications here
+    fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
+
     fun tagMissing(tag: String): Job =
-        viewModelScope.launch {
+        launchOperation(MediaCheckProgress.ADDING_TAGS) {
             val taggedNotes =
                 undoableOp {
-                    tags.bulkAdd(_mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
+                    tags.bulkAdd(mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
                 }
-            taggedFilesCount.value = taggedNotes.count
+            messageQueue.enqueue(MediaCheckMessage.TagsAdded(taggedNotes.count))
         }
 
     fun checkMedia(): Job =
-        viewModelScope.launch {
-            val result = withCol { media.check() }
-            _mediaCheckResult.value = result
+        launchOperation(MediaCheckProgress.CHECKING_MEDIA) {
+            mediaCheckResult.value = withCol { media.check() }
         }
 
-    fun deleteTrash(): Job = viewModelScope.launch { withCol { media.emptyTrash() } }
+    fun deleteTrash(): Job =
+        launchOperation {
+            withCol { media.emptyTrash() }
+            messageQueue.enqueue(MediaCheckMessage.TrashEmptied)
+        }
 
     fun restoreTrash(): Job =
-        viewModelScope.launch {
+        launchOperation {
             withCol { media.restoreTrash() }
+            messageQueue.enqueue(MediaCheckMessage.TrashRestored)
         }
 
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
     fun deleteUnusedMedia(): Job =
-        viewModelScope.launch {
-            val unused = _mediaCheckResult.value?.unusedList ?: listOf()
+        launchOperation(MediaCheckProgress.DELETING_MEDIA) {
+            val unused = mediaCheckResult.value?.unusedList ?: listOf()
             withCol { media.trashFiles(unused) }
-            deletedFilesCount.value = unused.size
+            messageQueue.enqueue(MediaCheckMessage.MediaDeleted(unused.size))
+        }
+
+    private fun launchOperation(
+        progress: MediaCheckProgress? = null,
+        block: suspend () -> Unit,
+    ): Job =
+        viewModelScope.launch {
+            try {
+                progressManager.withProgress(message = progress) { block() }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w("Media check operation failed")
+                messageQueue.enqueue(MediaCheckMessage.Failed(e))
+            }
         }
 }

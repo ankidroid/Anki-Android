@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -22,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -77,11 +64,11 @@ class WhiteBoardWidthDialog(
             ),
         )
         AlertDialog.Builder(context).show {
-            title(R.string.whiteboard_stroke_width)
-            positiveButton(R.string.save) {
+            title(CommonString.whiteboard_stroke_width)
+            positiveButton(CommonString.save) {
                 onStrokeWidthChanged?.accept(wbStrokeWidth)
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(CommonString.dialog_cancel)
             setView(layout)
         }
     }

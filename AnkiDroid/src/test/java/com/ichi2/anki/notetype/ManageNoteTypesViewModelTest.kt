@@ -1,28 +1,24 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.notetype
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.CombinedException
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
 import com.ichi2.anki.libanki.removeNotetype
+import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
+import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.testutils.NeedsRobolectric
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.hasItems
 import org.hamcrest.CoreMatchers.not
@@ -36,10 +32,14 @@ import org.junit.runner.RunWith
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
+@NeedsRobolectric(
+    "Preserve RobolectricTest's scoped CollectionManager dispatcher when switching to JvmTest; initialization and progress updates currently race assertions.",
+)
 class ManageNoteTypesViewModelTest : RobolectricTest() {
     @Test
     fun `multiple selection with one entry works as expected`() =
@@ -203,6 +203,68 @@ class ManageNoteTypesViewModelTest : RobolectricTest() {
             assertThat(viewModel.noteTypes.map { it.name }, hasItems(TEST_NAME_1, TEST_NAME_2))
             unmockkStatic(Collection::removeNotetype)
         }
+
+    @Test
+    fun `refreshNoteTypes reports progress`() =
+        runProgressTest {
+            assertProgressAround { refreshNoteTypes() }
+        }
+
+    @Test
+    fun `rename reports progress`() =
+        runProgressTest {
+            assertProgressAround { rename(noteTypeForName(TEST_NAME_1).id, TEST_NAME_2) }
+        }
+
+    @Test
+    fun `delete reports progress`() =
+        runProgressTest {
+            assertProgressAround { delete(noteTypeForName(TEST_NAME_1).id) }
+        }
+
+    @Test
+    fun `deleteSelectedNoteTypes reports progress`() =
+        runProgressTest {
+            onItemLongClick(noteTypeForName(TEST_NAME_1))
+
+            assertProgressAround { deleteSelectedNoteTypes() }
+        }
+
+    @Test
+    fun `deleting the last note type reports no progress`() =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            col.getNotetypeNameIdUseCount().drop(1).forEach { col.removeNotetype(it.id) }
+            val viewModel = ManageNoteTypesViewModel()
+            advanceUntilIdle()
+
+            viewModel.progressManager.progress.test {
+                assertIs<ViewModelProgress.Idle>(awaitItem())
+                viewModel.delete(viewModel.noteTypes.single().id)
+                advanceUntilIdle()
+                expectNoEvents()
+            }
+            assertEquals(UserMessage.DeletingLastModel, viewModel.state.value.message)
+        }
+
+    private fun runProgressTest(testBody: suspend ManageNoteTypesViewModel.() -> Unit) =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            addStandardNoteType(TEST_NAME_1, arrayOf("front", "back"), "", "")
+            val viewModel = ManageNoteTypesViewModel()
+            advanceUntilIdle()
+            viewModel.testBody()
+        }
+
+    private suspend fun ManageNoteTypesViewModel.assertProgressAround(op: () -> Unit) {
+        progressManager.progress.test {
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            op()
+            assertIs<ViewModelProgress.Active<Nothing>>(awaitItem())
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            expectNoEvents()
+        }
+    }
 
     /** Returns the current list of [NoteTypeItemState] */
     private val ManageNoteTypesViewModel.noteTypes: List<NoteTypeItemState>

@@ -1,47 +1,34 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.previewer
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
-import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.common.Flaky
-import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
 import io.mockk.spyk
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.withTimeout
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerViewModelTest : JvmTest() {
-    private val idsFile: IdsFile = mockk()
-
     private lateinit var viewModel: PreviewerViewModel
 
     private fun TestScope.onNextButtonClick() {
@@ -65,24 +52,25 @@ class PreviewerViewModelTest : JvmTest() {
     }
 
     @Before
-    fun setup() {
+    override fun setUp() {
+        super.setUp()
         val cardIds =
             (0..3).flatMap {
                 val note = addBasicNote()
                 note.cards().map { it.id }
             }
-        every { idsFile.getIds() } returns cardIds
-
-        val savedStateHandle =
-            SavedStateHandle().apply {
-                set(PreviewerFragment.CURRENT_INDEX_ARG, 0)
-                set(PreviewerFragment.CARD_IDS_FILE_ARG, idsFile)
-            }
-
-        viewModel = spyk(PreviewerViewModel(savedStateHandle))
+        updateDeckConfig(col.decks.selected()) { autoplay = false }
+        viewModel = spyk(PreviewerViewModel(SavedStateHandle(), cardIds, initialIndex = 0))
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
+        runBlocking { withTimeout(10.seconds) { viewModel.currentCard.await() } }
+    }
+
+    @After
+    override fun tearDown() {
+        viewModel.viewModelScope.cancel()
+        super.tearDown()
     }
 
     @Test
@@ -103,7 +91,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL)
     fun `previous button`() =
         runTest {
             // Start at Index 1
@@ -122,7 +109,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL)
     fun `toggle back side only`() =
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false
@@ -270,4 +256,52 @@ class PreviewerViewModelTest : JvmTest() {
             onSliderChange(sliderPosition = 2)
             assertEquals("Index should update for valid input", 1, viewModel.currentIndex.value)
         }
+
+    @Test
+    fun `showing the answer stops the question audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            val audio = audioPlaying()
+
+            onNextButtonClick()
+
+            assertTrue("question audio should stop", audio.isCancelled)
+        }
+
+    @Test
+    fun `going back to the question stops the answer audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            onNextButtonClick()
+            val audio = audioPlaying()
+
+            onPreviousButtonClick()
+
+            assertTrue("answer audio should stop", audio.isCancelled)
+        }
+
+    @Test
+    fun `showing only the back side stops the question audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            val audio = audioPlaying()
+
+            toggleBackSideOnly()
+
+            assertTrue("question audio should stop", audio.isCancelled)
+        }
+
+    @Test
+    fun `audio keeps playing after a configuration change`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            val audio = audioPlaying()
+
+            viewModel.onPageFinished(isAfterRecreation = true)
+            advanceUntilIdle()
+
+            assertFalse("audio should keep playing", audio.isCancelled)
+        }
+
+    private fun audioPlaying() = Job().also { viewModel.cardMediaPlayer.playAvTagsJob = it }
 }

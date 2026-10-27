@@ -1,22 +1,11 @@
-/*
- * Copyright (c) 2015 Ryan Annis <squeenix@live.ca>
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Ryan Annis <squeenix@live.ca>
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+
 package com.ichi2.anki
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -25,20 +14,31 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.databinding.ActivityNoteTypeFieldEditorBinding
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
-import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
-import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.REQUEST_HINT_LOCALE_SELECTION
+import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.RESULT_SELECTED_LOCALE
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditorContextMenuAction
 import com.ichi2.anki.libanki.Collection
@@ -47,6 +47,8 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -65,10 +67,11 @@ import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
+import com.ichi2.anki.common.android.R as CommonR
 
 @NeedsTest("perform one action, then another")
-class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
-    private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
+class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_editor) {
+    private val binding by viewBinding(ActivityNoteTypeFieldEditorBinding::bind)
 
     // Position of the current field selected
     private var currentPos = 0
@@ -95,15 +98,33 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.note_type_field_editor)
+        if (!ensureStorageIsReady()) {
+            return
+        }
+        setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
+            binding.toolbarContainer.updatePadding(left = constraints.left, right = constraints.right, top = constraints.top)
+            binding.btnAdd.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = constraints.bottom + 32.dp.toPx(this@NoteTypeFieldEditor)
+                rightMargin = constraints.right + 32.dp.toPx(this@NoteTypeFieldEditor)
+            }
+            binding.fields.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = constraints.left
+                rightMargin = constraints.right
+                bottomMargin = constraints.bottom
+            }
+            WindowInsetsCompat.CONSUMED
+        }
         binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
             val selectedLocale =
                 BundleCompat.getSerializable(
                     bundle,
-                    KEY_SELECTED_LOCALE,
+                    RESULT_SELECTED_LOCALE,
                     Locale::class.java,
                 )
             if (selectedLocale != null) {
@@ -134,7 +155,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         val noteTypeID = intent.getLongExtra(EXTRA_NOTETYPE_ID, 0)
         val collectionModel = getColUnsafe.notetypes.get(noteTypeID)
         if (collectionModel == null) {
-            showThemedToast(this, R.string.field_editor_model_not_available, true)
+            showThemedToast(this, CommonString.field_editor_model_not_available, true)
             finish()
             return
         }
@@ -147,6 +168,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
             }
+        binding.btnAdd.contentDescription = TR.sentenceCase.addField
         binding.btnAdd.setOnClickListener { addFieldDialog() }
     }
     // ----------------------------------------------------------------------------
@@ -173,11 +195,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         }
         input = input.substring(offset).trim()
         if (input.isEmpty()) {
-            showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
+            showThemedToast(this, resources.getString(CommonString.toast_empty_name), true)
             return null
         }
         if (fieldsLabels.any { input == it }) {
-            showThemedToast(this, resources.getString(R.string.toast_duplicate_field), true)
+            showThemedToast(this, resources.getString(CommonString.toast_duplicate_field), true)
             return null
         }
         return input
@@ -195,8 +217,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
-                title(R.string.model_field_editor_add)
-                positiveButton(R.string.menu_add) {
+                title(text = TR.sentenceCase.addField)
+                positiveButton(CommonString.menu_add) {
                     // Name is valid, now field is added
                     val fieldName = uniqueName(fieldNameInput)
                     try {
@@ -206,7 +228,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
 
                         // Create dialogue to for schema change
                         val c = ConfirmationDialog()
-                        c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                        c.setArgs(resources.getString(CommonString.full_sync_confirmation))
                         val confirm =
                             Runnable {
                                 try {
@@ -222,7 +244,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                     getColUnsafe.notetypes.update(notetype)
                     initialize()
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(CommonString.dialog_cancel)
             }
         }
     }
@@ -270,7 +292,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             }
 
         if (fieldsLabels.size < 2) {
-            showThemedToast(this, resources.getString(R.string.toast_last_field), true)
+            showThemedToast(this, resources.getString(CommonString.toast_last_field), true)
         } else {
             try {
                 getColUnsafe.modSchema(check = true)
@@ -278,7 +300,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 ConfirmationDialog().let {
                     it.setArgs(
                         title = fieldName,
-                        message = resources.getString(R.string.field_delete_warning),
+                        message = resources.getString(CommonString.field_delete_warning),
+                        positiveButtonText = getString(CommonString.dialog_positive_delete),
                     )
                     it.setConfirm(confirm)
                     showDialogFragment(it)
@@ -287,7 +310,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 e.log()
                 ConfirmationDialog().let {
                     it.setConfirm(confirm)
-                    it.setArgs(resources.getString(R.string.full_sync_confirmation))
+                    it.setArgs(resources.getString(CommonString.full_sync_confirmation))
                     showDialogFragment(it)
                 }
             }
@@ -297,7 +320,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     private fun deleteField() {
         launchCatchingTask {
             Timber.d("doInBackGroundDeleteField")
-            withProgress(message = getString(R.string.model_field_editor_changing)) {
+            withProgress(message = getString(CommonString.model_field_editor_changing)) {
                 val result =
                     withCol {
                         try {
@@ -329,8 +352,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             fieldNameInput.moveCursorToEnd()
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
-                title(R.string.model_field_editor_rename)
-                positiveButton(R.string.rename) {
+                title(CommonString.model_field_editor_rename)
+                positiveButton(CommonString.rename) {
                     if (uniqueName(fieldNameInput) == null) {
                         return@positiveButton
                     }
@@ -342,7 +365,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
 
                         // Handler mod schema confirmation
                         val c = ConfirmationDialog()
-                        c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                        c.setArgs(resources.getString(CommonString.full_sync_confirmation))
                         val confirm =
                             Runnable {
                                 getColUnsafe.modSchema(check = false)
@@ -357,7 +380,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                         this@NoteTypeFieldEditor.showDialogFragment(c)
                     }
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(CommonString.dialog_cancel)
             }
         }
     }
@@ -379,13 +402,14 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             AlertDialog
                 .Builder(this)
                 .show {
-                    positiveButton(R.string.dialog_ok) {
+                    title(CommonString.model_field_editor_reposition_menu)
+                    positiveButton(text = TR.actionsReposition()) {
                         val input = (it as AlertDialog).getInputField()
                         result(input.text.toString().toInt())
                     }
-                    negativeButton(R.string.dialog_cancel)
+                    negativeButton(CommonString.dialog_cancel)
                     setMessage(TR.fieldsNewPosition1(numberOfTemplates))
-                    setView(R.layout.dialog_generic_text_input)
+                    setView(CommonR.layout.dialog_generic_text_input)
                 }.input(
                     prefill = (currentPos + 1).toString(),
                     inputType = InputType.TYPE_CLASS_NUMBER,
@@ -410,7 +434,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
 
                 // Handle mod schema confirmation
                 val c = ConfirmationDialog()
-                c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                c.setArgs(resources.getString(CommonString.full_sync_confirmation))
                 val confirm =
                     Runnable {
                         try {
@@ -428,7 +452,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
 
     private fun repositionField(index: Int) {
         launchCatchingTask {
-            withProgress(message = getString(R.string.model_field_editor_changing)) {
+            withProgress(message = getString(CommonString.model_field_editor_changing)) {
                 val result =
                     withCol {
                         Timber.d("doInBackgroundRepositionField")
@@ -475,7 +499,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             e.log()
             // Handler mMod schema confirmation
             val c = ConfirmationDialog()
-            c.setArgs(resources.getString(R.string.full_sync_confirmation))
+            c.setArgs(resources.getString(CommonString.full_sync_confirmation))
             val confirm =
                 Runnable {
                     getColUnsafe.modSchema(check = false)
@@ -490,7 +514,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         notetype: NotetypeJson,
         idx: Int,
     ) {
-        withProgress(resources.getString(R.string.model_field_editor_changing)) {
+        withProgress(resources.getString(CommonString.model_field_editor_changing)) {
             withCol {
                 Timber.d("doInBackgroundChangeSortField")
                 notetypes.setSortIndex(notetype, idx)
@@ -526,7 +550,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      */
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
-        val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
+        val format = getString(CommonString.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
         initialize()
     }

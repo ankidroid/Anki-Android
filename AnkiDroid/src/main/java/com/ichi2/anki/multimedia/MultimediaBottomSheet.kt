@@ -1,47 +1,35 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.multimedia
 
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.BottomsheetMultimediaBinding
+import com.ichi2.anki.databinding.FragmentBottomsheetMultimediaBinding
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.OPEN_CAMERA
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.OPEN_DRAWING
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_FILE
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_IMAGE_FILE
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_VIDEO_FILE
+import com.ichi2.anki.multimedia.MultimediaUtils.canTakePicture
 import dev.androidbroadcast.vbpd.viewBinding
 
 /**
  * A BottomSheetDialogFragment class that provides options for selecting multimedia actions.
  */
 @NeedsTest("Test to ensure correct option is selected")
-class MultimediaBottomSheet : BottomSheetDialogFragment(R.layout.bottomsheet_multimedia) {
+class MultimediaBottomSheet : BottomSheetDialogFragment(R.layout.fragment_bottomsheet_multimedia) {
     private val viewModel: MultimediaViewModel by activityViewModels()
 
-    private val binding by viewBinding(BottomsheetMultimediaBinding::bind)
+    private val binding by viewBinding(FragmentBottomsheetMultimediaBinding::bind)
 
     override fun onViewCreated(
         view: View,
@@ -64,6 +52,7 @@ class MultimediaBottomSheet : BottomSheetDialogFragment(R.layout.bottomsheet_mul
         setupListener(binding.multimediaActionRecording, SELECT_AUDIO_RECORDING)
         setupListener(binding.multimediaActionVideo, SELECT_VIDEO_FILE)
         setupListener(binding.multimediaActionCamera, OPEN_CAMERA)
+        binding.multimediaActionCamera.isVisible = requireContext().canTakePicture()
     }
 
     override fun onStart() {

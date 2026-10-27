@@ -1,28 +1,15 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.utils
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Insets
 import android.graphics.Point
 import android.os.Build
-import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.ichi2.anki.compat.CompatHelper
 
 object DisplayUtils {
     @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
@@ -51,10 +38,16 @@ object DisplayUtils {
         return getDisplayDimensions(wm)
     }
 
-    /** Allow the window to be resized when an input method is shown,
-     * so that its contents are not covered by the input method */
-    @Suppress("DEPRECATION") // 7110: SOFT_INPUT_ADJUST_RESIZE
-    fun resizeWhenSoftInputShown(window: Window) {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    /**
+     * Fit a floating dialog above the keyboard, or pan to its focused input when [resize] is false.
+     *
+     * Activities with edge-to-edge content should handle IME insets in their own layout.
+     */
+    fun setDialogKeyboardResize(
+        dialog: Dialog,
+        resize: Boolean = true,
+    ) {
+        val window = dialog.window ?: return
+        CompatHelper.compat.setDialogKeyboardResize(window, resize)
     }
 }

@@ -1,6 +1,4 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 3 of the License, or (at your option) any later
@@ -32,7 +30,6 @@
  *
  *  https://android.googlesource.com/platform/tools/base/+/studio-master-dev/lint/libs/lint-checks/src/main/java/com/android/tools/lint/checks/StringCasingDetector.kt?autodive=0%2F
  */
-@file:Suppress("UnstableApiUsage")
 
 package com.ichi2.anki.lint.rules
 

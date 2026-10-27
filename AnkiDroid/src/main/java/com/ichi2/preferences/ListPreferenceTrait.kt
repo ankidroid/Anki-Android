@@ -1,6 +1,4 @@
 /*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 3 of the License, or (at your option) any later
@@ -35,7 +33,7 @@
  * * Convert to Kotlin
  * * Remove Hungarian Notation
  * * Rely on `ListPreferenceTrait` rather than `ListPreference`
- * * `bundleOf` + `.apply` usage
+ * * `Bundle().apply` usage
  * * `if (preference.callChangeListener(value)) {` - depend on `preference` and `listPreference`
  */
 
@@ -44,7 +42,6 @@ package com.ichi2.preferences
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.preference.ListPreferenceDialogFragmentCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceDialogFragmentCompat
@@ -98,17 +95,17 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             entries = preference.entryKeys.toTypedArray()
             entryValues = preference.entryValues.toTypedArray()
         } else {
-            clickedDialogEntryIndex = savedInstanceState.getInt(SAVE_STATE_INDEX, 0)
-            entries = savedInstanceState.getCharSequenceArray(SAVE_STATE_ENTRIES)!!
-            entryValues = savedInstanceState.getCharSequenceArray(SAVE_STATE_ENTRY_VALUES)!!
+            clickedDialogEntryIndex = savedInstanceState.getInt(STATE_INDEX, 0)
+            entries = savedInstanceState.getCharSequenceArray(STATE_ENTRIES)!!
+            entryValues = savedInstanceState.getCharSequenceArray(STATE_ENTRY_VALUES)!!
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(SAVE_STATE_INDEX, clickedDialogEntryIndex)
-        outState.putCharSequenceArray(SAVE_STATE_ENTRIES, entries)
-        outState.putCharSequenceArray(SAVE_STATE_ENTRY_VALUES, entryValues)
+        outState.putInt(STATE_INDEX, clickedDialogEntryIndex)
+        outState.putCharSequenceArray(STATE_ENTRIES, entries)
+        outState.putCharSequenceArray(STATE_ENTRY_VALUES, entryValues)
     }
 
     private val listPreference get() = preference as ListPreferenceTrait
@@ -145,13 +142,13 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     }
 
     companion object {
-        private const val SAVE_STATE_INDEX = "ListPreferenceDialogFragment.index"
-        private const val SAVE_STATE_ENTRIES = "ListPreferenceDialogFragment.entries"
-        private const val SAVE_STATE_ENTRY_VALUES = "ListPreferenceDialogFragment.entryValues"
+        private const val STATE_INDEX = "ListPreferenceDialogFragment.index"
+        private const val STATE_ENTRIES = "ListPreferenceDialogFragment.entries"
+        private const val STATE_ENTRY_VALUES = "ListPreferenceDialogFragment.entryValues"
 
         fun newInstance(key: String?): ListPreferenceDialogFragment =
             ListPreferenceDialogFragment().apply {
-                arguments = bundleOf(ARG_KEY to key)
+                arguments = Bundle().apply { putString(ARG_KEY, key) }
             }
     }
 }

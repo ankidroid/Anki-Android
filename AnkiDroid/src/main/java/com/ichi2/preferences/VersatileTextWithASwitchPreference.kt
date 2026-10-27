@@ -1,16 +1,4 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.preferences
 
@@ -35,8 +23,8 @@ import com.ichi2.anki.R
  *   * If text is present, tapping on the switch toggles it.
  *   * If text is empty, tapping on the switch will open the dialog, as if the title was tapped.
  *   * If the dialog is closed with Cancel, no changes happen.
- *   * If the dialog is closed with Ok, and text is present, the switch will be set to on.
- *   * If the dialog is closed with Ok, and text is empty, the switch will be set to off.
+ *   * If the dialog is closed with the positive button, and text is present, the switch will be set to on.
+ *   * If the dialog is closed with the positive button, and text is empty, the switch will be set to off.
  *
  * The preference inherits from [VersatileTextPreference] and supports any attributes it does,
  * including the regular [EditTextPreference] attributes.
@@ -86,7 +74,7 @@ class VersatileTextWithASwitchPreference(
 
 class VersatileTextWithASwitchPreferenceDialogFragment : VersatileTextPreferenceDialogFragment() {
     // This replicates what the overridden method does, which is needed as we want to catch
-    // the event when the Ok button was pressed and the change listener approved the new value.
+    // the event when the positive button was pressed and the change listener approved the new value.
     override fun onDialogClosed(positiveResult: Boolean) {
         if (positiveResult) {
             val preference = preference as VersatileTextWithASwitchPreference

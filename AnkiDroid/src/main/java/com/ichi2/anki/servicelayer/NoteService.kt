@@ -1,26 +1,14 @@
-/*
- * Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>
- * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
- * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>
- * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
 
 package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FieldEditText
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
@@ -36,6 +24,7 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.observability.undoableOp
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -128,7 +117,20 @@ object NoteService {
     fun importMediaToDirectory(
         col: Collection,
         field: IField,
+        skipSizeCheck: Boolean = false,
     ) {
+        val file = field.mediaFile ?: return
+
+        // > is the correct check: https://github.com/ankitects/anki/blob/5d9d864514b9a4ac7d4688fac390c22db91d4abe/rslib/src/sync/media/upload.rs#L87
+        // TODO: Move this check to the backend
+        if (!skipSizeCheck && file.length() > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
+            throw MediaSizeLimitExceededException(
+                file.name,
+                file.length(),
+                Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
+            )
+        }
+
         val inFile =
             when (field.type) {
                 EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaFile

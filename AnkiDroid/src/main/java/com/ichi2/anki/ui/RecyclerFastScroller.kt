@@ -1,6 +1,4 @@
 /*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 3 of the License, or (at your option) any later
@@ -56,17 +54,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
+import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.utils.ext.wholeAndFraction
 import com.ichi2.anki.utils.postDelayed
-import com.ichi2.utils.dp
 import com.ichi2.utils.isRtl
 import timber.log.Timber
 import kotlin.time.Duration
@@ -79,14 +77,35 @@ class RecyclerFastScroller
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0,
     ) : FrameLayout(context, attrs, defStyleAttr) {
-        private val bar: View
-        private val handle: View
+        @VisibleForTesting
+        internal val bar: View
+
+        @VisibleForTesting
+        internal val handle: View
         val hiddenTranslationX: Int
         private val hide: Runnable
         private val minScrollHandleHeight: Int = 48.dp.toPx(context)
         var onHandleTouchListener: OnTouchListener? = null
 
         private var appBarLayoutOffset: Int = 0
+
+        /**
+         * Inset, in pixels, reserved at the bottom of the handle's travel.
+         *
+         * For rounded display corners with edge to edge support.
+         *
+         * The handle is constrained to `height - handleBottomInset`, so it stays touchable and its
+         * bottom aligns with the list's last item at full scroll.
+         *
+         * The track is drawn edge-to-edge while scrolling and its bottom retracts to the same
+         * positions as the last row of the content when approaching the end.
+         */
+        var handleBottomInset: Int = 0
+            set(value) {
+                if (field == value) return
+                field = value
+                requestLayout()
+            }
 
         private var recyclerView: RecyclerView? = null
 
@@ -345,8 +364,9 @@ class RecyclerFastScroller
                     // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
                     handle.isPressed = true
 
-                    // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
-                    val scrollableHeight = height - handle.height
+                    // The valid scroll area is (usable track - handle.height), since the position of the handle is defined by its top edge, we subtract it.
+                    // The usable track excludes handleBottomInset (nav bar) so the handle can't be dragged into it.
+                    val scrollableHeight = (height - handleBottomInset) - handle.height
 
                     // Subtract half the handle's height and divide by 2 so the handle centers below the user's finger instead of hanging above or below.
                     // Divide by the scrollableHeight to make sure that the handle doesn't go off the screen and we use coerceAtLeast to prevent divide by 0 errors
@@ -376,11 +396,12 @@ class RecyclerFastScroller
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    handle.isSelected = false
+                    handle.isPressed = false
                     if (recyclerView != null) {
                         recyclerView?.let { removeCallbacks(scrollTask) }
                         scrollTask.run()
                     }
+                    postAutoHide()
                     false
                 }
                 else -> super.onTouchEvent(event)
@@ -398,20 +419,26 @@ class RecyclerFastScroller
             if (recyclerView == null) return
 
             val scrollOffset = recyclerView!!.computeVerticalScrollOffset() + appBarLayoutOffset
-            val verticalScrollRange = (
-                recyclerView!!.computeVerticalScrollRange() +
-                    recyclerView!!.paddingBottom
-            )
+            // The content range and the visible viewport come from the RecyclerView itself.
+            // Sizing & positioning the handle against the viewport (rather than the track height)
+            // keeps it proportional even when the track is shortened to clear the navigation bar,
+            // so the handle reaches the bottom of the track exactly when the list reaches its end.
+            val verticalScrollRange = recyclerView!!.computeVerticalScrollRange()
+            val verticalScrollExtent = recyclerView!!.computeVerticalScrollExtent()
 
-            val barHeight = bar.height
-            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
+            // The track (bar) spans the full height, but the handle travels only the area above
+            // handleBottomInset so it stays clear of the navigation bar / rounded corner.
+            val fullBarHeight = bar.height
+            val trackHeight = (fullBarHeight - handleBottomInset).coerceAtLeast(0)
+            val maxScrollOffset = (verticalScrollRange - verticalScrollExtent).coerceAtLeast(1)
+            val ratio = (scrollOffset.toFloat() / maxScrollOffset).coerceIn(0f, 1f)
 
-            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
+            var calculatedHandleHeight = (trackHeight.toFloat() * verticalScrollExtent / verticalScrollRange).toInt()
             if (calculatedHandleHeight < minScrollHandleHeight) {
                 calculatedHandleHeight = minScrollHandleHeight
             }
 
-            if (calculatedHandleHeight >= barHeight) {
+            if (calculatedHandleHeight >= trackHeight) {
                 translationX = hiddenTranslationX.toFloat()
                 hideOverride = true
                 return
@@ -419,9 +446,29 @@ class RecyclerFastScroller
 
             hideOverride = false
 
-            val y = ratio * (barHeight - calculatedHandleHeight)
+            val y = ratio * (trackHeight - calculatedHandleHeight)
 
             handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + calculatedHandleHeight)
+
+            // The track is edge-to-edge (drawn under the navigation bar) while the bottom of the last
+            // row is below the viewport. Once that bottom scrolls into view the track follows it
+            // exactly, so they stay aligned.
+            val layoutManager = recyclerView!!.layoutManager
+            val lastPosition = (recyclerView!!.adapter?.itemCount ?: 0) - 1
+            // The last row's bottom comes from its real on-screen position
+            // Note: Offsets can't be used - LinearLayoutManager reports them in scrollbar units
+            val lastRowBottomEdge =
+                lastPosition
+                    .takeIf { it >= 0 }
+                    ?.let { layoutManager?.findViewByPosition(it) }
+                    ?.let { layoutManager!!.getDecoratedBottom(it) }
+
+            // off-screen (or not laid out) → edge-to-edge; visible → follow the row's bottom
+            val isEdgeToEdge = lastRowBottomEdge == null || lastRowBottomEdge >= fullBarHeight
+            val barBottom = bar.top + if (isEdgeToEdge) fullBarHeight else lastRowBottomEdge
+            if (bar.bottom != barBottom) {
+                bar.layout(bar.left, bar.top, bar.right, barBottom)
+            }
         }
 
         companion object {

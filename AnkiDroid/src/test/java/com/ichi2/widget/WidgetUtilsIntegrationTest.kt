@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.widget
 
@@ -21,6 +7,8 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.widget.cardanalysis.CardAnalysisWidget
+import com.ichi2.widget.deckpicker.DeckPickerWidget
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
@@ -38,6 +26,31 @@ class WidgetUtilsIntegrationTest : RobolectricTest() {
         super.startRegularActivity<DeckPicker>() // WARN: This didn't crash before fixes applied
         WidgetPermissionReceiver().onReceive(targetContext, Intent())
     }
+
+    @Test
+    fun `deck picker widgets update with no widget manager`() {
+        DeckPickerWidget.updateDeckPickerWidgets(targetContext)
+    }
+
+    @Test
+    fun `card analysis widgets update with no widget manager`() {
+        CardAnalysisWidget.updateCardAnalysisWidgets(targetContext)
+    }
+
+    @Test
+    fun `deck picker widget ignores update broadcasts with no widget manager`() {
+        DeckPickerWidget().onReceive(targetContext, widgetUpdateIntent())
+    }
+
+    @Test
+    fun `card analysis widget ignores update broadcasts with no widget manager`() {
+        CardAnalysisWidget().onReceive(targetContext, widgetUpdateIntent())
+    }
+
+    private fun widgetUpdateIntent() =
+        Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE).apply {
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(1))
+        }
 
     companion object {
         @BeforeClass

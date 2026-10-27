@@ -25,17 +25,22 @@ echo "Checking basic utility installation status..."
 for UTILITY in sed gawk gh asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
 done
-if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
+if ! [ -f ../ankidroiddocs/changelog.asc ]; then
   echo "Could not find ../ankidroiddocs/changelog.asc?"
   exit 1
 fi
 
+# Captured once so every APK in this release reports the same BUILD_TIME
+# (consumed by AnkiDroid/build.gradle.kts via -PbuildTime).
+BUILD_TIME_MS=$(date +%s000)
+export BUILD_TIME_MS
+
 # Define the location of the manifest file
 SRC_DIR="./AnkiDroid"
-GRADLEFILE="$SRC_DIR/build.gradle"
+GRADLEFILE="$SRC_DIR/build.gradle.kts"
 CHANGELOG="$SRC_DIR/src/main/assets/changelog.html"
 
-if ! VERSION=$(grep 'versionName=' $GRADLEFILE | sed -e 's/.*="//' | sed -e 's/".*//')
+if ! VERSION=$(grep 'versionName = ' $GRADLEFILE | sed -e 's/.*= "//' | sed -e 's/".*//')
 then
   echo "Unable to get current version. Is sed installed?"
   exit 1
@@ -47,20 +52,6 @@ if [ "$PUBLIC" = "public" ]; then
   echo "- Author and merge a PR to ankidroiddocs/changelog.asc with details for the current version"
   echo "Press Enter to continue."
   read -r
-
-  # Render the new changelog
-  echo "Rendering changelog..."
-  if ! asciidoctor -a webfonts! ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
-  then
-    echo "Failed to render changelog?"
-    exit 1
-  fi
-  if ! grep "Version $VERSION " "$CHANGELOG"
-  then
-    echo "Could not find entry for version $VERSION in rendered $CHANGELOG ?"
-    exit 1
-  fi
-
 else
   echo "Performing testing release."
 fi
@@ -82,23 +73,61 @@ if [ "$PUBLIC" != "public" ]; then
   # Increment version code
   # It is an integer in AndroidManifest that nobody actually sees.
   # Ex: 72 to 73
-  PREVIOUS_CODE=$(grep 'versionCode=' $GRADLEFILE | sed -e 's/.*=//')
+  PREVIOUS_CODE=$(grep 'versionCode = ' $GRADLEFILE | sed -e 's/.*= //')
   GUESSED_CODE=$((PREVIOUS_CODE + 1))
 
   # Edit AndroidManifest.xml to bump version string
   echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
   sed -i -e s/"$PREVIOUS_VERSION""$SUFFIX"/"$VERSION"/g $GRADLEFILE
-  sed -i -e s/versionCode="$PREVIOUS_CODE"/versionCode="$GUESSED_CODE"/g $GRADLEFILE
+  sed -i -e s/"versionCode = $PREVIOUS_CODE"/"versionCode = $GUESSED_CODE"/g $GRADLEFILE
 fi
 
-# If any changes go in during the release process, pushing fails, so push immediately.
-# Worst case this burns a version number despite a failure later, and we have a version/tag
-# that never launched. That's better than having to manually patch up build.gradle.kts and push a tag
-# for a release that did launch, but the push failed
+# Render the new changelog
+echo "Rendering changelog..."
+if ! asciidoctor -a webfonts! ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
+then
+  echo "Failed to render changelog?"
+  exit 1
+fi
+if [ "$PUBLIC" = "public" ]; then
+  if ! grep "Version $VERSION " "$CHANGELOG"
+  then
+    echo "Could not find entry for version $VERSION in rendered $CHANGELOG ?"
+    exit 1
+  fi
+else
+  NOTE="Version $VERSION is a test build. Its changelog comes with the stable release. Until then, here are the changes in the latest stable version."
+  if ! NOTE_HTML=$(echo "_${NOTE}_" | asciidoctor -s -o - -) ||
+    ! NOTE_HTML="$NOTE_HTML" gawk '{ print } /^<div id="content">$/ { print ENVIRON["NOTE_HTML"]; added = 1 } END { exit !added }' "$CHANGELOG" > "$CHANGELOG.tmp"
+  then
+    echo "Could not add the test build note to $CHANGELOG ?"
+    exit 1
+  fi
+  mv "$CHANGELOG.tmp" "$CHANGELOG"
+fi
+
+# Validate the resulting versionCode before committing or tagging the release.
+if ! ./gradlew :AnkiDroid:validateVersionCode --no-configuration-cache
+then
+  exit 1
+fi
+
+# Push the version bump before Play. A merge during the upload rejects the push,
+# and the script would otherwise carry on after Play had already accepted the build,
+# leaving main without the version that shipped.
+# If this push fails, nothing has been published yet and the release stops.
+# Worst case a later failure burns a version on main. That is better than
+# hand-patching a release that did launch but whose push failed.
+# The tag is pushed only after Play accepts, so a Play failure does not create a GitHub release.
 echo "Committing changelog and version bump via git"
 git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
+if ! git push
+then
+  echo "Failed to push the version bump. Nothing was published yet."
+  exit 1
+fi
 
 . tools/check-keystore.sh
 
@@ -107,22 +136,25 @@ git tag v"$VERSION"
 # Configuration for pushing to Play specified in build.gradle.kts 'play' task
 echo "Running 'publishPlayReleaseApk' gradle target"
 ./gradlew --stop
-if ! ./gradlew publishPlayReleaseApk
+if ! ./gradlew publishPlayReleaseApk -PbuildTime="$BUILD_TIME_MS"
 then
   # APK contains problems, abort release
   exit 1
 fi
 
-# If the Play Store accepted the builds, the version bump should be pushed / made concrete
-git push
-git push --tags
+# If the Play Store accepted the builds, the tag should be pushed / made concrete
+if ! git push --tags
+then
+  echo "Failed to push the v$VERSION tag. Play already has this build."
+  exit 1
+fi
 
 # Build the full set of release APKs for all flavors, with universals
 UCFLAVORS='Full Amazon Play'
 for UCFLAVOR in $UCFLAVORS; do
   ./gradlew --stop
   echo Running assemble"$UCFLAVOR"Release target with universal APK flag
-  if ! ./gradlew assemble"$UCFLAVOR"Release -Duniversal-apk=true
+  if ! ./gradlew assemble"$UCFLAVOR"Release -Duniversal-apk=true -PbuildTime="$BUILD_TIME_MS"
   then
     echo "unable to build release APKs for flavor $UCFLAVOR"
     exit 1
@@ -162,7 +194,7 @@ cp proguard-mappings.tar.gz "$PREFIX"proguard-mappings.tar.gz
 # Create a full universal build that disables minify, to help diagnose proguard issues
 ./gradlew --stop
 echo Running assembleFullRelease target with universal APK flag and MINIFY_ENABLED=false
-if ! MINIFY_ENABLED=false ./gradlew assembleFullRelease -Duniversal-apk=true
+if ! MINIFY_ENABLED=false ./gradlew assembleFullRelease -Duniversal-apk=true -PbuildTime="$BUILD_TIME_MS"
 then
   echo "unable to build full unminified APKs"
   exit 1
@@ -178,8 +210,10 @@ export GITHUB_REPO="Anki-Android"
 
 if [ "$PUBLIC" = "public" ]; then
   RELEASE_TYPE="--latest"
+  RELEASE_KIND="Public release"
 else
   RELEASE_TYPE="--prerelease"
+  RELEASE_KIND="Pre-release"
 fi
 
 # Get the directory of the current script
@@ -187,7 +221,11 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 # Read the content of the markdown file using the absolute path
 RELEASE_NOTES="$SCRIPT_DIR/release-description.md"
 echo "Creating new Github release"
-gh release create v"$VERSION" --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE --draft
+if ! gh release create v"$VERSION" --verify-tag --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE --draft
+then
+  echo "Failed to create the GitHub release for v$VERSION"
+  exit 1
+fi
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
@@ -255,3 +293,9 @@ then
   exit 1
 fi
 echo "Release published successfully"
+
+cat <<EOF >> "${GITHUB_STEP_SUMMARY:-/dev/null}"
+### [AnkiDroid $VERSION](https://github.com/ankidroid/Anki-Android/releases/tag/v$VERSION)
+
+$RELEASE_KIND
+EOF

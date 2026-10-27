@@ -1,45 +1,52 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.scheduling
 
+import android.os.Bundle
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
+import com.ichi2.anki.servicelayer.getFSRSStatus
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.positiveButton
+import io.mockk.coEvery
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.shadows.ShadowToast
+import java.io.File
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
-@Ignore("selectTab(1) does not attach Ids")
-@NeedsTest("get the tests working")
-@NeedsTest("set interval to same value visibility with FSRS")
 @RunWith(AndroidJUnit4::class)
 class SetDueDateDialogTest : RobolectricTest() {
     @Test
@@ -56,6 +63,7 @@ class SetDueDateDialogTest : RobolectricTest() {
         testDialog {
             selectTab(0)
             assertThat(singleDayTextLayout.suffixText, equalTo("days"))
+            selectTab(1)
             assertThat(dateRangeStartLayout.suffixText, equalTo("days"))
             assertThat(dateRangeEndLayout.suffixText, equalTo("days"))
         }
@@ -89,18 +97,18 @@ class SetDueDateDialogTest : RobolectricTest() {
 
     @Test
     fun `singular text`() =
-        testDialog(cards = listOf(1)) {
+        testDialog(cardCount = 1) {
             selectTab(0)
-            assertThat(singleDayTextLayout.hint, equalTo("Show card in"))
+            assertThat(dateSingleLabel.text, equalTo("Show card in"))
             selectTab(1)
             assertThat(dateRangeLabel.text, equalTo("Show card in range"))
         }
 
     @Test
     fun `plural text`() =
-        testDialog(cards = listOf(1, 2)) {
+        testDialog(cardCount = 2) {
             selectTab(0)
-            assertThat(singleDayTextLayout.hint, equalTo("Show cards in"))
+            assertThat(dateSingleLabel.text, equalTo("Show cards in"))
             selectTab(1)
             assertThat(dateRangeLabel.text, equalTo("Show cards in range"))
         }
@@ -114,22 +122,256 @@ class SetDueDateDialogTest : RobolectricTest() {
             dateRangeEnd.setText("2")
             changeInterval.isChecked = true
 
-            assertThat(viewModel.calculateDaysParameter(), equalTo("1-2!"))
+            assertThat(viewModel.calculateDaysParameter(), equalTo(SetDueDateDays("1-2!")))
         }
 
+    @Test
+    fun `single day input limited to 5 digits`() =
+        testDialog {
+            selectTab(0)
+            singleDayText.setText("123456")
+            assertThat(singleDayText.text.toString(), equalTo("12345"))
+        }
+
+    @Test
+    fun `range start input limited to 5 digits`() =
+        testDialog {
+            selectTab(1)
+            dateRangeStart.setText("123456")
+            assertThat(dateRangeStart.text.toString(), equalTo("12345"))
+        }
+
+    @Test
+    fun `range end input limited to 5 digits`() =
+        testDialog {
+            selectTab(1)
+            dateRangeEnd.setText("123456")
+            assertThat(dateRangeEnd.text.toString(), equalTo("12345"))
+        }
+
+    @Test
+    fun `card ids are readable after recreation`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            launchFragment<SetDueDateDialog>(
+                themeResId = R.style.Base_Theme_Light,
+                fragmentArgs = setDueDateArgs(cardIds),
+            ).use { scenario ->
+                advanceRobolectricLooper()
+                scenario.recreate()
+                advanceRobolectricLooper()
+                scenario.onFragment { fragment ->
+                    assertThat(fragment.cardIds, equalTo(cardIds))
+                }
+            }
+        }
+
+    @Test
+    fun `ids file is removed after the dialog is dismissed`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            val args = setDueDateArgs(cardIds)
+            val idsFile = args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE)
+
+            launchFragment<SetDueDateDialog>(
+                themeResId = R.style.Base_Theme_Light,
+                fragmentArgs = args,
+            ).use { scenario ->
+                advanceRobolectricLooper()
+                assertThat("kept while the dialog is open", idsFile.exists(), equalTo(true))
+                scenario.onFragment { it.dismiss() }
+                advanceRobolectricLooper()
+            }
+
+            assertThat("removed once dismissed", idsFile.exists(), equalTo(false))
+        }
+
+    @Test
+    fun `missing selection dismisses due date dialog`() =
+        withActivity { activity ->
+            val card = addBasicNote().firstCard()
+            val originalDue = card.due
+            val args = setDueDateArgs(listOf(card.id))
+            assertTrue(args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE).delete())
+            val fragment = SetDueDateDialog().apply { arguments = args }
+            fragment.show(activity.supportFragmentManager, "due-date")
+            advanceRobolectricLooper()
+            assertNull(activity.supportFragmentManager.findFragmentByTag("due-date"))
+            assertThat(col.getCard(card.id).due, equalTo(originalDue))
+            assertThat(
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(targetContext.getString(CommonString.something_wrong)),
+            )
+        }
+
+    @Test
+    fun `unreadable ids file does not crash`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            val args = setDueDateArgs(cardIds)
+            args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE).writeBytes(ByteArray(0))
+
+            launchFragment<SetDueDateDialog>(
+                themeResId = R.style.Base_Theme_Light,
+                fragmentArgs = args,
+            ).use {
+                advanceRobolectricLooper()
+            }
+        }
+
+    @Test
+    fun `loading FSRS forces the interval to match the due date`() = assertSchedulerLoading(fsrsEnabled = true)
+
+    @Test
+    fun `loading SM-2 allows changing the interval`() = assertSchedulerLoading(fsrsEnabled = false)
+
+    @Test
+    fun `unavailable scheduler setting falls back to SM-2`() = assertSchedulerLoading(fsrsEnabled = null)
+
+    @Test
+    fun `show and duplicate requests return without waiting for loading`() =
+        withActivity { activity ->
+            val firstCardIds = listOf(addBasicNote().firstCard().id)
+            val secondCardIds = listOf(addBasicNote().firstCard().id)
+            withPausedLoading { finishLoading ->
+                SetDueDateDialog.show(activity, firstCardIds)
+                SetDueDateDialog.show(activity, secondCardIds)
+                advanceRobolectricLooper()
+
+                assertEquals(firstCardIds, assertNotNull(activity.currentDialog).cardIds)
+                assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
+                assertEquals(1, activity.dueDateFiles.size)
+                finishLoading.complete(Unit)
+            }
+        }
+
+    @Test
+    fun `dialog can reopen after dismissal`() =
+        withActivity { activity ->
+            val firstCardIds = listOf(addBasicNote().firstCard().id)
+            val secondCardIds = listOf(addBasicNote().firstCard().id)
+            SetDueDateDialog.show(activity, firstCardIds)
+            advanceRobolectricLooper()
+            val dialog = assertNotNull(activity.currentDialog)
+
+            dialog.dismiss()
+            advanceRobolectricLooper()
+            assertNull(activity.currentDialog)
+
+            SetDueDateDialog.show(activity, secondCardIds)
+            advanceRobolectricLooper()
+            val reopenedDialog = assertNotNull(activity.currentDialog)
+            assertNotSame(dialog, reopenedDialog)
+            assertEquals(secondCardIds, reopenedDialog.cardIds)
+            assertTrue(reopenedDialog.requireDialog().isShowing)
+        }
+
+    @Test
+    fun `dialog can be dismissed and reopened while loading`() =
+        withActivity { activity ->
+            val firstCardIds = listOf(addBasicNote().firstCard().id)
+            val secondCardIds = listOf(addBasicNote().firstCard().id)
+            withPausedLoading(fsrsEnabled = true) { finishLoading ->
+                SetDueDateDialog.show(activity, firstCardIds)
+                advanceRobolectricLooper()
+                assertNotNull(activity.currentDialog).dismiss()
+                advanceRobolectricLooper()
+                assertNull(activity.currentDialog)
+                assertTrue(activity.dueDateFiles.isEmpty())
+
+                coEvery { getFSRSStatus() } returns false
+                SetDueDateDialog.show(activity, secondCardIds)
+                finishLoading.complete(Unit)
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+
+                val dialog = assertNotNull(activity.currentDialog)
+                assertEquals(secondCardIds, dialog.cardIds)
+                assertTrue(dialog.requireDialog().isShowing)
+                assertTrue(dialog.changeInterval.isVisible)
+                assertFalse(dialog.viewModel.fsrsEnabled.value!!)
+            }
+        }
+
+    private fun assertSchedulerLoading(fsrsEnabled: Boolean?) =
+        withActivity { activity ->
+            val cardIds = listOf(addBasicNote().firstCard().id)
+            withPausedLoading(fsrsEnabled) { finishLoading ->
+                SetDueDateDialog.show(activity, cardIds)
+                advanceRobolectricLooper()
+                val dialog = assertNotNull(activity.currentDialog)
+                dialog.singleDayText.setText("3")
+                assertFalse(dialog.positiveButtonIsEnabled, "cannot save before the scheduler setting is loaded")
+                assertFalse(dialog.changeInterval.isVisible)
+                assertNull(dialog.viewModel.updateDueDateAsync().await(), "keyboard submission cannot save while loading")
+
+                finishLoading.complete(Unit)
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+
+                assertTrue(dialog.positiveButtonIsEnabled)
+                assertEquals(fsrsEnabled != true, dialog.changeInterval.isVisible)
+                assertEquals(fsrsEnabled == true, dialog.changeInterval.isChecked)
+                assertEquals(SetDueDateDays(if (fsrsEnabled == true) "3!" else "3"), dialog.viewModel.calculateDaysParameter())
+            }
+        }
+
+    private val FragmentActivity.currentDialog: SetDueDateDialog?
+        get() = supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as SetDueDateDialog?
+
+    private val FragmentActivity.dueDateFiles: List<File>
+        get() =
+            IdsFile
+                .getDirectory(this)
+                .listFiles { _, name -> name.startsWith("set-due-date") }
+                .orEmpty()
+                .toList()
+
+    private fun withActivity(block: suspend TestScope.(FragmentActivity) -> Unit) =
+        runTest {
+            Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+                controller.get().setTheme(R.style.Base_Theme_Light)
+                block(controller.setup().get())
+            }
+        }
+
+    private suspend fun withPausedLoading(
+        fsrsEnabled: Boolean? = false,
+        block: suspend (CompletableDeferred<Unit>) -> Unit,
+    ) {
+        val finishLoading = CompletableDeferred<Unit>()
+        mockkStatic(::getFSRSStatus)
+        try {
+            coEvery { getFSRSStatus() } coAnswers {
+                finishLoading.await()
+                fsrsEnabled
+            }
+            block(finishLoading)
+        } finally {
+            unmockkStatic(::getFSRSStatus)
+        }
+    }
+
+    private fun setDueDateArgs(cardIds: List<CardId>): Bundle =
+        SetDueDateDialog
+            .newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
+            .requireArguments()
+
     private fun testDialog(
-        cards: List<CardId> = listOf(1),
+        cardCount: Int = 1,
         action: SetDueDateDialog.() -> Unit,
     ) = runTest {
-        val dialog = SetDueDateDialog.newInstance(cards)
+        val cardIds = List(cardCount) { addBasicNote().firstCard().id }
+        val dialog = SetDueDateDialog.newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
         launchFragment(
             themeResId = R.style.Base_Theme_Light,
             fragmentArgs = dialog.arguments,
         ) {
             return@launchFragment dialog
-        }.apply {
-            moveToState(Lifecycle.State.CREATED)
-            this.onFragment {
+        }.use { scenario ->
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            advanceRobolectricLooper()
+            scenario.onFragment {
                 action(it)
             }
         }
@@ -146,12 +388,15 @@ fun TabLayout.selectTab(index: Int) =
         { "Tab $index not found" }
         .also { tab -> selectTab(tab) }
 
+/**
+ * Selects a tab by index, and waits for the [androidx.viewpager2.adapter.FragmentStateAdapter]
+ * to attach the page's fragment view to the dialog's view hierarchy.
+ */
 fun SetDueDateDialog.selectTab(index: Int) {
-    val tabLayout = dialog!!.findViewById<TabLayout>(R.id.tab_layout)
-    tabLayout.selectTab(index)
-    if (index == 1) {
-        TODO("Flaky: FragmentStateAdapter does not include views")
-    }
+    val viewPager = dialog!!.findViewById<ViewPager2>(R.id.set_due_date_pager)
+    viewPager.setCurrentItem(index, false)
+    // FragmentStateAdapter attaches fragments asynchronously via the main looper
+    advanceRobolectricLooper()
 }
 
 val SetDueDateDialog.positiveButtonIsEnabled get() =
@@ -179,3 +424,6 @@ val SetDueDateDialog.changeInterval: CheckBox get() =
 
 val SetDueDateDialog.dateRangeLabel: TextView get() =
     dialog!!.findViewById(R.id.date_range_label)
+
+val SetDueDateDialog.dateSingleLabel: TextView get() =
+    dialog!!.findViewById(R.id.date_single_label)

@@ -1,36 +1,36 @@
 AnkiDroid bilan istalgan narsani eslab qoling!
 
-AnkiDroid sizga flesh-kartalarni endi unutay deganingizda koʻrsatib, juda samarali oʻrganishga yordam beradi. U Windows, Linux va macOSʼda mavjud Anki oraliqli takrorlash dasturiga (shu jumladan sinxronizatsiyaga ham) toʻliq mos keladi.
+AnkiDroid sizga fleş-kartalarni endi unutay deganingizda körsatib, juda samarali örganişga yordam beradi. U Windows, Linux va macOSʼda mavjud Anki oraliqli takrorlaş dasturiga (şu jumladan sinxronizatsiyaga ham) töliq mos keladi.
 
-Turli xil narsalarni istalgan joy va istalgan vaqtingizda oʻrganing. Avtobus safarlarida, supermarket navbatlarida yoki boshqa har qanday kutish holatidagi boʻsh vaqtingizdan unumli foydalaning!
+Turli xil narsalarni istalgan joy va istalgan vaqtingizda örganing. Avtobus safarlarida, supermarket navbatlarida yoki boşqa har qanday kutiş holatidagi böş vaqtingizdan unumli foydalaning!
 
-Oʻzingizni fleshka-kartalaringizni yarating yoki koʻplab tillar va mavzular uchun tuzilgan bepul dastalarni yuklab oling (6000 dan ortiq mavjud).
+Özingizni fleşka-kartalaringizni yarating yoki köplab tillar va mavzular uçun tuzilgan bepul dastalarni yuklab oling (6000 dan ortiq mavjud).
 
-Anki Desktop orqali yoki toʻgʻridan-toʻgʻri AnkiDroid orqali material qoʻshing. Ilova hatto lugʻatdan avtomatik ravishda material qoʻshishni ham qoʻllab-quvvatlaydi!
+Anki Desktop orqali yoki töğridan-töğri AnkiDroid orqali material qöşing. Ilova hatto luğatdan avtomatik ravişda material qöşişni ham qöllab-quvvatlaydi!
 
 ★ Asosiy jihatlar:
-• qo'llab-quvvatlanadigan flesh-karta tarkibi: matn, rasmlar, ovoz, LaTeX
-• oraliqli takrorlash (SI bilan optimallashtirilgan FSRS algoritmi)
+• qöllab-quvvatlanadigan fleş-karta tarkibi: matn, rasmlar, ovoz, LaTeX
+• oraliqli takrorlaş (SI bilan optimallaştirilgan FSRS algoritmi)
 • matn sintezatori integratsiyasi
 • 10 000 dan ortiq tayyor dasta
 • progress vidjeti
 • batafsil statistika
-• AnkiWeb bilan sinxronlash
-• ochiq manbali
+• AnkiWeb bilan sinxronlaş
+• oçiq manbali
 
-★ Qoʻshimcha funksiyalar
-• javoblarni yozish (ixtiyoriy)
+★ Qöşimça funksiyalar
+• javoblarni yoziş (ixtiyoriy)
 • Yozuv taxtasi
-• karta muharriri/qoʻshuvchisi
+• karta muharriri/qöşuvçisi
 • karta brauzeri
-• planshetga moslashtirilgan
-• mavjud toʻplam fayllarini import qilish (Anki Desktop orqali)
-• Kartalarni lugʻat kabi boshqa ilovalardan niyat bilan qoʻshing
-• shriftni moslashtirish
-• toʻliq zaxiralash tizimi
-• surish, bosish orqali navigatsiya
-• moslashtiriladigan
-• dinamik dastalar bilan ishlash
+• planşetga moslaştirilgan
+• mavjud kolleksiya fayllarini import qiliş (Anki Desktop orqali)
+• Kartalarni luğat kabi boşqa ilovalardan niyat bilan qöşing
+• şriftni moslaştiriş
+• töliq zaxiralaş tizimi
+• suriş, bosiş orqali navigatsiya
+• moslaştiriladigan
+• dinamik dastalar bilan işlaş
 • tungi rejim
 • 27 lokalizatsiya
-• AnkiDroidʼni barcha oldingi versiyalarini veb-saytdan yuklab olish mumkin
+• AnkiDroidʼni barça oldingi versiyalarini veb-saytdan yuklab oliş mumkin

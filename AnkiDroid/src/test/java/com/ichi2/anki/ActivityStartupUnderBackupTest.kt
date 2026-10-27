@@ -1,43 +1,30 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Looper.getMainLooper
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
-import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.skipTest
 import com.ichi2.utils.ExceptionUtil.getFullStackTrace
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert
-import org.junit.Assume.assumeThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
-import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowToast
 import java.util.stream.Collectors
+import kotlin.test.assertNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-@Config(application = EmptyApplication::class) // no point in Application init if we don't use it
 class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField // required for Parameter
@@ -51,14 +38,8 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
 
     @Before
     fun before() {
-        notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
-        notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(
             PreferencesActivity::class.java.simpleName,
-            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
-        )
-        notYetHandled(
-            FilteredDeckOptions::class.java.simpleName,
             "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
         )
         notYetHandled(
@@ -104,6 +85,13 @@ $stackTrace""",
         // But we get the main idea: onCreate() doesn't throw an exception and is handled.
         // and onDestroy() is also called in the real implementation on my phone.
         assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, equalTo(true))
+        if (controller.get() is AbstractIntentHandler) {
+            assertNull(shadowOf(controller.get()).nextStartedActivity, "The intent must not be dispatched during backup recovery")
+            assertThat(
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(targetContext.getString(CommonString.ankidroid_cannot_open_after_backup_try_again)),
+            )
+        }
         controller.destroy()
         assertThat(
             "If a backup was taking place, the activity should be destroyed successfully",
@@ -117,7 +105,7 @@ $stackTrace""",
         reason: String,
     ) {
         if (launcher!!.simpleName == activityName) {
-            assumeThat("$activityName $reason", true, equalTo(false))
+            skipTest("$activityName $reason")
         }
     }
 
@@ -130,6 +118,12 @@ $stackTrace""",
                 .stream()
                 .map { x: ActivityLaunchParam ->
                     arrayOf(x, x.simpleName)
-                }.collect(Collectors.toList())
+                }.collect(Collectors.toList()) +
+                listOf(Intent.ACTION_MAIN, "com.ichi2.anki.DO_SYNC").map { action ->
+                    arrayOf(
+                        ActivityLaunchParam.get(IntentHandler::class.java) { Intent(action) },
+                        "IntentHandler $action",
+                    )
+                }
     }
 }

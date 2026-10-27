@@ -1,16 +1,4 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.utils
 
@@ -30,11 +18,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.android.AdaptionUtil
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
 
@@ -53,7 +42,7 @@ inline fun <T> withWakeLock(
     tag: String,
     block: () -> T,
 ): T {
-    val context = AnkiDroidApp.instance
+    val context = appContext
     val wakeLock =
         ContextCompat
             .getSystemService(context, PowerManager::class.java)!!
@@ -80,11 +69,11 @@ fun Context.openUrl(url: String) {
 
 fun Context.openUrl(uri: Uri) {
     if (!AdaptionUtil.hasWebBrowser(this)) {
-        val noBrowserMessage = getString(R.string.no_browser_msg, uri.toString())
+        val noBrowserMessage = getString(CommonString.no_browser_msg, uri.toString())
         if (this is FragmentActivity) {
             showSnackbar(noBrowserMessage) {
                 setAction(android.R.string.copyUrl) {
-                    copyToClipboard(uri.toString())
+                    copyToClipboard(TruncatedString.from(uri.toString()))
                 }
             }
         } else {
@@ -97,9 +86,9 @@ fun Context.openUrl(uri: Uri) {
     } catch (ex: Exception) {
         Timber.w("No app found to handle opening an external url from ${this::class.java.name}")
         if (this is FragmentActivity) {
-            showSnackbar(R.string.activity_start_failed)
+            showSnackbar(CommonString.activity_start_failed)
         } else {
-            showThemedToast(this, R.string.activity_start_failed, false)
+            showThemedToast(this, CommonString.activity_start_failed, false)
         }
     }
 }
@@ -107,14 +96,14 @@ fun Context.openUrl(uri: Uri) {
 // necessary for Fragments that are BaseSnackbarBuilderProvider to work correctly
 fun Fragment.openUrl(uri: Uri) {
     if (!AdaptionUtil.hasWebBrowser(requireContext())) {
-        showSnackbar(getString(R.string.no_browser_msg, uri.toString()))
+        showSnackbar(getString(CommonString.no_browser_msg, uri.toString()))
         return
     }
     try {
         startActivity(Intent(Intent.ACTION_VIEW, uri))
     } catch (ex: ActivityNotFoundException) {
         Timber.w("No app found to handle opening an external url from ${Fragment::class.java.name}")
-        showSnackbar(R.string.activity_start_failed)
+        showSnackbar(CommonString.activity_start_failed)
     }
 }
 

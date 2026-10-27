@@ -1,127 +1,99 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.reviewer.audiorecord
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
+import androidx.media3.common.Player
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.recorder.AudioRecorder
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.ichi2.anki.recorder.PlayerState
+import com.ichi2.anki.recorder.RecorderState
+import com.ichi2.anki.recorder.VoicePlayer
+import com.ichi2.anki.recorder.VoiceRecorder
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.io.File
+import kotlin.time.Duration
 
 class CheckPronunciationViewModel(
-    private val audioRecorder: AudioRecorder = AudioRecorder(AnkiDroidApp.instance),
-    private val audioPlayer: AudioPlayer = AudioPlayer(),
+    audioRecorder: AudioRecorder = AudioRecorder(appContext),
+    createPlayer: () -> Player = { VoicePlayer.createExoPlayer(appContext) },
+    recordingsDirectory: File = VoiceRecorder.recordingsDirectory(appContext),
 ) : ViewModel() {
-    init {
-        addCloseable(audioPlayer)
-        addCloseable(audioRecorder)
+    private val recorder = VoiceRecorder(audioRecorder, recordingsDirectory, viewModelScope)
+    private val player = VoicePlayer(viewModelScope, createPlayer)
 
-        audioPlayer.onCompletion = {
-            viewModelScope.launch {
-                playbackProgressFlow.emit(playbackProgressBarMaxFlow.value)
-                playIconFlow.emit(R.drawable.ic_play)
-            }
-        }
+    init {
+        addCloseable(player)
+        addCloseable(recorder)
     }
 
-    val playbackProgressFlow = MutableStateFlow(0)
-    val playbackProgressBarMaxFlow = MutableStateFlow(1)
-    val playIconFlow = MutableStateFlow(R.drawable.ic_play)
+    val playbackProgressFlow: Flow<Int> = player.position.map { it.inWholeMilliseconds.toInt() }
+    val playbackProgressBarMaxFlow: Flow<Int> =
+        player.state
+            .map { state ->
+                val duration = (state as? PlayerState.Ready)?.duration ?: Duration.ZERO
+                duration.inWholeMilliseconds.toInt().coerceAtLeast(1)
+            }.distinctUntilChanged()
+    val isPlayingFlow: Flow<Boolean> =
+        player.state
+            .map { state -> state is PlayerState.Ready && state.isPlaying }
+            .distinctUntilChanged()
     val replayFlow = MutableSharedFlow<Unit>()
     val isPlaybackVisibleFlow = MutableStateFlow(false)
 
-    private var progressBarUpdateJob: Job? = null
-    private val currentFile get() = audioRecorder.currentFile
-    private val isPlaying get() = audioPlayer.isPlaying
+    private val currentFile get() = (recorder.state.value as? RecorderState.Recorded)?.file
 
     fun onRecordingStarted() {
-        audioRecorder.start()
         onCancelPlayback()
+        recorder.start()
     }
 
     fun onRecordingCancelled() {
-        audioRecorder.stop()
+        recorder.discard()
     }
 
     fun onRecordingCompleted() {
-        audioRecorder.stop()
-        viewModelScope.launch {
-            isPlaybackVisibleFlow.emit(true)
-            playIconFlow.emit(R.drawable.ic_play)
-            playbackProgressFlow.emit(0)
-        }
+        if (!recorder.stop()) return
+        isPlaybackVisibleFlow.value = true
+    }
+
+    fun pausePlayback() {
+        player.pause()
     }
 
     fun onPlayOrReplay() {
         if (!isPlaybackVisibleFlow.value) return
-
-        if (isPlaying) {
-            replayCurrentFile()
-            viewModelScope.launch {
-                replayFlow.emit(Unit)
+        val file = currentFile ?: return
+        val state = player.state.value
+        when {
+            state == PlayerState.Empty || state == PlayerState.Failed -> {
+                player.load(file)
+                player.play()
             }
-        } else {
-            viewModelScope.launch { playIconFlow.emit(R.drawable.ic_replay) }
-            playCurrentFile()
+            state is PlayerState.Ready && state.isPlaying -> {
+                player.seekTo(Duration.ZERO)
+                viewModelScope.launch { replayFlow.emit(Unit) }
+            }
+            else -> player.play()
         }
     }
 
     fun onCancelPlayback() {
-        progressBarUpdateJob?.cancel()
-        audioPlayer.close()
-        viewModelScope.launch {
-            isPlaybackVisibleFlow.emit(false)
-            playbackProgressFlow.emit(0)
-            playIconFlow.emit(R.drawable.ic_play)
+        player.unload()
+        if (recorder.state.value is RecorderState.Recorded) {
+            recorder.discard()
         }
+        isPlaybackVisibleFlow.value = false
     }
 
     fun resetAll() {
         onRecordingCancelled()
         onCancelPlayback()
-    }
-
-    private fun playCurrentFile() {
-        val filePath = currentFile?.absolutePath ?: return
-        audioPlayer.play(filePath) {
-            viewModelScope.launch {
-                playbackProgressBarMaxFlow.emit(audioPlayer.duration)
-                launchProgressBarUpdateJob()
-            }
-        }
-    }
-
-    private fun replayCurrentFile() {
-        audioPlayer.replay()
-        launchProgressBarUpdateJob()
-    }
-
-    private fun launchProgressBarUpdateJob() {
-        progressBarUpdateJob?.cancel()
-        progressBarUpdateJob =
-            viewModelScope.launch {
-                while (isPlaying) {
-                    playbackProgressFlow.emit(audioPlayer.currentPosition)
-                    delay(50L)
-                }
-            }
     }
 }

@@ -1,34 +1,24 @@
-/*
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
- * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
 
 package com.ichi2.anki.dialogs
 
+import android.content.ContextWrapper
+import android.os.Looper
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
@@ -36,16 +26,18 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.hasItem
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
+import org.robolectric.shadows.ShadowToast
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.fail
 
 @RunWith(RobolectricTestRunner::class)
 class CreateDeckDialogTest : RobolectricTest() {
@@ -53,7 +45,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
     override fun setUp() {
         super.setUp()
-        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        getPreferences().edit { putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, true) }
         ensureCollectionLoadIsSynchronous()
         activityScenario =
             ActivityScenario.launch(DeckPicker::class.java).apply {
@@ -62,21 +54,8 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     override fun tearDown() {
-        super.tearDown()
         activityScenario.closeQuietly()
-    }
-
-    @Test
-    fun testCreateFilteredDeckFunction() {
-        val deckName = "filteredDeck"
-        ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
-            createDeckDialog.onNewDeckCreated = { id: DeckId ->
-                // a deck was created
-                assertThat(id, equalTo(col.decks.id(deckName)))
-                assertionCalled()
-            }
-            createDeckDialog.createFilteredDeck(deckName)
-        }
+        super.tearDown()
     }
 
     @Test
@@ -99,7 +78,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a deck was created
-                assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
+                assertThat(id, equalTo(col.decks.byName(deckName)!!.id))
                 assertionCalled()
             }
             createDeckDialog.createDeck(deckName)
@@ -124,10 +103,73 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun `creating a child of a filtered deck shows an error`() {
+        addDynamicDeck("Filtered Deck 1")
+        val deckCount = col.decks.count()
+        withCreateDeckDialog(DeckDialogType.DECK) {
+            onNewDeckCreated = { fail("the deck was not created") }
+            showDialog().apply {
+                input = "Filtered Deck 1::Child"
+                positiveButton.performClick()
+            }
+        }
+        Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+        assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+        activityScenario.onActivity { activity ->
+            assertThat(
+                activity.snackbarText,
+                equalTo(TR.errorsFilteredParentDeck()),
+            )
+        }
+    }
+
+    @Test
+    fun `creating a descendant of a filtered deck with non-activity context shows an error`() {
+        addDynamicDeck("Filtered Deck 1")
+        val deckCount = col.decks.count()
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { fail("the deck was not created") }
+            dialog.createDeck("filtered deck 1::Parent::Child")
+
+            assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+            assertThat(
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(TR.errorsFilteredParentDeck()),
+            )
+        }
+    }
+
+    @Test
+    fun `creating a subdeck below a filtered deck shows an error`() {
+        val parentId = addDeck("Parent")
+        addDynamicDeck("Parent::Filtered")
+        val deckCount = col.decks.count()
+        withCreateDeckDialog(DeckDialogType.SUB_DECK, parentId) {
+            onNewDeckCreated = { fail("the deck was not created") }
+            showDialog().apply {
+                input = "Filtered::Child"
+                positiveButton.performClick()
+            }
+        }
+        Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+        assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+        activityScenario.onActivity { activity ->
+            assertThat(
+                activity.snackbarText,
+                equalTo(TR.errorsFilteredParentDeck()),
+            )
+        }
+    }
+
+    @Test
     fun testRenameDeckFunction() {
         val deckName = "Deck Name"
         val deckNewName = "New Deck Name"
-        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { createDeckDialog, assertionCalled ->
+        val deckId = col.decks.id(deckName)
+        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK, renamedDeckId = deckId) { createDeckDialog, assertionCalled ->
             createDeckDialog.deckName = deckName
             createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a deck name was renamed
@@ -142,7 +184,8 @@ class CreateDeckDialogTest : RobolectricTest() {
     fun testRenameDeckWithQuotes() {
         val deckName = "Deck Name"
         val deckNewNameWithQuotes = "New \"Quoted\" Deck Name"
-        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { createDeckDialog, assertionCalled ->
+        val deckId = col.decks.id(deckName)
+        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK, renamedDeckId = deckId) { createDeckDialog, assertionCalled ->
             createDeckDialog.deckName = deckName
             createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // Verify that the quotes are preserved in the renamed deck
@@ -193,6 +236,17 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun `subdeck name may not be blank`() {
+        val parentId = addDeck("Parent")
+        testDialog(DeckDialogType.SUB_DECK, parentId) {
+            input = "   "
+            assertThat("Create is disabled if the subdeck name is blank", positiveButton.isEnabled, equalTo(false))
+            input = "Child"
+            assertThat("Create is enabled if the subdeck name is not blank", positiveButton.isEnabled, equalTo(true))
+        }
+    }
+
+    @Test
     fun searchDecksIconVisibilityDeckCreationTest() =
         runTest {
             // await deckpicker
@@ -209,10 +263,10 @@ class CreateDeckDialogTest : RobolectricTest() {
             for (i in 0 until 10) {
                 val createDeckDialog =
                     CreateDeckDialog(
-                        deckPicker,
-                        R.string.new_deck,
-                        DeckDialogType.DECK,
-                        null,
+                        context = deckPicker,
+                        title = "Create deck",
+                        deckDialogType = DeckDialogType.DECK,
+                        parentId = null,
                     )
                 val did =
                     suspendCoroutine { coro ->
@@ -227,7 +281,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
                 updateSearchDecksIcon(deckPicker)
                 assertEquals(
-                    deckPicker.optionsMenuState?.searchIcon,
+                    deckPicker.viewModel.optionsMenuState?.searchIcon,
                     decksCount() >= 10,
                 )
 
@@ -239,7 +293,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                     assertEquals(deckCounter.get(), decksCount())
 
                     updateSearchDecksIcon(deckPicker)
-                    assertFalse(deckPicker.optionsMenuState?.searchIcon ?: true)
+                    assertFalse(deckPicker.viewModel.optionsMenuState?.searchIcon ?: true)
                 }
             }
         }
@@ -247,7 +301,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private suspend fun updateSearchDecksIcon(deckPicker: DeckPicker) {
         // the icon update requires a call to refreshState() and subsequent menu
         // rebuild; access it directly instead so the test passes
-        deckPicker.updateMenuState()
+        deckPicker.viewModel.refreshMenuState()
     }
 
     @Test
@@ -255,54 +309,86 @@ class CreateDeckDialogTest : RobolectricTest() {
         runTest {
             val deckPicker =
                 suspendCoroutine { coro -> activityScenario.onActivity { coro.resume(it) } }
-            deckPicker.updateMenuState()
-            assertEquals(deckPicker.optionsMenuState!!.searchIcon, false)
+            deckPicker.viewModel.refreshMenuState()
+            assertEquals(deckPicker.viewModel.optionsMenuState!!.searchIcon, false)
             // a single top-level deck with lots of subdecks should turn the icon on
             withCol {
                 decks.id(deckTreeName(0, 10, "Deck"))
             }
-            deckPicker.updateMenuState()
-            assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
+            deckPicker.viewModel.refreshMenuState()
+            assertEquals(deckPicker.viewModel.optionsMenuState!!.searchIcon, true)
         }
 
     @Test
     fun positiveButtonEnabledOnMatchingDeckNames() {
         val previousDeckName = "Deck Name"
-        testDialog(DeckDialogType.RENAME_DECK) {
+        testRenameDialog(currentName = previousDeckName) {
             input = previousDeckName
             assertThat("no error is displayed", getInputTextLayout().error, nullValue())
         }
     }
 
     @Test
-    fun `filtered decks - duplicate creation`() {
-        fun allDeckNames() = col.decks.allNamesAndIds().map { it.name }
-
-        fun createDeck(
-            deckName: String,
-            expectedReturnValue: Boolean = true,
-        ) {
-            withCreateDeckDialog(DeckDialogType.FILTERED_DECK) {
-                onNewDeckCreated = { }
-                assertThat("createFilteredDeck", createFilteredDeck(deckName), equalTo(expectedReturnValue))
-            }
+    fun `renaming a deck with an extra colon does not conflict with itself`() {
+        testRenameDialog(currentName = "a::b") {
+            input = "a:::b"
+            assertThat("no error is displayed", getInputTextLayout().error, nullValue())
+            assertThat("rename is enabled", positiveButton.isEnabled, equalTo(true))
         }
+    }
 
-        val duplicatedName = col.sched.getOrCreateFilteredDeck(did = 0).name
-
-        createDeck(duplicatedName)
-        assertThat("initial filtered deck created", allDeckNames(), hasItem(duplicatedName))
-
-        createDeck(duplicatedName)
-        assertThat("initial filtered deck", allDeckNames(), hasItem(duplicatedName))
-        assertThat("duplicate deck is created", allDeckNames(), hasItem("$duplicatedName+"))
-
-        repeat(9) {
-            createDeck(duplicatedName)
+    @Test
+    fun `renaming a deck to an existing deck name shows an error`() {
+        col.decks.id("c")
+        testRenameDialog(currentName = "a::b") {
+            input = "c"
+            assertThat(
+                "error is displayed",
+                getInputTextLayout().error?.toString(),
+                equalTo(getResourceString(CommonString.error_name_exists)),
+            )
+            assertThat("rename is disabled", positiveButton.isEnabled, equalTo(false))
         }
+    }
 
-        assertThat("final duplicate deck is created", allDeckNames(), hasItem("$duplicatedName${"+".repeat(10)}"))
-        createDeck(duplicatedName, expectedReturnValue = false)
+    @Test
+    fun `renaming a deck to an equivalent name changes nothing`() {
+        val deckId = col.decks.id("a::b")
+        val deckCount = col.decks.count()
+        withRenameDeckDialog(deckId) {
+            deckName = "a::b"
+            onNewDeckCreated = { fail("the deck was not renamed") }
+            renameDeck("a:::b")
+        }
+        assertThat("the deck kept its name", col.decks.name(deckId), equalTo("a::b"))
+        assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+        activityScenario.onActivity { activity ->
+            assertThat("no rename is reported", activity.snackbarText, nullValue())
+        }
+    }
+
+    @Test
+    fun `renaming a deck which no longer exists does not create a deck`() {
+        val deckId = col.decks.id("Old Deck")
+        col.decks.remove(listOf(deckId))
+        val deckCount = col.decks.count()
+        withRenameDeckDialog(deckId) {
+            deckName = "Old Deck"
+            onNewDeckCreated = { fail("the deck was not renamed") }
+            renameDeck("New Deck")
+        }
+        assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+    }
+
+    private fun testRenameDialog(
+        currentName: String,
+        callback: (AlertDialog.() -> Unit),
+    ) {
+        val deckId = col.decks.id(currentName)
+        withRenameDeckDialog(deckId) {
+            deckName = currentName
+            callback(this.showDialog())
+        }
     }
 
     /**
@@ -311,9 +397,10 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun testDialog(
         deckDialogType: DeckDialogType,
         parentId: DeckId? = null,
+        renamedDeckId: DeckId? = null,
         callback: (AlertDialog.() -> Unit),
     ) {
-        withCreateDeckDialog(deckDialogType, parentId) {
+        withCreateDeckDialog(deckDialogType, parentId, renamedDeckId) {
             callback(this.showDialog())
         }
     }
@@ -324,11 +411,198 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun withCreateDeckDialog(
         deckDialogType: DeckDialogType,
         parentId: DeckId? = null,
+        renamedDeckId: DeckId? = null,
         callback: (CreateDeckDialog.() -> Unit),
     ) {
         activityScenario.onActivity { activity: DeckPicker ->
-            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)
+            val createDeckDialog =
+                CreateDeckDialog(
+                    context = activity,
+                    title = "Create deck",
+                    deckDialogType = deckDialogType,
+                    parentId = parentId,
+                    renamedDeckId = renamedDeckId,
+                )
             callback(createDeckDialog)
+        }
+    }
+
+    /**
+     * Creates a test instance of [CreateDeckDialog] which renames [renamedDeckId]
+     */
+    private fun withRenameDeckDialog(
+        renamedDeckId: DeckId,
+        callback: (CreateDeckDialog.() -> Unit),
+    ) = withCreateDeckDialog(DeckDialogType.RENAME_DECK, renamedDeckId = renamedDeckId, callback = callback)
+
+    /*
+     * The next 8 testcases test every permutation of
+     * {createDeck, renameDeck}, {validName, invalidName}, [activityContext, nonActivityContext]
+     * Shadows.shadowOf(Looper.getMainLooper()).idle()
+     * is used to flush the queue and get the latest snackbar, since asking for it immediately fails the test
+     * as the display time is LENGTH_LONG
+     */
+    @Test
+    fun `createDeck with activity context shows snackbar for valid name`() {
+        ensureExecutionOfScenario(DeckDialogType.DECK) { dialog, assertionCalled ->
+            dialog.onNewDeckCreated = { _: DeckId -> assertionCalled() }
+            dialog.createDeck("Create Deck")
+
+            activityScenario.onActivity { activity ->
+                assertThat(
+                    "Snackbar should confirm deck creation for valid name",
+                    activity.snackbarText,
+                    equalTo(getResourceString(CommonString.deck_created)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `createDeck with activity context shows snackbar for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.createDeck("   ")
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+            assertThat(
+                "Snackbar should show invalid name error for blank name",
+                activity.snackbarText,
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `createSubDeck with a blank name does not create a deck`() {
+        val parentId = addDeck("Parent")
+        val deckCount = col.decks.count()
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create subdeck", DeckDialogType.SUB_DECK, parentId)
+            dialog.onNewDeckCreated = { fail("the deck was not created") }
+            dialog.createSubDeck(parentId, "   ")
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+            assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+            assertThat(
+                "Snackbar should show invalid name error for blank name",
+                activity.snackbarText,
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `createDeck with non-activity context shows toast for valid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.createDeck("Create Deck")
+
+            assertThat(
+                "Toast should confirm deck creation for valid name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(CommonString.deck_created)),
+            )
+        }
+    }
+
+    @Test
+    fun `createDeck with non-activity context shows toast for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.createDeck("   ")
+
+            assertThat(
+                "Toast should show invalid name error for blank name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `renameDeck with activity context shows snackbar for valid name`() {
+        val deckId = col.decks.id("Old Deck")
+        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK, renamedDeckId = deckId) { dialog, assertionCalled ->
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> assertionCalled() }
+            dialog.renameDeck("Rename Deck")
+
+            activityScenario.onActivity { activity ->
+                assertThat(
+                    "Snackbar should confirm rename for valid name",
+                    activity.snackbarText,
+                    equalTo(getResourceString(CommonString.deck_renamed)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `renameDeck with activity context shows snackbar for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.RENAME_DECK, null, col.decks.id("Old Deck"))
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.renameDeck("   ")
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+            assertThat(
+                "Snackbar should show invalid name error for blank name",
+                activity.snackbarText,
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `renameDeck with non-activity context shows toast for valid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(
+                    ContextWrapper(activity),
+                    "Create deck",
+                    DeckDialogType.RENAME_DECK,
+                    null,
+                    col.decks.id("Old Deck"),
+                )
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.renameDeck("Rename Deck")
+
+            assertThat(
+                "Toast should confirm rename for valid name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(CommonString.deck_renamed)),
+            )
+        }
+    }
+
+    @Test
+    fun `renameDeck with non-activity context shows toast for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(
+                    ContextWrapper(activity),
+                    "Create deck",
+                    DeckDialogType.RENAME_DECK,
+                    null,
+                    col.decks.id("Old Deck"),
+                )
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.renameDeck("   ")
+
+            assertThat(
+                "Toast should show invalid name error for blank name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
+            )
         }
     }
 
@@ -339,11 +613,12 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun ensureExecutionOfScenario(
         deckDialogType: DeckDialogType,
         parentId: DeckId? = null,
+        renamedDeckId: DeckId? = null,
         callback: ((CreateDeckDialog, (() -> Unit)) -> Unit),
     ) {
         activityScenario.onActivity { activity: DeckPicker ->
             val assertionCalled = AtomicReference(false)
-            callback(CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)) {
+            callback(CreateDeckDialog(activity, "Create deck", deckDialogType, parentId, renamedDeckId)) {
                 assertionCalled.set(true)
             }
             assertThat("no call to assertionCalled()", assertionCalled.get(), equalTo(true))

@@ -7,7 +7,7 @@
  * Licensed under the GPL-3.0 license. See LICENSE file in the project root for details.
  *
  * @description
- * updateI18nFiles() to update files in AnkiDroid/src/main/res/values/ with downloaded files from crowdin.
+ * updateI18nFiles() to update files in common/android/src/main/res/values/ with downloaded files from crowdin.
  * The downloaded file needs to extract first with 'yarn start extract'.
  * It's expected to be called through 'yarn start update'.
  */
@@ -163,7 +163,7 @@ export async function updateI18nFiles() {
         // but this comment hopefully clarifies for the reader that BCP47 / ISO-639-2 3-letter language tags do work in practice.
         //
         // The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
-        let androidLanguages = [];
+        let androidLanguages: string[];
         const languageCode = language.split("-", 1)[0];
         if (LOCALIZED_REGIONS.includes(languageCode)) {
             androidLanguages = [language.replace("-", "-r")]; // zh-CN becomes zh-rCN

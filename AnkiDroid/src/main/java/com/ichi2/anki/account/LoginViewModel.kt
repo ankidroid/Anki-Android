@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.account
 
@@ -21,14 +7,13 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import anki.sync.SyncAuth
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.SyncAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
@@ -38,37 +23,37 @@ import timber.log.Timber
  * validates input fields, and provides results for login operations.
  */
 class LoginViewModel : ViewModel() {
-    private val _loginButtonEnabled = MutableStateFlow(false)
-    val loginButtonEnabled: StateFlow<Boolean> = _loginButtonEnabled.asStateFlow()
+    val loginButtonEnabled: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    private val _userNameError = MutableStateFlow<LoginError?>(null)
-    val userNameError: StateFlow<LoginError?> = _userNameError.asStateFlow()
+    val userNameError: StateFlow<LoginError?>
+        field = MutableStateFlow<LoginError?>(null)
 
-    private val _passwordError = MutableStateFlow<LoginError?>(null)
-    val passwordError: StateFlow<LoginError?> = _passwordError.asStateFlow()
+    val passwordError: StateFlow<LoginError?>
+        field = MutableStateFlow<LoginError?>(null)
 
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
-    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
+    val loginState: StateFlow<LoginState>
+        field = MutableStateFlow<LoginState>(LoginState.Idle)
 
     fun onUserNameFocusChange(
         hasFocus: Boolean,
         userName: String,
     ) {
-        _userNameError.value = if (!hasFocus && userName.isEmpty()) LoginError.EMPTY_USERNAME else null
+        userNameError.value = if (!hasFocus && userName.isEmpty()) LoginError.EMPTY_USERNAME else null
     }
 
     fun onPasswordFocusChange(
         hasFocus: Boolean,
         password: String,
     ) {
-        _passwordError.value = if (!hasFocus && password.isEmpty()) LoginError.EMPTY_PASSWORD else null
+        passwordError.value = if (!hasFocus && password.isEmpty()) LoginError.EMPTY_PASSWORD else null
     }
 
     fun onTextChanged(
         userName: String,
         password: String,
     ) {
-        _loginButtonEnabled.value = userName.isNotEmpty() && password.isNotEmpty()
+        loginButtonEnabled.value = userName.isNotEmpty() && password.isNotEmpty()
     }
 
     /**
@@ -91,15 +76,15 @@ class LoginViewModel : ViewModel() {
                 val auth = syncLogin(username, password, endpoint)
                 Timber.i("Login success")
                 updateLogin(username, auth.hkey)
-                _loginState.value = LoginState.Success
+                loginState.value = LoginState.Success
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 Timber.i("Login auth failed")
                 updateLogin("", "")
-                _loginState.value = LoginState.Error(exc)
+                loginState.value = LoginState.Error(exc)
             } catch (exc: Exception) {
                 // do not log the error, can contain PII
                 Timber.w("Login error")
-                _loginState.value = LoginState.Error(exc)
+                loginState.value = LoginState.Error(exc)
             }
         }
     }
@@ -110,7 +95,7 @@ class LoginViewModel : ViewModel() {
         endpoint: String?,
     ): SyncAuth =
         withCol {
-            syncLogin(username, password, endpoint)
+            SyncAuth(syncLogin(username, password, endpoint))
         }
 
     private fun updateLogin(
@@ -129,8 +114,8 @@ class LoginViewModel : ViewModel() {
 enum class LoginError(
     @StringRes private val messageResId: Int,
 ) {
-    EMPTY_USERNAME(R.string.invalid_email),
-    EMPTY_PASSWORD(R.string.password_empty),
+    EMPTY_USERNAME(CommonString.invalid_email),
+    EMPTY_PASSWORD(CommonString.password_empty),
     ;
 
     fun toHumanReadableString(context: Context): String = context.getString(this.messageResId)

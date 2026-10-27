@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -22,13 +8,16 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
-import com.ichi2.anki.databinding.BrowserColumnsSelectionEntryBinding
-import com.ichi2.anki.databinding.BrowserColumnsSelectionHeadingBinding
-import java.util.Collections
+import com.ichi2.anki.databinding.ItemBrowserColumnsEntryBinding
+import com.ichi2.anki.databinding.ItemBrowserColumnsHeadingBinding
+import com.ichi2.anki.utils.ext.runWhenNotComputingLayout
+import com.ichi2.anki.utils.ext.swapPositions
+import com.ichi2.anki.common.android.R as CommonR
 
 class BrowserColumnSelectionAdapter(
     val items: MutableList<BrowserColumnSelectionRecyclerItem>,
@@ -68,10 +57,10 @@ class BrowserColumnSelectionAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             BrowserColumnSelectionRecyclerItem.COLUMN_VIEW_TYPE ->
-                ColumnViewHolder(BrowserColumnsSelectionEntryBinding.inflate(inflater, parent, false))
+                ColumnViewHolder(ItemBrowserColumnsEntryBinding.inflate(inflater, parent, false))
 
             BrowserColumnSelectionRecyclerItem.USAGE_VIEW_TYPE -> {
-                UsageViewHolder(BrowserColumnsSelectionHeadingBinding.inflate(inflater, parent, false))
+                UsageViewHolder(ItemBrowserColumnsHeadingBinding.inflate(inflater, parent, false))
             }
             else -> throw IllegalArgumentException("Unexpected viewType")
         }
@@ -105,12 +94,6 @@ class BrowserColumnSelectionAdapter(
         notifyItemChanged(toPosition)
     }
 
-    fun refreshDataset() {
-        // this needs to be done after onMoved, or the drag operation sometimes completes early
-        // when on a tablet
-        notifyItemRangeChanged(0, items.size)
-    }
-
     fun <T> MutableList<T>.move(
         fromIndex: Int,
         toIndex: Int,
@@ -130,10 +113,10 @@ class BrowserColumnSelectionAdapter(
     }
 
     /**
-     * @see R.layout.browser_columns_selection_entry
+     * @see R.layout.item_browser_columns_entry
      */
     private inner class ColumnViewHolder(
-        private val binding: BrowserColumnsSelectionEntryBinding,
+        private val binding: ItemBrowserColumnsEntryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(column: ColumnWithSample) {
             column.label.let { binding.columnTitle.text = it }
@@ -142,9 +125,9 @@ class BrowserColumnSelectionAdapter(
             binding.buttonToggleColumn.apply {
                 // NICE_TO_HAVE: animate between + and -
                 val isExclude = absoluteAdapterPosition < positionOfAvailableHeading
-                setImageResource(if (isExclude) R.drawable.ic_remove else R.drawable.ic_add)
+                setImageResource(if (isExclude) R.drawable.ic_remove else CommonR.drawable.ic_add)
 
-                val label = context.getString(if (isExclude) R.string.exclude_column else R.string.include_column)
+                val label = context.getString(if (isExclude) CommonString.exclude_column else CommonString.include_column)
                 contentDescription = label
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     tooltipText = label
@@ -163,9 +146,9 @@ class BrowserColumnSelectionAdapter(
         }
     }
 
-    /** @see [R.layout.browser_columns_selection_heading] */
+    /** @see [R.layout.item_browser_columns_heading] */
     private class UsageViewHolder(
-        private val binding: BrowserColumnsSelectionHeadingBinding,
+        private val binding: ItemBrowserColumnsHeadingBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(columnUsage: ColumnUsage) {
             binding.title.text = itemView.context.getString(columnUsage.titleRes)
@@ -176,7 +159,7 @@ class BrowserColumnSelectionAdapter(
 /**
  * A [ItemTouchHelper.Callback] for the [BrowserColumnSelectionAdapter].
  */
-open class BrowserColumnSelectionTouchHelperCallback(
+class BrowserColumnSelectionTouchHelperCallback(
     private val items: MutableList<BrowserColumnSelectionRecyclerItem>,
 ) : ItemTouchHelper.Callback() {
     private val movementFlags = makeMovementFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0)
@@ -202,9 +185,20 @@ open class BrowserColumnSelectionTouchHelperCallback(
         // `Available` should always be the first element, so don't allow moving above it
         if (toPosition == 0) return false
 
-        Collections.swap(items, fromPosition, toPosition)
+        items.swapPositions(fromPosition, toPosition)
         recyclerView.adapter?.notifyItemMoved(fromPosition, toPosition)
         return true
+    }
+
+    override fun clearView(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+    ) {
+        super.clearView(recyclerView, viewHolder)
+
+        // this needs to be done after onMoved, or the drag operation sometimes completes early
+        // when on a tablet
+        recyclerView.runWhenNotComputingLayout { recyclerView.adapter?.notifyItemRangeChanged(0, items.size) }
     }
 
     override fun onSwiped(

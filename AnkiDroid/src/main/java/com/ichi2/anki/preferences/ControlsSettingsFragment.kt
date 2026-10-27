@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences
 
 import android.content.res.Configuration
@@ -26,6 +13,7 @@ import androidx.preference.children
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -35,10 +23,12 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
 import com.ichi2.preferences.ReviewerControlPreference
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -124,6 +114,7 @@ class ControlsSettingsFragment :
         setControlPreferencesDefaultValues(screen)
         setDynamicTitle()
         setupNewStudyScreenSettings()
+        setupAnswerCommands()
     }
 
     @NeedsTest("Only the tab elements are removed")
@@ -139,36 +130,72 @@ class ControlsSettingsFragment :
 
     private fun setDynamicTitle() {
         findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
-            val preferenceTitle = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            val preferenceTitle = TR.sentenceCase.setDueDate
             it.title = preferenceTitle
             it.dialogTitle = preferenceTitle
         }
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
-            it.title = getString(R.string.gesture_toggle_whiteboard).toSentenceCase(R.string.sentence_gesture_toggle_whiteboard)
+            it.title = TR.sentenceCase.gestureToggleWhiteboard(getString(CommonString.gesture_toggle_whiteboard))
         }
         findPreference<ControlPreference>(getString(R.string.flag_red_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_red).toSentenceCase(R.string.sentence_gesture_flag_red)
+            it.title = TR.sentenceCase.gestureFlagRed(getString(CommonString.gesture_flag_red))
         }
         findPreference<ControlPreference>(getString(R.string.flag_orange_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_orange).toSentenceCase(R.string.sentence_gesture_flag_orange)
+            it.title = TR.sentenceCase.gestureFlagOrange(getString(CommonString.gesture_flag_orange))
         }
         findPreference<ControlPreference>(getString(R.string.flag_green_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_green).toSentenceCase(R.string.sentence_gesture_flag_green)
+            it.title = TR.sentenceCase.gestureFlagGreen(getString(CommonString.gesture_flag_green))
         }
         findPreference<ControlPreference>(getString(R.string.flag_blue_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_blue).toSentenceCase(R.string.sentence_gesture_flag_blue)
+            it.title = TR.sentenceCase.gestureFlagBlue(getString(CommonString.gesture_flag_blue))
         }
         findPreference<ControlPreference>(getString(R.string.flag_pink_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_pink).toSentenceCase(R.string.sentence_gesture_flag_pink)
+            it.title = TR.sentenceCase.gestureFlagPink(getString(CommonString.gesture_flag_pink))
         }
         findPreference<ControlPreference>(getString(R.string.flag_turquoise_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_turquoise).toSentenceCase(R.string.sentence_gesture_flag_turquoise)
+            it.title = TR.sentenceCase.gestureFlagTurquoise(getString(CommonString.gesture_flag_turquoise))
         }
         findPreference<ControlPreference>(getString(R.string.flag_purple_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_purple).toSentenceCase(R.string.sentence_gesture_flag_purple)
+            it.title = TR.sentenceCase.gestureFlagPurple(getString(CommonString.gesture_flag_purple))
         }
         findPreference<ControlPreference>(getString(R.string.remove_flag_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
+            it.title = TR.sentenceCase.gestureFlagRemove(getString(CommonString.gesture_flag_remove))
+        }
+        findPreference<ControlPreference>(getString(R.string.bury_card_command_key))?.let {
+            it.title = TR.sentenceCase.buryCard
+        }
+        findPreference<ControlPreference>(getString(R.string.suspend_card_command_key))?.let {
+            it.title = TR.sentenceCase.suspendCard
+        }
+        findPreference<ControlPreference>(getString(R.string.card_info_command_key))?.let {
+            it.title = TR.sentenceCase.cardInfo
+        }
+        findPreference<ControlPreference>(getString(R.string.bury_note_command_key))?.let {
+            it.title = TR.sentenceCase.buryNote
+        }
+        findPreference<ControlPreference>(getString(R.string.suspend_note_command_key))?.let {
+            it.title = TR.sentenceCase.suspendNote
+        }
+        findPreference<ControlPreference>(getString(R.string.mark_command_key))?.let {
+            it.title = TR.sentenceCase.markNote
+        }
+        findPreference<ControlPreference>(getString(R.string.previewer_mark_key))?.let {
+            it.title = TR.sentenceCase.markNote
+        }
+        findPreference<ControlPreference>(getString(R.string.previous_card_info_command_key))?.let {
+            it.title = TR.sentenceCase.previousCardInfo
+        }
+        findPreference<ControlPreference>(getString(R.string.delete_command_key))?.let {
+            it.title = TR.sentenceCase.deleteNote
+        }
+        findPreference<ControlPreference>(getString(R.string.answer_again_command_key))?.let {
+            it.title = TR.sentenceCase.answerAgain
+        }
+        findPreference<ControlPreference>(getString(R.string.answer_hard_command_key))?.let {
+            it.title = TR.sentenceCase.answerHard
+        }
+        findPreference<ControlPreference>(getString(R.string.answer_good_command_key))?.let {
+            it.title = TR.sentenceCase.answerGood
         }
     }
 
@@ -176,6 +203,10 @@ class ControlsSettingsFragment :
         if (!Prefs.isNewStudyScreenEnabled) {
             findPreference<Preference>(R.string.gestures_corner_touch_preference)?.dependency = getString(R.string.gestures_preference)
             findPreference<Preference>(R.string.pref_swipe_sensitivity_key)?.dependency = getString(R.string.gestures_preference)
+            findPreference<Preference>(R.string.pref_key_whiteboard_undo)?.isVisible = false
+            findPreference<Preference>(R.string.pref_key_whiteboard_toggle_eraser)?.isVisible = false
+            findPreference<Preference>(R.string.pref_key_whiteboard_redo)?.isVisible = false
+            findPreference<Preference>(R.string.pref_key_whiteboard_clear)?.isVisible = false
             return
         }
         for (keyRes in legacyStudyScreenSettings) {
@@ -210,23 +241,28 @@ class ControlsSettingsFragment :
             )
         for (key in answerCommandKeys) {
             (findPreference<Preference>(key) as? ReviewerControlPreference)?.let { answerPref ->
-                val items =
-                    arrayOf(
-                        getString(R.string.only_answer),
-                        getString(R.string.flip_and_answer),
-                    )
                 answerPref.setOnBindingSelectedListener { binding ->
+                    val isAlreadyAssigned =
+                        showAnswerPref?.getMappableBindings()?.any {
+                            it.binding == binding &&
+                                (it.side == CardSide.QUESTION || it.side == CardSide.BOTH)
+                        } == true
+                    if (isAlreadyAssigned) {
+                        answerPref.addBinding(binding, CardSide.ANSWER)
+                        return@setOnBindingSelectedListener true
+                    }
+
                     AlertDialog.Builder(requireContext()).show {
                         setTitle(answerPref.title)
                         setIcon(answerPref.icon)
-                        setItems(items) { _, index ->
-                            when (index) {
-                                0 -> answerPref.addBinding(binding, CardSide.ANSWER)
-                                1 -> {
-                                    answerPref.addBinding(binding, CardSide.ANSWER)
-                                    showAnswerPref?.addBinding(binding, CardSide.QUESTION)
-                                }
-                            }
+                        setMessage(getString(CommonString.also_assign_binding_to_show_answer, getString(CommonString.show_answer)))
+
+                        positiveButton(text = getString(CommonString.dialog_assign)) {
+                            answerPref.addBinding(binding, CardSide.ANSWER)
+                            showAnswerPref?.addBinding(binding, CardSide.QUESTION)
+                        }
+                        negativeButton(text = getString(CommonString.dialog_skip)) {
+                            answerPref.addBinding(binding, CardSide.ANSWER)
                         }
                     }
                     true

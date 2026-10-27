@@ -1,30 +1,13 @@
-/*
- * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
- * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>
- * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
- * Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Nicolas Rauol <nicolas.rauol@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 package com.ichi2.anki.recorder
 
 import android.content.Context
 import android.media.MediaRecorder
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -41,6 +24,7 @@ class AudioRecorder(
     private val context: Context,
 ) : Closeable {
     private var recorder: MediaRecorder? = null
+    private var isTempFile = false
 
     /**
      * Indicates whether the recorder is currently capturing audio.
@@ -67,6 +51,7 @@ class AudioRecorder(
         Timber.i("AudioRecorder::startRecording (isRecording %b)", isRecording)
         if (isRecording) return
 
+        isTempFile = file == null
         val target = file ?: createTempFile() ?: return
         currentFile = target
 
@@ -125,18 +110,27 @@ class AudioRecorder(
 
     /**
      * Stops the recording and updates state.
+     * @param keepFile If false, deletes the file (only if it was a temp file).
      */
-    fun stop() {
+    fun stop(keepFile: Boolean = true) {
         if (!isRecording) return
 
         try {
             recorder?.stop()
         } catch (e: RuntimeException) {
             Timber.w(e, "Failed to stop recorder: likely called too soon after start")
-            currentFile?.delete()
-            currentFile = null
+            deleteCurrentFile()
         } finally {
             isRecording = false
+
+            if (!keepFile && isTempFile) {
+                deleteCurrentFile()
+            }
+
+            if (!keepFile) {
+                currentFile = null
+            }
+            isTempFile = false
         }
     }
 
@@ -181,8 +175,23 @@ class AudioRecorder(
      * Should be called in `onDestroy()` or when the class is no longer needed.
      */
     override fun close() {
-        stop()
-        recorder?.release()
-        recorder = null
+        try {
+            if (isRecording) {
+                // If closing while recording, we assume it's an abort
+                stop(keepFile = !isTempFile)
+            }
+        } finally {
+            recorder?.release()
+            recorder = null
+        }
+    }
+
+    private fun deleteCurrentFile() {
+        val file = currentFile ?: return
+        if (file.exists() && !file.delete()) {
+            Timber.w("Failed to delete temporary recording file: ${file.absolutePath}")
+        } else {
+            Timber.d("Deleted temporary recording file")
+        }
     }
 }

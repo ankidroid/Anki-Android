@@ -1,16 +1,4 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.utils
 
@@ -21,10 +9,10 @@ import android.view.MenuItem
 import androidx.annotation.DrawableRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
-import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.android.R as CommonR
 
 private const val DEFAULT_HORIZONTAL_PADDING = 4F
 
@@ -65,14 +53,18 @@ private fun Context.increaseHorizontalPaddingOfMenuIcons(
     }
 }
 
+/**
+ * Sets [drawableResId] as the icon, with [horizontalPaddingDp] of padding on each side.
+ */
 fun MenuItem.setPaddedIcon(
     context: Context,
     @DrawableRes drawableResId: Int,
     horizontalPaddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
 ) {
     val padding = horizontalPaddingDp.dp.toPx(context)
-    val drawable = ContextCompat.getDrawable(context, drawableResId)
-    icon = InsetDrawable(drawable, padding, 0, padding, 0)
+    // #21688 use the Menu's context to resolve the drawable
+    setIcon(drawableResId)
+    icon = InsetDrawable(icon, padding, 0, padding, 0)
 }
 
 /**
@@ -99,18 +91,25 @@ fun Context.increaseHorizontalPaddingOfMenuIcons(
 
 /**
  * Recursively mutates and tints the icons of the items of the given overflow or popup menu
- * with the color [R.attr.overflowAndPopupMenuIconColor] that is specified in the theme.
+ * with the color [CommonR.attr.overflowAndPopupMenuIconColor] that is specified in the theme.
  * Has no effect for items that have no icon.
  */
 fun Context.tintOverflowMenuIcons(
     menu: Menu,
     skipIf: ((MenuItem) -> Boolean)? = null,
 ) {
-    val iconColor = MaterialColors.getColor(this, R.attr.overflowAndPopupMenuIconColor, 0)
+    val iconColor = MaterialColors.getColor(this, CommonR.attr.overflowAndPopupMenuIconColor, 0)
 
     menu.overflowItemsRecursive().forEach { item ->
         if (skipIf == null || !skipIf(item)) {
             item.icon?.mutate()?.setTint(iconColor)
         }
+    }
+}
+
+fun Menu.configureIconsDirection(context: Context) {
+    val direction = context.resources.configuration.layoutDirection
+    itemsRecursive().forEach { item ->
+        item.icon?.layoutDirection = direction
     }
 }

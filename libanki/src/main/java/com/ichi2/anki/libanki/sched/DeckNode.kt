@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>
+
 package com.ichi2.anki.libanki.sched
 
 import anki.decks.DeckTreeNode
@@ -108,6 +96,15 @@ data class DeckNode(
      * There can be false negative but no false positive.
      */
     fun hasCardsReadyToStudy(): Boolean = revCount > 0 || newCount > 0 || lrnCount > 0
+
+    /**
+     * Sum of new, review and learning cards due across the top-level decks, for
+     * the deck-picker subtitle. The root's own aggregate is not used as the
+     * backend caps it at the 9999 daily limit. Per-deck counts already apply
+     * each deck's daily limits, so subdecks sharing a parent limit are not
+     * double-counted (issue 17605).
+     */
+    fun totalCardsDue(): Int = children.sumOf { it.newCount + it.revCount + it.lrnCount }
 
     /**
      * The node with [did] [deckId], if it is either this node or a descendant.

@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
+
 package com.ichi2.anki
 
 import android.content.ClipDescription
@@ -22,10 +10,11 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
-import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileNameAndExtension
@@ -45,36 +34,36 @@ object MediaRegistration {
      * Represents different types of media errors.
      */
     sealed class MediaError {
-        /** [Something wrong wrong][R.string.multimedia_editor_something_wrong] */
+        /** [Something wrong wrong][CommonString.multimedia_editor_something_wrong] */
         data object GenericError : MediaError()
 
-        /** [Something went wrong, please try again[R.string.something_wrong] */
+        /** [Something went wrong, please try again[CommonString.something_wrong] */
         data class GenericErrorTryAgain(
             val details: String?,
         ) : MediaError()
 
-        /** [Error converting clipboard image to png][R.string.multimedia_editor_png_paste_error] */
+        /** [Error converting clipboard image to png][CommonString.multimedia_editor_png_paste_error] */
         class ConversionError(
             val message: String,
         ) : MediaError()
 
-        /** [The image is too large, please insert the image manually][R.string.note_editor_image_too_large] */
+        /** [The image is too large, please insert the image manually][CommonString.note_editor_image_too_large] */
         data object ImageTooLarge : MediaError()
 
-        /** [The video file is too large, please insert the video manually][R.string.note_editor_video_too_large] */
+        /** [The video file is too large, please insert the video manually][CommonString.note_editor_video_too_large] */
         data object VideoTooLarge : MediaError()
 
-        /** [The audio file is too large, please insert the audio manually][R.string.note_editor_audio_too_large] */
+        /** [The audio file is too large, please insert the audio manually][CommonString.note_editor_audio_too_large] */
         data object AudioTooLarge : MediaError()
 
         fun toHumanReadableString(context: Context): String =
             when (this) {
-                is GenericError -> context.getString(R.string.multimedia_editor_something_wrong)
-                is GenericErrorTryAgain -> context.getString(R.string.something_wrong) + details?.let { "\n\n$it" }.orEmpty()
-                is ConversionError -> context.getString(R.string.multimedia_editor_png_paste_error, message)
-                is ImageTooLarge -> context.getString(R.string.note_editor_image_too_large)
-                is VideoTooLarge -> context.getString(R.string.note_editor_video_too_large)
-                is AudioTooLarge -> context.getString(R.string.note_editor_audio_too_large)
+                is GenericError -> context.getString(CommonString.multimedia_editor_something_wrong)
+                is GenericErrorTryAgain -> context.getString(CommonString.something_wrong) + details?.let { "\n\n$it" }.orEmpty()
+                is ConversionError -> context.getString(CommonString.multimedia_editor_png_paste_error, message)
+                is ImageTooLarge -> context.getString(CommonString.note_editor_image_too_large)
+                is VideoTooLarge -> context.getString(CommonString.note_editor_video_too_large)
+                is AudioTooLarge -> context.getString(CommonString.note_editor_audio_too_large)
             }
     }
 
@@ -208,7 +197,8 @@ object MediaRegistration {
         }
 
         // register media for webView
-        if (!registerMediaForWebView(tempFilePath)) {
+        val importedFile = registerMediaForWebView(tempFilePath)
+        if (importedFile == null) {
             clipCopy.delete()
             return null
         }
@@ -216,8 +206,7 @@ object MediaRegistration {
 
         val field = if (isImage) ImageField() else MediaClipField()
 
-        field.hasTemporaryMedia = true
-        field.mediaFile = tempFilePath
+        field.mediaFile = importedFile
         return field.formattedValue
     }
 
@@ -242,25 +231,22 @@ object MediaRegistration {
     }
 
     /**
+     * @return the imported file, including any filename changes made by the backend, or null on failure
+     *
      * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
      */
     @CheckResult
-    fun registerMediaForWebView(mediaPath: File?): Boolean {
-        if (mediaPath == null) {
-            // Nothing to register - continue with execution.
-            return true
-        }
+    private fun registerMediaForWebView(mediaPath: File): File? {
         Timber.i("Adding media to collection: %s", mediaPath)
-        val f = mediaPath
         return try {
-            CollectionManager.getColUnsafe().media.addFile(f)
-            true
+            val media = CollectionManager.getColUnsafe().media
+            File(media.dir, media.addFile(mediaPath))
         } catch (e: IOException) {
             Timber.w(e, "Failed to add file")
-            false
+            null
         } catch (e: EmptyMediaException) {
             Timber.w(e, "Failed to add file")
-            false
+            null
         }
     }
 }

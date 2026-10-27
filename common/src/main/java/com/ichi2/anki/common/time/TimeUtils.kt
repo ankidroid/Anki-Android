@@ -1,22 +1,7 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.common.time
 
-import com.ichi2.anki.common.annotations.NeedsTest
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -33,11 +18,9 @@ const val TIME_DAY = 24.0 * TIME_HOUR
 // private const val TIME_MONTH = 30.0 * TIME_DAY
 // private const val TIME_YEAR = 12.0 * TIME_MONTH
 
-@NeedsTest("untested")
 fun getTimestamp(time: Time): String = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
 
 /** Formats the time as '00:00.00' (m:s:ms), OR 00:00:00.00 (h:m:s.ms) */
-@NeedsTest("untested")
 fun Duration.formatAsString(): String {
     val milliseconds = this.inWholeMilliseconds
     val ms = milliseconds % 1000
@@ -51,11 +34,10 @@ fun Duration.formatAsString(): String {
     }
 }
 
-@NeedsTest("untested")
 fun getDayStart(time: Time): Long {
     val cal = time.calendar()
     if (cal[Calendar.HOUR_OF_DAY] < 4) {
-        cal.roll(Calendar.DAY_OF_YEAR, -1)
+        cal.add(Calendar.DAY_OF_YEAR, -1)
     }
     cal[Calendar.HOUR_OF_DAY] = 4
     cal[Calendar.MINUTE] = 0

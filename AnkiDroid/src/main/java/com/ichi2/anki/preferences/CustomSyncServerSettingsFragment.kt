@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences
 
 import android.content.SharedPreferences
@@ -20,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.snackbar.showSnackbar
@@ -49,14 +37,14 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
             // Empty string input causes the certificate to be unset in the backend, i.e., no error
             if (!CollectionManager.updateCustomCertificate(newCert)) {
                 AlertDialog.Builder(requireContext()).show {
-                    setTitle(R.string.dialog_invalid_custom_certificate_title)
-                    setMessage(R.string.dialog_invalid_custom_certificate)
-                    setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                    setTitle(CommonString.dialog_invalid_custom_certificate_title)
+                    setMessage(CommonString.dialog_invalid_custom_certificate)
+                    setPositiveButton(CommonString.dialog_ok) { _, _ -> }
                 }
                 return@setOnPreferenceChangeListener false
             }
 
-            showSnackbar(R.string.dialog_updated_custom_certificate)
+            showSnackbar(CommonString.dialog_updated_custom_certificate)
             true
         }
     }
@@ -81,7 +69,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
                 key == SyncPreferences.CUSTOM_SYNC_ENABLED
             ) {
                 prefs.edit {
-                    remove(SyncPreferences.CURRENT_SYNC_URI)
+                    remove(SyncPreferences.PREF_CURRENT_SYNC_URI)
                 }
             }
         }

@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.pages
 
 import android.content.Context
@@ -20,42 +7,43 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import anki.collection.OpChanges
 import anki.scheduler.UnburyDeckRequest
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
-import com.ichi2.anki.StudyOptionsActivity
-import com.ichi2.anki.common.time.SECONDS_PER_DAY
-import com.ichi2.anki.common.time.TIME_HOUR
-import com.ichi2.anki.common.time.TIME_MINUTE
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.StudyOptionsDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.showThemedToast
-import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.utils.listItemsAndMessage
+import com.ichi2.anki.study.StudyAvailability
+import com.ichi2.anki.study.currentDeckStudyState
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.math.round
 
 class CongratsPage :
     PageFragment(),
@@ -68,14 +56,16 @@ class CongratsPage :
         ChangeManager.subscribe(this)
     }
 
+    // TODO: move this to the ViewModel
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,
     ) {
-        // typically due to 'day rollover'
-        if (changes.studyQueues) {
-            Timber.i("refreshing: study queues updated")
-            webViewLayout.post { webViewLayout.reload() }
+        // typically due to 'day rollover'. handler !== viewModel excludes changes this
+        // screen caused itself (eg. unburying), which are already handled directly
+        if (changes.studyQueues && handler !== viewModel) {
+            Timber.i("study queues updated")
+            viewModel.onStudyQueuesChanged()
         }
     }
 
@@ -90,7 +80,7 @@ class CongratsPage :
             .onEach { errorMessage ->
                 AlertDialog
                     .Builder(requireContext())
-                    .setTitle(R.string.vague_error)
+                    .setTitle(CommonString.vague_error)
                     .setMessage(errorMessage)
                     .show()
             }.launchIn(lifecycleScope)
@@ -107,9 +97,9 @@ class CongratsPage :
                                 TR.studyingAllBuriedCards(),
                             )
                         AlertDialog.Builder(requireContext()).show {
-                            negativeButton(R.string.dialog_cancel)
-                            listItemsAndMessage(
-                                TR.studyingWhatWouldYouLikeToUnbury(),
+                            setTitle(TR.studyingWhatWouldYouLikeToUnbury())
+                            negativeButton(CommonString.dialog_cancel)
+                            listItems(
                                 unburyOptions,
                             ) { _, position ->
                                 val mode =
@@ -129,12 +119,34 @@ class CongratsPage :
         viewModel.deckOptionsDestination
             .flowWithLifecycle(lifecycle)
             .onEach { destination ->
-                val intent = destination.toIntent(requireContext())
-                startActivity(intent, null)
+                navigate(destination)
             }.launchIn(lifecycleScope)
+
+        // a rebuild triggered elsewhere (eg. deck options) while this screen wasn't visible may
+        // have been missed, so recheck on every STARTED entry instead of trusting only the
+        // opExecuted callback. Launched from inside repeatOnLifecycle so the collector is
+        // guaranteed active before it emits (congratsRefreshState has no replay cache, so
+        // emitting with no active collector silently drops the event).
+        // viewLifecycleOwner (not the fragment's own lifecycle) is required by lint - see
+        // UnsafeRepeatOnLifecycleDetector.
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.refreshIfNeeded() }
+                viewModel.congratsRefreshState.collect { state ->
+                    when (state) {
+                        CongratsRefreshState.ReloadPage -> {
+                            Timber.d("congrats: reloading page after rebuild")
+                            webViewLayout.post { webViewLayout.reload() }
+                        }
+                        CongratsRefreshState.DeckHasCardsToStudy -> openStudyOptionsAndFinish()
+                    }
+                }
+            }
+        }
 
         with(view.findViewById<MaterialToolbar>(R.id.toolbar)) {
             inflateMenu(R.menu.congrats)
+            menu.findItem(R.id.action_open_deck_options)?.title = TR.sentenceCase.deckOptions
             setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.action_open_deck_options) {
                     viewModel.onDeckOptions()
@@ -159,79 +171,20 @@ class CongratsPage :
         )
 
     private fun openStudyOptionsAndFinish() {
-        val intent = Intent(requireContext(), StudyOptionsActivity::class.java)
-        startActivity(intent, null)
+        Timber.i("opening study options")
+        navigate(StudyOptionsDestination)
         requireActivity().finish()
     }
 
     private fun onStudyMore() {
         launchCatchingTask {
             val customStudy = CustomStudyDialog.createInstance(deckId = withCol { decks.selected() })
-            customStudy.show(childFragmentManager, null)
+            requireActivity().showDialogFragment(customStudy)
         }
     }
 
     companion object {
         fun getIntent(context: Context): Intent = SingleFragmentActivity.getIntent(context, fragmentClass = CongratsPage::class)
-
-        private fun displayNewCongratsScreen(context: Context): Boolean = context.sharedPrefs().getBoolean("new_congrats_screen", false)
-
-        fun display(activity: FragmentActivity) {
-            if (displayNewCongratsScreen(activity)) {
-                activity.startActivity(getIntent(activity))
-            } else {
-                activity.launchCatchingTask {
-                    val message = getDeckFinishedMessage(activity)
-                    showThemedToast(activity, message, false)
-                }
-            }
-        }
-
-        fun onReviewsCompleted(
-            activity: FragmentActivity,
-            cardsInDeck: Boolean,
-        ) {
-            if (displayNewCongratsScreen(activity)) {
-                activity.startActivity(getIntent(activity))
-                return
-            }
-
-            // Show a message when reviewing has finished
-            if (cardsInDeck) {
-                activity.launchCatchingTask {
-                    val message = getDeckFinishedMessage(activity)
-                    activity.showSnackbar(message)
-                }
-            } else {
-                activity.showSnackbar(R.string.studyoptions_no_cards_due)
-            }
-        }
-
-        // based in https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/routes/congrats/lib.ts#L8C17-L8C34
-        private suspend fun getDeckFinishedMessage(activity: FragmentActivity): String {
-            val info = withCol { sched.congratulationsInfo() }
-            val secsUntilNextLearn = info.secsUntilNextLearn
-            if (secsUntilNextLearn >= SECONDS_PER_DAY) {
-                return activity.getString(R.string.studyoptions_congrats_finished)
-            }
-            // https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/lib/tslib/time.ts#L22
-            val (unit, amount) =
-                if (secsUntilNextLearn < TIME_MINUTE) {
-                    "seconds" to secsUntilNextLearn.toDouble()
-                } else if (secsUntilNextLearn < TIME_HOUR) {
-                    "minutes" to secsUntilNextLearn / TIME_MINUTE
-                } else {
-                    "hours" to secsUntilNextLearn / TIME_HOUR
-                }
-
-            val nextLearnDue = TR.schedulingNextLearnDue(unit, round(amount).toInt())
-            return activity.getString(R.string.studyoptions_congrats_next_due_in, nextLearnDue)
-        }
-
-        fun DeckPicker.onDeckCompleted() {
-            Timber.i("Opening CongratsPage")
-            startActivity(getIntent(this))
-        }
     }
 }
 
@@ -261,7 +214,7 @@ class CongratsViewModel :
     }
 
     private suspend fun unburyAndStudy(mode: UnburyDeckRequest.Mode) {
-        undoableOp {
+        undoableOp(handler = this) {
             sched.unburyDeck(decks.getCurrentId(), mode)
         }
         unburyState.emit(UnburyState.OpenStudy)
@@ -274,10 +227,57 @@ class CongratsViewModel :
             deckOptionsDestination.emit(DeckOptionsDestination(deckId, isFiltered))
         }
     }
+
+    val congratsRefreshState = MutableSharedFlow<CongratsRefreshState>()
+
+    // set when onStudyQueuesChanged() has nothing to emit to (screen not STARTED, so
+    // congratsRefreshState has no collector and would silently drop the event) - consumed
+    // and cleared by refreshIfNeeded() on the next STARTED
+    private var missedRefresh = false
+
+    fun onStudyQueuesChanged() {
+        launchCatchingIO {
+            if (congratsRefreshState.subscriptionCount.value == 0) {
+                missedRefresh = true
+                return@launchCatchingIO
+            }
+            emitRefreshState()
+        }
+    }
+
+    /** Called every time the screen becomes STARTED. [isDeckFinished] is always checked,
+     * but reload/navigation only happens if something was actually
+     * missed while unwatched, or the deck no longer needs the congrats page. */
+    suspend fun refreshIfNeeded() {
+        // desktop's Overview re-checks sched._is_finished() on every refresh instead of
+        // assuming the deck is still done - do the same before reloading the congrats page
+        val stillFinished = isDeckFinished()
+        if (!missedRefresh && stillFinished) return
+        missedRefresh = false
+        congratsRefreshState.emit(
+            if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
+        )
+    }
+
+    private suspend fun emitRefreshState() {
+        missedRefresh = false
+        val stillFinished = isDeckFinished()
+        congratsRefreshState.emit(
+            if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
+        )
+    }
+
+    private suspend fun isDeckFinished(): Boolean = withCol { currentDeckStudyState().availability == StudyAvailability.NoCardsAvailable }
 }
 
 sealed class UnburyState {
     data object OpenStudy : UnburyState()
 
     data object SelectMode : UnburyState()
+}
+
+sealed class CongratsRefreshState {
+    data object ReloadPage : CongratsRefreshState()
+
+    data object DeckHasCardsToStudy : CongratsRefreshState()
 }

@@ -1,38 +1,27 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.databinding.DialogForgetCardsBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.openUrl
@@ -56,7 +45,7 @@ import timber.log.Timber
  * * https://docs.ankiweb.net/browsing.html#cards
  */
 @NeedsTest("all")
-class ForgetCardsDialog : DialogFragment() {
+class ForgetCardsDialog : AnalyticsDialogFragment() {
     /**
      * Resets cards back to their original positions in the new queue
      *
@@ -85,13 +74,13 @@ class ForgetCardsDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val sharedPrefs = requireContext().sharedPrefs()
         if (savedInstanceState != null) {
-            restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(ARG_RESTORE_ORIGINAL, true)
-            resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(ARG_RESET_REPETITION, false)
+            restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(STATE_RESTORE_ORIGINAL, true)
+            resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(STATE_RESET_REPETITION, false)
         } else {
             // If no saved instance state, load the last saved preferences for restore position and reset counts.
             with(sharedPrefs) {
-                restoreOriginalPositionIfPossible = getBoolean(ARG_RESTORE_ORIGINAL, true)
-                resetRepetitionAndLapseCounts = getBoolean(ARG_RESET_REPETITION, false)
+                restoreOriginalPositionIfPossible = getBoolean(PREF_RESTORE_ORIGINAL, true)
+                resetRepetitionAndLapseCounts = getBoolean(PREF_RESET_REPETITION, false)
             }
         }
         val binding = DialogForgetCardsBinding.inflate(layoutInflater)
@@ -113,39 +102,43 @@ class ForgetCardsDialog : DialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext()).create {
             // BUG: this is 'Reset Card'/'Forget Card' in Anki Desktop (24.04)
-            // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))
             // "Reset card progress" is less explicit on the singular/plural dimension
-            titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
+            titleWithHelpIcon(stringRes = CommonString.reset_card_dialog_title) {
                 requireContext().openUrl(R.string.link_help_forget_cards)
             }
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(CommonString.reset) {
                 sharedPrefs.edit {
-                    putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
-                    putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
+                    putBoolean(PREF_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+                    putBoolean(PREF_RESET_REPETITION, resetRepetitionAndLapseCounts)
                 }
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_FORGET,
-                    bundleOf(
-                        ARG_RESTORE_ORIGINAL to restoreOriginalPositionIfPossible,
-                        ARG_RESET_REPETITION to resetRepetitionAndLapseCounts,
-                    ),
+                    Bundle().apply {
+                        putBoolean(RESULT_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+                        putBoolean(RESULT_RESET_REPETITION, resetRepetitionAndLapseCounts)
+                    },
                 )
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(CommonString.dialog_cancel)
             setView(binding.root)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
-        outState.putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
+        outState.putBoolean(STATE_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+        outState.putBoolean(STATE_RESET_REPETITION, resetRepetitionAndLapseCounts)
     }
 
     companion object {
         const val REQUEST_KEY_FORGET = "request_key_forget_cards"
-        const val ARG_RESTORE_ORIGINAL = "key_restore_original"
-        const val ARG_RESET_REPETITION = "key_reset_repetition"
+        const val RESULT_RESTORE_ORIGINAL = "key_restore_original"
+        const val RESULT_RESET_REPETITION = "key_reset_repetition"
+
+        private const val STATE_RESTORE_ORIGINAL = "key_restore_original"
+        private const val STATE_RESET_REPETITION = "key_reset_repetition"
+        private const val PREF_RESTORE_ORIGINAL = "key_restore_original"
+        private const val PREF_RESET_REPETITION = "key_reset_repetition"
     }
 }
 
@@ -155,17 +148,33 @@ class ForgetCardsDialog : DialogFragment() {
  *
  * @param cardsIdsProducer lambda which returns the list of cards for which to reset the progress
  */
-internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
+internal fun FragmentActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
     setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
         forgetCards(
             cardsIdsProducer = cardsIdsProducer,
-            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),
-            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION),
+            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.RESULT_RESTORE_ORIGINAL),
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.RESULT_RESET_REPETITION),
         )
     }
 }
 
-private fun AnkiActivity.forgetCards(
+/**
+ * Listen for requests from [ForgetCardsDialog] and triggers backend calls to reset progress for
+ * current selected/reviewed card/cards. Callers need to supply the list of cards ids.
+ *
+ * @param cardsIdsProducer lambda which returns the list of cards for which to reset the progress
+ */
+internal fun Fragment.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
+    setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
+        activity?.forgetCards(
+            cardsIdsProducer = cardsIdsProducer,
+            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.RESULT_RESTORE_ORIGINAL),
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.RESULT_RESET_REPETITION),
+        )
+    }
+}
+
+private fun FragmentActivity.forgetCards(
     cardsIdsProducer: suspend () -> List<CardId>,
     restoreOriginalPositionIfPossible: Boolean,
     resetRepetitionAndLapseCounts: Boolean,
@@ -190,7 +199,7 @@ private fun AnkiActivity.forgetCards(
     Timber.d("forgot %d cards", cardsIds.size)
     showSnackbar(
         resources.getQuantityString(
-            R.plurals.reset_cards_dialog_acknowledge,
+            CommonPlurals.reset_cards_dialog_acknowledge,
             cardsIds.size,
             cardsIds.size,
         ),

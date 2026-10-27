@@ -6,9 +6,11 @@ runKtlint () {
     # and for the implementation, https://github.com/JLLeitschuh/ktlint-gradle/blob/master/plugin/src/main/kotlin/org/jlleitschuh/gradle/ktlint/GitHook.kt
     # The only change made are:
     # * replacing "exit" for "return", as this is running inside a function
-    # * echoing if the apply fails
+    # * aborting with stderr guidance if restoring unstaged changes fails
     # * renaming `diff` variable to `diff_path`.
     # * changing the path of the diff file (to ensure in case of failure that we don't overwrite the file)
+    # * storing the diff under `git rev-parse --git-dir` so worktrees work; abort if stash fails
+    # * never deleting the recovery patch after a failed stash/restore (see #17593)
     ######## KTLINT-GRADLE HOOK START ########
 
     CHANGED_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $NF ~ /\.kts?$/ { print $NF }')"
@@ -21,11 +23,27 @@ runKtlint () {
     echo "Running ktlint over these files:"
     echo "$CHANGED_FILES"
 
+    # Snapshot unstaged work before ktlint mutates the tree. Keep that patch on any
+    # stash/restore failure: #17593 lost hours of in-flight edits when an earlier
+    # hook version discarded the only recovery copy after a partial apply.
+    git_dir=$(git rev-parse --git-dir)
     date=$(date +%y%m%d_%H%M%S)
-    diff_path=.git/unstaged-ktlint-git-hook-$date.diff
-    git diff --color=never > $diff_path
-    if [ -s $diff_path ]; then
-      git apply -R $diff_path
+    diff_path="$git_dir/unstaged-ktlint-git-hook-$date.diff"
+    if ! git diff --color=never > "$diff_path"; then
+        echo "Failed to save unstaged changes before ktlint." >&2
+        echo "Commit aborted. Any partial snapshot is kept at: $diff_path" >&2
+        return 1
+    fi
+    if [ -s "$diff_path" ]; then
+        if ! git apply -R "$diff_path"; then
+            # Intentionally keep $diff_path: git apply -R can delete files before
+            # failing (e.g. unwritable paths), and removing the patch then destroys
+            # the only recovery copy — the #17593 failure mode.
+            echo "Failed to stash unstaged changes before ktlint." >&2
+            echo "Commit aborted. Your unstaged edits are still saved in: $diff_path" >&2
+            echo "Reapply with: git apply --ignore-whitespace \"$diff_path\"" >&2
+            return 1
+        fi
     fi
 
     ./gradlew --quiet ktlintFormat -PinternalKtlintGitFilter="$CHANGED_FILES"
@@ -40,18 +58,19 @@ runKtlint () {
     done
 
 
-    if [ -s $diff_path ]; then
-        git apply --ignore-whitespace $diff_path
-        apply_exit_code=$?
-        if [ $apply_exit_code -ne 0 ]; then
-            echo "`git apply` failed. You can find a patch of the version of the code before your `git commit` in $diff_path"
-        else
-            rm $diff_path
+    if [ -s "$diff_path" ]; then
+        if ! git apply --ignore-whitespace "$diff_path"; then
+            echo "git apply failed when restoring unstaged changes." >&2
+            echo "Commit aborted. Ktlint-formatted files remain staged (see: git diff --cached)." >&2
+            echo "Your unstaged edits are saved in: $diff_path" >&2
+            echo "Reapply with: git apply --ignore-whitespace \"$diff_path\"" >&2
+            return 1
         fi
+        rm -f "$diff_path"
     else
-      rm $diff_path
+        rm -f "$diff_path"
     fi
-    unset diff_path
+    unset diff_path git_dir
 
     echo "Completed ktlint hook."
     return $gradle_command_exit_code

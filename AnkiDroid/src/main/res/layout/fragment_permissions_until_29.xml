@@ -17,4 +17,12 @@
         app:permissionIcon="@drawable/ic_save_white"
         app:permissions="@array/legacy_storage_permissions"
         />
+    <com.ichi2.anki.ui.windows.permissions.PermissionsItem
+        android:id="@+id/internet_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:permissionTitle="@string/internet_access_title"
+        app:permissionSummary="@string/permission_access_summary"
+        app:permission="@string/manage_internet_permission"
+        />
 </LinearLayout>

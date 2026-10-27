@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.scheduling
 
@@ -22,7 +8,9 @@ import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.DateRange
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.NeedsRobolectric
 import com.ichi2.testutils.common.assertThrows
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -31,6 +19,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
+@NeedsRobolectric(
+    "Schedule CollectionManager work on the test dispatcher before removing the Android runner; advanceUntilIdle must await initialization.",
+)
 class SetDueDateViewModelTest : JvmTest() {
     @Test
     fun `initial values`() =
@@ -38,6 +29,24 @@ class SetDueDateViewModelTest : JvmTest() {
             assertThat("card count", cardCount, equalTo(2))
             assertThat("is not valid", !isValid)
             assertThat("initial tab is single day", currentTab, equalTo(Tab.SINGLE_DAY))
+        }
+
+    @Test
+    fun `submission waits for scheduler initialization`() =
+        runTest {
+            val viewModel = SetDueDateViewModel()
+            viewModel.nextSingleDayDueDate = 3
+
+            assertFalse(viewModel.isValid, "valid input cannot be submitted before the scheduler setting is known")
+            assertThat(viewModel.calculateDaysParameter(), equalTo(null))
+            assertThat("keyboard submission is also guarded", viewModel.updateDueDateAsync().await(), equalTo(null))
+
+            col.config.set("fsrs", true)
+            viewModel.init(cardIds = listOf(1, 2))
+            advanceUntilIdle()
+
+            assertTrue(viewModel.isValid, "existing input becomes valid once the scheduler setting is known")
+            assertThat(viewModel.calculateDaysParameter(), equalTo(SetDueDateDays("3!")))
         }
 
     @Test
@@ -171,8 +180,10 @@ class SetDueDateViewModelTest : JvmTest() {
         fsrsEnabled: Boolean = false,
         testBody: suspend SetDueDateViewModel.() -> Unit,
     ) = runTest {
+        col.config.set("fsrs", fsrsEnabled)
         val viewModel = SetDueDateViewModel()
-        viewModel.init(cardIds.toLongArray(), fsrsEnabled = fsrsEnabled)
+        viewModel.init(cardIds)
+        advanceUntilIdle()
         testBody(viewModel)
     }
 }

@@ -1,22 +1,13 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -27,15 +18,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.databinding.LocaleSelectionDialogBinding
+import com.ichi2.anki.common.utils.android.getColorFromAttr
+import com.ichi2.anki.databinding.DialogLocaleSelectionBinding
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.ui.AccessibleSearchView
-import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.TypedFilter
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
@@ -55,7 +47,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 ::sendSelectionResult,
             )
 
-        val binding = LocaleSelectionDialogBinding.inflate(layoutInflater)
+        val binding = DialogLocaleSelectionBinding.inflate(layoutInflater)
         binding.localeDialogSelectionList.adapter = localeAdapter
         binding.localeDialogSelectionToolbar.setupMenuWith(localeAdapter)
         return AlertDialog.Builder(requireContext()).show {
@@ -69,7 +61,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         style: Int,
     ) {
         super.setupDialog(dialog, style)
-        dialog.window?.let { resizeWhenSoftInputShown(it) }
+        setDialogKeyboardResize(dialog)
         // this is required for the keyboard to appear: https://stackoverflow.com/a/10133603/
         dialog.window?.clearFlags(FLAG_NOT_FOCUSABLE or FLAG_ALT_FOCUSABLE_IM)
     }
@@ -95,7 +87,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     private fun sendSelectionResult(locale: Locale? = null) {
         parentFragmentManager.setFragmentResult(
             REQUEST_HINT_LOCALE_SELECTION,
-            bundleOf(KEY_SELECTED_LOCALE to locale),
+            Bundle().apply { putSerializable(RESULT_SELECTED_LOCALE, locale) },
         )
     }
 
@@ -115,7 +107,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             viewType: Int,
         ) = TextViewHolder(
             layoutInflater
-                .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView,
+                .inflate(R.layout.item_locale, parent, false) as TextView,
         )
 
         override fun onBindViewHolder(
@@ -123,7 +115,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             position: Int,
         ) {
             val locale = filteredLocales[position]
-            holder.textView.text = locale.displayName
+            holder.textView.text = locale.label(holder.textView.context)
             holder.textView.setOnClickListener { onLocaleSelected(locale) }
         }
 
@@ -137,7 +129,11 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 ): List<Locale> {
                     val normalisedConstraint = constraint.toString().lowercase(Locale.getDefault())
                     return items.filter {
-                        it.displayName.lowercase(Locale.getDefault()).contains(normalisedConstraint)
+                        it
+                            .label(requireContext())
+                            .toString()
+                            .lowercase(Locale.getDefault())
+                            .contains(normalisedConstraint)
                     }
                 }
 
@@ -155,7 +151,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
     companion object {
         const val REQUEST_HINT_LOCALE_SELECTION = "request_hint_locale_selection"
-        const val KEY_SELECTED_LOCALE = "key_selected_locale"
+        const val RESULT_SELECTED_LOCALE = "key_selected_locale"
 
         /**
          * Language identifier for International Phonetic Alphabet. This isn't available from [Locale.getAvailableLocales], but
@@ -167,3 +163,17 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         private val IPALanguage = Locale.Builder().setLanguageTag("und-fonipa").build()
     }
 }
+
+/** Some locales like Locale.ROOT have empty display name */
+internal fun Locale.label(context: Context): CharSequence =
+    displayName.ifBlank {
+        val text = context.getString(CommonString.locale_selection_dialog_unknown_language, toLanguageTag())
+        val spannable = SpannableString(text)
+        spannable.setSpan(
+            ForegroundColorSpan(getColorFromAttr(context, android.R.attr.textColorSecondary)),
+            0,
+            text.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+        spannable
+    }

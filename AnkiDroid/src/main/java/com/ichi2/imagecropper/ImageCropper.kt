@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.imagecropper
 
@@ -37,6 +23,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropImageView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentImageCropperBinding
 import com.ichi2.anki.snackbar.showSnackbar
@@ -81,7 +68,7 @@ class ImageCropper :
             cropRect = Rect(100, 300, 500, 1200)
         }
         val originalImageUri =
-            BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
+            BundleCompat.getParcelable(requireArguments(), ARG_IMAGE_URI, Uri::class.java)
                 ?: error("No image identifier was provided for cropping")
         viewLifecycleOwner.lifecycleScope.launch {
             withProgress {
@@ -178,6 +165,7 @@ class ImageCropper :
                 if (Build.VERSION.SDK_INT >= 30) {
                     Bitmap.CompressFormat.WEBP_LOSSLESS
                 } else {
+                    @Suppress("DEPRECATION") // WEBP: deprecated in API 30, the only option below it
                     Bitmap.CompressFormat.WEBP
                 }
             }
@@ -195,7 +183,7 @@ class ImageCropper :
     ) {
         if (error != null) {
             Timber.e(error, "Failed to load image by URI")
-            showSnackbar(R.string.something_wrong)
+            showSnackbar(CommonString.something_wrong)
         }
     }
 
@@ -206,7 +194,7 @@ class ImageCropper :
         if (result.error == null) {
             val resultIntent = Intent()
             resultIntent.putExtra(
-                CROP_IMAGE_RESULT,
+                EXTRA_CROP_IMAGE_RESULT,
                 CropResultData(
                     uriContent = result.uriContent,
                     uriPath = context?.let { result.getUriFilePath(it) },
@@ -216,7 +204,7 @@ class ImageCropper :
             activity?.finish()
         } else {
             Timber.e(result.error, "Failed to crop image")
-            showSnackbar(R.string.something_wrong)
+            showSnackbar(CommonString.something_wrong)
         }
     }
 
@@ -232,12 +220,12 @@ class ImageCropper :
         /**
          * The key for the original image URI passed as an argument.
          */
-        const val CROP_IMAGE_URI = "image_uri"
+        const val ARG_IMAGE_URI = "image_uri"
 
         /**
          * The key for the cropped image path sent back in the result Intent.
          */
-        const val CROP_IMAGE_RESULT = "crop_image_result"
+        const val EXTRA_CROP_IMAGE_RESULT = "crop_image_result"
     }
 
     @Parcelize

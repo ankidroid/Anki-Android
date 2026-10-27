@@ -1,27 +1,13 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.noteeditor
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditorFragment
-import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.libanki.NotetypeJson
@@ -36,6 +22,13 @@ class FieldState private constructor(
     private val editor: NoteEditorFragment,
 ) {
     private var customViewIds: List<Int>? = null
+
+    // Values beyond the current type's field count, retained until the draft is saved or discarded.
+    private var hiddenFieldValues: List<String> = emptyList()
+
+    /** All draft values, including fields temporarily hidden by a smaller note type. */
+    val currentFieldValues: List<String>
+        get() = editor.currentFieldStrings.map { it.orEmpty() } + hiddenFieldValues
 
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
         val fieldEditLines: List<FieldEditLine> =
@@ -59,10 +52,13 @@ class FieldState private constructor(
             }
         }
         if (type.type == Type.CHANGE_FIELD_COUNT) {
-            val currentFieldStrings = editor.currentFieldStrings
-            for (i in 0 until min(currentFieldStrings.size, fieldEditLines.size)) {
-                fieldEditLines[i].setContent(currentFieldStrings[i], type.replaceNewlines)
+            val fieldValues = currentFieldValues
+            for (i in 0 until min(fieldValues.size, fieldEditLines.size)) {
+                fieldEditLines[i].setContent(fieldValues[i], type.replaceNewlines)
             }
+            hiddenFieldValues = fieldValues.drop(fieldEditLines.size)
+        } else if (type.type != Type.INIT) {
+            clearHiddenFields()
         }
         return fieldEditLines
     }
@@ -98,6 +94,18 @@ class FieldState private constructor(
 
     fun setInstanceState(savedInstanceState: Bundle?) {
         customViewIds = savedInstanceState?.getIntegerArrayList("customViewIds")
+        hiddenFieldValues = savedInstanceState?.getStringArrayList("hiddenFieldValues").orEmpty()
+    }
+
+    fun saveInstanceState(outState: Bundle) {
+        // Visible values are already saved by the field views; only save the hidden tail here.
+        if (hiddenFieldValues.isNotEmpty()) {
+            outState.putStringArrayList("hiddenFieldValues", ArrayList(hiddenFieldValues))
+        }
+    }
+
+    fun clearHiddenFields() {
+        hiddenFieldValues = emptyList()
     }
 
     /** How fields should be changed when the UI is rebuilt  */
@@ -171,7 +179,7 @@ class FieldState private constructor(
                     // Set the new field label text
                     if (allowFieldRemapping(oldFields)) {
                         // Show the content of old field if remapping is enabled
-                        fields[i][0] = String.format(context.resources.getString(R.string.field_remapping), fname, oldFields[j][0])
+                        fields[i][0] = String.format(context.resources.getString(CommonString.field_remapping), fname, oldFields[j][0])
                     } else {
                         fields[i][0] = fname
                     }

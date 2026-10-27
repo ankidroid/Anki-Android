@@ -1,161 +1,199 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.reviewer.audiorecord
 
+import android.content.Context
+import android.net.Uri
+import androidx.lifecycle.ViewModelStore
+import androidx.media3.common.MediaItem
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.ichi2.anki.R
 import com.ichi2.anki.recorder.AudioRecorder
-import com.ichi2.testutils.JvmTest
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.mockk.runs
-import io.mockk.slot
+import com.ichi2.anki.recorder.MediaRecorderStub
+import com.ichi2.anki.recorder.PlayerStub
+import com.ichi2.anki.recorder.VoiceRecorder
+import com.ichi2.testutils.rules.MainDispatcherRule
 import io.mockk.verify
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class CheckPronunciationViewModelTest : JvmTest() {
-    private lateinit var mockRecorder: AudioRecorder
-    private lateinit var mockPlayer: AudioPlayer
-    private lateinit var viewModel: CheckPronunciationViewModel
+class CheckPronunciationViewModelTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
-    private val onPreparedCallback = slot<() -> Unit>()
-    private var onCompletionCallback: (() -> Unit)? = null
+    @get:Rule
+    val recordingsFolder = TemporaryFolder()
 
-    private var isPlayingMock = false
+    private val mediaRecorderStub = MediaRecorderStub()
+    private val playerStub = PlayerStub()
+    private val viewModelStore = ViewModelStore()
 
     @Before
-    fun setup() {
-        mockRecorder =
-            mockk(relaxUnitFun = true) {
-                every { currentFile?.absolutePath } returns "test_file.3gp"
-            }
-        mockPlayer =
-            mockk(relaxUnitFun = true) {
-                every { play("test_file.3gp", capture(onPreparedCallback)) } just runs
-                every { isPlaying } answers { isPlayingMock }
-                every { duration } returns 3000
-                every { currentPosition } returns 1500
-                every { onCompletion = any() } answers {
-                    onCompletionCallback = firstArg()
-                }
-            }
+    fun installMediaRecorder() {
+        mediaRecorderStub.install()
+    }
 
-        viewModel = CheckPronunciationViewModel(mockRecorder, mockPlayer)
+    @After
+    fun uninstallMediaRecorder() {
+        mediaRecorderStub.uninstall()
     }
 
     @Test
     fun `onRecordingCompleted should make playback visible`() =
-        runTest {
+        runViewModelTest { viewModel ->
             viewModel.isPlaybackVisibleFlow.test {
                 assertFalse(awaitItem())
-                viewModel.onRecordingCompleted()
+                viewModel.record()
                 assertTrue(awaitItem())
             }
-            verify { mockRecorder.stop() }
+        }
+
+    @Test
+    fun `no player is created until the first play`() =
+        runViewModelTest { viewModel ->
+            viewModel.record()
+
+            assertEquals(0, playerStub.createdCount, "players created")
         }
 
     @Test
     fun `onPlayOrReplay when stopped should start playback and update UI`() =
-        runTest {
-            // Precondition: Playback view must be visible to allow play
-            viewModel.isPlaybackVisibleFlow.value = true
-            isPlayingMock = false
+        runViewModelTest { viewModel ->
+            val recording = viewModel.record()
 
-            viewModel.playIconFlow.test {
-                assertEquals(R.drawable.ic_play, awaitItem())
-                viewModel.onPlayOrReplay()
-                assertEquals(R.drawable.ic_replay, awaitItem())
-            }
+            viewModel.onPlayOrReplay()
+            playerStub.ready()
 
-            verify { mockPlayer.play("test_file.3gp", any()) }
+            verify { playerStub.player.setMediaItem(MediaItem.fromUri(Uri.fromFile(recording))) }
+            assertTrue(viewModel.isPlayingFlow.first(), "playing")
+            assertEquals(3000, viewModel.playbackProgressBarMaxFlow.first(), "progress bar max")
+        }
 
-            viewModel.playbackProgressBarMaxFlow.test {
-                assertEquals(1, awaitItem())
-                onPreparedCallback.captured.invoke()
-                assertEquals(3000, awaitItem())
-            }
+    @Test
+    fun `the play button shows playing only once the recording has loaded`() =
+        runViewModelTest { viewModel ->
+            viewModel.record()
+
+            viewModel.onPlayOrReplay()
+
+            assertFalse(viewModel.isPlayingFlow.first(), "not playing while the recording loads")
+            playerStub.ready()
+            assertTrue(viewModel.isPlayingFlow.first(), "playing once loaded")
+        }
+
+    @Test
+    fun `pressing play again while the recording loads does not reload it`() =
+        runViewModelTest { viewModel ->
+            viewModel.record()
+
+            viewModel.onPlayOrReplay()
+            viewModel.onPlayOrReplay()
+
+            verify(exactly = 1) { playerStub.player.setMediaItem(any()) }
+            verify(exactly = 1) { playerStub.player.prepare() }
         }
 
     @Test
     fun `onPlayOrReplay when playing should replay audio`() =
-        runTest {
-            // Precondition: Playback view must be visible
-            viewModel.isPlaybackVisibleFlow.value = true
-            isPlayingMock = true
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
 
             viewModel.replayFlow.test {
                 viewModel.onPlayOrReplay()
                 assertEquals(Unit, awaitItem())
             }
 
-            verify { mockPlayer.replay() }
-            // Allow the progress bar job to complete
-            isPlayingMock = false
+            verify { playerStub.player.seekTo(0L) }
+            assertEquals(0, viewModel.playbackProgressFlow.first(), "progress")
+            assertTrue(viewModel.isPlayingFlow.first(), "playing")
         }
 
     @Test
-    fun `when playback completes should reset icon and fill progress`() =
-        runTest {
-            // Start playback to set the state
-            viewModel.isPlaybackVisibleFlow.value = true
-            isPlayingMock = false
+    fun `onPlayOrReplay when paused should resume playback and update UI`() =
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
+            viewModel.pausePlayback()
+
             viewModel.onPlayOrReplay()
-            onPreparedCallback.captured.invoke()
-            isPlayingMock = true
 
-            // Launch collectors concurrently
-            val iconJob =
-                launch {
-                    viewModel.playIconFlow.test {
-                        assertEquals(R.drawable.ic_replay, awaitItem())
-                        assertEquals(R.drawable.ic_play, awaitItem())
-                    }
-                }
-            val progressJob =
-                launch {
-                    viewModel.playbackProgressFlow.test {
-                        awaitItem() // initial 0
-                        assertEquals(1500, awaitItem()) // from progress job
-                        assertEquals(3000, awaitItem()) // from completion
-                    }
-                }
+            assertTrue(viewModel.isPlayingFlow.first(), "playing")
+            verify(exactly = 1) { playerStub.player.setMediaItem(any()) }
+        }
 
-            // Trigger the completion event
-            onCompletionCallback?.invoke()
+    @Test
+    fun `pausePlayback should pause audio and update UI`() =
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
 
-            // Clean up
-            iconJob.cancel()
-            progressJob.cancel()
+            viewModel.pausePlayback()
+
+            assertFalse(viewModel.isPlayingFlow.first(), "playing")
+            verify { playerStub.player.pause() }
+        }
+
+    @Test
+    fun `when playback completes should reset playing state and fill progress`() =
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
+
+            playerStub.ended()
+
+            assertFalse(viewModel.isPlayingFlow.first(), "playing")
+            assertEquals(3000, viewModel.playbackProgressFlow.first(), "progress")
+            assertEquals(3000, viewModel.playbackProgressBarMaxFlow.first(), "progress bar max")
+        }
+
+    @Test
+    fun `playing after the end starts from the beginning`() =
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
+            playerStub.ended()
+
+            viewModel.onPlayOrReplay()
+
+            assertEquals(0, viewModel.playbackProgressFlow.first(), "progress")
+            assertTrue(viewModel.isPlayingFlow.first(), "playing")
+        }
+
+    @Test
+    fun `a recording that fails to play shows play again and can be retried`() =
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
+
+            playerStub.fail()
+            assertFalse(viewModel.isPlayingFlow.first(), "playing after the error")
+            viewModel.onPlayOrReplay()
+
+            verify(exactly = 2) { playerStub.player.setMediaItem(any()) }
+        }
+
+    @Test
+    fun `clearing the ViewModel releases the player`() =
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
+
+            viewModelStore.clear()
+
+            verify { playerStub.player.release() }
         }
 
     @Test
     fun `onRecordingStarted should hide playback and start recording`() =
-        runTest {
-            // Make playback visible first to test that it gets hidden
-            viewModel.onRecordingCompleted()
+        runViewModelTest { viewModel ->
+            viewModel.recordAndPlay()
 
             viewModel.isPlaybackVisibleFlow.test {
                 assertTrue(awaitItem())
@@ -163,20 +201,142 @@ class CheckPronunciationViewModelTest : JvmTest() {
                 assertFalse(awaitItem())
             }
 
-            verify { mockRecorder.start() }
-            coVerify { mockPlayer.close() }
+            verify(exactly = 2) { mediaRecorderStub.mediaRecorder.start() }
+            verify { playerStub.player.stop() }
         }
 
     @Test
-    fun `onRecordingCancelled should reset recorder`() {
-        viewModel.onRecordingCancelled()
-        verify { mockRecorder.stop() }
-    }
+    fun `a cancelled recording leaves no file`() =
+        runViewModelTest { viewModel ->
+            viewModel.onRecordingStarted()
+
+            viewModel.onRecordingCancelled()
+
+            assertFalse(mediaRecorderStub.outputFiles.single().exists(), "the cancelled recording is deleted")
+        }
 
     @Test
-    fun `resetAll should reset recorder and player`() {
-        viewModel.resetAll()
-        verify { mockRecorder.stop() }
-        verify { mockPlayer.close() }
+    fun `recording again deletes the previous recording`() =
+        runViewModelTest { viewModel ->
+            val previous = viewModel.record()
+
+            val current = viewModel.record()
+
+            assertFalse(previous.exists(), "the previous recording is deleted")
+            assertTrue(current.exists(), "the new recording is kept")
+        }
+
+    @Test
+    fun `starting again while recording replaces the recording`() =
+        runViewModelTest { viewModel ->
+            viewModel.onRecordingStarted()
+            val previous = mediaRecorderStub.outputFiles.single()
+
+            val current = viewModel.record()
+
+            assertFalse(previous.exists(), "the interrupted recording is deleted")
+            assertTrue(current.exists(), "the new recording is kept")
+        }
+
+    @Test
+    fun `cancelling playback deletes the recording`() =
+        runViewModelTest { viewModel ->
+            val recording = viewModel.record()
+
+            viewModel.onCancelPlayback()
+
+            assertFalse(recording.exists(), "the dismissed recording is deleted")
+        }
+
+    @Test
+    fun `cancelling playback keeps a recording in progress`() =
+        runViewModelTest { viewModel ->
+            viewModel.onRecordingStarted()
+
+            viewModel.onCancelPlayback()
+            viewModel.onRecordingCompleted()
+
+            assertTrue(viewModel.isPlaybackVisibleFlow.value, "the recording can still be played")
+            assertTrue(mediaRecorderStub.outputFiles.single().exists(), "the recording is kept")
+        }
+
+    @Test
+    fun `resetAll deletes the recording and unloads the player`() =
+        runViewModelTest { viewModel ->
+            val recording = viewModel.recordAndPlay()
+
+            viewModel.resetAll()
+
+            assertFalse(recording.exists(), "the recording is deleted")
+            assertFalse(viewModel.isPlaybackVisibleFlow.value, "playback is hidden")
+            verify { playerStub.player.stop() }
+        }
+
+    @Test
+    fun `clearing the ViewModel deletes the recording`() =
+        runViewModelTest { viewModel ->
+            val recording = viewModel.record()
+
+            viewModelStore.clear()
+
+            assertFalse(recording.exists(), "the recording is deleted when the study screen closes")
+        }
+
+    @Test
+    fun `a recording that fails to start shows no playback and leaves no file`() =
+        runViewModelTest { viewModel ->
+            mediaRecorderStub.failStart = true
+
+            viewModel.record()
+
+            assertFalse(viewModel.isPlaybackVisibleFlow.value, "no playback for a failed recording")
+            assertFalse(mediaRecorderStub.outputFiles.single().exists(), "the empty file is deleted")
+        }
+
+    @Test
+    fun `recordings are stored outside the cache`() =
+        runTest {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val viewModel =
+                CheckPronunciationViewModel(AudioRecorder(context), playerStub.factory)
+                    .also { viewModelStore.put(VIEW_MODEL_KEY, it) }
+            try {
+                val recording = viewModel.record()
+
+                assertEquals(File(context.noBackupFilesDir, VoiceRecorder.RECORDINGS_DIRECTORY), recording.parentFile)
+            } finally {
+                viewModelStore.clear()
+            }
+        }
+
+    private fun runViewModelTest(testBody: suspend TestScope.(CheckPronunciationViewModel) -> Unit) =
+        runTest {
+            val viewModel =
+                CheckPronunciationViewModel(
+                    AudioRecorder(ApplicationProvider.getApplicationContext()),
+                    playerStub.factory,
+                    recordingsFolder.root,
+                ).also { viewModelStore.put(VIEW_MODEL_KEY, it) }
+            try {
+                testBody(viewModel)
+            } finally {
+                viewModelStore.clear()
+            }
+        }
+
+    private fun CheckPronunciationViewModel.record(): File {
+        onRecordingStarted()
+        onRecordingCompleted()
+        return mediaRecorderStub.outputFiles.last()
+    }
+
+    private fun CheckPronunciationViewModel.recordAndPlay(): File =
+        record().also {
+            onPlayOrReplay()
+            playerStub.ready()
+        }
+
+    companion object {
+        private const val VIEW_MODEL_KEY = "checkPronunciation"
     }
 }

@@ -1,35 +1,18 @@
-/*
- *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser.search
 
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.testutils.AnkiTest
-import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.JvmTest
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
-import org.robolectric.annotation.Config
+import org.junit.runners.Parameterized
 import kotlin.test.assertEquals
 
 /** Test for [CardState] */
-@RunWith(ParameterizedRobolectricTestRunner::class)
-@Config(application = EmptyApplication::class)
-class CardStateTest : RobolectricTest() {
-    @ParameterizedRobolectricTestRunner.Parameter(0)
+@RunWith(Parameterized::class)
+class CardStateTest : JvmTest() {
+    @Parameterized.Parameter(0)
     @JvmField
     var stateParam: CardState? = null
 
@@ -64,7 +47,7 @@ class CardStateTest : RobolectricTest() {
 
     companion object {
         @JvmStatic
-        @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
+        @Parameterized.Parameters(name = "{0}")
         fun parameters(): Collection<Array<Any>> = CardState.entries.map { arrayOf(it) }
     }
 }

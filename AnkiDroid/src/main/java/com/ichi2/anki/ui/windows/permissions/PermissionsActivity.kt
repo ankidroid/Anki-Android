@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.permissions
 
 import android.content.Context
@@ -20,18 +7,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
-import androidx.core.content.IntentCompat
+import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.PermissionSet
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.StoragePermissionSet
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.REQUEST_PERMISSIONS
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.RESULT_HAS_ALL_PERMISSIONS
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.themes.Themes
-import com.ichi2.themes.setTransparentStatusBar
 import dev.androidbroadcast.vbpd.viewBinding
+import timber.log.Timber
 
 /**
  * Screen responsible for getting permissions from the user.
@@ -47,52 +37,84 @@ import dev.androidbroadcast.vbpd.viewBinding
  * To request optional permissions from the user, prefer [PermissionsBottomSheet].
  */
 class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
-    private val binding by viewBinding(ActivityPermissionsBinding::bind)
+    internal val binding by viewBinding(ActivityPermissionsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setViewBinding(binding)
-        Themes.setTheme(this)
-        setTransparentStatusBar()
 
-        binding.continueButton.setOnClickListener { finish() }
+        binding.continueButton.setOnClickListener { decideStorageAndFinish() }
 
-        val permissionSet =
-            requireNotNull(IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)) {
-                "PERMISSIONS_SET_EXTRA not set"
-            }
-        val permissionsFragment =
-            requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
-                "invalid permissionsFragment"
-            }
-        setFragmentResultListener(PERMISSIONS_FRAGMENT_RESULT_KEY) { _, bundle ->
-            val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
-            setContinueButtonEnabled(hasAllPermissions)
+        // #20881: Activity should not be launchd without extras
+        val permissionSet = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
+        if (permissionSet == null) {
+            Timber.w("EXTRA_PERMISSIONS_SET not set; finishing")
+            showThemedToast(this, CommonString.something_wrong, false)
+            setResult(RESULT_CANCELED)
+            finish()
+            return
         }
-
-        supportFragmentManager.commit {
-            replace(R.id.fragment_container, permissionsFragment)
-        }
+        configurePermissions(permissionSet)
         // only close the activity by tapping the continue button
         onBackPressedDispatcher.addCallback {}
     }
 
-    fun setContinueButtonEnabled(isEnabled: Boolean) {
+    private fun configurePermissions(permissionSet: StoragePermissionSet) {
+        setFragmentResultListener(REQUEST_PERMISSIONS) { _, bundle ->
+            val hasAllPermissions = bundle.getBoolean(RESULT_HAS_ALL_PERMISSIONS)
+            setContinueButtonEnabled(hasAllPermissions)
+        }
+        setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ -> decideStorageAndFinish() }
+
+        showPermissionsFragment(permissionSet)
+    }
+
+    private fun showPermissionsFragment(permissionSet: StoragePermissionSet) {
+        val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, permissionsFragment)
+        }
+    }
+
+    private fun setContinueButtonEnabled(isEnabled: Boolean) {
         binding.continueButton.isEnabled = isEnabled
     }
 
+    /**
+     * Records the storage decision and closes the screen: the granted permissions
+     * determine the default collection path.
+     *
+     * Called on 'Continue', or when the fragment reports [REQUEST_PERMISSIONS_GRANTED].
+     * Preserves an existing collection path.
+     *
+     * @see InitialActivity.decideStorageIfUndecided
+     */
+    private fun decideStorageAndFinish() {
+        InitialActivity.decideStorageIfUndecided(this)
+        finish()
+    }
+
     companion object {
-        const val PERMISSIONS_SET_EXTRA = "permissionsSet"
+        const val EXTRA_PERMISSIONS_SET = "permissionsSet"
+
+        /**
+         * Fragment result request key: all the fragment's permissions are granted.
+         *
+         * Signals the activity to persist the
+         * [storage decision][com.ichi2.anki.common.storage.StorageDecision], and then close.
+         */
+        const val REQUEST_PERMISSIONS_GRANTED = "result_complete"
 
         fun getIntent(
             context: Context,
-            permissionsSet: PermissionSet,
+            permissionsSet: StoragePermissionSet,
         ): Intent =
             Intent(context, PermissionsActivity::class.java).apply {
-                putExtra(PERMISSIONS_SET_EXTRA, permissionsSet as Parcelable)
+                putExtra(EXTRA_PERMISSIONS_SET, permissionsSet as Parcelable)
             }
     }
 }

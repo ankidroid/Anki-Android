@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.testutils.ext
 
@@ -20,8 +6,18 @@ import anki.collection.OpChangesWithCount
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.observability.undoableOp
+
+/** Corrupts the deck hierarchy so the next scheduler queue/count fetch throws "deck not found in limits map". */
+fun AnkiTest.triggerDeckNotFoundInLimitsMap() {
+    addDeck("A::B::C").withNote(QueueType.New)
+    val parentDeckId = col.decks.idForName("A::B")!!
+    // Drop A::B without removing A::B::C, leaving it without an entry in the limits map.
+    col.db.execute("delete from decks where id = ?", parentDeckId)
+    col.decks.select(col.decks.idForName("A")!!)
+}
 
 suspend fun AnkiTest.addBasicNoteWithOp(
     fields: List<String> = listOf("foo", "bar"),

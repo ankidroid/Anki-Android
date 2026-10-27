@@ -91,16 +91,33 @@ import com.ichi2.anki.api.Ease
  *                             | Supports query(). For code examples see class description of [Model].
  * --------------------------------------------------------------------------------------------------------------------
  * ```
+ *
+ * If AnkiDroid's storage is not yet configured (the user has not completed first-run setup),
+ * operations on this provider throw [IllegalStateException].
  */
 public object FlashCardsContract {
-    public const val AUTHORITY: String = BuildConfig.AUTHORITY
-    public const val READ_WRITE_PERMISSION: String = BuildConfig.READ_WRITE_PERMISSION
+    /** For when dealing with parallel builds (.A, .B, etc.) */
+    public fun getAuthority(ankiPackageName: String = BuildConfig.ANKI_PACKAGE_NAME): String = "$ankiPackageName.flashcards"
+
+    public fun getPermission(ankiPackageName: String = BuildConfig.ANKI_PACKAGE_NAME): String =
+        "$ankiPackageName.permission.READ_WRITE_DATABASE"
+
+    public fun getAuthorityUri(authority: String = getAuthority()): Uri = Uri.parse("content://$authority")
+
+    /**
+     *  This assumes the default release/debug build package name. Use [getAuthority] and [getPermission] when working with parallel builds
+     */
+    public const val AUTHORITY: String = "${BuildConfig.ANKI_PACKAGE_NAME}.flashcards"
+    public const val READ_WRITE_PERMISSION: String = "${BuildConfig.ANKI_PACKAGE_NAME}.permission.READ_WRITE_DATABASE"
 
     /**
      * A content:// style uri to the authority for the flash card provider
+     *
+     * This uri assumes the default release-build package name.
+     * Use [getAuthorityUri] and [getPermission] for parallel builds (.A, .B, etc.)
      */
     @JvmField // required for Java API
-    public val AUTHORITY_URI: Uri = Uri.parse("content://$AUTHORITY")
+    public val AUTHORITY_URI: Uri = getAuthorityUri()
 
     /**
      * The Notes can be accessed by
@@ -197,6 +214,8 @@ public object FlashCardsContract {
      * ```
      */
     public object Note {
+        public const val CONTENT_URI_SEGMENT: String = "notes"
+
         /**
          * The content:// style URI for notes. If the it is appended by the note's ID, this
          * note can be directly accessed, e.g.
@@ -218,14 +237,20 @@ public object FlashCardsContract {
          * For examples on how to use the URI for queries see class description.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "notes")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
+
+        public const val CONTENT_URI_V2_SEGMENT: String = "notes_v2"
 
         /**
          * The content:// style URI for notes, but with a direct SQL query to the notes table instead of accepting
          * a query in the libanki browser search syntax like the main URI #CONTENT_URI does.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI_V2: Uri = Uri.withAppendedPath(AUTHORITY_URI, "notes_v2")
+        public val CONTENT_URI_V2: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_V2_SEGMENT)
+
+        public fun getContentUriV2(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_V2_SEGMENT)
 
         /**
          * This is the ID of the note. It is the same as the note ID in Anki. This ID can be
@@ -259,21 +284,30 @@ public object FlashCardsContract {
         public const val FLAGS: String = "flags"
         public const val DATA: String = "data"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    GUID,
+                    MID,
+                    MOD,
+                    USN,
+                    TAGS,
+                    FLDS,
+                    SFLD,
+                    CSUM,
+                    FLAGS,
+                    DATA,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                GUID,
-                MID,
-                MOD,
-                USN,
-                TAGS,
-                FLDS,
-                SFLD,
-                CSUM,
-                FLAGS,
-                DATA,
-            )
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for a note.
@@ -358,12 +392,17 @@ public object FlashCardsContract {
      * ```
      */
     public object Model {
+        public const val CONTENT_URI_SEGMENT: String = "models"
+
         /**
          * The content:// style URI for note type. If the it is appended by the note type's ID, this
          * note can be directly accessed. See class description above for further details.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "models")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
+
         public const val CURRENT_MODEL_ID: String = "current"
 
         /**
@@ -390,20 +429,29 @@ public object FlashCardsContract {
          */
         public const val DECK_ID: String = "deck_id"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    NAME,
+                    FIELD_NAMES,
+                    NUM_CARDS,
+                    CSS,
+                    DECK_ID,
+                    SORT_FIELD_INDEX,
+                    TYPE,
+                    LATEX_POST,
+                    LATEX_PRE,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                NAME,
-                FIELD_NAMES,
-                NUM_CARDS,
-                CSS,
-                DECK_ID,
-                SORT_FIELD_INDEX,
-                TYPE,
-                LATEX_POST,
-                LATEX_PRE,
-            )
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for a note type.
@@ -478,18 +526,24 @@ public object FlashCardsContract {
         public const val CARD_COUNT: String = "card_count"
 
         /**
-         * Default columns that are returned when querying the ...models/#/templates URI.
+         * Default columns returned when querying the ...models/#/templates URI.
          */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    MODEL_ID,
+                    ORD,
+                    NAME,
+                    QUESTION_FORMAT,
+                    ANSWER_FORMAT,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                MODEL_ID,
-                ORD,
-                NAME,
-                QUESTION_FORMAT,
-                ANSWER_FORMAT,
-            )
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
     }
 
     /**
@@ -581,6 +635,8 @@ public object FlashCardsContract {
      * ```
      */
     public object Card {
+        public const val CONTENT_URI_SEGMENT: String = "cards"
+
         /**
          * The ID of the card in the Anki database.
          */
@@ -609,6 +665,60 @@ public object FlashCardsContract {
         public const val DECK_ID: String = "deck_id"
 
         /**
+         * The stored Anki repetition count for this card.
+         *
+         * Counts how many times Anki has recorded this card as answered during study. The Anki
+         * manual's
+         * [`prop:reps`](https://docs.ankiweb.net/searching.html#card-properties) search uses the
+         * same stored counter. New cards typically start at 0.
+         *
+         * This provider exposes the backend value as-is; exact effects of manual operations such as
+         * rescheduling depend on Anki's scheduler/backend behavior.
+         */
+        public const val REPS: String = "reps"
+
+        /**
+         * The stored Anki lapse count for this card.
+         *
+         * Counts how many times Anki has recorded this card as lapsed. In Anki's manual, a
+         * [lapse](https://docs.ankiweb.net/deck-options.html#lapses) is pressing Again on a review
+         * card, and [`prop:lapses`](https://docs.ankiweb.net/searching.html#card-properties)
+         * searches this same stored counter.
+         *
+         * This provider exposes the backend value as-is.
+         */
+        public const val LAPSES: String = "lapses"
+
+        /**
+         * The stored Anki card type code: the card's learning or review stage.
+         *
+         * See also [Anki's card states](https://docs.ankiweb.net/getting-started.html#card-states).
+         *
+         * Think of this as a simple state machine that affects how the card is scheduled when it
+         * is answered. A card typically moves `0 -> 1 -> 2`; if a review card lapses, it
+         * typically moves `2 -> 3 -> 2`.
+         *
+         * * `0` = new
+         * * `1` = learning
+         * * `2` = review
+         * * `3` = relearning
+         *
+         * Other values should be treated as unknown.
+         */
+        public const val TYPE: String = "type"
+
+        /**
+         * The stored original deck id for this card.
+         *
+         * For cards in filtered decks, Anki keeps a link to the card's
+         * [home deck](https://docs.ankiweb.net/filtered-decks.html#home-decks).
+         *
+         * * If the card is currently in a filtered deck, this is the deck id the card came from.
+         * * If the card is not currently in a filtered deck, this value is 0.
+         */
+        public const val ORIGINAL_DECK_ID: String = "original_deck_id"
+
+        /**
          * The question for this card.
          */
         public const val QUESTION: String = "question"
@@ -635,23 +745,258 @@ public object FlashCardsContract {
         public const val ANSWER_PURE: String = "answer_pure"
 
         /**
+         * The stored Anki queue code for this card: how Anki decides whether the card can be shown.
+         *
+         * See [AnkiDroid's cards table docs](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure/#cards).
+         *
+         * Unlike [TYPE], queue also includes temporary display states such as buried, suspended,
+         * and preview.
+         *
+         * * `-3` = manually buried
+         * * `-2` = sibling buried
+         * * `-1` = suspended
+         * * `0` = new
+         * * `1` = learning
+         * * `2` = review
+         * * `3` = day-learning / relearning; next review is at least one day after the previous
+         *   review
+         * * `4` = preview
+         *
+         * Negative values indicate cards that are not currently schedulable. Non-negative values
+         * indicate active scheduler queues.
+         *
+         * Other values should be treated as unknown.
+         */
+        public const val RAW_QUEUE: String = "queue"
+
+        /**
+         * The stored Anki due value for this card.
+         *
+         * This is raw scheduler state, not a single normalized timestamp or day number.
+         *
+         * See [AnkiDroid's cards table docs](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure/#cards).
+         *
+         * This value is state-dependent:
+         *
+         * * new queue: the order in which cards are to be studied; starts from 1
+         * * learning / relearning queue: Unix timestamp in seconds
+         * * review queue: the collection scheduler day number when the card is due for review.
+         *   This is not a calendar date; converting it to one requires collection
+         *   creation/day-cutoff metadata not currently exposed by this API.
+         * * filtered deck: the position of the card inside the filtered deck
+         *
+         * Consumers must read this together with [RAW_QUEUE], and with [RAW_ORIGINAL_DUE] when
+         * filtered-deck behavior matters.
+         */
+        public const val RAW_DUE: String = "due"
+
+        /**
+         * The stored original due value for this card.
+         *
+         * For cards in filtered decks, this stores the due value from before the card entered the
+         * filtered deck. If the card is not currently in a filtered deck, this value is `0`.
+         *
+         * @see RAW_DUE for the state-dependent meaning of the current due value
+         */
+        public const val RAW_ORIGINAL_DUE: String = "original_due"
+
+        /**
+         * The stored Anki interval (`ivl`) for this card, in days.
+         *
+         * See [AnkiDroid's cards table docs](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure/#cards).
+         *
+         * For review cards, this is the scheduled number of days between reviews. For relearning
+         * cards, this retains the review interval that will apply when the card returns to the
+         * review queue.
+         *
+         * Learning cards store `0`; their active learning due value is stored in [RAW_DUE].
+         */
+        public const val INTERVAL: String = "interval"
+
+        /**
+         * The stored SM-2 ease factor for this card.
+         *
+         * This factor helps determine the next review interval for cards using SM-2 scheduling.
+         * It is not used by FSRS.
+         *
+         * This is an integer scaled by 10, so `2500` means `250%`.
+         * New SM-2 cards typically start at `2500`.
+         */
+        public const val RAW_SM2_FACTOR: String = "sm2_factor"
+
+        /**
+         * The stored Anki `left` value for this card.
+         *
+         * This is relevant for learning and relearning cards.
+         *
+         * Anki uses this as an internal scheduler counter. The stored value is encoded as:
+         *
+         * * `left % 1000`: learning or relearning reps left before graduation
+         * * `left / 1000`: reps that can still be completed before the day cutoff
+         *
+         * For example, `left = 2003` means 3 reps left before graduation, with 2 of
+         * them still completable before the day cutoff.
+         *
+         * This provider exposes the backend value as-is, so consumers should not depend on a
+         * normalized encoding.
+         */
+        public const val RAW_LEFT: String = "left"
+
+        /**
+         * The stored original position for this card, if the backend has one.
+         *
+         * This is raw card metadata from the backend. It is not the same as the card's current
+         * due/order value, and it is not related to filtered-deck original due handling.
+         *
+         * See [Anki's studying documentation](https://docs.ankiweb.net/studying.html#editing-and-more)
+         * for the user-facing "Restore original position" behavior, and
+         * [Anki's card info documentation](https://docs.ankiweb.net/stats.html#card-info) for the
+         * card position shown in card info.
+         *
+         * When present, Anki uses this to retain a card's original position independently from
+         * later user changes such as repositioning. Cards that do not have this metadata return
+         * `null`.
+         */
+        public const val ORIGINAL_POSITION: String = "original_position"
+
+        /**
+         * The raw custom data string stored on this card.
+         *
+         * This value is used by custom scheduling hooks. The provider exposes the backend value
+         * as-is: it does not parse, validate, normalize, or promise a schema for the string.
+         *
+         * See [Anki's custom-data search documentation](https://docs.ankiweb.net/searching.html#custom-data)
+         * for examples of how Anki treats this as custom scheduler data.
+         *
+         * Consumers should treat this as opaque text owned by the scheduler/custom scheduling
+         * code that wrote it. Cards with no custom data return an empty string.
+         */
+        public const val RAW_CUSTOM_DATA: String = "custom_data"
+
+        /**
+         * The FSRS stability value stored in the card's memory state, if present.
+         *
+         * This is raw FSRS scheduler state. Stability represents the estimated number of days it
+         * takes for recall probability to drop from 100% to 90% for this card's memory.
+         *
+         * See [Anki's card stability documentation](https://docs.ankiweb.net/stats.html#card-stability).
+         *
+         * Cards without stored FSRS memory state return `null`. Consumers should not expect this
+         * value to be present for cards scheduled without FSRS, new cards without memory state, or
+         * cards whose scheduler state has not stored FSRS memory data.
+         *
+         * @see FSRS_DIFFICULTY
+         */
+        public const val FSRS_STABILITY: String = "fsrs_stability"
+
+        /**
+         * The FSRS difficulty value stored in the card's memory state, if present.
+         *
+         * This is raw FSRS scheduler state. Difficulty represents the estimated inherent
+         * difficulty of recalling this card's memory.
+         *
+         * See [Anki's card difficulty documentation](https://docs.ankiweb.net/stats.html#card-difficulty).
+         *
+         * Cards without stored FSRS memory state return `null`. Consumers should not expect this
+         * value to be present for cards scheduled without FSRS, new cards without memory state, or
+         * cards whose scheduler state has not stored FSRS memory data.
+         *
+         * @see FSRS_STABILITY
+         */
+        public const val FSRS_DIFFICULTY: String = "fsrs_difficulty"
+
+        /**
+         * The desired retention value stored on this card, if present.
+         *
+         * This is raw FSRS scheduler metadata, expressed as a fraction such as `0.9` for 90%.
+         * It is exposed as stored by the backend and is not derived from deck options at query
+         * time.
+         *
+         * See [Anki's desired retention documentation](https://docs.ankiweb.net/deck-options.html#desired-retention).
+         *
+         * Cards without a stored desired-retention value return `null`.
+         */
+        public const val FSRS_DESIRED_RETENTION: String = "fsrs_desired_retention"
+
+        /**
+         * The FSRS decay value stored on this card, if present.
+         *
+         * This is raw FSRS scheduler metadata used by the FSRS forgetting curve. The provider
+         * exposes the backend value as-is and does not reinterpret it.
+         *
+         * See the [FSRS algorithm documentation](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm#fsrs-6)
+         * for the forgetting-curve context.
+         *
+         * Cards without a stored decay value return `null`.
+         */
+        public const val FSRS_DECAY: String = "fsrs_decay"
+
+        /**
+         * The last review time stored on this card, if present.
+         *
+         * This is raw backend card metadata in Unix epoch seconds. It is not a formatted date and
+         * it is not synthesized from the revlog by this provider.
+         *
+         * See [Anki's revlog documentation](https://docs.ankiweb.net/stats.html#manual-analysis)
+         * for the related Unix epoch convention used in review history, and the upstream
+         * [last review time change](https://github.com/ankitects/anki/pull/4124) for why this
+         * card-level value exists.
+         *
+         * Cards without a stored last-review time return `null`.
+         */
+        public const val LAST_REVIEW_TIME_SECONDS: String = "last_review_time_secs"
+
+        /**
+         * The raw flag code in the range from 0 to 7
+         *
+         * * `0` = no flag
+         * * `1` = red
+         * * `2` = orange
+         * * `3` = green
+         * * `4` = blue
+         * * `5` = pink
+         * * `6` = turquoise
+         * * `7` = purple
+         *
+         * Other values will throw IllegalArgumentException on set.
+         */
+        public const val FLAGS: String = "flags"
+
+        /**
          * The content:// style URI for cards. Can be used to search for cards or access specific cards.
          * For examples on how to use the URI for queries see the overview in [FlashCardsContract].
+         *
+         * For card searches, the matching card IDs and result count are fixed when the query runs.
+         * Other fields are loaded lazily and may reflect changes made while the cursor is open.
+         * If a card is deleted before its row is loaded, the row retains its [_ID] and returns `null`
+         * for all other requested columns. Rows already loaded may still contain the earlier values.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
+
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    NOTE_ID,
+                    CARD_ORD,
+                    CARD_NAME,
+                    DECK_ID,
+                    QUESTION,
+                    ANSWER,
+                    FLAGS,
+                )
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                NOTE_ID,
-                CARD_ORD,
-                CARD_NAME,
-                DECK_ID,
-                QUESTION,
-                ANSWER,
-            )
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for a card.
@@ -722,7 +1067,7 @@ public object FlashCardsContract {
      *            |                   |            | com.ichi2.anki.api.Ease.EASE_3.value
      *            |                   |            | com.ichi2.anki.api.Ease.EASE_4.value
      * --------------------------------------------------------------------------------------------------------------------
-     * String     | TIME_TAKEN        | write_only | The it took to answer the card (in milliseconds). Used when answering the card.
+     * String     | TIME_TAKEN        | write_only | The time it took to answer the card (in milliseconds). Used when answering the card.
      * --------------------------------------------------------------------------------------------------------------------
      * int        | BURY              | write-only | Set to 1 to bury the card. Mutually exclusive with setting EASE/TIME_TAKEN/SUSPEND
      * --------------------------------------------------------------------------------------------------------------------
@@ -772,8 +1117,12 @@ public object FlashCardsContract {
      * ```
      */
     public object ReviewInfo {
+        public const val CONTENT_URI_SEGMENT: String = "schedule"
+
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "schedule")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
@@ -822,15 +1171,24 @@ public object FlashCardsContract {
          */
         public const val SUSPEND: String = "suspended"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    NOTE_ID,
+                    CARD_ORD,
+                    BUTTON_COUNT,
+                    NEXT_REVIEW_TIMES,
+                    MEDIA_FILES,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                NOTE_ID,
-                CARD_ORD,
-                BUTTON_COUNT,
-                NEXT_REVIEW_TIMES,
-                MEDIA_FILES,
-            )
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for ReviewInfo.
@@ -931,11 +1289,19 @@ public object FlashCardsContract {
      * ```
      */
     public object Deck {
-        @JvmField // required for Java API
-        public val CONTENT_ALL_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "decks")
+        public const val CONTENT_ALL_URI_SEGMENT: String = "decks"
 
         @JvmField // required for Java API
-        public val CONTENT_SELECTED_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck")
+        public val CONTENT_ALL_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_ALL_URI_SEGMENT)
+
+        public fun getContentAllUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_ALL_URI_SEGMENT)
+
+        public const val CONTENT_SELECTED_URI_SEGMENT: String = "selected_deck"
+
+        @JvmField // required for Java API
+        public val CONTENT_SELECTED_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_SELECTED_URI_SEGMENT)
+
+        public fun getContentSelectedUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_SELECTED_URI_SEGMENT)
 
         /**
          * The name of the Deck
@@ -967,16 +1333,25 @@ public object FlashCardsContract {
          */
         public const val DECK_DESC: String = "deck_desc"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    DECK_NAME,
+                    DECK_ID,
+                    DECK_COUNTS,
+                    OPTIONS,
+                    DECK_DYN,
+                    DECK_DESC,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                DECK_NAME,
-                DECK_ID,
-                DECK_COUNTS,
-                OPTIONS,
-                DECK_DYN,
-                DECK_DESC,
-            )
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for Deck.
@@ -1001,11 +1376,15 @@ public object FlashCardsContract {
      * ```
      */
     public object AnkiMedia {
+        public const val CONTENT_URI_SEGMENT: String = "media"
+
         /**
          * Content Uri for the MEDIA row of the CardContentProvider
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "media")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         /**
          * Uri.toString() which points to the media file that is to be inserted.

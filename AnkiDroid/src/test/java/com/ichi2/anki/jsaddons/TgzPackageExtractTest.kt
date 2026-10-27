@@ -1,28 +1,18 @@
-/*
- * Copyright (c) 2021 Mani infinyte01@gmail.com
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Mani infinyte01@gmail.com
 
 package com.ichi2.anki.jsaddons
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
+import io.mockk.every
+import io.mockk.spyk
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.hamcrest.io.FileMatchers.anExistingFile
@@ -32,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class TgzPackageExtractTest : RobolectricTest() {
@@ -135,6 +126,53 @@ class TgzPackageExtractTest : RobolectricTest() {
         // test if package.json extracted successfully
         val packageJsonPath = File(packagePath, "package.json")
         assertThat(packageJsonPath, anExistingFile())
+    }
+
+    /**
+     * Test that failure to create the addon directory is reported to the caller
+     * instead of being silently swallowed
+     */
+    @Test
+    fun extractionFailureIsReportedTest() {
+        // a regular file where the addon directory should go: directory creation must fail
+        val blocker = File(addonDir, "blocker").also { it.writeText("") }
+        val addonsPackageDir = File(blocker, "some-addon")
+
+        assertFailsWith<IOException> {
+            addonPackage.extractTarGzipToAddonFolder(File(tarballPath), addonsPackageDir)
+        }
+    }
+
+    /**
+     * Test that a failed extraction is reported to the caller
+     * instead of completing as if it had succeeded
+     */
+    @Test
+    fun unTarFailureIsReportedTest() {
+        val failingExtract = spyk(addonPackage)
+        every { failingExtract.unTar(any(), any()) } throws IOException("simulated failure")
+
+        assertFailsWith<IOException> {
+            failingExtract.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
+        }
+    }
+
+    @Test
+    fun failedExtractionCleansUpPartialAddonTest() {
+        // an addon package dir inside the addons dir, as production lays it out
+        val addonsPackageDir = File(addonDir, "some-addon")
+
+        val failingExtract = spyk(addonPackage)
+        every { failingExtract.unTar(any(), any()) } answers {
+            // simulate a partial extraction before the failure
+            File(addonsPackageDir, "partial.js").writeText("")
+            throw IOException("simulated failure")
+        }
+
+        assertFailsWith<IOException> {
+            failingExtract.extractTarGzipToAddonFolder(File(tarballPath), addonsPackageDir)
+        }
+        assertThat(addonsPackageDir, not(anExistingDirectory()))
     }
 
     /**

@@ -1,20 +1,10 @@
-/*
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
 import android.content.Context
 import android.text.format.Formatter
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.utils.FileUtil
 import timber.log.Timber
 
@@ -63,14 +53,14 @@ class CollectionIntegrityStorageCheck {
             Timber.e("CollectionIntegrityCheckStatus in an invalid state")
             val defaultRequiredFreeSpace = defaultRequiredFreeSpace(context)
             return context.resources.getString(
-                R.string.integrity_check_insufficient_space,
+                CommonString.integrity_check_insufficient_space,
                 defaultRequiredFreeSpace,
             )
         }
         val required = Formatter.formatShortFileSize(context, requiredSpace)
         val insufficientSpace =
             context.resources.getString(
-                R.string.integrity_check_insufficient_space,
+                CommonString.integrity_check_insufficient_space,
                 required,
             )
 
@@ -78,7 +68,7 @@ class CollectionIntegrityStorageCheck {
         val currentFree = Formatter.formatShortFileSize(context, freeSpace)
         val insufficientSpaceCurrentFree =
             context.resources.getString(
-                R.string.integrity_check_insufficient_space_extra_content,
+                CommonString.integrity_check_insufficient_space_extra_content,
                 currentFree,
             )
         return insufficientSpace + insufficientSpaceCurrentFree
@@ -100,7 +90,7 @@ class CollectionIntegrityStorageCheck {
                 val requiredFreeSpace = defaultRequiredFreeSpace(context)
                 return fromError(
                     context.resources.getString(
-                        R.string.integrity_check_insufficient_space,
+                        CommonString.integrity_check_insufficient_space,
                         requiredFreeSpace,
                     ),
                 )
@@ -118,7 +108,7 @@ class CollectionIntegrityStorageCheck {
                 val readableFileSize = Formatter.formatFileSize(context, requiredSpaceInBytes)
                 return fromError(
                     context.resources.getString(
-                        R.string.integrity_check_insufficient_space,
+                        CommonString.integrity_check_insufficient_space,
                         readableFileSize,
                     ),
                 )

@@ -1,18 +1,5 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.preferences
 
 import android.content.Context
@@ -20,6 +7,7 @@ import androidx.annotation.XmlRes
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.testutils.getInstanceFromClassName
 import org.xmlpull.v1.XmlPullParser
@@ -106,20 +94,30 @@ object PreferenceTestUtils {
         return fragments.distinctBy { it::class } // and remove any repeated fragments
     }
 
-    fun attrValueToString(
-        value: String,
-        context: Context,
-    ): String =
-        if (value.startsWith("@")) {
-            context.getString(value.substring(1).toInt())
+    context(test: RobolectricTest)
+    fun String.resValue(): String = resValue(test.targetContext)
+
+    fun String.resValue(context: Context): String =
+        if (this.startsWith("@")) {
+            context.getString(this.substring(1).toInt())
         } else {
-            value
+            this
         }
 
     fun attrToStringArray(
         value: String,
         context: Context,
-    ): Array<String> = context.resources.getStringArray(value.substring(1).toInt())
+    ): Array<String> {
+        if (!value.startsWith("@")) {
+            return arrayOf(value)
+        }
+        val resId = value.substring(1).toInt()
+        return if (context.resources.getResourceTypeName(resId) == "array") {
+            context.resources.getStringArray(resId)
+        } else {
+            arrayOf(context.getString(resId))
+        }
+    }
 
     fun getKeysFromXml(
         context: Context,
@@ -133,7 +131,7 @@ object PreferenceTestUtils {
                 emptySet()
             }
         return getAttrFromXml(context, xml, "key", excludeTags = exclusions)
-            .map { attrValueToString(it, context) }
+            .map { it.resValue(context) }
     }
 
     fun getAllPreferenceKeys(context: Context): Set<String> =

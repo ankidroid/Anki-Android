@@ -1,25 +1,12 @@
-/*
- *  Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
- *  Copyright (c) 2014 Timothy rae <perceptualchaos2@gmail.com>
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Timothy rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.multimedia
 
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.utils.htmlEncode
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.libanki.AvRef
 import com.ichi2.anki.libanki.AvTag
 import com.ichi2.anki.libanki.Card
@@ -32,7 +19,6 @@ import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.anki.libanki.getFileUri
 import com.ichi2.anki.utils.CollectionPreferences
-import com.ichi2.compat.CompatHelper
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.File

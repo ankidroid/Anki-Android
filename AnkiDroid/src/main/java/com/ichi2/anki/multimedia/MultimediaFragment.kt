@@ -1,27 +1,15 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.multimedia
 
 import android.net.Uri
 import android.os.Bundle
 import android.text.format.Formatter
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -31,19 +19,23 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -67,6 +59,8 @@ abstract class MultimediaFragment(
 
     val viewModel: MultimediaViewModel by viewModels()
 
+    private val argsStorage by lazy { MultimediaArgsStorage.create(requireContext()) }
+
     protected var ankiCacheDirectory: String? = null
 
     protected var indexValue: Int = 0
@@ -74,32 +68,50 @@ abstract class MultimediaFragment(
     protected lateinit var note: IMultimediaEditableNote
     protected var imageUri: Uri? = null
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        val multimediaActivityExtra =
+            try {
+                arguments
+                    ?.getSerializableCompat<File>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)
+                    ?.let(argsStorage::read)
+            } catch (e: Exception) {
+                Timber.w(e, "Unable to load multimedia arguments")
+                showErrorDialog()
+                return null
+            }
+        if (multimediaActivityExtra != null) {
+            indexValue = multimediaActivityExtra.index
+            field = multimediaActivityExtra.field
+            note = multimediaActivityExtra.note
+            if (multimediaActivityExtra.imageUri != null) {
+                imageUri = multimediaActivityExtra.imageUri.toUri()
+            }
+        }
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Keep the input while the fragment can be restored after recreation or process death.
+        if (isRemoving || activity?.isFinishing == true) {
+            arguments?.getSerializableCompat<File>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)?.delete()
+        }
+    }
+
     @NeedsTest("test discard dialog shown in case there are changes")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setupEdgeToEdge(view)
 
-        requireAnkiActivity().setToolbarTitle(title)
-
-        if (arguments != null) {
-            Timber.d("Getting MultimediaActivityExtra values from arguments")
-            @Suppress("USELESS_CAST")
-            val multimediaActivityExtra =
-                arguments?.getSerializableCompat(
-                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
-                ) as? MultimediaActivityExtra
-
-            if (multimediaActivityExtra != null) {
-                indexValue = multimediaActivityExtra.index
-                field = multimediaActivityExtra.field
-                note = multimediaActivityExtra.note
-                if (multimediaActivityExtra.imageUri != null) {
-                    imageUri = multimediaActivityExtra.imageUri.toUri()
-                }
-            }
-        }
+        requireAnkiActivity().setToolbarText(title = title)
 
         val backCallback =
             object : OnBackPressedCallback(
@@ -121,6 +133,26 @@ abstract class MultimediaFragment(
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
+    }
+
+    /**
+     * Applies edge-to-edge insets for the screen. [MultimediaActivity] is the only host, and it
+     * insets the app bar above this fragment, so no top inset is taken here.
+     */
+    private fun setupEdgeToEdge(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            root.updatePadding(
+                left = bars.left,
+                right = bars.right,
+                // 'action_done' is the bottom-most touch target, so it clears the corners too
+                bottom = maxOf(bars.bottom, insets.bottomCornerClearance(root)),
+            )
+            insets
+        }
     }
 
     /**
@@ -169,20 +201,42 @@ abstract class MultimediaFragment(
      * "Something went wrong" message from the application's resources.
      */
     fun showSomethingWentWrong() {
-        showSnackbar(resources.getString(R.string.multimedia_editor_something_wrong))
+        showSnackbar(resources.getString(CommonString.multimedia_editor_something_wrong))
     }
 
     /**
      * Creates and shows an AlertDialog with an error message
-     * from the application's resources. The dialog includes an "OK" button that,
-     * when clicked, finishes the current activity.
+     * from the application's resources. Acknowledging or cancelling the dialog finishes
+     * the current activity.
      */
     fun showErrorDialog(errorMessage: String? = null) {
         AlertDialog.Builder(requireContext()).show {
-            setMessage(errorMessage ?: resources.getString(R.string.something_wrong))
-            setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
+            setMessage(errorMessage ?: resources.getString(CommonString.something_wrong))
+            setPositiveButton(getString(CommonString.dialog_ok)) { _, _ ->
                 requireActivity().finish()
             }
+            setOnCancelListener { requireActivity().finish() }
         }
+    }
+
+    /**
+     * Finishes the activity with a [MultimediaResult.Cancelled] result when no media
+     * has been captured yet. Call from child-launcher cancel branches to propagate
+     * the cancellation without losing partial captures.
+     */
+    protected fun cancelIfEmpty() {
+        if (viewModel.currentMultimediaUri.value == null) {
+            setMultimediaResultAndFinish(MultimediaResult.Cancelled(indexValue))
+        }
+    }
+
+    /**
+     * Attaches the currently captured media to [field] and finishes the activity
+     * with a [MultimediaResult.Success]. Call from confirm/done actions.
+     */
+    protected fun finishWithMedia() {
+        field.mediaFile = viewModel.currentMultimediaPath.value
+        field.hasTemporaryMedia = true
+        setMultimediaResultAndFinish(MultimediaResult.Success(indexValue, field))
     }
 }

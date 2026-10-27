@@ -1,41 +1,30 @@
-/*
- Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
- Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
-
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
 
 package com.ichi2.themes
 
+import android.app.Activity
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
-import androidx.annotation.ColorInt
+import android.os.Bundle
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.withStyledAttributes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
-import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.android.systemIsInNightMode
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.Theme
-import com.ichi2.ui.AppCompatPreferenceActivity
+import com.ichi2.themes.Themes.currentTheme
+import timber.log.Timber
 
 /**
  * Helper methods to configure things related to AnkiDroid's themes
@@ -52,8 +41,41 @@ object Themes {
         context.setTheme(currentTheme.styleResId)
     }
 
-    fun setLegacyActionBar(context: Context) {
-        context.setTheme(R.style.ThemeOverlay_LegacyActionBar)
+    /**
+     * @param savedInstanceState the bundle provided to [Activity.onCreate]
+     */
+    fun setTheme(
+        activity: Activity,
+        savedInstanceState: Bundle?,
+    ) {
+        val tv = TypedValue()
+        activity.theme.resolveAttribute(android.R.attr.windowBackground, tv, true)
+        val hadLauncherSplash = tv.resourceId == R.drawable.launch_screen
+
+        // If the decor view already exists, `windowBackground` can no longer be updated by setTheme
+        // `hadLauncherSplash` is exempt: its window background is replaced below.
+        // Exclude recreation: the decor view can exist before `onCreate`, but the framework
+        // refreshes `windowBackground`.
+        val isRecreation = savedInstanceState != null
+        if (!isRecreation && !hadLauncherSplash && activity.window.peekDecorView() != null) {
+            val message =
+                "Decor view was initialized before setTheme(): windowBackground is stale. " +
+                    "Move window access (e.g. enableEdgeToEdge()) after super.onCreate()"
+            if (BuildConfig.DEBUG) throw IllegalStateException(message) else Timber.w(message)
+        }
+
+        setTheme(activity as Context)
+
+        if (hadLauncherSplash) {
+            activity.theme.resolveAttribute(android.R.attr.windowBackground, tv, true)
+            val replacement =
+                if (tv.type in TypedValue.TYPE_FIRST_COLOR_INT..TypedValue.TYPE_LAST_COLOR_INT) {
+                    tv.data.toDrawable()
+                } else {
+                    AppCompatResources.getDrawable(activity, tv.resourceId)
+                }
+            activity.window.setBackgroundDrawable(replacement)
+        }
     }
 
     /**
@@ -63,16 +85,7 @@ object Themes {
      * Otherwise, updates to the selected theme.
      */
     fun updateCurrentTheme(context: Context) {
-        // AppCompatPreferenceActivity's sharedPreferences is initialized
-        // after the time when the theme should be set
-        // TODO (#5019): always use the context as the parameter for getSharedPrefs
-        val prefsContext =
-            if (context is AppCompatPreferenceActivity<*>) {
-                AnkiDroidApp.instance
-            } else {
-                context
-            }
-        val prefs = PrefsRepository(prefsContext)
+        val prefs = PrefsRepository(context)
         val appTheme = prefs.appTheme
 
         val themeIsDark = (appTheme == AppTheme.FOLLOW_SYSTEM && systemIsInNightMode(context)) || appTheme == AppTheme.NIGHT
@@ -90,60 +103,9 @@ object Themes {
             }
         AppCompatDelegate.setDefaultNightMode(defaultNightMode)
     }
-
-    /**
-     * #8150: Fix icons not appearing in Note Editor due to MIUI 12's "force dark" mode
-     */
-    fun disableXiaomiForceDarkMode(context: Context) {
-        // Setting a theme is an additive operation, so this adds a single property.
-        context.setTheme(R.style.ThemeOverlay_Xiaomi)
-    }
-
-    fun getResFromAttr(
-        context: Context,
-        resAttr: Int,
-    ): Int {
-        val attrs = intArrayOf(resAttr)
-        return getResFromAttr(context, attrs)[0]
-    }
-
-    /**
-     * NOTE: dangerous function, it mutates the input array and returns it!
-     */
-    fun getResFromAttr(
-        context: Context,
-        attrs: IntArray,
-    ): IntArray {
-        context.withStyledAttributes(attrs = attrs) {
-            for (i in attrs.indices) {
-                attrs[i] = getResourceId(i, 0)
-            }
-        }
-        return attrs
-    }
-
-    @JvmStatic // tests failed when removing, maybe try later
-    @ColorInt
-    fun getColorFromAttr(context: Context, attr: Int): Int = MaterialColors.getColor(context, attr, 0)
-
-    /**
-     * NOTE: dangerous function, it mutates the input array and returns it!
-     */
-    @JvmStatic // tests failed when removing, maybe try later
-    @ColorInt
-    fun getColorsFromAttrs(context: Context, attrs: IntArray): IntArray {
-        for (i in attrs.indices) {
-            attrs[i] = getColorFromAttr(context, attrs[i])
-        }
-        return attrs
-    }
-
-    fun systemIsInNightMode(context: Context): Boolean =
-        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-            Configuration.UI_MODE_NIGHT_YES
 }
 
-@Suppress("deprecation", "API35 properly handle edge-to-edge")
+@Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
 fun FragmentActivity.setTransparentStatusBar() {
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
         Themes.currentTheme !is NightTheme

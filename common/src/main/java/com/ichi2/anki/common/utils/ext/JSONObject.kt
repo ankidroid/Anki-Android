@@ -80,6 +80,36 @@ fun <T : JSONObject> JSONObject.deepClonedInto(clone: T): T {
 }
 
 /**
+ * Compares JSON values recursively without serializing either document. Object key order is
+ * ignored; array order is significant. Numbers are compared by their JSON representation.
+ */
+fun JSONObject.contentEquals(other: JSONObject): Boolean {
+    if (this === other) return true
+    if (length() != other.length()) return false
+    for (key in keys()) {
+        if (!other.has(key) || !jsonValuesEqual(get(key), other.get(key))) return false
+    }
+    return true
+}
+
+private fun jsonValuesEqual(
+    first: Any?,
+    second: Any?,
+): Boolean =
+    when {
+        first === second -> true
+        first == null || first === JSONObject.NULL -> second == null || second === JSONObject.NULL
+        first is JSONObject && second is JSONObject -> first.contentEquals(second)
+        first is JSONArray && second is JSONArray ->
+            first.length() == second.length() &&
+                (0 until first.length()).all { jsonValuesEqual(first.opt(it), second.opt(it)) }
+        first is Number && second is Number ->
+            // Preserve integer precision and equality across Int/Long/Double, as JSON writing does.
+            JSONObject.numberToString(first) == JSONObject.numberToString(second)
+        else -> first == second
+    }
+
+/**
  * Change type from JSONObject to JSONObject.
  *
  * Assuming the whole code use only JSONObject, JSONArray and JSONTokener,
@@ -129,3 +159,18 @@ fun JSONObject.jsonObjectIterable(): Iterable<JSONObject> =
         .asSequence()
         .map { getJSONObject(it) }
         .asIterable()
+
+/**
+ * @return `null` if the key doesn't exist, or the value is not a long. The long value of the key
+ * otherwise.
+ */
+fun JSONObject.getLongOrNull(key: String): Long? {
+    if (!has(key)) {
+        return null
+    }
+    try {
+        return getLong(key)
+    } catch (ex: Exception) {
+        return null
+    }
+}

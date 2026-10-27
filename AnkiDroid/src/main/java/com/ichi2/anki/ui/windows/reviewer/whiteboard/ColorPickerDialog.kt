@@ -1,27 +1,20 @@
-/*
- * Copyright (c) 2025 Divyansh Kushwaha <thedroiddiv@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Divyansh Kushwaha <thedroiddiv@gmail.com>
 
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.view.Choreographer
+import android.widget.FrameLayout
 import androidx.annotation.ColorInt
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.utils.Dp
-import com.ichi2.utils.dp
+import com.ichi2.anki.common.utils.Dp
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
 import com.skydoves.colorpickerview.AlphaTileView
@@ -57,12 +50,40 @@ fun Context.showColorPickerDialog(
             // This ensures the BrightnessSlideBar is fully initialized before applying
             // the initial color. Calling it too early causes the slider to use its
             // default position, resulting in an incorrect displayed color.
-            colorPickerView.post { colorPickerView.setInitialColor(initialColor) }
+            colorPickerView.post {
+                colorPickerView.setInitialColor(initialColor)
+                // The wheel only sets hue and saturation; brightness comes from the slider below it.
+                // A near-black seed parks that slider at zero, so any hue picked on the wheel would
+                // assemble back to black and the picker would seem to ignore the choice (issue #21329).
+                // Lift the slider once so the wheel is usable. Brighter seeds keep their own brightness.
+                if (initialColor.isNearBlack()) {
+                    colorPickerView.post {
+                        colorPickerView.brightnessSlider?.setSelectorByHalfSelectorPosition(1f)
+                    }
+                }
+            }
             // Bubble showing the selected color
-            colorPickerView.flagView = BubbleFlag(this@showColorPickerDialog)
-            setTitle(R.string.choose_color)
-            setPositiveButton(R.string.dialog_ok, onPositiveCallback)
-            negativeButton(R.string.dialog_cancel)
+            val bubbleFlag = BubbleFlag(this@showColorPickerDialog)
+            colorPickerView.flagView = bubbleFlag
+            // TODO on these lower Android versions the view clipping fails and we end up with a
+            //  square(standard view shape) instead of the expected circle so we update the
+            //  positioning values so the square sis smaller and is centered in the background pin
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
+                bubbleFlag
+                    .findViewById<FrameLayout>(R.id.flag_color_layout_wrapper)
+                    .updatePadding(
+                        10.dp.toPx(this@showColorPickerDialog),
+                        7.dp.toPx(this@showColorPickerDialog),
+                        10.dp.toPx(this@showColorPickerDialog),
+                    )
+                bubbleFlag.alphaTileView.updateLayoutParams {
+                    this.width = 12.dp.toPx(this@showColorPickerDialog)
+                    this.height = 12.dp.toPx(this@showColorPickerDialog)
+                }
+            }
+            setTitle(CommonString.choose_color)
+            setPositiveButton(CommonString.dialog_ok, onPositiveCallback)
+            negativeButton(CommonString.dialog_cancel)
             setBottomSpace(12.dp)
             val callback =
                 object : Choreographer.FrameCallback {
@@ -87,11 +108,24 @@ fun Context.showColorPickerDialog(
 }
 
 /**
+ * Whether the color's brightness is low enough to read as black. The brightness slider stores
+ * exactly this value, so a near-black color means the slider would be parked near zero.
+ */
+private fun Int.isNearBlack(): Boolean {
+    val hsv = FloatArray(3)
+    Color.colorToHSV(this, hsv)
+    return hsv[2] <= NEAR_BLACK_BRIGHTNESS
+}
+
+/** Brightness (HSV value) at or below which a color is treated as black. */
+private const val NEAR_BLACK_BRIGHTNESS = 0.05f
+
+/**
  * Custom flag view that displays the selected color in a bubble above the color picker selector.
  */
 private class BubbleFlag(
     context: Context?,
-) : FlagView(context, R.layout.colorpicker_flag_bubble) {
+) : FlagView(context, R.layout.view_colorpicker_flag_bubble) {
     val alphaTileView: AlphaTileView = findViewById(R.id.flag_color_layout)
 
     override fun onRefresh(colorEnvelope: ColorEnvelope) {

@@ -1,20 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-@file:Suppress("UnstableApiUsage")
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.lint.rules
 
@@ -111,13 +95,15 @@ class TranslationTypo :
             return
         }
 
-        val crowdinContext = context.toCrowdinContext()
+        val text = element.textContent
+        val containsUrl = text.contains("://")
 
         /** Helper function to report 'TranslationTypo' issues */
         fun Element.reportIssue(message: String) {
             val elementToReport = this
             val crowdinEditUrl =
-                crowdinContext
+                context
+                    .toCrowdinContext()
                     ?.getEditUrl(elementToReport)
                     ?.let { url -> "\n$url" } ?: ""
             context.report(
@@ -128,13 +114,13 @@ class TranslationTypo :
         }
 
         fun CheckStringCase.reportIfIssue() {
-            if (!this.shouldReport(element)) return
+            if (containsUrl || !this.shouldReport(text)) return
             element.reportIssue("should be '${this.expectedCasing}'")
         }
 
         // use the unicode character instead of three dots for ellipsis
         // ignore RTL to reduce maintenance: GitHub incorrectly displays ellipsis, so hard to review
-        if (element.textContent.contains("...") && !context.isRightToLeftLanguage()) {
+        if (text.contains("...") && !context.isRightToLeftLanguage()) {
             element.reportIssue("should use unicode '&#8230;' for ellipsis not three dots; RTL languages best viewed on crowdin")
         }
 
@@ -148,11 +134,11 @@ class TranslationTypo :
         ankiMobileCasingCheck.reportIfIssue()
 
         // remove empty strings
-        if (element.textContent.isEmpty() && element.getAttribute("name") != "empty_string") {
+        if (text.isEmpty() && element.getAttribute("name") != "empty_string") {
             element.reportIssue("should not be empty")
         }
 
-        if (element.textContent.trim() != element.textContent) {
+        if (text.trim() != text) {
             var isValid = true
             element.childNodes.forEach {
                 if (it is CDATASection) {
@@ -177,13 +163,7 @@ class TranslationTypo :
         val expectedCasing: String,
     ) {
         /** Flags 'javascript' when 'JavaScript' should be used */
-        fun shouldReport(element: Element): Boolean {
-            // if it's a link, don't check it - www.ankiweb.net matches the below
-            if (element.textContent.contains("://")) return false
-
-            // if it contains 'javascript', but casing is not the correct 'JavaScript'
-            return regex.containsMatchIn(element.textContent) && !element.textContent.contains(expectedCasing)
-        }
+        fun shouldReport(text: String): Boolean = regex.containsMatchIn(text) && !text.contains(expectedCasing)
 
         companion object {
             /**

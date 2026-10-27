@@ -1,63 +1,46 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.previewer
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.SavedStateHandle
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.utils.ViewModelSavedStateHandle
 import com.ichi2.anki.utils.ext.flag
-import com.ichi2.anki.utils.ext.require
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 class PreviewerViewModel(
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: ViewModelSavedStateHandle,
+    @VisibleForTesting val selectedCardIds: List<Long>,
+    initialIndex: Int,
 ) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber {
     val currentIndex =
         savedStateHandle.getMutableStateFlow(
             KEY_CURRENT_INDEX,
-            initialValue = savedStateHandle.require<Int>(PreviewerFragment.CURRENT_INDEX_ARG),
+            initialValue = initialIndex,
         )
     val backSideOnly = savedStateHandle.getMutableStateFlow(KEY_BACKSIDE_ONLY, false)
     val isMarked = MutableStateFlow(false)
     val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
-
-    @VisibleForTesting
-    val selectedCardIds: List<Long> = savedStateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
 
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
@@ -72,7 +55,7 @@ class PreviewerViewModel(
 
     override var currentCard: Deferred<Card> =
         asyncIO {
-            withCol { getCard(selectedCardIds[savedStateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG)]) }
+            withCol { getCard(selectedCardIds[currentIndex.value]) }
         }
     override val server = AnkiServer(this).also { it.start() }
 
@@ -86,10 +69,9 @@ class PreviewerViewModel(
 
     /** Call this after the webView has finished loading the page */
     @NeedsTest("16302 - a sound-only card on the back/flipped with 'don't keep activities'")
-    @NeedsTest("16302 - on config changes, sound continues to play")
     override fun onPageFinished(isAfterRecreation: Boolean) {
-        if (isAfterRecreation) {
-            launchCatchingIO {
+        launchCatchingIO {
+            if (isAfterRecreation) {
                 showCard(showAnswerOnReload)
                 // isAfterRecreation can either mean:
                 // * after config change (ViewModel exists)
@@ -97,13 +79,9 @@ class PreviewerViewModel(
                 // if the ViewModel existed, we want to continue playing audio
                 // if not, we want to setup the sound player
                 cardMediaPlayer.ensureAvTagsLoaded(currentCard.await())
-            }
-            return
-        }
-        launchCatchingIO {
-            currentIndex.collectLatest {
-                showCard(showAnswer = backSideOnly.value)
-                loadAndPlaySounds()
+            } else {
+                // re-render the current card
+                updateCurrentIndex { it }
             }
         }
     }
@@ -113,9 +91,11 @@ class PreviewerViewModel(
         launchCatchingIO {
             backSideOnly.emit(!backSideOnly.value)
             if (!backSideOnly.value && showingAnswer.value) {
+                cardMediaPlayer.stop()
                 showQuestion()
                 cardMediaPlayer.autoplayAllForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
+                cardMediaPlayer.stop()
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             }
@@ -156,10 +136,11 @@ class PreviewerViewModel(
     fun onNextButtonClick() {
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
+                cardMediaPlayer.stop()
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             } else {
-                currentIndex.update { it + 1 }
+                updateCurrentIndex { it + 1 }
             }
         }
     }
@@ -171,14 +152,15 @@ class PreviewerViewModel(
     fun onPreviousButtonClick() {
         launchCatchingIO {
             if (currentIndex.value > 0) {
-                currentIndex.update { it - 1 }
+                updateCurrentIndex { it - 1 }
             } else if (showingAnswer.value && !backSideOnly.value) {
+                cardMediaPlayer.stop()
                 showQuestion()
             }
         }
     }
 
-    suspend fun getNoteEditorDestination() = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
+    suspend fun getNoteEditorDestination() = NoteEditorDestination.EditNoteFromPreviewer(currentCard.await().id)
 
     fun replayMedia() {
         launchCatchingIO {
@@ -196,13 +178,20 @@ class PreviewerViewModel(
         val index = sliderPosition - 1
         if (index !in selectedCardIds.indices) return
         launchCatchingIO {
-            currentIndex.emit(index)
+            updateCurrentIndex { index }
         }
     }
 
     /* *********************************************************************************************
      *************************************** Internal methods ***************************************
      ********************************************************************************************* */
+
+    /** Applies [update] to [currentIndex] and re-renders the resulting card. */
+    private suspend fun updateCurrentIndex(update: (Int) -> Int) {
+        currentIndex.update(update)
+        showCard(showAnswer = backSideOnly.value)
+        loadAndPlaySounds()
+    }
 
     private suspend fun showCard(showAnswer: Boolean) {
         currentCard =

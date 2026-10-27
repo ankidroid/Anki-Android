@@ -1,19 +1,6 @@
-/*
- * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
- * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>
 
 package com.ichi2.anki
 
@@ -25,6 +12,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.Region
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -37,16 +28,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.SubMenu
+import android.view.TouchDelegate
 import android.view.View
+import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo.TouchDelegateInfo
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.annotation.IntDef
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -55,13 +53,23 @@ import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.navigationBars
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isGone
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
@@ -69,7 +77,18 @@ import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.android.HandlerUtils.executeFunctionWithDelay
+import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.utils.ext.showRemainingDueCounts
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
@@ -87,11 +106,9 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.isReco
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.setEditorStatus
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.PostRequestUri
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.reviewer.ActionButtons
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
@@ -103,7 +120,6 @@ import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardMarker
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
-import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.reviewer.ReviewerUi
@@ -115,21 +131,17 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
-import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.getLongOrNull
-import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
-import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
-import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.cancelable
@@ -145,6 +157,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
+import com.ichi2.anki.common.android.R as CommonR
 
 @Suppress("LeakingThis")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
@@ -157,6 +170,9 @@ open class Reviewer :
     private var hasDrawerSwipeConflicts = false
     private var showWhiteboard = true
     private var prefFullscreenReview = false
+
+    /** Immersive review: whether the system bars are currently swiped back into view */
+    private var immersiveBarsVisible = true
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
     private var isEraserMode = false
@@ -225,15 +241,16 @@ open class Reviewer :
             FlashCardViewerResultCallback(),
         )
 
-    private val flagItemIds = mutableSetOf<Int>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
+        }
+        if (Prefs.devBottomNavEnabled && resources.getBoolean(R.bool.bottom_navigation_available)) {
+            showBackIcon()
         }
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
@@ -243,16 +260,14 @@ open class Reviewer :
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
         processor = BindingMap(sharedPrefs(), ViewerCommand.entries, this)
-        if (sharedPrefs().getString("answerButtonPosition", "bottom") == "bottom" && !navBarNeedsScrim) {
-            setNavigationBarColor(R.attr.showAnswerColor)
-        }
+        setupEdgeToEdge()
         if (!sharedPrefs().getBoolean("showDeckTitle", false)) {
             // avoid showing "AnkiDroid"
             supportActionBar?.title = ""
         }
         startLoadingCollection()
         registerOnForgetHandler { listOf(currentCardId!!) }
-        previousCardId = savedInstanceState?.getLongOrNull(KEY_PREVIOUS_CARD_ID)
+        previousCardId = savedInstanceState?.getLongOrNull(STATE_PREVIOUS_CARD_ID)
     }
 
     override fun onPause() {
@@ -273,7 +288,7 @@ open class Reviewer :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        previousCardId?.let { outState.putLong(KEY_PREVIOUS_CARD_ID, it) }
+        previousCardId?.let { outState.putLong(STATE_PREVIOUS_CARD_ID, it) }
     }
 
     protected val flagToDisplay: Flag
@@ -366,12 +381,343 @@ open class Reviewer :
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int =
         when (fullscreenMode) {
-            FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
-            FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
-            FullScreenMode.BUTTONS_AND_MENU -> R.layout.reviewer
+            FullScreenMode.BUTTONS_ONLY -> R.layout.activity_reviewer_fullscreen
+            FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.activity_reviewer_fullscreen_noanswers
+            FullScreenMode.BUTTONS_AND_MENU -> R.layout.activity_reviewer
         }
 
-    public override fun fitsSystemWindows(): Boolean = !fullscreenMode.isFullScreenReview()
+    // insets are handled manually: see setupEdgeToEdge()
+    public override fun fitsSystemWindows(): Boolean = false
+
+    /**
+     * Enables edge-to-edge and applies insets so no content is occluded by the system bars.
+     */
+    private fun setupEdgeToEdge() {
+        val answerButtonsPosition =
+            sharedPrefs().getString(getString(R.string.answer_buttons_position_preference), "bottom")
+        val answerButtonsAtBottom = answerButtonsPosition == "bottom"
+        val immersive = fullscreenMode.isFullScreenReview()
+        enableEdgeToEdge(
+            // the status bar sits over the app bar, which is dark in every theme except E-Ink
+            statusBarStyle =
+                SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) {
+                    currentTheme != DayTheme.EINK
+                },
+            navigationBarStyle =
+                if (answerButtonsAtBottom) {
+                    // The answer area is `showAnswerColor` (dark) in every theme.
+                    SystemBarStyle.dark(Color.TRANSPARENT)
+                } else if (immersive) {
+                    // use a translucent scrim if there are no answer buttons
+                    // auto() draws nothing over gesture navigation, so use dark/light.
+                    if (Themes.isNightTheme) {
+                        SystemBarStyle.dark(EDGE_TO_EDGE_DARK_SCRIM)
+                    } else {
+                        SystemBarStyle.light(EDGE_TO_EDGE_LIGHT_SCRIM, EDGE_TO_EDGE_DARK_SCRIM)
+                    }
+                } else {
+                    // the navigation bar sits over an empty window-background strip below the
+                    // card. The dark scrim is only used below API 26, where light navigation
+                    // icons are unsupported
+                    SystemBarStyle.auto(Color.TRANSPARENT, EDGE_TO_EDGE_DARK_SCRIM) {
+                        Themes.isNightTheme
+                    }
+                },
+        )
+
+        // systemBars handles the 3-button nav bar
+        fun WindowInsetsCompat.bars() = getInsets(systemBars() or displayCutout())
+
+        val zero: (WindowInsetsCompat) -> Int = { 0 }
+        val topBars: (WindowInsetsCompat) -> Int = { it.bars().top }
+        val bottomBars: (WindowInsetsCompat) -> Int = { it.bars().bottom }
+        val bottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
+            it.getInsets(systemBars() or displayCutout() or ime()).bottom
+        }
+        // the bars' regions and the keyboard, with the bars' regions still reported (by
+        // the stable insets) while the bars are hidden
+        val stableBottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
+            maxOf(
+                it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).bottom,
+                it.getInsets(ime()).bottom,
+            )
+        }
+
+        // 3 button nav: when hidden, the 'show answer' button should be
+        // at the same position it would be with a gesture nav, to save screen space.
+        val bottomStrip = GESTURE_BAR_HEIGHT.toPx(this)
+        val bottomStripOrBars: (WindowInsetsCompat) -> Int = {
+            maxOf(
+                bottomBarsAndKeyboard(it),
+                minOf(it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).bottom, bottomStrip),
+            )
+        }
+
+        // Exactly one view is bottom-most and absorbs the bottom inset:
+        // 'bottom' => the answer area.
+        // 'top' => the card and its overlays.
+        // 'none' => type the answer + ime
+        val cardBottom = if (answerButtonsPosition == "top") bottomBars else zero
+        val bottomAreaBottom = if (answerButtonsPosition == "none") bottomBarsAndKeyboard else zero
+        val whiteboardPaletteBottom = if (answerButtonsAtBottom) zero else bottomBars
+        val answerAreaBottom =
+            when {
+                !answerButtonsAtBottom -> zero
+                fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE -> stableBottomBarsAndKeyboard
+                immersive -> bottomStripOrBars
+                else -> bottomBarsAndKeyboard
+            }
+
+        /**
+         * Pads [view]'s content past the side insets and, per [top] and [bottom], those
+         * insets; `null` leaves that padding untouched.
+         */
+        fun clearInsets(
+            view: View,
+            basePadding: Int = 0,
+            top: ((WindowInsetsCompat) -> Int)? = null,
+            bottom: ((WindowInsetsCompat) -> Int)? = null,
+        ) {
+            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+                val bars = insets.bars()
+                v.updatePadding(
+                    left = basePadding + bars.left,
+                    top = top?.invoke(insets) ?: v.paddingTop,
+                    right = basePadding + bars.right,
+                    bottom = bottom?.invoke(insets) ?: v.paddingBottom,
+                )
+                insets
+            }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.toolbar_container)) { container, insets ->
+            val bars = insets.bars()
+            container.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            if (answerButtonsAtBottom && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // SystemBarStyle.dark suits a bottom bar over the dark answer area, but a
+                // side bar sits over the window background, where light icons would be
+                // unreadable in day themes: have the system draw its contrasting scrim there
+                val nav = insets.getInsets(navigationBars())
+                window.isNavigationBarContrastEnforced = nav.left > 0 || nav.right > 0
+            }
+            insets
+        }
+        findViewById<View>(R.id.top_bar).also { topBar ->
+            // in BUTTONS_ONLY, the counts bar sits at the top of the window
+            val baseTopPadding = topBar.paddingTop
+            // top padding is added to stop the counts appearing inside rounded corners
+            // TODO: left padding could be used; but this screen is deprecated
+            val topBarTop: (WindowInsetsCompat) -> Int = {
+                baseTopPadding + it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).top
+            }
+            clearInsets(
+                topBar,
+                basePadding = resources.getDimensionPixelSize(CommonR.dimen.side_margin),
+                top = if (fullscreenMode == FullScreenMode.BUTTONS_ONLY) topBarTop else null,
+            )
+        }
+
+        val contentAtWindowTop =
+            when (fullscreenMode) {
+                FullScreenMode.FULLSCREEN_ALL_GONE -> true
+                FullScreenMode.BUTTONS_ONLY -> !prefShowTopbar
+                FullScreenMode.BUTTONS_AND_MENU -> false
+            }
+        val contentTop = if (contentAtWindowTop) topBars else null
+        // side insets only. The card is laid out below this (usually empty) wrap_content
+        // layer and clears the top inset itself: top padding here would give the layer
+        // phantom height, doubling the gap above the card
+        clearInsets(micToolBarLayer)
+        // the card and its overlays reach the bottom of the screen when the answer buttons
+        // are shown above them
+        clearInsets(findViewById(R.id.flashcard), top = contentTop, bottom = cardBottom)
+        // Touches are forwarded to the WebView in the touch layer's coordinates.
+        // So the layer insets need to match the WebView
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.touch_layer)) { view, insets ->
+            val bars = insets.bars()
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                updateMargins(
+                    left = bars.left,
+                    top = contentTop?.invoke(insets) ?: 0,
+                    right = bars.right,
+                    bottom = cardBottom(insets),
+                )
+            }
+            insets
+        }
+        clearInsets(findViewById(R.id.whiteboard), top = contentTop, bottom = cardBottom)
+
+        clearInsets(colorPalette, bottom = whiteboardPaletteBottom)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bottom_area_layout)) { bottomArea, insets ->
+            bottomArea.updatePadding(bottom = bottomAreaBottom(insets))
+            insets
+        }
+
+        findViewById<View>(R.id.answer_field).also { answerField ->
+            clearInsets(answerField, basePadding = answerField.paddingLeft)
+        }
+
+        val answerArea = findViewById<ViewGroup>(R.id.answer_options_layout)
+        answerArea.setBackgroundColor(MaterialColors.getColor(this, CommonR.attr.showAnswerColor, 0))
+        // The bottom inset is painted showAnswerColor by the background, extending the
+        // answer area's color underneath the navigation bar - or, in immersive review,
+        // down to the screen edge
+        val answerAreaBottomHeld =
+            if (immersive) resetInsetsWhenFadeEnds(answerArea, answerAreaBottom) else answerAreaBottom
+        clearInsets(answerArea, bottom = answerAreaBottomHeld)
+        extendAnswerButtonsIntoInsets(answerArea)
+
+        syncControlsWithSystemBars()
+    }
+
+    /**
+     * When system bars are animating away, only reset the insets when the fade ends.
+     */
+    private fun resetInsetsWhenFadeEnds(
+        view: View,
+        bottom: (WindowInsetsCompat) -> Int,
+    ): (WindowInsetsCompat) -> Int {
+        fun WindowInsetsAnimationCompat.animatesBars() = typeMask and systemBars() != 0
+
+        var barsAnimating = false
+        var heldInsets: WindowInsetsCompat? = null
+        ViewCompat.setWindowInsetsAnimationCallback(
+            view,
+            object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    if (animation.animatesBars()) {
+                        barsAnimating = true
+                    }
+                }
+
+                // required override; the per-frame animated insets are not used
+                override fun onProgress(
+                    insets: WindowInsetsCompat,
+                    runningAnimations: List<WindowInsetsAnimationCompat>,
+                ): WindowInsetsCompat = insets
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    if (!animation.animatesBars()) return
+                    barsAnimating = false
+                    val held = heldInsets ?: return
+                    heldInsets = null
+                    ViewCompat.dispatchApplyWindowInsets(view, held)
+                }
+            },
+        )
+        return { insets ->
+            val target = bottom(insets)
+            if (barsAnimating && target < view.paddingBottom) {
+                heldInsets = insets
+                view.paddingBottom
+            } else {
+                heldInsets = null
+                target
+            }
+        }
+    }
+
+    /**
+     * Allows a user to tap the inset below 'show answer' to flip or answer a card.
+     * The inset is the same color as 'show answer', so it looks to be an extension
+     * of the button.
+     */
+    private fun extendAnswerButtonsIntoInsets(answerArea: ViewGroup) {
+        val buttons =
+            listOf(
+                R.id.flashcard_layout_flip,
+                R.id.flashcard_layout_ease1,
+                R.id.flashcard_layout_ease2,
+                R.id.flashcard_layout_ease3,
+                R.id.flashcard_layout_ease4,
+            ).map { answerArea.findViewById<View>(it) }
+        answerArea.touchDelegate = AnswerBandTouchDelegate(answerArea, buttons)
+    }
+
+    /** Routes a touch below a button to the button itself. */
+    private class AnswerBandTouchDelegate(
+        private val answerArea: ViewGroup,
+        private val buttons: List<View>,
+    ) : TouchDelegate(Rect(), answerArea) {
+        /** The button's delegate which took the current gesture's DOWN */
+        private var active: TouchDelegate? = null
+
+        /** The button hovered by explore by touch, via its band */
+        private var hovered: ButtonBandDelegate? = null
+
+        /** A delegate per shown button, bounded by the button and its bands as laid out now */
+        private fun bandDelegates(): List<ButtonBandDelegate> =
+            buttons.filter { it.isShown }.map { ButtonBandDelegate(answerArea.touchBoundsOf(it), it) }
+
+        override fun onTouchEvent(event: MotionEvent): Boolean {
+            if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                // bounds are read at the DOWN, so a layout pass mid-gesture cannot stale them
+                active = bandDelegates().firstOrNull { it.takes(event) }
+                return active != null
+            }
+            return active?.takes(event) ?: false
+        }
+
+        /** Handle talkback events: the area below the buttons delegates to the buttons. */
+        @RequiresApi(Build.VERSION_CODES.Q)
+        override fun onTouchExplorationHoverEvent(event: MotionEvent): Boolean {
+            val target =
+                if (event.actionMasked == MotionEvent.ACTION_HOVER_EXIT) {
+                    null
+                } else {
+                    bandDelegates().firstOrNull { it.bounds.contains(event.x.toInt(), event.y.toInt()) }
+                }
+            if (target?.button === hovered?.button) return target?.hovers(event, event.action) ?: false
+            // the finger crossed onto, off, or between bands: switch the buttons' hover
+            hovered?.hovers(event, MotionEvent.ACTION_HOVER_EXIT)
+            hovered = target
+            return target?.hovers(event, MotionEvent.ACTION_HOVER_ENTER) ?: false
+        }
+
+        /** The bands' regions: [View] forwards explore by touch inside them to [onTouchExplorationHoverEvent] */
+        @RequiresApi(Build.VERSION_CODES.Q)
+        override fun getTouchDelegateInfo(): TouchDelegateInfo {
+            val bands = bandDelegates()
+            // TouchDelegateInfo rejects an empty map: with no button shown there are no bands
+            if (bands.isEmpty()) return super.getTouchDelegateInfo()
+            return TouchDelegateInfo(bands.associate { Region(it.bounds) to it.button })
+        }
+    }
+
+    /** A button's [TouchDelegate], keeping [bounds] and [button] for [AnswerBandTouchDelegate] */
+    private class ButtonBandDelegate(
+        val bounds: Rect,
+        val button: View,
+    ) : TouchDelegate(bounds, button)
+
+    /**
+     * Immersive review: fades the overlaid controls in and out with the system bars
+     */
+    private fun syncControlsWithSystemBars() {
+        if (fullscreenMode == FullScreenMode.BUTTONS_AND_MENU) return
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { _, insets ->
+            val visible = insets.isVisible(navigationBars())
+            if (visible == immersiveBarsVisible) return@setOnApplyWindowInsetsListener insets
+
+            immersiveBarsVisible = visible
+            Timber.d("System bar visibility change. Visible: %b", visible)
+
+            fun toggleWithAnimation(
+                @IdRes id: Int,
+            ) {
+                val view = findViewById<View>(id)
+                if (visible) showViewWithAnimation(view) else hideViewWithAnimation(view)
+            }
+
+            toggleWithAnimation(R.id.toolbar_container)
+            if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
+                toggleWithAnimation(R.id.top_bar)
+                toggleWithAnimation(R.id.answer_options_layout)
+            }
+            insets
+        }
+    }
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
@@ -405,7 +751,7 @@ open class Reviewer :
 
         // Set full screen/immersive mode if needed
         if (prefFullscreenReview) {
-            setFullScreen(this)
+            hideSystemBars()
         }
         setRenderWorkaround(this)
     }
@@ -492,10 +838,10 @@ open class Reviewer :
                 if (whiteboard != null) {
                     try {
                         val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
-                        showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
+                        showSnackbar(getString(CommonString.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
                     } catch (e: Exception) {
                         Timber.w(e)
-                        showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
+                        showSnackbar(getString(CommonString.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
                     }
                 }
             }
@@ -594,10 +940,10 @@ open class Reviewer :
 
             if (isEraserMode) {
                 startMonitoringEraserButtonRipple()
-                showSnackbar(getString(R.string.white_board_eraser_enabled), 1000)
+                showSnackbar(getString(CommonString.white_board_eraser_enabled), 1000)
             } else {
                 stopMonitoringEraserButtonRipple()
-                showSnackbar(getString(R.string.white_board_eraser_disabled), 1000)
+                showSnackbar(getString(CommonString.white_board_eraser_disabled), 1000)
             }
         }
     }
@@ -753,7 +1099,7 @@ open class Reviewer :
                     CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
                     showThemedToast(
                         this,
-                        this.getText(R.string.multimedia_editor_audio_view_create_failed).toString(),
+                        this.getText(CommonString.multimedia_editor_audio_view_create_failed).toString(),
                         true,
                     )
                 }
@@ -783,12 +1129,10 @@ open class Reviewer :
         }
     }
 
-    private fun showDueDateDialog() =
-        launchCatchingTask {
-            Timber.i("showing due date dialog")
-            val dialog = SetDueDateDialog.newInstance(listOf(currentCardId!!))
-            showDialogFragment(dialog)
-        }
+    private fun showDueDateDialog() {
+        Timber.i("showing due date dialog")
+        SetDueDateDialog.show(this, listOf(currentCardId!!))
+    }
 
     private fun showResetCardDialog() {
         Timber.i("showResetCardDialog() Reset progress button pressed")
@@ -796,23 +1140,21 @@ open class Reviewer :
     }
 
     fun addNote(fromGesture: Gesture? = null) {
-        val animation = getAnimationTransitionFromGesture(fromGesture)
-        val inverseAnimation = getInverseTransition(animation)
+        val inverseAnimation = getAnimationTransitionFromGesture(fromGesture).invert()
         Timber.i("launching 'add note'")
-        val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).toIntent(this)
-        addNoteLauncher.launch(intent)
+        addNoteLauncher.navigate(NoteEditorDestination.AddNoteFromReviewer(inverseAnimation))
     }
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (currentCard == null) {
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
+            showSnackbar(getString(CommonString.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
         Timber.i("opening card info")
-        val intent = CardInfoDestination(currentCard!!.id, TR.currentCardStudy()).toIntent(this)
+        val intent = CardInfoDestination(currentCard!!.id, EntryPoint.CURRENT_CARD_STUDY).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
 
@@ -823,9 +1165,9 @@ open class Reviewer :
             return
         }
         Timber.i("opening previous card info")
-        val intent = CardInfoDestination(previousCardId!!, TR.previousCardStudy()).toIntent(this)
+        val intent = CardInfoDestination(previousCardId!!, EntryPoint.PREVIOUS_CARD_STUDY).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
 
@@ -841,9 +1183,9 @@ open class Reviewer :
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
         if (currentCard != null && isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))) {
-            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
+            markCardIcon.setTitle(CommonString.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
-            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
+            markCardIcon.setTitle(TR.sentenceCase.markNote).setIcon(R.drawable.ic_star_border_white)
         }
         markCardIcon.iconAlpha = alpha
 
@@ -860,8 +1202,25 @@ open class Reviewer :
         }
 
         // Anki Desktop Translations
-        menu.findItem(R.id.action_reschedule_card).title =
-            CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+        menu.findItem(R.id.action_flag)?.title = TR.sentenceCase.flagCard
+        menu.findItem(R.id.action_open_deck_options)?.title = TR.sentenceCase.deckOptions
+        menu.findItem(R.id.action_reschedule_card).title = TR.sentenceCase.setDueDate
+        menu.findItem(R.id.action_card_info)?.title = TR.sentenceCase.cardInfo
+        menu.findItem(R.id.action_previous_card_info)?.title = TR.sentenceCase.previousCardInfo
+        menu.findItem(R.id.action_delete)?.title = TR.sentenceCase.deleteNote
+        // top-level (visible=false in XML) items, shown when only the card-level action is available
+        menu.findItem(R.id.action_bury_card)?.title = TR.sentenceCase.buryCard
+        menu.findItem(R.id.action_suspend_card)?.title = TR.sentenceCase.suspendCard
+        menu.findItem(R.id.action_bury)?.let { buryItem ->
+            buryItem.title = TR.studyingBury()
+            buryItem.subMenu?.findItem(R.id.action_bury_card)?.title = TR.sentenceCase.buryCard
+            buryItem.subMenu?.findItem(R.id.action_bury_note)?.title = TR.sentenceCase.buryNote
+        }
+        menu.findItem(R.id.action_suspend)?.let { suspendItem ->
+            suspendItem.title = TR.studyingSuspend()
+            suspendItem.subMenu?.findItem(R.id.action_suspend_card)?.title = TR.sentenceCase.suspendCard
+            suspendItem.subMenu?.findItem(R.id.action_suspend_note)?.title = TR.sentenceCase.suspendNote
+        }
 
         // Undo button
         @DrawableRes val undoIconId: Int
@@ -884,7 +1243,7 @@ open class Reviewer :
         if (colIsOpenUnsafe()) { // Required mostly because there are tests where `col` is null
             if (whiteboardIsShownAndHasStrokes) {
                 // Make Undo action title to whiteboard Undo specific one
-                undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
+                undoIcon.title = resources.getString(CommonString.undo_action_whiteboard_last_stroke)
 
                 // Show whiteboard Eraser action button
                 if (!actionButtons.status.toggleEraserIsDisabled()) {
@@ -902,7 +1261,7 @@ open class Reviewer :
                     // In this case, there is no object word for the verb, "Undo",
                     // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                     // we need to use the string for just "Undo" instead of the string for "Undo %s".
-                    undoIcon.title = resources.getString(R.string.undo)
+                    undoIcon.title = resources.getString(CommonString.undo)
                     undoIcon.iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 }
             }
@@ -918,7 +1277,7 @@ open class Reviewer :
                     iconAlpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                     isEnabled = true
                 } else {
-                    setTitle(R.string.redo)
+                    setTitle(CommonString.redo)
                     iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                     isEnabled = false
                 }
@@ -938,7 +1297,7 @@ open class Reviewer :
         // White board button
         if (prefWhiteboard) {
             // Configure the whiteboard related items in the action bar
-            toggleWhiteboardIcon.setTitle(R.string.disable_whiteboard)
+            toggleWhiteboardIcon.setTitle(CommonString.disable_whiteboard)
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
             toggleWhiteboardIcon.isVisible = true
             if (!actionButtons.status.toggleStylusIsDisabled()) {
@@ -964,29 +1323,29 @@ open class Reviewer :
                 // "hide whiteboard" icon
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
-                hideWhiteboardIcon.setTitle(R.string.hide_whiteboard)
+                hideWhiteboardIcon.setTitle(CommonString.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 // eraser icon
                 toggleEraserIcon.icon = eraserIcon
                 if (isEraserMode) {
-                    toggleEraserIcon.setTitle(R.string.disable_eraser)
+                    toggleEraserIcon.setTitle(CommonString.disable_eraser)
                 } else { // default
-                    toggleEraserIcon.setTitle(R.string.enable_eraser)
+                    toggleEraserIcon.setTitle(CommonString.enable_eraser)
                 }
                 // whiteboard editor icon
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
                 if (toggleStylus) {
-                    toggleStylusIcon.setTitle(R.string.disable_stylus)
+                    toggleStylusIcon.setTitle(CommonString.disable_stylus)
                     stylusIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 } else {
-                    toggleStylusIcon.setTitle(R.string.enable_stylus)
+                    toggleStylusIcon.setTitle(CommonString.enable_stylus)
                     stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 }
                 toggleStylusIcon.icon = stylusIcon
             } else {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
-                hideWhiteboardIcon.setTitle(R.string.show_whiteboard)
+                hideWhiteboardIcon.setTitle(CommonString.show_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 toggleStylusIcon.isEnabled = false
@@ -996,7 +1355,7 @@ open class Reviewer :
                 colorPalette.visibility = View.GONE
             }
         } else {
-            toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
+            toggleWhiteboardIcon.setTitle(CommonString.enable_whiteboard)
         }
         if (colIsOpenUnsafe() && getColUnsafe.decks.isFiltered(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
@@ -1015,11 +1374,11 @@ open class Reviewer :
 
         val voicePlaybackIcon = menu.findItem(R.id.action_toggle_mic_tool_bar)
         if (isMicToolBarVisible) {
-            voicePlaybackIcon.setTitle(R.string.menu_disable_voice_playback)
+            voicePlaybackIcon.setTitle(CommonString.menu_disable_voice_playback)
             // #18477: always show 'disable', even if 'enable' was invisible
             voicePlaybackIcon.isVisible = true
         } else {
-            voicePlaybackIcon.setTitle(R.string.menu_enable_voice_playback)
+            voicePlaybackIcon.setTitle(CommonString.menu_enable_voice_playback)
         }
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -1030,9 +1389,8 @@ open class Reviewer :
 
     private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
-            for ((flag, displayName) in Flag.queryDisplayNames()) {
+            for ((flag, displayName) in Flag.queryDisplayNames(this@Reviewer)) {
                 subMenu.findItem(flag.id).title = displayName
-                flagItemIds.add(flag.id)
             }
         }
     }
@@ -1089,10 +1447,10 @@ open class Reviewer :
         easeButton1!!.setColor(background[0])
         easeButton4!!.setColor(background[3])
         // Ease 2 is "hard"
-        easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+        easeButton2!!.setup(background[1], textColor[1], CommonString.ease_button_hard)
         easeButton2!!.requestFocus()
         // Ease 3 is good
-        easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+        easeButton3!!.setup(background[2], textColor[2], CommonString.ease_button_good)
         easeButton4!!.setVisibility(View.VISIBLE)
         easeButton3!!.requestFocus()
 
@@ -1234,9 +1592,9 @@ open class Reviewer :
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String =
                     if (state.topCard.queue.buriedOrSuspended()) {
-                        resources.getString(R.string.leech_suspend_notification)
+                        resources.getString(CommonString.leech_suspend_notification)
                     } else {
-                        resources.getString(R.string.leech_notification)
+                        resources.getString(CommonString.leech_notification)
                     }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
@@ -1252,14 +1610,14 @@ open class Reviewer :
     private suspend fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
         val nCards = timebox.reps
         val nMins = timebox.secs / 60
-        val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-        val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+        val mins = resources.getQuantityString(CommonPlurals.in_minutes, nMins, nMins)
+        val timeboxMessage = resources.getQuantityString(CommonPlurals.timebox_reached, nCards, nCards, mins)
         suspendCancellableCoroutine { coroutines ->
             Timber.i("Showing timebox reached dialog")
             AlertDialog.Builder(this).show {
-                title(R.string.timebox_reached_title)
+                title(CommonString.timebox_reached_title)
                 message(text = timeboxMessage)
-                positiveButton(R.string.dialog_continue) {
+                positiveButton(CommonString.dialog_continue) {
                     coroutines.resume(Unit)
                 }
                 negativeButton(text = CollectionManager.TR.studyingFinish()) {
@@ -1490,12 +1848,12 @@ open class Reviewer :
 
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
-        showRemainingCardCount = col.config.get("dueCounts") ?: true
+        showRemainingCardCount = col.config.showRemainingDueCounts
         stopTimerOnAnswer = col.decks.configDictForDeckId(col.decks.current().id).stopTimerOnAnswer
     }
 
     override fun onSingleTap(): Boolean {
-        if (prefFullscreenReview && isImmersiveSystemUiVisible(this)) {
+        if (prefFullscreenReview && immersiveBarsVisible) {
             delayedHide(INITIAL_HIDE_DELAY)
             return true
         }
@@ -1503,7 +1861,7 @@ open class Reviewer :
     }
 
     override fun onFling() {
-        if (prefFullscreenReview && isImmersiveSystemUiVisible(this)) {
+        if (prefFullscreenReview && immersiveBarsVisible) {
             delayedHide(INITIAL_HIDE_DELAY)
         }
     }
@@ -1524,7 +1882,7 @@ open class Reviewer :
         object : Handler(getDefaultLooper()) {
             override fun handleMessage(msg: Message) {
                 if (prefFullscreenReview) {
-                    setFullScreen(this@Reviewer)
+                    hideSystemBars()
                 }
             }
         }
@@ -1544,46 +1902,14 @@ open class Reviewer :
         }
     }
 
-    @Suppress("deprecation") // #9332: UI Visibility -> Insets
-    private fun setFullScreen(a: AbstractFlashcardViewer) {
-        // Set appropriate flags to enable Sticky Immersive mode.
-        a.window.decorView.systemUiVisibility = (
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE // | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_LOW_PROFILE
-                or View.SYSTEM_UI_FLAG_IMMERSIVE
-        )
-        // Show / hide the Action bar together with the status bar
-        val prefs = a.sharedPrefs()
-        val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = MaterialColors.getColor(a, R.attr.appBarColor, 0)
-        val decorView = a.window.decorView
-        decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
-            val toolbar = a.findViewById<View>(R.id.toolbar)
-            val answerButtons = a.findViewById<View>(R.id.answer_options_layout)
-            val topbar = a.findViewById<View>(R.id.top_bar)
-            if (toolbar == null || topbar == null || answerButtons == null) {
-                return@setOnSystemUiVisibilityChangeListener
-            }
-            // Note that system bars will only be "visible" if none of the
-            // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-            val visible = flags and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
-            Timber.d("System UI visibility change. Visible: %b", visible)
-            if (visible) {
-                showViewWithAnimation(toolbar)
-                if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
-                    showViewWithAnimation(topbar)
-                    showViewWithAnimation(answerButtons)
-                }
-            } else {
-                hideViewWithAnimation(toolbar)
-                if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
-                    hideViewWithAnimation(topbar)
-                    hideViewWithAnimation(answerButtons)
-                }
-            }
+    /** Hides the system bars for immersive review; see [syncControlsWithSystemBars] */
+    private fun hideSystemBars() {
+        Timber.d("hideSystemBars")
+        with(WindowInsetsControllerCompat(window, window.decorView)) {
+            // the bars return on swipe and stay until the next delayedHide, rather than
+            // showing transiently (BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+            hide(systemBars())
         }
     }
 
@@ -1592,7 +1918,7 @@ open class Reviewer :
         view.visibility = View.VISIBLE
         view
             .animate()
-            .alpha(TRANSPARENCY)
+            .alpha(1f)
             .setDuration(ANIMATION_DURATION.toLong())
             .setListener(null)
     }
@@ -1615,6 +1941,19 @@ open class Reviewer :
     private fun isImmersiveSystemUiVisible(
         activity: AnkiActivity,
     ): Boolean = activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
+
+    fun setFullscreenMode(mode: FullScreenMode): Boolean =
+        try {
+            val prefs = sharedPrefs()
+            if (FullScreenMode.fromPreference(prefs) != mode) {
+                FullScreenMode.setPreference(prefs, mode)
+                ActivityCompat.recreate(this)
+            }
+            true
+        } catch (e: Exception) {
+            Timber.w(e, "Error setting fullscreen mode")
+            false
+        }
 
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
@@ -1693,10 +2032,7 @@ open class Reviewer :
             if (!whiteboard.isCurrentlyDrawing &&
                 (
                     !showWhiteboard ||
-                        (
-                            prefFullscreenReview &&
-                                isImmersiveSystemUiVisible(this@Reviewer)
-                        )
+                        (prefFullscreenReview && immersiveBarsVisible)
                 )
             ) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
@@ -1808,14 +2144,32 @@ open class Reviewer :
          */
         const val EXTRA_DECK_ID = "deckId"
 
-        private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
+        private const val STATE_PREVIOUS_CARD_ID = "key_previous_card_id"
 
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
-        private const val TRANSPARENCY = 0.90f
+
+        // the default scrims of androidx.activity.EdgeToEdge, which it keeps private.
+        // These are lazy for unit tests
+        private val EDGE_TO_EDGE_LIGHT_SCRIM by lazy { Color.argb(0xe6, 0xff, 0xff, 0xff) }
+        private val EDGE_TO_EDGE_DARK_SCRIM by lazy { Color.argb(0x80, 0x1b, 0x1b, 0x1b) }
+
+        /**
+         * With the system bars hidden, the answer buttons rest this far above the bottom
+         * of the screen, clear of rounded corners.
+         *
+         * This constant comes from the AOSP gesture navigation bar inset
+         * * 16dp before Android 13
+         * * 24dp since Android 13 (use this - better for corner margins on all devices)
+         *
+         * Hardcoded: it's not feasible to obtain this in 3-button mode.
+         */
+        private val GESTURE_BAR_HEIGHT = 24.dp
 
         /** Default (500ms) time for action snackbars, such as undo, bury and suspend */
         const val ACTION_SNACKBAR_TIME = 500
+
+        private val flagItemIds: Set<Int> = Flag.entries.map { it.id }.toSet()
 
         fun getIntent(context: Context): Intent =
             if (Prefs.isNewStudyScreenEnabled) {
@@ -1833,4 +2187,52 @@ open class Reviewer :
         val gesture = (binding.binding as? Binding.GestureInput)?.gesture
         return executeCommand(action, gesture)
     }
+}
+
+/** Runs [block] on a copy of this event, recycled afterwards */
+private inline fun <T> MotionEvent.withCopy(block: (MotionEvent) -> T): T {
+    val copy = MotionEvent.obtain(this)
+    try {
+        return block(copy)
+    } finally {
+        copy.recycle()
+    }
+}
+
+/**
+ * Offers [event] to the delegate, which takes it if its bounds contain the touch.
+ * Given a copy: [TouchDelegate.onTouchEvent] rewrites the event's location to its view
+ *
+ * @return whether the delegate's view handled [event]: `false` if the touch is outside its bounds
+ */
+private fun TouchDelegate.takes(event: MotionEvent): Boolean = event.withCopy { onTouchEvent(it) }
+
+/**
+ * Explore by touch: forwards [event] to the delegate's view as [action], hovering it
+ *
+ * @return whether the delegate's view handled the hover
+ */
+@RequiresApi(Build.VERSION_CODES.Q)
+private fun TouchDelegate.hovers(
+    event: MotionEvent,
+    action: Int,
+): Boolean =
+    event.withCopy { copy ->
+        copy.action = action
+        onTouchExplorationHoverEvent(copy)
+    }
+
+/**
+ * [button]'s bounds, including insets:
+ * * the inset area under the button (if touching the bottom; not the top row of large answer buttons)
+ * * the sides of the button if it's at the far left/right of the answer area
+ */
+private fun ViewGroup.touchBoundsOf(button: View): Rect {
+    val bounds = Rect()
+    button.getDrawingRect(bounds)
+    offsetDescendantRectToMyCoords(button, bounds)
+    if (bounds.left <= paddingLeft) bounds.left = 0
+    if (bounds.right >= width - paddingRight) bounds.right = width
+    if (bounds.bottom >= height - paddingBottom) bounds.bottom = height
+    return bounds
 }

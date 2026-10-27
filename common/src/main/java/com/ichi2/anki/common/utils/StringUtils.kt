@@ -1,6 +1,4 @@
 /*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
-
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation; either version 3 of the License, or (at your option) any later
@@ -36,8 +34,8 @@ package com.ichi2.anki.common.utils
 
 import com.ichi2.anki.common.annotations.DuplicatedCode
 import org.jetbrains.annotations.Contract
+import java.text.BreakIterator
 import java.util.Locale
-import kotlin.math.min
 
 object StringUtils {
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
@@ -50,8 +48,6 @@ object StringUtils {
         return s[0].uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
     }
 }
-
-fun String.trimToLength(maxLength: Int): String = this.substring(0, min(this.length, maxLength))
 
 fun String.indexOfOrNull(
     c: Char,
@@ -69,6 +65,16 @@ fun String.lastIndexOfOrNull(
     ignoreCase: Boolean = false,
 ): Int? =
     when (val index = this.lastIndexOf(c, startIndex, ignoreCase)) {
+        -1 -> null
+        else -> index
+    }
+
+fun String.lastIndexOfOrNull(
+    s: String,
+    startIndex: Int = lastIndex,
+    ignoreCase: Boolean = false,
+): Int? =
+    when (val index = this.lastIndexOf(s, startIndex, ignoreCase)) {
         -1 -> null
         else -> index
     }
@@ -105,4 +111,54 @@ fun String.htmlEncode(): String {
         }
     }
     return sb.toString()
+}
+
+/**
+ * Truncates the string to the given maximum length and appends an ellipsis (`…`)
+ * if the text exceeds that length.
+ *
+ * Prefer [android.text.TextUtils.ellipsize] when you have a reference to a TextView
+ *
+ * @param ellipsizeAfter when to ellipsize the text.
+ *  `ellipsizeAfter = 2` returns converts `"foo"` to `"fo…"`
+ *
+ *  @throws IllegalStateException if [`ellipsizeAfter`][ellipsizeAfter]` <= 0`
+ */
+fun String.ellipsize(
+    ellipsizeAfter: Int,
+    locale: Locale = Locale.ROOT,
+): String {
+    require(ellipsizeAfter > 0) { "invalid length: $ellipsizeAfter" }
+    if (this.length <= ellipsizeAfter) return this
+    val lastIndex = this.indexOfLastGraphemeCluster(maxChars = ellipsizeAfter, locale)
+    return this.take(lastIndex) + "…"
+}
+
+private fun String.indexOfLastGraphemeCluster(
+    maxChars: Int,
+    locale: Locale,
+): Int {
+    val iterator = BreakIterator.getCharacterInstance(locale)
+    iterator.setText(this)
+
+    var end = iterator.first()
+    var lastSafe = end
+
+    while (end != BreakIterator.DONE) {
+        if (end > maxChars) return lastSafe
+        lastSafe = end
+        end = iterator.next()
+    }
+
+    return lastSafe
+}
+
+/** The first grapheme cluster, keeping an emoji, a flag or an accented letter whole. */
+fun String.firstGraphemeOrNull(): String? {
+    val iterator = BreakIterator.getCharacterInstance()
+    iterator.setText(this)
+
+    val end = iterator.next()
+    if (end == BreakIterator.DONE || end == 0) return null
+    return this.substring(0, end)
 }

@@ -1,30 +1,18 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.servicemodel
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.android.getCurrentLocaleTag
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.HashUtil
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.noteeditor.CustomToolbarButton
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -33,7 +21,9 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeThemes
 import com.ichi2.anki.servicelayer.RemovedPreferences
-import com.ichi2.utils.HashUtil
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import com.ichi2.utils.LanguageUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -41,17 +31,22 @@ import org.hamcrest.Matchers.lessThan
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import java.util.Locale
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
-class PreferenceUpgradeServiceTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class PreferenceUpgradeServiceTest : AndroidTest {
     private lateinit var prefs: SharedPreferences
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         prefs = targetContext.sharedPrefs()
     }
 
@@ -171,12 +166,12 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
         // enabled -> always
-        prefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
+        prefs.edit { putBoolean(RemovedPreferences.PREF_SYNC_FETCHES_MEDIA, true) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
         assertThat(prefs.getString("syncFetchMedia", null), equalTo("always"))
 
         // disabled -> never
-        prefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
+        prefs.edit { putBoolean(RemovedPreferences.PREF_SYNC_FETCHES_MEDIA, false) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
         assertThat(prefs.getString("syncFetchMedia", null), equalTo("never"))
     }
@@ -217,7 +212,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
             // - follow app use path: get help / using / ankidroid manual -> it should send you to English manual
             // - manual is translated in Japanese, so set app language preference to Japanese
             // - set app language back to english, verify it goes to english manual again
-            // assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(languageTag))
+            // assertThat(getCurrentLocaleTag(), equalTo(languageTag))
         }
     }
 
@@ -226,7 +221,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         PreferenceUpgrade.UpgradeAppLocale().performUpgrade(prefs)
 
         assertNotNull(prefs.getString("language", null))
-        assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
+        assertThat(getCurrentLocaleTag(), equalTo(""))
     }
 
     @Test
@@ -235,7 +230,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         PreferenceUpgrade.UpgradeAppLocale().performUpgrade(prefs)
 
         assertThat(prefs.getString("language", null), equalTo(""))
-        assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
+        assertThat(getCurrentLocaleTag(), equalTo(""))
     }
 
     @Test
@@ -243,56 +238,97 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         val upgrade = UpgradeThemes()
 
         // Constants should have the correct values
-        assertEquals(UpgradeThemes.THEME_FOLLOW_SYSTEM, targetContext.getString(R.string.theme_follow_system_value))
-        assertEquals(UpgradeThemes.THEME_LIGHT, targetContext.getString(R.string.theme_light_value))
-        assertEquals(UpgradeThemes.THEME_PLAIN, targetContext.getString(R.string.theme_plain_value))
-        assertEquals(UpgradeThemes.THEME_BLACK, targetContext.getString(R.string.theme_black_value))
-        assertEquals(UpgradeThemes.THEME_DARK, targetContext.getString(R.string.theme_dark_value))
-        assertEquals(UpgradeThemes.THEME_DAY, targetContext.getString(R.string.theme_day_scheme_value))
-        assertEquals(UpgradeThemes.THEME_NIGHT, targetContext.getString(R.string.theme_night_scheme_value))
+        assertEquals(UpgradeThemes.THEME_FOLLOW_SYSTEM, targetContext.getString(CommonR.string.theme_follow_system_value))
+        assertEquals(UpgradeThemes.THEME_LIGHT, targetContext.getString(CommonR.string.theme_light_value))
+        assertEquals(UpgradeThemes.THEME_PLAIN, targetContext.getString(CommonR.string.theme_plain_value))
+        assertEquals(UpgradeThemes.THEME_BLACK, targetContext.getString(CommonR.string.theme_black_value))
+        assertEquals(UpgradeThemes.THEME_DARK, targetContext.getString(CommonR.string.theme_dark_value))
+        assertEquals(UpgradeThemes.THEME_DAY, targetContext.getString(CommonR.string.theme_day_scheme_value))
+        assertEquals(UpgradeThemes.THEME_NIGHT, targetContext.getString(CommonR.string.theme_night_scheme_value))
 
         // Follow System -> Should remain Follow System, no sub-themes set
-        prefs.edit { putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_FOLLOW_SYSTEM) }
+        prefs.edit { putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_FOLLOW_SYSTEM) }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_FOLLOW_SYSTEM))
-        assertThat(prefs.contains(UpgradeThemes.KEY_DAY_THEME), equalTo(false))
-        assertThat(prefs.contains(UpgradeThemes.KEY_NIGHT_THEME), equalTo(false))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_FOLLOW_SYSTEM))
+        assertThat(prefs.contains(UpgradeThemes.PREF_DAY_THEME), equalTo(false))
+        assertThat(prefs.contains(UpgradeThemes.PREF_NIGHT_THEME), equalTo(false))
 
         // Light -> Day + dayTheme: Light
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_LIGHT)
-            remove(UpgradeThemes.KEY_DAY_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_LIGHT)
+            remove(UpgradeThemes.PREF_DAY_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
-        assertThat(prefs.getString(UpgradeThemes.KEY_DAY_THEME, null), equalTo(UpgradeThemes.THEME_LIGHT))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
+        assertThat(prefs.getString(UpgradeThemes.PREF_DAY_THEME, null), equalTo(UpgradeThemes.THEME_LIGHT))
 
         // Plain -> Day + dayTheme: Plain
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_PLAIN)
-            remove(UpgradeThemes.KEY_DAY_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_PLAIN)
+            remove(UpgradeThemes.PREF_DAY_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
-        assertThat(prefs.getString(UpgradeThemes.KEY_DAY_THEME, null), equalTo(UpgradeThemes.THEME_PLAIN))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
+        assertThat(prefs.getString(UpgradeThemes.PREF_DAY_THEME, null), equalTo(UpgradeThemes.THEME_PLAIN))
 
         // Black -> Night + nightTheme: Black
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_BLACK)
-            remove(UpgradeThemes.KEY_NIGHT_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_BLACK)
+            remove(UpgradeThemes.PREF_NIGHT_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
-        assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_BLACK))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
+        assertThat(prefs.getString(UpgradeThemes.PREF_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_BLACK))
 
         // Dark -> Night + nightTheme: Dark
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_DARK)
-            remove(UpgradeThemes.KEY_NIGHT_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_DARK)
+            remove(UpgradeThemes.PREF_NIGHT_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
-        assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_DARK))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
+        assertThat(prefs.getString(UpgradeThemes.PREF_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_DARK))
+    }
+
+    @Test
+    fun `long touch migration removes invalid bindings and preserves valid bindings`() {
+        prefs.edit {
+            putString("binding_SHOW_ANSWER", "1/r⌨Ctrl+660|r⍝LONG_TAP2|r✅Ä1|r⌨not-a-number2|r⍝SWIPE_UP2")
+        }
+        val upgrade = PreferenceUpgrade.RemoveLongTouchGesture()
+
+        upgrade.performUpgrade(prefs)
+
+        val expected = "1/r⌨Ctrl+660|r✅Ä1|r⍝SWIPE_UP2"
+        assertEquals(expected, prefs.getString("binding_SHOW_ANSWER", null))
+
+        upgrade.performUpgrade(prefs)
+
+        assertEquals(expected, prefs.getString("binding_SHOW_ANSWER", null))
+    }
+
+    @Test
+    fun `long touch migration leaves all invalid bindings explicitly unbound`() {
+        prefs.edit {
+            putString("binding_SHOW_ANSWER", "1/r⍝LONG_TAP2|r⌨not-a-number2|r✅2")
+        }
+
+        PreferenceUpgrade.RemoveLongTouchGesture().performUpgrade(prefs)
+
+        assertEquals("1/", prefs.getString("binding_SHOW_ANSWER", null))
+        assertTrue(ViewerAction.SHOW_ANSWER.getBindings(prefs).isEmpty())
+    }
+
+    @Test
+    fun `long touch migration does not rewrite preferences with only valid bindings`() {
+        val original = "1/r⌨Shift+Ctrl+660|r✅Ä1|r⍝SWIPE_UP2"
+        prefs.edit {
+            putString("binding_SHOW_ANSWER", original)
+        }
+
+        PreferenceUpgrade.RemoveLongTouchGesture().performUpgrade(prefs)
+
+        assertEquals(original, prefs.getString("binding_SHOW_ANSWER", null))
     }
 
     @Test

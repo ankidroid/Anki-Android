@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.utils
 
@@ -32,6 +18,9 @@ fun showDialogFragmentImpl(
     manager: FragmentManager,
     newFragment: DialogFragment,
 ) {
+    // A pending dismissal can destroy the previous dialog before this transaction removes it.
+    manager.executePendingTransactions()
+
     // DialogFragment.show() will take care of adding the fragment
     // in a transaction. We also want to remove any currently showing
     // dialog, so make our own transaction and take care of that here.
@@ -45,3 +34,10 @@ fun showDialogFragmentImpl(
     newFragment.show(ft, DIALOG_FRAGMENT_TAG)
     manager.executePendingTransactions()
 }
+
+/**
+ * Convenience function for calling [showDialogFragmentImpl] with a certain [FragmentManager],
+ * as opposed to [com.ichi2.anki.utils.ext.showDialogFragment], which always calls it with the activity-level
+ * support fragment manager. This is useful when you want a dialog to be scoped to a fragment's lifecycle.
+ */
+fun FragmentManager.showDialogFragment(newFragment: DialogFragment) = showDialogFragmentImpl(this, newFragment)

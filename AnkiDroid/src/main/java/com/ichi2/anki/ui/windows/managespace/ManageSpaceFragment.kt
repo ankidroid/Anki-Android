@@ -1,18 +1,5 @@
-/*                                                            *
- * Copyright (c) 2022 Brian Da Silva <brianjose2010@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Brian Da Silva <brianjose2010@gmail.com>
 
 package com.ichi2.anki.ui.windows.managespace
 
@@ -25,23 +12,27 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.getUserFriendlyErrorText
-import com.ichi2.anki.withProgress
 import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +57,7 @@ sealed interface Size {
 
     class Error(
         val exception: Exception,
-        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error,
+        @StringRes val widgetTextId: Int = CommonString.pref__widget_text__error,
     ) : Size
 }
 
@@ -77,8 +68,10 @@ sealed interface Size {
 class ManageSpaceViewModel(
     val app: Application,
 ) : AndroidViewModel(app),
-    CollectionDirectoryProvider {
+    CollectionDirectoryProvider,
+    HasProgress<ManageSpaceProgress> {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
+    override val progressManager = ProgressManager<ManageSpaceProgress>()
 
     val flowOfDeleteUnusedMediaSize = MutableStateFlow<Size>(Size.Calculating)
     val flowOfDeleteBackupsSize = MutableStateFlow<Size>(Size.Calculating)
@@ -106,15 +99,17 @@ class ManageSpaceViewModel(
         }
 
     suspend fun deleteMediaFiles(filesNamesToDelete: List<String>) {
-        try {
-            withCol {
-                media.trashFiles(filesNamesToDelete)
-                media.emptyTrash()
+        progressManager.withProgress(message = ManageSpaceProgress.DELETING_MEDIA) {
+            try {
+                withCol {
+                    media.trashFiles(filesNamesToDelete)
+                    media.emptyTrash()
+                }
+            } finally {
+                launchCalculationOfSizeOfEverything()
+                launchCalculationOfCollectionSize()
+                launchSearchForUnusedMedia()
             }
-        } finally {
-            launchCalculationOfSizeOfEverything()
-            launchCalculationOfCollectionSize()
-            launchSearchForUnusedMedia()
         }
     }
 
@@ -132,12 +127,14 @@ class ManageSpaceViewModel(
         }
 
     suspend fun deleteBackups(backupsToDelete: List<File>) {
-        try {
-            withCol { BackupManager.deleteBackups(this@withCol, backupsToDelete) }
-        } finally {
-            launchCalculationOfBackupsSize()
-            launchCalculationOfCollectionSize()
-            launchCalculationOfSizeOfEverything()
+        progressManager.withProgress(message = ManageSpaceProgress.DELETING_BACKUPS) {
+            try {
+                withCol { BackupManager.deleteBackups(this@withCol, backupsToDelete) }
+            } finally {
+                launchCalculationOfBackupsSize()
+                launchCalculationOfCollectionSize()
+                launchCalculationOfSizeOfEverything()
+            }
         }
     }
 
@@ -153,13 +150,15 @@ class ManageSpaceViewModel(
         }
 
     suspend fun deleteCollection() {
-        try {
-            CollectionManager.deleteCollectionDirectory() // Executed in withQueue
-        } finally {
-            launchCalculationOfBackupsSize()
-            launchCalculationOfSizeOfEverything()
-            launchCalculationOfCollectionSize()
-            launchSearchForUnusedMedia()
+        progressManager.withProgress(message = ManageSpaceProgress.DELETING_COLLECTION) {
+            try {
+                CollectionManager.deleteCollectionDirectory() // Executed in withQueue
+            } finally {
+                launchCalculationOfBackupsSize()
+                launchCalculationOfSizeOfEverything()
+                launchCalculationOfCollectionSize()
+                launchSearchForUnusedMedia()
+            }
         }
     }
 
@@ -205,6 +204,12 @@ class ManageSpaceViewModel(
     }
 }
 
+enum class ManageSpaceProgress {
+    DELETING_MEDIA,
+    DELETING_BACKUPS,
+    DELETING_COLLECTION,
+}
+
 /**************************************************************************************************
  ******************************************** Fragment ********************************************
  **************************************************************************************************/
@@ -228,14 +233,7 @@ class ManageSpaceFragment : SettingsFragment() {
 
         adjustDeleteEverythingStringsDependingOnCollectionLocation(deleteEverythingPreference)
 
-        listOf(
-            viewModel.flowOfDeleteUnusedMediaSize to deleteUnusedMediaPreference,
-            viewModel.flowOfDeleteCollectionSize to deleteCollectionPreference,
-            viewModel.flowOfDeleteEverythingSize to deleteEverythingPreference,
-            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference,
-        ).forEach { (flowOfSize, preference) ->
-            lifecycleScope.launch { flowOfSize.collect { size -> preference.setWidgetTextBy(size) } }
-        }
+        observeProgress(viewModel) { progress -> getString(progress.messageRes) }
     }
 
     override fun onViewCreated(
@@ -244,7 +242,17 @@ class ManageSpaceFragment : SettingsFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.apply {
-            title = getString(R.string.pref__manage_space__screen_title)
+            title = getString(CommonString.pref__manage_space__screen_title)
+        }
+
+        listOf(
+            viewModel.flowOfDeleteUnusedMediaSize to R.string.pref_delete_media_key,
+            viewModel.flowOfDeleteCollectionSize to R.string.pref_delete_collection_key,
+            viewModel.flowOfDeleteEverythingSize to R.string.pref_delete_everything_key,
+            viewModel.flowOfDeleteBackupsSize to R.string.pref_delete_backups_key,
+        ).forEach { (flowOfSize, key) ->
+            val preference = requirePreference<TextWidgetPreference>(key)
+            flowOfSize.launchCollectionInViewLifecycleScope { size -> preference.setWidgetTextBy(size) }
         }
     }
 
@@ -258,19 +266,17 @@ class ManageSpaceFragment : SettingsFragment() {
 
             val deleteFilesPromptResult =
                 requireContext().awaitDialog {
-                    setTitle(R.string.dialog__delete_unused_media_files__title)
+                    setTitle(CommonString.dialog__delete_unused_media_files__title)
                     setMultiChoiceItems(unusedFileNames, CheckedItems.All)
-                    setPositiveButton(R.string.dialog_positive_delete)
-                    setNegativeButton(R.string.dialog_cancel)
+                    setPositiveButton(CommonString.dialog_positive_delete)
+                    setNegativeButton(CommonString.dialog_cancel)
                 }
 
             if (deleteFilesPromptResult is DialogResult.Ok.MultipleChoice) {
                 val checkedItems = deleteFilesPromptResult.checkedItems
                 val filesNamesToDelete = unusedFileNames.filterIndexed { index, _ -> checkedItems[index] }
 
-                withProgress(R.string.delete_media_message) {
-                    viewModel.deleteMediaFiles(filesNamesToDelete)
-                }
+                viewModel.deleteMediaFiles(filesNamesToDelete)
             }
         } else {
             showSnackbarIfCalculatingOrError(size)
@@ -288,19 +294,17 @@ class ManageSpaceFragment : SettingsFragment() {
 
             val chooseBackupsPromptResult =
                 requireContext().awaitDialog {
-                    setTitle(R.string.dialog__delete_backups__title)
+                    setTitle(CommonString.dialog__delete_backups__title)
                     setMultiChoiceItems(backupNames, CheckedItems.None)
-                    setPositiveButton(R.string.dialog_positive_delete)
-                    setNegativeButton(R.string.dialog_cancel)
+                    setPositiveButton(CommonString.dialog_positive_delete)
+                    setNegativeButton(CommonString.dialog_cancel)
                 }
 
             if (chooseBackupsPromptResult is DialogResult.Ok.MultipleChoice) {
                 val checkedItems = chooseBackupsPromptResult.checkedItems
                 val backupsToDelete = backupFiles.filterIndexed { index, _ -> checkedItems[index] }
 
-                withProgress(R.string.progress__deleting_backups) {
-                    viewModel.deleteBackups(backupsToDelete)
-                }
+                viewModel.deleteBackups(backupsToDelete)
             }
         } else {
             showSnackbarIfCalculatingOrError(size)
@@ -321,17 +325,15 @@ class ManageSpaceFragment : SettingsFragment() {
         if (size is Size.Bytes) {
             val deleteCollectionPromptResult =
                 requireContext().awaitDialog {
-                    setTitle(R.string.dialog__delete_collection__title)
-                    setMessage(R.string.dialog__delete_collection__message)
-                    setPositiveButton(R.string.dialog_positive_delete)
-                    setNegativeButton(R.string.dialog_cancel)
+                    setTitle(CommonString.dialog__delete_collection__title)
+                    setMessage(CommonString.dialog__delete_collection__message)
+                    setPositiveButton(CommonString.dialog_positive_delete)
+                    setNegativeButton(CommonString.dialog_cancel)
                 }
 
             if (deleteCollectionPromptResult is DialogResult.Ok) {
                 try {
-                    withProgress(R.string.progress__deleting_collection) {
-                        viewModel.deleteCollection()
-                    }
+                    viewModel.deleteCollection()
                 } finally {
                     exitProcess(0)
                 }
@@ -349,15 +351,15 @@ class ManageSpaceFragment : SettingsFragment() {
 
     private fun adjustDeleteEverythingStringsDependingOnCollectionLocation(preference: Preference) {
         if (viewModel.collectionDirectory.isInsideDirectoriesRemovedWithTheApp(requireContext())) {
-            preference.setTitle(R.string.pref__delete_everything__title)
-            preference.setSummary(R.string.pref__delete_everything__summary)
-            deleteEverythingDialogTitle = R.string.dialog__delete_everything__title
-            deleteEverythingDialogMessage = R.string.dialog__delete_everything__message
+            preference.setTitle(CommonString.pref__delete_everything__title)
+            preference.setSummary(CommonString.pref__delete_everything__summary)
+            deleteEverythingDialogTitle = CommonString.dialog__delete_everything__title
+            deleteEverythingDialogMessage = CommonString.dialog__delete_everything__message
         } else {
-            preference.setTitle(R.string.pref__delete_app_data__title)
-            preference.setSummary(R.string.pref__delete_app_data__summary)
-            deleteEverythingDialogTitle = R.string.dialog__delete_app_data__title
-            deleteEverythingDialogMessage = R.string.dialog__delete_app_data__message
+            preference.setTitle(CommonString.pref__delete_app_data__title)
+            preference.setSummary(CommonString.pref__delete_app_data__summary)
+            deleteEverythingDialogTitle = CommonString.dialog__delete_app_data__title
+            deleteEverythingDialogMessage = CommonString.dialog__delete_app_data__message
         }
     }
 
@@ -366,8 +368,8 @@ class ManageSpaceFragment : SettingsFragment() {
             requireContext().awaitDialog {
                 setTitle(deleteEverythingDialogTitle)
                 setMessage(deleteEverythingDialogMessage)
-                setPositiveButton(R.string.dialog_positive_delete)
-                setNegativeButton(R.string.dialog_cancel)
+                setPositiveButton(CommonString.dialog_positive_delete)
+                setNegativeButton(CommonString.dialog_cancel)
             }
 
         if (deleteEverythingPromptResult is DialogResult.Ok) {
@@ -386,12 +388,12 @@ class ManageSpaceFragment : SettingsFragment() {
 
         widgetText =
             when (size) {
-                is Size.Calculating -> getString(R.string.pref__widget_text__calculating)
+                is Size.Calculating -> getString(CommonString.pref__widget_text__calculating)
                 is Size.Error -> getString(size.widgetTextId)
                 is Size.Bytes -> size.totalSize.toHumanReadableSize()
                 is Size.FilesAndBytes ->
                     resources.getQuantityString(
-                        R.plurals.pref__widget_text__n_files_n_bytes,
+                        CommonPlurals.pref__widget_text__n_files_n_bytes,
                         size.files.size,
                         size.files.size,
                         size.totalSize.toHumanReadableSize(),
@@ -414,9 +416,18 @@ class ManageSpaceFragment : SettingsFragment() {
 
     private fun showSnackbarIfCalculatingOrError(size: Size) {
         when (size) {
-            is Size.Calculating -> showSnackbar(R.string.pref__etc__snackbar__calculating)
+            is Size.Calculating -> showSnackbar(CommonString.pref__etc__snackbar__calculating)
             is Size.Error -> showSnackbar(requireContext().getUserFriendlyErrorText(size.exception))
             else -> {}
         }
     }
 }
+
+@get:StringRes
+private val ManageSpaceProgress.messageRes: Int
+    get() =
+        when (this) {
+            ManageSpaceProgress.DELETING_MEDIA -> CommonString.delete_media_message
+            ManageSpaceProgress.DELETING_BACKUPS -> CommonString.progress__deleting_backups
+            ManageSpaceProgress.DELETING_COLLECTION -> CommonString.progress__deleting_collection
+        }

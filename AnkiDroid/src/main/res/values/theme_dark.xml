@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <color name="theme_dark_primary">#3d3d3d</color>
-    <color name="theme_dark_primary_dark">@color/material_grey_900</color>
-    <color name="theme_dark_primary_light">@color/material_grey_800</color>
-    <color name="theme_dark_primary_text">@color/white</color>
-    <color name="theme_dark_secondary_text">#b2ffffff</color>
-    <color name="theme_dark_row_current">#393939</color>
-    <color name="theme_dark_drawer_row_current">#33999999</color>
-    <color name="theme_dark_drawer_item">#DEFFFFFF</color>
 
     <style name="Base.Theme.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
@@ -24,6 +16,13 @@
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
+        <item name="colorSecondaryContainer">#3C5A6E</item>
+        <item name="colorSurfaceVariant">#263E50</item>
+        <item name="colorOnSurfaceVariant">#D4D4D4</item>
+        <item name="colorOutlineVariant">#5B819B</item>
+        <item name="colorTertiary">#78CAFF</item>
+        <item name="colorOnTertiary">#00324D</item>
+        <item name="colorOnSecondaryContainer">@color/white</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">#424C54</item>
@@ -54,7 +53,7 @@
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
         <item name="focusedRowBackgroundColor">@color/theme_dark_row_current</item>
-        <item name="dynDeckColor">#6699d6</item>
+        <item name="dynDeckColor">@color/material_light_blue_500</item>
         <item name="deckDivider">@drawable/divider_dark</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
@@ -119,8 +118,6 @@
         <!-- FAB -->
         <item name="fab_normal">@color/material_light_blue_700</item>
         <item name="fab_pressed">@color/material_light_blue_900</item>
-        <item name="fab_labelsTextColor">@color/white</item>
-        <item name="fab_item_background">@drawable/fab_label_background</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <!-- Dialog styles -->
@@ -128,6 +125,7 @@
         <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
         <item name="textAllCaps">false</item>
+        <item name="clozeColor">#1976D2</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
@@ -172,8 +170,17 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
         <item name="incrementerButtonBackground">@color/material_theme_grey</item>
-        <item name="incrementerInputBackground">@color/material_theme_grey</item>
-        <item name="incrementerIconColor">@color/material_blue_400</item>
+
+        <!-- Reminder troubleshooting -->
+        <item name="reminderTroubleshootingOk">@color/google_green_300</item>
+        <item name="reminderTroubleshootingWarning">@color/google_yellow_300</item>
+
+        <item name="badgeErrorColor">#f45000</item>
+        <item name="badgeWarningColor">#ff5e13</item>
+        <item name="widgetStrokeWidth">0dp</item>
+        <item name="widgetStrokeColor">@color/transparent</item>
+        <item name="studyScreenElevation">0.8dp</item>
+        <item name="whiteboardToolbarCardStyle">?attr/materialCardViewStyle</item>
     </style>
 
     <style name="Theme_Dark" parent="Base.Theme.Dark"/>

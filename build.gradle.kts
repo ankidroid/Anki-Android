@@ -1,31 +1,45 @@
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
+import com.ichi2.anki.gradle.BackendTempLibraryService
+import com.ichi2.anki.gradle.GitHubActionsTestListener
+import com.ichi2.anki.gradle.TestSummaryService
+import com.ichi2.anki.gradle.configureRobolectricJvm
+import com.ichi2.anki.gradle.registerJacocoLibraryVariants
+import com.ichi2.anki.gradle.reportBackendTempLibraries
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.buildconfiguration.tasks.UpdateDaemonJvm
 import org.gradle.internal.jvm.Jvm
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JvmVendorSpec
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardOpenOption
+import java.lang.management.ManagementFactory
 import java.util.Properties
 import kotlin.math.max
-import kotlin.system.exitProcess
-import kotlin.time.Duration.Companion.milliseconds
 
 
 // Top-level build file where you can add configuration options common to all subprojects/modules.
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.parcelize) apply false
-    alias(libs.plugins.kotlin.jvm) apply false
+    // Use `id` to avoid classpath conflicts. Versions are pinned by buildSrc/.
+    id("com.android.application") apply false
+    id("com.android.library") apply false
+    id("com.android.test") apply false
+    id("org.jetbrains.kotlin.android") apply false
+    id("org.jetbrains.kotlin.plugin.parcelize") apply false
+    id("org.jetbrains.kotlin.jvm") apply false
+    // Separate AndroidX artifact, not pinned by AGP version comes from the catalog.
+    alias(libs.plugins.androidx.baselineprofile) apply false
+    // Serialization is a separate artifact, not pinned transitively by AGP.
     alias(libs.plugins.kotlin.serialization) apply false
+    // Pinned by buildSrc; applied by the Compose convention plugin.
+    id("org.jetbrains.kotlin.plugin.compose") apply false
     alias(libs.plugins.ktlint.gradle.plugin) apply false
     alias(libs.plugins.keeper) apply false
 }
+
+registerJacocoLibraryVariants()
 
 val localProperties = Properties()
 if (project.rootProject.file("local.properties").exists()) {
@@ -34,7 +48,30 @@ if (project.rootProject.file("local.properties").exists()) {
 val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
-val ktlintVersion: String? = libs.versions.ktlint.get()
+val ktlintVersion: String = libs.versions.ktlint.get()
+
+// Shared state for the GitHub Actions test summary listener.
+// Only registered when running under GitHub Actions; null otherwise.
+val testSummaryService = System.getenv("GITHUB_STEP_SUMMARY")?.let { path ->
+    gradle.sharedServices.registerIfAbsent("testSummaryService", TestSummaryService::class) {
+        parameters.path.set(path)
+    }
+}
+
+// The backend keeps native libraries in the test JVM's temp directory, outside Gradle clean.
+// Use -PbackendTempLibraryWarnBytes=0 to report even small amounts; the default is 1 GiB.
+val backendTempLibraryService =
+    gradle.sharedServices.registerIfAbsent("backendTempLibraryService", BackendTempLibraryService::class) {
+        parameters.warnAboveBytes.set(
+            providers.gradleProperty("backendTempLibraryWarnBytes").map { it.toLong() }.orElse(1024L * 1024 * 1024),
+        )
+    }
+
+/**
+ * Per-fork JVM heap for unit tests.
+ * See [Test.setMaxHeapSize]
+ */
+val unitTestForkMaxHeapGb = 2
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
@@ -43,18 +80,37 @@ subprojects {
         version.set(ktlintVersion)
     }
 
+    tasks.withType<Test>().configureEach {
+        // Stop on the first test failure in the merge queue; keep all results for other runs.
+        failFast = providers.environmentVariable("GITHUB_EVENT_NAME").orNull == "merge_group"
+    }
+
     afterEvaluate {
         plugins.withType<com.android.build.gradle.BasePlugin> {
-            val androidExtension = extensions.getByName("android") as CommonExtension<*, *, *, *, *, *>
+            // com.android.lint [BasePlugin] has no `android` extension
+            // as it can be applied to java-library
+            val androidExtension = extensions.findByName("android") as? CommonExtension ?: return@withType
             androidExtension.testOptions.unitTests {
                 isIncludeAndroidResources = true
             }
             androidExtension.testOptions.unitTests.all {
+                // Resolve SDKs before forking tests: Robolectric's shared download lock races on Windows (Issue 22069).
+                it.dependsOn(":AnkiDroid:robolectricSdkDownload")
+                val robolectricDependencies = project(":AnkiDroid").layout.buildDirectory.file("robolectric-deps.properties")
+                it.inputs.file(robolectricDependencies)
+                it.systemProperty(
+                    "robolectric-deps.properties",
+                    robolectricDependencies.get().asFile.absolutePath,
+                )
+
                 // tell backend to avoid rollover time, and disable interval fuzzing
                 it.environment("ANKI_TEST_MODE", "1")
 
-                it.maxHeapSize = "2g"
+                it.maxHeapSize = "${unitTestForkMaxHeapGb}g"
                 it.minHeapSize = "1g"
+
+                it.configureRobolectricJvm()
+                it.reportBackendTempLibraries(backendTempLibraryService)
 
                 it.useJUnitPlatform()
                 it.testLogging {
@@ -63,13 +119,10 @@ subprojects {
                     exceptionFormat = TestExceptionFormat.FULL
                 }
 
-                // CI: Log the test results
-                it.afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
-                    if (desc.parent != null) {
-                        return@KotlinClosure2 // only log for the root suite
-                    }
-                    logTestResultsToGitHubActions(desc, result)
-                }))
+                // CI: Log test results to the GitHub Actions step summary.
+                testSummaryService?.let { service ->
+                    it.addTestListener(GitHubActionsTestListener(service))
+                }
 
                 it.maxParallelForks = gradleTestMaxParallelForks
                 it.forkEvery = 40
@@ -95,16 +148,33 @@ subprojects {
         (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
          */
         tasks.withType(KotlinCompile::class.java).configureEach {
+            // We use `isInIdeaSync` to resolve a mismatch between Android Studio's code analyzer
+            // and the Kotlin 2.3 compiler regarding Explicit Backing Fields. The IDE requires
+            // the unsafe '-XXLanguage' flag to clear false syntax errors, but the actual compiler
+            // crashes if it receives this flag due to our strict 'warnings as errors'.
+            // This workaround safely feeds the unsafe flag *only* to the IDE during Gradle sync,
+            // while passing the standard, crash-free flag to the compiler during the actual build.
+            val isInIdeaSync = System.getProperty("idea.sync.active").toBoolean()
+            val taskName = name
+
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                val compilerArgs = mutableListOf(
-                    // https://youtrack.jetbrains.com/issue/KT-73255
-                    // Apply @StringRes to both constructor params and generated properties
-                    "-Xannotation-default-target=param-property"
-                )
-                if (project.name != "api") {
+                val compilerArgs = mutableListOf<String>()
+
+                if (isInIdeaSync) {
+                    compilerArgs += "-XXLanguage:+ExplicitBackingFields"
+                }
+
+                if (project.path !in listOf(":api", ":common", ":common:android")) {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
-                    compilerArgs += "-Xcontext-parameters"
+                }
+                // Opt in to Material3 APIs marked experimental once at the module level
+                // (currently only :AnkiDroid uses Compose Material3). Avoids littering
+                // composables with @OptIn(ExperimentalMaterial3Api::class).
+                // Skipped for testFixtures since that source set only carries
+                // compose-runtime on compileOnly, not material3.
+                if (project.path == ":AnkiDroid" && !taskName.contains("TestFixtures")) {
+                    compilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
                 }
                 freeCompilerArgs = compilerArgs
             }
@@ -112,31 +182,74 @@ subprojects {
     }
 }
 
+// Opt all modules in to lint (with :AnkiDroid pinned to one flavor: 'Full')
+val lintAll = tasks.register("lintAll") {
+    group = "verification"
+    description = "Runs lint on every module."
+    // specify 'Full' explicitly so other flavors don't run
+    // 'full' has no Manifest changes, so catches more unused references (#15741)
+    dependsOn(":AnkiDroid:lintFullDebug")
+}
+
+subprojects {
+    if (path == ":AnkiDroid") return@subprojects // pinned above to avoid other flavors
+    afterEvaluate {
+        // 'lintDebug' applies to all Android modules; 'lint' for all JVM modules
+        (tasks.findByName("lintDebug") ?: tasks.findByName("lint"))
+            ?.let { lintAll.configure { dependsOn(it) } }
+    }
+}
+
 val jvmVersion = Jvm.current().javaVersion?.majorVersion.parseIntOrDefault(defaultValue = 0)
-val minSdk: String? = libs.versions.minSdk.get()
+val minSdk: String = libs.versions.minSdk.get()
 val jvmVersionLowerBound = 21
 val jvmVersionUpperBound = 25
-if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
-    println("\n\n\n")
-    println("**************************************************************************************************************")
-    println("\n\n\n")
-    println("ERROR: AnkiDroid builds with JVM versions between $jvmVersionLowerBound and $jvmVersionUpperBound.")
-    println("  Incompatible major version detected: '$jvmVersion'")
-    println("\n\n\n")
-    if (jvmVersion > jvmVersionUpperBound) {
-        println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
-        println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
-        println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
-    } else {
-        println("  Please update: Settings - Build, Execution, Deployment - Build Tools - Gradle - Gradle JDK")
+// `updateDaemonJvm` aligns the daemon JVM, blocking it stops us from fixing the issue
+val aligningDaemon = gradle.startParameter.taskNames.any { it.substringAfterLast(':') == "updateDaemonJvm" }
+if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound && !aligningDaemon) {
+    val message = buildString {
+        appendLine("ERROR: AnkiDroid builds with JVM versions between $jvmVersionLowerBound and $jvmVersionUpperBound.")
+        appendLine("  Incompatible major version detected: '$jvmVersion'")
+        if (jvmVersion > jvmVersionUpperBound) {
+            appendLine("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
+            appendLine("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
+            appendLine("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+        } else {
+            appendLine("  The Gradle daemon is on an unsupported JVM (set by gradle/gradle-daemon-jvm.properties).")
+            appendLine("  Align it to the pinned daemon JVM: ./gradlew updateDaemonJvm")
+        }
     }
-    println("\n\n\n")
-    println("**************************************************************************************************************")
-    println("\n\n\n")
-    exitProcess(1)
+    throw GradleException(message.trimEnd())
+}
+
+// define ANKIDROID_JVM as a guard, to be sure the Gradle Daemon Toolchain was pinned correctly
+// A multi-project alias using `JAVA_HOME` can flag that the env var is no longer sufficient.
+val requestedJvm = System.getenv("ANKIDROID_JVM")?.toIntOrNull()
+if (requestedJvm != null && requestedJvm != jvmVersion && !aligningDaemon) {
+    throw GradleException(
+        """
+        ANKIDROID_JVM=$requestedJvm, but the Gradle daemon is running on JVM $jvmVersion.
+        The daemon JVM is set by gradle/gradle-daemon-jvm.properties; JAVA_HOME does not override it.
+
+        To build on JVM $requestedJvm, align the daemon and re-run:
+            ./gradlew updateDaemonJvm --jvm-version=$requestedJvm
+
+        Revert when finished:
+            git checkout gradle/gradle-daemon-jvm.properties
+        """.trimIndent(),
+    )
+}
+
+// Ensure `./gradlew updateDaemonJvm` uses consistent defaults.
+// overridable with: `--jvm-vendor`/`--jvm-version` if necessary.
+tasks.withType<UpdateDaemonJvm>().configureEach {
+    @Suppress("UnstableApiUsage") // JvmVendorSpec.JETBRAINS
+    vendor.convention(JvmVendorSpec.JETBRAINS)
+    languageVersion.convention(JavaLanguageVersion.of(21))
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // true when running on GitHub Actions
+val isMacOs = System.getProperty("os.name") == "Mac OS X"
 // allows for -Dpre-dex=false to be set
 val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 // allows for universal APKs to be generated
@@ -147,12 +260,48 @@ var androidTestVariantName by extra(
     if (testReleaseBuild) "Release" else "Debug"
 )
 
+private fun sysctl(key: String): Long =
+    providers.exec {
+        commandLine("sysctl", "-n", key)
+    }.standardOutput.asText.get().trim().toLong()
+
+/**
+ * The Gradle daemon's `-Xmx` max heap, in bytes.
+ *
+ * Reads from the launch flags as `getRuntime().maxMemory()` is GC-dependent.
+ *
+ * @throws IllegalStateException if `-Xmx` is missing or invalid.
+ */
+private fun gradleDaemonHeapBytes(): Long {
+    val xmx = ManagementFactory.getRuntimeMXBean().inputArguments
+        .lastOrNull { it.startsWith("-Xmx") } // last -Xmx wins, as in the JVM
+        ?: error("Gradle daemon has no -Xmx flag")
+    val match = Regex("-Xmx(\\d+)([MG])", RegexOption.IGNORE_CASE).matchEntire(xmx)
+        ?: error("Cannot parse Gradle daemon heap from '$xmx'; expected -Xmx<n>M or -Xmx<n>G")
+    val size = match.groupValues[1].toLong()
+    val byteMultiplier = when (match.groupValues[2].uppercase()) {
+        "G" -> 1024L * 1024 * 1024
+        else -> 1024L * 1024 // M
+    }
+    return size * byteMultiplier
+}
+
 val gradleTestMaxParallelForks by extra(
-    if (System.getProperty("os.name") == "Mac OS X") {
-        // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
-        providers.exec {
-            commandLine("sysctl", "-n", "hw.physicalcpu")
-        }.standardOutput.asText.get().trim().toInt()
+    if (isMacOs) {
+        // macOS reports hardware cores.
+        // This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
+        val physicalCpus = sysctl("hw.physicalcpu")
+
+        if (ciBuild) {
+            // #21168: The `macos-14` CI runner has only 7GB RAM and OOMs (exit 134) so bound by RAM.
+            // Reserve the daemon's own heap (the OS shares its slack); split the rest into forks.
+            val forkHeapBytes = unitTestForkMaxHeapGb * 1024L * 1024 * 1024
+            val availableBytes = sysctl("hw.memsize") - gradleDaemonHeapBytes()
+            val memoryBoundForkProcesses = max(1L, availableBytes / forkHeapBytes)
+            minOf(physicalCpus, memoryBoundForkProcesses).toInt()
+        } else {
+            physicalCpus.toInt()
+        }
     } else if (ciBuild) {
         // GitHub Actions run on Standard_D4ads_v5 Azure Compute Units with 4 vCPUs
         // They appear to be 2:1 vCPU to CPU on Linux/Windows with two vCPU cores but with performance 1:1-similar
@@ -168,36 +317,3 @@ val gradleTestMaxParallelForks by extra(
 )
 
 private fun String?.parseIntOrDefault(defaultValue: Int): Int = this?.toIntOrNull() ?: defaultValue
-
-private fun logTestResultsToGitHubActions(desc: TestDescriptor, result: TestResult) {
-    if (!ciBuild) return
-
-    val elapsed = (result.endTime - result.startTime).milliseconds
-
-    val tests = result.testCount
-    val passed = result.successfulTestCount
-    val failed = result.failedTestCount
-    val skipped = result.skippedTestCount
-
-    // Gradle Test Run :AnkiDroid:testPlayDebugUnitTest returned SUCCESS in 5m 30s
-    val markdownSummary = """
-                        |${desc.displayName} returned **${result.resultType}** in $elapsed
-                        || Tests | Passed | Failed | Skipped |
-                        ||-------|--------|--------|---------|
-                        || $tests| $passed| $failed| $skipped|
-                        |----
-                    """.trimMargin()
-
-    appendToGitHubActionsSummary(markdownSummary)
-}
-
-private fun appendToGitHubActionsSummary(message: String) {
-    if (!ciBuild) return
-    val summaryPath = System.getenv("GITHUB_STEP_SUMMARY") ?: return
-    Files.writeString(
-        Paths.get(summaryPath),
-        message,
-        StandardOpenOption.CREATE,
-        StandardOpenOption.APPEND
-    )
-}

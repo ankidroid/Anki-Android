@@ -1,25 +1,16 @@
-/*
- * Copyright (c) 2025 Pankaj Gupta <pankajgupta0695@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Pankaj Gupta <pankajgupta0695@gmail.com>
+
 package com.ichi2.preferences
 
 import android.content.Context
 import android.widget.EditText
 import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -27,10 +18,14 @@ import io.mockk.verify
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class NumberRangePreferenceCompatTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class NumberRangePreferenceCompatTest : AndroidTest {
     private val preference = TestableNumberRangePreferenceCompat(targetContext)
     private val preferenceMock: NumberRangePreferenceCompat = mockk(relaxed = true)
 

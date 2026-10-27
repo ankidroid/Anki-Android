@@ -1,23 +1,9 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
 import android.content.Intent
-import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
@@ -29,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -50,24 +37,34 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.android.AnkiShakeDetector
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.anki.databinding.Reviewer2Binding
-import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.databinding.FragmentReviewerBinding
+import com.ichi2.anki.dialogs.showDeckOptionsSelectionDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
@@ -85,34 +82,41 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
-import com.ichi2.utils.dp
+import com.ichi2.ui.TypeAnswerEditText
+import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.show
 import com.squareup.seismic.ShakeDetector
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
+import kotlin.time.Duration.Companion.milliseconds
 
 class ReviewerFragment :
-    CardViewerFragment(R.layout.reviewer2),
+    CardViewerFragment(R.layout.fragment_reviewer),
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener,
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels()
-    private val binding by viewBinding(Reviewer2Binding::bind)
+
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentReviewerBinding::bind)
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
-    private var shakeDetector: ShakeDetector? = null
-    private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
+    private lateinit var reviewerWebViewClient: ReviewerWebViewClient
+    private var shakeDetector: AnkiShakeDetector? = null
+    private val whiteboardFragment get() = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName) as? WhiteboardFragment
     private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
-    private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView =
@@ -129,23 +133,21 @@ class ReviewerFragment :
     override fun onLoadInitialHtml(): String =
         stdHtml(
             context = requireContext(),
-            extraJsAssets = listOf("scripts/ankidroid-reviewer.js"),
+            extraJsAssets = listOf("scripts/ankidroid-reviewer.js", "scripts/type-answer.js"),
             nightMode = Themes.isNightTheme,
         )
 
     override fun onStart() {
         super.onStart()
-        if (!requireActivity().isChangingConfigurations) {
-            shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
-        }
+        shakeDetector?.start()
     }
 
     override fun onStop() {
         super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
-            shakeDetector?.stop()
         }
+        shakeDetector?.stop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -172,6 +174,7 @@ class ReviewerFragment :
         setupToolbarPosition()
         setupAnswerTimer()
         setupMargins()
+        setupResetProgress()
         setupCheckPronunciation()
         setupActions()
         setupWhiteboard()
@@ -185,20 +188,43 @@ class ReviewerFragment :
         }
 
         viewModel.statesMutationEvalFlow.collectIn(lifecycleScope) { eval ->
-            webViewLayout.evaluateJavascript(eval) {
-                viewModel.onStateMutationCallback()
+            // Completion is signaled by `statesMutated`
+            webViewLayout.evaluateJavascript(eval) { result ->
+                // eval failed, usually a syntax error
+                // Note: this is `"null"`, not null
+                if ("null" == result) {
+                    viewModel.onStateMutationCallback()
+                }
             }
         }
 
-        viewModel.showingAnswer.collectIn(lifecycleScope) {
-            resetZoom()
+        viewModel.showingAnswer.collectIn(lifecycleScope) { showingAnswer ->
+            // reset zoom if flipped
+            if (showingAnswer) reviewerWebViewClient.resetZoom()
             // focus on the whole layout so motion controllers can be captured
             // without navigating the other View elements
             binding.rootLayout.requestFocus()
         }
 
-        viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
-            startActivity(destination.toIntent(requireContext()))
+        // reset zoom if the card changes (incl. bury/suspend)
+        viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
+            reviewerWebViewClient.resetZoom()
+        }
+
+        viewModel.navigateFlow.collectIn(lifecycleScope) { destination ->
+            if (destination is DeckOptionsDestination && destination.options.size > 1) {
+                requireContext().showDeckOptionsSelectionDialog(destination.options) { selectedOption ->
+                    Timber.i("Deck options target selected: ${selectedOption.deckId}")
+                    navigate(
+                        destination.copy(
+                            deckId = selectedOption.deckId,
+                            isFiltered = selectedOption.isFiltered,
+                        ),
+                    )
+                }
+                return@collectIn
+            }
+            navigate(destination)
         }
 
         binding.webViewContainer.setFrameStyle()
@@ -223,6 +249,13 @@ class ReviewerFragment :
         if (Prefs.keepScreenOn) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
+
+        setRenderWorkaround(requireActivity())
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        super.onWebViewRecreated(webView)
+        setRenderWorkaround(requireActivity())
     }
 
     private fun setupTypeAnswer() {
@@ -247,6 +280,26 @@ class ReviewerFragment :
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
+
+            /**
+             * Sync keyboard suggestions and `imeHintLocales` on the answer field to match
+             * [typeInAnswer]. Returns `true` if anything changed (caller should `restartInput()`).
+             *
+             * @see TypeAnswerEditText.noSuggest
+             */
+            fun TypeAnswerEditText.syncTypeAnswerProperties(typeInAnswer: TypeAnswer): Boolean {
+                var changed = false
+                if (noSuggest != typeInAnswer.noSuggest) {
+                    noSuggest = typeInAnswer.noSuggest
+                    changed = true
+                }
+                if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                    imeHintLocales = typeInAnswer.imeHintLocales
+                    changed = true
+                }
+                return changed
+            }
+
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.typeAnswerFlow.collect { typeInAnswer ->
                     if (typeInAnswer == null) {
@@ -265,8 +318,7 @@ class ReviewerFragment :
 
                     binding.typeAnswerContainer.isVisible = true
                     binding.typeAnswerEditText.apply {
-                        if (imeHintLocales != typeInAnswer.imeHintLocales) {
-                            imeHintLocales = typeInAnswer.imeHintLocales
+                        if (syncTypeAnswerProperties(typeInAnswer)) {
                             context?.getSystemService<InputMethodManager>()?.restartInput(this)
                         }
                         if (autoFocusTypeAnswer) {
@@ -297,19 +349,15 @@ class ReviewerFragment :
             }
     }
 
-    private fun resetZoom() {
-        webViewLayout.settings.loadWithOverviewMode = false
-        webViewLayout.settings.loadWithOverviewMode = true
-    }
-
+    @NeedsTest("Whiteboard takes priority on key events")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (webviewHasFocus ||
+        if (
             event.action != KeyEvent.ACTION_DOWN ||
             view?.let { binding.typeAnswerEditText }?.isFocused == true
         ) {
             return false
         }
-        return bindingMap.onKeyDown(event)
+        return whiteboardFragment?.dispatchKeyEvent(event) == true || bindingMap.onKeyDown(event)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -320,8 +368,17 @@ class ReviewerFragment :
         return true
     }
 
+    @NeedsTest("Whiteboard takes priority on shake events")
     override fun hearShake() {
-        bindingMap.onGesture(Gesture.SHAKE)
+        // Sensor events still arrive while a dialog or another window covers the reviewer.
+        if (view?.hasWindowFocus() != true) {
+            Timber.d("Ignoring shake: reviewer window does not have focus")
+            return
+        }
+
+        if (whiteboardFragment?.onScreenShake() != true) {
+            bindingMap.onGesture(Gesture.SHAKE)
+        }
     }
 
     private fun setupBindings() {
@@ -329,11 +386,13 @@ class ReviewerFragment :
         binding.root.setOnGenericMotionListener { _, event ->
             bindingMap.onGenericMotionEvent(event)
         }
-        if (bindingMap.isBound(Gesture.SHAKE)) {
-            shakeDetector = ShakeDetector(this)
-            shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+        if (isBound(Gesture.SHAKE)) {
+            shakeDetector = AnkiShakeDetector.createInstance(requireContext(), this)
         }
     }
+
+    private fun isBound(gesture: Gesture): Boolean =
+        bindingMap.isBound(gesture) || BindingMap(sharedPrefs(), WhiteboardAction.entries).isBound(gesture)
 
     private fun setupAnswerButtons() {
         if (!Prefs.showAnswerButtons) {
@@ -479,6 +538,17 @@ class ReviewerFragment :
         }
     }
 
+    private fun setupResetProgress() {
+        viewModel.resetProgressFlow
+            .flowWithLifecycle(lifecycle)
+            .onEach {
+                showDialogFragment(ForgetCardsDialog())
+            }.launchIn(lifecycleScope)
+        // TODO handle 'Reset progress' in the ViewModel instead of the activity, once
+        //  a mechanism of showing a progress bar if the operation takes too long is implemented
+        registerOnForgetHandler { listOf(viewModel.getCardId()) }
+    }
+
     private fun setupCheckPronunciation() {
         viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
             if (isEnabled && binding.checkPronunciationContainer.getFragment<CheckPronunciationFragment?>() == null) {
@@ -507,18 +577,25 @@ class ReviewerFragment :
             },
             false,
         )
+
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
-            binding.whiteboardContainer.isVisible = isEnabled
-            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
-            if (whiteboardFragment == null && isEnabled) {
-                childFragmentManager.commit {
-                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
+            val existingFragment = whiteboardFragment
+            childFragmentManager.commit {
+                if (isEnabled) {
+                    if (existingFragment != null) {
+                        show(existingFragment)
+                    } else {
+                        val newFragment = WhiteboardFragment()
+                        newFragment.gestureFallbackListener = { gesture -> bindingMap.onGesture(gesture) }
+                        add(R.id.web_view_container, newFragment, WhiteboardFragment::class.jvmName)
+                    }
+                } else {
+                    existingFragment?.let { hide(it) }
                 }
             }
         }
         viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
-            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
-            (whiteboardFragment as? WhiteboardFragment)?.resetCanvas()
+            whiteboardFragment?.resetCanvas()
         }
     }
 
@@ -532,7 +609,7 @@ class ReviewerFragment :
             val message = CollectionManager.TR.studyingCardStudiedIn(timebox.reps) + " " + CollectionManager.TR.studyingMinute(minutes)
 
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.timebox_reached_title)
+                setTitle(CommonString.timebox_reached_title)
                 setMessage(message)
                 setPositiveButton(CollectionManager.TR.studyingContinue()) { _, _ ->
                     Timber.i("ReviewerFragment: Timebox 'Continue'")
@@ -555,18 +632,11 @@ class ReviewerFragment :
             }
 
         viewModel.editNoteTagsFlow.collectIn(lifecycleScope) { noteId ->
-            val dialogFragment =
-                tagsDialogFactory.newTagsDialog().withArguments(
-                    requireContext(),
-                    TagsDialog.DialogType.EDIT_TAGS,
-                    listOf(noteId),
-                )
-            showDialogFragment(dialogFragment)
+            tagsDialogFactory.show(requireActivity(), noteIds = listOf(noteId))
         }
 
         viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->
-            val dialogFragment = SetDueDateDialog.newInstance(listOf(cardId))
-            showDialogFragment(dialogFragment)
+            SetDueDateDialog.show(requireActivity(), listOf(cardId))
         }
 
         viewModel.pageUpFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
@@ -607,14 +677,17 @@ class ReviewerFragment :
         stateFilter: CardStateFilter,
     ) = viewModel.onEditedTags(selectedTags)
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient = ReviewerWebViewClient(savedInstanceState)
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
+        ReviewerWebViewClient(savedInstanceState).also { reviewerWebViewClient = it }
 
     override fun onCreateWebChromeClient(): CardViewerWebChromeClient = ReviewerWebChromeClient()
 
     private inner class ReviewerWebViewClient(
         savedInstanceState: Bundle?,
     ) : CardViewerWebViewClient(savedInstanceState) {
-        private var scale: Float = if (!isRobolectric) webViewLayout.scale else 1F
+        // Capture the fresh WebView's scale before any pinch zoom; this includes screen density.
+        private val initialScale: Float = if (!isRobolectric) webViewLayout.scale else 1F
+        private var scale: Float = initialScale
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
         private val gestureParser by lazy {
@@ -625,13 +698,24 @@ class ReviewerFragment :
         }
         private var hasShownUnsupportedFeatureWarning = false
 
+        /** Resets pinch zoom, leaving the viewport untouched when already at the initial scale. */
+        fun resetZoom() {
+            val factor = initialScale / scale
+            if (abs(factor - 1f) < 0.001f) return
+            // zoomBy is asynchronous. Keep _showQuestion/_showAnswer queued until the renderer
+            // has reset its visual viewport, otherwise zoom completion can undo answer anchoring.
+            val pageScale = initialScale / resources.displayMetrics.density
+            webViewLayout.evaluateJavascript("ankidroid.waitForZoomReset($pageScale);")
+            webViewLayout.zoomBy(factor.coerceIn(0.01f, 100f))
+        }
+
         init {
             webViewLayout.setOnScrollChangeListener { _, _, _, _, _ ->
                 isScrolling = true
                 isScrollingJob?.cancel()
                 isScrollingJob =
                     lifecycleScope.launch {
-                        delay(300)
+                        delay(300.milliseconds)
                         isScrolling = false
                     }
             }
@@ -647,14 +731,16 @@ class ReviewerFragment :
                     gestureParser.parse(url, scale, webView) { gesture ->
                         if (gesture == null) return@parse
                         Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        bindingMap.onGesture(gesture)
+                        // Stylus mode passes finger input through to the WebView. Whiteboard
+                        // bindings still take priority while the whiteboard is visible.
+                        if (whiteboardFragment?.takeIf { it.isVisible }?.onGesture(gesture) != true) {
+                            bindingMap.onGesture(gesture)
+                        }
                     }
                     true
                 }
                 "ankidroid" -> {
                     when (url.host) {
-                        "focusin" -> webviewHasFocus = true
-                        "focusout" -> webviewHasFocus = false
                         "show-answer" -> viewModel.onShowAnswer()
                     }
                     true
@@ -663,8 +749,8 @@ class ReviewerFragment :
                     if (hasShownUnsupportedFeatureWarning) return true
                     hasShownUnsupportedFeatureWarning = true
                     AlertDialog.Builder(requireContext()).show {
-                        setMessage(R.string.feature_not_supported_by_study_screen)
-                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                        setMessage(CommonString.feature_not_supported_by_study_screen)
+                        setPositiveButton(CommonString.dialog_ok) { _, _ -> }
                     }
                     true
                 }

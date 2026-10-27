@@ -1,20 +1,6 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *  Copyright (c) 2024 voczi <dev@voczi.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 voczi <dev@voczi.com>
+
 package com.ichi2.anki.pages
 
 import android.app.Activity
@@ -51,6 +37,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 
 interface PostRequestHandler {
     suspend fun handlePostRequest(
@@ -63,6 +50,14 @@ interface PostRequestHandler {
 value class PostRequestUri(
     val uri: String,
 ) {
+    val ankidroidMethodName: String?
+        get() =
+            if (uri.startsWith(AnkiServer.ANKIDROID_PREFIX)) {
+                uri.substring(AnkiServer.ANKIDROID_PREFIX.length)
+            } else {
+                null
+            }
+
     val backendMethodName: String?
         get() =
             if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
@@ -122,6 +117,7 @@ val collectionMethods =
         "simulateFsrsWorkload" to { bytes -> simulateFsrsWorkloadRaw(bytes) },
         // https://github.com/ankitects/anki/pull/4326 -> saveCustomColours should be no-op in mobile clients
         "saveCustomColours" to { bytes -> backendIdentity(bytes) },
+        "getCustomColours" to { bytes -> getCustomColoursRaw(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(
@@ -152,6 +148,12 @@ val uiMethods =
         },
         "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
         "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
+        "importDialogRequireClose" to { _ ->
+            lifecycleScope.async {
+                finish()
+                byteArrayOf()
+            }
+        },
         "addImageOcclusionNote" to { bytes ->
             lifecycleScope.async {
                 withCol { addImageOcclusionNoteRaw(bytes) }
@@ -215,7 +217,7 @@ suspend fun FragmentActivity?.handleUiPostRequest(
             undoableOp { OpChanges.parseFrom(data) }
             launchCatchingTask {
                 // Allow time for toast message to appear before closing editor
-                delay(1000)
+                delay(1.seconds)
                 setResult(Activity.RESULT_OK)
                 finish()
             }
@@ -225,7 +227,7 @@ suspend fun FragmentActivity?.handleUiPostRequest(
             undoableOp { OpChanges.parseFrom(data) }
             launchCatchingTask {
                 // Allow time for toast message to appear before closing editor
-                delay(1000)
+                delay(1.seconds)
                 setResult(NoteEditorFragment.RESULT_UPDATED_IO_NOTE)
                 finish()
             }

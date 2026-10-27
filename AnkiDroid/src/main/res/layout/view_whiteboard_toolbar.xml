@@ -12,7 +12,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/toolbar_card"
-        style="?attr/materialCardViewStyle"
+        style="?attr/whiteboardToolbarCardStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -28,7 +28,7 @@
                 style="@android:style/Widget.ActionButton"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_undo_white"
+                android:src="@drawable/ic_undo_2"
                 android:contentDescription="@string/undo"
                 android:tooltipText="@string/undo"/>
 
@@ -37,7 +37,7 @@
                 style="@android:style/Widget.ActionButton"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_redo"
+                android:src="@drawable/ic_redo_2"
                 android:contentDescription="@string/redo"
                 android:tooltipText="@string/redo"/>
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:scrollbars="none"
-                tools:listitem="@layout/button_color_brush"
+                tools:listitem="@layout/item_button_color_brush"
                 />
 
         </LinearLayout>

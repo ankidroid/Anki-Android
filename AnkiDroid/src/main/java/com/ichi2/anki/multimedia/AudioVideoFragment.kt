@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.multimedia
 
@@ -27,26 +13,24 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentAudioVideoBinding
 import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.AUDIO_CLIP
 import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.VIDEO_CLIP
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.ExceptionUtil.executeSafe
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.openInputStreamSafe
@@ -67,17 +51,11 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      */
     private val pickMediaLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             when {
                 result.resultCode != Activity.RESULT_OK || result.data == null -> {
                     Timber.d("Uri is empty or Result not OK")
-                    if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
-                    }
+                    cancelIfEmpty()
                 }
                 else -> {
                     executeSafe(requireContext(), "pickMediaLauncher:unhandled") {
@@ -153,7 +131,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                     "audio/*",
                     // #9226: allows ogg on Android 8
                     arrayOf("audio/*", "application/ogg"),
-                    R.string.multimedia_editor_popup_audio_clip,
+                    CommonString.multimedia_editor_popup_audio_clip,
                 )
             }
 
@@ -162,7 +140,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 openMediaChooser(
                     "video/*",
                     emptyArray(),
-                    R.string.multimedia_editor_popup_video_clip,
+                    CommonString.multimedia_editor_popup_video_clip,
                 )
             }
         }
@@ -200,17 +178,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 Timber.d("Audio or Video length is not valid")
                 return@setOnClickListener
             }
-            field.mediaFile = viewModel.currentMultimediaPath.value
-
-            field.hasTemporaryMedia = true
-
-            val resultData =
-                Intent().apply {
-                    putExtra(MULTIMEDIA_RESULT, field)
-                    putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                }
-            requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-            requireActivity().finish()
+            finishWithMedia()
         }
     }
 
@@ -386,13 +354,13 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     override fun onDestroyView() {
         super.onDestroyView()
         Timber.d("Releasing media player")
-        mediaPlayer.release()
+        if (::mediaPlayer.isInitialized) mediaPlayer.release()
     }
 
     override fun onStop() {
         super.onStop()
         Timber.d("Stopping media player")
-        mediaPlayer.playWhenReady = false
+        if (::mediaPlayer.isInitialized) mediaPlayer.playWhenReady = false
     }
 
     companion object {
@@ -427,7 +395,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         context: Context,
     ): String =
         when (mediaOption) {
-            AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
-            VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)
+            AUDIO_CLIP -> context.getString(CommonString.multimedia_editor_popup_audio_clip)
+            VIDEO_CLIP -> context.getString(CommonString.multimedia_editor_popup_video_clip)
         }
 }

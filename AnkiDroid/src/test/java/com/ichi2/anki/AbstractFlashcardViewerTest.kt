@@ -1,38 +1,43 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki
 
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.os.Parcelable
 import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.CheckResult
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import anki.config.ConfigKey
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
-import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
+import com.ichi2.anki.AnkiActivity.Companion.EXTRA_FINISH_ANIMATION
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.createBasicTypingNoteType
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import com.ichi2.anki.noteeditor.openNoteEditorWithArgs
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.snackbarText
+import com.ichi2.testutils.mockWebResourceRequest
+import com.ichi2.testutils.registerWebBrowser
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -48,10 +53,13 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import timber.log.Timber
 import java.util.Locale
 import java.util.stream.Stream
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @Suppress("SameParameterValue")
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
@@ -61,7 +69,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Rating? = null
+        var startActivityFailure: Exception? = null
         private var lastTime = 0
+
+        override fun startActivity(intent: Intent) {
+            startActivityFailure?.let { throw it }
+            super.startActivity(intent)
+        }
 
         override fun performReload() {
             // intentionally blank
@@ -120,6 +134,25 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 require(mediaGroupCompleted) { "mediaGroupCompleted never occurred" }
             }
         }
+    }
+
+    @Test
+    fun `rejected web link launch shows an error and consumes navigation`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        val viewer = getViewer(addCard = true)
+        viewer.startActivityFailure = SecurityException("The handler requires a permission")
+        val webView = assertNotNull(viewer.webView)
+
+        assertTrue(
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                webView,
+                mockWebResourceRequest("https://example.org"),
+            ),
+        )
+        advanceRobolectricLooper()
+        targetContext.assertNoActivityStarted()
+        assertEquals(viewer.getString(CommonString.activity_start_failed), viewer.snackbarText)
     }
 
     @ParameterizedTest
@@ -209,21 +242,21 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val expectedAnimation =
                 AbstractFlashcardViewer.getAnimationTransitionFromGesture(gesture)
             val expectedInverseAnimation =
-                ActivityTransitionAnimation.getInverseTransition(expectedAnimation)
+                expectedAnimation.invert()
 
             val animation = gesture.toAnimationTransition().invert()
             val bundle =
-                bundleOf(
-                    NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
-                    NoteEditorFragment.EXTRA_CARD_ID to viewer.currentCard!!.id,
-                    FINISH_ANIMATION_EXTRA to animation as Parcelable,
-                )
-            val noteEditor = NoteEditorTest().openNoteEditorWithArgs(bundle)
+                Bundle().apply {
+                    putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.EDIT.value)
+                    putLong(NoteEditorFragment.EXTRA_CARD_ID, viewer.currentCard!!.id)
+                    putParcelable(EXTRA_FINISH_ANIMATION, animation as Parcelable)
+                }
+            val noteEditor = openNoteEditorWithArgs(bundle)
             val actualInverseAnimation =
                 BundleCompat.getParcelable(
                     noteEditor.requireArguments(),
-                    FINISH_ANIMATION_EXTRA,
-                    Direction::class.java,
+                    EXTRA_FINISH_ANIMATION,
+                    TransitionDirection::class.java,
                 )
             assertEquals(expectedInverseAnimation, actualInverseAnimation)
         }
@@ -241,7 +274,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat("Displaying answer", viewer.isDisplayingAnswer, equalTo(true))
 
-        viewer.executeCommand(ViewerCommand.ANSWER_EASY)
+        viewer.executeCommandAndWaitForFinish(ViewerCommand.ANSWER_EASY)
 
         assertThat(viewer.answered, notNullValue())
     }
@@ -412,6 +445,15 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 }
 
 fun AbstractFlashcardViewer.loadInitialCard() = launchCatchingTask { updateCardAndRedraw() }
+
+/** Lets the final answer release its global lock before test teardown. */
+private fun AbstractFlashcardViewer.executeCommandAndWaitForFinish(command: ViewerCommand) {
+    // Drain media callbacks before the final answer clears currentCard.
+    runBlocking { cardMediaPlayer.stop() }
+    RobolectricTest.advanceRobolectricLooper()
+    executeCommand(command)
+    RobolectricTest.advanceRobolectricLooperUntil { isFinishing }
+}
 
 val AbstractFlashcardViewer.typedInputText get() = typeAnswer!!.input
 val AbstractFlashcardViewer.correctTypedAnswer get() = typeAnswer!!.correct

@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2021 Nicola Dardanis <nicdard@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Nicola Dardanis <nicdard@gmail.com>
+
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create
@@ -50,17 +38,17 @@ public class TestJavaClass {
 """
 
     @Language("JAVA")
-    private val javaFileWithUIUtils = """                            
-package com.ichi2.anki.lint.rules;                             
-                                                               
-import android.widget.Toast;                                   
-                                                               
-public class UIUtilsKt {
-                                                               
-    public static void main(String[] args) {                   
-        Toast.makeText();                                      
-    }                                                          
-}                                                              
+    private val javaFileWithToastWrapper = """
+package com.ichi2.anki.lint.rules;
+
+import android.widget.Toast;
+
+public class ToastKt {
+
+    public static void main(String[] args) {
+        Toast.makeText();
+    }
+}
 """
 
     @Test
@@ -79,11 +67,11 @@ public class UIUtilsKt {
     }
 
     @Test
-    fun allowsUsageForUIUtils() {
+    fun allowsUsageForToastWrapper() {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(create(stubToast), create(javaFileWithUIUtils))
+            .files(create(stubToast), create(javaFileWithToastWrapper))
             .issues(DirectToastMakeTextUsage.ISSUE)
             .run()
             .expectClean()

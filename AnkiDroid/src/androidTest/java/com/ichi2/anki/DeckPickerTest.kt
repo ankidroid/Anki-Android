@@ -1,30 +1,20 @@
-/*
- * Copyright (c) 2021 Shridhar Goel <shridhar.goel@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Shridhar Goel <shridhar.goel@gmail.com>
 
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.view.View
+import androidx.core.content.edit
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.ichi2.anki.TestUtils.activityInstance
 import com.ichi2.anki.TestUtils.isTablet
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.disableIntroductionSlide
@@ -32,11 +22,12 @@ import com.ichi2.anki.testutil.discardPreliminaryViews
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.tapOnCountLayouts
-import org.hamcrest.Matchers.instanceOf
+import com.ichi2.anki.testutil.useResumedActivity
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertEquals
 
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
 class DeckPickerTest : InstrumentedTest() {
@@ -64,11 +55,34 @@ class DeckPickerTest : InstrumentedTest() {
         // Go to RecyclerView item having "Test Deck" and click on the counts layout
         tapOnCountLayouts("Default")
 
-        // Check if currently open Activity is StudyOptionsActivity
-        assertThat(
-            activityInstance,
-            instanceOf(StudyOptionsActivity::class.java),
-        )
+        // ActivityScenarioRule only owns DeckPicker. Close Study Options before collection cleanup.
+        useResumedActivity<StudyOptionsActivity> {
+            onView(withId(R.id.studyoptions_frame)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun bottomNavigationFollowsDeckPickerLayoutWhenPreferenceIsSaved() {
+        val key = testContext.getString(R.string.dev_bottom_nav_key)
+        val preferences = testContext.sharedPrefs()
+        val wasSaved = preferences.contains(key)
+        val oldValue = preferences.getBoolean(key, false)
+        try {
+            preferences.edit(commit = true) { putBoolean(key, true) }
+            activityRule.scenario.recreate()
+            activityRule.scenario.onActivity { deckPicker ->
+                val hasBottomNavLayout = deckPicker.resources.getBoolean(R.bool.bottom_navigation_available)
+                assertEquals(!deckPicker.fragmented, hasBottomNavLayout)
+                assertEquals(true, Prefs.devBottomNavEnabled)
+                assertEquals(hasBottomNavLayout, deckPicker.bottomNavigationEnabled)
+                assertEquals(hasBottomNavLayout, deckPicker.findViewById<View>(R.id.bottom_navigation) != null)
+                assertEquals(if (hasBottomNavLayout) 1 else 0, deckPicker.deckPickerBinding.decks.itemDecorationCount)
+            }
+        } finally {
+            preferences.edit(commit = true) {
+                if (wasSaved) putBoolean(key, oldValue) else remove(key)
+            }
+        }
     }
 
     @Test

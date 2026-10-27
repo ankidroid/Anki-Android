@@ -1,26 +1,14 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
-import com.ichi2.anki.R
+import androidx.fragment.app.activityViewModels
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -29,21 +17,17 @@ import com.ichi2.utils.positiveButton
 import timber.log.Timber
 import java.net.URLDecoder
 
+@NeedsTest("integration test: ImportDialog => DeckPicker")
 class ImportDialog : AsyncDialogFragment() {
-    interface ImportDialogListener {
-        fun importAdd(importPath: String)
-
-        fun importReplace(importPath: String)
-    }
+    private val importViewModel: ImportViewModel by activityViewModels()
 
     private val dialogType: Type
-        get() = Type.fromCode(requireArguments().getInt(IMPORT_DIALOG_TYPE_KEY))
+        get() = Type.fromCode(requireArguments().getInt(ARG_DIALOG_TYPE))
 
     private val packagePath: String
-        get() = requireArguments().getString(IMPORT_DIALOG_PACKAGE_PATH_KEY)!!
+        get() = requireArguments().getString(ARG_PACKAGE_PATH)!!
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
-        super.onCreate(savedInstanceState)
         val dialog = AlertDialog.Builder(requireActivity())
         dialog.setCancelable(true)
         val displayFileName = filenameFromPath(convertToDisplayName(packagePath))
@@ -51,22 +35,22 @@ class ImportDialog : AsyncDialogFragment() {
         return when (dialogType) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
                 dialog
-                    .setTitle(R.string.import_title)
-                    .setMessage(res().getString(R.string.import_dialog_message_add, displayFileName))
-                    .positiveButton(R.string.import_message_add) {
-                        (activity as ImportDialogListener).importAdd(packagePath)
+                    .setTitle(CommonString.import_title)
+                    .setMessage(res().getString(CommonString.import_dialog_message_add, displayFileName))
+                    .positiveButton(CommonString.import_message_add) {
+                        importViewModel.triggerImportAdd(packagePath)
                         activity?.dismissAllDialogFragments()
-                    }.negativeButton(R.string.dialog_cancel)
+                    }.negativeButton(CommonString.dialog_cancel)
                     .create()
             }
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
                 dialog
-                    .setTitle(R.string.import_title)
-                    .setMessage(res().getString(R.string.import_message_replace_confirm, displayFileName))
-                    .positiveButton(R.string.dialog_positive_replace) {
-                        (activity as ImportDialogListener).importReplace(packagePath)
+                    .setTitle(CommonString.import_title)
+                    .setMessage(res().getString(CommonString.import_message_replace_confirm, displayFileName))
+                    .positiveButton(CommonString.dialog_positive_replace) {
+                        importViewModel.triggerImportReplace(packagePath)
                         activity?.dismissAllDialogFragments()
-                    }.negativeButton(R.string.dialog_cancel)
+                    }.negativeButton(CommonString.dialog_cancel)
                     .create()
             }
         }
@@ -85,12 +69,12 @@ class ImportDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return res().getString(R.string.import_interrupted)
+            return res().getString(CommonString.import_interrupted)
         }
 
     override val notificationTitle: String
         get() {
-            return res().getString(R.string.import_title)
+            return res().getString(CommonString.import_title)
         }
 
     enum class Type(
@@ -106,8 +90,8 @@ class ImportDialog : AsyncDialogFragment() {
     }
 
     companion object {
-        const val IMPORT_DIALOG_TYPE_KEY = "dialogType"
-        const val IMPORT_DIALOG_PACKAGE_PATH_KEY = "packagePath"
+        const val ARG_DIALOG_TYPE = "dialogType"
+        const val ARG_PACKAGE_PATH = "packagePath"
 
         /**
          * A set of dialogs which deal with importing a file
@@ -122,10 +106,10 @@ class ImportDialog : AsyncDialogFragment() {
         ): ImportDialog =
             ImportDialog().apply {
                 arguments =
-                    bundleOf(
-                        IMPORT_DIALOG_TYPE_KEY to dialogType.code,
-                        IMPORT_DIALOG_PACKAGE_PATH_KEY to packagePath,
-                    )
+                    Bundle().apply {
+                        putInt(ARG_DIALOG_TYPE, dialogType.code)
+                        putString(ARG_PACKAGE_PATH, packagePath)
+                    }
             }
 
         private fun filenameFromPath(path: String): String = path.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]

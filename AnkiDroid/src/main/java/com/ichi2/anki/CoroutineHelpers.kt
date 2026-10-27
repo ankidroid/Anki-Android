@@ -1,49 +1,51 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
 
 package com.ichi2.anki
 
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
-import android.view.WindowManager
+import android.text.format.Formatter
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportData.Companion.throwIfDialogUnusable
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
-import com.ichi2.anki.CrashReportData.HelpAction
-import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
-import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
+import com.ichi2.anki.backend.DatabaseCorruption
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.DeferredNavigation
+import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.toIntent
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
-import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.exception.StorageNotConfiguredException
+import com.ichi2.anki.progress.blockTouches
+import com.ichi2.anki.progress.unblockTouches
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.redirectToMainEntryPoint
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
 import com.ichi2.utils.message
@@ -69,15 +71,16 @@ import kotlinx.coroutines.withTimeout
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendException.BackendCardTypeException
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 /** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
 // COULD_BE_BETTER: this shouldn't be necessary, but TestClass::runWith needs it
@@ -87,37 +90,6 @@ var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 /** Whether [showError] should throw an exception on failure */
 @VisibleForTesting
 var throwOnShowError = false
-
-/**
- * Runs a suspend function that catches any uncaught errors and reports them to the user.
- * Errors from the backend contain localized text that is often suitable to show to the user as-is.
- * Other errors should ideally be handled in the block.
- *
- * @param context Coroutine context passed to [launch]
- * @param errorMessageHandler Called after an exception is caught and logged, input is either
- * `Exception.localizedMessage` or `Exception.toString()`
- * @param block code to execute inside [launch]
- */
-fun CoroutineScope.launchCatching(
-    context: CoroutineContext = EmptyCoroutineContext,
-    errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit,
-): Job =
-    launch(context) {
-        try {
-            block()
-        } catch (cancellationException: CancellationException) {
-            // CancellationException should be re-thrown to propagate it to the parent coroutine
-            throw cancellationException
-        } catch (backendException: BackendException) {
-            Timber.w(backendException)
-            val message = backendException.localizedMessage ?: backendException.toString()
-            errorMessageHandler.invoke(message)
-        } catch (exception: Exception) {
-            Timber.w(exception)
-            errorMessageHandler.invoke(exception.toString())
-        }
-    }
 
 interface OnErrorListener {
     val onError: MutableSharedFlow<String>
@@ -193,21 +165,34 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
-            is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException -> {
+            is StorageNotConfiguredException -> {
+                // expected before first-run setup completes: no crash report
+                // edge case when 'ensureStorageIsReady' was insufficient
+                Timber.w(exc, errorMessage)
+                if (!isFinishing) redirectToMainEntryPoint()
+            }
+            is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException,
+            is CollectionLockedException,
+            -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
+            }
+            // must precede `is BackendException`: BackendDbCorruptException is a subclass
+            is SQLiteDatabaseCorruptException, is BackendDbCorruptException -> {
+                Timber.e(exc, errorMessage)
+                DatabaseCorruption.isDetected = true
+                if (callerTrace != null) Timber.e(callerTrace)
+                (this as? AnkiActivity)
+                    ?.showDatabaseErrorDialog(
+                        errorDialogType = DatabaseErrorDialogType.DIALOG_LOAD_FAILED,
+                        exceptionData = DatabaseErrorDialog.CustomExceptionData.fromException(exc),
+                    )
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
                 if (callerTrace != null) Timber.e(callerTrace)
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this))
-            }
-            is SQLiteDatabaseCorruptException -> {
-                Timber.e(exc, errorMessage)
-                DatabaseErrorDialog.databaseCorruptFlag = true
-                if (callerTrace != null) Timber.e(callerTrace)
-                DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(CollectionLoadingErrorDialog().toMessage())
             }
             else -> {
                 Timber.e(exc, errorMessage)
@@ -247,15 +232,85 @@ fun <T> FragmentActivity.asyncCatching(
         runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
 
-/** See [FragmentActivity.launchCatchingTask] */
+/**
+ * Launch a job that catches any uncaught errors and reports them to the user.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ *
+ * A valid, non-finishing activity must be used when running this.
+ */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
     skipCrashReport: ((Exception) -> Boolean)? = null,
     block: suspend CoroutineScope.() -> Unit,
-): Job =
-    lifecycle.coroutineScope.launch {
-        requireActivity().runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
+): Job {
+    val fragmentLifecycle = lifecycle
+    return fragmentLifecycle.coroutineScope.launch {
+        // Removal can precede scope registration; reading the fragment creates a new lifecycle.
+        if (fragmentLifecycle.currentState == Lifecycle.State.DESTROYED) {
+            Timber.w("Skipping launchCatchingTask for %s: fragment lifecycle is destroyed", this@launchCatchingTask.javaClass.simpleName)
+            return@launch
+        }
+        val validActivity = validActivityForTask() ?: return@launch
+        validActivity.runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
+}
+
+private fun Fragment.validActivityForTask(): FragmentActivity? =
+    // It's a bug to call this if the activity is invalid or finishing.
+    kotlin
+        .runCatching {
+            requireActivity(simpleName = true).also { activity ->
+                check(!activity.isFinishing) {
+                    "Cannot launch task for ${this@validActivityForTask.javaClass.simpleName}: activity is finishing"
+                }
+            }
+        }.getOrElse {
+            Timber.w(it, "Fragment.launchCatchingTask")
+            if (isRobolectric) throw it
+            null
+        }
+
+/**
+ * [Fragment.requireActivity], with a short stable name so crash reports can be grouped together.
+ *
+ * ```diff
+ * - Fragment <name>{afc1c3c} (f8db5cf7-13f5-495f-8195-79e0be3aff68) not attached to an activity.
+ * + Fragment <name> not attached to an activity.
+ * ```
+ */
+fun Fragment.requireActivity(simpleName: Boolean): FragmentActivity =
+    if (simpleName) {
+        checkNotNull(activity) { "Fragment ${javaClass.simpleName} not attached to an activity." }
+    } else {
+        requireActivity()
+    }
+
+/**
+ * Like [Fragment.launchCatchingTask], but tied to the current view's lifecycle.
+ * Skips [block] if the view is destroyed before the job starts.
+ *
+ * @return the launched job, or `null` if the fragment has no view.
+ */
+fun Fragment.launchCatchingViewTask(
+    errorMessage: String? = null,
+    skipCrashReport: ((Exception) -> Boolean)? = null,
+    block: suspend CoroutineScope.() -> Unit,
+): Job? {
+    val owner = viewLifecycleOwnerLiveData.value ?: return null
+    return owner.lifecycleScope.launch {
+        // A synchronous replacement can destroy the view before lifecycleScope registers cancellation.
+        if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) {
+            Timber.w(
+                "Skipping launchCatchingViewTask for %s: view lifecycle is destroyed",
+                this@launchCatchingViewTask.javaClass.simpleName,
+            )
+            return@launch
+        }
+        val validActivity = validActivityForTask() ?: return@launch
+        validActivity.runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
+    }
+}
 
 /**
  * Displays an error dialog with title 'Error' and provided [message].
@@ -265,23 +320,23 @@ fun Fragment.launchCatchingTask(
  * @param crashReportData Crash report data which may be reported when the dialog is dismissed.
  */
 fun Context.showError(
-    message: String,
+    message: CharSequence,
     crashReportData: CrashReportData?,
 ) {
-    crashReportData.throwIfDialogUnusable(message)
+    crashReportData.throwIfDialogUnusable(message.toString())
 
     Timber.i("Error dialog displayed")
+
+    val helpAction = crashReportData?.helpAction?.takeIf { it.canExecute(this) }
 
     try {
         AlertDialog
             .Builder(this)
             .create {
-                title(R.string.vague_error)
+                title(CommonString.vague_error)
                 message(text = message)
-                positiveButton(R.string.dialog_ok)
-                if (crashReportData?.helpAction != null) {
-                    neutralButton(R.string.help)
-                }
+                positiveButton(CommonString.dialog_ok)
+                helpAction?.let { neutralButton(text = it.buttonText(this@showError)) }
                 if (crashReportData?.reportableException == true) {
                     Timber.w("sending crash report on close")
                     setOnDismissListener { crashReportData.sendCrashReport() }
@@ -291,10 +346,7 @@ fun Context.showError(
                 setOnShowListener {
                     neutralButton?.setOnClickListener {
                         lifecycle.coroutineScope.launch {
-                            val shouldDismiss = crashReportData!!.helpAction!!.execute(context = context)
-                            if (shouldDismiss) {
-                                dismiss()
-                            }
+                            if (helpAction!!.execute(this@showError)) dismiss()
                         }
                     }
                 }
@@ -308,31 +360,20 @@ fun Context.showError(
     }
 }
 
-/**
- * @return Whether the dialog should be dismissed
- */
-suspend fun HelpAction.execute(context: Context): Boolean {
+/** The dialog's [Context] is wrapped (e.g. ContextThemeWrapper); walk the chain to find the activity. */
+internal tailrec fun Context.findAnkiActivity(): AnkiActivity? =
     when (this) {
-        is AnkiBackendLink -> {
-            context.openUrl(this.link)
-            return false
-        }
-        OpenDeckOptions -> {
-            // if we're in the error dialog, we have no context of the deck which caused the exception
-            // assume it's the current deck
-            val openCurrentDeckOptions = DeckOptionsDestination.fromCurrentDeck()
-            context.startActivity(openCurrentDeckOptions.toIntent(context))
-            // dismiss the dialog - the user should have resolved the issue
-            return true
-        }
+        is AnkiActivity -> this
+        is ContextWrapper -> baseContext.findAnkiActivity()
+        else -> null
     }
-}
 
 /** In most cases, you'll want [AnkiActivity.withProgress]
  * instead. This lower-level routine can be used to integrate your own
  * progress UI.
  */
 suspend fun <T> Backend.withProgress(
+    progressContext: ProgressContext,
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
     block: suspend CoroutineScope.() -> T,
@@ -340,7 +381,7 @@ suspend fun <T> Backend.withProgress(
     coroutineScope {
         val monitor =
             launch {
-                monitorProgress(this@withProgress, extractProgress, updateUi)
+                progressContext.monitorProgress(this@withProgress, extractProgress, updateUi)
             }
         try {
             block()
@@ -357,6 +398,7 @@ suspend fun <T> Backend.withProgress(
  * flashes of a dialog.
  */
 suspend fun <T> FragmentActivity.withProgress(
+    progressContext: ProgressContext = ProgressContext(),
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     @StringRes manualCancelButton: Int? = null,
@@ -376,6 +418,7 @@ suspend fun <T> FragmentActivity.withProgress(
         manualCancelButton = manualCancelButton,
     ) { dialog ->
         backend.withProgress(
+            progressContext = progressContext,
             extractProgress = extractProgress,
             updateUi = { updateDialog(dialog) },
         ) {
@@ -392,7 +435,7 @@ suspend fun <T> FragmentActivity.withProgress(
  * flashes of a dialog.
  */
 suspend fun <T> Activity.withProgress(
-    message: String = resources.getString(R.string.dialog_processing),
+    message: String = resources.getString(CommonString.dialog_processing),
     op: suspend () -> T,
 ): T =
     withProgressDialog(
@@ -406,7 +449,7 @@ suspend fun <T> Activity.withProgress(
 
 /** @see withProgress(String, ...) */
 suspend fun <T> Fragment.withProgress(
-    message: String = getString(R.string.dialog_processing),
+    message: String = getString(CommonString.dialog_processing),
     block: suspend () -> T,
 ): T = requireActivity().withProgress(message, block)
 
@@ -422,11 +465,13 @@ suspend fun <T> Fragment.withProgress(
     block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
+// TODO: #17551 add a lease-owned progress UI, with `CollectionLease.cancel` as its Cancel handler.
+//  Rethink `progressDialogShown` and `FLAG_NOT_TOUCHABLE`.
 @Suppress("Deprecation") // ProgressDialog deprecation
 suspend fun <T> withProgressDialog(
     context: Activity,
     onCancel: (() -> Unit)?,
-    delayMillis: Long = 600,
+    delayDuration: Duration = 600.milliseconds,
     @StringRes manualCancelButton: Int? = null,
     op: suspend (android.app.ProgressDialog) -> T,
 ): T =
@@ -436,6 +481,7 @@ suspend fun <T> withProgressDialog(
                 setCancelable(onCancel != null)
                 if (manualCancelButton != null) {
                     setCancelable(false)
+                    setCanceledOnTouchOutside(false)
                     setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
                         Timber.i("Progress dialog cancelled via cancel button")
                         onCancel?.let { it() }
@@ -450,17 +496,15 @@ suspend fun <T> withProgressDialog(
                 }
             }
         // disable taps immediately
-        context.runOnUiThread {
-            context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        }
+        context.runOnUiThread { context.window.blockTouches() }
         // reveal the dialog after 600ms
         var dialogIsOurs = false
         val dialogJob =
             launch {
-                delay(delayMillis)
+                delay(delayDuration)
                 if (!AnkiDroidApp.instance.progressDialogShown) {
                     Timber.i(
-                        """Displaying progress dialog: ${delayMillis}ms elapsed; 
+                        """Displaying progress dialog: $delayDuration elapsed;
                 |cancellable: ${onCancel != null}; 
                 |manualCancel: ${manualCancelButton != null}
                 |
@@ -484,7 +528,7 @@ suspend fun <T> withProgressDialog(
         } finally {
             dialogJob.cancel()
             dismissDialogIfShowing(dialog)
-            context.runOnUiThread { context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) }
+            context.runOnUiThread { context.window.unblockTouches() }
             if (dialogIsOurs) {
                 AnkiDroidApp.instance.progressDialogShown = false
             }
@@ -507,12 +551,12 @@ private fun dismissDialogIfShowing(dialog: Dialog) {
  * [ProgressContext]. Calls updateUi() to update the UI with the extracted
  * progress.
  */
-private suspend fun monitorProgress(
+private suspend fun ProgressContext.monitorProgress(
     backend: Backend,
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
 ) {
-    val state = ProgressContext(Progress.getDefaultInstance())
+    val state = this
     while (true) {
         state.progress =
             withContext(Dispatchers.IO) {
@@ -523,32 +567,60 @@ private suspend fun monitorProgress(
         withContext(Dispatchers.Main) {
             state.updateUi()
         }
-        delay(100)
+        delay(100.milliseconds)
     }
 }
 
-/** Holds the current backend progress, and text/amount properties
+/**
+ * Holds the current backend progress, and text/amount properties
  * that can be written to in order to update the UI.
  */
 data class ProgressContext(
-    var progress: Progress,
-    var text: String = "",
-    /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null,
-)
-
-@Suppress("Deprecation") // ProgressDialog deprecation
-private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
-    // ideally this would show a progress bar, but MaterialDialog does not support
-    // setting progress after starting with indeterminate progress, so we just use
-    // this for now
-    // this code has since been updated to ProgressDialog, and the above not rechecked
-    val progressText =
-        amount?.let {
-            " ${it.first}/${it.second}"
-        } ?: ""
+    var progress: Progress = Progress.getDefaultInstance(),
+    var text: String? = null,
+    /** If set, shows a progress bar with `current` of `max` complete. */
+    var amount: Amount? = null,
+    val formatAmount: (Amount) -> String = { (current, max) -> "$current/$max" },
+    /** Separator between [text] and [amount] */
+    val separator: String = " ",
+) {
     @Suppress("Deprecation") // ProgressDialog deprecation
-    dialog.setMessage(text + progressText)
+    fun updateDialog(dialog: android.app.ProgressDialog) {
+        val message =
+            listOfNotNull(
+                text,
+                amount?.let { formatAmount(it) },
+            ).joinToString(separator)
+        dialog.setMessage(message)
+    }
+
+    companion object {
+        /**
+         * A [com.ichi2.anki.ProgressContext] which formats progress as bytes:
+         *
+         * `28 MB/141 MB`
+         */
+        fun ofBytes(context: Context) =
+            ProgressContext(
+                formatAmount = { (current, max) ->
+                    // replace spaces with NBSP so newlines are handled better
+                    val curStr = Formatter.formatShortFileSize(context, current).replace(' ', '\u00A0')
+                    val maxStr = Formatter.formatShortFileSize(context, max).replace(' ', '\u00A0')
+                    context.getString(CommonString.progress_amount_bytes, curStr, maxStr)
+                },
+            )
+    }
+
+    /**
+     * Represents a progress value and a maximum limit.
+     *
+     * @see ProgressContext
+     */
+    // values are 'Long' as this can represent bytes.
+    data class Amount(
+        val current: Long,
+        val max: Long,
+    )
 }
 
 /**
@@ -574,21 +646,52 @@ private fun Activity.showError(
 ) = showError(throwable.toString(), throwable.toCrashReportData(context = this, reportException))
 
 /**
- * Launches a coroutine which is guaranteed to terminate within the [timeout] duration, which means
- * it is safe to call on the global coroutine scope. We handle the global scope carefully here to ensure
- * that the coroutine eventually terminates and does not cause a memory leak.
+ * Since AnkiBroadcastReceiver's `onReceiveBroadcast` methods is expected to finish quickly, this
+ * helper function is required to run a suspending function from an `onReceiveBroadcast` method.
+ * [AnkiBroadcastReceiver.goAsync] extends the lifetime of the `onReceiveBroadcast` method and tells
+ * the OS not to kill the process prematurely.
+ *
+ * Theoretically, an expedited Worker could also be used to run a suspending function from `onReceiveBroadcast`.
+ * However, AnkiDroid is only allotted a fixed number of expedited Worker calls per day
+ * and those expedited calls are also used by the sync service, so it's best to conserve them.
+ *
+ * Do not call [AnkiBroadcastReceiver.goAsync] directly before calling this function.
+ *
+ * @param timeout Just in case the block hangs. Cannot exceed 8 seconds, because an ANR may occur if
+ * an AnkiBroadcastReceiver's onReceiveBroadcast method runs for longer than 10 seconds.
+ * See [the docs](https://developer.android.com/reference/android/content/BroadcastReceiver#goAsync()).
+ * @param block The suspending function to run.
+ *
+ * @see AnkiBroadcastReceiver.goAsync
+ * @see AnkiBroadcastReceiver.onReceiveBroadcast
  */
-fun runGloballyWithTimeout(
+fun AnkiBroadcastReceiver.runGloballyWithTimeout(
     timeout: Duration,
     block: suspend () -> Unit,
 ) {
-    AnkiDroidApp.applicationScope.launch {
+    val pendingResult = goAsync()
+    if (pendingResult == null) {
+        // pendingResult should never be null, so this should never happen.
+        // According to the implementation of goAsync, if it is, that indicates goAsync was called twice for the same onReceiveBroadcast.
+        Timber.w("goAsync returned null, cannot run block")
+        CrashReportService.sendExceptionReport(
+            message =
+                "goAsync returned null for BroadcastReceiver: " +
+                    "This should never happen and indicates goAsync was called twice for the same onReceiveBroadcast",
+            origin = "CoroutineHelpers:BroadcastReceiver.runGloballyWithTimeout",
+        )
+        return
+    }
+
+    applicationScope.launch {
         try {
-            withTimeout(timeout) {
+            withTimeout(minOf(timeout, 8.seconds)) {
                 block()
             }
         } catch (e: TimeoutCancellationException) {
             Timber.w(e, "runGloballyWithTimeout timed out after $timeout")
+        } finally {
+            pendingResult.finish()
         }
     }
 }
@@ -610,6 +713,7 @@ data class CrashReportData(
     fun shouldReportException(): Boolean {
         if (!reportableException) return false
         if (exception.isInvalidFsrsParametersException()) return false
+        if (exception.isDeckNotFoundInLimitsMapException()) return false
         if (exception is BackendInvalidInputException && exception.message == "missing template") return false
         return true
     }
@@ -630,12 +734,64 @@ data class CrashReportData(
      * - Open the deck options
      */
     sealed class HelpAction {
+        /** Label for the 'help' button on the error dialog. Defaults to "Help". */
+        open fun buttonText(context: Context): CharSequence = context.getString(CommonString.help)
+
+        /** `false` hides the help button. */
+        open fun canExecute(context: Context): Boolean = true
+
+        /** Perform the action. @return whether the error dialog should be dismissed. */
+        abstract suspend fun execute(context: Context): Boolean
+
         data class AnkiBackendLink(
             val link: Uri,
-        ) : HelpAction()
+        ) : HelpAction() {
+            override suspend fun execute(context: Context): Boolean {
+                context.openUrl(link)
+                return false
+            }
+        }
 
         /** Open the deck options for the current deck */
-        data object OpenDeckOptions : HelpAction()
+        data object OpenDeckOptions : HelpAction() {
+            override suspend fun execute(context: Context): Boolean {
+                // if we're in the error dialog, we have no context of the deck which caused the exception
+                // assume it's the current deck
+                val openCurrentDeckOptions = DeckOptionsDestination.fromCurrentDeck()
+                context.startActivity(with(DeferredNavigation) { openCurrentDeckOptions.toIntent() })
+                // dismiss the dialog - the user should have resolved the issue
+                return true
+            }
+        }
+
+        /**
+         * Opens settings at the Advanced screen, where changing the 'AnkiDroid directory'
+         * resolves a [CollectionLockedException] (#21051)
+         */
+        data object OpenAdvancedSettings : HelpAction() {
+            override fun buttonText(context: Context): CharSequence = context.getString(CommonString.settings)
+
+            override suspend fun execute(context: Context): Boolean {
+                Timber.i("Opening 'Advanced settings'")
+                context.startActivity(with(DeferredNavigation) { PreferencesDestination.Advanced.toIntent() })
+                return true
+            }
+        }
+
+        /** Opens 'Check Database' */
+        data object OpenCheckDatabase : HelpAction() {
+            override fun buttonText(context: Context): CharSequence = with(context) { TR.sentenceCase.checkDatabase }
+
+            override fun canExecute(context: Context): Boolean = context.findAnkiActivity() != null
+
+            override suspend fun execute(context: Context): Boolean {
+                Timber.i("Opening 'Check Database'")
+                context.findAnkiActivity()!!.showDatabaseErrorDialog(
+                    errorDialogType = DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK,
+                )
+                return true
+            }
+        }
 
         companion object {
             fun from(e: Throwable): HelpAction? {
@@ -650,7 +806,9 @@ data class CrashReportData(
                     }
 
                 if (link != null) return AnkiBackendLink(link)
+                if (e is CollectionLockedException) return OpenAdvancedSettings
                 if (e.isInvalidFsrsParametersException()) return OpenDeckOptions
+                if (e.isDeckNotFoundInLimitsMapException()) return OpenCheckDatabase
 
                 return null
             }
@@ -699,5 +857,9 @@ data class CrashReportData(
             } catch (_: Throwable) {
                 false
             }
+
+        @VisibleForTesting
+        internal fun Throwable.isDeckNotFoundInLimitsMapException(): Boolean =
+            this is BackendInvalidInputException && message == "deck not found in limits map"
     }
 }

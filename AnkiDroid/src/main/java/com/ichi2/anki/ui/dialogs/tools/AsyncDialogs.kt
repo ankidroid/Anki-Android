@@ -1,16 +1,4 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.ui.dialogs.tools
 
@@ -135,8 +123,8 @@ sealed interface DialogResult {
  *     val dialogResult = awaitDialog {
  *         setTitle("Title")
  *         setMessage("Message")
- *         setPositiveButton(R.string.dialog_ok)
- *         setNegativeButton(R.string.dialog_cancel)
+ *         setPositiveButton(CommonString.dialog_ok)
+ *         setNegativeButton(CommonString.dialog_cancel)
  *     }
  *
  *     if (dialogResult is DialogResult.Ok) {

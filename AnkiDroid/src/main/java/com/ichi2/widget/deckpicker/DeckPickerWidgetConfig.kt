@@ -1,55 +1,56 @@
-/*
- *  Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
 
 package com.ichi2.widget.deckpicker
 
 import android.appwidget.AppWidgetManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
-import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.isDefaultDeckEmpty
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.unregisterReceiverSilently
+import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.widgets.R
+import com.ichi2.anki.widgets.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
 import com.ichi2.widget.WidgetConfigScreenAdapter
+import com.ichi2.widget.getAppWidgetManager
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -65,7 +66,6 @@ import timber.log.Timber
  */
 class DeckPickerWidgetConfig :
     AnkiActivity(R.layout.widget_deck_picker_config),
-    DeckSelectionListener,
     BaseSnackbarBuilderProvider {
     private val binding by viewBinding(WidgetDeckPickerConfigBinding::bind)
 
@@ -88,10 +88,22 @@ class DeckPickerWidgetConfig :
 
         super.onCreate(savedInstanceState)
 
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
-
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.content) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            binding.content.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                updateMargins(
+                    left = constraints.left,
+                    right = constraints.right,
+                    bottom = constraints.bottom + 16.dp.toPx(this@DeckPickerWidgetConfig),
+                    top = constraints.top + 16.dp.toPx(this@DeckPickerWidgetConfig),
+                )
+            }
+            WindowInsetsCompat.CONSUMED
+        }
         deckPickerWidgetPreferences = DeckPickerWidgetPreferences(this)
 
         appWidgetId = intent.getAppWidgetId()
@@ -102,14 +114,17 @@ class DeckPickerWidgetConfig :
             return
         }
 
-        // Check if the collection is empty before proceeding and if the collection is empty, show a toast instead of the configuration view.
+        registerDeckSelectedHandler(action = ::onDeckSelected)
+
+        // The widget can only be configured against an existing deck. If the collection has
+        // none, show the same message the widget itself displays and close the config screen.
         this.initTask =
             lifecycleScope.launch {
                 if (isCollectionEmpty()) {
                     Timber.w("Closing: Collection is empty")
                     showThemedToast(
                         this@DeckPickerWidgetConfig,
-                        R.string.app_not_initialized_new,
+                        CommonString.empty_collection_state_in_widget,
                         false,
                     )
                     finish()
@@ -135,9 +150,14 @@ class DeckPickerWidgetConfig :
 
     private fun initializeUIComponents() {
         deckAdapter =
-            WidgetConfigScreenAdapter { deck, position ->
+            WidgetConfigScreenAdapter(lifecycleScope) { deck, _ ->
                 deckAdapter.removeDeck(deck.deckId)
-                showSnackbar(R.string.deck_removed_from_widget)
+                // Removal always frees at least one slot, so the FAB is going
+                // to be visible. Show it now (synchronously) so the snackbar
+                // anchors to it instead of the Save button while the async
+                // updateFabVisibility() is still in flight.
+                binding.fabWidgetDeckPicker.isVisible = true
+                showSnackbar(CommonString.deck_removed_from_widget)
                 updateViewVisibility()
                 updateFabVisibility()
                 updateDoneButtonVisibility()
@@ -154,10 +174,14 @@ class DeckPickerWidgetConfig :
 
         setupDoneButton()
 
-        // TODO: Implement multi-select functionality so that user can select desired decks in once.
-        // TODO: Implement a functionality to hide already selected deck.
         binding.fabWidgetDeckPicker.setOnClickListener {
-            showDeckSelectionDialog()
+            // TODO previous code filtered the already selected decks, we guard against this for now
+            startDeckSelection(
+                title = getString(CommonString.select_decks_title),
+                allowAll = false,
+                skipEmptyDefault = true,
+                allowMultipleSelection = true,
+            )
         }
 
         lifecycleScope.launch { updateViewWithSavedPreferences() }
@@ -216,7 +240,15 @@ class DeckPickerWidgetConfig :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = binding.fabWidgetDeckPicker.takeIf { it.isVisible }
+        // Prefer the FAB so snackbars sit above it. Fall back to the Save button
+        // for the brief window after a removal where the FAB is being un-hidden
+        // asynchronously, so snackbars never overlap the bottom button row.
+        anchorView =
+            when {
+                binding.fabWidgetDeckPicker.isVisible -> binding.fabWidgetDeckPicker
+                binding.submitButton.isVisible -> binding.submitButton
+                else -> null
+            }
     }
 
     /**
@@ -228,7 +260,7 @@ class DeckPickerWidgetConfig :
      *   and the activity is finished.
      */
     private fun setupDoneButton() {
-        val saveText = getString(R.string.save).uppercase()
+        val saveText = getString(CommonString.save).uppercase()
 
         // Set the button text and click listener only once during initialization
         binding.submitButton.text = saveText
@@ -239,8 +271,9 @@ class DeckPickerWidgetConfig :
 
             val selectedDeckIds = deckPickerWidgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
 
-            val appWidgetManager = AppWidgetManager.getInstance(this)
-            DeckPickerWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+            getAppWidgetManager(this)?.let { appWidgetManager ->
+                DeckPickerWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+            }
 
             val resultValue = Intent().updateWidget(appWidgetId)
             setResult(RESULT_OK, resultValue)
@@ -302,34 +335,18 @@ class DeckPickerWidgetConfig :
         }
     }
 
-    /** Asynchronously displays the list of deck in the selection dialog. */
-    private fun showDeckSelectionDialog() {
-        lifecycleScope.launch {
-            val decks = fetchDecks()
-            displayDeckSelectionDialog(decks)
-        }
-    }
-
     /** Returns the list of standard deck. */
     private suspend fun fetchDecks(): List<SelectableDeck.Deck> =
         withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = true)
         }
 
-    /** Displays the deck selection dialog with the provided list of decks. */
-    private fun displayDeckSelectionDialog(decks: List<SelectableDeck>) {
-        val dialog =
-            DeckSelectionDialog.newInstance(
-                title = getString(R.string.select_decks_title),
-                summaryMessage = null,
-                keepRestoreDefaultButton = false,
-                decks = decks,
-            )
-        dialog.show(supportFragmentManager, "DeckSelectionDialog")
+    private fun dismissDeckSelectionDialog() {
+        (supportFragmentManager.findFragmentByTag(DECK_SELECTION_DIALOG_TAG) as? DeckSelectionDialog)?.dismiss()
     }
 
     /** Called when a deck is selected from the deck selection dialog. */
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
             return
         }
@@ -338,8 +355,7 @@ class DeckPickerWidgetConfig :
         val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
 
         if (isDeckAlreadySelected) {
-            // TODO: Eventually, ensure that the user can't select a deck that is already selected.
-            showSnackbar(getString(R.string.deck_already_selected_message))
+            showSnackbar(getString(CommonString.deck_already_selected_message))
             return
         }
 
@@ -347,22 +363,22 @@ class DeckPickerWidgetConfig :
         if (deckAdapter.itemCount >= MAX_DECKS_ALLOWED) {
             // Snackbar will only be shown when adding the 5th deck
             if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+                showSnackbar(resources.getQuantityString(CommonPlurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
             }
             // The FAB visibility should be handled in updateFabVisibility()
-        } else {
-            // Add the deck and update views
-            deckAdapter.addDeck(deck)
-            updateViewVisibility()
-            updateFabVisibility()
-            setupDoneButton()
-            hasUnsavedChanges = true
-            setUnsavedChanges(true)
-
-            // Show snackbar if the deck is the 5th deck
-            if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
-            }
+            return
+        }
+        // Add the deck and update views
+        deckAdapter.addDeck(deck)
+        updateViewVisibility()
+        updateFabVisibility()
+        setupDoneButton()
+        hasUnsavedChanges = true
+        setUnsavedChanges(true)
+        // Show snackbar and dismiss the selection dialog once the 5th deck is reached
+        if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
+            showSnackbar(resources.getQuantityString(CommonPlurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+            dismissDeckSelectionDialog()
         }
     }
 
@@ -440,12 +456,12 @@ class DeckPickerWidgetConfig :
 
     /** BroadcastReceiver to handle widget removal. */
     private val widgetRemovedReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context?,
-                intent: Intent?,
+        object : AnkiBroadcastReceiver() {
+            override fun onReceiveBroadcast(
+                context: Context,
+                intent: Intent,
             ) {
-                if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
+                if (intent.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
                     return
                 }
 
@@ -454,7 +470,7 @@ class DeckPickerWidgetConfig :
                     return
                 }
 
-                context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
+                deckPickerWidgetPreferences.deleteDeckData(appWidgetId)
             }
         }
 
@@ -463,5 +479,6 @@ class DeckPickerWidgetConfig :
          * Maximum number of decks allowed in the widget.
          */
         private const val MAX_DECKS_ALLOWED = 5
+        private const val DECK_SELECTION_DIALOG_TAG = "DeckSelectionDialog"
     }
 }

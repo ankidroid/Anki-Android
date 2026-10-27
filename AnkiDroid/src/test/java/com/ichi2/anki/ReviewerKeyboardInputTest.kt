@@ -1,18 +1,5 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki
 
 import android.view.KeyEvent
@@ -22,17 +9,12 @@ import android.view.KeyEvent.KEYCODE_1
 import android.view.KeyEvent.KEYCODE_2
 import android.view.KeyEvent.KEYCODE_3
 import android.view.KeyEvent.KEYCODE_4
-import android.view.KeyEvent.KEYCODE_BUTTON_A
-import android.view.KeyEvent.KEYCODE_BUTTON_B
-import android.view.KeyEvent.KEYCODE_BUTTON_X
-import android.view.KeyEvent.KEYCODE_BUTTON_Y
 import android.view.KeyEvent.KEYCODE_E
 import android.view.KeyEvent.KEYCODE_F5
 import android.view.KeyEvent.KEYCODE_R
 import android.view.KeyEvent.KEYCODE_SPACE
 import android.view.KeyEvent.KEYCODE_Z
 import androidx.annotation.CheckResult
-import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
 import com.ibm.icu.impl.Assert
@@ -40,7 +22,7 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.CardSide
@@ -161,7 +143,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldUndoIfAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            ReviewerBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
+            ReviewerBinding(KeyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
@@ -172,7 +154,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldNotUndoIfNotAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            ReviewerBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
+            ReviewerBinding(KeyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')

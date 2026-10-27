@@ -188,7 +188,7 @@ var onPageFinished = function () {
         .then(() => card.classList.add("mathjax-rendered"))
         .then(() => {
             // Focus if the element contains the attribute
-            if (typedElement && typedElement.getAttribute("data-focus")) {
+            if (typedElement && typedElement.getAttribute("data-focus") === "true") {
                 typedElement.focus();
             }
         })

@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2023 Ashish Yadav <mailtoashish693@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2023 Ashish Yadav <mailtoashish693@gmail.com>
+
 package com.ichi2.anki.multimedia.audio
 
 import android.app.Activity
@@ -29,33 +17,40 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.formatAsString
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.compat.Compat
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
+import com.ichi2.anki.compat.USAGE_TOUCH
 import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.ImmediatePlayback
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.recorder.AudioRecorder
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.recorder.AudioTimer
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.OnHoldListener
 import com.ichi2.anki.ui.setOnHoldListener
 import com.ichi2.anki.utils.elapsed
-import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper.Companion.compat
-import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -72,8 +67,7 @@ class AudioRecordingController(
     val linearLayout: LinearLayout? = null,
     val viewModel: MultimediaViewModel? = null,
     val note: IMultimediaEditableNote? = null,
-) : AudioTimer.OnTimerTickListener,
-    AudioTimer.OnAudioTickListener {
+) {
     private lateinit var audioRecorder: AudioRecorder
     private var state: RecordingState = AppendToRecording.CLEARED
 
@@ -157,7 +151,7 @@ class AudioRecordingController(
                 sv.addView(previewLayout)
                 val label = FixedTextView(this)
                 label.textSize = 20f
-                label.text = UiUtil.makeBold(this.getString(R.string.audio_recording_field_list))
+                label.text = UiUtil.makeBold(this.getString(CommonString.audio_recording_field_list))
                 label.gravity = Gravity.CENTER_HORIZONTAL
                 previewLayout.addView(label)
                 var hasTextContents = false
@@ -203,7 +197,7 @@ class AudioRecordingController(
 
         setUpMediaPlayer()
 
-        audioTimer = AudioTimer(this, this)
+        audioTimer = setupAudioTimer(context)
 
         // if the recorder is in the 'cleared' state
         // holding the 'record' button should start a recording
@@ -310,6 +304,42 @@ class AudioRecordingController(
         }
     }
 
+    @CheckResult
+    private fun setupAudioTimer(context: Context): AudioTimer {
+        fun onRecordingTimerTick(duration: Duration) {
+            if (isPlaying && !isRecording) {
+                // This may remain at 0 for a few hundred ms while the audio player starts
+                // BUG: It takes 300ms from elapsed == duration -> onCompletionListener being called
+                // probably best to move onCompletionListener to here
+                val elapsed = audioPlayer?.elapsed ?: Duration.ZERO
+                audioProgressBar.progress = elapsed.inWholeMilliseconds.toInt()
+                audioTimeView?.text = elapsed.formatAsString()
+            } else {
+                audioTimeView?.text = duration.formatAsString()
+                audioProgressBar.progress = 0
+            }
+        }
+
+        fun onRecordingAudioTick() {
+            try {
+                if (isRecording) {
+                    val maxAmplitude = audioRecorder.getMaxAmplitude() / 10
+                    audioWaveform.addAmplitude(maxAmplitude.toFloat())
+                }
+            } catch (e: IllegalStateException) {
+                Timber.d(e, "Audio recorder interrupted")
+            }
+        }
+
+        return AudioTimer(
+            scope =
+                (context as? LifecycleOwner)?.lifecycleScope
+                    ?: CoroutineScope(Dispatchers.Main),
+            onTimerTick = ::onRecordingTimerTick,
+            onAudioTick = ::onRecordingAudioTick,
+        )
+    }
+
     private fun setUpMediaPlayer() {
         try {
             if (audioPlayer == null) {
@@ -348,7 +378,7 @@ class AudioRecordingController(
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     setIconResource(R.drawable.ic_record)
-                    contentDescription = context.getString(R.string.start_recording)
+                    contentDescription = context.getString(CommonString.start_recording)
                 }
                 audioWaveform.clear()
                 cancelAudioRecordingButton.isEnabled = false
@@ -359,7 +389,7 @@ class AudioRecordingController(
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     setIconResource(R.drawable.ic_stop)
-                    contentDescription = context.getString(R.string.stop_recording)
+                    contentDescription = context.getString(CommonString.stop_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = false
@@ -369,7 +399,7 @@ class AudioRecordingController(
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     setIconResource(R.drawable.ic_skip_next)
-                    contentDescription = context.getString(R.string.next_recording)
+                    contentDescription = context.getString(CommonString.next_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = true
@@ -380,7 +410,7 @@ class AudioRecordingController(
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     setIconResource(R.drawable.ic_play)
-                    contentDescription = context.getString(R.string.play_recording)
+                    contentDescription = context.getString(CommonString.play_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = true
@@ -472,7 +502,7 @@ class AudioRecordingController(
         } catch (e: Exception) {
             Timber.w(e)
         }
-        audioTimer = AudioTimer(this, this)
+        audioTimer = setupAudioTimer(context)
     }
 
     private fun prepareAudioPlayer() {
@@ -492,7 +522,7 @@ class AudioRecordingController(
         stopAndSaveRecording()
         // TODO: discuss if we want to keep the snackbar here
         // show this snackbar only in the edit field/multimedia activity
-        if (inEditField) (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
+        if (inEditField) (context as Activity).showSnackbar(context.resources.getString(CommonString.audio_saved))
         prepareAudioPlayer()
     }
 
@@ -516,7 +546,7 @@ class AudioRecordingController(
             Timber.w("Audio recording permission denied.")
             showThemedToast(
                 context,
-                context.resources.getString(R.string.multimedia_editor_audio_permission_denied),
+                context.resources.getString(CommonString.multimedia_editor_audio_permission_denied),
                 true,
             )
             return
@@ -562,7 +592,7 @@ class AudioRecordingController(
                 audioPlayer!!.start()
             } catch (e: Exception) {
                 Timber.w(e, "error starting audioPlayer")
-                showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_playing_failed), true)
+                showThemedToast(context, context.resources.getString(CommonString.multimedia_editor_audio_view_playing_failed), true)
             }
             audioTimer.start()
             setUiState(state.play())
@@ -630,7 +660,7 @@ class AudioRecordingController(
             audioRecorder.stop()
         } catch (e: RuntimeException) {
             Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
-            showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_recording_failed), true)
+            showThemedToast(context, context.resources.getString(CommonString.multimedia_editor_audio_view_recording_failed), true)
         }
         isRecording = false
         isAudioRecordingSaved = true
@@ -693,31 +723,6 @@ class AudioRecordingController(
             clearRecording()
         } else {
             discardAudio()
-        }
-    }
-
-    override fun onTimerTick(duration: Duration) {
-        if (isPlaying && !isRecording) {
-            // This may remain at 0 for a few hundred ms while the audio player starts
-            // BUG: It takes 300ms from elapsed == duration -> onCompletionListener being called
-            // probably best to move onCompletionListener to here
-            val elapsed = audioPlayer!!.elapsed
-            audioProgressBar.progress = elapsed.inWholeMilliseconds.toInt()
-            audioTimeView?.text = elapsed.formatAsString()
-        } else {
-            audioTimeView?.text = duration.formatAsString()
-            audioProgressBar.progress = 0
-        }
-    }
-
-    override fun onAudioTick() {
-        try {
-            if (isRecording) {
-                val maxAmplitude = audioRecorder.getMaxAmplitude() / 10
-                audioWaveform.addAmplitude(maxAmplitude.toFloat())
-            }
-        } catch (e: IllegalStateException) {
-            Timber.d(e, "Audio recorder interrupted")
         }
     }
 

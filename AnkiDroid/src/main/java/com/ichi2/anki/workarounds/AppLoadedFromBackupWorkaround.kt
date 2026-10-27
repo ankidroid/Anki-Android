@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.workarounds
 
@@ -20,10 +6,10 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Process
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
-import com.ichi2.anki.exception.ManuallyReportedException
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.themes.Themes
 import timber.log.Timber
 
@@ -48,7 +34,6 @@ object AppLoadedFromBackupWorkaround {
         if (AnkiDroidApp.isInitialized) {
             return false
         }
-
         // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
         // Application.onCreate() is not called if:
         // * The App was open
@@ -57,7 +42,7 @@ object AppLoadedFromBackupWorkaround {
         Timber.w("Activity started with no application instance")
         showThemedToast(
             this,
-            getString(R.string.ankidroid_cannot_open_after_backup_try_again),
+            getString(CommonString.ankidroid_cannot_open_after_backup_try_again),
             false,
         )
         CrashReportService.sendExceptionReport(
@@ -70,10 +55,13 @@ object AppLoadedFromBackupWorkaround {
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
         // on Importer
-        Themes.setTheme(this)
+        Themes.setTheme(this, savedInstanceState)
         // Avoids a SuperNotCalledException
         activitySuperOnCreate(savedInstanceState)
-        finish()
+        // Process.killProcess is a hard kill. I suspect that some Android OSes leave has the app in
+        // an invalid state after this occurs (meaning Application.onCreate is not called).
+        // Before killProcess, gracefully kill the app, removing it from the recents list
+        finishAndRemoveTask()
 
         // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
         Thread {

@@ -1,18 +1,4 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
@@ -20,17 +6,13 @@ import android.view.View
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.databinding.ViewAnswerAreaBinding
-import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.JvmTest
 import com.ichi2.themes.Themes
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
-import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)

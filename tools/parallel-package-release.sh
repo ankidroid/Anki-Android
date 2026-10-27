@@ -19,6 +19,11 @@ fi
 
 . tools/check-keystore.sh
 
+# Inherit from release.sh when invoked via it; otherwise compute our own so
+# every APK in this run shares one BUILD_TIME.
+BUILD_TIME_MS="${BUILD_TIME_MS:-$(date +%s000)}"
+export BUILD_TIME_MS
+
 # Get on to the tag requested
 #git checkout $TAG
 
@@ -26,7 +31,7 @@ BUILDNAMES='A B C D E'
 for BUILD in $BUILDNAMES; do
     LCBUILD=`tr '[:upper:]' '[:lower:]' <<< $BUILD`
     ./gradlew --stop
-    if ! ./gradlew assembleFullRelease -PcustomSuffix="$LCBUILD" -PcustomName="AnkiDroid.$BUILD" -Duniversal-apk=true
+    if ! ./gradlew assembleFullRelease -PcustomSuffix="$LCBUILD" -PcustomName="AnkiDroid.$BUILD" -Duniversal-apk=true -PbuildTime="$BUILD_TIME_MS"
     then
       echo "Unable to build parallel target $BUILD"
       exit 1

@@ -1,33 +1,20 @@
-/*
- * Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>
- * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
- * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>
- * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
 
 package com.ichi2.anki.multimediacard.impl
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.ichi2.anki.compat.readBooleanCompat
+import com.ichi2.anki.compat.writeBooleanCompat
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.utils.ext.readSerializableList
 import com.ichi2.anki.utils.ext.writeSerializableList
-import com.ichi2.compat.readBooleanCompat
-import com.ichi2.compat.writeBooleanCompat
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import org.acra.util.IOUtils

@@ -1,20 +1,8 @@
-/*
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
- * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
- * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>
+
 package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
@@ -85,13 +73,21 @@ class Tags(
      * ***********************************************************
      */
 
-    /** Rename provided tag and its children, returning number of changed notes. */
+    /**
+     * Rename a given tag and its children on all notes that reference it.
+     *
+     * @return [OpChangesWithCount] containing the number of affected notes.
+     */
     fun rename(
         old: String,
         new: String,
     ): OpChangesWithCount = col.backend.renameTags(currentPrefix = old, newPrefix = new)
 
-    /** Remove the provided tag(s) and their children from notes and the tag list. */
+    /**
+     * Remove the provided tag(s) and their children from notes and the tag list.
+     *
+     * @return [OpChangesWithCount] containing the number of affected notes.
+     */
     fun remove(spaceSeparatedTags: String): OpChangesWithCount = col.backend.removeTags(`val` = spaceSeparatedTags)
 
     /**

@@ -1,18 +1,5 @@
-/*
- Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
-
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
 
 @file:Suppress(
     "ktlint:standard:discouraged-comment-location",
@@ -22,7 +9,6 @@
 
 package com.ichi2.utils
 
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import org.apache.commons.collections4.list.SetUniqueList
 import java.util.Arrays
 import java.util.Spliterator
@@ -68,7 +54,7 @@ class UniqueArrayList<E> /**
          * and [List] don't get out of sync, and [SetUniqueList] cannot be sorted via [java.util.Collections.sort]
          * or [SetUniqueList.sort] both will throw an exception, due to a limitation on this class [java.util.ListIterator]
          *
-         * Sorting can be only done via [UniqueArrayList.sort] or [UniqueArrayList.sort].
+         * Sorting can be only done via [UniqueArrayList.sort] or [UniqueArrayList.sortWith].
          *
          * Modification to this list reference should be done with cautious to avoid having the internal [Set] out of sync
          */
@@ -91,11 +77,10 @@ class UniqueArrayList<E> /**
          * must not throw a `ClassCastException` for any elements
          * `e1` and `e2` in the list).
          *
-         * @see .sort
+         * @see sortWith
          */
-        @KotlinCleanup("sortWith")
         fun sort() {
-            sortOverride(null)
+            sortWith(null)
         }
 
         /**
@@ -121,15 +106,17 @@ class UniqueArrayList<E> /**
          *
          * @see java.util.Collections.sort
          */
-        @KotlinCleanup("sortWith")
         override fun sort(c: Comparator<in E>?) {
-            sortOverride(c)
+            sortWith(c)
         }
 
-        /** Exists temporarily: [sort] has been defined as invalid in kotlin so it can't be called internally */
+        /**
+         * Sorts the backing list while preserving the set used for uniqueness.
+         *
+         * @param c the comparator, or `null` to use the elements' natural ordering.
+         */
         @Suppress("UNCHECKED_CAST")
-        @KotlinCleanup("use sortWith")
-        fun sortOverride(c: Comparator<in E>?) {
+        fun sortWith(c: Comparator<in E>?) {
             val elements = ArrayList(list).toArray() as Array<E>
             Arrays.sort(elements, c)
             val i = list.listIterator()

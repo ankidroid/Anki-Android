@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.previewer
 
 import androidx.lifecycle.SavedStateHandle
@@ -37,7 +24,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     val tempDirectory = TemporaryFolder()
 
     private fun createViewModel(arguments: TemplatePreviewerArguments): TemplatePreviewerViewModel {
-        val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARGS_KEY to arguments))
+        val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARG_KEY to arguments))
         val viewModel = TemplatePreviewerViewModel(savedStateHandle)
         return spyk(viewModel).apply {
             // the default implementation requires the Collection media directory,
@@ -98,7 +85,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
-        val notetype = col.notetypes.byName("Basic (optional reversed card)")!!
+        val notetype = col.notetypes.basicOptionalReversed
         val arguments =
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
@@ -116,7 +103,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
-        val notetype = col.notetypes.byName("Cloze")!!
+        val notetype = col.notetypes.cloze
         val arguments =
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),

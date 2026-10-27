@@ -1,23 +1,10 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences.reviewer
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Collections
+import com.ichi2.anki.utils.ext.swapPositions
 
 /**
  * A [ItemTouchHelper.Callback] for the [ReviewerMenuSettingsAdapter].
@@ -29,7 +16,7 @@ import java.util.Collections
  * (see [clearView]).
  */
 class ReviewerMenuSettingsTouchHelperCallback(
-    private val items: List<ReviewerMenuSettingsRecyclerItem>,
+    private val items: MutableList<ReviewerMenuSettingsRecyclerItem>,
 ) : ItemTouchHelper.Callback() {
     private val movementFlags = makeMovementFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0)
 
@@ -54,7 +41,7 @@ class ReviewerMenuSettingsTouchHelperCallback(
         // `Always show` should always be the first element, so don't allow moving above it
         if (toPosition == 0) return false
 
-        Collections.swap(items, fromPosition, toPosition)
+        items.swapPositions(fromPosition, toPosition)
         recyclerView.adapter?.notifyItemMoved(fromPosition, toPosition)
         return true
     }

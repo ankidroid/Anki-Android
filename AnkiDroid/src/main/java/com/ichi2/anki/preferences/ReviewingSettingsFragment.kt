@@ -1,24 +1,13 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
@@ -29,6 +18,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
+import com.ichi2.widget.DayRolloverAlarm
 import timber.log.Timber
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -53,14 +43,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
         }
         // Timebox time limit
         // Represents in Android preferences the collections configuration "timeLim": i.e.
-        // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
-        // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
-        requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-            launchCatchingTask { setValue(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
-            setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { CollectionPreferences.setTimeboxTimeLimit(newValue.toDuration(DurationUnit.MINUTES)) }
-            }
-        }
+        // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appears suggesting to halt and giving the number of cards reviewed.
+        // Managed in TimeboxSettingsFragment.
+        updateTimeboxSummary()
         // Start of next day
         // Represents the collection pref "rollover"
         // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
@@ -69,6 +54,25 @@ class ReviewingSettingsFragment : SettingsFragment() {
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { setDayOffset(requireContext(), newValue) }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateTimeboxSummary()
+    }
+
+    private fun updateTimeboxSummary() {
+        launchCatchingTask {
+            val minutes = CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)
+            val pref =
+                findPreference<androidx.preference.Preference>(getString(R.string.time_limit_preference)) ?: return@launchCatchingTask
+            pref.summary =
+                if (minutes > 0) {
+                    resources.getQuantityString(CommonPlurals.pref_summ_minutes, minutes, minutes)
+                } else {
+                    getString(CommonString.disabled)
+                }
         }
     }
 }
@@ -87,5 +91,6 @@ suspend fun setDayOffset(
         setPreferences(newPrefs)
     }
     if (!Prefs.newReviewRemindersEnabled) scheduleNotification(TimeManager.time, context)
+    DayRolloverAlarm.scheduleNext(context)
     Timber.i("set day offset: '%d'", hours)
 }

@@ -1,25 +1,12 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.previewer
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentTemplatePreviewerBinding
 import com.ichi2.anki.libanki.CardOrdinal
@@ -28,6 +15,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.fragment_template_previewer),
@@ -49,6 +37,15 @@ class TemplatePreviewerFragment :
         // as super.onViewCreated depends on webViewLayout, which depends on the binding
         binding = FragmentTemplatePreviewerBinding.bind(view)
 
+        // The backing NotetypeFile may be missing after process death if the OS cleared
+        // its cache dir. Bail out before the ViewModel is constructed; the constructor
+        // would otherwise throw on `getNotetype()`.
+        if (!TemplatePreviewerArguments.isUsable(requireArguments())) {
+            Timber.w("Notetype file missing on previewer open; finishing")
+            requireActivity().finish()
+            return
+        }
+
         super.onViewCreated(view, savedInstanceState)
 
         binding.showAnswer.setOnClickListener { viewModel.toggleShowAnswer() }
@@ -56,9 +53,9 @@ class TemplatePreviewerFragment :
             .onEach { showingAnswer ->
                 binding.showAnswer.text =
                     if (showingAnswer) {
-                        getString(R.string.hide_answer)
+                        getString(CommonString.hide_answer)
                     } else {
-                        getString(R.string.show_answer)
+                        getString(CommonString.show_answer)
                     }
             }.launchIn(lifecycleScope)
 
@@ -88,11 +85,11 @@ class TemplatePreviewerFragment :
     suspend fun getSafeClozeOrd(): CardOrdinal = viewModel.getSafeClozeOrd()
 
     companion object {
-        const val ARGS_KEY = "templatePreviewerArgs"
+        const val ARG_KEY = "arg_key"
 
         fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment =
             TemplatePreviewerFragment().apply {
-                val args = bundleOf(ARGS_KEY to arguments)
+                val args = Bundle().apply { putParcelable(ARG_KEY, arguments) }
                 this.arguments = args
             }
     }

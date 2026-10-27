@@ -1,6 +1,4 @@
 /*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 3 of the License, or (at your option) any later
@@ -82,7 +80,7 @@ class Decks(
     fun save(g: Deck) {
         g.id =
             col.backend.addOrUpdateDeckLegacy(
-                BackendUtils.toByteString(g),
+                toJsonBytes(g),
                 preserveUsnAndMtime = false,
             )
     }
@@ -220,6 +218,9 @@ class Decks(
         )
     }
 
+    /**
+     * Returns the root node of the deck tree without counts as it uses the browser collapsed state.
+     */
     @LibAnkiAlias("deck_tree")
     @Suppress("unused")
     fun deckTree(): DeckTreeNode = col.backend.deckTree(now = 0)
@@ -564,17 +565,15 @@ class Decks(
         }
     }
 
-    /** Select a new branch (deck and descendants). */
+    /**
+     * Select a new branch (deck and descendants).
+     *
+     * @see setCurrent includes `undoableOp` support - use for UI code.
+     */
     @LibAnkiAlias("select")
-    @RustCleanup("does not match upstream")
+    @Suppress("CheckResult")
     fun select(did: DeckId) {
-        col.backend.setCurrentDeck(did)
-        val selectedDeckName = name(did)
-        val childrenDids =
-            allNamesAndIds(skipEmptyDefault = true, includeFiltered = false)
-                .filter { it.name.startsWith("$selectedDeckName::") }
-                .map { it.id }
-        col.config.set(ACTIVE_DECKS, listOf(did) + childrenDids)
+        setCurrent(did)
     }
 
     /** @return The currently selected deck ID. */
@@ -692,7 +691,7 @@ class Decks(
         did: DeckId,
         subdeckName: String?,
     ): String? {
-        if (subdeckName.isNullOrEmpty()) {
+        if (subdeckName.isNullOrBlank()) {
             return null
         }
         val newName = subdeckName.replace("\"".toRegex(), "")
@@ -700,7 +699,7 @@ class Decks(
             return null
         }
         val deck = getLegacy(did) ?: return null
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName
+        return deck.name + DECK_SEPARATOR + subdeckName
     }
 
     @NotInPyLib
@@ -739,9 +738,6 @@ class Decks(
 
         /** Configuration saving the current deck  */
         const val CURRENT_DECK = "curDeck"
-
-        /** Configuration saving the set of active decks (i.e. current decks and its descendants)  */
-        const val ACTIVE_DECKS = "activeDecks"
 
         @NotInPyLib
         const val DECK_SEPARATOR = "::"

@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2024 Neel Doshi <neeldoshi147@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Neel Doshi <neeldoshi147@gmail.com>
+
 package com.ichi2.anki.notetype
 
 import android.view.LayoutInflater
@@ -24,9 +12,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogNewNoteTypeBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Utils
@@ -36,6 +26,7 @@ import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
 import com.ichi2.utils.moveCursorToEnd
@@ -76,9 +67,20 @@ class AddNewNotesType(
             AlertDialog
                 .Builder(activity)
                 .apply {
-                    customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
-                    positiveButton(R.string.dialog_ok) { _ ->
-                        val newName = binding.notetypeNewName.text.toString()
+                    setTitle(with(activity) { TR.sentenceCase.addNoteType })
+                    customView(
+                        binding.root,
+                        paddingStart = 24.dp.toPx(activity),
+                        paddingEnd = 24.dp.toPx(activity),
+                        paddingTop = 24.dp.toPx(activity),
+                        paddingBottom = 0,
+                    )
+                    positiveButton(CommonString.dialog_add) { _ ->
+                        val newName =
+                            binding.notetypeNewName.text
+                                .toString()
+                                .trim()
+                        if (newName.isEmpty()) return@positiveButton
                         val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                         val selectedOption = allOptions[selectedPosition]
@@ -88,7 +90,7 @@ class AddNewNotesType(
                             cloneStandardNotetype(newName, selectedOption)
                         }
                     }
-                    negativeButton(R.string.dialog_cancel)
+                    negativeButton(CommonString.dialog_cancel)
                 }.show()
         dialog.initializeViewsWith(allOptions, currentNames)
     }
@@ -97,13 +99,24 @@ class AddNewNotesType(
         optionsToDisplay: List<AddNotetypeUiModel>,
         currentNames: List<String>,
     ) {
-        val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
-        val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
+        val addPrefixStr = context.resources.getString(CommonString.model_browser_add_add)
+        val clonePrefixStr = context.resources.getString(CommonString.model_browser_add_clone)
+
+        binding.notetypeTypeLabel.text = TR.notetypesType()
+        binding.notetypeNewNameLayout.hint = TR.deckConfigNamePrompt()
+
         binding.notetypeNewName.addTextChangedListener { editableText ->
-            val currentName = editableText?.toString() ?: ""
-            positiveButton.isEnabled =
-                currentName.isNotEmpty() &&
-                !currentNames.contains(currentName)
+            val currentName = editableText?.toString()?.trim() ?: ""
+            val alreadyExists = currentNames.any { it.equals(currentName, true) }
+
+            binding.notetypeNewNameLayout.error =
+                if (alreadyExists) {
+                    context.getString(CommonString.error_name_exists)
+                } else {
+                    null
+                }
+
+            positiveButton.isEnabled = currentName.isNotEmpty() && !alreadyExists
         }
         binding.notetypeNewType.apply {
             onItemSelectedListener =

@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.preferences
 
 import androidx.appcompat.app.AlertDialog
@@ -22,15 +9,18 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.CommonPreferenceKey
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -56,23 +46,25 @@ class DeveloperOptionsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         setupEnableDeveloperOptions()
+        requirePreference<SwitchPreferenceCompat>(R.string.dev_bottom_nav_key).isVisible =
+            resources.getBoolean(R.bool.bottom_navigation_available)
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
             // If we don't delete the limiter data, our test crash may not go through,
             // but we are triggering it very much on purpose, we want to see the crash in ACRA
-            this.context?.let { c -> CrashReportService.deleteACRALimiterData(c) }
+            this.context?.let { c -> CrashReportService.deleteLimiterData(c) }
 
             Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
             throw RuntimeException("This is a test crash")
         }
         // Make it possible to test analytics
         requirePreference<Preference>(R.string.pref_analytics_debug_key).setOnPreferenceClickListener {
-            if (UsageAnalytics.isEnabled) {
+            if (AnkiDroidUsageAnalytics.isEnabled) {
                 showSnackbar("Analytics set to dev mode")
             } else {
                 showSnackbar("Done! Enable Analytics in 'General' settings to use.")
             }
-            UsageAnalytics.setDevMode()
+            AnkiDroidUsageAnalytics.setDevMode(AnkiDroidApp.instance.applicationContext)
             false
         }
         // Lock database
@@ -109,7 +101,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                     "This will most likely make it so that you cannot access your collection. " +
                         "It will be very difficult to recover your data.",
                 )
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setPositiveButton(CommonString.dialog_ok) { _, _ ->
                     Timber.w("Setting collection path to /storage/emulated/0/AnkiDroid")
                     AnkiDroidApp.sharedPrefs().edit {
                         putString(
@@ -118,7 +110,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                         )
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
             }
             false
         }
@@ -146,7 +138,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                 setPositiveButton("OK") { _, _ ->
                     generateNotes(numberOfNotes)
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
             }
             true
         }
@@ -172,7 +164,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                 setPositiveButton("OK") { _, _ ->
                     generateFiles(sizeOfFiles, numberOfFiles)
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
             }
             true
         }
@@ -182,7 +174,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
          * with a "Review reminders" button, so we need to immediately reload the settings activity
          * to make this change show up.
          */
-        requirePreference<Preference>(R.string.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
+        requirePreference<Preference>(CommonPreferenceKey.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
         }
@@ -286,13 +278,13 @@ class DeveloperOptionsFragment : SettingsFragment() {
      */
     private fun showDisableDeveloperOptionsDialog() {
         AlertDialog.Builder(requireContext()).show {
-            setTitle(R.string.disable_dev_options)
-            setPositiveButton(R.string.dialog_ok) { _, _ ->
+            setTitle(CommonString.disable_dev_options)
+            setPositiveButton(CommonString.dialog_ok) { _, _ ->
                 Prefs.isDeveloperOptionsEnabled = false
                 parentFragmentManager.popBackStack()
                 ActivityCompat.recreate(requireActivity())
             }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
         }
     }
 }

@@ -1,34 +1,48 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.speech.tts.TextToSpeech
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.ReadText.closeForTests
 import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
+import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.reviewer.CardSide
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockkObject
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.test.runCurrent
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.robolectric.Robolectric.buildActivity
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.Implementation
+import org.robolectric.annotation.Implements
+import org.robolectric.shadows.ShadowDialog
+import org.robolectric.shadows.ShadowTextToSpeech
+import org.robolectric.shadows.ShadowToast
+import java.util.Locale
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class ReadTextTest : RobolectricTest() {
@@ -88,8 +102,146 @@ class ReadTextTest : RobolectricTest() {
         assertThat(isTextToSpeechShutdown, equalTo(false))
     }
 
+    @Test
+    fun `legacy TTS initialization failure explains missing engines`() =
+        withTtsActivity { activity ->
+            initializeTextToSpeech(activity)
+            shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.ERROR)
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            assertEquals("No text-to-speech engine installed", dialog.title)
+        }
+
+    @Test
+    fun `legacy TTS initialization failure with an installed engine shows a toast instead of installation guidance`() =
+        withTtsActivity { activity ->
+            shadowOf(activity.packageManager).apply {
+                val engine = ComponentName("test.tts", "TestTtsService")
+                addServiceIfNotPresent(engine)
+                addIntentFilterForService(
+                    engine,
+                    IntentFilter(TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE).apply { addCategory(Intent.CATEGORY_DEFAULT) },
+                )
+            }
+            initializeTextToSpeech(activity)
+            shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.ERROR)
+
+            assertEquals(activity.getString(CommonString.no_tts_available_message), ShadowToast.getTextOfLatestToast())
+            assertNull(ShadowDialog.getLatestDialog())
+        }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `reviewer TTS waits for cached languages without blocking the callback`() =
+        runTest {
+            val (viewer, lifecycle) = createViewer()
+            val locales = CompletableDeferred<List<Locale>>()
+            try {
+                mockkObject(TtsVoices) {
+                    coEvery { TtsVoices.localesForEngine(any()) } coAnswers { locales.await() }
+                    initializeTextToSpeech(viewer)
+
+                    shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+                    verify(viewer, never()).ttsInitialized()
+
+                    locales.complete(listOf(Locale.US))
+                    runCurrent()
+                    verify(viewer).ttsInitialized()
+                    coVerify { TtsVoices.localesForEngine("reviewer.engine") }
+                }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.DESTROYED
+            }
+        }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `releasing TTS cancels the reviewer wait without cancelling discovery`() = assertWaitCancelled { viewer, _ -> releaseTts(viewer) }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `destroying the reviewer cancels its wait without cancelling discovery`() =
+        assertWaitCancelled { _, lifecycle -> lifecycle.currentState = Lifecycle.State.DESTROYED }
+
+    private fun assertWaitCancelled(stop: (AbstractFlashcardViewer, LifecycleRegistry) -> Unit) =
+        runTest {
+            val (viewer, lifecycle) = createViewer()
+            val locales = CompletableDeferred<List<Locale>>()
+            try {
+                mockkObject(TtsVoices) {
+                    coEvery { TtsVoices.localesForEngine(any()) } coAnswers { locales.await() }
+                    initializeTextToSpeech(viewer)
+                    shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+
+                    stop(viewer, lifecycle)
+                    runCurrent()
+                    assertFalse(locales.isCancelled)
+                    locales.complete(listOf(Locale.US))
+                    runCurrent()
+
+                    verify(viewer, never()).ttsInitialized()
+                }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.DESTROYED
+            }
+        }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `an old TTS callback cannot initialize its replacement`() =
+        runTest {
+            val (viewer, lifecycle) = createViewer()
+            try {
+                mockkObject(TtsVoices) {
+                    coEvery { TtsVoices.localesForEngine(any()) } returns listOf(Locale.US)
+                    initializeTextToSpeech(viewer)
+                    val oldCallback = shadowOf(textToSpeech).onInitListener
+                    initializeTextToSpeech(viewer)
+
+                    oldCallback.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+                    verify(viewer, never()).ttsInitialized()
+
+                    shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+                    verify(viewer).ttsInitialized()
+                }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.DESTROYED
+            }
+        }
+
+    @Implements(TextToSpeech::class)
+    class NoLanguageQueryTextToSpeech : ShadowTextToSpeech() {
+        @Implementation
+        fun getDefaultEngine(): String = "reviewer.engine"
+
+        @Implementation
+        fun getAvailableLanguages(): Set<Locale> = throw AssertionError("Reviewer must use the startup language cache")
+    }
+
+    private fun createViewer(): Pair<AbstractFlashcardViewer, LifecycleRegistry> {
+        val viewer = mock(AbstractFlashcardViewer::class.java)
+        val lifecycle = LifecycleRegistry(viewer)
+        `when`(viewer.lifecycle).thenReturn(lifecycle)
+        lifecycle.currentState = Lifecycle.State.RESUMED
+        return viewer to lifecycle
+    }
+
     private val isTextToSpeechShutdown: Boolean
         get() = shadowOf(textToSpeech).isShutdown
+
+    private fun withTtsActivity(block: (AnkiActivity) -> Unit) {
+        buildActivity(AnkiActivity::class.java).use { controller ->
+            val activity = controller.setup().get()
+            try {
+                block(activity)
+            } finally {
+                releaseTts(activity)
+            }
+        }
+    }
 
     private fun initializeTextToSpeech(context: Context) {
         initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener::class.java))

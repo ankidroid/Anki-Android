@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2024 Arthur Milchior <arthur@milchior.fr>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Arthur Milchior <arthur@milchior.fr>
+
 package com.ichi2.anki.testutil
 
 import android.annotation.SuppressLint
@@ -25,10 +13,12 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.ThreadUtils.sleep
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * This file contains utility methods to interact with the DeckPicker.
@@ -39,7 +29,7 @@ fun closeGetStartedScreenIfExists() {
 }
 
 fun closeBackupCollectionDialogIfExists() {
-    onView(withText(R.string.button_backup_later))
+    onView(withText(CommonString.button_backup_later))
         .withFailureHandler { _, _ -> }
         .perform(click())
 }
@@ -62,8 +52,8 @@ fun createDeckWithUniqueName(): String {
     val deckName = "TestDeck$testString"
     onView(withId(R.id.fab_main)).perform(click())
     onView(withId(R.id.add_deck_button)).perform(click())
-    onView(withId(R.id.dialog_text_input)).perform(typeText(deckName))
-    onView(withText(R.string.dialog_ok)).perform(click())
+    onView(withId(CommonR.id.dialog_text_input)).perform(typeText(deckName))
+    onView(withText(CommonString.dialog_ok)).perform(click())
     return deckName
 }
 

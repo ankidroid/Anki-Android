@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.ui.windows.reviewer.audiorecord
 
 import android.Manifest
@@ -28,8 +15,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.CheckPronunciationFragmentBinding
+import com.ichi2.anki.databinding.FragmentCheckPronunciationBinding
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.utils.show
@@ -38,25 +26,25 @@ import dev.androidbroadcast.vbpd.viewBinding
 /**
  * Integrates [AudioRecordView] with [AudioPlayView] to play the recorded audios.
  */
-class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragment) {
+class CheckPronunciationFragment : Fragment(R.layout.fragment_check_pronunciation) {
     private val viewModel: CheckPronunciationViewModel by viewModels()
     private val studyScreenViewModel: ReviewerViewModel by viewModels({ requireParentFragment() })
 
-    private val binding by viewBinding(CheckPronunciationFragmentBinding::bind)
+    private val binding by viewBinding(FragmentCheckPronunciationBinding::bind)
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (!isGranted) {
                 AlertDialog.Builder(requireContext()).show {
-                    setTitle(R.string.permission_denied)
-                    setMessage(R.string.recording_permission_denied_message)
-                    setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    setTitle(CommonString.permission_denied)
+                    setMessage(CommonString.microphone_permission_denied_message)
+                    setPositiveButton(CommonString.dialog_ok) { _, _ ->
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         val uri = Uri.fromParts("package", requireContext().packageName, null)
                         intent.data = uri
                         startActivity(intent)
                     }
-                    setNegativeButton(R.string.dialog_cancel, null)
+                    setNegativeButton(CommonString.dialog_cancel, null)
                 }
             }
         }
@@ -77,8 +65,10 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
         if (requireActivity().isChangingConfigurations) {
             return
         }
-        viewModel.resetAll()
-        binding.recordView.forceReset()
+        if (binding.recordView.isRecording) {
+            binding.recordView.finishRecording()
+        }
+        viewModel.pausePlayback()
     }
 
     private fun setupViewListeners() {
@@ -130,7 +120,8 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             .collectIn(lifecycleScope) { max ->
                 binding.playView.setPlaybackProgressBarMax(max)
             }
-        viewModel.playIconFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { iconRes ->
+        viewModel.isPlayingFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isPlaying ->
+            val iconRes = if (isPlaying) R.drawable.ic_replay else R.drawable.ic_play
             binding.playView.changePlayIcon(iconRes)
         }
         viewModel.replayFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {

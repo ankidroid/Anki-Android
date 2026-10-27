@@ -1,24 +1,11 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import java.util.Objects
@@ -61,8 +48,8 @@ class ReviewerBinding(
     override fun toDisplayString(context: Context): String {
         val bindingString = binding.toDisplayString(context)
         return when (side) {
-            CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question, bindingString)
-            CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer, bindingString)
+            CardSide.QUESTION -> context.getString(CommonString.display_binding_card_side_question, bindingString)
+            CardSide.ANSWER -> context.getString(CommonString.display_binding_card_side_answer, bindingString)
             CardSide.BOTH -> bindingString
         }
     }
@@ -82,7 +69,7 @@ class ReviewerBinding(
                     StringBuilder(string)
                         .substring(0, string.length - 1)
                         .removePrefix(PREFIX.toString())
-                val binding = Binding.fromString(bindingString)
+                val binding = Binding.fromString(bindingString) ?: return null
                 val side =
                     when (string.last()) {
                         QUESTION_SUFFIX -> CardSide.QUESTION
@@ -92,8 +79,7 @@ class ReviewerBinding(
                 return ReviewerBinding(binding, side)
             }
 
-            val strings = getPreferenceSubstrings(prefString)
-            return strings.mapNotNull { fromString(it) }
+            return getPreferenceSubstrings(prefString).mapNotNull { fromString(it) }
         }
 
         @CheckResult

@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2020 Mike Hardy <github@mikehardy.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2020 Mike Hardy <github@mikehardy.net>
 
 package com.ichi2.anki.tests
 
@@ -26,6 +13,7 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.annotations.DuplicatedCode
+import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
@@ -40,9 +28,9 @@ import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.lessThanOrEqualTo
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import org.junit.rules.ExternalResource
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -50,7 +38,7 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.test.fail
 
-abstract class InstrumentedTest {
+abstract class InstrumentedTest : DeferredNavigation {
     internal val col: Collection
         get() = CollectionManager.getColUnsafe()
 
@@ -64,6 +52,18 @@ abstract class InstrumentedTest {
     /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
+
+    /**
+     * Keep the backend alive until other rules, including activity rules, finish their cleanup.
+     * The lowest order makes this the outermost rule, so its cleanup runs last.
+     */
+    @get:Rule(order = Int.MIN_VALUE)
+    val collectionCleanup =
+        object : ExternalResource() {
+            override fun after() {
+                runAfterEachTest()
+            }
+        }
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
@@ -122,8 +122,7 @@ abstract class InstrumentedTest {
         CollectionManager.setColForTests(null)
     }
 
-    @After
-    fun runAfterEachTest() {
+    private fun runAfterEachTest() {
         try {
             if (CollectionManager.isOpenUnsafe()) {
                 CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()

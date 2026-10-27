@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
-
   This program is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free Software
   Foundation; either version 3 of the License, or (at your option) any later
@@ -125,6 +123,7 @@
         style="@style/Widget.AnkiDroid.CardView.Recording"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="@string/record_voice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

@@ -1,28 +1,12 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *  Copyright (c) 2025 Gautam Bhetanabhotla <gautamarcturus@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText:  Copyright (c) 2025 Gautam Bhetanabhotla <gautamarcturus@gmail.com>
 
 package com.ichi2.anki.deckpicker
 
-import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.append
-import java.util.Locale
 
 /**
  * An immutable variant of a [DeckNode]. Instantiated right before
@@ -79,33 +63,27 @@ data class DisplayDeckNode private constructor(
 /** Convert the tree into a flat list of [DisplayDeckNode]s, where matching decks and the children/parents
  * are included. Decks inside collapsed decks are not considered. */
 fun DeckNode.filterAndFlattenDisplay(
-    filter: CharSequence?,
+    filter: DeckFilters,
     selectedDeckId: DeckId,
 ): List<DisplayDeckNode> {
-    val filterPattern =
-        if (filter.isNullOrBlank()) {
-            null
-        } else {
-            filter.toString().lowercase(Locale.getDefault()).trim()
-        }
     val list = mutableListOf<DisplayDeckNode>()
-    filterAndFlattenDisplayInner(filterPattern, list, parentMatched = false, selectedDeckId)
+    filterAndFlattenDisplayInner(filter, list, parentMatched = false, selectedDeckId)
     return list
 }
 
 private fun DeckNode.filterAndFlattenDisplayInner(
-    filter: CharSequence?,
+    filter: DeckFilters,
     list: MutableList<DisplayDeckNode>,
     parentMatched: Boolean,
     selectedDeckId: DeckId,
 ) {
-    if (!isSyntheticDeck && (nameMatchesFilter((filter)) || parentMatched)) {
+    if (!isSyntheticDeck && (filter.accept(fullDeckName) || parentMatched)) {
         this.addVisibleToList(list, matchesSearchOrChild = true, selectedDeckId)
         return
     }
 
     // When searching, ignore collapsed state and always search children
-    val searching = filter != null
+    val searching = filter.isActive()
     if (collapsed && !searching) {
         return
     }
@@ -149,14 +127,5 @@ fun DeckNode.addVisibleToList(list: MutableList<DeckNode>) {
         for (child in children) {
             child.addVisibleToList(list)
         }
-    }
-}
-
-@SuppressLint("LocaleRootUsage")
-private fun DeckNode.nameMatchesFilter(filter: CharSequence?): Boolean {
-    return if (filter == null) {
-        true
-    } else {
-        return node.name.lowercase(Locale.getDefault()).contains(filter) || node.name.lowercase(Locale.ROOT).contains(filter)
     }
 }

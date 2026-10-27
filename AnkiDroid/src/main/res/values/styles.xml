@@ -12,28 +12,16 @@
 
     <!-- Nav drawer style to set width specified by Material Design specification -->
     <style name="NavDrawer">
-        <item name="android:layout_width">280dp</item>
         <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
-        <item name="android:maxWidth">280dp</item>
-    </style>
-
-    <style name="OverflowMenuStyle" parent="Widget.Material3.PopupMenu.Overflow">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
-    </style>
-
-    <style name="PopupMenuStyle" parent="Widget.Material3.PopupMenu">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
-    </style>
-
-    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
     <style name="AnswerButton" parent="Widget.Material3.Button.ElevatedButton">
         <item name="android:padding">0dp</item>
         <item name="cornerRadius">@dimen/answer_button_corner_radius</item>
         <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
-        <item name="elevation">@dimen/study_screen_elevation</item>
+        <item name="elevation">?attr/studyScreenElevation</item>
+        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="strokeColor">?attr/widgetStrokeColor</item>
     </style>
 
     <!--  Material Design-style persistent footer button -->
@@ -110,9 +98,9 @@
     <!-- Action bar. Currently all action bar text is white in every theme. -->
     <style name="ActionBarStyle" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <!-- Colors: hamburger, title text, overflow icon -->
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">?attr/actionBarTextColor</item>
         <!-- Colors: subtitle text -->
-        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorSecondary">?attr/actionBarTextColor</item>
         <!-- Overflow menu style -->
         <item name="popupTheme">@style/ActionBar.Popup</item>
     </style>
@@ -174,36 +162,6 @@
         <item name="android:background">@drawable/ic_gesture_tap</item>
     </style>
 
-    <!-- Snackbars -->
-    <style name="SnackbarStyle" parent="Widget.Material3.Snackbar">
-        <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>
-    </style>
-    <style name="SnackbarButtonStyle" parent="Widget.Material3.Button.TextButton.Snackbar">
-        <item name="android:textColor">?attr/snackbarButtonTextColor</item>
-    </style>
-
-    <!-- Switches -->
-    <style name="Preference.SwitchPreferenceCompat.Material3" parent="@style/Preference.SwitchPreferenceCompat.Material">
-        <item name="widgetLayout">@layout/preference_material_switch_widget</item>
-    </style>
-
-    <style name="SliderLabelStyle" parent="Widget.MaterialComponents.Tooltip">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SliderStyle" parent="Widget.Material3.Slider">
-        <item name="trackColorActive">@color/slider_active_track_color</item>
-        <item name="trackColorInactive">@color/slider_inactive_track_color</item>
-        <item name="haloColor">@color/slider_halo_color</item>
-        <item name="thumbColor">@color/slider_thumb_color</item>
-        <item name="labelStyle">@style/SliderLabelStyle</item>
-        <item name="tickVisible">false</item>
-    </style>
-
-    <style name="PreferenceThemeOverlay.AnkiDroid">
-        <item name="singleLineTitle">false</item>
-    </style>
-
     <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorAccent">?attr/progressDialogButtonTextColor</item>
         <item name="android:textColorPrimary">?android:attr/textColor</item>
@@ -219,29 +177,24 @@
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
     </style>
 
-    <style name="ThemeOverlay.AnkiDroid.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="dialogCornerRadius">@dimen/m3_alert_dialog_corner_size</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
-        <item name="android:windowBackground">@drawable/material_dialog_background</item>
-    </style>
-
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.FullScreen" parent="ThemeOverlay.AnkiDroid.AlertDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">?android:attr/colorBackground</item>
     </style>
 
-    <style name="AnkiDroid.AlertDialog.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
-        <!-- The default style uses onSurfaceVariant, which isn't defined yet -->
-        <item name="android:textColor">?android:attr/textColor</item>
-    </style>
+    <style name="TextAppearance.AnkiDroid.TopAppBar.Title" parent="TextAppearance.Material3.TitleMedium" />
+
+    <style name="TextAppearance.AnkiDroid.TopAppBar.Subtitle" parent="TextAppearance.Material3.ActionBar.Subtitle" />
 
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
 
     <style name="CardView.ViewerStyle" parent="Widget.Material3.CardView.Elevated">
-        <item name="android:elevation">@dimen/study_screen_elevation</item>
+        <item name="android:elevation">?attr/studyScreenElevation</item>
+        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="strokeColor">?attr/widgetStrokeColor</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -252,17 +205,13 @@
         <item name="android:alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
-    </style>
-
     <style name="Widget.AnkiDroid.CardView.Recording" parent="CardView">
-        <item name="cardElevation">@dimen/study_screen_elevation</item>
+        <item name="cardElevation">?attr/studyScreenElevation</item>
         <item name="cardPreventCornerOverlap">false</item>
         <item name="contentPadding">0dp</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:elevation">@dimen/study_screen_elevation</item>
+        <item name="android:elevation">?attr/studyScreenElevation</item>
         <item name="cardCornerRadius">16dp</item>
         <item name="cardUseCompatPadding">false</item>
         <item name="cardBackgroundColor">?popupBackgroundColor</item>
@@ -275,13 +224,32 @@
         <item name="colorPrimaryContainer">?colorPrimary</item>
     </style>
 
-    <!-- TODO remove this style when a proper 'colorOnPrimaryContainer' is set in themes, without
-           this override the user doesn't see the text selection highlight in TextInputLayouts -->
-    <style name="TextInputSelectionColorFixStyle" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.TextInputSelectionFix</item>
+    <!-- Applied to a TextInputLayout which should show the error outline, but not an error message. -->
+    <style name="TextAppearance.AnkiDroid.HiddenError" parent="TextAppearance.Design.Error">
+        <item name="android:textSize">0sp</item>
     </style>
 
-    <style name="ThemeOverlay.TextInputSelectionFix" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
-        <item name="colorOnPrimaryContainer">?attr/editTextHighlightColor</item>
+    <style name="Widget.AnkiDroid.SortPillButton" parent="Widget.Material3.Button.UnelevatedButton">
+        <!-- wrap_content + 48dp min size so the pill grows with larger accessibility text scales -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <!-- Override the parent's horizontal content padding (24dp) to maximise content area
+             in the 48dp-wide button. -->
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:insetTop">8dp</item>
+        <item name="android:insetBottom">8dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <!-- tabular numerals ensures correct centering -->
+        <item name="android:fontFeatureSettings">"tnum"</item>
+        <item name="android:textColor">@color/sort_pill_content_color</item>
+        <item name="iconSize">16dp</item>
+        <item name="iconPadding">2dp</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="iconTint">@color/sort_pill_content_color</item>
+        <item name="backgroundTint">@color/sort_pill_background_color</item>
     </style>
 </resources>

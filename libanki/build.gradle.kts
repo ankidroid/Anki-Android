@@ -1,60 +1,22 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
+import com.android.build.api.dsl.LibraryExtension
+import com.ichi2.anki.gradle.addAnkiBackendDependencies
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("ankidroid.android.library")
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "com.ichi2.anki.libanki"
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
-
-    defaultConfig {
-        minSdk =
-            libs.versions.minSdk
-                .get()
-                .toInt()
-
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
+    testFixtures.enable = true
 }
-
-apply(from = "../lint.gradle")
-apply(from = "../jacocoSupport.gradle")
 
 dependencies {
     // Project dependencies
     implementation(project(":common"))
 
     // Backend libraries
-    implementation(libs.protobuf.kotlin.lite) // This is required when loading from a file
-
-    val localProperties = Properties()
-    if (project.rootProject.file("local.properties").exists()) {
-        localProperties.load(project.rootProject.file("local.properties").inputStream())
-    }
-    if (localProperties["local_backend"] == "true") {
-        implementation(files(rootProject.file("../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")))
-        testImplementation(files(rootProject.file("../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")))
-    } else {
-        implementation(libs.ankiBackend.backend)
-        testImplementation(libs.ankiBackend.testing)
-    }
+    addAnkiBackendDependencies(project)
 
     // JVM dependencies
     implementation(libs.jakewharton.timber)
@@ -76,9 +38,11 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.json)
 
-    testImplementation(project(":libanki:testutils"))
-
-    // project lint checks
-    // PERF: some rules do not need to be applied... but the full run was 3s
-    lintChecks(project(":lint-rules"))
+    // testFixtures dependencies
+    testFixturesImplementation(project(":common"))
+    testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.junit.vintage.engine)
+    testFixturesImplementation(libs.kotlinx.coroutines.core)
+    testFixturesImplementation(libs.kotlinx.coroutines.test)
+    testFixturesImplementation(libs.androidx.sqlite.framework)
 }

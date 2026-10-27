@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs
 
@@ -35,13 +21,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.AndroidTtsVoice
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogTtsVoicesBinding
-import com.ichi2.anki.databinding.DialogTtsVoicesVoiceBinding
+import com.ichi2.anki.databinding.ItemTtsVoiceBinding
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
 import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.themes.Themes
@@ -128,7 +115,7 @@ class TtsVoicesDialogFragment : DialogFragment(R.layout.dialog_tts_voices) {
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
-            showThemedToast(requireContext(), R.string.tts_voices_failed_opening_tts_system_settings, shortLength = true)
+            showThemedToast(requireContext(), CommonString.tts_voices_failed_opening_tts_system_settings, shortLength = true)
         }
     }
 
@@ -160,15 +147,15 @@ class TtsVoicesDialogFragment : DialogFragment(R.layout.dialog_tts_voices) {
         }
 
         viewModel.uninstalledVoicePlayed.observe { voice ->
-            dialog?.window?.decorView?.showSnackbar(R.string.tts_voices_selected_voice_should_be_installed) {
-                setAction(R.string.tts_voices_use_selected_voice_without_install) { viewModel.copyToClipboard(voice) }
+            dialog?.window?.decorView?.showSnackbar(CommonString.tts_voices_selected_voice_should_be_installed) {
+                setAction(CommonString.tts_voices_use_selected_voice_without_install) { viewModel.copyToClipboard(voice) }
             }
         }
 
         viewModel.ttsPlaybackErrorFlow.observe {
             val string = it.localizedErrorMessage(requireContext())
             dialog?.window?.decorView?.showSnackbar(string) {
-                setAction(R.string.help) {
+                setAction(CommonString.help) {
                     // TODO: Should do this in ViewModel, but we need an Activity
                     requireContext().openUrl(R.string.link_faq_tts)
                 }
@@ -207,7 +194,7 @@ class TtsVoicesDialogFragment : DialogFragment(R.layout.dialog_tts_voices) {
     // inner allows access to viewModel/openTtsSettings
     inner class TtsVoiceAdapter : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
         inner class TtsViewHolder(
-            private val binding: DialogTtsVoicesVoiceBinding,
+            private val binding: ItemTtsVoiceBinding,
         ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(voice: AndroidTtsVoice) {
                 binding.textViewTop.text = voice.normalizedLocale.displayName
@@ -233,7 +220,7 @@ class TtsVoicesDialogFragment : DialogFragment(R.layout.dialog_tts_voices) {
             viewType: Int,
         ): TtsViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = DialogTtsVoicesVoiceBinding.inflate(layoutInflater, parent, false)
+            val binding = ItemTtsVoiceBinding.inflate(layoutInflater, parent, false)
             return TtsViewHolder(binding)
         }
 

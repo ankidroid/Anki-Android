@@ -1,16 +1,4 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.ui.windows.managespace
 
@@ -22,7 +10,7 @@ import android.os.storage.StorageManager
 import android.os.storage.StorageVolume
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.utils.TranslatableException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -153,7 +141,7 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
  *
  *     externalDirs:                /storage/emulated/0/Android/data/com.ichi2.anki
  *
- * There is a similar method [com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage],
+ * There is a similar method [com.ichi2.anki.common.storage.isLegacyStorage],
  * but it has a different purpose and behavior, and I am not sure if I understand it well.
  */
 @Suppress("DEPRECATION") // context.externalMediaDirs: see the doc for the method
@@ -212,7 +200,7 @@ class CanNotWriteToOrCreateFileException(
     TranslatableException {
     override val message get() = "Can not write to or create file: $file"
 
-    override fun getTranslatedMessage(context: Context) = context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
+    override fun getTranslatedMessage(context: Context) = context.getString(CommonString.error__etc__cannot_write_to_or_create_file, file)
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {

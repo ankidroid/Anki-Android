@@ -14,23 +14,31 @@
         android:key="@string/pref_minutes_between_automatic_backups_key"
         android:title="@string/pref__minutes_between_automatic_backups__title"
         android:persistent="false"
-        app:min="5"/>
+        app:min="5"
+        app:max="99999"
+        />
 
     <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
         android:key="@string/pref_daily_backups_to_keep_key"
         android:title="@string/pref__daily_backups_to_keep__title"
         android:persistent="false"
-        app:min="0"/>
+        app:min="0"
+        app:max="99999"
+        />
 
     <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
         android:key="@string/pref_weekly_backups_to_keep_key"
         android:title="@string/pref__weekly_backups_to_keep__title"
         android:persistent="false"
-        app:min="0"/>
+        app:min="0"
+        app:max="99999"
+        />
 
     <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
         android:key="@string/pref_monthly_backups_to_keep_key"
         android:title="@string/pref__monthly_backups_to_keep__title"
         android:persistent="false"
-        app:min="0"/>
+        app:min="0"
+        app:max="99999"
+        />
 </PreferenceScreen>

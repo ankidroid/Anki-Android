@@ -1,21 +1,10 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.libanki
 
+import android.annotation.SuppressLint
+import anki.notetypes.StockNotetype
+import anki.notetypes.notetypeId
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -25,6 +14,32 @@ import org.junit.Test
 import kotlin.test.assertFailsWith
 
 class NotetypesTest : InMemoryAnkiTest() {
+    @Test // #20510
+    fun `notetype cache is invalidated on undo and redo`() {
+        val notetype = col.notetypes.basic
+
+        fun fieldCount() =
+            col.notetypes
+                .get(notetype.id)!!
+                .fields.size
+
+        col.notetypes.addFieldLegacy(notetype, col.notetypes.newField("NewField"))
+        assertThat("field added", fieldCount(), equalTo(3))
+
+        @SuppressLint("CheckResult")
+        col.notetypes.restoreNotetypeToStock(
+            notetypeId { ntid = notetype.id },
+            forceKind = StockNotetype.Kind.KIND_BASIC,
+        )
+        assertThat("fields after restore", fieldCount(), equalTo(2))
+
+        col.undo()
+        assertThat("fields after undo", fieldCount(), equalTo(3))
+
+        col.redo()
+        assertThat("fields after redo", fieldCount(), equalTo(2))
+    }
+
     @Test
     fun `getSingleNotetypeOfNotes - multiple`() {
         val notes = addNotes(2)

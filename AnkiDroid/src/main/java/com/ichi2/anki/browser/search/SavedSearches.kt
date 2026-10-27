@@ -1,40 +1,10 @@
-/*
- *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser.search
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.libanki.Config
+import com.ichi2.anki.common.utils.ext.savedFilters
 import timber.log.Timber
-
-/**
- * A named query for the Card Browser
- *
- * Selecting a saved search quickly allows a user to either:
- * - search the given query
- * - add additional terms to the query before searching
- *
- * @see SavedSearches
- */
-data class SavedSearch(
-    val name: String,
-    val query: String,
-) {
-    fun normalize() = SavedSearch(name = this.name, query = this.query.trim())
-}
 
 /**
  * Manages saved searches (named search queries in the Card Browser)
@@ -102,20 +72,3 @@ object SavedSearches {
     /** Removes all saved searches from the Anki collection */
     suspend fun clear() = saveToConfig(emptyList())
 }
-
-/**
- * The list of saved searches in the Anki Collection
- *
- * Ordering is NOT preserved in Anki Desktop. Searches are ordered based on the name and are
- * case-sensitive
- */
-var Config.savedFilters: List<SavedSearch>
-    get() =
-        get<Map<String, String>>("savedFilters")
-            .orEmpty()
-            .map { (key, value) -> SavedSearch(name = key, query = value) }
-    set(value) {
-        set("savedFilters", value.toMap())
-    }
-
-fun List<SavedSearch>.toMap(): Map<String, String> = associate { it.name to it.query }

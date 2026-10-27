@@ -1,62 +1,79 @@
-/*
- *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.previewer
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.Slider
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.PreviewerBinding
-import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
+import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.databinding.FragmentPreviewerBinding
+import com.ichi2.anki.previewer.PreviewerFragment.Companion.ARG_CARD_IDS_FILE
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.collectIn
+import com.ichi2.anki.utils.ext.getIntOrNull
+import com.ichi2.anki.utils.ext.requireParcelable
+import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.savedStateViewModelFactory
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.performClickIfEnabled
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.io.IOException
 
 class PreviewerFragment :
-    CardViewerFragment(R.layout.previewer),
+    CardViewerFragment(R.layout.fragment_previewer),
     Toolbar.OnMenuItemClickListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     BindingProcessor<MappableBinding, PreviewerAction> {
-    override val viewModel: PreviewerViewModel by viewModels()
-    private val binding by viewBinding(PreviewerBinding::bind)
+    override val viewModel: PreviewerViewModel by viewModels {
+        savedStateViewModelFactory { handle ->
+            val arguments = requireArguments()
+            // Read before constructing the ViewModel, which immediately loads the first card.
+            val ids =
+                try {
+                    arguments.requireParcelable<IdsFile>(ARG_CARD_IDS_FILE).getIds()
+                } catch (e: IOException) {
+                    throw UnavailableSelectionException(e)
+                }
+            if (ids.isEmpty()) throw UnavailableSelectionException()
+            PreviewerViewModel(handle, ids, requireNotNull(arguments.getIntOrNull(ARG_CURRENT_INDEX)))
+        }
+    }
+
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentPreviewerBinding::bind)
+
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
     override val baseSnackbarBuilder: SnackbarBuilder
@@ -75,6 +92,16 @@ class PreviewerFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        try {
+            viewModel
+        } catch (e: UnavailableSelectionException) {
+            Timber.w(e, "Failed to read previewer IDs")
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            // The activity may still lay out this view before finishing. Its slider has no range yet.
+            view.isVisible = false
+            requireActivity().finish()
+            return
+        }
         super.onViewCreated(view, savedInstanceState)
         val cardsCount = viewModel.cardsCount()
 
@@ -85,7 +112,7 @@ class PreviewerFragment :
                     val displayIndex = currentIndex + 1
                     binding.slider.value = displayIndex.toFloat()
                     binding.progressIndicator.text =
-                        getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
+                        getString(CommonString.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
         // ************************************* Menu items *************************************
@@ -107,10 +134,10 @@ class PreviewerFragment :
                     with(menu.findItem(R.id.action_mark)) {
                         if (isMarked) {
                             setIcon(R.drawable.ic_star)
-                            setTitle(R.string.menu_unmark_note)
+                            setTitle(CommonString.menu_unmark_note)
                         } else {
                             setIcon(R.drawable.ic_star_border_white)
-                            setTitle(R.string.menu_mark_note)
+                            title = TR.sentenceCase.markNote
                         }
                     }
                 }
@@ -133,9 +160,15 @@ class PreviewerFragment :
 
         binding.slider.apply {
             valueTo = cardsCount.toFloat()
+            doOnLayout {
+                updateSliderGestureExclusion(this)
+            }
+            addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                updateSliderGestureExclusion(this)
+            }
             addOnSliderTouchListener(
                 object : Slider.OnSliderTouchListener {
-                    override fun onStartTrackingTouch(slider: Slider) {}
+                    override fun onStartTrackingTouch(slider: Slider) = Unit
 
                     override fun onStopTrackingTouch(slider: Slider) {
                         viewModel.onSliderChange(slider.value.toInt())
@@ -184,10 +217,18 @@ class PreviewerFragment :
         bindingMap = BindingMap(sharedPrefs(), PreviewerAction.entries, this)
     }
 
+    private fun updateSliderGestureExclusion(slider: Slider) {
+        ViewCompat.setSystemGestureExclusionRects(
+            slider,
+            listOf(Rect(0, 0, slider.width, slider.height)),
+        )
+    }
+
     private fun setupFlagMenu(menu: Menu) {
+        menu.findItem(R.id.action_flag).title = TR.sentenceCase.flagCard
         val submenu = menu.findItem(R.id.action_flag).subMenu
         lifecycleScope.launch {
-            for ((flag, name) in Flag.queryDisplayNames()) {
+            for ((flag, name) in Flag.queryDisplayNames(requireContext())) {
                 submenu
                     ?.add(Menu.NONE, flag.id, Menu.NONE, name)
                     ?.setIcon(flag.drawableRes)
@@ -242,32 +283,36 @@ class PreviewerFragment :
         menu.findItem(R.id.action_back_side_only).apply {
             if (isBackSideOnly) {
                 setIcon(R.drawable.ic_card_answer)
-                setTitle(R.string.card_side_answer)
+                setTitle(CommonString.card_side_answer)
             } else {
-                setIcon(R.drawable.ic_card_question)
-                setTitle(R.string.card_side_both)
+                setIconRes(requireContext(), R.drawable.ic_card_question)
+                setTitle(CommonString.card_side_both)
             }
         }
     }
 
     private fun editCard() {
         lifecycleScope.launch {
-            val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
-            startActivity(intent)
+            navigate(viewModel.getNoteEditorDestination())
         }
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN) return false
+        if (event.action != KeyEvent.ACTION_DOWN || !::bindingMap.isInitialized) return false
         return bindingMap.onKeyDown(event)
     }
 
+    /** Distinguishes selection failures from I/O failures during ViewModel construction. */
+    private class UnavailableSelectionException(
+        cause: IOException? = null,
+    ) : Exception("Unable to load preview selection", cause)
+
     companion object {
-        /** Index of the card to be first displayed among the IDs provided by [CARD_IDS_FILE_ARG] */
-        const val CURRENT_INDEX_ARG = "currentIndex"
+        /** Index of the card to be first displayed among the IDs provided by [ARG_CARD_IDS_FILE] */
+        const val ARG_CURRENT_INDEX = "currentIndex"
 
         /** Argument key to a [IdsFile] with the IDs of the cards to be displayed */
-        const val CARD_IDS_FILE_ARG = "cardIdsFile"
+        const val ARG_CARD_IDS_FILE = "cardIdsFile"
 
         fun getIntent(
             context: Context,
@@ -275,10 +320,10 @@ class PreviewerFragment :
             currentIndex: Int,
         ): Intent {
             val arguments =
-                bundleOf(
-                    CURRENT_INDEX_ARG to currentIndex,
-                    CARD_IDS_FILE_ARG to idsFile,
-                )
+                Bundle().apply {
+                    putInt(ARG_CURRENT_INDEX, currentIndex)
+                    putParcelable(ARG_CARD_IDS_FILE, idsFile)
+                }
             return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }

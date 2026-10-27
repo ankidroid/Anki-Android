@@ -1,41 +1,39 @@
-/*
- *  Copyright (c) 2021 Mike Hardy <github@mikehardy.net>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Mike Hardy <github@mikehardy.net>
+
 package com.ichi2.anki
 
 import android.app.Application
 import android.content.Intent
+import android.text.InputType
 import android.view.Menu
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.core.os.BundleCompat
 import androidx.core.view.iterator
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.ANSWER_AGAIN
+import com.ichi2.anki.cardviewer.ViewerCommand.ANSWER_EASY
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
+import com.ichi2.anki.cardviewer.ViewerCommand.SHOW_ANSWER
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
@@ -50,10 +48,16 @@ import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.PreferenceTestUtils
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
+import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.testutils.RecordingInputMethodManager
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.addNoSuggestNote
+import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.ext.text
+import com.ichi2.testutils.withBooleanPreference
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -62,18 +66,81 @@ import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.json.JSONArray
 import org.junit.Assume.assumeTrue
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
+import org.robolectric.annotation.Config
+import org.robolectric.shadow.api.Shadow
+import org.robolectric.shadows.ShadowMediaPlayer
+import org.robolectric.shadows.util.DataSource
 import timber.log.Timber
+import java.io.File
+import java.io.IOException
+import java.util.concurrent.ConcurrentLinkedQueue
+import kotlin.test.assertContains
+import kotlin.test.assertNotEquals
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @Test
+    fun `nosuggest supports Done`() =
+        runTest {
+            targetContext.sharedPrefs().edit { putBoolean("useInputTag", false) }
+            col.addNoSuggestNote()
+            val reviewer = startReviewer()
+            val field = reviewer.findViewById<EditText>(R.id.answer_field)
+            assertTrue(field.onCheckIsTextEditor())
+            assertNotEquals(InputType.TYPE_NULL, field.inputType)
+            val info = EditorInfo()
+            val connection = field.createInputConnection(info)
+            assertEquals(InputType.TYPE_NULL, info.inputType)
+
+            connection.performEditorAction(EditorInfo.IME_ACTION_DONE)
+            advanceRobolectricLooper()
+            assertTrue(reviewer.isDisplayingAnswer)
+        }
+
+    @Test
+    @Config(shadows = [RecordingInputMethodManager::class])
+    fun `nosuggest resets for the next typing card`() =
+        runTest {
+            targetContext.sharedPrefs().edit { putBoolean("useInputTag", false) }
+            val noSuggestCard = col.addNoSuggestNote().firstCard()
+            val normalCard = addBasicWithTypingNote("Normal question", "Answer").firstCard()
+            val reviewer = startReviewer()
+            val field = reviewer.findViewById<EditText>(R.id.answer_field)
+            val originalInputType = field.inputType
+            val inputMethodManager = Shadow.extract<RecordingInputMethodManager>(reviewer.getSystemService<InputMethodManager>())
+            assertEquals(noSuggestCard.id, reviewer.currentCardId)
+            assertTrue(field.onCheckIsTextEditor())
+            assertNotEquals(InputType.TYPE_NULL, field.inputType)
+            val noSuggestInfo = EditorInfo()
+            field.createInputConnection(noSuggestInfo)
+            assertEquals(InputType.TYPE_NULL, noSuggestInfo.inputType)
+
+            reviewer.executeCommand(SHOW_ANSWER)
+            advanceRobolectricLooper()
+            assertTrue(reviewer.isDisplayingAnswer)
+
+            inputMethodManager.restartedViews.clear()
+            reviewer.executeCommand(ANSWER_EASY)
+            advanceRobolectricLooper()
+            assertEquals(normalCard.id, reviewer.currentCardId)
+            assertContains(inputMethodManager.restartedViews, field)
+            assertTrue(field.onCheckIsTextEditor())
+            assertEquals(originalInputType, field.inputType)
+            val normalInfo = EditorInfo()
+            field.createInputConnection(normalInfo)
+            assertEquals(originalInputType, normalInfo.inputType)
+        }
 
     @Ignore("flaky")
     @Test
@@ -87,6 +154,24 @@ class ReviewerTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `saved bottom nav preference does not show a back icon on split pane layouts`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            RuntimeEnvironment.setQualifiers("sw600dp")
+            val reviewer = startReviewer(withCards = 1)
+            assertFalse(reviewer.resources.getBoolean(R.bool.bottom_navigation_available))
+            assertTrue(reviewer.drawerToggle.isDrawerIndicatorEnabled)
+        }
+
+    @Test
+    fun `saved bottom nav preference shows a back icon on large single pane layouts`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            RuntimeEnvironment.setQualifiers("sw480dp-large")
+            val reviewer = startReviewer(withCards = 1)
+            assertTrue(reviewer.resources.getBoolean(R.bool.bottom_navigation_available))
+            assertFalse(reviewer.drawerToggle.isDrawerIndicatorEnabled)
+        }
 
     @Test
     fun testOnSelectedTags() {
@@ -139,31 +224,76 @@ class ReviewerTest : RobolectricTest() {
         // Assert
         val shadowApplication = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Application>())
         val intent = shadowApplication.nextStartedActivity
-        val fragmentBundle = intent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
         val actualAnimation =
             BundleCompat.getParcelable(
-                fragmentBundle!!,
-                AnkiActivity.FINISH_ANIMATION_EXTRA,
-                ActivityTransitionAnimation.Direction::class.java,
+                intent.extras!!,
+                AnkiActivity.EXTRA_FINISH_ANIMATION,
+                TransitionDirection::class.java,
             )
         val expectedAnimation =
-            ActivityTransitionAnimation.getInverseTransition(
-                AbstractFlashcardViewer.getAnimationTransitionFromGesture(fromGesture),
-            )
+            AbstractFlashcardViewer.getAnimationTransitionFromGesture(fromGesture).invert()
 
         assertEquals("Animation from swipe should be inverse to the finishing one", expectedAnimation, actualAnimation)
     }
 
     @Test
-    fun noErrorShouldOccurIfSoundFileNotPresent() {
-        addBasicNote("[[sound:not_on_file_system.mp3]]", "World")
+    fun `baseSnackbarBuilder has no anchor when answer buttons are hidden`() {
+        addBasicNote()
+        val reviewer = startReviewer()
+        val answerButtons = reviewer.findViewById<View>(R.id.answer_options_layout)
+        answerButtons.visibility = View.GONE
+
+        val snackbar = reviewer.showSnackbar("test")
+
+        assertThat(
+            "anchorView must be null when answer buttons layout is not visible",
+            snackbar?.anchorView,
+            nullValue(),
+        )
+    }
+
+    @Test
+    fun `baseSnackbarBuilder anchors to answer buttons when visible`() {
+        addBasicNote()
+        val reviewer = startReviewer()
+        val answerButtons = reviewer.findViewById<View>(R.id.answer_options_layout)
+        answerButtons.visibility = View.VISIBLE
+
+        val snackbar = reviewer.showSnackbar("test")
+
+        assertThat(
+            "anchorView is the answer buttons layout when visible",
+            snackbar?.anchorView,
+            equalTo(answerButtons),
+        )
+    }
+
+    @Test
+    fun `missing sound is reported without interrupting review`() {
+        val filename = "not_on_file_system.mp3"
+        addBasicNote("[sound:$filename]", "World")
             .firstCard()
             .moveToReviewQueue()
 
-        val reviewer = startReviewer()
+        val reviewer = startReviewer(ReviewerWithSnackbarRecording::class.java)
+        val mediaDirectory = getMediaDirectory(reviewer)
+        assertFalse(File(mediaDirectory, filename).exists())
+        // The default media shadow accepts every file, including missing ones.
+        ShadowMediaPlayer.addException(
+            DataSource.toDataSource(AbstractFlashcardViewer.getMediaBaseUrl(mediaDirectory) + filename),
+            IOException("Missing sound file"),
+        )
         reviewer.displayCardQuestion()
 
-        assertThat("If the sound file with given name is not present, then no error occurs", true)
+        // Playback runs on Dispatchers.IO; draining the main looper alone can miss it.
+        advanceRobolectricLooperUntil { reviewer.snackbarMessages.isNotEmpty() && !reviewer.cardMediaPlayer.isPlaying }
+        assertThat(
+            reviewer.snackbarMessages.toList(),
+            equalTo(listOf(reviewer.getString(CommonString.card_viewer_could_not_find_image, filename))),
+        )
+        reviewer.displayCardAnswer()
+        assertTrue(reviewer.isDisplayingAnswer)
+        assertFalse(reviewer.isFinishing)
     }
 
     @Test
@@ -521,6 +651,15 @@ class ReviewerTest : RobolectricTest() {
 
     private val defaultDeckConfig
         get() = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+
+    private class ReviewerWithSnackbarRecording : Reviewer() {
+        val snackbarMessages = ConcurrentLinkedQueue<String>()
+
+        override val baseSnackbarBuilder: SnackbarBuilder = {
+            super.baseSnackbarBuilder.invoke(this)
+            text?.let(snackbarMessages::add)
+        }
+    }
 
     private class ReviewerForMenuItems : Reviewer() {
         var menu: Menu? = null

@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+
 package com.ichi2.anki
 
 import android.content.Context
@@ -37,26 +25,37 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
+import com.ichi2.anki.common.android.animationEnabled
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.DeferredNavigation
+import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.StatisticsDestination
+import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.destinations.toIntent
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.grantedStoragePermissions
+import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.dialogs.help.HelpDialog
-import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.pages.StatisticsDestination
-import com.ichi2.anki.preferences.PreferencesActivity
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
-import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.IntentUtil
+import com.ichi2.widget.WidgetPermissionReceiver
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 abstract class NavigationDrawerActivity(
     @LayoutRes contentLayoutId: Int? = null,
@@ -100,7 +99,7 @@ abstract class NavigationDrawerActivity(
             ) as ClosableDrawerLayout
 
         val coordinatorLayout = binding.root
-        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+        if (preferences.getBoolean(PREF_FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
             val fullDraggableContainer = FullDraggableContainerFix(this)
@@ -130,7 +129,7 @@ abstract class NavigationDrawerActivity(
             LayoutInflater
                 .from(this)
                 .inflate(layoutResID, closableDrawerLayout, false) as CoordinatorLayout
-        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+        if (preferences.getBoolean(PREF_FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
             val fullDraggableContainer = FullDraggableContainerFix(this)
@@ -145,7 +144,7 @@ abstract class NavigationDrawerActivity(
 
     @get:LayoutRes
     private val navigationDrawerLayout: Int
-        get() = if (fitsSystemWindows()) R.layout.navigation_drawer_layout else R.layout.navigation_drawer_layout_fullscreen
+        get() = if (fitsSystemWindows()) R.layout.activity_navigation_drawer else R.layout.activity_navigation_drawer_fullscreen
 
     /** Whether android:fitsSystemWindows="true" should be applied to the navigation drawer  */
     protected open fun fitsSystemWindows(): Boolean = true
@@ -153,24 +152,27 @@ abstract class NavigationDrawerActivity(
     fun navDrawerIsReady(): Boolean = navigationView != null
 
     // Navigation drawer initialisation
-    @Suppress("deprecation", "API35 properly handle edge-to-edge")
+    @Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
     protected fun initNavigationDrawer(mainView: View = findViewById(android.R.id.content)) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         drawerLayout = mainView.findViewById(R.id.drawer_layout)
-        // set a custom shadow that overlays the main content when the drawer opens
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
-        window.statusBarColor = getColor(R.color.transparent)
+        window.statusBarColor = getColor(CommonR.color.transparent)
         drawerLayout.setStatusBarBackgroundColor(
             MaterialColors.getColor(
                 this,
-                R.attr.appBarColor,
+                CommonR.attr.appBarColor,
                 0,
             ),
         )
         // Setup toolbar and hamburger
-        navigationView = drawerLayout.findViewById(R.id.navdrawer_items_container)
-        navigationView!!.setNavigationItemSelectedListener(this)
+        navigationView =
+            drawerLayout.findViewById<NavigationView>(R.id.navdrawer_items_container).apply {
+                setNavigationItemSelectedListener(this@NavigationDrawerActivity)
+                menu.findItem(R.id.nav_decks)?.title = TR.actionsDecks()
+                menu.findItem(R.id.nav_stats)?.title = TR.statisticsTitle()
+                setupDrawerInsets(this)
+            }
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -188,8 +190,8 @@ abstract class NavigationDrawerActivity(
             object : ActionBarDrawerToggle(
                 this,
                 drawerLayout,
-                R.string.drawer_open,
-                R.string.drawer_close,
+                CommonString.drawer_open,
+                CommonString.drawer_close,
             ) {
                 override fun onDrawerClosed(drawerView: View) {
                     super.onDrawerClosed(drawerView)
@@ -220,8 +222,35 @@ abstract class NavigationDrawerActivity(
         drawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
-        val intent = Intent("com.ichi2.widget.UPDATE_WIDGET").setClassName("com.ichi2.widget", "WidgetPermissionReceiver")
+        val intent = Intent(this, WidgetPermissionReceiver::class.java).setAction("com.ichi2.widget.UPDATE_WIDGET")
         this.sendBroadcast(intent)
+    }
+
+    /**
+     * Edge to edge: the header image and rows extend to the window edge. The text labels
+     * are not drawn underneath the system UI.
+     */
+    private fun setupDrawerInsets(navigationView: NavigationView) {
+        val contentWidth = resources.getDimensionPixelSize(R.dimen.nav_drawer_width)
+        val itemPadding = navigationView.itemHorizontalPadding
+        val dividerInset = navigationView.dividerInsetStart
+        // setting the values below requests a layout: only do so if the inset changed
+        var appliedStartInset = -1
+        ViewCompat.setOnApplyWindowInsetsListener(navigationView) { view, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            // the top is not inset: the header image is meant to draw under the status bar
+            view.updatePadding(bottom = bars.bottom)
+
+            // Widen by the start inset, so the usable width is unchanged.
+            val startInset = if (view.layoutDirection == View.LAYOUT_DIRECTION_RTL) bars.right else bars.left
+            if (startInset != appliedStartInset) {
+                appliedStartInset = startInset
+                navigationView.itemHorizontalPadding = itemPadding + startInset
+                navigationView.dividerInsetStart = dividerInset + startInset
+                view.updateLayoutParams { width = contentWidth + startInset }
+            }
+            insets
+        }
     }
 
     /**
@@ -277,7 +306,9 @@ abstract class NavigationDrawerActivity(
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         // Pass any configuration change to the drawer toggles
-        drawerToggle.onConfigurationChanged(newConfig)
+        if (::drawerToggle.isInitialized) {
+            drawerToggle.onConfigurationChanged(newConfig)
+        }
     }
 
     /**
@@ -388,11 +419,7 @@ abstract class NavigationDrawerActivity(
     }
 
     protected fun openCardBrowser() {
-        val intent = Intent(this@NavigationDrawerActivity, CardBrowser::class.java)
-        if (currentCardId != null) {
-            intent.putExtra("currentCard", currentCardId)
-        }
-        startActivity(intent)
+        navigate(BrowserDestination.Open)
     }
 
     /**
@@ -400,22 +427,25 @@ abstract class NavigationDrawerActivity(
      */
     protected fun openStatistics() {
         Timber.i("launching statistics")
-        val intent =
-            StatisticsDestination().toIntent(this)
-        startActivity(intent)
+        navigate(StatisticsDestination)
     }
 
     /**
      * Opens AnkiDroid's Settings Screen.
      */
     protected fun openSettings() {
-        val intent = PreferencesActivity.getIntent(this)
-        preferencesLauncher.launch(intent)
+        preferencesLauncher.navigate(PreferencesDestination.Root)
     }
 
-    // Override this to specify a specific card id
-    protected open val currentCardId: CardId?
-        get() = null
+    /**
+     * Hides the navigation drawer indicator (hamburger icon) and any back arrows
+     * from the toolbar. Used when bottom navigation is active.
+     */
+    protected fun disableDrawerIndicator() {
+        drawerToggle.isDrawerIndicatorEnabled = false
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        navButtonGoesBack = false
+    }
 
     protected fun showBackIcon() {
         drawerToggle.isDrawerIndicatorEnabled = false
@@ -469,7 +499,7 @@ abstract class NavigationDrawerActivity(
     companion object {
         // Intent request codes
         const val REQUEST_PREFERENCES_UPDATE = 100
-        const val FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
+        const val PREF_FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
 
         const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
 
@@ -499,8 +529,8 @@ abstract class NavigationDrawerActivity(
             val reviewCardsShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "reviewCardsShortcutId")
-                    .setShortLabel(context.getString(R.string.studyoptions_start))
-                    .setLongLabel(context.getString(R.string.studyoptions_start))
+                    .setShortLabel(context.getString(CommonString.studyoptions_start))
+                    .setLongLabel(context.getString(CommonString.studyoptions_start))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
                     .setIntents(arrayOf(deckPickerIntent, intentReviewCards))
                     .build()
@@ -513,21 +543,21 @@ abstract class NavigationDrawerActivity(
             val noteEditorShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "noteEditorShortcutId")
-                    .setShortLabel(context.getString(R.string.menu_add))
-                    .setLongLabel(context.getString(R.string.menu_add))
+                    .setShortLabel(context.getString(CommonString.menu_add))
+                    .setLongLabel(context.getString(CommonString.menu_add))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.add_shortcut))
                     .setIntent(intentAddNote)
                     .build()
 
             // CardBrowser Shortcut
-            val intentCardBrowser = Intent(context, CardBrowser::class.java)
+            val intentCardBrowser = with(DeferredNavigation) { BrowserDestination.Open.toIntent() }
             intentCardBrowser.action = Intent.ACTION_VIEW
             intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             val cardBrowserShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "cardBrowserShortcutId")
-                    .setShortLabel(context.getString(R.string.card_browser))
-                    .setLongLabel(context.getString(R.string.card_browser))
+                    .setShortLabel(context.getString(CommonString.card_browser))
+                    .setLongLabel(context.getString(CommonString.card_browser))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.browse_shortcut))
                     .setIntent(intentCardBrowser)
                     .build()

@@ -1,26 +1,13 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.toIntent
+import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
@@ -29,7 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
 
-abstract class NoteEditorTest protected constructor() {
+abstract class NoteEditorTest protected constructor() : InstrumentedTest() {
     /*
      * Rules mean that we get a failure on API 25.
      * Even if we ignore the tests, the rules cause a failure.
@@ -51,9 +38,7 @@ abstract class NoteEditorTest protected constructor() {
         ).takeUnless { isInvalid }
 
     private val noteEditorIntent: Intent
-        get() {
-            return NoteEditorLauncher.AddNote().toIntent(targetContext)
-        }
+        get() = NoteEditorDestination.AddNote().toIntent()
 
     @Before
     fun before() {
@@ -77,6 +62,4 @@ abstract class NoteEditorTest protected constructor() {
 
     protected open val invalidSdks: List<Int>
         get() = ArrayList()
-    protected val targetContext: Context
-        get() = InstrumentationRegistry.getInstrumentation().targetContext
 }

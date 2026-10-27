@@ -1,18 +1,5 @@
-/*
- Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
-
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
 
 package com.ichi2.utils
 
@@ -95,18 +82,19 @@ object TagsUtil {
     fun compareTag(
         lhs: String,
         rhs: String,
+    ): Int = compareTag(lhs.split("::"), rhs.split("::"))
+
+    /** Compare already split tags without allocating their parts for each comparison. */
+    internal fun compareTag(
+        lhs: List<String>,
+        rhs: List<String>,
     ): Int {
-        val lhsIt = lhs.split("::").asSequence().iterator()
-        val rhsIt = rhs.split("::").asSequence().iterator()
-        while (lhsIt.hasNext() && rhsIt.hasNext()) {
-            val cmp = lhsIt.next().compareTo(rhsIt.next(), true)
+        for (index in 0 until minOf(lhs.size, rhs.size)) {
+            val cmp = lhs[index].compareTo(rhs[index], true)
             if (cmp != 0) {
                 return cmp
             }
         }
-        if (!lhsIt.hasNext() && !rhsIt.hasNext()) {
-            return 0
-        }
-        return if (lhsIt.hasNext()) 1 else -1
+        return lhs.size.compareTo(rhs.size)
     }
 }

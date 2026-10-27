@@ -1,16 +1,4 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.ui.preferences.screens
 
@@ -26,6 +14,7 @@ import androidx.preference.PreferenceFragmentCompat
 import anki.config.Preferences.BackupLimits
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.requirePreference
@@ -149,17 +138,17 @@ class BackupLimitsPresenter(
             preference.summaryProvider =
                 Preference.SummaryProvider<EditTextPreference> {
                     when (viewModel.flowOfState.value) {
-                        is State.Fetching -> fragment.getString(R.string.pref__etc__summary__fetching)
-                        is State.Error.NoCollection -> fragment.getString(R.string.pref__etc__summary__no_collection)
-                        is State.Error.Exception -> fragment.getString(R.string.pref__etc__summary__error)
+                        is State.Fetching -> fragment.getString(CommonString.pref__etc__summary__fetching)
+                        is State.Error.NoCollection -> fragment.getString(CommonString.pref__etc__summary__no_collection)
+                        is State.Error.Exception -> fragment.getString(CommonString.pref__etc__summary__error)
                         is State.Fetched -> preference.text
                     }
                 }
 
             preference.onClickListener = listener@{
                 when (val state = viewModel.flowOfState.value) {
-                    is State.Fetching -> fragment.showSnackbar(R.string.pref__etc__snackbar__fetching)
-                    is State.Error.NoCollection -> fragment.showSnackbar(R.string.pref__etc__snackbar__no_collection)
+                    is State.Fetching -> fragment.showSnackbar(CommonString.pref__etc__snackbar__fetching)
+                    is State.Error.NoCollection -> fragment.showSnackbar(CommonString.pref__etc__snackbar__no_collection)
                     is State.Error.Exception ->
                         fragment.showSnackbar(
                             text = fragment.requireContext().getUserFriendlyErrorText(state.exception),

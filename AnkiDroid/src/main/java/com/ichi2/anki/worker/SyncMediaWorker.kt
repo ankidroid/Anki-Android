@@ -1,29 +1,18 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.worker
 
 import android.app.Notification
+import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
+import androidx.annotation.VisibleForTesting
+import androidx.concurrent.futures.await
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
-import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
@@ -33,19 +22,36 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import anki.sync.MediaSyncProgress
-import anki.sync.SyncAuth
-import anki.sync.syncAuth
-import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.receiver.CopyToClipboardReceiver
+import com.ichi2.anki.sync.MeteredSyncPolicy
+import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.syncMedia
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
-import com.ichi2.utils.Permissions
+import com.ichi2.utils.TruncatedString
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
+import java.util.UUID
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+
+/**
+ * Held while a media sync runs. A profile switch holds it until the process dies,
+ * so a media sync cannot start part way through a restart.
+ */
+val mediaSyncLock = Mutex()
 
 class SyncMediaWorker(
     context: Context,
@@ -53,7 +59,7 @@ class SyncMediaWorker(
 ) : CoroutineWorker(context, parameters) {
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
     private val notificationManager: NotificationManagerCompat? =
-        if (Permissions.canPostNotifications(context)) {
+        if (canPostNotifications(context)) {
             NotificationManagerCompat.from(context)
         } else {
             null
@@ -61,42 +67,54 @@ class SyncMediaWorker(
 
     override suspend fun doWork(): Result {
         Timber.v("SyncMediaWorker::doWork")
+        return mediaSyncLock.withLockUnlessSwitching { doWorkHoldingLock() }
+    }
 
+    private suspend fun doWorkHoldingLock(): Result {
         try {
-            val auth =
-                syncAuth {
-                    hkey = inputData.getString(HKEY_KEY)!!
-                    inputData.getString(ENDPOINT_KEY)?.let {
-                        endpoint = it
-                    }
-                }
+            val auth = requireNotNull(inputData.toSyncAuth())
 
             // The collection must be open, but we should not block collection operations while
             // `syncMedia` is executing, the app should be usable during a background media sync
             val backend = CollectionManager.getColUnsafe().backend
-            backend.syncMedia(input = auth)
+            backend.syncMedia(auth)
 
-            delay(1000) // avoid notifications if sync occurs too quickly
+            delay(1.seconds) // avoid notifications if sync occurs too quickly
             if (backend.mediaSyncStatus().active) {
                 Timber.i("Showing SyncMediaWorker's notification")
                 trySetForeground(getForegroundInfo())
                 monitorProgress(backend)
             }
         } catch (cancellationException: CancellationException) {
-            Timber.w(cancellationException)
+            Timber.w(cancellationException, "SyncMediaWorker cancelled (user tapped Cancel or WorkManager cancelled)")
+            notificationManager?.cancel(NotificationId.SYNC_MEDIA)
+            Timber.d("SyncMediaWorker: progress notification cancelled after worker cancellation")
             cancelMediaSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {
-            Timber.w(throwable)
+            Timber.w(throwable, "SyncMediaWorker failed")
             notify {
-                setContentTitle(CollectionManager.TR.syncMediaFailed())
+                // TODO: add a contentIntent, so tapping the notification opens the app
+                //  (ideally showing the media sync log: an AlertDialog in DeckPicker)
+                setContentTitle(TR.syncMediaFailed())
                 throwable.localizedMessage?.let { message ->
                     setContentText(message)
+                    setStyle(
+                        NotificationCompat
+                            .BigTextStyle()
+                            .bigText(message),
+                    )
+                    addAction(
+                        R.drawable.baseline_content_copy_24,
+                        with(applicationContext) { TR.sentenceCase.copyToClipboard },
+                        getCopyToClipboardIntent(TruncatedString.from(message)),
+                    )
                 }
             }
+            Timber.d("SyncMediaWorker: showing failure notification")
             return Result.failure()
         }
-        Timber.d("SyncMediaWorker: cancelling notification")
+        Timber.d("SyncMediaWorker: cancelling progress notification (sync completed)")
         notificationManager?.cancel(NotificationId.SYNC_MEDIA)
 
         Timber.d("SyncMediaWorker: success")
@@ -120,13 +138,13 @@ class SyncMediaWorker(
                 val notificationText = syncProgress.run { "$added $removed $checked" }
                 notify(getProgressNotification(notificationText))
             }
-            delay(NOTIFICATION_UPDATE_RATE_MS)
+            delay(NOTIFICATION_UPDATE_RATE)
         }
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
-        val title = applicationContext.getString(R.string.syncing_media)
-        val cancelTitle = CollectionManager.TR.syncAbortButton()
+        val title = applicationContext.getString(CommonString.syncing_media)
+        val cancelTitle = TR.syncAbortButton()
         val notification =
             buildNotification {
                 setContentTitle(title)
@@ -142,6 +160,17 @@ class SyncMediaWorker(
         }
     }
 
+    @VisibleForTesting
+    internal fun getCopyToClipboardIntent(text: TruncatedString): PendingIntent {
+        val intent = CopyToClipboardReceiver.getIntent(applicationContext, text)
+        return PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
     private fun notify(notification: Notification) = notificationManager?.notify(NotificationId.SYNC_MEDIA, notification)
 
     private fun notify(builder: NotificationCompat.Builder.() -> Unit) {
@@ -150,7 +179,7 @@ class SyncMediaWorker(
 
     private fun buildNotification(block: NotificationCompat.Builder.() -> Unit): Notification =
         NotificationCompat
-            .Builder(applicationContext, Channel.SYNC.id)
+            .Builder(applicationContext, NotificationChannel.SYNC.id)
             .apply {
                 priority = NotificationCompat.PRIORITY_LOW
                 setSmallIcon(R.drawable.ic_star_notify)
@@ -160,8 +189,8 @@ class SyncMediaWorker(
             }.build()
 
     private fun getProgressNotification(progress: CharSequence): Notification {
-        val title = applicationContext.getString(R.string.syncing_media)
-        val cancelTitle = CollectionManager.TR.syncAbortButton()
+        val title = applicationContext.getString(CommonString.syncing_media)
+        val cancelTitle = TR.syncAbortButton()
 
         return buildNotification {
             setContentTitle(title)
@@ -172,41 +201,66 @@ class SyncMediaWorker(
     }
 
     companion object {
-        private const val HKEY_KEY = "hkey"
-        private const val ENDPOINT_KEY = "endpoint"
-        const val NOTIFICATION_UPDATE_RATE_MS = 500L
+        val NOTIFICATION_UPDATE_RATE = 500.milliseconds
 
-        fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
+        /** Ensure a metered network request approval only affects the intended request. */
+        private val schedulingLock = Mutex()
+
+        fun getWorkRequest(
+            auth: SyncAuth,
+            networkType: NetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true),
+            id: UUID = UUID.randomUUID(),
+        ): OneTimeWorkRequest {
             val constraints =
                 Constraints
                     .Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-
-            val data =
-                Data
-                    .Builder()
-                    .putString(HKEY_KEY, auth.hkey)
-                    .putString(ENDPOINT_KEY, auth.endpoint)
+                    .setRequiredNetworkType(networkType)
                     .build()
 
             return OneTimeWorkRequestBuilder<SyncMediaWorker>()
-                .setInputData(data)
+                .setId(id)
+                .setInputData(auth.toWorkData())
                 .setConstraints(constraints)
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()
         }
 
-        fun start(
+        /**
+         * A later metered approval must also release media already waiting for Wi-Fi.
+         * Updating the existing request preserves any sync that has started in the meantime.
+         */
+        suspend fun start(
             context: Context,
             auth: SyncAuth,
+            networkType: NetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true),
         ) {
-            Timber.i("Launching background media sync")
-            val request = getWorkRequest(auth)
+            schedulingLock.withLock {
+                Timber.i("Launching background media sync")
+                val request = getWorkRequest(auth, networkType)
 
-            WorkManager
-                .getInstance(context)
-                .enqueueUniqueWork(UniqueWorkNames.SYNC_MEDIA, ExistingWorkPolicy.KEEP, request)
+                val manager = WorkManager.getInstance(context)
+                manager.enqueueUniqueWork(UniqueWorkNames.SYNC_MEDIA, ExistingWorkPolicy.KEEP, request).result.await()
+                if (networkType == NetworkType.CONNECTED) {
+                    manager.allowMeteredMediaSync(auth)
+                }
+            }
+        }
+
+        /**
+         * Applies a new request's permission to use metered networks to retained media work.
+         *
+         * If a new request allows metered networks, it does not overwrite the old work due to
+         * [ExistingWorkPolicy.KEEP], so explicitly update the work request.
+         *
+         * Call after `enqueueUniqueWork` has completed while holding [schedulingLock].
+         */
+        private suspend fun WorkManager.allowMeteredMediaSync(auth: SyncAuth) {
+            val existing =
+                getWorkInfosForUniqueWork(UniqueWorkNames.SYNC_MEDIA).await().firstOrNull {
+                    !it.state.isFinished && it.constraints.requiredNetworkType == NetworkType.UNMETERED
+                } ?: return
+            val result = updateWork(getWorkRequest(auth, NetworkType.CONNECTED, existing.id)).await()
+            Timber.i("Allowing metered media sync for work %s: %s", existing.id, result)
         }
     }
 }

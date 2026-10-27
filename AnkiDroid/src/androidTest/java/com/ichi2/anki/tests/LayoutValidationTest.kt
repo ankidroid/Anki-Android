@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.tests
 
 import android.os.Build
@@ -103,20 +90,20 @@ class LayoutValidationTest : InstrumentedTest() {
             //   a FragmentActivity to use android:name="..."
             val ignoredLayoutIds =
                 listOf(
-                    com.ichi2.anki.R.layout.introduction_activity,
-                    com.ichi2.anki.R.layout.reviewer2,
-                    com.ichi2.anki.R.layout.preferences,
-                    com.ichi2.anki.R.layout.drawing_fragment,
-                    com.ichi2.anki.R.layout.card_browser_searchview_fragment,
+                    com.ichi2.anki.R.layout.activity_introduction,
+                    com.ichi2.anki.R.layout.fragment_reviewer,
+                    com.ichi2.anki.R.layout.fragment_preferences,
+                    com.ichi2.anki.R.layout.fragment_drawing,
+                    com.ichi2.anki.R.layout.fragment_card_browser_searchview,
                 ) +
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                        listOf(com.ichi2.anki.R.layout.widget_small_unthemed)
+                        listOf(com.ichi2.anki.widgets.R.layout.widget_small_unthemed)
                     } else {
                         emptyList()
                     }
 
             return layout::class.java.fields
-                .map { arrayOf(it.getInt(layout), it.name) }
+                .map { arrayOf<Any>(it.getInt(layout), it.name) }
                 .filterNot { (id, name) -> name in nonAnkiFieldNames || id in ignoredLayoutIds }
         }
 

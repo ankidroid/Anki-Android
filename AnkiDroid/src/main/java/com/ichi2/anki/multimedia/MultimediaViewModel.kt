@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.multimedia
 
@@ -33,11 +19,11 @@ class MultimediaViewModel : ViewModel() {
     private var prevMultimediaPath: File? = null
     private var prevMultimediaUri: Uri? = null
 
-    private val _currentMultimediaUri = MutableStateFlow<Uri?>(null)
-    val currentMultimediaUri: StateFlow<Uri?> get() = _currentMultimediaUri
+    val currentMultimediaUri: StateFlow<Uri?>
+        field = MutableStateFlow<Uri?>(null)
 
-    private val _currentMultimediaPath = MutableStateFlow<File?>(null)
-    val currentMultimediaPath: StateFlow<File?> get() = _currentMultimediaPath
+    val currentMultimediaPath: StateFlow<File?>
+        field = MutableStateFlow<File?>(null)
 
     var selectedMediaFileSize: Long = 0
 
@@ -56,8 +42,8 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun restoreMultimedia() {
-        _currentMultimediaUri.value = prevMultimediaUri
-        _currentMultimediaPath.value = prevMultimediaPath
+        currentMultimediaUri.value = prevMultimediaUri
+        currentMultimediaPath.value = prevMultimediaPath
     }
 
     fun updateMediaFileLength(length: Long) {
@@ -65,7 +51,7 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun updateCurrentMultimediaUri(uri: Uri?) {
-        _currentMultimediaUri.value = uri
+        currentMultimediaUri.value = uri
     }
 
     fun updateCurrentMultimediaPath(uri: String) {
@@ -73,6 +59,6 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun updateCurrentMultimediaPath(path: File?) {
-        _currentMultimediaPath.value = path
+        currentMultimediaPath.value = path
     }
 }

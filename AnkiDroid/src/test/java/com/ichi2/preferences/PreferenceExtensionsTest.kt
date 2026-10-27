@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.preferences
 
 import android.content.SharedPreferences
@@ -31,7 +18,7 @@ class PreferenceExtensionsTest {
     private val mockPreferences: SharedPreferences =
         SPMockBuilder().createSharedPreferences().apply {
             edit {
-                putString(VALID_KEY, VALID_RESULT)
+                putString(PREF_VALID, VALID_RESULT)
             }
         }
 
@@ -49,52 +36,52 @@ class PreferenceExtensionsTest {
 
     @Test
     fun existingKeyReturnsMappedValue() {
-        val ret = getOrSetString(VALID_KEY, UNUSED_SUPPLIER)
+        val ret = getOrSetString(PREF_VALID, UNUSED_SUPPLIER)
         assertEquals(ret, VALID_RESULT)
     }
 
     @Test
     fun missingKeyReturnsLambdaValue() {
-        val ret = getOrSetString(MISSING_KEY) { LAMBDA_RETURN }
+        val ret = getOrSetString(PREF_MISSING) { LAMBDA_RETURN }
         assertEquals(ret, LAMBDA_RETURN)
     }
 
     @Test
     fun missingKeySetsPreference() {
-        getOrSetString(MISSING_KEY) { LAMBDA_RETURN }
-        assertThat(mockPreferences.getString(MISSING_KEY, null), equalTo(LAMBDA_RETURN))
+        getOrSetString(PREF_MISSING) { LAMBDA_RETURN }
+        assertThat(mockPreferences.getString(PREF_MISSING, null), equalTo(LAMBDA_RETURN))
     }
 
     @SuppressWarnings("unused")
     @Test
     fun noLambdaExceptionIfKeyExists() {
-        assertDoesNotThrow { getOrSetString(VALID_KEY, EXCEPTION_SUPPLIER) }
+        assertDoesNotThrow { getOrSetString(PREF_VALID, EXCEPTION_SUPPLIER) }
     }
 
     @Test(expected = ExpectedException::class)
     fun rethrowLambdaExceptionIfKeyIsMissing() {
-        getOrSetString(MISSING_KEY, EXCEPTION_SUPPLIER)
+        getOrSetString(PREF_MISSING, EXCEPTION_SUPPLIER)
     }
 
     // Long Tests
 
     @Test
     fun existingLongKeyReturnsStoredValue() {
-        mockPreferences.edit { putLong(LONG_VALID_KEY, LONG_VALID_VALUE) }
-        val result = getOrSetLong(LONG_VALID_KEY, LONG_UNUSED_SUPPLIER)
+        mockPreferences.edit { putLong(PREF_LONG_VALID, LONG_VALID_VALUE) }
+        val result = getOrSetLong(PREF_LONG_VALID, LONG_UNUSED_SUPPLIER)
         assertEquals(LONG_VALID_VALUE, result)
     }
 
     @Test
     fun missingLongKeyPersistsValue() {
-        getOrSetLong(LONG_MISSING_KEY) { LONG_LAMBDA_VALUE }
-        assertEquals(LONG_LAMBDA_VALUE, mockPreferences.getLong(LONG_MISSING_KEY, -1))
+        getOrSetLong(PREF_LONG_MISSING) { LONG_LAMBDA_VALUE }
+        assertEquals(LONG_LAMBDA_VALUE, mockPreferences.getLong(PREF_LONG_MISSING, -1))
     }
 
     @Test
     fun handlesNegativeLongValue() {
-        getOrSetLong(NEGATIVE_TEST_KEY) { LONG_NEGATIVE_VALUE }
-        assertEquals(LONG_NEGATIVE_VALUE, mockPreferences.getLong(NEGATIVE_TEST_KEY, 0))
+        getOrSetLong(PREF_NEGATIVE_TEST) { LONG_NEGATIVE_VALUE }
+        assertEquals(LONG_NEGATIVE_VALUE, mockPreferences.getLong(PREF_NEGATIVE_TEST, 0))
     }
 
     private class ExpectedException : RuntimeException()
@@ -103,18 +90,18 @@ class PreferenceExtensionsTest {
 
     companion object {
         // String constants
-        private const val VALID_KEY = "VALID"
+        private const val PREF_VALID = "VALID"
         private const val VALID_RESULT = "WAS VALID KEY"
-        private const val MISSING_KEY = "INVALID"
+        private const val PREF_MISSING = "INVALID"
         private const val LAMBDA_RETURN = "LAMBDA"
 
         // Long constants
-        private const val LONG_VALID_KEY = "LONG_VALID"
+        private const val PREF_LONG_VALID = "LONG_VALID"
         private const val LONG_VALID_VALUE = 42L
-        private const val LONG_MISSING_KEY = "LONG_INVALID"
+        private const val PREF_LONG_MISSING = "LONG_INVALID"
         private const val LONG_LAMBDA_VALUE = 100L
         private const val LONG_NEGATIVE_VALUE = -500L
-        private const val NEGATIVE_TEST_KEY = "negative_test"
+        private const val PREF_NEGATIVE_TEST = "negative_test"
 
         // Suppliers
         private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }

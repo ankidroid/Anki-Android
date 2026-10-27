@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.mediacheck
 
@@ -24,7 +10,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebViewClient
+import android.webkit.WebView
+import androidx.annotation.CallSuper
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
@@ -32,32 +20,42 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
-import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.withProgress
+import com.ichi2.anki.progress.observeProgress
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.observeMessages
+import com.ichi2.anki.utils.showAndAwaitDismissal
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import com.ichi2.utils.toRGBHex
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * MediaCheckFragment for displaying a list of media files that are either unused or missing.
  * It allows users to tag missing media files or delete unused ones.
  **/
-class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
+class MediaCheckFragment :
+    Fragment(R.layout.fragment_media_check),
+    OnWebViewRecreatedListener {
     private val viewModel: MediaCheckViewModel by viewModels()
 
     private val binding by viewBinding(FragmentMediaCheckBinding::bind)
+
+    private var lastReport: String? = null
 
     override fun onViewCreated(
         view: View,
@@ -66,7 +64,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.apply {
-            setTitle(TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.check_media))
+            setTitle(TR.sentenceCase.checkMediaTitle)
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
@@ -74,22 +72,19 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        launchCatchingTask {
-            withProgress(R.string.check_media_message) {
-                viewModel.checkMedia().join()
+        observeProgress(viewModel) { progress -> getString(progress.messageRes) }
+        viewModel.checkMedia()
+
+        viewModel.mediaCheckResult.launchCollectionInViewLifecycleScope { result ->
+            updateWebView(result?.report.orEmpty())
+            if (result != null) {
+                binding.tagMissingMediaButton.isVisible = result.missingCount != 0
+                binding.deleteUsedMediaButton.isVisible = result.unusedCount != 0
+                if (result.haveTrash) setupMenu()
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.mediaCheckResult.collectLatest { result ->
-                updateWebView(result?.report.orEmpty())
-                if (result != null) {
-                    binding.tagMissingMediaButton.isVisible = result.missingCount != 0
-                    binding.deleteUsedMediaButton.isVisible = result.unusedCount != 0
-                    if (result.haveTrash) setupMenu()
-                }
-            }
-        }
+        observeMessages(viewModel.pendingMessages, viewModel::messageShown, ::showMessage)
 
         setupButtonListeners()
     }
@@ -105,22 +100,22 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                     menuInflater.inflate(R.menu.media_check_menu, menu)
                     menu.findItem(R.id.action_restore_trash).apply {
                         isVisible = true
-                        title = TR.mediaCheckRestoreTrash().toSentenceCase(R.string.sentence_restore_deleted)
+                        title = TR.sentenceCase.restoreDeleted
                     }
                     menu.findItem(R.id.action_empty_trash).apply {
                         isVisible = true
-                        title = TR.mediaCheckEmptyTrash().toSentenceCase(R.string.sentence_empty_trash)
+                        title = TR.sentenceCase.emptyTrash
                     }
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
                     when (menuItem.itemId) {
                         R.id.action_restore_trash -> {
-                            confirmMediaRestore()
+                            viewModel.restoreTrash()
                             true
                         }
                         R.id.action_empty_trash -> {
-                            deleteTrash()
+                            viewModel.deleteTrash()
                             true
                         }
                         else -> false
@@ -131,44 +126,52 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     }
 
     private fun updateWebView(report: String) {
+        lastReport = report
+        val backgroundColor = getColorFromAttr(requireContext(), android.R.attr.colorBackground)
+        val textColor = getColorFromAttr(requireContext(), android.R.attr.textColorPrimary)
+
+        val backgroundColorHex = backgroundColor.toRGBHex()
+        val textColorHex = textColor.toRGBHex()
+
         val html =
             """
             <html>
                 <body style="
-                      padding: 0px 8px;
+                    background-color: $backgroundColorHex;
+                    color: $textColorHex;
+                    padding: 0px 8px;
                     font-size:14px;
                     white-space: pre-wrap;">$report
                 </body>
             </html>
             """.trimIndent()
 
-        binding.webView.webViewClient = WebViewClient()
+        binding.webView.setWebViewClient(object : SafeWebViewClient() {})
         binding.webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        lastReport?.let { updateWebView(it) }
+    }
+
+    @CallSuper
+    override fun onDestroyView() {
+        binding.webView.safeDestroy()
+        super.onDestroyView()
     }
 
     private fun setupButtonListeners() {
         binding.tagMissingMediaButton.apply {
             // mediaCheckAddTag => "Tag Missing"
-            text =
-                TR
-                    .mediaCheckAddTag()
-                    .toSentenceCase(R.string.sentence_tag_missing)
+            text = TR.sentenceCase.tagMissing
 
             setOnClickListener {
-                launchCatchingTask {
-                    withProgress(getString(R.string.check_media_adding_missing_tag)) {
-                        viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).join()
-                        showResultDialog(
-                            R.string.check_media_tags_added,
-                            TR.browsingNotesUpdated(viewModel.taggedFiles),
-                        )
-                    }
-                }
+                viewModel.tagMissing(tag = TR.mediaCheckMissingMediaTag())
             }
         }
 
         binding.deleteUsedMediaButton.apply {
-            text = TR.mediaCheckDeleteUnused().toSentenceCase(R.string.sentence_check_media_delete_unused)
+            text = TR.sentenceCase.checkMediaDeleteUnused
 
             setOnClickListener {
                 deleteConfirmationDialog()
@@ -176,94 +179,63 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
     }
 
-    private fun confirmMediaRestore() {
-        launchCatchingTask {
-            withProgress {
-                viewModel.restoreTrash().join()
-                showTrashRestoredDialog()
-            }
-        }
-    }
-
-    private fun deleteTrash() {
-        launchCatchingTask {
-            withProgress {
-                viewModel.deleteTrash().join()
-                showTrashDeletedDialog()
-            }
-        }
-    }
-
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
-            positiveButton(R.string.dialog_ok) { handleDeleteConfirmation() }
-            negativeButton(R.string.dialog_cancel)
+            positiveButton(CommonString.dialog_positive_delete) { viewModel.deleteUnusedMedia() }
+            negativeButton(CommonString.dialog_cancel)
         }
     }
 
-    private fun handleDeleteConfirmation() {
-        launchCatchingTask {
-            withProgress(resources.getString(R.string.delete_media_message)) {
-                viewModel.deleteUnusedMedia().join()
-                showDeletionResult()
-            }
+    private suspend fun showMessage(message: MediaCheckMessage) {
+        when (message) {
+            is MediaCheckMessage.TagsAdded ->
+                showResultDialog(
+                    CommonString.check_media_tags_added,
+                    TR.browsingNotesUpdated(message.notesUpdated),
+                )
+            is MediaCheckMessage.MediaDeleted ->
+                showResultDialog(
+                    CommonString.delete_media_result_title,
+                    resources.getQuantityString(CommonPlurals.delete_media_result_message, message.count, message.count),
+                )
+            MediaCheckMessage.TrashEmptied -> showResultDialog(message = TR.mediaCheckTrashEmptied())
+            MediaCheckMessage.TrashRestored -> showResultDialog(message = TR.mediaCheckTrashRestored())
+            is MediaCheckMessage.Failed -> showErrorDialog(message.exception)
         }
     }
 
-    /**
-     * Displays the result of a media deletion operation and updates stored trash statistics.
-     *
-     * This function retrieves the previously stored trash information (if any),
-     * combines it with the current deletion statistics from the ViewModel, and
-     * updates the stored values accordingly.
-     */
-    private fun showDeletionResult() {
-        showResultDialog(
-            R.string.delete_media_result_title,
-            resources.getQuantityString(
-                R.plurals.delete_media_result_message,
-                viewModel.deletedFiles,
-                viewModel.deletedFiles,
-            ),
-        )
-    }
-
-    private fun showTrashRestoredDialog() {
-        AlertDialog.Builder(requireContext()).show {
-            message(text = TR.mediaCheckTrashRestored())
-            positiveButton(R.string.dialog_ok) {
-                requireActivity().finish()
-            }
-            cancelable(false)
-        }
-    }
-
-    private fun showTrashDeletedDialog() {
-        AlertDialog.Builder(requireContext()).show {
-            message(text = TR.mediaCheckTrashEmptied())
-            positiveButton(R.string.dialog_ok) {
-                requireActivity().finish()
-            }
-            cancelable(false)
-        }
-    }
-
-    private fun showResultDialog(
-        titleRes: Int,
+    private suspend fun showResultDialog(
+        @StringRes titleRes: Int? = null,
         message: String,
     ) {
-        AlertDialog.Builder(requireContext()).show {
-            title(titleRes)
+        AlertDialog.Builder(requireContext()).showAndAwaitDismissal {
+            titleRes?.let { title(it) }
             message(text = message)
-            positiveButton(R.string.dialog_ok) {
-                requireActivity().finish()
-            }
+            positiveButton(CommonString.dialog_ok) { requireActivity().finish() }
             cancelable(false)
         }
+    }
+
+    private suspend fun showErrorDialog(exception: Exception) {
+        AlertDialog.Builder(requireContext()).showAndAwaitDismissal {
+            title(CommonString.vague_error)
+            message(text = exception.localizedMessage ?: exception.toString())
+            positiveButton(CommonString.dialog_ok)
+        }
+        exception.toCrashReportData(requireActivity()).sendCrashReport()
     }
 
     companion object {
         fun getIntent(context: Context): Intent = SingleFragmentActivity.getIntent(context, MediaCheckFragment::class)
     }
 }
+
+@get:StringRes
+private val MediaCheckProgress.messageRes: Int
+    get() =
+        when (this) {
+            MediaCheckProgress.CHECKING_MEDIA -> CommonString.check_media_message
+            MediaCheckProgress.ADDING_TAGS -> CommonString.check_media_adding_missing_tag
+            MediaCheckProgress.DELETING_MEDIA -> CommonString.delete_media_message
+        }

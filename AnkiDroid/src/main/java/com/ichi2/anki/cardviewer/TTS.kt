@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2021 Tyler Lewis <tyler.r.lewis1@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tyler Lewis <tyler.r.lewis1@gmail.com>
 
 // This time, we're going to be doing the most that we can using ReadText.java. Rather than the reimplementation
 // that happened with branch Cloze_TTS_#9590.
@@ -20,7 +7,7 @@ package com.ichi2.anki.cardviewer
 
 import android.content.Context
 import com.ichi2.anki.CardUtils
-import com.ichi2.anki.R
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.libanki.Card
@@ -78,26 +65,21 @@ class TTS {
      */
     fun selectTts(
         col: Collection,
-        context: Context,
         card: Card,
         qa: CardSide,
     ) {
         val textToRead = if (qa == CardSide.QUESTION) card.question(col, true) else card.pureAnswer(col)
         // get the text from the card
         ReadText.selectTts(
-            getTextForTts(context, textToRead),
+            getTextForTts(textToRead),
             CardUtils.getDeckIdForCard(card),
             getOrdUsingCardType(card, col),
             qa,
         )
     }
 
-    private fun getTextForTts(
-        context: Context,
-        text: String,
-    ): String {
-        val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
-        val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
+    private fun getTextForTts(text: String): String {
+        val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, TR.cardTemplatesBlank())
         return stripHTML(clozeReplaced)
     }
 

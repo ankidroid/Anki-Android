@@ -1,22 +1,10 @@
-/*
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
- * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
- * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+
 package com.ichi2.anki.preferences
 
 import android.content.Context
@@ -25,8 +13,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
-import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
@@ -34,7 +24,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
+import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
@@ -42,20 +34,19 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.common.annotations.LegacyNotifications
+import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ScheduleReminders
-import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.utils.isWindowCompact
-import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
 class PreferencesFragment :
-    Fragment(R.layout.preferences),
+    Fragment(R.layout.fragment_preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
     /**
@@ -121,26 +112,36 @@ class PreferencesFragment :
     }
 
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
-        if (result.key == getString(R.string.pref_review_reminders_screen_key)) {
-            Timber.i("Preferences:: edit review reminders button pressed")
-            val intent = ScheduleReminders.getIntent(requireContext(), ReviewReminderScope.Global)
-            startActivity(intent)
+        if (result.resourceFile == R.xml.preferences_review_reminders) {
+            // This is a special case because the review reminders settings screen is not a
+            // normal SettingsFragment, but is instead a custom fragment.
+            Timber.i("Preferences:: Opening review reminders settings from search result")
+            openPreferencesFragmentFromSearch(ScheduleRemindersFragment())
+            return
+        }
+
+        if (result.key == getString(R.string.time_limit_preference)) {
+            Timber.i("Preferences:: Opening timebox settings from search result")
+            openPreferencesFragmentFromSearch(TimeboxSettingsFragment())
             return
         }
 
         val fragment = getFragmentFromXmlRes(result.resourceFile) ?: return
-
-        parentFragmentManager.popBackStack() // clear the search fragment from the backstack
-        childFragmentManager.commit {
-            replace(R.id.settings_container, fragment, fragment.javaClass.name)
-            setFadeTransition(this)
-            addToBackStack(fragment.javaClass.name)
-        }
+        openPreferencesFragmentFromSearch(fragment)
 
         if (fragment is ControlsSettingsFragment) {
             fragment.highlightPreference(result)
         } else {
             result.highlight(fragment as PreferenceFragmentCompat)
+        }
+    }
+
+    private fun openPreferencesFragmentFromSearch(fragment: Fragment) {
+        parentFragmentManager.popBackStack() // clear the search fragment from the backstack
+        childFragmentManager.commit {
+            replace(R.id.settings_container, fragment, fragment.javaClass.name)
+            setFadeTransition(this)
+            addToBackStack(fragment.javaClass.name)
         }
     }
 
@@ -166,7 +167,7 @@ class PreferencesFragment :
                     view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.apply {
                         updateLayoutParams<AppBarLayout.LayoutParams> {
                             scrollFlags = 0
-                            val resId = Themes.getResFromAttr(requireContext(), android.R.attr.actionBarSize)
+                            val resId = getResFromAttr(requireContext(), android.R.attr.actionBarSize)
                             height = resources.getDimensionPixelSize(resId)
                         }
                         isTitleEnabled = false
@@ -199,17 +200,17 @@ class PreferencesFragment :
         )
 
         // Configure headers highlight
-        childFragmentManager.executePendingTransactions() // wait for the headers page creation
-        childFragmentManager.findFragmentById(R.id.settings_container)?.let { fragment ->
+        childFragmentManager.addOnBackStackChangedListener {
             val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
-            if (headerFragment !is HeaderFragment) return@let
-            val key = getHeaderKeyForFragment(fragment) ?: return@let
+            if (headerFragment !is HeaderFragment) return@addOnBackStackChangedListener
+            val fragment = childFragmentManager.findFragmentById(R.id.settings_container) ?: return@addOnBackStackChangedListener
+            val key = getHeaderKeyForFragment(fragment) ?: return@addOnBackStackChangedListener
             headerFragment.highlightPreference(key)
         }
     }
 
     private fun setFadeTransition(fragmentTransaction: FragmentTransaction) {
-        if (!sharedPrefs().getBoolean("safeDisplay", false)) {
+        if (Animations.areAnimationsEnabled(requireContext())) {
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         }
     }
@@ -217,10 +218,10 @@ class PreferencesFragment :
     /**
      * Starts the first settings fragment, which by default is [HeaderFragment].
      * The initial fragment may be overridden by putting the java class name
-     * of the fragment on an intent extra with the key [INITIAL_FRAGMENT_EXTRA]
+     * of the fragment on an intent extra with the key [EXTRA_INITIAL_FRAGMENT]
      */
     private fun loadInitialSubscreen() {
-        val fragmentClassName = arguments?.getString(INITIAL_FRAGMENT_EXTRA)
+        val fragmentClassName = arguments?.getString(EXTRA_INITIAL_FRAGMENT)
         val initialFragment =
             if (fragmentClassName == null) {
                 if (!settingsIsSplit) HeaderFragment() else GeneralSettingsFragment()
@@ -242,6 +243,34 @@ class PreferencesFragment :
 class PreferencesActivity :
     SingleFragmentActivity(),
     SearchPreferenceResultListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    v: View,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (f !is SearchPreferenceFragment) return
+                    val recyclerView = v.findViewById<RecyclerView>(com.bytehamster.lib.preferencesearch.R.id.list)
+                    ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { view, insets ->
+                        val bars =
+                            insets.getInsets(
+                                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout() or
+                                    WindowInsetsCompat.Type.ime(),
+                            )
+                        view.updatePadding(bottom = bars.bottom)
+                        insets
+                    }
+                }
+            },
+            false,
+        )
+    }
+
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
         if (fragment is SearchPreferenceResultListener) {
@@ -250,14 +279,19 @@ class PreferencesActivity :
     }
 
     companion object {
+        /**
+         * Builds an [Intent] which opens [PreferencesFragment], optionally at [initialFragment].
+         *
+         * Prefer navigating via `PreferencesDestination`.
+         */
         fun getIntent(
             context: Context,
-            initialFragment: KClass<out SettingsFragment>? = null,
+            initialFragment: KClass<out Fragment>? = null,
         ): Intent {
-            val arguments = bundleOf(INITIAL_FRAGMENT_EXTRA to initialFragment?.jvmName)
+            val arguments = Bundle().apply { putString(EXTRA_INITIAL_FRAGMENT, initialFragment?.jvmName) }
             return Intent(context, PreferencesActivity::class.java).apply {
-                putExtra(FRAGMENT_NAME_EXTRA, PreferencesFragment::class.jvmName)
-                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+                putExtra(EXTRA_FRAGMENT_NAME, PreferencesFragment::class.jvmName)
+                putExtra(EXTRA_FRAGMENT_ARGS, arguments)
             }
         }
     }
@@ -267,7 +301,7 @@ class PreferencesActivity :
 @LegacyNotifications("Magic number which is no longer needed")
 const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
-const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
+const val EXTRA_INITIAL_FRAGMENT = "initial_fragment"
 
 /**
  * @return the [SettingsFragment] which uses the given [screen] resource.

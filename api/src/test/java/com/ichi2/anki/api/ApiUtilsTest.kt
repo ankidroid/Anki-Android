@@ -1,10 +1,11 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: LGPL-3.0-or-later
 
 package com.ichi2.anki.api
 
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -19,6 +20,7 @@ import kotlin.test.assertNull
  * Slack: bresan
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [35])
 internal class ApiUtilsTest {
     @Test
     fun joinFieldsShouldJoinWhenListIsValid() {
@@ -54,6 +56,11 @@ internal class ApiUtilsTest {
     @Test
     fun joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
         assertEquals("", Utils.joinTags(emptySet()))
+    }
+
+    @Test
+    fun joinTagsShouldReplaceSpacesWithUnderscores() {
+        assertEquals("multi_word tag2", Utils.joinTags(linkedSetOf("multi word", "tag2")))
     }
 
     @Test

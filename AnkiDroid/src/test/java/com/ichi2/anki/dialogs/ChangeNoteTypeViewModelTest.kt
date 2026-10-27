@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs
 
@@ -28,11 +14,13 @@ import com.ichi2.anki.dialogs.ChangeNoteTypeViewModelTest.Launch.Regular
 import com.ichi2.anki.dialogs.SelectedIndex.NOTHING
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NotetypeJson
+import kotlinx.coroutines.Job
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class ChangeNoteTypeViewModelTest : RobolectricTest() {
@@ -44,6 +32,23 @@ class ChangeNoteTypeViewModelTest : RobolectricTest() {
                 assertFailsWith<ChangeNoteTypeException> { executeChangeNoteTypeAsync().await() }
             assertThat(expectedException.message, equalTo("No changes to save"))
             assertThat(expectedException.kind.toString(targetContext), equalTo("No changes to save"))
+        }
+
+    @Test
+    fun `closeDialogFlow emits unit on success`() =
+        viewModelTest {
+            val basicAndOptionalReversed = col.notetypes.byName("Basic (optional reversed card)")!!
+            setOutputNoteType(basicAndOptionalReversed)
+
+            closeDialogFlow.test {
+                // MutableStateFlow emits its initial value (null) immediately.
+                assertThat(awaitItem(), equalTo(null))
+
+                val changes = executeChangeNoteTypeAsync().await()
+                // assert that the flow emitted unit after execution
+                assertThat(awaitItem(), equalTo(Unit))
+                cancelAndIgnoreRemainingEvents()
+            }
         }
 
     @Test
@@ -410,6 +415,20 @@ class ChangeNoteTypeViewModelTest : RobolectricTest() {
     }
 
     @Test
+    fun `a template selection is ignored after switching to cloze`() =
+        viewModelTest(Regular(templateCount = 2)) {
+            setOutputNoteType(col.notetypes.byName("Cloze")!!)
+
+            assertTemplateSelectionIsIgnored()
+        }
+
+    @Test
+    fun `a template selection is ignored for a cloze note type`() =
+        viewModelTest(Cloze()) {
+            assertTemplateSelectionIsIgnored()
+        }
+
+    @Test
     fun `init fails if no notes`() {
         val ex = assertFailsWith<IllegalArgumentException> { buildViewModel(noteIds = emptyList()) }
         assertThat(ex.message, equalTo("ARG_NOTE_IDS was empty"))
@@ -554,4 +573,25 @@ private suspend fun ChangeNoteTypeViewModel.setOutputNoteType(noteType: Notetype
 private fun ChangeNoteTypeViewModel.templateNameToIndex(name: String) =
     SelectedIndex.Index(this.outputNoteType.templatesNames.indexOf(name))
 
-private fun ChangeNoteTypeViewModel.canMapTemplates(): Boolean = canChangeTemplatesFlow.value
+/** [ChangeNoteTypeViewModel.canChangeTemplates], checking that [ChangeNoteTypeViewModel.canChangeTemplatesFlow] agrees */
+private fun ChangeNoteTypeViewModel.canMapTemplates(): Boolean =
+    canChangeTemplates.also { assertThat("canChangeTemplatesFlow agrees", canChangeTemplatesFlow.value, equalTo(it)) }
+
+/** Waits for the job, returning what it failed with, or `null` if it succeeded */
+private suspend fun Job.failureOrNull(): Throwable? {
+    join()
+    var cause: Throwable? = null
+    invokeOnCompletion { cause = it }
+    return cause
+}
+
+/** Asserts that a template selection is dropped, rather than being fatal or changing the map */
+private suspend fun ChangeNoteTypeViewModel.assertTemplateSelectionIsIgnored() {
+    assertThat("precondition: templates are locked", canMapTemplates(), equalTo(false))
+    val mappingBefore = templateChangeMap
+
+    val failure = updateTemplateMapping(outputTemplateIndex = 0, mappedFrom = NOTHING).failureOrNull()
+
+    assertNull(failure, "the selection must not crash")
+    assertThat("the mapping is left alone", templateChangeMap, equalTo(mappingBefore))
+}

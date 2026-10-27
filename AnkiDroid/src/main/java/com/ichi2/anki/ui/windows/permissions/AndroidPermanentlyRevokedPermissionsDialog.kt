@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.ui.windows.permissions
 
@@ -21,8 +7,8 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createNoStorageList
 import com.ichi2.utils.cancelable
@@ -49,7 +35,7 @@ object AndroidPermanentlyRevokedPermissionsDialog {
 
         val message =
             context.getString(
-                R.string.directory_revoked_after_inactivity,
+                CommonString.directory_revoked_after_inactivity,
                 "WRITE_EXTERNAL_STORAGE",
                 getCurrentAnkiDroidDirectoryPath(context),
             )
@@ -73,6 +59,6 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             CollectionHelper.getCurrentAnkiDroidDirectory(context).absolutePath
         } catch (e: Exception) {
             Timber.w(e)
-            context.getString(R.string.card_browser_unknown_deck_name)
+            context.getString(CommonString.card_browser_unknown_deck_name)
         }
 }

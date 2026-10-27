@@ -1,21 +1,9 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.utils.ext
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -55,14 +43,27 @@ fun FragmentActivity.dismissAllDialogFragments() {
 }
 
 /**
- * @return The last fragment added by [showDialogFragment], only  if it is the provided type.
- * `null` if the type does not match, or if a dialog has not been shown
+ * Executes [block] after all fragments have executed `onViewCreated`
  */
-inline fun <reified T : DialogFragment> FragmentActivity.getCurrentDialogFragment(): T? =
-    supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as? T?
-
-/**
- * @return The last fragment added by [showDialogFragment], only  if it is the provided type.
- * `null` if the type does not match, or if a dialog has not been shown
- */
-inline fun <reified T : DialogFragment> Fragment.getCurrentDialogFragment(): T? = requireActivity().getCurrentDialogFragment()
+fun FragmentActivity.onAllFragmentsLoaded(block: () -> Unit) {
+    supportFragmentManager.registerFragmentLifecycleCallbacks(
+        object : FragmentManager.FragmentLifecycleCallbacks() {
+            override fun onFragmentViewCreated(
+                fm: FragmentManager,
+                f: Fragment,
+                v: View,
+                savedInstanceState: Bundle?,
+            ) {
+                super.onFragmentViewCreated(fm, f, v, savedInstanceState)
+                if (supportFragmentManager.fragments.all { it.view != null }) {
+                    try {
+                        block()
+                    } finally {
+                        supportFragmentManager.unregisterFragmentLifecycleCallbacks(this)
+                    }
+                }
+            }
+        },
+        true,
+    )
+}

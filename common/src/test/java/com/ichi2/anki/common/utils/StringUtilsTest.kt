@@ -1,18 +1,4 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
-
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.common.utils
 
@@ -24,6 +10,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import kotlin.test.assertFailsWith
 
 /** Test of [toTitleCase] */
 class StringUtilsTest {
@@ -66,26 +53,6 @@ class StringUtilsTest {
     fun toTitleCase_multi_word_as_single_entity() {
         assertThat(toTitleCase("HELLO WORLD"), equalTo("Hello world"))
         assertThat(toTitleCase("hello world"), equalTo("Hello world"))
-    }
-
-    @Test
-    fun trimToLength_under_max() {
-        assertThat("hello".trimToLength(10), equalTo("hello"))
-    }
-
-    @Test
-    fun trimToLength_over_max() {
-        assertThat("hello".trimToLength(3), equalTo("hel"))
-    }
-
-    @Test
-    fun trimToLength_exact_match() {
-        assertThat("hello".trimToLength(5), equalTo("hello"))
-    }
-
-    @Test
-    fun trimToLength_zero() {
-        assertThat("hello".trimToLength(0), equalTo(""))
     }
 
     @Test
@@ -222,5 +189,70 @@ class StringUtilsTest {
         val result = "&<>".htmlEncode()
         assertThat(result, equalTo("&amp;&lt;&gt;"))
         assertFalse(result.contains("&amp;lt;"))
+    }
+
+    @Test
+    fun ellipsize_input_greater_than_threshold() {
+        val expected = "Hello1"
+        assertThat(expected.ellipsize(ellipsizeAfter = 5), equalTo("Hello…"))
+    }
+
+    @Test
+    fun ellipsize_input_equal_to_threshold() {
+        val expected = "Hello"
+        assertThat(expected.ellipsize(ellipsizeAfter = 5), equalTo("Hello"))
+    }
+
+    @Test
+    fun ellipsize_input_less_than_threshold() {
+        val expected = "Hi"
+        assertThat(expected.ellipsize(ellipsizeAfter = 5), equalTo("Hi"))
+    }
+
+    @Test
+    fun ellipsize_blank_input() {
+        assertThat("".ellipsize(ellipsizeAfter = 1), equalTo(""))
+    }
+
+    @Test
+    fun ellipsize_input_invalid_threshold() {
+        assertFailsWith<IllegalArgumentException> { "hello".ellipsize(0) }
+        assertFailsWith<IllegalArgumentException> { "hello".ellipsize(-1) }
+    }
+
+    @Test
+    fun ellipsize_emoji_is_not_split() {
+        val input = "Brazil\uD83C\uDDE7\uD83C\uDDF7"
+        assertThat(input.ellipsize(6), equalTo("Brazil…"))
+        assertThat(input.ellipsize(7), equalTo("Brazil…"))
+        assertThat(input.ellipsize(8), equalTo("Brazil…"))
+        assertThat(input.ellipsize(9), equalTo("Brazil…"))
+        assertThat(input.ellipsize(10), equalTo("Brazil\uD83C\uDDE7\uD83C\uDDF7"))
+        assertThat(input + " ".ellipsize(11), equalTo("Brazil\uD83C\uDDE7\uD83C\uDDF7 "))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_plain_letter() {
+        assertThat("work".firstGraphemeOrNull(), equalTo("w"))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_empty_string() {
+        assertNull("".firstGraphemeOrNull())
+    }
+
+    @Test
+    fun firstGraphemeOrNull_emoji_is_not_split() {
+        assertThat("\uD83D\uDE00 Study".firstGraphemeOrNull(), equalTo("\uD83D\uDE00"))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_flag_is_not_split() {
+        assertThat("\uD83C\uDDEE\uD83C\uDDF3 India".firstGraphemeOrNull(), equalTo("\uD83C\uDDEE\uD83C\uDDF3"))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_keeps_combining_accent_with_its_base_letter() {
+        assertThat("e\u0301cole".firstGraphemeOrNull(), equalTo("e\u0301"))
     }
 }

@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki
 
@@ -30,8 +17,8 @@ import android.widget.EditText
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.FixedEditText
@@ -44,6 +31,7 @@ import timber.log.Timber
 import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
+import com.ichi2.anki.common.android.R as CommonR
 
 class FieldEditText :
     FixedEditText,
@@ -92,7 +80,7 @@ class FieldEditText :
         val highlightColor =
             MaterialColors.getColor(
                 context,
-                R.attr.editTextHighlightColor,
+                CommonR.attr.editTextHighlightColor,
                 "#99CCFF".toColorInt(), // light blue color for fallback just-in-case
             )
         setHighlightColor(highlightColor)
@@ -125,7 +113,7 @@ class FieldEditText :
      * Modify the style of this view to represent a duplicate field.
      */
     fun setDupeStyle() {
-        setBackgroundColor(MaterialColors.getColor(context, R.attr.duplicateColor, 0))
+        setBackgroundColor(MaterialColors.getColor(context, CommonR.attr.duplicateColor, 0))
     }
 
     /**
@@ -139,14 +127,7 @@ class FieldEditText :
         content: String?,
         replaceNewLine: Boolean,
     ) {
-        val text =
-            if (content == null) {
-                ""
-            } else if (replaceNewLine) {
-                content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
-            } else {
-                content
-            }
+        val text = if (content == null) "" else convertBrToNewline(content, replaceNewLine)
         setText(text)
     }
 
@@ -192,7 +173,7 @@ class FieldEditText :
                 pasteListener!!.onPaste(this, mediaUri, description)
             } catch (e: Exception) {
                 Timber.w(e, "Failed to paste media")
-                showSnackbar(context.getString(R.string.multimedia_editor_something_wrong))
+                showSnackbar(context.getString(CommonString.multimedia_editor_something_wrong))
                 false
             }
         }
@@ -242,5 +223,11 @@ class FieldEditText :
 
     companion object {
         val NEW_LINE: String = System.getProperty("line.separator")!!
+
+        /** Converts stored `<br>` HTML line breaks to [NEW_LINE], matching [setContent]'s handling. */
+        fun convertBrToNewline(
+            content: String,
+            replaceNewLine: Boolean,
+        ): String = if (replaceNewLine) content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE) else content
     }
 }

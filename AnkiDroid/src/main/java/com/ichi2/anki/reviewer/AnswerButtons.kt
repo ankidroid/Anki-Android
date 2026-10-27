@@ -1,26 +1,14 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.reviewer
 
 import android.content.Context
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.themes.Themes
+import com.ichi2.anki.common.android.animationEnabled
+import com.ichi2.anki.common.utils.android.getColorsFromAttrs
+import com.ichi2.anki.common.utils.android.getResFromAttr
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Handles mapping from an answer button to its position.
@@ -84,30 +72,30 @@ enum class AnswerButtons {
             val backgroundIds: IntArray =
                 if (ctx.animationEnabled()) {
                     intArrayOf(
-                        R.attr.againButtonRippleRef,
-                        R.attr.hardButtonRippleRef,
-                        R.attr.goodButtonRippleRef,
-                        R.attr.easyButtonRippleRef,
+                        CommonR.attr.againButtonRippleRef,
+                        CommonR.attr.hardButtonRippleRef,
+                        CommonR.attr.goodButtonRippleRef,
+                        CommonR.attr.easyButtonRippleRef,
                     )
                 } else {
                     intArrayOf(
-                        R.attr.againButtonRef,
-                        R.attr.hardButtonRef,
-                        R.attr.goodButtonRef,
-                        R.attr.easyButtonRef,
+                        CommonR.attr.againButtonRef,
+                        CommonR.attr.hardButtonRef,
+                        CommonR.attr.goodButtonRef,
+                        CommonR.attr.easyButtonRef,
                     )
                 }
-            return Themes.getResFromAttr(ctx, backgroundIds)
+            return getResFromAttr(ctx, backgroundIds)
         }
 
         fun getTextColors(ctx: Context): IntArray =
-            Themes.getColorsFromAttrs(
+            getColorsFromAttrs(
                 ctx,
                 intArrayOf(
-                    R.attr.againButtonTextColor,
-                    R.attr.hardButtonTextColor,
-                    R.attr.goodButtonTextColor,
-                    R.attr.easyButtonTextColor,
+                    CommonR.attr.againButtonTextColor,
+                    CommonR.attr.hardButtonTextColor,
+                    CommonR.attr.goodButtonTextColor,
+                    CommonR.attr.easyButtonTextColor,
                 ),
             )
     }

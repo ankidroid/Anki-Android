@@ -5,7 +5,7 @@
     <string name="pref_general_screen_key">generalScreen</string>
     <string name="deck_for_new_cards_key">useCurrent</string>
     <string name="pref_language_key">language</string>
-    <string name="analytics_opt_in_key">analytics_opt_in</string>
+    <string name="analytics_opt_in_key">analytics_opt_in_v2</string>
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
@@ -33,6 +33,7 @@
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Editing -->
     <string name="paste_png_key">pastePNG</string>
+    <string name="last_shared_deck_id_key">lastSharedDeckId</string>
     <!-- Switch Profile -->
     <string name="pref_switch_profile_screen_key">switchProfileScreen</string>
     <string name="pref_enable_switch_profile_key">enableSwitchProfile</string>
@@ -137,6 +138,10 @@
     <string name="replay_voice_command_key">binding_REPLAY_VOICE</string>
     <string name="save_voice_command_key">binding_SAVE_VOICE</string>
     <string name="toggle_whiteboard_command_key">binding_TOGGLE_WHITEBOARD</string>
+    <string name="pref_key_whiteboard_toggle_eraser">binding_whiteboard_TOGGLE_ERASER</string>
+    <string name="pref_key_whiteboard_clear">binding_whiteboard_CLEAR</string>
+    <string name="pref_key_whiteboard_undo">binding_whiteboard_UNDO</string>
+    <string name="pref_key_whiteboard_redo">binding_whiteboard_REDO</string>
     <string name="toggle_eraser_command_key">binding_TOGGLE_ERASER</string>
     <string name="clear_whiteboard_command_key">binding_CLEAR_WHITEBOARD</string>
     <string name="change_whiteboard_pen_color_command_key">binding_CHANGE_WHITEBOARD_PEN_COLOR</string>
@@ -197,23 +202,26 @@
     <string name="media_import_allow_all_files_key">mediaImportAllowAllFiles</string>
     <string name="pref_cat_plugins_key">category_plugins</string>
     <string name="enable_api_key">providerEnabled</string>
+    <string name="pref_allow_card_external_launch_key">allowCardExternalLaunch</string>
     <string name="thirdparty_apps_key">thirdpartyapps_link</string>
     <string name="tts_key">tts</string>
     <string name="double_scrolling_gap_key">double_scrolling</string>
+    <string name="pref_allow_dangerous_js_api">allow_dangerous_js_api</string>
     <string name="html_javascript_debugging_key">html_javascript_debugging</string>
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
     <!-- Notification preferences -->
     <string name="pref_notifications_screen_key">notificationsScreen</string>
-    <string name="pref_notifications_minimum_cards_due_key">minimumCardsDueForNotification</string>
     <string name="pref_notifications_vibrate_key">widgetVibrate</string>
     <string name="pref_notifications_blink_key">widgetBlink</string>
     <!-- Review reminders -->
     <string name="pref_review_reminders_screen_key">reviewRemindersScreen</string>
     <string name="review_reminders_next_free_id">reviewRemindersNextFreeId</string>
     <string name="reminder_notifs_request_shown_key">reminderNotifsRequestShown</string>
+    <string name="review_reminder_deserialization_errors_key">reviewReminderDeserializationErrors</string>
     <!-- Notifications -->
+    <string name="notifications_bottom_sheet_below_33">notificationsBottomSheetBelow33</string>
     <string name="notifications_permission_requested_key">notificationsPermissionRequested</string>
     <string name="record_audio_permission_requested_key">recordAudioPermissionRequested</string>
     <!-- Developer options -->
@@ -225,14 +233,14 @@
     <string name="pref_corrupt_fsrs_params">debug_corrupt_fsrs_params</string>
     <string name="new_congrats_screen_pref_key">new_congrats_screen</string>
     <string name="new_reviewer_options_key">newReviewerOptions</string>
-    <string name="pref_browser_find_replace">browserFindReplace</string>
-    <string name="pref_new_review_reminders">newReviewReminders</string>
     <string name="developer_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <string name="pref_cat_wip_key">workInProgressDevOptions</string>
     <string name="reviewer_port_pref_key">reviewerPort</string>
     <string name="use_fixed_port_pref_key">useFixedPort</string>
+    <string name="pref_allow_template_audio_recording">allowTemplateAudioRecording</string>
     <string name="dev_card_browser_fragmented">cardBrowserFragmented</string>
     <string name="dev_card_browser_search_view">cardBrowserSearchView</string>
+    <string name="dev_bottom_nav_key">devBottomNav</string>
     <string name="dev_open_tts_voices">openTtsVoices</string>
     <!-- Developer options > Create fake notes -->
     <string name="pref_fill_default_deck_number_key">FillDefaultNumberDeck</string>
@@ -263,4 +271,6 @@
     <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
     <string name="reviewer_toolbar_position_key">reviewerToolbarPosition</string>
 
+    <!-- Onboarding -->
+    <string name="internet_permission_requested_key">internetPermissionRequested</string>
 </resources>

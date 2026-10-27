@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2021 Nicola Dardanis <nicdard@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-@file:Suppress("UnstableApiUsage")
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Nicola Dardanis <nicdard@gmail.com>
 
 package com.ichi2.anki.lint.rules
 
@@ -31,7 +17,7 @@ import org.jetbrains.uast.UCallExpression
 
 /**
  * This custom Lint rules will raise an error if a developer uses the {android.widget.Toast#makeText(...)} method instead
- * of using the top level method {com.ichi2.anki.showThemedToast(...)} provided by the UIUtils file.
+ * of using the top level method {com.ichi2.anki.common.utils.android.showThemedToast(...)} provided by the Toast file.
  */
 class DirectToastMakeTextUsage :
     Detector(),
@@ -68,7 +54,7 @@ class DirectToastMakeTextUsage :
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
-        if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtilsKt") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "ToastKt") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
             context.report(
                 ISSUE,
                 node,

@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.pages
 
 import android.os.Bundle
@@ -30,13 +17,15 @@ import com.ichi2.anki.R
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
+import com.ichi2.utils.WebViewVersion
+import com.ichi2.utils.showDialogIfWebViewOutdated
 import timber.log.Timber
 
 /**
  * Base class for displaying Anki HTML pages
  */
 abstract class PageFragment(
-    @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
+    @LayoutRes contentLayoutId: Int = R.layout.fragment_page,
 ) : Fragment(contentLayoutId),
     PostRequestHandler,
     OnWebViewRecreatedListener {
@@ -63,6 +52,8 @@ abstract class PageFragment(
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?) = PageWebViewClient()
 
     protected open fun onWebViewCreated() { }
+
+    protected open val minimumWebViewVersion: WebViewVersion? = null
 
     /**
      * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
@@ -103,15 +94,26 @@ abstract class PageFragment(
         server = AnkiServer(this).also { it.start() }
         webViewLayout = view.findViewById(R.id.webview_layout)
 
+        minimumWebViewVersion?.let { minVersion ->
+            val isOutdated =
+                with(requireContext()) {
+                    showDialogIfWebViewOutdated(minVersion) {
+                        requireActivity().finish()
+                    }
+                }
+            if (isOutdated) {
+                Timber.w("${this::class.simpleName} requires modern WebView version, aborting load")
+                return
+            }
+        }
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
         setupWebView(savedInstanceState)
     }
 
     private fun setupWebView(savedInstanceState: Bundle?) {
-        val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
+        val pageWebViewClient = onCreateWebViewClient(savedInstanceState).apply { serverUrl = server.baseUrl().toUri() }
         webViewLayout.apply {
             setAcceptThirdPartyCookies(true)
             with(settings) {
