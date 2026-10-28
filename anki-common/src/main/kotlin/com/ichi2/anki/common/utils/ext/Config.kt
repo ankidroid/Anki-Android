@@ -109,7 +109,7 @@ var Config.flagLabels by ConfigProperty(
  *
  * Defaults to an empty map when the `savedFilters` collection config key is absent.
  *
- * [source](https://github.com/ankitects/anki/blob/main/pylib/anki/collection.py)
+ * [source](https://github.com/ankitects/anki/blob/main/qt/aqt/browser/sidebar/tree.py)
  * @see SavedSearch
  */
 var Config.savedFilters by jsonConfigProperty<Map<String, String>>("savedFilters").orDefault(emptyMap()).mapped(
