@@ -33,19 +33,20 @@ open class SafeWebViewLayout :
         DESTROYED_TERMINAL,
     }
 
-    private var webView: WebView = createWebView()
+    /** May be destroyed: prefer [activeWebView] unless the destroyed instance is needed. */
+    private var uncheckedWebView: WebView = createWebView()
 
     private var webViewState = WebViewState.ACTIVE
 
     /** The inner [WebView], or `null` while it is destroyed. Public methods should go through this. */
     private val activeWebView: WebView?
         get() {
-            if (webViewState == WebViewState.ACTIVE) return webView
+            if (webViewState == WebViewState.ACTIVE) return uncheckedWebView
             Timber.w("WebView call ignored: WebView was destroyed")
             return null
         }
 
-    var scrollBars: Int = webView.scrollBarStyle
+    var scrollBars: Int = uncheckedWebView.scrollBarStyle
         set(value) {
             field = value
             activeWebView?.scrollBarStyle = value
@@ -60,14 +61,14 @@ open class SafeWebViewLayout :
     protected open fun createWebView() = WebView(context)
 
     init {
-        addView(webView, webViewLayoutParams)
+        addView(uncheckedWebView, webViewLayoutParams)
     }
 
     // Not guarded when not [WebViewState.ACTIVE]: callers rarely use these after destroy and a no-op is impossible.
-    val settings: WebSettings get() = webView.settings
+    val settings: WebSettings get() = uncheckedWebView.settings
 
     @Suppress("DEPRECATION")
-    val scale get() = webView.scale
+    val scale get() = uncheckedWebView.scale
 
     @MainThread
     fun zoomBy(zoomFactor: Float) {
@@ -152,7 +153,7 @@ open class SafeWebViewLayout :
     @MainThread
     fun destroy() {
         when (webViewState) {
-            WebViewState.ACTIVE -> webView.destroy()
+            WebViewState.ACTIVE -> uncheckedWebView.destroy()
             // Crash cleanup already destroyed the native WebView; promote to terminal so reattach
             // does not recover.
             WebViewState.DESTROYED_RECOVERABLE -> Unit
@@ -187,7 +188,7 @@ open class SafeWebViewLayout :
      * [onAttachedToWindow] recreates the inner [WebView] from [WebViewState.DESTROYED_RECOVERABLE].
      */
     override fun onRenderProcessGone(webView: WebView) {
-        if (webView !== this.webView) {
+        if (webView !== uncheckedWebView) {
             destroyWebView(webView)
             return
         }
@@ -256,14 +257,14 @@ open class SafeWebViewLayout :
     }
 
     private fun recreateInnerWebView(listener: OnWebViewRecreatedListener) {
-        val previousWebView = this.webView
+        val previousWebView = uncheckedWebView
         if (previousWebView.parent == this) {
             removeView(previousWebView)
         }
-        this.webView = createWebView()
+        uncheckedWebView = createWebView()
         webViewState = WebViewState.ACTIVE
-        addView(this.webView, webViewLayoutParams)
-        listener.onWebViewRecreated(this.webView)
+        addView(uncheckedWebView, webViewLayoutParams)
+        listener.onWebViewRecreated(uncheckedWebView)
     }
 
     private fun tryRecoverDestroyedWebViewIfNeeded(listener: OnWebViewRecreatedListener) {
@@ -292,7 +293,7 @@ open class SafeWebViewLayout :
     }
 
     /**
-     * Destroys the internal state of the wrapped [webView]
+     * Destroys the internal state of the wrapped [uncheckedWebView]
      *
      * No other methods may be called on this WebView after destroy
      */
@@ -300,7 +301,7 @@ open class SafeWebViewLayout :
     fun safeDestroy() {
         when (webViewState) {
             WebViewState.ACTIVE -> {
-                destroyWebView(webView, this)
+                destroyWebView(uncheckedWebView, this)
                 // Mark destroyed even if [destroyWebView] partially failed; using a partially torn-down
                 // WebView is unsafe.
             }
