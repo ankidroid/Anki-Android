@@ -465,6 +465,9 @@ suspend fun <T> Fragment.withProgress(
     block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
+/** Used to avoid showing extra progress dialogs when one already shown. */
+private var progressDialogShown = false
+
 // TODO: #17551 add a lease-owned progress UI, with `CollectionLease.cancel` as its Cancel handler.
 //  Rethink `progressDialogShown` and `FLAG_NOT_TOUCHABLE`.
 @Suppress("Deprecation") // ProgressDialog deprecation
@@ -502,7 +505,7 @@ suspend fun <T> withProgressDialog(
         val dialogJob =
             launch {
                 delay(delayDuration)
-                if (!AnkiDroidApp.instance.progressDialogShown) {
+                if (!progressDialogShown) {
                     Timber.i(
                         """Displaying progress dialog: $delayDuration elapsed;
                 |cancellable: ${onCancel != null}; 
@@ -511,7 +514,7 @@ suspend fun <T> withProgressDialog(
                         """.trimMargin(),
                     )
                     dialog.show()
-                    AnkiDroidApp.instance.progressDialogShown = true
+                    progressDialogShown = true
                     dialogIsOurs = true
                 } else {
                     Timber.w(
@@ -530,7 +533,7 @@ suspend fun <T> withProgressDialog(
             dismissDialogIfShowing(dialog)
             context.runOnUiThread { context.window.unblockTouches() }
             if (dialogIsOurs) {
-                AnkiDroidApp.instance.progressDialogShown = false
+                progressDialogShown = false
             }
         }
     }
