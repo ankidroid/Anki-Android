@@ -120,6 +120,9 @@ object SentenceCaseExtension {
     fun renameDeck() = resourceCase(tr().actionsRenameDeck(), R.string.sentence_rename_deck)
 
     @Composable
+    fun renameTag() = resourceCase(tr().actionsRenameTag(), R.string.sentence_rename_tag)
+
+    @Composable
     fun deckOptions() = resourceCase(tr().deckConfigTitle(), R.string.sentence_deck_options)
 
     @Composable
