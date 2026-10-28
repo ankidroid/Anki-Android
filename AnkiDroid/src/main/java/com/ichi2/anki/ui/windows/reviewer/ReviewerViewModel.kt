@@ -499,7 +499,7 @@ class ReviewerViewModel(
         statesMutationEvalFlow.emit(
             """
             anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js })
-                .finally(() => fetch("ankidroid/statesMutated", { method: "POST" }));
+                .finally(() => ankidroid.request("statesMutated"));
             """,
         )
     }
