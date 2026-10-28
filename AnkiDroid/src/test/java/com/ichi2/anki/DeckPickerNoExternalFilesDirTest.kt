@@ -2,7 +2,7 @@
 
 package com.ichi2.anki
 
-import android.content.Context
+import android.Manifest
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -26,22 +26,20 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
-import org.robolectric.annotation.Implementation
-import org.robolectric.annotation.Implements
 import org.robolectric.shadows.ShadowDialog
-import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.absolutePathString
 
 @RunWith(AndroidJUnit4::class)
-@Config(shadows = [ShadowNullExternalFilesDir::class])
+@Config(shadows = [ShadowNullExternalStorage::class])
 class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
     // TODO: @Config(sdk = [Build.VERSION_CODES.BAKLAVA]) // Bug 460912704 occurs on Android 16
     @Test
     fun `Fatal error is shown on fresh startup getExternalFilesDir is null`() {
         // Currently undefined if we should fail when PREF_COLLECTION_PATH is set
         //  but getExternalFilesDir returns null
+        assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
 
         // IntroductionActivity should be skipped by our code so we can show the error
         // without user interaction
@@ -54,6 +52,7 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
     @Test
     @Config(application = AnkiDroidAppWithCollectionButUnwritableStorage::class)
     fun `Fatal error is shown when getExternalFilesDir is null and collection is set but unwritable`() {
+        assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
         // IntroductionActivity should be skipped by our code so we can show the error
         // without user interaction
         deckPicker(skipIntroduction = false) {
@@ -65,6 +64,7 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
     @Test
     fun `fatal error is shown after 'Create a new collection' and getExternalFilesDir is null`() =
         try {
+            assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
             AnkiDroidApp.clearFatalError()
             withNoWritePermission {
                 CollectionHelper.ankiDroidDirectoryOverride = tempFolder.newFolder()
@@ -92,23 +92,17 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
         }
 }
 
-/**
- * A shadow which makes [Context.getExternalFilesDir] return `null`
- */
-@Suppress("ProtectedInFinal", "unused")
-@Implements(
-    className = "android.app.ContextImpl",
-    isInAndroidSdk = false,
-)
-class ShadowNullExternalFilesDir {
-    @Implementation
-    protected fun getExternalFilesDir(type: String?): File? = null
-}
-
 class AnkiDroidAppWithCollectionButUnwritableStorage : AnkiDroidApp() {
     override fun onCreate() =
         withTempDir("DeckPickerNoExternalFilesDirTest") { path ->
             try {
+                // Legacy storage permission is what reaches initializeAnkiDroidDirectory
+                // after a collection path is already saved. The mock then throws, and a
+                // null external files dir becomes the storage fatal error.
+                shadowOf(this).grantPermissions(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                )
                 mockkObject(CollectionHelper)
                 every { CollectionHelper.initializeAnkiDroidDirectory(any()) } throws StorageAccessException("testing")
                 this.sharedPrefs().edit {

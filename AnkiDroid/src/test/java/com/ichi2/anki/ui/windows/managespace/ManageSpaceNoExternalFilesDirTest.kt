@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.ShadowNullExternalFilesDir
+import com.ichi2.anki.ShadowNullExternalStorage
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -16,10 +16,12 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-@Config(shadows = [ShadowNullExternalFilesDir::class])
+@Config(shadows = [ShadowNullExternalStorage::class])
 class ManageSpaceNoExternalFilesDirTest : RobolectricTest() {
     @Test
     fun `opening without an external files dir redirects to the app start`() {
+        assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
+
         val controller = Robolectric.buildActivity(ManageSpaceActivity::class.java, Intent())
         saveControllerForCleanup(controller)
 
