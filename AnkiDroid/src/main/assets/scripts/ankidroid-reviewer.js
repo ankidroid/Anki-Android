@@ -54,16 +54,6 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 // ============================================================================
 
 (() => {
-    function localRequest(endpoint, payload = {}) {
-        fetch(`ankidroid/${endpoint}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        }).catch(err => console.log("Failed to reach local server:", err));
-    }
-
     /**
      * Checks if the target element is a text input field.
      * @param {Event} event
@@ -76,13 +66,13 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 
     document.addEventListener("focusin", event => {
         if (isTextInput(event)) {
-            localRequest("focusin");
+            ankidroid.request("focusin");
         }
     });
 
     document.addEventListener("focusout", event => {
         if (isTextInput(event)) {
-            localRequest("focusout");
+            ankidroid.request("focusout");
         }
     });
 })();
@@ -181,7 +171,7 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
                 if (elapsed > MULTI_TOUCH_TIMEOUT || hadMovedPastSlop) {
                     return;
                 }
-                sendGesture("multiFingerTap", { touchCount });
+                ankidroid.request("multiFingerTap", { touchCount });
                 return;
             }
 
@@ -195,7 +185,7 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             }
 
             // Swipes and tap detection
-            sendGesture("tapOrSwipe", {
+            ankidroid.request("tapOrSwipe", {
                 x: Math.round(endX),
                 y: Math.round(endY),
                 deltaX: Math.round(endX - startX),
@@ -206,21 +196,6 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
         },
         { passive: true },
     );
-
-    /**
-     * Sends the gesture data to be handled by the app.
-     * @param {"multiFingerTap"|"tapOrSwipe"} endpoint
-     * @param {Object} data
-     */
-    function sendGesture(endpoint, data) {
-        fetch(`ankidroid/${endpoint}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        }).catch(err => console.log("Failed to send gesture:", err));
-    }
 
     function resetTouches() {
         maxTouchCount = 0;
