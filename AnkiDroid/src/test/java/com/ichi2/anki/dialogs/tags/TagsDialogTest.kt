@@ -876,9 +876,9 @@ class TagsDialogTest : RobolectricTest() {
     private val TagsDialog.softInputAdjustment: Int
         get() = requireDialog().window!!.attributes.softInputMode and WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
 
-    private fun editTagsArguments() =
+    private fun editTagsArguments(allTags: List<String> = listOf("a")) =
         TagsDialog(ParametersUtils.whatever())
-            .withTestArguments(TagsDialog.DialogType.EDIT_TAGS, arrayListOf(), listOf("a"))
+            .withTestArguments(TagsDialog.DialogType.EDIT_TAGS, arrayListOf(), allTags)
             .requireArguments()
 
     private fun withTagsAfterTogglingAll(
@@ -973,23 +973,27 @@ class TagsDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `long-clicking a tag opens the add tag dialog prefilled with the tag as a prefix`() {
+        val tag = "parent"
+        runTagsDialogScenario(args = editTagsArguments(listOf(tag))) { tagsDialog ->
+            val recycler = tagsDialog.binding.tagsList
+            // Force layout so Robolectric creates the tag row.
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            val row = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+            row.itemView.performLongClick()
+            advanceRobolectricLooper()
+            val addTagDialog = ShadowDialog.getLatestDialog() as AlertDialog
+            assertEquals("$tag::", addTagDialog.getInputField().text.toString())
+        }
+    }
+
     private fun withAddTagDialog(
         allTags: List<String>,
         block: (AlertDialog) -> Unit,
     ) {
-        runTagsDialogScenario(
-            args =
-                TagsDialog(ParametersUtils.whatever())
-                    .withTestArguments(
-                        type = TagsDialog.DialogType.EDIT_TAGS,
-                        checkedTags = arrayListOf(),
-                        allTags = allTags,
-                    ).requireArguments(),
-            factory =
-                TagsDialogFactory(
-                    listener = Mockito.mock(TagsDialogListener::class.java),
-                ),
-        ) { tagsDialog: TagsDialog ->
+        runTagsDialogScenario(args = editTagsArguments(allTags)) { tagsDialog ->
             tagsDialog.binding.toolbar.root.menu
                 .performIdentifierAction(R.id.tags_dialog_action_add, 0)
             advanceRobolectricLooper()
