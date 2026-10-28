@@ -257,10 +257,6 @@ open class SafeWebViewLayout :
     }
 
     private fun recreateInnerWebView(listener: OnWebViewRecreatedListener) {
-        val previousWebView = uncheckedWebView
-        if (previousWebView.parent == this) {
-            removeView(previousWebView)
-        }
         uncheckedWebView = createWebView()
         webViewState = WebViewState.ACTIVE
         addView(uncheckedWebView, webViewLayoutParams)
