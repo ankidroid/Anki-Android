@@ -89,6 +89,13 @@ class ManageTagsViewModel : ViewModel() {
     /** Acknowledges that the UI has finished displaying a message. */
     fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
 
+    /** Clears a dismissed operation error if it is still current. */
+    fun errorDismissed(error: Throwable) {
+        updateState { current ->
+            if (current.error === error) current.copy(error = null) else current
+        }
+    }
+
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
 
@@ -426,7 +433,7 @@ sealed class ManageTagsState {
         val visibleNodes: List<TagListItemState>,
         /** `true` while a tag operation runs, allowing the UI to show progress without hiding the list. */
         val isWorking: Boolean = false,
-        /** Most recent operation failure, cleared when the next operation starts. */
+        /** Most recent operation failure, cleared on dismissal or when the next operation starts. */
         val error: Throwable? = null,
         val totalTagCount: Int = 0,
     ) : ManageTagsState()

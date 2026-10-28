@@ -469,6 +469,8 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 
     <!-- Manage tags screen -->
+    <string name="manage_tags">Manage tags</string>
+    <string name="manage_tags_search_hint">Search tags</string>
     <string name="manage_tags_clear_unused_confirm">Remove all tags with no associated notes.</string>
     <string name="manage_tags_rename_title">Rename tag</string>
     <string name="manage_tags_clear_unused_action">Clear</string>
@@ -482,5 +484,31 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="manage_tags_collapse" comment="Accessibility action for a tag row that hides its children">Collapse</string>
     <string name="manage_tags_state_collapsed" comment="Accessibility state of a tag row whose children are hidden">Collapsed</string>
     <string name="manage_tags_state_expanded" comment="Accessibility state of a tag row whose children are visible">Expanded</string>
+    <string name="manage_tags_no_matches" comment="Shown when a tag search returns no results">No tags match your search</string>
+
+    <plurals name="manage_tags_summary" comment="Header on the Manage Tags screen. %d is the total number of tags">
+        <item quantity="one">%d tag</item>
+        <item quantity="other">%d tags</item>
+    </plurals>
+
+    <plurals name="manage_tags_removed_from_notes" comment="Snackbar shown after deleting a tag. %d is the number of notes the tag was removed from">
+        <item quantity="one">Tag removed from %d note</item>
+        <item quantity="other">Tag removed from %d notes</item>
+    </plurals>
+
+    <plurals name="manage_tags_renamed_on_notes" comment="Snackbar shown after renaming a tag. %d is the number of notes whose tags were updated">
+        <item quantity="one">Tag renamed on %d note</item>
+        <item quantity="other">Tag renamed on %d notes</item>
+    </plurals>
+
+    <plurals name="manage_tags_moved_on_notes" comment="Snackbar shown after moving a tag to a new parent. %d is the number of notes whose tags were updated">
+        <item quantity="one">Tag moved on %d note</item>
+        <item quantity="other">Tag moved on %d notes</item>
+    </plurals>
+
+    <plurals name="manage_tags_unused_cleared" comment="Snackbar shown after clearing unused tags. %d is the number of tags cleared">
+        <item quantity="one">Cleared %d unused tag</item>
+        <item quantity="other">Cleared %d unused tags</item>
+    </plurals>
 </resources>
 
