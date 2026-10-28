@@ -8,12 +8,26 @@ import com.ichi2.anki.libanki.Collection
 /** Whether tag input can be submitted, with rejection reasons for the UI to localize. */
 internal enum class TagInputValidation { VALID, EMPTY, EMPTY_COMPONENT, UNCHANGED, ALREADY_EXISTS }
 
-/** Rejects empty components, unchanged names and collisions while allowing changes to the source's spelling. */
+/** Checks input and known tags without accessing the collection. */
+internal fun validateTagRename(
+    source: TagName,
+    text: String,
+    tagExists: (TagName) -> Boolean,
+): TagInputValidation = validateTagRename(source, text, tagExists, collection = null)
+
+/** Also checks stored parent spelling and paths that the tag tree can hide. */
 @WorkerThread
 internal fun Collection.validateTagRename(
     source: TagName,
     text: String,
     tagExists: (TagName) -> Boolean,
+): TagInputValidation = validateTagRename(source, text, tagExists, collection = this)
+
+private fun validateTagRename(
+    source: TagName,
+    text: String,
+    tagExists: (TagName) -> Boolean,
+    collection: Collection?,
 ): TagInputValidation {
     val candidate = TagName.build(text.trim()) ?: return TagInputValidation.EMPTY
     // DEFECT Older Android NFC tables can miss compositions that Anki applies,
@@ -28,13 +42,13 @@ internal fun Collection.validateTagRename(
         // DEFECT After an external case-only rename, this check can reject restoring the old spelling
         // and accept keeping the current spelling.
         candidate.value == source.value || spelling == source.value -> TagInputValidation.UNCHANGED
-        normalized == source && spellingWithRegisteredParent(spelling) == source.value -> TagInputValidation.UNCHANGED
+        normalized == source && collection?.spellingWithRegisteredParent(spelling) == source.value -> TagInputValidation.UNCHANGED
         // DEFECT Android and Anki can fold Unicode differently, so this check can reject a free
         // destination or allow an occupied one.
         normalized != source && (
             tagExists(
                 normalized,
-            ) || hasStoredTagWithOverlappingSeparator(normalized)
+            ) || collection?.hasStoredTagWithOverlappingSeparator(normalized) == true
         ) -> TagInputValidation.ALREADY_EXISTS
         else -> TagInputValidation.VALID
     }
