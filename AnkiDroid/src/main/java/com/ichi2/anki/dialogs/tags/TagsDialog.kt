@@ -34,6 +34,7 @@ import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogTagsBinding
 import com.ichi2.anki.launchCatchingTask
@@ -41,6 +42,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.tags.ManageTagsFragment
 import com.ichi2.anki.tags.tagNameInputFilter
 import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.anki.utils.ext.requireParcelable
@@ -323,6 +325,18 @@ class TagsDialog : AnalyticsDialogFragment {
         val toolbar: Toolbar = binding.toolbar.root
         val titleRes = if (type == DialogType.EDIT_TAGS) CommonString.card_details_tags else CommonString.studyoptions_limit_select_tags
         toolbar.setTitle(titleRes)
+
+        toolbar.menu.findItem(R.id.action_manage_tags).apply {
+            // Only the Card Browser opens FILTER_BY_TAG; editors and Custom Study share this dialog.
+            isVisible = type == DialogType.FILTER_BY_TAG
+            icon?.setTint(getColorFromAttr(toolbar.context, CommonR.attr.actionBarTextColor))
+            setOnMenuItemClickListener {
+                startActivity(ManageTagsFragment.getIntent(requireContext()))
+                // Cancel the pending selection and discard the tree that management can change.
+                dismiss()
+                true
+            }
+        }
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         val drawable = ContextCompat.getDrawable(requireContext(), CommonR.drawable.ic_add)
