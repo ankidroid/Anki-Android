@@ -2,6 +2,10 @@
 
 package com.ichi2.anki.tags
 
+import androidx.lifecycle.SavedStateHandle
+
+internal fun createManageTagsViewModel(savedStateHandle: SavedStateHandle = SavedStateHandle()) = ManageTagsViewModel(savedStateHandle)
+
 internal val ManageTagsState.Content.visibleTagNames: List<String>
     get() = visibleNodes.map { it.fullTagName }
 

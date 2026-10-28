@@ -44,12 +44,13 @@ internal fun TagActionsBottomSheet(
     enabled: Boolean,
     onAction: (TagAction) -> Unit,
     onDismissRequest: () -> Unit,
+    canRename: Boolean? = true,
 ) {
     if (LocalInspectionMode.current) {
         Surface(shape = BottomSheetDefaults.ExpandedShape, color = BottomSheetDefaults.ContainerColor) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 BottomSheetDefaults.DragHandle()
-                TagActions(tag, enabled, onAction)
+                TagActions(tag, enabled, canRename, onAction)
             }
         }
         return
@@ -58,7 +59,7 @@ internal fun TagActionsBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     ) {
-        TagActions(tag, enabled, onAction)
+        TagActions(tag, enabled, canRename, onAction)
     }
 }
 
@@ -67,6 +68,7 @@ internal fun TagActionsBottomSheet(
 private fun TagActions(
     tag: TagName,
     enabled: Boolean,
+    canRename: Boolean?,
     onAction: (TagAction) -> Unit,
 ) {
     Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom = 8.dp)) {
@@ -105,11 +107,23 @@ private fun TagActions(
                     TagAction.RENAME -> CommonString.rename to R.drawable.ic_mode_edit_white
                     else -> CommonString.dialog_positive_delete to R.drawable.ic_delete
                 }
-            val color = if (action == TagAction.DELETE) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+            val actionEnabled = enabled && (action != TagAction.RENAME || canRename == true)
+            val color =
+                when {
+                    !actionEnabled -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                    action == TagAction.DELETE -> MaterialTheme.colorScheme.error
+                    else -> MaterialTheme.colorScheme.onSurface
+                }
             ListItem(
                 headlineContent = { Text(stringResource(label), color = color) },
+                supportingContent =
+                    if (action == TagAction.RENAME && canRename == false) {
+                        { Text(stringResource(CommonString.manage_tags_rename_no_notes)) }
+                    } else {
+                        null
+                    },
                 leadingContent = { Icon(painterResource(icon), contentDescription = null, tint = color) },
-                modifier = Modifier.clickable(enabled = enabled) { onAction(action) },
+                modifier = Modifier.clickable(enabled = actionEnabled) { onAction(action) },
             )
         }
     }

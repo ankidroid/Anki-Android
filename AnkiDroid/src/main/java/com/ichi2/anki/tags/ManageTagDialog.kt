@@ -3,6 +3,8 @@
 package com.ichi2.anki.tags
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -28,7 +30,7 @@ internal fun ManageTagDialog(
     tagExists: (TagName) -> Boolean,
     onConfirm: (String) -> Unit,
     onDismissRequest: () -> Unit,
-    checkRenameCollision: (suspend (TagName, TagName) -> TagInputValidation?)? = null,
+    validateRenameInput: (suspend (TagName, String) -> TagInputValidation?)? = null,
     tagRevision: Long? = null,
 ) {
     val title = action.dialogTitle()
@@ -80,8 +82,9 @@ internal fun ManageTagDialog(
         text: String,
         result: TagInputValidation,
     ): Boolean = result == TagInputValidation.ALREADY_EXISTS && !text.isAscii() && !text.trimEnd().endsWith(':')
+    val validatedText = remember(source.value, tagRevision, validateRenameInput) { mutableStateOf<String?>(null) }
     val validation =
-        if (checkRenameCollision == null) {
+        if (validateRenameInput == null) {
             InputValidation.Immediate { text -> errorFor(check(text)) }
         } else {
             InputValidation.Async(
@@ -91,11 +94,13 @@ internal fun ManageTagDialog(
                 },
                 invalidationKey = tagRevision,
             ) { text ->
-                // A collision suggested by Android's case folding needs confirmation from the backend.
-                if (needsBackendCheck(text, check(text))) {
-                    errorFor(checkRenameCollision(source, requireNotNull(TagName.build(text.trim()))))
-                } else {
+                // The rename operation rechecks the destination under collection access.
+                if (validatedText.value == text) {
                     null
+                } else {
+                    errorFor(validateRenameInput(source, text)).also { error ->
+                        validatedText.value = text.takeIf { error == null }
+                    }
                 }
             }
         }
