@@ -69,6 +69,35 @@ class ReviewerGestureJavaScriptTest : InstrumentedTest() {
         }
     }
 
+    @Test
+    fun stuckRequestDoesNotBlockLaterRequests() {
+        val requests = LinkedBlockingQueue<String>()
+        val requestCount = AtomicInteger()
+        val releaseFirstRequest = CountDownLatch(1)
+        val handler =
+            recordingHandler { uri ->
+                requests.add(uri)
+                if (requestCount.incrementAndGet() == 1) {
+                    releaseFirstRequest.await(30, TimeUnit.SECONDS)
+                }
+            }
+        try {
+            withGesturePage(handler) {
+                sendTap()
+                assertEquals("/ankidroid/tapOrSwipe", requests.poll(5, TimeUnit.SECONDS))
+
+                sendTap()
+                assertEquals(
+                    "/ankidroid/tapOrSwipe",
+                    requests.poll(15, TimeUnit.SECONDS),
+                    "A request that is never answered must not block the next ones",
+                )
+            }
+        } finally {
+            releaseFirstRequest.countDown()
+        }
+    }
+
     private fun checkCardBaseDoesNotRedirectGestureRequests(base: String) {
         val requests = LinkedBlockingQueue<String>()
         // Accept every path so a wrong destination fails with its actual URL, rather than a timeout.
