@@ -118,6 +118,13 @@ class IncrementerNumberRangePreferenceCompat :
                                             }
                                         }.focusGroup(),
                                 requestFocus = true,
+                                onDone = {
+                                    (dialog as? AlertDialog)
+                                        ?.takeIf { it.isShowing }
+                                        ?.positiveButton
+                                        ?.takeIf { it.isEnabled }
+                                        ?.performClick()
+                                },
                                 onBindInput = {
                                     numberRangePreference.inputBindingListener?.onBindEditText(it)
                                 },
