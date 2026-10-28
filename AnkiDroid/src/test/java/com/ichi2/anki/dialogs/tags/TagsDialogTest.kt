@@ -31,6 +31,9 @@ import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
 import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.ListUtil
+import com.ichi2.utils.getInputField
+import com.ichi2.utils.getInputTextLayout
+import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThanOrEqualTo
@@ -41,9 +44,11 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
 import timber.log.Timber
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import com.ichi2.anki.common.android.R as CommonR
@@ -912,6 +917,51 @@ class TagsDialogTest : RobolectricTest() {
             type = type,
             checkedTags = checkedTags,
         )
+    }
+
+    @Test
+    fun `entering an existing tag shows an error and disables OK`() {
+        val existingTag = "a"
+        val validTag = "b"
+        runTagsDialogScenario(
+            args =
+                TagsDialog(ParametersUtils.whatever())
+                    .withTestArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = arrayListOf(),
+                        allTags = listOf(existingTag),
+                    ).requireArguments(),
+            factory =
+                TagsDialogFactory(
+                    listener = Mockito.mock(TagsDialogListener::class.java),
+                ),
+        ) { tagsDialog: TagsDialog ->
+            tagsDialog.binding.toolbar.root.menu
+                .performIdentifierAction(R.id.tags_dialog_action_add, 0)
+            advanceRobolectricLooper()
+            val addTagDialog = ShadowDialog.getLatestDialog() as AlertDialog
+            // OK starts disabled: Ensure its enabled for a valid input
+            addTagDialog.getInputField().setText(validTag)
+            advanceRobolectricLooperUntil(
+                lazyMessage = { "OK was never enabled for a valid tag" },
+            ) {
+                addTagDialog.positiveButton.isEnabled
+            }
+            addTagDialog.getInputField().setText(existingTag)
+            advanceRobolectricLooperUntil(
+                lazyMessage = { "error was never shown for an existing tag" },
+            ) {
+                addTagDialog.getInputTextLayout().error != null
+            }
+            assertEquals(
+                expected = targetContext.getString(CommonString.tag_already_exists),
+                actual = addTagDialog.getInputTextLayout().error.toString(),
+            )
+            assertFalse(
+                actual = addTagDialog.positiveButton.isEnabled,
+                message = "OK should be disabled for an existing tag",
+            )
+        }
     }
 
     private fun runTagsDialogScenario(
