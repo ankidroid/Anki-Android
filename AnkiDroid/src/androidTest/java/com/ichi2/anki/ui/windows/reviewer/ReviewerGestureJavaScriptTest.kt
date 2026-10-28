@@ -21,9 +21,12 @@ import com.ichi2.anki.testutil.notificationPermission
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 /** Executes the production touch listeners and requests in a real WebView. */
 @RunWith(AndroidJUnit4::class)
@@ -36,6 +39,35 @@ class ReviewerGestureJavaScriptTest : InstrumentedTest() {
 
     @Test
     fun crossOriginCardBaseDoesNotRedirectGestureRequests() = checkCardBaseDoesNotRedirectGestureRequests(base = "https://example.invalid/")
+
+    @Test
+    fun gestureRequestsAreHandledInOrder() {
+        val requests = LinkedBlockingQueue<String>()
+        val requestCount = AtomicInteger()
+        val releaseFirstRequest = CountDownLatch(1)
+        val handler =
+            recordingHandler { uri ->
+                requests.add(uri)
+                if (requestCount.incrementAndGet() == 1) {
+                    // Hold the first request, so a second one could overtake it
+                    releaseFirstRequest.await(10, TimeUnit.SECONDS)
+                }
+            }
+        try {
+            withGesturePage(handler) {
+                sendTap()
+                assertEquals("/ankidroid/tapOrSwipe", requests.poll(5, TimeUnit.SECONDS))
+
+                sendTap()
+                assertNull(requests.poll(1, TimeUnit.SECONDS), "A request must only be sent after the previous one is handled")
+
+                releaseFirstRequest.countDown()
+                assertEquals("/ankidroid/tapOrSwipe", requests.poll(5, TimeUnit.SECONDS))
+            }
+        } finally {
+            releaseFirstRequest.countDown()
+        }
+    }
 
     private fun checkCardBaseDoesNotRedirectGestureRequests(base: String) {
         val requests = LinkedBlockingQueue<String>()

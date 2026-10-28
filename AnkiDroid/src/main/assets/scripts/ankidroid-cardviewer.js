@@ -9,21 +9,31 @@ globalThis.ankidroid = globalThis.ankidroid || {};
 
 /**
  * Sends a POST request to the `/ankidroid/` endpoints of the app.
+ *
+ * Requests are sent one at a time, so the app handles them in the order they were made.
  * @param {string} endpoint
  * @param {Object} [payload] - sent as JSON
  * @returns {Promise<void>} resolved after the app handled the request
  */
-globalThis.ankidroid.request = function (endpoint, payload = {}) {
-    // Not a relative URL: a <base> element in the card would change its destination
-    const url = new URL(`/ankidroid/${endpoint}`, location.origin);
-    return fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    }).then(
-        () => {},
-        err => console.log(`Failed to send ${endpoint} request:`, err),
-    );
-};
+globalThis.ankidroid.request = (() => {
+    let lastRequest = Promise.resolve();
+    return function (endpoint, payload = {}) {
+        // Not a relative URL: a <base> element in the card would change its destination
+        const url = new URL(`/ankidroid/${endpoint}`, location.origin);
+        lastRequest = lastRequest
+            .then(() =>
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }),
+            )
+            .then(
+                () => {},
+                err => console.log(`Failed to send ${endpoint} request:`, err),
+            );
+        return lastRequest;
+    };
+})();
