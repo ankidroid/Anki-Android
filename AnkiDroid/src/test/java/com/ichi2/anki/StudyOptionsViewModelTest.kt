@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.progress.ViewModelProgress
 import kotlinx.coroutines.CoroutineScope
@@ -143,6 +144,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
             addDynamicDeck("Filtered", "")
+            viewModel.refreshData()
 
             viewModel.rebuildCram()
 
@@ -156,6 +158,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
             addDynamicDeck("Filtered", "")
+            viewModel.refreshData()
 
             ensureOpsExecuted(1) {
                 viewModel.emptyCram()
@@ -167,6 +170,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
             addDynamicDeck("Filtered", "")
+            viewModel.refreshData()
 
             ensureOpsExecuted(1) {
                 viewModel.rebuildCram()
@@ -178,6 +182,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
             addDynamicDeck("Filtered", "")
+            viewModel.refreshData()
 
             assertProgressAround(StudyOptionsProgress.REBUILDING_FILTERED_DECK) { viewModel.rebuildCram() }
         }
@@ -187,6 +192,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
             addDynamicDeck("Filtered", "")
+            viewModel.refreshData()
 
             assertProgressAround(StudyOptionsProgress.EMPTYING_FILTERED_DECK) { viewModel.emptyCram() }
         }
@@ -199,10 +205,58 @@ class StudyOptionsViewModelTest : RobolectricTest() {
                 val card = sched.card!!
                 sched.buryCards(listOf(card.id), true)
             }
+            viewModel.refreshData()
 
             ensureOpsExecuted(1) {
                 viewModel.unbury().join()
             }
+        }
+
+    @Test
+    fun `emptyCram - empties the shown deck when another deck is selected`() =
+        runTest {
+            addNoteToDeck(addDeck("ShownHome"))
+            addNoteToDeck(addDeck("OtherHome"))
+            val shown = addDynamicDeck("Shown", search = "deck:ShownHome")
+            viewModel.refreshData()
+            val other = addDynamicDeck("Other", search = "deck:OtherHome")
+
+            viewModel.emptyCram()
+
+            assertEquals(0, col.decks.cardCount(shown))
+            assertEquals(1, col.decks.cardCount(other))
+        }
+
+    @Test
+    fun `rebuildCram - rebuilds the shown deck when another deck is selected`() =
+        runTest {
+            addNoteToDeck(addDeck("ShownHome"))
+            addNoteToDeck(addDeck("OtherHome"))
+            val shown = addDynamicDeck("Shown", search = "deck:ShownHome")
+            viewModel.refreshData()
+            val other = addDynamicDeck("Other", search = "deck:OtherHome")
+            col.sched.emptyFilteredDeck(shown)
+
+            viewModel.rebuildCram()
+
+            assertEquals(1, col.decks.cardCount(shown))
+            assertEquals(1, col.decks.cardCount(other))
+        }
+
+    @Test
+    fun `unbury - unburies the shown deck when another deck is selected`() =
+        runTest {
+            val shown = addDeck("Shown", setAsSelected = true)
+            val other = addDeck("Other")
+            viewModel.refreshData()
+            addNoteToDeck(shown, queueType = QueueType.ManuallyBuried)
+            addNoteToDeck(other, queueType = QueueType.ManuallyBuried)
+            col.decks.select(other)
+
+            viewModel.unbury().join()
+
+            assertEquals(QueueType.New, col.getCard(col.findCards("deck:Shown").single()).queue)
+            assertEquals(QueueType.ManuallyBuried, col.getCard(col.findCards("deck:Other").single()).queue)
         }
 
     @Test
