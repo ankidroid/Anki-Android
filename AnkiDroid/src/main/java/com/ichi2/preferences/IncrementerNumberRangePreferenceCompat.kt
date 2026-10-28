@@ -12,6 +12,8 @@ import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.databinding.DialogIncrementerPreferenceBinding
+import com.ichi2.compose.ui.components.NumberPickerState.Companion.ValidationResult
+import com.ichi2.compose.ui.components.NumberPickerState.Companion.validate
 import com.ichi2.utils.NonLeadingZeroInputFilter
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
@@ -161,39 +163,6 @@ class IncrementerNumberRangePreferenceCompat :
                 }
             }
         }
-    }
-
-    companion object {
-        enum class ValidationResult {
-            VALID,
-            INVALID,
-            EMPTY,
-            OVERFLOW,
-            UNDERFLOW,
-        }
-
-        /**
-         * Validation logic for the preference input.
-         *
-         * @param text The raw string from the EditText.
-         * @param value The parsed integer value (or null if parsing failed).
-         * @param min The minimum allowed value.
-         * @param max The maximum allowed value.
-         * @return A [ValidationResult] representing the state of the input.
-         */
-        fun validate(
-            text: String,
-            value: Int?,
-            min: Int,
-            max: Int,
-        ): ValidationResult =
-            when {
-                text.isEmpty() -> ValidationResult.EMPTY
-                value == null -> ValidationResult.INVALID
-                value > max -> ValidationResult.OVERFLOW
-                value < min -> ValidationResult.UNDERFLOW
-                else -> ValidationResult.VALID
-            }
     }
 
     override fun makeDialogFragment() = IncrementerNumberRangeDialogFragmentCompat()
