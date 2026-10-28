@@ -475,6 +475,9 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Manage tags screen -->
     <string name="manage_tags_actions_title" comment="Title of the bottom sheet showing actions for the selected tag">Tag actions</string>
+    <string name="manage_tags_rename_invalid">Enter a different tag name</string>
+    <string name="manage_tags_rename_empty">Enter a tag name</string>
+    <string name="manage_tags_rename_empty_component" comment="Rename error for an empty tag hierarchy level, such as ::tag, tag:: or tag::::child. %s is the tag hierarchy separator (::), shown in monospace.">Each level separated by %s needs a name</string>
     <string name="manage_tags_more_actions" comment="Accessibility label for a tag overflow button. %1$s is the full tag path">More actions for %1$s</string>
     <string name="manage_tags_expand" comment="Accessibility action for a tag row that shows its children">Expand</string>
     <string name="manage_tags_collapse" comment="Accessibility action for a tag row that hides its children">Collapse</string>

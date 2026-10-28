@@ -5,6 +5,8 @@ package com.ichi2.anki.tags
 
 import android.text.InputFilter
 import android.text.Spanned
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 
 /**
  * The filter that constrains the inputted tag.
@@ -49,3 +51,13 @@ internal val tagNameInputFilter =
         }
         sb
     }
+
+/** Applies the shared tag separator filter while retaining selection and IME composition. */
+internal fun TextFieldValue.filterTagInput(): TextFieldValue {
+    val filtered = tagNameInputFilter.filter(text, 0, text.length, null, 0, 0)?.toString() ?: return this
+
+    fun mapOffset(offset: Int): Int = tagNameInputFilter.filter(text, 0, offset, null, 0, 0)?.length ?: offset
+
+    fun mapRange(range: TextRange): TextRange = TextRange(mapOffset(range.start), mapOffset(range.end))
+    return copy(text = filtered, selection = mapRange(selection), composition = composition?.let(::mapRange))
+}
