@@ -2,12 +2,14 @@
 
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.annotation.CheckResult
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -20,6 +22,9 @@ import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.utils.ImportUtils.FileImporter
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
@@ -43,6 +48,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
+import java.util.function.Supplier
 import kotlin.test.assertIs
 import kotlin.test.assertNull
 
@@ -59,6 +65,9 @@ class ImportUtilsTest : RobolectricTest() {
             "application/colpkg" to ImportResolution.CollectionPackage::class,
             "application/x-colpkg" to ImportResolution.CollectionPackage::class,
         )
+    private val storageDocumentUri = "content://com.android.externalstorage.documents/document/denied.apkg".toUri()
+    private val mediaStoreUri = "content://media/external_primary/file/52".toUri()
+    private val storageProviderRefusal = SecurityException("com.android.externalstorage has no access to $mediaStoreUri")
 
     @Before
     fun captureCrashReports() {
@@ -119,6 +128,35 @@ class ImportUtilsTest : RobolectricTest() {
 
         assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
         verify(crashReporter).sendExceptionReport(exception, "ImportUtils", null, false)
+    }
+
+    @Test
+    fun `storage provider refused by media store imports through media store`() {
+        val result = importRefusedStorageDocument { "package contents".byteInputStream() }
+
+        assertEquals("package contents", File(assertIs<ImportResult.Success>(result).path).readText())
+        verifyNoInteractions(crashReporter)
+    }
+
+    @Test
+    fun `storage provider refusal is still reported if media store cannot open the file`() {
+        val result = importRefusedStorageDocument { throw SecurityException() }
+
+        assertEquals(storageProviderRefusal, assertIs<ImportResult.Failure>(result).exception)
+        verify(crashReporter).sendExceptionReport(storageProviderRefusal, "ImportUtils", null, false)
+    }
+
+    @SuppressLint("NewApi")
+    private fun importRefusedStorageDocument(mediaStoreSource: Supplier<InputStream>): ImportResult {
+        mockkStatic(MediaStore::class)
+        try {
+            every { MediaStore.getMediaUri(targetContext, storageDocumentUri) } returns mediaStoreUri
+            shadowOf(targetContext.contentResolver).registerInputStreamSupplier(storageDocumentUri) { throw storageProviderRefusal }
+            shadowOf(targetContext.contentResolver).registerInputStreamSupplier(mediaStoreUri, mediaStoreSource)
+            return importerWithFileName("denied.apkg").prepareImport(targetContext, Intent(Intent.ACTION_VIEW, storageDocumentUri))
+        } finally {
+            unmockkStatic(MediaStore::class)
+        }
     }
 
     @Test
