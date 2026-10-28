@@ -157,7 +157,7 @@ class RemoveAccountFragment :
         webViewLayout.loadUrl(url)
     }
 
-    override fun onWebViewRecreated(webView: WebView) {
+    override fun onWebViewRecreated() {
         setupWebView()
     }
 

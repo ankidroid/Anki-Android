@@ -99,7 +99,7 @@ class Info :
         setupWebView()
     }
 
-    override fun onWebViewRecreated(webView: WebView) {
+    override fun onWebViewRecreated() {
         setupWebView()
     }
 

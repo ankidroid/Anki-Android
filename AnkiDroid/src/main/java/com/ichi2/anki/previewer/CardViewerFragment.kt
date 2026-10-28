@@ -242,10 +242,10 @@ abstract class CardViewerFragment(
     /**
      * Reconfigures the [WebView] after a render process crash by calling [setupWebView].
      *
-     * Subclasses that override this method must call `super.onWebViewRecreated(webView)`,
+     * Subclasses that override this method must call `super.onWebViewRecreated()`,
      * as the base implementation reapplies all clients, settings, and content.
      */
-    override fun onWebViewRecreated(webView: WebView) {
+    override fun onWebViewRecreated() {
         setupWebView(null)
     }
 

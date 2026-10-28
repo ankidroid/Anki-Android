@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebView
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -150,7 +149,7 @@ class MediaCheckFragment :
         binding.webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
     }
 
-    override fun onWebViewRecreated(webView: WebView) {
+    override fun onWebViewRecreated() {
         lastReport?.let { updateWebView(it) }
     }
 

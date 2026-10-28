@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 
@@ -20,5 +19,5 @@ class SafeWebViewLayoutHostFragment :
         savedInstanceState: Bundle?,
     ): View = FrameLayout(requireContext())
 
-    override fun onWebViewRecreated(webView: WebView) {}
+    override fun onWebViewRecreated() {}
 }
