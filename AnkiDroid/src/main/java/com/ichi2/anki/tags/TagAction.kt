@@ -2,4 +2,24 @@
 
 package com.ichi2.anki.tags
 
+import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.ui.internationalization.trCase
+
 internal enum class TagAction { RENAME, DELETE }
+
+@Composable
+internal fun TagAction.dialogTitle(): String =
+    when (this) {
+        TagAction.RENAME -> trCase().renameTag()
+        TagAction.DELETE -> stringResource(CommonString.manage_tags_delete_title)
+    }
+
+@StringRes
+internal fun TagAction.confirmTextRes(): Int =
+    when (this) {
+        TagAction.RENAME -> CommonString.rename
+        TagAction.DELETE -> CommonString.dialog_positive_delete
+    }
