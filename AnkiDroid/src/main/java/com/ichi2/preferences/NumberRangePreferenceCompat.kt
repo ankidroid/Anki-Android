@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import androidx.core.content.withStyledAttributes
+import androidx.fragment.app.DialogFragment
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.R
@@ -201,5 +202,5 @@ open class NumberRangePreferenceCompat
             }
         }
 
-        override fun makeDialogFragment() = NumberRangeDialogFragmentCompat()
+        override fun makeDialogFragment(): DialogFragment = NumberRangeDialogFragmentCompat()
     }

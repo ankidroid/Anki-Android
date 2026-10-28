@@ -97,6 +97,43 @@ class BackupPickerTest {
             scenario.onActivity { dialog.negativeButton.performClick() }
         }
 
+    @Test
+    fun recreationRestoresUnconfirmedTextAndSelection() =
+        withPicker { scenario, _, _ ->
+            replaceText("123")
+            assertTrue(
+                editableNode().performAction(
+                    AccessibilityNodeInfo.ACTION_SET_SELECTION,
+                    Bundle().apply {
+                        putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_START_INT, 1)
+                        putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_END_INT, 2)
+                    },
+                ),
+            )
+            waitUntil(message = { "Expected selected range before recreation" }) {
+                editableNode().let { it.textSelectionStart == 1 && it.textSelectionEnd == 2 }
+            }
+            scenario.recreate()
+            waitUntil(message = { "Expected restored text and selection after attachment" }) {
+                editableNode().let { it.text.toString() == "123" && it.textSelectionStart == 1 && it.textSelectionEnd == 2 }
+            }
+            val input = editableNode()
+            assertEquals("123", input.text.toString())
+            assertEquals(1, input.textSelectionStart)
+            assertEquals(2, input.textSelectionEnd)
+            scenario.onActivity { activity ->
+                val parent = activity.fragment as PreferencesFragment
+                val fragment = parent.childFragmentManager.findFragmentById(R.id.settings_container) as BackupLimitsSettingsFragment
+                assertEquals(
+                    "30",
+                    fragment
+                        .requirePreference<IncrementerNumberRangePreferenceCompat>(
+                            R.string.pref_minutes_between_automatic_backups_key,
+                        ).text,
+                )
+            }
+        }
+
     internal fun editableNode(): AccessibilityNodeInfo = findNode { it.isEditable }
 
     private fun labeledNode(label: String): AccessibilityNodeInfo =
