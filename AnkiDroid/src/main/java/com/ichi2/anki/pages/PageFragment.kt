@@ -5,7 +5,6 @@ package com.ichi2.anki.pages
 import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
-import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
@@ -162,7 +161,7 @@ abstract class PageFragment(
         super.onDestroyView()
     }
 
-    override fun onWebViewRecreated(webView: WebView) {
+    override fun onWebViewRecreated() {
         setupWebView(null)
     }
 }

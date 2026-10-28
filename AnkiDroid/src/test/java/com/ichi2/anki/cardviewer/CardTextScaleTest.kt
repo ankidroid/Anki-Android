@@ -80,7 +80,7 @@ class CardTextScaleTest : RobolectricTest() {
             assertEquals(100, webView.settings.textZoom)
 
             webView.settings.textZoom = 130
-            (activity.fragment as PreviewerFragment).onWebViewRecreated(webView)
+            (activity.fragment as PreviewerFragment).onWebViewRecreated()
             assertEquals(100, webView.settings.textZoom)
         }
     }

@@ -253,8 +253,8 @@ class ReviewerFragment :
         setRenderWorkaround(requireActivity())
     }
 
-    override fun onWebViewRecreated(webView: WebView) {
-        super.onWebViewRecreated(webView)
+    override fun onWebViewRecreated() {
+        super.onWebViewRecreated()
         setRenderWorkaround(requireActivity())
     }
 

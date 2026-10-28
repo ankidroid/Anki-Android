@@ -241,7 +241,7 @@ open class SafeWebViewLayout :
         uncheckedWebView = createWebView()
         webViewState = WebViewState.ACTIVE
         addView(uncheckedWebView, webViewLayoutParams)
-        listener.onWebViewRecreated(uncheckedWebView)
+        listener.onWebViewRecreated()
     }
 
     private fun tryRecoverDestroyedWebViewIfNeeded(listener: OnWebViewRecreatedListener) {
@@ -338,15 +338,14 @@ open class SafeWebViewLayout :
  */
 fun interface OnWebViewRecreatedListener {
     /**
-     * Reconfigures a [WebView] after [SafeWebViewLayout.onRenderProcessGone] has replaced
-     * the old instance. Implementations must reapply all clients, settings and content
-     * that were configured on the original [WebView], as [SafeWebViewLayout] only handles
-     * the structural replacement and cannot reapply app level configuration.
+     * Reconfigures the [SafeWebViewLayout] after [SafeWebViewLayout.onRenderProcessGone] has
+     * replaced its [WebView]. Implementations must reapply, through the layout, all clients,
+     * settings and content that were configured on the original [WebView], as
+     * [SafeWebViewLayout] only handles the structural replacement and cannot reapply app level
+     * configuration.
      *
      * To manually trigger this path, call `webViewLayout.loadUrl("chrome://crash")`.
      * Automated testing requires an instrumented test; a unit test is not sufficient.
-     *
-     * @param webView the new [WebView], already attached to [SafeWebViewLayout]
      */
-    fun onWebViewRecreated(webView: WebView)
+    fun onWebViewRecreated()
 }

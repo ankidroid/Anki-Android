@@ -326,7 +326,7 @@ class MultimediaImageFragment :
      * [SafeWebViewLayout] only replaces the crashed [WebView], so the client and the preview
      * have to be applied again.
      */
-    override fun onWebViewRecreated(webView: WebView) {
+    override fun onWebViewRecreated() {
         Timber.i("restoring the image preview after a render process crash")
         setupWebView()
         previewedImage?.let { previewImage(it) }
