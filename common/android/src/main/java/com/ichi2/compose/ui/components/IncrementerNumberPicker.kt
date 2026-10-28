@@ -294,7 +294,12 @@ private fun PlusMinusButton(
     val iconResource = if (increment) CommonR.drawable.ic_add else CommonR.drawable.ic_remove
     val icon =
         remember(context, iconResource) {
-            val drawable = AppCompatResources.getDrawable(context, iconResource)!!.mutate().apply { setTint(AndroidColor.WHITE) }
+            val drawable =
+                AppCompatResources.getDrawable(context, iconResource)!!.mutate().apply {
+                    context.withStyledAttributes(attrs = intArrayOf(CommonR.attr.incrementerButtonIconColor)) {
+                        setTint(getColor(0, AndroidColor.WHITE))
+                    }
+                }
             object : Painter() {
                 override val intrinsicSize = Size.Unspecified
 

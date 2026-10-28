@@ -6,6 +6,7 @@ import android.view.WindowManager
 import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
@@ -14,12 +15,16 @@ import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.utils.negativeButton
+import org.junit.Rule
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowDialog
 
 /** The same tests run against the original preferences and the extracted picker. */
 class BackupPickerScreenshotTest : ScreenshotTest() {
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
+
     @Test
     fun backupPickers() =
         withBackups { fragment ->
@@ -51,6 +56,7 @@ class BackupPickerScreenshotTest : ScreenshotTest() {
         name: String,
         dialog: AlertDialog,
     ) {
+        composeRule.waitForIdle()
         val window = dialog.window!!
         // Robolectric can retain extra window height when an error caption is added.
         // Use the measured panel, as Android does for a dialog with wrap-content height.
@@ -110,6 +116,7 @@ class BackupPickerScreenshotTest : ScreenshotTest() {
         onDisplayPreferenceDialog(preference)
         advanceRobolectricLooper()
         val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        composeRule.waitForIdle()
         block(dialog)
         dialog.negativeButton.performClick()
         advanceRobolectricLooper()
