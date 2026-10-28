@@ -19,7 +19,7 @@ import com.ichi2.compose.ui.dialogs.TextInputDialog
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 
-/** Validates a rename or asks for confirmation before deleting a tag. */
+/** Validates a rename or asks for confirmation before deleting a tag or clearing unused tags. */
 @Composable
 internal fun ManageTagDialog(
     action: TagAction,
@@ -32,10 +32,16 @@ internal fun ManageTagDialog(
     tagRevision: Long? = null,
 ) {
     val title = action.dialogTitle()
-    if (action == TagAction.DELETE) {
+    if (action == TagAction.DELETE || action == TagAction.CLEAR_UNUSED) {
         MessageDialog(
             title = title,
-            message = stringResource(CommonString.manage_tags_delete_confirm, requireNotNull(tag).value),
+            message =
+                if (action == TagAction.DELETE) {
+                    stringResource(CommonString.manage_tags_delete_confirm, requireNotNull(tag).value)
+                } else {
+                    // TODO: List the unused tags that will be removed before the user confirms.
+                    stringResource(CommonString.manage_tags_clear_unused_confirm)
+                },
             confirmText = stringResource(action.confirmTextRes()),
             onConfirm = { if (enabled) onConfirm("") },
             onDismissRequest = onDismissRequest,
@@ -108,9 +114,9 @@ internal fun ManageTagDialog(
     )
 }
 
-/** Supplies rename and delete actions with readable names for [ManageTagDialog] previews. */
+/** Supplies rename, delete, and clear-unused actions with readable names for [ManageTagDialog] previews. */
 internal class TagActionPreviewProvider : PreviewParameterProvider<TagAction> {
-    private val actions = listOf(TagAction.RENAME, TagAction.DELETE)
+    private val actions = listOf(TagAction.RENAME, TagAction.DELETE, TagAction.CLEAR_UNUSED)
     override val values = actions.asSequence()
 
     override fun getDisplayName(index: Int): String = actions[index].name.lowercase()
