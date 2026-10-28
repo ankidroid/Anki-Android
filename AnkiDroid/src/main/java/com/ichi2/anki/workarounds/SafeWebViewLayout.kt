@@ -37,18 +37,24 @@ open class SafeWebViewLayout :
 
     private var webViewState = WebViewState.ACTIVE
 
+    /** The inner [WebView], or `null` while it is destroyed. Public methods should go through this. */
+    private val activeWebView: WebView?
+        get() {
+            if (webViewState == WebViewState.ACTIVE) return webView
+            Timber.w("WebView call ignored: WebView was destroyed")
+            return null
+        }
+
     var scrollBars: Int = webView.scrollBarStyle
         set(value) {
             field = value
-            if (warnIfNotActive("scrollBars setter")) return
-            webView.scrollBarStyle = value
+            activeWebView?.scrollBarStyle = value
         }
 
     @NeedsTest("Verify background color applies to inner WebView")
     override fun setBackgroundColor(color: Int) {
         super.setBackgroundColor(color)
-        if (warnIfNotActive("setBackgroundColor")) return
-        webView.setBackgroundColor(color)
+        activeWebView?.setBackgroundColor(color)
     }
 
     protected open fun createWebView() = WebView(context)
@@ -68,15 +74,14 @@ open class SafeWebViewLayout :
 
     @MainThread
     fun setWebViewClient(webViewClient: SafeWebViewClient) {
-        if (warnIfNotActive("setWebViewClient")) return
+        val webView = activeWebView ?: return
         webViewClient.setOnRenderProcessGoneListener(this)
         webView.webViewClient = webViewClient
     }
 
     @MainThread
     fun setWebChromeClient(webChromeClient: WebChromeClient) {
-        if (warnIfNotActive("setWebChromeClient")) return
-        webView.webChromeClient = webChromeClient
+        activeWebView?.webChromeClient = webChromeClient
     }
 
     @MainThread
@@ -84,8 +89,7 @@ open class SafeWebViewLayout :
         script: String,
         resultCallback: ((String) -> Unit)? = null,
     ) {
-        if (warnIfNotActive("evaluateJavascript")) return
-        webView.evaluateJavascript(script) { callback ->
+        activeWebView?.evaluateJavascript(script) { callback ->
             resultCallback?.invoke(callback)
         }
     }
@@ -95,14 +99,12 @@ open class SafeWebViewLayout :
         javascriptInterface: Any,
         name: String,
     ) {
-        if (warnIfNotActive("addJavascriptInterface")) return
-        webView.addJavascriptInterface(javascriptInterface, name)
+        activeWebView?.addJavascriptInterface(javascriptInterface, name)
     }
 
     @MainThread
     fun loadUrl(url: String) {
-        if (warnIfNotActive("loadUrl")) return
-        webView.loadUrl(url)
+        activeWebView?.loadUrl(url)
     }
 
     @MainThread
@@ -113,49 +115,36 @@ open class SafeWebViewLayout :
         encoding: String?,
         historyUrl: String?,
     ) {
-        if (warnIfNotActive("loadDataWithBaseURL")) return
-        webView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
+        activeWebView?.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
     }
 
     fun setAcceptThirdPartyCookies(accept: Boolean) {
-        if (warnIfNotActive("setAcceptThirdPartyCookies")) return
+        val webView = activeWebView ?: return
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, accept)
     }
 
     @MainThread
     fun goBack() {
-        if (warnIfNotActive("goBack")) return
-        webView.goBack()
+        activeWebView?.goBack()
     }
 
     @MainThread
-    fun canGoBack(): Boolean {
-        if (warnIfNotActive("canGoBack")) return false
-        return webView.canGoBack()
-    }
+    fun canGoBack(): Boolean = activeWebView?.canGoBack() ?: false
 
     @MainThread
-    fun pageUp(): Boolean {
-        if (warnIfNotActive("pageUp")) return false
-        return webView.pageUp(false)
-    }
+    fun pageUp(): Boolean = activeWebView?.pageUp(false) ?: false
 
     @MainThread
-    fun pageDown(): Boolean {
-        if (warnIfNotActive("pageDown")) return false
-        return webView.pageDown(false)
-    }
+    fun pageDown(): Boolean = activeWebView?.pageDown(false) ?: false
 
     @MainThread
     fun reload() {
-        if (warnIfNotActive("reload")) return
-        webView.reload()
+        activeWebView?.reload()
     }
 
     @MainThread
     fun focusOnWebView() {
-        if (warnIfNotActive("focusOnWebView")) return
-        webView.requestFocus()
+        activeWebView?.requestFocus()
     }
 
     @MainThread
@@ -175,21 +164,17 @@ open class SafeWebViewLayout :
 
     @MainThread
     fun scrollVerticallyBy(y: Int) {
-        if (warnIfNotActive("scrollVerticallyBy")) return
+        val webView = activeWebView ?: return
         if (webView.canScrollVertically(y)) {
             webView.scrollBy(0, y)
         }
     }
 
     @MainThread
-    fun createPrintDocumentAdapter(documentName: String): PrintDocumentAdapter? {
-        if (warnIfNotActive("createPrintDocumentAdapter")) return null
-        return webView.createPrintDocumentAdapter(documentName)
-    }
+    fun createPrintDocumentAdapter(documentName: String): PrintDocumentAdapter? = activeWebView?.createPrintDocumentAdapter(documentName)
 
     override fun setOnScrollChangeListener(l: OnScrollChangeListener?) {
-        if (warnIfNotActive("setOnScrollChangeListener")) return
-        webView.setOnScrollChangeListener(l)
+        activeWebView?.setOnScrollChangeListener(l)
     }
 
     /**
@@ -296,14 +281,6 @@ open class SafeWebViewLayout :
             }
         }
         recreateInnerWebView(listener)
-    }
-
-    private fun warnIfNotActive(methodName: String): Boolean {
-        if (webViewState != WebViewState.ACTIVE) {
-            Timber.w("$methodName called after WebView was destroyed")
-            return true
-        }
-        return false
     }
 
     override fun onAttachedToWindow() {
