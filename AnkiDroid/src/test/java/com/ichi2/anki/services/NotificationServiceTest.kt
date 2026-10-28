@@ -418,6 +418,62 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
+    fun `triggering with reviews today in a subdeck and onlyNotifyIfNoReviews is true should not fire notification`() =
+        runTest {
+            val parentDid = addDeck("Parent", setAsSelected = true)
+            val childDid = addDeck("Parent::Child").withNote()
+            col.decks.select(parentDid)
+            val reviewReminder = createTestReminder(deckId = parentDid, thresholdInt = 1, onlyNotifyIfNoReviews = true)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            val card = col.sched.card!!
+            assertThat(card.did, equalTo(childDid))
+            col.sched.answerCard(card, CardAnswer.Rating.GOOD)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+        }
+
+    @Test
+    fun `triggering with reviews today in a filtered deck and onlyNotifyIfNoReviews is true should not fire notification`() =
+        runTest {
+            val homeDid = addDeck("Deck").withNotes(count = 2)
+            val firstNid = col.findNotes("deck:Deck").first()
+            val filteredDid = addDynamicDeck("Filtered", search = "nid:$firstNid")
+            col.decks.select(filteredDid)
+            val reviewReminder = createTestReminder(deckId = homeDid, thresholdInt = 1, onlyNotifyIfNoReviews = true)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            val card = col.sched.card!!
+            assertThat(card.did, equalTo(filteredDid))
+            assertThat(card.oDid, equalTo(homeDid))
+            col.sched.answerCard(card, CardAnswer.Rating.GOOD)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+        }
+
+    @Test
+    fun `triggering with reviews today only in parent deck and onlyNotifyIfNoReviews is true should fire subdeck notification`() =
+        runTest {
+            val parentDid = addDeck("Parent", setAsSelected = true).withNote()
+            val childDid = addDeck("Parent::Child").withNote()
+            col.decks.select(parentDid)
+            val reviewReminder = createTestReminder(deckId = childDid, thresholdInt = 1, onlyNotifyIfNoReviews = true)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            val card = col.sched.card!!
+            assertThat(card.did, equalTo(parentDid))
+            col.sched.answerCard(card, CardAnswer.Rating.GOOD)
+            attemptNotif(reviewReminder)
+
+            verifyNotifSent(reviewReminder)
+        }
+
+    @Test
     fun `triggering with blocked collection should not fire notification but schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
