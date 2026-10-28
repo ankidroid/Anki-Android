@@ -40,8 +40,12 @@ open class AnkiServer(
                 newFixedLengthResponse(Response.Status.NOT_FOUND, null, null)
             }
             else -> {
-                Timber.d("Ignored request of unhandled method %s, uri %s", session.method, session.uri)
-                newFixedLengthResponse(null)
+                Timber.d("Rejecting request of unhandled method %s, uri %s", session.method, session.uri)
+                // the request body is left unread, so the connection can't be reused
+                newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, null, null).apply {
+                    addHeader("Allow", "POST")
+                    closeConnection(true)
+                }
             }
         }
 
