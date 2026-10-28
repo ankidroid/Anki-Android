@@ -19,6 +19,7 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 class AnkiServerTest {
     @Test
@@ -109,6 +110,23 @@ class AnkiServerTest {
 
         assertEquals(Status.INTERNAL_ERROR, response.status)
         assertEquals("Interrupted", response.data.readBytes().decodeToString())
+    }
+
+    @Test
+    fun `an unhandled method is rejected and closes the connection`() {
+        // the request body is left unread, so the connection must not be reused
+        val session =
+            mock<IHTTPSession> {
+                on { method } doReturn Method.PUT
+                on { uri } doReturn "/_anki/test"
+            }
+
+        val response = AnkiServer(mock()).serve(session)
+
+        assertEquals(Status.METHOD_NOT_ALLOWED, response.status)
+        // RFC 9110: a 405 must list the supported methods
+        assertEquals("POST", response.getHeader("Allow"))
+        assertTrue(response.isCloseConnection)
     }
 
     private fun assertRejected(
