@@ -162,14 +162,6 @@
         <item name="android:background">@drawable/ic_gesture_tap</item>
     </style>
 
-    <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">?attr/progressDialogButtonTextColor</item>
-        <item name="android:textColorPrimary">?android:attr/textColor</item>
-        <item name="android:background">?attr/dialogBackground</item>
-        <item name="android:buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
-        <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
-    </style>
-
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorPrimary">?attr/progressDialogButtonTextColor</item>
         <item name="buttonTint">?attr/colorOnPrimary</item>
@@ -186,10 +178,6 @@
     <style name="TextAppearance.AnkiDroid.TopAppBar.Title" parent="TextAppearance.Material3.TitleMedium" />
 
     <style name="TextAppearance.AnkiDroid.TopAppBar.Subtitle" parent="TextAppearance.Material3.ActionBar.Subtitle" />
-
-    <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
-    </style>
 
     <style name="CardView.ViewerStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="android:elevation">?attr/studyScreenElevation</item>
