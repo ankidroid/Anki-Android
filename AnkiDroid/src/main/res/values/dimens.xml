@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
     <dimen name="default_width">56dp</dimen>
-    <dimen name="keyline_1">16dp</dimen>
     <dimen name="study_options_padding">8dp</dimen>
 
     <!-- Top margin for action bar subtitles -->
@@ -23,7 +22,6 @@
     <!-- DeckPicker -->
     <dimen name="deck_picker_left_padding_small">0dp</dimen>
     <dimen name="deck_picker_left_padding">24dp</dimen>
-    <dimen name="deck_picker_right_padding">4dp</dimen>
     <dimen name="note_editor_toolbar_height">52dp</dimen>
 
     <dimen name="reviewer_side_margin">8dp</dimen>

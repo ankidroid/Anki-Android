@@ -2,6 +2,24 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
 
+    <!-- Action bar. Currently all action bar text is white in every theme. -->
+    <style name="ActionBarStyle" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <!-- Colors: hamburger, title text, overflow icon -->
+        <item name="android:textColorPrimary">?attr/actionBarTextColor</item>
+        <!-- Colors: subtitle text -->
+        <item name="android:textColorSecondary">?attr/actionBarTextColor</item>
+        <!-- Overflow menu style -->
+        <item name="popupTheme">@style/ActionBar.Popup</item>
+    </style>
+
+    <!-- For all other action bar popups like overflow menu (except spinner dropdown in Lollipop). -->
+    <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:textColorPrimary">?attr/actionBarPopupTextColor</item>
+        <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
+        <item name="android:colorBackground">?attr/popupBackgroundColor</item>
+    </style>
+
     <style name="OverflowMenuStyle" parent="Widget.Material3.PopupMenu.Overflow">
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>

@@ -10,9 +10,9 @@ import android.graphics.RectF
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
-import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.android.R as CommonR
 
 @JvmInline
 private value class DepthBitSet(
@@ -52,7 +52,7 @@ class DeckHierarchyLinesDecoration(
     private val layerPaint = Paint().apply { alpha = targetAlpha }
 
     // The horizontal indent spacing between each depth level
-    private val nestedIndent = context.resources.getDimension(R.dimen.keyline_1)
+    private val nestedIndent = context.resources.getDimension(CommonR.dimen.keyline_1)
 
     // The offset to center the vertical lines with the expander chevron
     private val expanderCenterOffset = adapter.expanderWidth / 2f

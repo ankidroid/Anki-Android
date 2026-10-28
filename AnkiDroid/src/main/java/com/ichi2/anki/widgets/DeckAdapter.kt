@@ -60,14 +60,14 @@ class DeckAdapter(
 
     // intended to be `val` but was declared a `var` to allow initialization from the init {} block
     private var selectableItemBackground: Int = 0
-    private val endPadding: Int = context.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
+    private val endPadding: Int = context.resources.getDimension(CommonR.dimen.deck_picker_right_padding).toInt()
     private val startPadding: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
 
     /** Left padding when the view has subdecks */
     val startPaddingSmall: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
 
     /** Padding to apply for each depth level of a deck */
-    val nestedIndent = context.resources.getDimension(R.dimen.keyline_1).toInt()
+    val nestedIndent = context.resources.getDimension(CommonR.dimen.keyline_1).toInt()
 
     /** The width of the expander chevron icon */
     val expanderWidth = 48.dp.toPx(context)

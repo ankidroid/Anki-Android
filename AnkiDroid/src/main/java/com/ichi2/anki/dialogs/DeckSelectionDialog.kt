@@ -336,7 +336,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                     importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
                 }
             }
-            indent.minimumWidth = node.depth * expander.resources.getDimensionPixelSize(R.dimen.keyline_1)
+            indent.minimumWidth = node.depth * expander.resources.getDimensionPixelSize(CommonR.dimen.keyline_1)
         }
 
         private fun hasSubDecks(node: DeckNode): Boolean = node.children.isNotEmpty()
