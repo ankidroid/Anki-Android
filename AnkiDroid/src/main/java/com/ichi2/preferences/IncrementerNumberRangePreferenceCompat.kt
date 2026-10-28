@@ -70,9 +70,20 @@ class IncrementerNumberRangePreferenceCompat :
                 ComposeView(context).apply {
                     setContent {
                         AnkiDroidTheme {
-                            IncrementerNumberPicker(state, requestFocus = true, onBindInput = {
-                                numberRangePreference.inputBindingListener?.onBindEditText(it)
-                            })
+                            IncrementerNumberPicker(
+                                state,
+                                requestFocus = true,
+                                onDone = {
+                                    (dialog as? AlertDialog)
+                                        ?.takeIf { it.isShowing }
+                                        ?.positiveButton
+                                        ?.takeIf { it.isEnabled }
+                                        ?.performClick()
+                                },
+                                onBindInput = {
+                                    numberRangePreference.inputBindingListener?.onBindEditText(it)
+                                },
+                            )
                         }
                     }
                 }

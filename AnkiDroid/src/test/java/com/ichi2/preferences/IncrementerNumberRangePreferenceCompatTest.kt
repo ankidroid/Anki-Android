@@ -5,6 +5,7 @@ package com.ichi2.preferences
 
 import android.os.Bundle
 import android.text.InputType
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -78,7 +79,7 @@ class IncrementerNumberRangePreferenceCompatTest : RobolectricTest() {
     }
 
     @Test
-    fun `numeric keyboard starts at the end and Done does not save or dismiss`() {
+    fun `numeric keyboard starts at the end and Done saves a valid integer once`() {
         withBackupIntervalDialog { preference, dialog ->
             val input = dialog.findViewById<EditText>(android.R.id.edit)!!
             assertTrue(input.hasFocus())
@@ -88,11 +89,82 @@ class IncrementerNumberRangePreferenceCompatTest : RobolectricTest() {
             assertNotNull(input.onCreateInputConnection(editor))
             assertEquals(InputType.TYPE_CLASS_NUMBER, editor.inputType)
             assertEquals(EditorInfo.IME_ACTION_DONE, editor.imeOptions)
+            val savedValues = mutableListOf<Any?>()
+            preference.setOnPreferenceChangeListener { _, value ->
+                savedValues.add(value)
+                true
+            }
             input.setText("31")
             input.onEditorAction(EditorInfo.IME_ACTION_DONE)
-            assertTrue(dialog.isShowing)
-            assertEquals("30", preference.text)
+            advanceRobolectricLooper()
+            assertFalse(dialog.isShowing)
+            assertEquals("31", preference.text)
+            assertEquals(listOf(31), savedValues)
+            input.onEditorAction(EditorInfo.IME_ACTION_DONE)
+            assertEquals(listOf(31), savedValues)
+        }
+    }
+
+    @Test
+    fun `Done leaves empty and invalid values open without saving`() {
+        withBackupIntervalDialog { preference, dialog ->
+            val input = dialog.findViewById<EditText>(android.R.id.edit)!!
+            preference.setOnPreferenceChangeListener { _, _ -> error("Invalid input must not save") }
+            // Exercise submission validation independently of the typing filters.
+            input.filters = emptyArray()
+            for (text in listOf("", "4", "100000", "2147483648")) {
+                input.setText(text)
+                input.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                assertTrue("Invalid input: $text", dialog.isShowing)
+                assertFalse(dialog.positiveButton.isEnabled)
+                assertEquals("30", preference.text)
+            }
             dialog.negativeButton.performClick()
+        }
+    }
+
+    @Test
+    fun `Done respects disabled confirmation and rejected preference changes`() {
+        withBackupIntervalDialog { preference, dialog ->
+            val input = dialog.findViewById<EditText>(android.R.id.edit)!!
+            var attempts = 0
+            preference.setOnPreferenceChangeListener { _, _ ->
+                attempts++
+                false
+            }
+            input.setText("31")
+            dialog.positiveButton.isEnabled = false
+            input.onEditorAction(EditorInfo.IME_ACTION_DONE)
+            assertTrue(dialog.isShowing)
+            assertEquals(0, attempts)
+            assertEquals("30", preference.text)
+            dialog.positiveButton.isEnabled = true
+            input.onEditorAction(EditorInfo.IME_ACTION_DONE)
+            advanceRobolectricLooper()
+            assertFalse(dialog.isShowing)
+            assertEquals(1, attempts)
+            assertEquals("30", preference.text)
+        }
+    }
+
+    @Test
+    fun `hardware Enter submits on release without saving twice`() {
+        withBackupIntervalDialog { preference, dialog ->
+            val input = dialog.findViewById<EditText>(android.R.id.edit)!!
+            val savedValues = mutableListOf<Any?>()
+            preference.setOnPreferenceChangeListener { _, value ->
+                savedValues.add(value)
+                true
+            }
+            input.setText("31")
+            input.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+            assertTrue(dialog.isShowing)
+            assertTrue(savedValues.isEmpty())
+            input.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
+            advanceRobolectricLooper()
+            assertFalse(dialog.isShowing)
+            assertEquals("31", preference.text)
+            assertEquals(listOf(31), savedValues)
         }
     }
 
