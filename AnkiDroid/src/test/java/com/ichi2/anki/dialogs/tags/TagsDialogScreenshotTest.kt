@@ -11,6 +11,21 @@ import org.junit.Test
 
 class TagsDialogScreenshotTest : DialogScreenshotTest() {
     @Test
+    fun `browser tag options`() =
+        runTest {
+            addBasicNote().update { addTag("biology::animals") }
+            val dialog = TagsDialog().withArguments(targetContext, DialogType.FILTER_BY_TAG)
+            withDialog(dialog) {
+                dialog.viewModel.tags.await()
+                advanceRobolectricLooperUntil { dialog.binding.tagsList.adapter != null }
+                val toolbar = dialog.binding.toolbar.root
+                toolbar.showOverflowMenu()
+                advanceRobolectricLooper()
+                captureScreen("browser_tag_options")
+            }
+        }
+
+    @Test
     fun `empty tags`() =
         runTest {
             val dialog = TagsDialog().withArguments(targetContext, DialogType.EDIT_TAGS)

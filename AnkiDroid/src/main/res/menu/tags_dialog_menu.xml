@@ -22,4 +22,10 @@
         android:icon="@drawable/ic_select_all_white"
         android:title="@string/check_all_tags"
         ankidroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_manage_tags"
+        android:title="@string/manage_tags"
+        android:visible="false"
+        ankidroid:showAsAction="never"/>
 </menu>
