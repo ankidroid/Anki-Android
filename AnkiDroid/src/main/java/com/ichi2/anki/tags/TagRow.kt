@@ -129,3 +129,25 @@ private fun TagRowPreview(
         }
     }
 }
+
+/** @see TagRow */
+@Preview(name = "Actions open", widthDp = 360)
+@Composable
+private fun TagRowWithActionsPreview(
+    @PreviewParameter(AnkiDroidThemeProvider::class) theme: Theme,
+) {
+    val item = TagListItemState("Science::Biology", "Biology", 1, hasChildren = false, collapsed = false)
+    AnkiDroidPreview(theme = theme) {
+        Surface {
+            Column {
+                TagRow(item, actionsEnabled = true, onToggleCollapsed = {}, onOverflowClick = {})
+                TagActionsBottomSheet(
+                    tag = item.fullTag,
+                    enabled = true,
+                    onAction = {},
+                    onDismissRequest = {},
+                )
+            }
+        }
+    }
+}
