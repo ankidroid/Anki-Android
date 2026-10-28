@@ -26,6 +26,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.allDecksCounts
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.EpochMilliseconds
+import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.reviewreminders.ReviewReminder
@@ -315,8 +316,8 @@ class NotificationService : AnkiBroadcastReceiver() {
          * Used for the "only notify me if no reviews have been done today" review reminder feature.
          */
         private suspend fun wasScopeReviewedToday(scope: ReviewReminderScope): Boolean {
-            // Handles the global and deck-specific scope cases separately to avoid the need for string concatenation,
-            // thus protecting against SQL injection. Checks for existence rather than counting to increase efficiency.
+            // Handles the global and deck-specific scope cases separately.
+            // Checks for existence rather than counting to increase efficiency.
             val queryResult =
                 when (scope) {
                     is ReviewReminderScope.Global ->
@@ -337,17 +338,20 @@ class NotificationService : AnkiBroadcastReceiver() {
                     is ReviewReminderScope.DeckSpecific ->
                         withCol {
                             val startOfToday: EpochMilliseconds = sched.dayCutoff * 1000 - 1.days.inWholeMilliseconds
-                            // Essentially the same as above, but only check through cards with a deck ID matching the provided scope
+                            // Essentially the same as above, but only check through cards in the provided deck or its subdecks,
+                            // including cards temporarily moved into a filtered deck (whose home deck is stored in odid)
+                            // Deck IDs are numbers, so building the IN list from them is safe
+                            val deckIds = Utils.ids2str(decks.deckAndChildIds(scope.did))
                             val query = """
                         SELECT EXISTS (
                             SELECT 1
                             FROM cards
                             JOIN revlog ON revlog.cid = cards.id
                             WHERE revlog.id > ?
-                            AND cards.did = ?
+                            AND (cards.did IN $deckIds OR cards.odid IN $deckIds)
                         )
                     """
-                            db.queryScalar(query, startOfToday, scope.did)
+                            db.queryScalar(query, startOfToday)
                         }
                 }
             return (queryResult == 1)
