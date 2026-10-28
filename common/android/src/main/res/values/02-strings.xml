@@ -469,7 +469,9 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 
     <!-- Manage tags screen -->
+    <string name="manage_tags_clear_unused_confirm">Remove all tags with no associated notes.</string>
     <string name="manage_tags_rename_title">Rename tag</string>
+    <string name="manage_tags_clear_unused_action">Clear</string>
     <string name="manage_tags_rename_invalid">Enter a different tag name</string>
     <string name="manage_tags_rename_empty">Enter a tag name</string>
     <string name="manage_tags_delete_title">Delete tag</string>
