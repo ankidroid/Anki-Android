@@ -9,8 +9,10 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Message
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
@@ -45,6 +47,7 @@ import java.util.Locale
 object ImportUtils {
     // A filename should be shortened if over this threshold
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
+    private const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
 
     /** Resolve the source and select its importer without copying files or starting UI. */
     fun resolveImport(
@@ -384,7 +387,7 @@ object ImportUtils {
             tempPath: String,
         ): CacheFileResult =
             try {
-                context.contentResolver.openInputStreamSafe(data)?.let { input ->
+                openImportSource(context, data)?.let { input ->
                     copyToCache(input, tempPath)
                 } ?: run {
                     Timber.w("Content provider crashed")
@@ -406,6 +409,31 @@ object ImportUtils {
                 Timber.w("Could not open import source")
                 CacheFileResult.Error(e)
             }
+
+        private fun openImportSource(
+            context: Context,
+            data: Uri,
+        ): InputStream? =
+            try {
+                context.contentResolver.openInputStreamSafe(data)
+            } catch (e: SecurityException) {
+                openThroughMediaStore(context, data) ?: throw e
+            }
+
+        private fun openThroughMediaStore(
+            context: Context,
+            documentUri: Uri,
+        ): InputStream? {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
+            if (documentUri.authority != EXTERNAL_STORAGE_PROVIDER_AUTHORITY) return null
+            Timber.i("Storage provider could not open the import source, retrying through MediaStore")
+            return try {
+                MediaStore.getMediaUri(context, documentUri)?.let { context.contentResolver.openInputStreamSafe(it) }
+            } catch (_: Exception) {
+                Timber.w("Could not open import source through MediaStore")
+                null
+            }
+        }
 
         /**
          * Returns [CacheFileResult.Error] for any [Exception] while copying or closing [input].
