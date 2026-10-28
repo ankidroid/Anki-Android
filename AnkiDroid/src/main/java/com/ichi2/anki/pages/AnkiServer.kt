@@ -30,8 +30,9 @@ open class AnkiServer(
                     val data = runBlocking { postHandler.handlePostRequest(PostRequestUri(uri), inputBytes) }
                     buildResponse(data)
                 } catch (exception: Exception) {
-                    Timber.w(exception, "buildResponse failure")
-                    buildResponse(exception.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
+                    Timber.w(exception, "POST handler failed: %s", uri)
+                    val message = exception.localizedMessage ?: exception.javaClass.name
+                    buildResponse(message.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
                 }
             }
             Method.GET -> {
@@ -45,15 +46,10 @@ open class AnkiServer(
         }
 
     private fun buildResponse(
-        data: ByteArray?,
+        data: ByteArray,
         mimeType: String = "application/binary",
         status: Response.IStatus = Response.Status.OK,
-    ): Response =
-        if (data == null) {
-            newFixedLengthResponse(null)
-        } else {
-            newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
-        }
+    ): Response = newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
 
     companion object {
         const val LOCALHOST = "127.0.0.1"

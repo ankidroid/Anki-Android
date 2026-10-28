@@ -4,6 +4,7 @@ package com.ichi2.anki.pages
 
 import fi.iki.elonen.NanoHTTPD.IHTTPSession
 import fi.iki.elonen.NanoHTTPD.Method
+import fi.iki.elonen.NanoHTTPD.Response
 import fi.iki.elonen.NanoHTTPD.Response.Status
 import fi.iki.elonen.NanoHTTPD.ResponseException
 import org.junit.Test
@@ -93,6 +94,23 @@ class AnkiServerTest {
         }
     }
 
+    @Test
+    fun `a handler exception without a message is an internal error`() {
+        val response = serveWithFailingHandler(IllegalStateException())
+
+        assertEquals(Status.INTERNAL_ERROR, response.status)
+        assertEquals(IllegalStateException::class.java.name, response.data.readBytes().decodeToString())
+    }
+
+    @Test
+    fun `a handler exception message is the error body`() {
+        // Anki's postProto suppresses its alert for exactly '500: Interrupted'
+        val response = serveWithFailingHandler(IllegalStateException("Interrupted"))
+
+        assertEquals(Status.INTERNAL_ERROR, response.status)
+        assertEquals("Interrupted", response.data.readBytes().decodeToString())
+    }
+
     private fun assertRejected(
         contentLengthHeader: String?,
         expected: Status,
@@ -105,6 +123,18 @@ class AnkiServerTest {
 
         assertEquals(expected, exception.status, message)
         verifyNoInteractions(handler)
+    }
+
+    private fun serveWithFailingHandler(exception: Exception): Response {
+        val handler =
+            object : PostRequestHandler {
+                override suspend fun handlePostRequest(
+                    uri: PostRequestUri,
+                    bytes: ByteArray,
+                ): ByteArray = throw exception
+            }
+        val session = postSession(ByteArrayInputStream(byteArrayOf()), contentLength = 0)
+        return AnkiServer(handler).serve(session)
     }
 
     private fun postSession(
