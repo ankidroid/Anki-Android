@@ -388,7 +388,6 @@ class TagsDialog : AnalyticsDialogFragment {
      *
      * @param prefixTag: The tag to be prefilled into the EditText section. A trailing '::' will be appended.
      */
-    @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
         val addTagDialog =
             AlertDialog
