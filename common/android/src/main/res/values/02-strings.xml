@@ -467,5 +467,12 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
     <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+
+    <!-- Manage tags screen -->
+    <string name="manage_tags_more_actions" comment="Accessibility label for a tag overflow button. %1$s is the full tag path">More actions for %1$s</string>
+    <string name="manage_tags_expand" comment="Accessibility action for a tag row that shows its children">Expand</string>
+    <string name="manage_tags_collapse" comment="Accessibility action for a tag row that hides its children">Collapse</string>
+    <string name="manage_tags_state_collapsed" comment="Accessibility state of a tag row whose children are hidden">Collapsed</string>
+    <string name="manage_tags_state_expanded" comment="Accessibility state of a tag row whose children are visible">Expanded</string>
 </resources>
 
