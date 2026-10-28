@@ -4,8 +4,6 @@
 package com.ichi2.anki.progress
 
 import android.content.Context
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.fragment.app.DialogFragment
@@ -172,24 +170,6 @@ private fun FragmentManager.removeDialogHolder(
     }
     dialogHolders[this]?.remove(tag)
     (findFragmentByTag(tag) as? DialogFragment)?.dismissAllowingStateLoss()
-}
-
-private val touchBlockCounts = WeakHashMap<Window, Int>()
-
-internal fun Window.blockTouches() {
-    val count = touchBlockCounts[this] ?: 0
-    if (count == 0) addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    touchBlockCounts[this] = count + 1
-}
-
-internal fun Window.unblockTouches() {
-    val count = touchBlockCounts[this] ?: return
-    if (count > 1) {
-        touchBlockCounts[this] = count - 1
-        return
-    }
-    touchBlockCounts.remove(this)
-    clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 }
 
 private fun AnkiActivity.wireCancelListener(
