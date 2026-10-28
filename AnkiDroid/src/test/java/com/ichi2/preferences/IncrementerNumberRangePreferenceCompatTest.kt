@@ -3,8 +3,8 @@
 
 package com.ichi2.preferences
 
-import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat.Companion.ValidationResult
-import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat.Companion.validate
+import com.ichi2.compose.ui.components.NumberPickerState.Companion.ValidationResult
+import com.ichi2.compose.ui.components.NumberPickerState.Companion.validate
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
 import org.junit.Test
