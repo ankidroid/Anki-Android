@@ -6,10 +6,12 @@ package com.ichi2.anki.dialogs.tags
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.FragmentScenario
@@ -18,9 +20,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.tags.ManageTagsFragment
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
@@ -43,18 +47,70 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
 import timber.log.Timber
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest : RobolectricTest() {
+    @Test
+    fun `only the browser filter dialog offers tag management after recreation`() {
+        for (type in TagsDialog.DialogType.entries) {
+            val args = TagsDialog().withArguments(targetContext, type).requireArguments()
+            FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_Light).use { scenario ->
+                fun checkMenu() {
+                    scenario.onFragment { fragment ->
+                        val toolbar = fragment.binding.toolbar.root
+                        val item = assertNotNull(toolbar.menu.findItem(R.id.action_manage_tags))
+                        assertEquals(type == TagsDialog.DialogType.FILTER_BY_TAG, item.isVisible)
+                    }
+                }
+                checkMenu()
+                scenario.recreate()
+                checkMenu()
+            }
+        }
+    }
+
+    @Test
+    @Config(sdk = [24, 36])
+    fun `manage tags opens the manager without applying the pending filter`() {
+        val listener = Mockito.mock(TagsDialogListener::class.java)
+        val args =
+            TagsDialog()
+                .withArguments(targetContext, TagsDialog.DialogType.FILTER_BY_TAG, checkedTags = arrayListOf("pending"))
+                .requireArguments()
+        runTagsDialogScenario(args, TagsDialogFactory(listener)) { fragment ->
+            val activity = fragment.requireActivity()
+            val toolbar = fragment.binding.toolbar.root
+            assertTrue(toolbar.showOverflowMenu())
+            advanceRobolectricLooper()
+            val popup = assertNotNull(shadowOf(RuntimeEnvironment.getApplication()).latestPopupWindow)
+            val popupDecor = popup.contentView.rootView
+            assertTrue(popupDecor.isAttachedToWindow)
+            assertTrue(popupDecor.isLaidOut)
+            val list = popup.contentView as ListView
+            val position = (0 until list.count).first { (list.adapter.getItem(it) as MenuItem).itemId == R.id.action_manage_tags }
+            assertTrue(list.performItemClick(list.getChildAt(position), position, list.adapter.getItemId(position)))
+            val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
+            assertEquals(SingleFragmentActivity::class.java.name, intent.component?.className)
+            assertEquals(ManageTagsFragment::class.java.name, intent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+            advanceRobolectricLooper()
+            assertFalse(fragment.isAdded)
+            assertFalse(popupDecor.isAttachedToWindow, "The overflow window must not retain the destroyed tags dialog")
+            Mockito.verifyNoInteractions(listener)
+        }
+    }
+
     @Test
     fun `confirming removal of a parent does not preserve its display state`() {
         confirmTags(listOf("B B::child"), parentClicks = 1, selected = listOf("B::child"), preserved = emptyList())
