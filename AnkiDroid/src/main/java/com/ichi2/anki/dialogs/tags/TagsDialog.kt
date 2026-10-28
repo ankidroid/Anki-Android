@@ -8,9 +8,7 @@ import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.InputFilter
 import android.text.InputType
-import android.text.Spanned
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -45,6 +43,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.tags.tagNameInputFilter
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
@@ -349,7 +348,7 @@ class TagsDialog : AnalyticsDialogFragment {
         val toolbarSearchItem: MenuItem? = toolbarSearchItem
         toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
         val queryET = toolbarSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-        queryET.filters = arrayOf(addTagFilter)
+        queryET.filters = arrayOf(tagNameInputFilter)
         toolbarSearchView!!.queryHint = getString(CommonString.filter_tags)
         toolbarSearchView!!.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
@@ -408,9 +407,9 @@ class TagsDialog : AnalyticsDialogFragment {
                     d?.dismiss()
                 }
         val inputET = addTagDialog.getInputField()
-        inputET.filters = arrayOf(addTagFilter)
+        inputET.filters = arrayOf(tagNameInputFilter)
         if (!prefixTag.isNullOrEmpty()) {
-            // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
+            // utilize the tagNameInputFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
         }
         inputET.moveCursorToEnd()
@@ -491,49 +490,5 @@ class TagsDialog : AnalyticsDialogFragment {
         private const val ARG_DIALOG_TYPE = "dialogType"
         private const val ARG_CHECKED_TAGS = "checkedTags"
         private const val COMPACT_HEIGHT_DP = 480
-
-        /**
-         * The filter that constrains the inputted tag.
-         * Space is not allowed in a tag. For UX of hierarchical tag, inputting a space will instead
-         * insert "::" at the cursor. If there are already some colons in front of the cursor,
-         * complete to 2 colons. For example:
-         *   "tag"   -- input a space --> "tag::"
-         *   "tag:"  -- input a space --> "tag::"
-         *   "tag::" -- input a space --> "tag::"
-         */
-        private val addTagFilter =
-            InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-                if (!source.subSequence(start, end).contains(' ')) {
-                    return@InputFilter null
-                }
-                var previousColonsCnt = 0
-                if (dest != null) {
-                    val previousPart = dest.take(destStart)
-                    if (previousPart.endsWith("::")) {
-                        previousColonsCnt = 2
-                    } else if (previousPart.endsWith(":")) {
-                        previousColonsCnt = 1
-                    }
-                }
-                val sb = StringBuilder()
-                for (char in source.subSequence(start, end)) {
-                    if (char == ' ') {
-                        if (previousColonsCnt == 0) {
-                            sb.append("::")
-                        } else if (previousColonsCnt == 1) {
-                            sb.append(":")
-                        }
-                    } else {
-                        sb.append(char)
-                    }
-                    previousColonsCnt =
-                        if (char == ':') {
-                            previousColonsCnt + 1
-                        } else {
-                            0
-                        }
-                }
-                sb
-            }
     }
 }
