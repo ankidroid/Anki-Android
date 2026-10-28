@@ -6,9 +6,13 @@ import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.InputType
+import android.view.KeyEvent
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.DialogFragment
 import androidx.test.core.app.ActivityScenario
@@ -40,6 +44,90 @@ class BackupPickerTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
     private val device get() = UiDevice.getInstance(instrumentation)
     private val inputMethodSettings = TestInputMethodSettings()
+
+    @Test
+    fun keyboardAppearsAfterDelayedWindowFocus() =
+        withPicker(prepareDialog = { dialog ->
+            val window = dialog.window!!
+            window.addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED)
+            WindowCompat.getInsetsController(window, window.decorView).hide(WindowInsetsCompat.Type.ime())
+        }) { scenario, _, dialog ->
+            waitUntil(message = { "Expected attached input before window focus" }) {
+                var ready = false
+                scenario.onActivity {
+                    val input = dialog.findViewById<EditText>(android.R.id.edit)!!
+                    ready = input.isAttachedToWindow && input.hasFocus() && !input.hasWindowFocus()
+                }
+                ready
+            }
+            // Drain the attachment callback while the window still cannot accept IME input.
+            instrumentation.waitForIdleSync()
+            awaitKeyboard(scenario, dialog, visible = false)
+            scenario.onActivity { dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE) }
+            awaitKeyboard(scenario, dialog, visible = true)
+        }
+
+    @Test
+    fun hardwareTabCanReachEveryEnabledControlInBothDirections() =
+        withPicker { scenario, _, dialog ->
+            awaitKeyboard(scenario, dialog, visible = true)
+            val context = instrumentation.targetContext
+            val minus = context.getString(CommonString.minus_sign)
+            val plus = context.getString(CommonString.plus_sign)
+
+            fun focusedControl(): String? {
+                if (editableNode().isFocused) return "input"
+                if (labeledNode(minus).isFocused) return "minus"
+                if (labeledNode(plus).isFocused) return "plus"
+                var button: String? = null
+                scenario.onActivity {
+                    button =
+                        when {
+                            dialog.negativeButton.isFocused -> "cancel"
+                            dialog.positiveButton.isFocused -> "save"
+                            else -> null
+                        }
+                }
+                return button
+            }
+
+            val tabOrders =
+                mapOf(
+                    "30" to listOf("input", "plus", "cancel", "save", "minus"),
+                    "5" to listOf("input", "plus", "cancel", "save"),
+                    "99999" to listOf("input", "cancel", "save", "minus"),
+                    "" to listOf("input", "cancel"),
+                    "4" to listOf("input", "plus", "cancel"),
+                )
+            for ((text, forwardOrder) in tabOrders) {
+                replaceText(text)
+                waitUntil(message = { "Expected enabled controls for '$text'" }) {
+                    var saveEnabled = false
+                    scenario.onActivity { saveEnabled = dialog.positiveButton.isEnabled }
+                    saveEnabled == ("save" in forwardOrder) &&
+                        labeledNode(minus).isEnabled == ("minus" in forwardOrder) &&
+                        labeledNode(plus).isEnabled == ("plus" in forwardOrder)
+                }
+                for (modifiers in listOf(0, KeyEvent.META_SHIFT_ON)) {
+                    waitUntil(message = { "Expected focused input" }) { editableNode().isFocused }
+                    val expectedOrder =
+                        if (modifiers == 0) forwardOrder else listOf("input") + forwardOrder.drop(1).reversed()
+                    for (control in expectedOrder) {
+                        waitUntil(message = {
+                            "Text: '$text', Tab modifiers: $modifiers, expected $control, focused ${focusedControl()}"
+                        }) {
+                            focusedControl() == control
+                        }
+                        assertTrue(device.pressKeyCode(KeyEvent.KEYCODE_TAB, modifiers))
+                        instrumentation.waitForIdleSync()
+                    }
+                    waitUntil(message = { "Text: '$text', Tab modifiers: $modifiers, focus should wrap back to the input" }) {
+                        focusedControl() == "input"
+                    }
+                }
+            }
+        }
 
     @Test
     fun keyboardInputBackAndCancelKeepTheirBehavior() =
@@ -93,7 +181,9 @@ class BackupPickerTest {
             waitUntil(message = { "Expected accessible range error" }) { !editableNode().error.isNullOrEmpty() }
             assertEquals(context.getString(CommonString.minimum_value_is, 5), editableNode().error)
             scenario.onActivity { assertFalse(dialog.positiveButton.isEnabled) }
-            assertFalse(labeledNode(context.getString(CommonString.minus_sign)).isEnabled)
+            waitUntil(message = { "Expected disabled decrement button below the minimum" }) {
+                !labeledNode(context.getString(CommonString.minus_sign)).isEnabled
+            }
             assertTrue(labeledNode(context.getString(CommonString.plus_sign)).performAction(AccessibilityNodeInfo.ACTION_CLICK))
             waitUntil(message = { "Expected minimum value after increment" }) { editableNode().text.toString() == "5" }
             assertNull(editableNode().error)
@@ -124,6 +214,43 @@ class BackupPickerTest {
         }
     }
 
+    @Test
+    fun recreationRestoresUnconfirmedTextAndSelection() =
+        withPicker { scenario, _, _ ->
+            replaceText("123")
+            assertTrue(
+                editableNode().performAction(
+                    AccessibilityNodeInfo.ACTION_SET_SELECTION,
+                    Bundle().apply {
+                        putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_START_INT, 1)
+                        putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_END_INT, 2)
+                    },
+                ),
+            )
+            waitUntil(message = { "Expected selected range before recreation" }) {
+                editableNode().let { it.textSelectionStart == 1 && it.textSelectionEnd == 2 }
+            }
+            scenario.recreate()
+            waitUntil(message = { "Expected restored text and selection after attachment" }) {
+                editableNode().let { it.text.toString() == "123" && it.textSelectionStart == 1 && it.textSelectionEnd == 2 }
+            }
+            val input = editableNode()
+            assertEquals("123", input.text.toString())
+            assertEquals(1, input.textSelectionStart)
+            assertEquals(2, input.textSelectionEnd)
+            scenario.onActivity { activity ->
+                val parent = activity.fragment as PreferencesFragment
+                val fragment = parent.childFragmentManager.findFragmentById(R.id.settings_container) as BackupLimitsSettingsFragment
+                assertEquals(
+                    "30",
+                    fragment
+                        .requirePreference<IncrementerNumberRangePreferenceCompat>(
+                            R.string.pref_minutes_between_automatic_backups_key,
+                        ).text,
+                )
+            }
+        }
+
     internal fun editableNode(): AccessibilityNodeInfo = findNode { it.isEditable }
 
     private fun labeledNode(label: String): AccessibilityNodeInfo =
@@ -152,7 +279,7 @@ class BackupPickerTest {
                 },
             ),
         )
-        waitUntil(message = { "Expected edited text $text" }) { editableNode().text.toString() == text }
+        waitUntil(message = { "Expected edited text $text" }) { editableNode().text?.toString().orEmpty() == text }
     }
 
     private fun awaitKeyboard(
@@ -169,7 +296,10 @@ class BackupPickerTest {
         }
     }
 
-    internal fun withPicker(block: (ActivityScenario<PreferencesActivity>, IncrementerNumberRangePreferenceCompat, AlertDialog) -> Unit) {
+    internal fun withPicker(
+        prepareDialog: (AlertDialog) -> Unit = {},
+        block: (ActivityScenario<PreferencesActivity>, IncrementerNumberRangePreferenceCompat, AlertDialog) -> Unit,
+    ) {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val previous = inputMethodSettings.showWithHardwareKeyboard
         try {
@@ -196,6 +326,7 @@ class BackupPickerTest {
                                 "androidx.preference.PreferenceFragment.DIALOG",
                             ) as DialogFragment
                         ).requireDialog() as AlertDialog
+                    prepareDialog(dialog)
                 }
                 block(scenario, preference, dialog)
             }
