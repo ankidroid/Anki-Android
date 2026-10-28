@@ -53,7 +53,7 @@ open class AnkiServer(
         data: ByteArray,
         mimeType: String = "application/binary",
         status: Response.IStatus = Response.Status.OK,
-    ): Response = newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
+    ): Response = newFixedLengthResponse(status, mimeType, ByteArrayInputStream(data), data.size.toLong())
 
     companion object {
         const val LOCALHOST = "127.0.0.1"
