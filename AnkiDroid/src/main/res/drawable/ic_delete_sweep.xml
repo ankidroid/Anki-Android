@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Material Symbols Outlined. Converted from SVG to Android VectorDrawable.
+  Source: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/delete_sweep/materialsymbolsoutlined/delete_sweep_24px.svg
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="?attr/colorControlNormal">
+    <group android:translateY="960">
+        <path android:fillColor="@android:color/white" android:pathData="M600-240v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120-640H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440-200H200q-33 0-56.5-23.5T120-280v-360Zm80 0v360h240v-360H200Zm0 0v360-360Z" />
+    </group>
+</vector>

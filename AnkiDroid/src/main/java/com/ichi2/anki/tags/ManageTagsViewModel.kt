@@ -12,9 +12,9 @@ import com.ichi2.anki.libanki.Tags
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
-import com.ichi2.anki.tags.UserMessage.TagMoved
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
+import com.ichi2.anki.tags.UserMessage.UnusedTagMoved
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
@@ -64,6 +64,7 @@ class ManageTagsViewModel : ViewModel() {
 
     private var tagOperation: Job? = null
     private var expansionSave: Job? = null
+    private var tagRevision = 0L
 
     init {
         refreshTags()
@@ -77,6 +78,8 @@ class ManageTagsViewModel : ViewModel() {
 
     /**
      * Filters visible tags by [query]. Ancestors of matches are shown to preserve hierarchy.
+     *
+     * TODO: Highlight matching text in tag search results.
      *
      * WARN: Mutliselect was not implemented on this screen due to the confusing combination
      * of having a filtered tag selected.
@@ -93,6 +96,13 @@ class ManageTagsViewModel : ViewModel() {
 
     /** Acknowledges that the UI has finished displaying a message. */
     fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
+
+    /** Clears a dismissed operation error if it is still current. */
+    fun errorDismissed(error: Throwable) {
+        updateState { current ->
+            if (current.error === error) current.copy(error = null) else current
+        }
+    }
 
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
@@ -219,7 +229,7 @@ class ManageTagsViewModel : ViewModel() {
             if (result.count == 0 && currentParent != newParent) {
                 UserMessage.UnusedTagNotMoved
             } else {
-                TagMoved(result.count)
+                UnusedTagMoved(result.count)
             },
         )
     }
@@ -231,6 +241,7 @@ class ManageTagsViewModel : ViewModel() {
             ManageTagsState.Content(
                 visibleNodes = computeVisibleNodes(searchQuery.value),
                 totalTagCount = tagList.size,
+                tagRevision = ++tagRevision,
             )
     }
 
@@ -453,9 +464,11 @@ sealed class ManageTagsState {
         val visibleNodes: List<TagListItemState>,
         /** `true` while a tag operation runs, allowing the UI to show progress without hiding the list. */
         val isWorking: Boolean = false,
-        /** Most recent operation failure, cleared when the next operation starts. */
+        /** Most recent operation failure, cleared on dismissal or when the next operation starts. */
         val error: Throwable? = null,
         val totalTagCount: Int = 0,
+        /** Invalidates selected-tag checks even when a note update leaves the tag tree unchanged. */
+        val tagRevision: Long = 0,
     ) : ManageTagsState()
 
     data class Error(
@@ -474,8 +487,11 @@ sealed interface UserMessage {
         val notesAffected: Int,
     ) : UserMessage
 
-    /** @param notesAffected number of notes whose tags were reparented */
-    data class TagMoved(
+    /**
+     * Retained for move-operation tests; the Manage Tags UI does not offer moving tags.
+     * @param notesAffected number of notes whose tags were reparented
+     */
+    data class UnusedTagMoved(
         val notesAffected: Int,
     ) : UserMessage
 
