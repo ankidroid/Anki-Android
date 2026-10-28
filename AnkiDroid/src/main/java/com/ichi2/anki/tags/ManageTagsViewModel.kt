@@ -3,7 +3,9 @@
 package com.ichi2.anki.tags
 
 import android.icu.lang.UCharacter
+import android.os.Bundle
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
@@ -16,9 +18,9 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
-import com.ichi2.anki.tags.UserMessage.TagMoved
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
+import com.ichi2.anki.tags.UserMessage.UnusedTagMoved
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
@@ -47,15 +49,16 @@ import anki.tags.TagTreeNode as BackendTagTreeNode
  * @see ManageTagsState for UI state.
  * @see pendingMessages for messages awaiting display.
  */
-class ManageTagsViewModel :
-    ViewModel(),
+class ManageTagsViewModel(
+    savedStateHandle: SavedStateHandle,
+) : ViewModel(),
     ChangeManager.Subscriber {
     val state: StateFlow<ManageTagsState>
         field = MutableStateFlow<ManageTagsState>(ManageTagsState.Loading)
 
-    /** Search field contents, available even while tags are loading or failed to load. */
+    /** Saved search field contents, available even while tags are loading or failed to load. */
     val searchQuery: StateFlow<String>
-        field = MutableStateFlow("")
+        field = savedStateHandle.getMutableStateFlow(STATE_SEARCH_QUERY, "")
 
     private val messageQueue = MessageQueue<UserMessage>()
 
@@ -66,14 +69,25 @@ class ManageTagsViewModel :
     private var tagList: List<TagListItemState> = emptyList()
 
     /** Explicit collapses override search expansion until the query changes. */
-    private val searchCollapsedTags = mutableSetOf<TagName>()
+    private val searchCollapsedTags =
+        savedStateHandle
+            .get<Bundle>(STATE_SEARCH_COLLAPSED_TAGS)
+            ?.getStringArrayList(STATE_SEARCH_COLLAPSED_TAGS)
+            .orEmpty()
+            .mapNotNullTo(mutableSetOf(), TagName::build)
 
     private var tagOperation: Job? = null
     private var expansionSave: Job? = null
+    private var tagRevision = 0L
 
     private val undoHistory = ManageTagsUndoHistory()
 
     init {
+        savedStateHandle.setSavedStateProvider(STATE_SEARCH_COLLAPSED_TAGS) {
+            Bundle().apply {
+                putStringArrayList(STATE_SEARCH_COLLAPSED_TAGS, searchCollapsedTags.mapTo(ArrayList(), TagName::value))
+            }
+        }
         ChangeManager.subscribe(this)
         addCloseable { ChangeManager.unsubscribe(this) }
         refreshTags()
@@ -95,6 +109,8 @@ class ManageTagsViewModel :
     /**
      * Filters visible tags by [query]. Ancestors of matches are shown to preserve hierarchy.
      *
+     * TODO: Highlight matching text in tag search results.
+     *
      * WARN: Mutliselect was not implemented on this screen due to the confusing combination
      * of having a filtered tag selected.
      */
@@ -110,6 +126,13 @@ class ManageTagsViewModel :
 
     /** Acknowledges that the UI has finished displaying a message. */
     fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
+
+    /** Clears a dismissed operation error if it is still current. */
+    fun errorDismissed(error: Throwable) {
+        updateState { current ->
+            if (current.error === error) current.copy(error = null) else current
+        }
+    }
 
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
@@ -245,7 +268,7 @@ class ManageTagsViewModel :
             if (result.count == 0 && currentParent != newParent) {
                 UserMessage.UnusedTagNotMoved
             } else {
-                TagMoved(result.count)
+                UnusedTagMoved(result.count)
             },
         )
     }
@@ -294,6 +317,7 @@ class ManageTagsViewModel :
                 totalTagCount = tagList.size,
                 undoLabel = undoLabels.undoLabel,
                 redoLabel = undoLabels.redoLabel,
+                tagRevision = ++tagRevision,
             )
     }
 
@@ -376,6 +400,9 @@ class ManageTagsViewModel :
     }
 
     companion object {
+        private const val STATE_SEARCH_QUERY = "search_query"
+        private const val STATE_SEARCH_COLLAPSED_TAGS = "search_collapsed_tags"
+
         /**
          * Converts the backend's recursive [BackendTagTreeNode] into a flat list of all
          * [TagListItemState]s in pre-order. Always recurses into all children regardless of
@@ -520,12 +547,14 @@ sealed class ManageTagsState {
         val visibleNodes: List<TagListItemState>,
         /** `true` while a tag operation runs, allowing the UI to show progress without hiding the list. */
         val isWorking: Boolean = false,
-        /** Most recent operation failure, cleared when the next operation starts. */
+        /** Most recent operation failure, cleared on dismissal or when the next operation starts. */
         val error: Throwable? = null,
         val totalTagCount: Int = 0,
         /** Localized labels, limited to this screen's history until another caller changes it. */
         val undoLabel: String? = null,
         val redoLabel: String? = null,
+        /** Invalidates selected-tag checks even when a note update leaves the tag tree unchanged. */
+        val tagRevision: Long = 0,
     ) : ManageTagsState()
 
     data class Error(
@@ -553,8 +582,11 @@ sealed interface UserMessage {
         val notesAffected: Int,
     ) : UserMessage
 
-    /** @param notesAffected number of notes whose tags were reparented */
-    data class TagMoved(
+    /**
+     * Retained for move-operation tests; the Manage Tags UI does not offer moving tags.
+     * @param notesAffected number of notes whose tags were reparented
+     */
+    data class UnusedTagMoved(
         val notesAffected: Int,
     ) : UserMessage
 
