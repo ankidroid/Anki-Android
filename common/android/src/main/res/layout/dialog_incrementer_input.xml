@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+    app:boxCornerRadiusBottomEnd="12dp"
+    app:boxCornerRadiusBottomStart="12dp"
+    app:boxCornerRadiusTopEnd="12dp"
+    app:boxCornerRadiusTopStart="12dp"
+    app:errorEnabled="true"
+    app:errorIconDrawable="@null"
+    app:hintEnabled="false">
+
+    <com.ichi2.compose.ui.components.NumberPickerEditText
+        android:id="@android:id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="numberSigned"
+        android:maxLines="1"
+        android:padding="12dp"
+        android:selectAllOnFocus="true"
+        android:textSize="24sp" />
+
+</com.google.android.material.textfield.TextInputLayout>
