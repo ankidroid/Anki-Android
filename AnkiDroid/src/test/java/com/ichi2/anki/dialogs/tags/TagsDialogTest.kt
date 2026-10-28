@@ -973,6 +973,39 @@ class TagsDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `long-clicking a tag opens the add tag dialog prefilled with the tag as a prefix`() {
+        val tag = "parent"
+        runTagsDialogScenario(
+            args =
+                TagsDialog(ParametersUtils.whatever())
+                    .withTestArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = arrayListOf(),
+                        allTags = listOf(tag),
+                    ).requireArguments(),
+            factory =
+                TagsDialogFactory(
+                    listener = Mockito.mock(TagsDialogListener::class.java),
+                ),
+        ) { tagsDialog: TagsDialog ->
+            val recyclerView = tagsDialog.binding.tagsList
+            // workaround robolectric recyclerView issue
+            recyclerView.measure(0, 0)
+            recyclerView.layout(0, 0, 100, 1000)
+            RecyclerViewUtils
+                .viewHolderAt<TagsArrayAdapter.ViewHolder>(recyclerView, 0)
+                .itemView
+                .performLongClick()
+            advanceRobolectricLooper()
+            val addTagDialog = ShadowDialog.getLatestDialog() as AlertDialog
+            assertEquals(
+                expected = "$tag::",
+                actual = addTagDialog.getInputField().text.toString(),
+            )
+        }
+    }
+
     private fun withAddTagDialog(
         allTags: List<String>,
         block: (AlertDialog) -> Unit,
