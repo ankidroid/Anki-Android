@@ -2470,7 +2470,7 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck()
+    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck(shownDeckId = fragment?.shownDeckId)
 
     fun rebuildFiltered(did: DeckId) {
         viewModel.rebuildFilteredDeck(did)

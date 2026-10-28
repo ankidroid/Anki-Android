@@ -310,11 +310,12 @@ class DeckPickerViewModelTest : RobolectricTest() {
     @Test
     fun `deleteSelectedDeck reports progress before reading the selected deck`() =
         runTest {
-            col.decks.select(addDeck("Deleted"))
+            val deckId = addDeck("Deleted")
+            col.decks.select(deckId)
 
             DeckPickerViewModel().run {
                 withQueuedCollectionAccess {
-                    val deletion = deleteSelectedDeck()
+                    val deletion = deleteSelectedDeck(shownDeckId = deckId)
                     val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(progressManager.progress.value)
                     assertEquals(DeckPickerProgress.DELETING_DECK, active.message)
                     deletion.join()

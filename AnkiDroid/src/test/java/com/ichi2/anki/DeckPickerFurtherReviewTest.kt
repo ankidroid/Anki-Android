@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
@@ -9,10 +10,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.backendError
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.decks.DeckTreeNode
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.progress.ViewModelProgress
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
@@ -21,6 +25,7 @@ import net.ankiweb.rsdroid.exceptions.BackendIoException
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertSame
@@ -97,6 +102,76 @@ class DeckPickerFurtherReviewTest : RobolectricTest() {
             }
         } finally {
             DatabaseCorruption.isDetected = previouslyDetected
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `failed recovery refresh cannot leave a destructive shortcut acting on another deck`() {
+        var failSelection = false
+        var failReload = false
+        useBackend {
+            object : Backend() {
+                override fun setCurrentDeck(did: Long): OpChanges {
+                    if (failSelection) {
+                        failSelection = false
+                        failReload = true
+                        throw failure
+                    }
+                    return super.setCurrentDeck(did)
+                }
+
+                override fun deckTree(now: Long): DeckTreeNode {
+                    if (failReload) throw failure
+                    return super.deckTree(now)
+                }
+            }
+        }
+        addNoteToDeck(DEFAULT_DECK_ID)
+        val deleted = addDeck("Deleted", setAsSelected = true)
+        val survivor = addDeck("Survivor")
+        addNoteToDeck(deleted)
+        withDeckPicker(deckCount = 0) { picker ->
+            picker.awaitVisibleDecks(listOf(DEFAULT_DECK_ID, deleted, survivor))
+            advanceRobolectricLooperUntil {
+                picker.viewModel.loadDeckCounts?.isCompleted == true && picker.fragment?.viewModel?.selectedDeckId == deleted
+            }
+            throwOnShowError = false
+            failSelection = true
+            val deletion = picker.deleteDeck(deleted)
+            advanceRobolectricLooperUntil {
+                deletion.isCompleted && picker.viewModel.loadDeckCounts?.isCompleted == true
+            }
+            while (picker.viewModel.pendingErrors.value
+                    .isNotEmpty()
+            ) {
+                val pending =
+                    picker.viewModel.pendingErrors.value
+                        .first()
+                        .id
+                advanceRobolectricLooperUntil { (ShadowDialog.getLatestDialog() as? AlertDialog)?.isShowing == true }
+                ShadowDialog.getLatestDialog().dismiss()
+                advanceRobolectricLooperUntil {
+                    picker.viewModel.pendingErrors.value
+                        .firstOrNull()
+                        ?.id != pending
+                }
+            }
+
+            // A fix may reconcile or clear the pane. If it still displays the deleted deck,
+            // Shift+Delete must be blocked rather than deleting the backend's fallback deck.
+            if (picker.fragment?.viewModel?.selectedDeckId == deleted) {
+                picker.onKeyUp(
+                    KeyEvent.KEYCODE_DEL,
+                    KeyEvent(0, 0, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL, 0, KeyEvent.META_SHIFT_ON),
+                )
+                advanceRobolectricLooperUntil { picker.viewModel.progressManager.progress.value is ViewModelProgress.Idle }
+            }
+            assertEquals(
+                1,
+                col.decks.cardCount(DEFAULT_DECK_ID, includeSubdecks = true),
+                "Retrying the displayed deletion removed the cards from a different deck",
+            )
         }
     }
 

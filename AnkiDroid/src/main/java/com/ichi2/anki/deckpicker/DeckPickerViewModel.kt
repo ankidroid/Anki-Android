@@ -306,10 +306,14 @@ class DeckPickerViewModel :
     /**
      * Deletes the currently selected deck
      */
-    fun deleteSelectedDeck() =
+    fun deleteSelectedDeck(shownDeckId: DeckId?) =
         launchCatchingTask {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val targetDeckId = withCol { decks.selected() }
+                if (targetDeckId != shownDeckId) {
+                    reloadDeckCounts()
+                    return@withProgress
+                }
                 deleteDeck(targetDeckId).join()
             }
         }
