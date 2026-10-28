@@ -59,7 +59,7 @@ class StudyOptionsViewModel :
     suspend fun rebuildCram() {
         Timber.d("doInBackground - RebuildCram")
         progressManager.withProgress(message = StudyOptionsProgress.REBUILDING_FILTERED_DECK) {
-            undoableOp { sched.rebuildFilteredDeck(decks.selected()) }
+            undoableOp { sched.rebuildFilteredDeck(selectedDeckId) }
             withCol { updateStateFromCollection() }
         }
     }
@@ -67,14 +67,14 @@ class StudyOptionsViewModel :
     suspend fun emptyCram() {
         Timber.d("doInBackgroundEmptyCram")
         progressManager.withProgress(message = StudyOptionsProgress.EMPTYING_FILTERED_DECK) {
-            undoableOp { sched.emptyFilteredDeck(decks.selected()) }
+            undoableOp { sched.emptyFilteredDeck(selectedDeckId) }
             withCol { updateStateFromCollection() }
         }
     }
 
     fun unbury(): Job =
         viewModelScope.launch {
-            undoableOp<OpChanges> { sched.unburyDeck(decks.getCurrentId()) }
+            undoableOp<OpChanges> { sched.unburyDeck(selectedDeckId) }
         }
 
     /**
