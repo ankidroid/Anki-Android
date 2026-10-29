@@ -47,9 +47,9 @@ open class SafeWebViewLayout :
             return null
         }
 
-    var scrollBars: Int = uncheckedWebView.scrollBarStyle
+    var scrollBars: Int
+        get() = uncheckedWebView.scrollBarStyle
         set(value) {
-            field = value
             activeWebView?.scrollBarStyle = value
         }
 
