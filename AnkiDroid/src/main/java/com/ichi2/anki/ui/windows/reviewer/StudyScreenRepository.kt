@@ -12,9 +12,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.utils.CollectionPreferences
-import timber.log.Timber
-import java.net.BindException
-import java.net.ServerSocket
 
 class StudyScreenRepository(
     private val prefs: PrefsRepository = Prefs,
@@ -34,24 +31,6 @@ class StudyScreenRepository(
         val isToolbarShown = prefs.toolbarPosition != ToolbarPosition.NONE
         isMarkShownInToolbar = isToolbarShown && ViewerAction.MARK in actions
         isFlagShownInToolbar = isToolbarShown && ViewerAction.FLAG_MENU in actions
-    }
-
-    fun getServerPort(): Int {
-        if (!prefs.useFixedPortInReviewer) return 0
-        return try {
-            ServerSocket(prefs.reviewerPort)
-                .use {
-                    it.reuseAddress = true
-                    it.localPort
-                }.also {
-                    if (prefs.reviewerPort == 0) {
-                        prefs.reviewerPort = it
-                    }
-                }
-        } catch (_: BindException) {
-            Timber.w("Fixed port %d under use. Using dynamic port", prefs.reviewerPort)
-            0
-        }
     }
 
     fun generateStateMutationKey(): String = TimeManager.time.intTimeMS().toString()
