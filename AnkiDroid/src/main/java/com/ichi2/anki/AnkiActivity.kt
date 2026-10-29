@@ -645,6 +645,7 @@ open class AnkiActivity(
     }
 
     // Show dialogs to deal with database loading issues etc
+    // TODO: Make this generic over a regular activity, so it can be pulled down to anki-common
     open fun showDatabaseErrorDialog(
         errorDialogType: DatabaseErrorDialogType,
         exceptionData: CustomExceptionData? = null,
