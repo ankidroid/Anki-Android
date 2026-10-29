@@ -62,6 +62,9 @@ class HeaderFragment : SettingsFragment() {
 
         requirePreference<HeaderPreference>(R.string.pref_switch_profile_screen_key).isVisible = Prefs.switchProfileEnabled
 
+        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
+            .showBadgeWhen = { Prefs.shouldShowReviewRemindersIntro }
+
         configureSearchBar(
             requireActivity() as AppCompatActivity,
             requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
