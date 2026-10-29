@@ -166,7 +166,7 @@ class PostRequestBridge(
         const val MAX_MESSAGE_SIZE = 64 shl 20
 
         /** Whether the WebView supports the APIs used by the bridge. Logs a warning if it doesn't */
-        private fun isSupported(): Boolean =
+        fun isSupported(): Boolean =
             (
                 WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER) &&
                     WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT) &&
