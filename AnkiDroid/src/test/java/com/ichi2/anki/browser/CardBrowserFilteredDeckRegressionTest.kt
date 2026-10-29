@@ -12,7 +12,6 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.empty
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
@@ -31,7 +30,18 @@ class CardBrowserFilteredDeckRegressionTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("TODO: escape the literal '_*' deck name instead of matching every deck")
+    fun `filtered deck escapes wildcards in the deck name`() =
+        withCardBrowserFragment {
+            // '_' is a single character wildcard, so an unescaped name also matches 'Chapter11'
+            val selected = addBasicNote("selected").apply { moveToDeck("Chapter_1") }
+            addBasicNote("unrelated").apply { moveToDeck("Chapter11") }
+
+            val search = filteredDeckSearch(deckName = "Chapter_1")
+
+            assertThat(col.findCards(search), containsInAnyOrder(selected.firstCard().id))
+        }
+
+    @Test
     fun `filtered deck treats a deck named underscore star literally`() =
         withCardBrowserFragment {
             val selected = addBasicNote("selected").apply { moveToDeck("_*") }
@@ -43,7 +53,6 @@ class CardBrowserFilteredDeckRegressionTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("TODO: group OR alternatives before combining them with the selected deck")
     fun `filtered deck keeps both OR alternatives within the selected deck`() =
         withCardBrowserFragment {
             val first = addBasicNote("first").apply { moveToDeck("Selected") }
@@ -56,7 +65,6 @@ class CardBrowserFilteredDeckRegressionTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("TODO: retain the selected deck constraint when the query contains 'deck:'")
     fun `filtered deck preserves selected deck when query contains a deck restriction`() =
         withCardBrowserFragment {
             addBasicNote("selected").apply { moveToDeck("Selected") }

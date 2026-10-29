@@ -55,7 +55,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
-import anki.search.searchNode
 import com.google.android.material.chip.Chip
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -101,7 +100,6 @@ import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.getIcon
 import com.ichi2.anki.browser.search.iconRes
-import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.navigate
@@ -1717,45 +1715,15 @@ class CardBrowserFragment :
     fun showFilteredDeckScreen() {
         launchCatchingTask {
             withProgress {
-                val currentSearch = activityViewModel.searchTerms
-                // the desktop browser only adds a deck if it's directly selected while we select a
-                // deck outside the search box. So we need to look at the current search string
-                // and manually set a deck if one is not found
-                val search =
-                    if (currentSearch.isNotEmpty()) {
-                        if (currentSearch.contains("deck:")) {
-                            currentSearch
-                        } else {
-                            "${buildDeckNameSearch()} $currentSearch"
-                        }
-                    } else {
-                        buildDeckNameSearch()
-                    }
-                val intent = FilteredDeckOptionsFragment.getIntent(requireContext(), search = search)
+                // the selected deck sits outside the search box, so build the same search the
+                // browser uses, which combines the query and the filters via the backend
+                val searchRequest = activityViewModel.searchRequestFlow.value
+                val search = withCol { searchRequest.toSearchString().getOrThrow() }
+                val intent = FilteredDeckOptionsFragment.getIntent(requireContext(), search = search.value)
                 startActivity(intent)
             }
         }
     }
-
-    /**
-     * Returns a search string for the current selected deck to be used for building a filtered
-     * deck in the form of "deck:A". If the selected deck is "All Decks" then return a general deck
-     * search string.
-     */
-    @VisibleForTesting
-    suspend fun buildDeckNameSearch(): String? =
-        if (activityViewModel.deckId == ALL_DECKS_ID) {
-            "deck:_*"
-        } else {
-            activityViewModel.deckId?.let { deckId ->
-                withCol {
-                    // decks.get() returns the default deck if a deck doesn't exist for that did
-                    decks.get(deckId, default = true)?.name?.let { deckName ->
-                        buildSearchString(listOf(searchNode { deck = deckName }))
-                    }
-                }
-            }
-        }
 
     fun changeDisplayOrder() =
         launchCatchingTask {
