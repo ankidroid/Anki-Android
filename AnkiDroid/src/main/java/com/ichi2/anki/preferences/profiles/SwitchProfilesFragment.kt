@@ -50,17 +50,26 @@ class SwitchProfilesFragment : Fragment() {
                     val profiles by viewModel.profiles.collectAsStateWithLifecycle()
                     val isAddProfileDialogVisible by viewModel.isAddProfileDialogVisible.collectAsStateWithLifecycle()
                     val profileBeingRenamed by viewModel.profileBeingRenamed.collectAsStateWithLifecycle()
+                    val profileToSwitchTo by viewModel.profileToSwitchTo.collectAsStateWithLifecycle()
+                    val isSwitchBlocked by viewModel.isSwitchBlocked.collectAsStateWithLifecycle()
+                    // TODO: pass the user actions as one sealed class (MVI) instead of a callback each
                     SwitchProfilesScreen(
                         profiles = profiles,
                         isAddProfileDialogVisible = isAddProfileDialogVisible,
                         profileBeingRenamed = profileBeingRenamed,
+                        profileToSwitchTo = profileToSwitchTo,
+                        isSwitchBlocked = isSwitchBlocked,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
+                        onProfileClick = viewModel::requestSwitch,
                         onAddProfileClick = viewModel::showAddProfileDialog,
                         onAddProfileConfirm = viewModel::addProfile,
                         onAddProfileDismiss = viewModel::dismissAddProfileDialog,
                         onEditProfile = viewModel::showRenameProfileDialog,
                         onRenameProfileConfirm = viewModel::renameProfile,
                         onRenameProfileDismiss = viewModel::dismissRenameProfileDialog,
+                        onSwitchProfileConfirm = viewModel::switchProfile,
+                        onSwitchProfileDismiss = viewModel::dismissSwitchProfileDialog,
+                        onSwitchBlockedDismiss = viewModel::dismissSwitchBlockedMessage,
                         onDeleteProfile = viewModel::deleteProfile,
                     )
                 }
