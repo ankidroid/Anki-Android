@@ -4,12 +4,18 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.account.AccountActivity
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowToast
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -22,5 +28,22 @@ class SingleFragmentActivityTest : RobolectricTest() {
 
         assertTrue(activity.isFinishing)
         assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
+    }
+
+    @Test
+    fun `custom study results are left to the hosted fragment`() {
+        // a generic host: a fragment which doesn't listen for the result must not trigger navigation
+        val activity = startRegularActivity<SingleFragmentActivity>(SingleFragmentActivity.getIntent(targetContext, Fragment::class))
+
+        for (action in CustomStudyAction.entries) {
+            activity.supportFragmentManager.setFragmentResult(
+                CustomStudyAction.REQUEST_KEY,
+                bundleOf(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION to action.ordinal),
+            )
+            advanceRobolectricLooper()
+
+            assertNull(shadowOf(activity).nextStartedActivity, "$action started an activity")
+            assertFalse(activity.isFinishing, "$action finished the activity")
+        }
     }
 }

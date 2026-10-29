@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.pages
 
+import android.app.Activity
 import android.os.Looper
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
@@ -21,13 +23,16 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.testutils.launchFragmentInContainer
 import com.ichi2.testutils.saveState
 import com.ichi2.testutils.uninitializeField
+import com.ichi2.testutils.withFragment
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.Matchers.allOf
@@ -39,6 +44,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CongratsPageTest : RobolectricTest() {
@@ -119,6 +125,69 @@ class CongratsPageTest : RobolectricTest() {
         }
 
     @Test
+    fun `custom study results open study options and finish the screen`() =
+        runTest {
+            // Keep the deck finished so the Congrats page stays open.
+            updateDeckConfig(Consts.DEFAULT_DECK_ID) { new.perDay = 0 }
+            addBasicNote()
+
+            for (action in CustomStudyAction.entries) {
+                // hosted by EmptyAnkiActivity, not SingleFragmentActivity: the page handles the result itself
+                launchFragmentInContainer<CongratsPage>().use { scenario ->
+                    val activity = scenario.withFragment { requireActivity() }
+                    advanceUntilIdle()
+                    assertNull(shadowOf(activity).nextStartedActivity, "$action: page opened study options early")
+
+                    scenario.postCustomStudyResult(action)
+
+                    assertOpenedStudyOptionsAndFinished(activity)
+                }
+            }
+        }
+
+    @Test
+    fun `custom study result is handled after the page is recreated`() =
+        runTest {
+            // Keep the deck finished so the Congrats page stays open.
+            updateDeckConfig(Consts.DEFAULT_DECK_ID) { new.perDay = 0 }
+            addBasicNote()
+
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                scenario.recreate()
+                val activity = scenario.withFragment { requireActivity() }
+                advanceUntilIdle()
+                assertNull(shadowOf(activity).nextStartedActivity)
+
+                scenario.postCustomStudyResult(CustomStudyAction.EXTEND_STUDY_LIMITS)
+
+                assertOpenedStudyOptionsAndFinished(activity)
+            }
+        }
+
+    /** Issue 22801: the activity owns the custom study operation, so its result can arrive while the page is stopped */
+    @Test
+    fun `custom study result received while stopped is handled when the page starts`() =
+        runTest {
+            // Keep the deck finished so the Congrats page stays open.
+            updateDeckConfig(Consts.DEFAULT_DECK_ID) { new.perDay = 0 }
+            addBasicNote()
+
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                val activity = scenario.withFragment { requireActivity() }
+                scenario.moveToState(Lifecycle.State.CREATED)
+
+                scenario.postCustomStudyResult(CustomStudyAction.CUSTOM_STUDY_SESSION)
+                assertNull(shadowOf(activity).nextStartedActivity, "a stopped page should not navigate")
+                assertFalse(activity.isFinishing)
+
+                scenario.moveToState(Lifecycle.State.RESUMED)
+                advanceUntilIdle()
+
+                assertOpenedStudyOptionsAndFinished(activity)
+            }
+        }
+
+    @Test
     fun `custom study tag selection survives process death`() =
         runTest {
             // Keep the deck finished so the Congrats page stays open.
@@ -156,6 +225,22 @@ class CongratsPageTest : RobolectricTest() {
             assertEquals(assertNotNull(col.decks.customStudySession).id, selectedNote.firstCard().did)
             assertEquals(Consts.DEFAULT_DECK_ID, otherNote.firstCard().did)
         }
+
+    /** Posts [action] where [CustomStudyDialog] posts it: the activity's fragment manager */
+    private fun AnkiFragmentScenario<CongratsPage>.postCustomStudyResult(action: CustomStudyAction) {
+        onFragment { page ->
+            page.requireActivity().supportFragmentManager.setFragmentResult(
+                CustomStudyAction.REQUEST_KEY,
+                bundleOf(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION to action.ordinal),
+            )
+        }
+    }
+
+    private fun assertOpenedStudyOptionsAndFinished(activity: Activity) {
+        assertEquals(StudyOptionsActivity::class.java.name, shadowOf(activity).nextStartedActivity?.component?.className)
+        assertNull(shadowOf(activity).nextStartedActivity, "study options should open once")
+        assertTrue(activity.isFinishing)
+    }
 
     private fun clickDialogPositiveButton() {
         onView(withId(android.R.id.button1))
