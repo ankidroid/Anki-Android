@@ -58,11 +58,6 @@ open class AnkiServer(
     companion object {
         const val LOCALHOST = "127.0.0.1"
 
-        /** Common prefix used on Anki requests */
-        const val ANKI_PREFIX = "/_anki/"
-        const val ANKIDROID_PREFIX = "/ankidroid/"
-        const val ANKIDROID_JS_PREFIX = "/jsapi/"
-
         /**
          * @throws NanoHTTPD.ResponseException if the content-length is missing, or isn't
          * ASCII digits within [Int]. NanoHTTPD sends its status and closes the connection
