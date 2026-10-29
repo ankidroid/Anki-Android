@@ -2,12 +2,14 @@
 
 package com.ichi2.anki.reviewreminders
 
-import android.text.format.DateFormat
-import android.widget.EditText
+import android.view.View
 import androidx.core.content.edit
+import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -15,15 +17,14 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
-import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.android.material.chip.Chip
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -37,6 +38,7 @@ import com.ichi2.anki.testutil.waitUntil
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.empty
@@ -344,22 +346,6 @@ class ReviewRemindersTest : InstrumentedTest() {
         onView(withText("Delete this reminder?")).check(matches(isDisplayed()))
     }
 
-    /**
-     * The picker does not reliably open in clock mode, so toggling unconditionally can leave it in
-     * the mode we did not want and the text inputs never appear.
-     */
-    private fun switchTimePickerToKeyboardMode() {
-        if (!timePickerIsInKeyboardMode()) {
-            onView(withId(MaterialR.id.material_timepicker_mode_button)).perform(click())
-        }
-        onView(withId(MaterialR.id.material_hour_text_input)).checkWithTimeout(matches(isDisplayed()))
-    }
-
-    private fun timePickerIsInKeyboardMode(): Boolean =
-        runCatching {
-            onView(withId(MaterialR.id.material_hour_text_input)).check(matches(isDisplayed()))
-        }.isSuccess
-
     /** Expanding the advanced section travels through the view model, so wait for its content. */
     private fun openAdvancedSettings() {
         onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
@@ -376,27 +362,35 @@ class ReviewRemindersTest : InstrumentedTest() {
                 clickChildViewWithId(R.id.DeckPickerHoriz),
             ),
         )
-        onView(withId(R.id.add_edit_reminder_deck_name)).checkWithTimeout(matches(withText(deckName)))
+        onView(withId(R.id.add_edit_reminder_deck_name)).inRoot(isDialog()).checkWithTimeout(matches(withText(deckName)))
     }
 
-    /** Uses the time picker's keyboard mode; the selected time is in the morning. */
+    /** Sets the time on the picker directly, as a tap on its mode button can become a long press that only shows a tooltip. */
     private fun selectTime(time: ReviewReminderTime) {
-        onView(withId(R.id.add_edit_reminder_time_button)).perform(click())
-        switchTimePickerToKeyboardMode()
-        onView(allOf(isAssignableFrom(EditText::class.java), isDescendantOfA(withId(MaterialR.id.material_hour_text_input))))
-            .perform(replaceText(time.hour.toString()), closeSoftKeyboard())
-        onView(allOf(isAssignableFrom(Chip::class.java), isDescendantOfA(withId(MaterialR.id.material_minute_text_input))))
-            .perform(click())
-        onView(allOf(isAssignableFrom(EditText::class.java), isDescendantOfA(withId(MaterialR.id.material_minute_text_input))))
-            .perform(replaceText(time.minute.toString()), closeSoftKeyboard())
-        if (!DateFormat.is24HourFormat(testContext)) {
-            onView(allOf(withId(MaterialR.id.material_clock_period_am_button), isDisplayed())).perform(click())
-        }
-        onView(withId(MaterialR.id.material_timepicker_ok_button)).perform(click())
-        // The time picker is layered over this dialog rather than replacing it, so let the window
-        // stack settle before the caller interacts with the dialog underneath
-        onView(withId(R.id.add_edit_reminder_time_button)).checkWithTimeout(matches(withText(time.toFormattedString(testContext))))
+        onView(withId(R.id.add_edit_reminder_time_button)).inRoot(isDialog()).perform(click())
+        onView(withId(MaterialR.id.material_timepicker_ok_button)).inRoot(isDialog()).perform(confirmTime(time))
+        onView(withId(R.id.add_edit_reminder_time_button))
+            .inRoot(isDialog())
+            .checkWithTimeout(matches(withText(time.toFormattedString(testContext))))
     }
+
+    private fun confirmTime(time: ReviewReminderTime) =
+        object : ViewAction {
+            override fun getConstraints(): Matcher<View> = isDisplayed()
+
+            override fun getDescription(): String = "confirm $time in the time picker"
+
+            override fun perform(
+                uiController: UiController,
+                view: View,
+            ) {
+                view.findFragment<MaterialTimePicker>().apply {
+                    hour = time.hour
+                    minute = time.minute
+                }
+                view.performClick()
+            }
+        }
 
     private fun storedReminders(): List<ReviewReminder> = runBlocking { ReviewRemindersDatabase.getAllReminders().getRemindersList() }
 
