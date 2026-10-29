@@ -176,7 +176,7 @@ abstract class CardViewerFragment(
 
     override fun onDestroyView() {
         super.onDestroyView()
-        webViewLayout.destroy() // stops <audio> playbacks
+        webViewLayout.safeDestroy() // stops <audio> playbacks
     }
 
     protected open fun onLoadInitialHtml(): String =
