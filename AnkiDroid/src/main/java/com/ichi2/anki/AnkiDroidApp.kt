@@ -196,6 +196,7 @@ open class AnkiDroidApp :
         initializeAcraCrashReporter()
         initializeNavigator()
         initializeWidgetRepository()
+        initializeDatabaseErrorDialogs()
         WidgetNotificationScheduler.register { scheduleNotification() }
         WidgetStatus.register(Prefs) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
         Animations.setPreferencesProvider { context -> PrefsRepository(context) }

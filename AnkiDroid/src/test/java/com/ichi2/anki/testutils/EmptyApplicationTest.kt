@@ -5,6 +5,7 @@ package com.ichi2.anki.testutils
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.android.Animations
+import com.ichi2.anki.dialogs.databaseErrorDialogs
 import com.ichi2.testutils.EmptyApplication
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,5 +18,11 @@ class EmptyApplicationTest {
     fun `Animations provider is registered`() {
         // Must not throw UninitializedPropertyAccessException
         Animations.areAnimationsEnabled(getApplicationContext())
+    }
+
+    @Test
+    fun `database error dialogs are registered`() {
+        // Must not throw UninitializedPropertyAccessException
+        databaseErrorDialogs.canConfirmDatabaseCheck(getApplicationContext())
     }
 }
