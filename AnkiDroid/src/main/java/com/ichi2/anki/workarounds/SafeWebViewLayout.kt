@@ -66,8 +66,10 @@ open class SafeWebViewLayout :
     }
 
     // Not guarded when not [WebViewState.ACTIVE]: callers rarely use these after destroy and a no-op is impossible.
+    @get:MainThread
     val settings: WebSettings get() = uncheckedWebView.settings
 
+    @get:MainThread
     @Suppress("DEPRECATION")
     val scale get() = uncheckedWebView.scale
 
@@ -121,6 +123,7 @@ open class SafeWebViewLayout :
         activeWebView?.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
     }
 
+    @MainThread
     fun setAcceptThirdPartyCookies(accept: Boolean) {
         val webView = activeWebView ?: return
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, accept)
