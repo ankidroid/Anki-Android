@@ -149,6 +149,7 @@ import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
+import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
@@ -653,7 +654,10 @@ class CardBrowserFragment :
                     menu.findItem(R.id.action_preview_many)?.isVisible =
                         vm.rowCount > 0
 
-                    menu.findItem(R.id.action_undo).setupUndo()
+                    menu.findItem(R.id.action_undo)?.apply {
+                        setIconRes(requireContext(), R.drawable.ic_undo_white) // to handle LTR/RTL layout direction
+                        setupUndo()
+                    }
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
