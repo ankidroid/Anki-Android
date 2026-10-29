@@ -6,14 +6,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonPlurals
-import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
@@ -21,14 +19,11 @@ import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.canUserAccessDeck
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
-import com.ichi2.anki.common.annotations.LegacyNotifications
-import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.allDecksCounts
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.sched.Counts
-import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderId
@@ -36,10 +31,8 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.reviewreminders.reminderLogPrefix
 import com.ichi2.anki.runGloballyWithTimeout
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.utils.LanguageUtil.withUnicodeIsolation
-import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
@@ -357,73 +350,6 @@ class NotificationService : AnkiBroadcastReceiver() {
             return (queryResult == 1)
         }
 
-        /** The id of the notification for due cards.  */
-        @LegacyNotifications("Each notification will have a unique ID")
-        private const val WIDGET_NOTIFY_ID = 1
-
-        @LegacyNotifications("Replaced by new review reminder notification firing logic")
-        fun triggerNotificationFor(context: Context) {
-            Timber.i("NotificationService: OnStartCommand")
-            val manager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val preferences = context.sharedPrefs()
-            val minCardsDue =
-                preferences
-                    .getString(
-                        context.getString(CommonPreferenceKey.pref_notifications_minimum_cards_due_key),
-                        PENDING_NOTIFICATIONS_ONLY.toString(),
-                    )!!
-                    .toInt()
-            val dueCardsCount = WidgetStatus.fetchDue()
-            if (dueCardsCount >= minCardsDue) {
-                // Build basic notification
-                val cardsDueText =
-                    context.resources
-                        .getQuantityString(
-                            CommonPlurals.widget_minimum_cards_due_notification_ticker_text,
-                            dueCardsCount,
-                            dueCardsCount,
-                        )
-                // This generates a log warning "Use of stream types is deprecated..."
-                // The NotificationCompat code uses setSound() no matter what we do and triggers it.
-                val builder =
-                    NotificationCompat
-                        .Builder(
-                            context,
-                            NotificationChannel.GENERAL.id,
-                        ).setCategory(NotificationCompat.CATEGORY_REMINDER)
-                        .setSmallIcon(R.drawable.ic_star_notify)
-                        .setColor(context.getColor(CommonR.color.material_light_blue_700))
-                        .setContentTitle(cardsDueText)
-                        .setTicker(cardsDueText)
-                // Enable vibrate and blink if set in preferences
-                if (preferences.getBoolean("widgetVibrate", false)) {
-                    builder.setVibrate(longArrayOf(1000, 1000, 1000))
-                }
-                if (preferences.getBoolean("widgetBlink", false)) {
-                    builder.setLights(Color.BLUE, 1000, 1000)
-                }
-                // Creates an explicit intent for an Activity in your app
-                val resultIntent = Intent(context, DeckPicker::class.java)
-                resultIntent.flags =
-                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                val resultPendingIntent =
-                    PendingIntentCompat.getActivity(
-                        context,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT,
-                        false,
-                    )
-                builder.setContentIntent(resultPendingIntent)
-                // mId allows you to update the notification later on.
-                manager.notify(WIDGET_NOTIFY_ID, builder.build())
-            } else {
-                // Cancel the existing notification, if any.
-                manager.cancel(WIDGET_NOTIFY_ID)
-            }
-        }
-
         /**
          * A replacement for the default [NotificationCompat.Builder.addAction].
          * The default requires an icon for the action button, but the icon only actually shows up below API 24,
@@ -498,26 +424,22 @@ class NotificationService : AnkiBroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (Prefs.newReviewRemindersEnabled) {
-            Timber.i("${reminderLogPrefix()} NotificationService.onReceiveBroadcast")
-            val action = intent.action ?: return
-            val extras = intent.extras ?: return
-            val reviewReminderId =
-                extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID) ?: return
-            val reviewReminderScope =
-                extras.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE) ?: return
-            Timber.d("onReceiveBroadcast: reminder: $reviewReminderId, scope: $reviewReminderScope, action: $action")
+        Timber.i("${reminderLogPrefix()} NotificationService.onReceiveBroadcast")
+        val action = intent.action ?: return
+        val extras = intent.extras ?: return
+        val reviewReminderId =
+            extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID) ?: return
+        val reviewReminderScope =
+            extras.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE) ?: return
+        Timber.d("onReceiveBroadcast: reminder: $reviewReminderId, scope: $reviewReminderScope, action: $action")
 
-            runGloballyWithTimeout(SEND_REVIEW_REMINDER_TIMEOUT) {
-                handleReviewReminderNotification(
-                    context,
-                    reviewReminderId,
-                    reviewReminderScope,
-                    isRecurringNotification = (action == NotificationServiceAction.ScheduleRecurringNotifications.actionString),
-                )
-            }
-        } else {
-            triggerNotificationFor(context)
+        runGloballyWithTimeout(SEND_REVIEW_REMINDER_TIMEOUT) {
+            handleReviewReminderNotification(
+                context,
+                reviewReminderId,
+                reviewReminderScope,
+                isRecurringNotification = (action == NotificationServiceAction.ScheduleRecurringNotifications.actionString),
+            )
         }
     }
 }

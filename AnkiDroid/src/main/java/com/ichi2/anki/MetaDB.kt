@@ -650,21 +650,6 @@ object MetaDB {
         return SmallWidgetStatus(dueCardsCount = 0, eta = 0)
     }
 
-    fun getNotificationStatus(context: Context): Int {
-        openDBIfClosed(context)
-        val due = 0
-        try {
-            metaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null).use { cursor ->
-                if (cursor.moveToFirst()) {
-                    return cursor.getInt(0)
-                }
-            }
-        } catch (e: SQLiteException) {
-            Timber.e(e, "Error while querying widgetStatus")
-        }
-        return due
-    }
-
     fun storeSmallWidgetStatus(
         context: Context,
         status: SmallWidgetStatus,

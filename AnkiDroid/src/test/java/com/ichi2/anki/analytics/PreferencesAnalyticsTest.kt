@@ -3,7 +3,6 @@
 package com.ichi2.anki.analytics
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -41,7 +40,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_general_screen_key, // generalScreen
             R.string.pref_reviewing_screen_key, // reviewingScreen
             R.string.pref_sync_screen_key, // syncScreen
-            R.string.pref_notifications_screen_key, // notificationsScreen
             R.string.pref_controls_screen_key, // controlsScreen
             R.string.pref_accessibility_screen_key, // accessibilityScreen
             R.string.pref_custom_sync_server_screen_key, // customSyncServerScreen
@@ -70,13 +68,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             // Opens Custom sync server fragment
             R.string.custom_sync_server_key, // custom_sync_server_link
             R.string.thirdparty_apps_key, // thirdpartyapps_link
-            // will be reworked in the future
-            // Notify when
-            CommonPreferenceKey.pref_notifications_minimum_cards_due_key, // minimumCardsDueForNotification
-            // Vibrate
-            R.string.pref_notifications_vibrate_key, // widgetVibrate
-            // Blink light
-            R.string.pref_notifications_blink_key, // widgetBlink
             // potential personal data
             R.string.sync_account_key, // syncAccount
             R.string.custom_sync_server_collection_url_key, // syncBaseUrl
