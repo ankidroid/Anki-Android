@@ -196,7 +196,7 @@ class Info :
     }
 
     override fun onDestroy() {
-        binding.webView.safeDestroy()
+        binding.webView.destroy()
         super.onDestroy()
     }
 

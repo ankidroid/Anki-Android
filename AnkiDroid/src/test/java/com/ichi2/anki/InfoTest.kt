@@ -51,7 +51,7 @@ class InfoTest : RobolectricTest() {
     }
 
     @Test
-    fun `safeDestroy tears down the inner WebView`() {
+    fun `destroy tears down the inner WebView`() {
         val controller =
             startActivityControllerNormallyOpenCollectionWithIntent(
                 Info::class.java,
@@ -63,7 +63,7 @@ class InfoTest : RobolectricTest() {
     }
 
     @Test
-    fun `safeDestroy after render-process crash does not call destroy twice`() {
+    fun `destroy after render-process crash does not call destroy twice`() {
         val activity = launchInfo()
         val webViewLayout = activity.webViewLayout()
         val crashedWebView = webViewLayout.getChildAt(0) as WebView
@@ -72,7 +72,7 @@ class InfoTest : RobolectricTest() {
         assertThat(shadowOf(crashedWebView).wasDestroyCalled(), equalTo(true))
 
         val recoveredWebView = webViewLayout.getChildAt(0) as WebView
-        webViewLayout.safeDestroy()
+        webViewLayout.destroy()
         assertThat("recovered WebView is destroyed on teardown", shadowOf(recoveredWebView).wasDestroyCalled(), equalTo(true))
     }
 }

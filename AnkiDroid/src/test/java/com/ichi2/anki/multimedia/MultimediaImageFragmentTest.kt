@@ -86,7 +86,7 @@ class MultimediaImageFragmentTest : RobolectricTest() {
             assertThat("the dead WebView is removed from its parent", webView.parent, nullValue())
             assertThat("no replacement WebView is created", layout.childCount, equalTo(0))
 
-            layout.safeDestroy()
+            layout.destroy()
         }
 
     private fun withImageFragment(block: MultimediaImageFragment.() -> Unit) =

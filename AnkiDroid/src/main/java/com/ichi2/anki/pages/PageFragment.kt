@@ -157,7 +157,7 @@ abstract class PageFragment(
     @CallSuper
     override fun onDestroyView() {
         server.stop()
-        webViewLayout.safeDestroy()
+        webViewLayout.destroy()
         super.onDestroyView()
     }
 

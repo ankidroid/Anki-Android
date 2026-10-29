@@ -155,7 +155,7 @@ class MediaCheckFragment :
 
     @CallSuper
     override fun onDestroyView() {
-        binding.webView.safeDestroy()
+        binding.webView.destroy()
         super.onDestroyView()
     }
 
