@@ -2,12 +2,18 @@
 
 package com.ichi2.anki.testutil
 
+import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.os.ParcelFileDescriptor
 import androidx.core.net.toUri
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Test
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertContains
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class TestInputMethodControlTest {
@@ -30,6 +36,26 @@ class TestInputMethodControlTest {
             assertContains(error, "java.lang.SecurityException: Test IME control requires a matching signature")
         } finally {
             pipes.forEach { it.close() }
+        }
+    }
+
+    @Test
+    fun timeoutReportsTheBlockedThread() {
+        val release = CountDownLatch(1)
+        val thread = HandlerThread("blocked").apply { start() }
+        try {
+            Handler(thread.looper).post { release.await() }
+            waitUntil(message = { "Thread did not block: ${thread.state}" }) { thread.state == Thread.State.WAITING }
+
+            val failure =
+                assertFailsWith<IllegalStateException> {
+                    TestInputMethod.Control.runOn(thread.looper, 100, TimeUnit.MILLISECONDS) { Bundle() }
+                }
+
+            assertContains(assertNotNull(failure.message), "java.util.concurrent.CountDownLatch.await")
+        } finally {
+            release.countDown()
+            thread.quitSafely()
         }
     }
 }
