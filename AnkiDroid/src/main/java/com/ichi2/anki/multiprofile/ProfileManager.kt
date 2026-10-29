@@ -36,6 +36,8 @@ class ProfileManager private constructor(
     lateinit var activeProfileContext: ProfileContextWrapper
         private set
 
+    fun isActive(profileId: ProfileId): Boolean = profileId == activeProfileContext.profileId
+
     /**
      * Stores the Registry of all profiles (ID -> Display Name) and the
      * ID of the currently active profile.

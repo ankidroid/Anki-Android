@@ -7,11 +7,20 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.multiprofile.ProfileId
 import com.ichi2.anki.multiprofile.ProfileManager
+import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.anki.multiprofile.ProfileName.ValidationResult
+import com.ichi2.anki.multiprofile.ProfileSwitchGuard
+import com.ichi2.anki.multiprofile.ProfileSwitchGuard.BlockReason
+import com.ichi2.anki.multiprofile.ProfileSwitchGuard.SafetyCheck
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -29,8 +38,13 @@ class SwitchProfilesViewModelTest {
     private val prefs
         get() = context.getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE)
 
+    private var restarts = 0
+
     @Before
     fun setUp() {
+        val dispatcher = UnconfinedTestDispatcher()
+        Dispatchers.setMain(dispatcher)
+        ioDispatcher = dispatcher
         context = ApplicationProvider.getApplicationContext()
         prefs.edit(commit = true) { clear() }
         profileManager = ProfileManager.create(context)
@@ -39,9 +53,19 @@ class SwitchProfilesViewModelTest {
     @After
     fun tearDown() {
         prefs.edit(commit = true) { clear() }
+        Dispatchers.resetMain()
+        ioDispatcher = Dispatchers.IO
     }
 
-    private fun viewModel() = SwitchProfilesViewModel(profileManager)
+    private fun viewModel(vararg checks: SafetyCheck) =
+        SwitchProfilesViewModel(
+            profileManager = profileManager,
+            switchGuard = ProfileSwitchGuard(profileManager, checks.toList()),
+            restartApp = { restarts++ },
+        )
+
+    private val lastActiveProfileId: String?
+        get() = prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null)
 
     private val validName: ProfileName
         get() = (ProfileName.validate("Work") as ValidationResult.Valid).name
@@ -117,6 +141,78 @@ class SwitchProfilesViewModelTest {
 
         assertEquals(listOf("Default", "Office"), viewModel.profiles.value.map { it.name })
         assertNull(viewModel.profileBeingRenamed.value)
+    }
+
+    @Test
+    fun `tapping another profile asks before switching to it`() {
+        createProfile("Work")
+        val viewModel = viewModel()
+        val work = viewModel.profiles.value.single { it.name == "Work" }
+
+        viewModel.requestSwitch(work)
+
+        assertEquals(work, viewModel.profileToSwitchTo.value)
+    }
+
+    @Test
+    fun `tapping the active profile does not ask to switch`() {
+        val viewModel = viewModel()
+
+        viewModel.requestSwitch(viewModel.profiles.value.single())
+
+        assertNull(viewModel.profileToSwitchTo.value)
+    }
+
+    @Test
+    fun `dismissing the switch dialog keeps the current profile`() {
+        createProfile("Work")
+        val viewModel = viewModel()
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.name == "Work" })
+
+        viewModel.dismissSwitchProfileDialog()
+
+        assertNull(viewModel.profileToSwitchTo.value)
+        assertEquals(ProfileId.DEFAULT.value, lastActiveProfileId)
+        assertEquals(0, restarts)
+    }
+
+    @Test
+    fun `confirming a switch saves the profile and restarts the app`() {
+        val work = createProfile("Work")
+        val viewModel = viewModel()
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+
+        viewModel.switchProfile()
+
+        assertNull(viewModel.profileToSwitchTo.value)
+        assertEquals(work.value, lastActiveProfileId)
+        assertEquals(1, restarts)
+    }
+
+    @Test
+    fun `a blocked switch keeps the current profile and says why`() {
+        val work = createProfile("Work")
+        val viewModel = viewModel(SafetyCheck { BlockReason.SYNC_IN_PROGRESS })
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+
+        viewModel.switchProfile()
+
+        assertTrue(viewModel.isSwitchBlocked.value)
+        assertEquals(ProfileId.DEFAULT.value, lastActiveProfileId)
+        assertEquals(0, restarts)
+    }
+
+    @Test
+    fun `dismissing the blocked message hides it`() {
+        val viewModel = viewModel(SafetyCheck { BlockReason.BACKUP_IN_PROGRESS })
+        createProfile("Work")
+        viewModel.refresh()
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.name == "Work" })
+        viewModel.switchProfile()
+
+        viewModel.dismissSwitchBlockedMessage()
+
+        assertFalse(viewModel.isSwitchBlocked.value)
     }
 
     @Test
