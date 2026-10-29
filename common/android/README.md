@@ -52,11 +52,11 @@ Kotlin code and preference XML:
 ```kotlin
 import com.ichi2.anki.CommonPreferenceKey
 
-getString(CommonPreferenceKey.pref_new_review_reminders)
+getString(CommonPreferenceKey.pref_example_key)
 ```
 
 The key remains defined once in XML with `translatable="false"` and referenced
-as `@string/pref_new_review_reminders` by the preference UI. `CommonPreferenceKey`
+as `@string/pref_example_key` by the preference UI. `CommonPreferenceKey`
 and `CommonString` alias the same generated `R.string` class. Their intended uses
 are enforced by lint rather than the Kotlin compiler.
 

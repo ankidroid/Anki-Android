@@ -11,12 +11,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.services.NotificationService.NotificationServiceAction
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tests.InstrumentedTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -29,19 +26,6 @@ import kotlin.time.Duration.Companion.minutes
  */
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersServiceCorruptExtrasTest : InstrumentedTest() {
-    private var originalNewReviewRemindersEnabled = false
-
-    @Before
-    fun setUp() {
-        originalNewReviewRemindersEnabled = Prefs.newReviewRemindersEnabled
-        Prefs.newReviewRemindersEnabled = true
-    }
-
-    @After
-    fun tearDown() {
-        Prefs.newReviewRemindersEnabled = originalNewReviewRemindersEnabled
-    }
-
     @Test
     fun notificationServiceSurvivesAlarmWithCorruptExtras() {
         val intent =

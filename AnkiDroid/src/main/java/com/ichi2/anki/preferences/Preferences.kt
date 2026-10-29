@@ -35,7 +35,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.android.Animations
-import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
@@ -297,10 +296,6 @@ class PreferencesActivity :
     }
 }
 
-// Only enable AnkiDroid notifications unrelated to due reminders
-@LegacyNotifications("Magic number which is no longer needed")
-const val PENDING_NOTIFICATIONS_ONLY = 1000000
-
 const val EXTRA_INITIAL_FRAGMENT = "initial_fragment"
 
 /**
@@ -316,7 +311,6 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_sync -> SyncSettingsFragment()
         R.xml.preferences_backup_limits -> BackupLimitsSettingsFragment()
         R.xml.preferences_custom_sync_server -> CustomSyncServerSettingsFragment()
-        R.xml.preferences_notifications -> NotificationsSettingsFragment()
         R.xml.preferences_appearance -> AppearanceSettingsFragment()
         R.xml.preferences_controls -> ControlsSettingsFragment()
         R.xml.preferences_reviewer_controls -> ControlsSettingsFragment()
