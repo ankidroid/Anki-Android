@@ -797,7 +797,13 @@ dependencies {
         localProperties.load(project.rootProject.file("local.properties").inputStream())
     }
     if (localProperties["local_backend"] == "true") {
-        implementation(files(rootProject.file("../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")))
+        // Local AARs have no Maven metadata, so both the API and Android artifacts are needed.
+        implementation(
+            files(
+                rootProject.file("../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar"),
+                rootProject.file("../Anki-Android-Backend/rsdroid-android/build/outputs/aar/rsdroid-android-release.aar"),
+            ),
+        )
         testImplementation(files(rootProject.file("../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")))
     } else {
         implementation(libs.ankiBackend.backend)

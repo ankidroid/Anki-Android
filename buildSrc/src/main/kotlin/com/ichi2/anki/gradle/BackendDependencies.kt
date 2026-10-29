@@ -7,13 +7,15 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 import java.io.File
 import java.util.Properties
 
-// The Anki backend (rsdroid) is consumed either as a locally-built artifact in
+// The Anki backend (rsdroid) is consumed either as locally-built artifacts in
 // ../Anki-Android-Backend (when `local_backend=true` in local.properties) or as
 // the published library from the version catalog.
 
 // Paths within the `Anki-Android-Backend` checkout, which sits beside the repo root.
 private const val RSDROID_AAR =
     "rsdroid/build/outputs/aar/rsdroid-release.aar"
+private const val RSDROID_ANDROID_AAR =
+    "rsdroid-android/build/outputs/aar/rsdroid-android-release.aar"
 private const val RSDROID_TESTING_JAR =
     "rsdroid-testing/build/libs/rsdroid-testing.jar"
 
@@ -33,13 +35,13 @@ fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
             configuration = "implementation",
             useLocalBackend = useLocalBackend,
             catalogAlias = "ankiBackend-backend",
-            localPath = RSDROID_AAR,
+            localPaths = arrayOf(RSDROID_AAR, RSDROID_ANDROID_AAR),
         )
         addBackendArtifact(
             configuration = "testImplementation",
             useLocalBackend = useLocalBackend,
             catalogAlias = "ankiBackend-testing",
-            localPath = RSDROID_TESTING_JAR,
+            localPaths = arrayOf(RSDROID_TESTING_JAR),
         )
 
         // protobuf is required when loading from a file, regardless of the backend source
@@ -50,13 +52,13 @@ fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
                 configuration = "testFixturesImplementation",
                 useLocalBackend = useLocalBackend,
                 catalogAlias = "ankiBackend-backend",
-                localPath = RSDROID_AAR,
+                localPaths = arrayOf(RSDROID_AAR, RSDROID_ANDROID_AAR),
             )
             addBackendArtifact(
                 configuration = "testFixturesImplementation",
                 useLocalBackend = useLocalBackend,
                 catalogAlias = "ankiBackend-testing",
-                localPath = RSDROID_TESTING_JAR,
+                localPaths = arrayOf(RSDROID_TESTING_JAR),
             )
             dependencies.addProvider("testFixturesImplementation", libsLibrary("protobuf-kotlin-lite"))
         }
@@ -77,12 +79,13 @@ private fun Project.addBackendArtifact(
     configuration: String,
     useLocalBackend: Boolean,
     catalogAlias: String,
-    localPath: String,
+    vararg localPaths: String,
 ) {
     if (useLocalBackend) {
         // ../Anki-Android-Backend
         val backendCheckout = File(rootProject.projectDir.parentFile, "Anki-Android-Backend")
-        dependencies.add(configuration, files(File(backendCheckout, localPath)))
+        // Local AARs have no Maven metadata, so both the API and Android artifacts are needed.
+        dependencies.add(configuration, files(localPaths.map { File(backendCheckout, it) }))
     } else {
         dependencies.addProvider(configuration, libsLibrary(catalogAlias))
     }
