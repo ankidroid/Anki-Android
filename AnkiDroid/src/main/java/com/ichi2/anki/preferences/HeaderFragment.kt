@@ -2,12 +2,14 @@
 
 package com.ichi2.anki.preferences
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
+import androidx.preference.children
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
@@ -30,6 +32,11 @@ class HeaderFragment : SettingsFragment() {
         get() = R.xml.preference_headers
 
     private var highlightedPreferenceKey: String = ""
+
+    // SharedPreferences keeps its listeners in a WeakHashMap. Without this field referencing it,
+    // the listener could be garbage collected, and would then silently stop being called
+    private val refreshBadgesOnPreferenceChange =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> refreshBadges() }
 
     override fun initSubscreen() {
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
@@ -69,6 +76,25 @@ class HeaderFragment : SettingsFragment() {
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        refreshBadges()
+        Prefs.sharedPrefs.registerOnSharedPreferenceChangeListener(refreshBadgesOnPreferenceChange)
+    }
+
+    override fun onStop() {
+        Prefs.sharedPrefs.unregisterOnSharedPreferenceChangeListener(refreshBadgesOnPreferenceChange)
+        super.onStop()
+    }
+
+    /**
+     * Re-checks [HeaderPreference.showBadgeWhen] when a preference changes, so a badge clears as soon as
+     * its condition does, including when this fragment stays visible beside the opened screen on large screens.
+     */
+    private fun refreshBadges() {
+        preferenceScreen.children.filterIsInstance<HeaderPreference>().forEach { it.refreshBadge() }
     }
 
     fun highlightPreference(
