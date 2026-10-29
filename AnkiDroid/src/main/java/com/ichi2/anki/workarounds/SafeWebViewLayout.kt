@@ -151,21 +151,6 @@ open class SafeWebViewLayout :
     }
 
     @MainThread
-    fun destroy() {
-        when (webViewState) {
-            WebViewState.ACTIVE -> uncheckedWebView.destroy()
-            // Crash cleanup already destroyed the native WebView; promote to terminal so reattach
-            // does not recover.
-            WebViewState.DESTROYED_RECOVERABLE -> Unit
-            WebViewState.DESTROYED_TERMINAL -> {
-                Timber.w("destroy called after WebView was destroyed")
-                return
-            }
-        }
-        webViewState = WebViewState.DESTROYED_TERMINAL
-    }
-
-    @MainThread
     fun scrollVerticallyBy(y: Int) {
         val webView = activeWebView ?: return
         if (webView.canScrollVertically(y)) {
@@ -265,12 +250,13 @@ open class SafeWebViewLayout :
     }
 
     /**
-     * Destroys the internal state of the wrapped [uncheckedWebView]
+     * Destroys the inner [WebView] with [destroyWebView]: unlike [WebView.destroy], this also
+     * stops loading, clears callbacks and removes it from the layout.
      *
-     * No other methods may be called on this WebView after destroy
+     * Afterwards, calls on this layout are ignored and the [WebView] is never recreated.
      */
     @MainThread
-    fun safeDestroy() {
+    fun destroy() {
         when (webViewState) {
             WebViewState.ACTIVE -> {
                 destroyWebView(uncheckedWebView, this)
@@ -281,7 +267,7 @@ open class SafeWebViewLayout :
             // does not recover.
             WebViewState.DESTROYED_RECOVERABLE -> Unit
             WebViewState.DESTROYED_TERMINAL -> {
-                Timber.w("safeDestroy called after WebView was destroyed")
+                Timber.w("destroy called after WebView was destroyed")
                 return
             }
         }
@@ -306,7 +292,7 @@ open class SafeWebViewLayout :
         ) {
             Timber.d("Destroying WebView")
 
-            runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
+            runCatchingWithReport("destroyWebView", onlyIfSilent = true) {
                 webView?.apply {
                     stopLoading()
                     loadUrl("about:blank")
@@ -320,7 +306,7 @@ open class SafeWebViewLayout :
             }
 
             // attempt to run destroy() even if the above fails
-            runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
+            runCatchingWithReport("destroyWebView", onlyIfSilent = true) {
                 webView?.destroy()
             }
         }

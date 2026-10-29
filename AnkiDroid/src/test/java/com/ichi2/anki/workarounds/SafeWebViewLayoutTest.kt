@@ -13,6 +13,7 @@ import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.testutils.launchFragmentInContainer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
@@ -47,7 +48,7 @@ class SafeWebViewLayoutTest : RobolectricTest() {
     }
 
     @Test
-    fun `destroy then safeDestroy after early-return onRenderProcessGone do not destroy WebView twice`() {
+    fun `destroy after early-return onRenderProcessGone does not destroy WebView twice`() {
         val layout = DestroyCountingSafeWebViewLayout(targetContext)
         val webView = layout.getChildAt(0) as WebView
 
@@ -56,28 +57,10 @@ class SafeWebViewLayoutTest : RobolectricTest() {
         assertThat(layout.webViewDestroyCallCount, equalTo(1))
 
         layout.destroy()
-        layout.safeDestroy()
-
-        assertThat(
-            "destroy then safeDestroy do not invoke WebView.destroy again",
-            layout.webViewDestroyCallCount,
-            equalTo(1),
-        )
-    }
-
-    @Test
-    fun `safeDestroy then destroy after early-return onRenderProcessGone do not destroy WebView twice`() {
-        val layout = DestroyCountingSafeWebViewLayout(targetContext)
-        val webView = layout.getChildAt(0) as WebView
-
-        layout.onRenderProcessGone(webView)
-        assertThat(layout.webViewDestroyCallCount, equalTo(1))
-
-        layout.safeDestroy()
         layout.destroy()
 
         assertThat(
-            "safeDestroy then destroy do not invoke WebView.destroy again",
+            "destroy does not invoke WebView.destroy again",
             layout.webViewDestroyCallCount,
             equalTo(1),
         )
@@ -114,33 +97,39 @@ class SafeWebViewLayoutTest : RobolectricTest() {
             val parent = layout.parent as ViewGroup
             val deadWebView = layout.getChildAt(0) as WebView
             layout.destroy()
-            assertThat("destroy leaves the dead WebView attached", layout.childCount, equalTo(1))
+            assertThat("destroy removes the dead WebView", layout.childCount, equalTo(0))
 
             parent.removeView(layout)
             parent.addView(layout)
-            assertThat(layout.childCount, equalTo(1))
-            assertThat(
-                "intentional destroy is terminal; same dead WebView remains",
-                layout.getChildAt(0),
-                sameInstance(deadWebView),
-            )
+            assertThat("intentional destroy is terminal", layout.childCount, equalTo(0))
 
-            layout.loadUrl("https://blocked-after-intentional-destroy.example/")
+            val blockedUrl = "https://blocked-after-intentional-destroy.example/"
+            layout.loadUrl(blockedUrl)
             assertThat(
                 shadowOf(deadWebView).lastLoadedUrl,
-                equalTo(null),
+                equalTo("about:blank"),
             )
         }
     }
 
     @Test
     fun `destroy after crash cleanup prevents recovery on reattach`() {
-        assertOwnerTeardownPreventsRecovery { destroy() }
-    }
+        withMultimediaWebView { layout, _ ->
+            val webView = layout.getChildAt(0) as WebView
+            val parent = layout.parent as ViewGroup
+            parent.removeView(layout)
+            assertThat(layout.isAttachedToWindow, equalTo(false))
 
-    @Test
-    fun `safeDestroy after crash cleanup prevents recovery on reattach`() {
-        assertOwnerTeardownPreventsRecovery { safeDestroy() }
+            layout.onRenderProcessGone(webView)
+            assertThat(shadowOf(webView).wasDestroyCalled(), equalTo(true))
+            assertThat(layout.childCount, equalTo(0))
+
+            layout.destroy()
+            parent.addView(layout)
+
+            assertThat(layout.isAttachedToWindow, equalTo(true))
+            assertThat("owner teardown must prevent crash recovery", layout.childCount, equalTo(0))
+        }
     }
 
     @Test
@@ -205,25 +194,6 @@ class SafeWebViewLayoutTest : RobolectricTest() {
                 shadowOf(recoveredWebView).lastLoadedUrl,
                 equalTo(recoveryUrl),
             )
-        }
-    }
-
-    private fun assertOwnerTeardownPreventsRecovery(teardown: SafeWebViewLayout.() -> Unit) {
-        withMultimediaWebView { layout, _ ->
-            val webView = layout.getChildAt(0) as WebView
-            val parent = layout.parent as ViewGroup
-            parent.removeView(layout)
-            assertThat(layout.isAttachedToWindow, equalTo(false))
-
-            layout.onRenderProcessGone(webView)
-            assertThat(shadowOf(webView).wasDestroyCalled(), equalTo(true))
-            assertThat(layout.childCount, equalTo(0))
-
-            layout.teardown()
-            parent.addView(layout)
-
-            assertThat(layout.isAttachedToWindow, equalTo(true))
-            assertThat("owner teardown must prevent crash recovery", layout.childCount, equalTo(0))
         }
     }
 
