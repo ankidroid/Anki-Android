@@ -9,7 +9,7 @@ import android.webkit.WebResourceRequest
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toFile
 import com.ichi2.anki.libanki.TtsPlayer
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
+import com.ichi2.anki.pages.PostRequestBridge.Companion.LOCALHOST
 import com.ichi2.anki.pages.PostRequestUri.Companion.ANKIDROID_JS_PREFIX
 import timber.log.Timber
 import java.io.File
