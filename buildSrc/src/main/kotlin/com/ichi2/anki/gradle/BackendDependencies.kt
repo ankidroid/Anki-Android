@@ -29,15 +29,35 @@ fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
     with(project) {
         val useLocalBackend = localBackendEnabled()
 
-        addBackendArtifact("implementation", useLocalBackend, RSDROID_AAR, "ankiBackend-backend")
-        addBackendArtifact("testImplementation", useLocalBackend, RSDROID_TESTING_JAR, "ankiBackend-testing")
+        addBackendArtifact(
+            configuration = "implementation",
+            useLocalBackend = useLocalBackend,
+            catalogAlias = "ankiBackend-backend",
+            localPath = RSDROID_AAR,
+        )
+        addBackendArtifact(
+            configuration = "testImplementation",
+            useLocalBackend = useLocalBackend,
+            catalogAlias = "ankiBackend-testing",
+            localPath = RSDROID_TESTING_JAR,
+        )
 
         // protobuf is required when loading from a file, regardless of the backend source
         dependencies.addProvider("implementation", libsLibrary("protobuf-kotlin-lite"))
 
         if (project.hasTestFixtures) {
-            addBackendArtifact("testFixturesImplementation", useLocalBackend, RSDROID_AAR, "ankiBackend-backend")
-            addBackendArtifact("testFixturesImplementation", useLocalBackend, RSDROID_TESTING_JAR, "ankiBackend-testing")
+            addBackendArtifact(
+                configuration = "testFixturesImplementation",
+                useLocalBackend = useLocalBackend,
+                catalogAlias = "ankiBackend-backend",
+                localPath = RSDROID_AAR,
+            )
+            addBackendArtifact(
+                configuration = "testFixturesImplementation",
+                useLocalBackend = useLocalBackend,
+                catalogAlias = "ankiBackend-testing",
+                localPath = RSDROID_TESTING_JAR,
+            )
             dependencies.addProvider("testFixturesImplementation", libsLibrary("protobuf-kotlin-lite"))
         }
     }
@@ -56,8 +76,8 @@ private fun Project.localBackendEnabled(): Boolean {
 private fun Project.addBackendArtifact(
     configuration: String,
     useLocalBackend: Boolean,
-    localPath: String,
     catalogAlias: String,
+    localPath: String,
 ) {
     if (useLocalBackend) {
         // ../Anki-Android-Backend
