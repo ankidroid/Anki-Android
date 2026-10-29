@@ -6,6 +6,7 @@ import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.pages.PostRequestBridge
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.doReturn
@@ -62,7 +63,7 @@ class ViewerResourceHandlerTest : RobolectricTest() {
 
     private fun request(path: String): WebResourceRequest =
         mock {
-            on { url } doReturn "http://127.0.0.1$path".toUri()
+            on { url } doReturn "${PostRequestBridge.BASE_URL.removeSuffix("/")}$path".toUri()
             on { method } doReturn "GET"
             on { requestHeaders } doReturn emptyMap()
         }

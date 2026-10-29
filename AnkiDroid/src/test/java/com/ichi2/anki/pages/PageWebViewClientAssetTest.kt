@@ -125,9 +125,9 @@ class PageWebViewClientAssetTest : PageWebViewClientTestBase() {
 
                 val otherOrigins =
                     listOf(
-                        url.buildUpon().scheme("https").build(),
-                        url.buildUpon().encodedAuthority("127.0.0.1:${url.port + 1}").build(),
-                        url.buildUpon().encodedAuthority("example.org:${url.port}").build(),
+                        url.buildUpon().scheme("http").build(),
+                        url.buildUpon().encodedAuthority("${url.host}:8443").build(),
+                        url.buildUpon().encodedAuthority("example.org").build(),
                         url.buildUpon().encodedAuthority("user@${url.encodedAuthority}").build(),
                     )
                 for (other in otherOrigins) {

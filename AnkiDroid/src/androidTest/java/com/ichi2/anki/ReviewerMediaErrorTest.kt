@@ -15,7 +15,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
@@ -37,6 +36,8 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertEquals
 import com.google.android.material.R as MaterialR
+
+private const val LOCALHOST = "127.0.0.1"
 
 class ReviewerMediaErrorTest : InstrumentedTest() {
     @get:Rule(order = 0)

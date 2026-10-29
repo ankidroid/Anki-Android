@@ -14,7 +14,6 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -57,7 +56,6 @@ class PreviewerViewModel(
         asyncIO {
             withCol { getCard(selectedCardIds[currentIndex.value]) }
         }
-    override val server = AnkiServer(this).also { it.start() }
 
     init {
         ChangeManager.subscribe(this)

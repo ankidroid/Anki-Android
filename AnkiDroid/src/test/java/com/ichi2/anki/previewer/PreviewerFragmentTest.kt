@@ -10,8 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.parcelledCopy
 import com.ichi2.testutils.saveState
@@ -20,15 +18,11 @@ import kotlinx.coroutines.withTimeout
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.robolectric.Robolectric
 import org.robolectric.shadows.ShadowToast
-import java.io.IOException
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotSame
-import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
@@ -37,31 +31,6 @@ import kotlin.time.Duration.Companion.seconds
 class PreviewerFragmentTest : RobolectricTest() {
     // Changing the selected card renders its media controls, which requires a media folder.
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
-
-    @Test
-    fun `server startup failure is not handled as an unavailable selection`() {
-        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col), IdsFile.Purpose.PREVIEW)
-        val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
-        val failure = IOException("server bind failed")
-        // A constructor failure never registers the ViewModel for cleanup, so avoid creating real media resources.
-        Mockito.mockConstruction(CardMediaPlayer::class.java).use {
-            Mockito
-                .mockConstruction(AnkiServer::class.java) { server, _ ->
-                    Mockito.doThrow(failure).`when`(server).start()
-                }.use {
-                    Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
-                        try {
-                            assertSame(failure, assertFailsWith<IOException> { controller.setup() })
-                            assertNull(ShadowToast.getTextOfLatestToast())
-                            assertFalse(controller.get().isFinishing)
-                        } finally {
-                            // Prevent lifecycle cleanup from retrying construction after the failed launch.
-                            controller.get().finish()
-                        }
-                    }
-                }
-        }
-    }
 
     @Test
     fun `missing selection closes previewer`() = assertUnavailableSelection { assertTrue(delete()) }
