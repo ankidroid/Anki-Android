@@ -4,6 +4,7 @@ package com.ichi2.anki.testutils
 
 import android.app.Application
 import com.ichi2.anki.common.android.Animations
+import com.ichi2.anki.initializeDatabaseErrorDialogs
 import com.ichi2.anki.initializeWidgetRepository
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.settings.PrefsRepository
@@ -20,6 +21,7 @@ context(application: Application)
 fun registerTestApplicationSingletons() {
     initializeNavigator()
     initializeWidgetRepository()
+    initializeDatabaseErrorDialogs()
     WidgetStatus.register(PrefsRepository(application)) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
     Animations.setPreferencesProvider { context -> PrefsRepository(context) }
     maybeSetDefaultCollectionPath(application)
