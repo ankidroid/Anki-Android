@@ -13,6 +13,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,6 +34,7 @@ import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -201,11 +203,14 @@ abstract class CardViewerFragment(
                 displayZoomControls = false
                 allowFileAccess = true
                 domStorageEnabled = true
+                // the cards are served over https, but their templates may use http:// resources, like scripts
+                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                 // allow videos to autoplay via our JavaScript eval
                 mediaPlaybackRequiresUserGesture = false
             }
+            PostRequestBridge(viewModel, viewLifecycleOwner.lifecycleScope).attachTo(this)
             loadDataWithBaseURL(
-                viewModel.baseUrl(),
+                PostRequestBridge.BASE_URL,
                 onLoadInitialHtml(),
                 "text/html",
                 null,

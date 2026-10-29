@@ -8,6 +8,7 @@ import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -107,7 +108,7 @@ class MediaErrorHandlerTest {
     fun jsApiFailuresAreNotReportedAsMissingMedia() {
         for (method in listOf("POST", "GET", "OPTIONS")) {
             for (endpoint in listOf("cardDue", "cardMod", "ttsSetLanguage", "showAnswer?test=1")) {
-                processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/$endpoint", method))
+                processFailure(getWebResourceRequest("${PostRequestBridge.BASE_URL}jsapi/$endpoint", method))
                 assertThat("$method $endpoint", timesCalled, equalTo(0))
             }
         }
@@ -115,16 +116,16 @@ class MediaErrorHandlerTest {
 
     @Test
     fun jsApiFailureDoesNotHideMissingMediaOnSameSide() {
-        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardDue", "POST"))
+        processFailure(getWebResourceRequest("${PostRequestBridge.BASE_URL}jsapi/cardDue", "POST"))
         processFailure(getValidRequest("example.jpg"))
         assertThat(fileNames, contains("example.jpg"))
     }
 
     @Test
     fun jsApiFailuresDoNotConsumeMissingMediaLimit() {
-        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardDue", "POST"))
+        processFailure(getWebResourceRequest("${PostRequestBridge.BASE_URL}jsapi/cardDue", "POST"))
         sut.onCardSideChange()
-        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardMod", "POST"))
+        processFailure(getWebResourceRequest("${PostRequestBridge.BASE_URL}jsapi/cardMod", "POST"))
         sut.onCardSideChange()
         processFailure(getValidRequest("example.jpg"))
         sut.onCardSideChange()
@@ -136,7 +137,7 @@ class MediaErrorHandlerTest {
 
     @Test
     fun mediaWithApiLikeNamesIsStillReported() {
-        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardDue", "POST"))
+        processFailure(getWebResourceRequest("${PostRequestBridge.BASE_URL}jsapi/cardDue", "POST"))
         processFailure(getValidRequest("cardDue.bin"))
         sut.onCardSideChange()
         processFailure(getValidRequest("jsapi.jpg"))
@@ -199,8 +200,7 @@ class MediaErrorHandlerTest {
     }
 
     private fun getValidRequest(fileName: String): WebResourceRequest {
-        // actual URL on Android 9
-        val url = "http://127.0.0.1:40001/$fileName"
+        val url = "${PostRequestBridge.BASE_URL}$fileName"
         return getWebResourceRequest(url)
     }
 

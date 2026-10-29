@@ -9,7 +9,7 @@ import android.webkit.WebResourceRequest
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toFile
 import com.ichi2.anki.libanki.TtsPlayer
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.pages.PostRequestUri.Companion.ANKIDROID_JS_PREFIX
 import timber.log.Timber
 import java.io.File
@@ -91,7 +91,7 @@ class MediaErrorHandler : MediaErrorListener {
         // We could do better here (external images failing due to no HTTPS), but failures can occur due to no network.
         // As we don't yet check the error data, we don't know.
         // Therefore limit this feature to the common case of local files, which should always work.
-        if (url.host != LOCALHOST) return
+        if (url.host != PostRequestBridge.HOST) return
 
         // API requests can fail during card replacement; they are not missing media files.
         if (url.path?.startsWith(ANKIDROID_JS_PREFIX) == true) {
