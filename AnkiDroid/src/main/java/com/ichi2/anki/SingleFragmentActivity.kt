@@ -19,15 +19,11 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
-import com.ichi2.anki.common.destinations.StudyOptionsDestination
-import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
-import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -98,17 +94,6 @@ open class SingleFragmentActivity :
         }
         supportFragmentManager.commit {
             replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
-        }
-
-        setFragmentResultListener(CustomStudyAction.REQUEST_KEY) { _, bundle ->
-            when (CustomStudyAction.fromBundle(bundle)) {
-                CustomStudyAction.CUSTOM_STUDY_SESSION,
-                CustomStudyAction.EXTEND_STUDY_LIMITS,
-                -> {
-                    navigate(StudyOptionsDestination)
-                    finish()
-                }
-            }
         }
     }
 
