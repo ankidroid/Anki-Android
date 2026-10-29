@@ -7,6 +7,7 @@ import android.print.PrintDocumentAdapter
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.webkit.CookieManager
+import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -92,9 +93,8 @@ open class SafeWebViewLayout :
         script: String,
         resultCallback: ((String) -> Unit)? = null,
     ) {
-        activeWebView?.evaluateJavascript(script) { callback ->
-            resultCallback?.invoke(callback)
-        }
+        // Without a callback, the WebView does not send the result back.
+        activeWebView?.evaluateJavascript(script, resultCallback?.let { callback -> ValueCallback<String> { callback(it) } })
     }
 
     @MainThread
