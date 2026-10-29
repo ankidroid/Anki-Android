@@ -55,7 +55,7 @@
     <string name="dangerous_js_api_denied_snackbar">Güvenlik: Güvensiz JavaScript çağrısı engellendi.\nEğer koleksiyonunuzdaki bütün kartlara ve şablonlara güveniyorsanız, bu engel ileri düzey ayarlardan kaldırılabilir.</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">Kartların uygulama başlatmasına izin ver</string>
-    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="allow_card_external_launch_summ">Kartlar cihazınızdaki başka uygulamaları açıp istenmeyebilecek eylemleri tetikleyebilir.\nWeb linkleri bu ayar kapalı olduğunda da başka uygulamaları açabilir.\nKoleksiyonunuzdaki bütün kartlara ve şablonlara güvenmediğiniz sürece kapalı tutun.</string>
     <string name="card_external_launch_denied_snackbar">Güvenlik: Kartın başka bir uygulamayı başlatması engellendi.\nEğer koleksiyonunuzdaki bütün kartlara ve şablonlara güveniyorsanız, bu engel ileri düzey ayarlardan kaldırılabilir.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Kontur genişliği</string>
@@ -172,8 +172,8 @@
     <string name="use_timebox" maxLength="41">Use timebox</string>
     <string name="time_limit_label" maxLength="41">Time limit</string>
     <plurals name="timebox_minutes_suffix">
-        <item quantity="one">min</item>
-        <item quantity="other">mins</item>
+        <item quantity="one">dk</item>
+        <item quantity="other">dk</item>
     </plurals>
     <string name="pref_timebox_help_summary">Timeboxing divides your study into shorter sessions to help you stay focused. When the time limit is reached, you\'ll see how many cards you studied and can choose to take a break or continue.</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
@@ -252,7 +252,7 @@
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">Çalışma hatırlatıcısını değiştir</string>
     <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Saat:</string>
     <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deste:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Gelişmiş ayarlar</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">İleri düzey ayarlar</string>
     <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Kart eşiği:</string>
     <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Çalışılacak bundan az sayıda kart varsa bildirim gönderme</string>
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Sadece bugün hiç çalışmadıysam bildirim gönder</string>
