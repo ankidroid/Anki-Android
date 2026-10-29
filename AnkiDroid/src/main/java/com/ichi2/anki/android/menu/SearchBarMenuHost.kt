@@ -6,13 +6,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.forEach
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.search.SearchBar
-import com.ichi2.ui.RtlCompliantActionProvider
 import timber.log.Timber
 
 /**
@@ -78,10 +76,6 @@ private fun Menu.rebuild(
     menuHostHelper.onPrepareMenu(this)
 
     forEach { menuItem ->
-        // Setup RtlCompliantActionProvider (undo)
-        val rtlActionProvider = MenuItemCompat.getActionProvider(menuItem) as? RtlCompliantActionProvider
-        rtlActionProvider?.clickHandler = { _, menuItem -> menuHostHelper.onMenuItemSelected(menuItem) }
-
         menuItem.setOnMenuItemClickListener { item ->
             menuHostHelper.onMenuItemSelected(item)
         }
