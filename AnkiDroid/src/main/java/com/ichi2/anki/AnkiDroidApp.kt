@@ -19,7 +19,6 @@ import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
@@ -32,7 +31,6 @@ import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.common.android.ApplicationContextInitializer
 import com.ichi2.anki.common.android.getCurrentLocaleTag
 import com.ichi2.anki.common.android.withAppLocale
-import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.appName
 import com.ichi2.anki.common.coroutines.applicationScope
@@ -68,7 +66,6 @@ import com.ichi2.anki.recorder.VoiceRecorder
 import com.ichi2.anki.reviewreminders.ReminderLogTree
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
-import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.startup.configureBackendTemporaryDirectory
@@ -82,7 +79,6 @@ import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.AnkiDroidWidgetSmall
 import com.ichi2.widget.DayRolloverAlarm
-import com.ichi2.widget.WidgetNotificationScheduler
 import com.ichi2.widget.WidgetStatus
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
@@ -105,9 +101,6 @@ open class AnkiDroidApp :
     private var fatalInitializationError: FatalInitializationError? = null
 
     private var appLifecycleObserver: AppLifecycleObserver? = null
-
-    @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
-    private val notifications = MutableLiveData<Void?>()
 
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
     val sharedPrefsLastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
@@ -193,8 +186,7 @@ open class AnkiDroidApp :
         initializeAcraCrashReporter()
         initializeNavigator()
         initializeWidgetRepository()
-        WidgetNotificationScheduler.register { scheduleNotification() }
-        WidgetStatus.register(Prefs) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
+        WidgetStatus.register { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
         Animations.setPreferencesProvider { context -> PrefsRepository(context) }
         CollectionLockedException.messageProvider = {
             getString(CommonString.database_locked_summary_new, getString(CommonString.col_path))
@@ -438,18 +430,9 @@ open class AnkiDroidApp :
             setupNotificationChannels(applicationContext)
 
             val context = this.withAppLocale()
-            // In the future, if more notifications are added to AnkiDroid, scheduleAllNotifications
-            // should be extended to handle them, but since for now the only modernized notifications are review reminder
-            // notifications, we block this behind the review-reminder-specific feature flag.
-            if (Prefs.newReviewRemindersEnabled) {
-                Timber.i("Setting notifications if they have not already been set")
-                applicationScope.launch {
-                    scheduleAllNotifications(context)
-                }
-            } else {
-                // Register for notifications
-                Timber.i("AnkiDroidApp: Starting Services")
-                notifications.observeForever { NotificationService.triggerNotificationFor(context) }
+            Timber.i("Setting notifications if they have not already been set")
+            applicationScope.launch {
+                scheduleAllNotifications(context)
             }
         }
 
@@ -568,11 +551,6 @@ open class AnkiDroidApp :
             Build.VERSION.RELEASE,
             model,
         )
-    }
-
-    @LegacyNotifications("Only used by the widget to trigger notifications, we plan to stop relying on the widget")
-    fun scheduleNotification() {
-        notifications.postValue(null)
     }
 
     /**

@@ -126,12 +126,6 @@
     <string name="language" maxLength="41">Language</string>
     <string name="language_system">System language</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
-    <string name="notification_pref_title" maxLength="41">Notify when</string>
-    <string name="never_notify">Never notify</string>
-    <string name="notify_when_pending">Pending messages available</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d&#160;cards due</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
-    <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
     <string name="select_locale_title">Select language</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>

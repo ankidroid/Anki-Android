@@ -19,8 +19,6 @@ internal class MetaDbWidgetRepository(
     override fun storeSmallWidgetStatus(status: SmallWidgetStatus) = MetaDB.storeSmallWidgetStatus(context, status)
 
     override fun getWidgetSmallStatus(): SmallWidgetStatus = MetaDB.getWidgetSmallStatus(context)
-
-    override fun dueCardsCount(): Int = MetaDB.getNotificationStatus(context)
 }
 
 /** Wires up [MetaDbWidgetRepository] as the global [WidgetRepository]. */
