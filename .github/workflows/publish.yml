@@ -96,6 +96,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Raise Gradle Heap
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8" >> ~/.gradle/gradle.properties
+        shell: bash
+
       - name: Install Release Utilities
         run: |
           sudo chown -R $USER /var/lib/gems/
