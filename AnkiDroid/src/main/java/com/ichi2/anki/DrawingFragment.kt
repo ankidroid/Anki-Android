@@ -9,8 +9,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.createBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +21,7 @@ import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.databinding.FragmentDrawingBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.reviewer.ScreenBindings
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardView
 import com.ichi2.themes.Themes
@@ -26,10 +29,17 @@ import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DrawingFragment : Fragment(R.layout.fragment_drawing) {
+class DrawingFragment :
+    Fragment(R.layout.fragment_drawing),
+    DispatchKeyEventListener {
     private val binding by viewBinding(FragmentDrawingBinding::bind)
     private val whiteboardFragment
         get() = childFragmentManager.findFragmentById(R.id.fragment_container) as? WhiteboardFragment
+
+    /** Triggers the whiteboard bindings, as configured for the study screen */
+    @VisibleForTesting
+    internal lateinit var bindings: ScreenBindings
+        private set
 
     override fun onViewCreated(
         view: View,
@@ -48,8 +58,12 @@ class DrawingFragment : Fragment(R.layout.fragment_drawing) {
                 true
             }
         }
+        val whiteboard = requireNotNull(whiteboardFragment) { "the layout contains the whiteboard" }
+        bindings = ScreenBindings(this, whiteboard.bindingMap)
         setupBackPressHandling()
     }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean = bindings.dispatchKeyEvent(event)
 
     /**
      * Wires the discard-dialog back-press flow and tells the child WhiteboardFragment
