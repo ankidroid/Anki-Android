@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -95,6 +96,41 @@ class ProfileContextWrapperTest {
         val expectedFile = File(expectedDir, dbName)
         assertEquals(expectedFile.absolutePath, result.absolutePath)
         assertTrue("Parent databases folder should be created", expectedDir.exists())
+    }
+
+    @Test
+    fun `openOrCreateDatabase creates the database inside the profile`() {
+        val wrapper = ProfileContextWrapper.create(baseContext, profileId, profileBaseDir)
+        val databases = File(profileBaseDir, "databases")
+
+        wrapper.openOrCreateDatabase("three_args.db", Context.MODE_PRIVATE, null).close()
+        wrapper.openOrCreateDatabase("four_args.db", Context.MODE_PRIVATE, null, null).close()
+
+        assertTrue("three_args.db", File(databases, "three_args.db").exists())
+        assertTrue("four_args.db", File(databases, "four_args.db").exists())
+        assertFalse(baseContext.getDatabasePath("three_args.db").exists())
+        assertFalse(baseContext.getDatabasePath("four_args.db").exists())
+    }
+
+    @Test
+    fun `deleteDatabase removes the profile database and keeps the base one`() {
+        baseContext.openOrCreateDatabase("shared.db", Context.MODE_PRIVATE, null).close()
+        val wrapper = ProfileContextWrapper.create(baseContext, profileId, profileBaseDir)
+        wrapper.openOrCreateDatabase("shared.db", Context.MODE_PRIVATE, null).close()
+
+        assertTrue(wrapper.deleteDatabase("shared.db"))
+
+        assertFalse(File(profileBaseDir, "databases/shared.db").exists())
+        assertTrue(baseContext.getDatabasePath("shared.db").exists())
+    }
+
+    @Test
+    fun `default profile opens databases in the base folder`() {
+        val wrapper = ProfileContextWrapper.create(baseContext, ProfileId.DEFAULT, profileBaseDir)
+
+        wrapper.openOrCreateDatabase("default.db", Context.MODE_PRIVATE, null).close()
+
+        assertTrue(baseContext.getDatabasePath("default.db").exists())
     }
 
     // --- Security tests ---
