@@ -217,7 +217,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                 decksAdapter.removeDeck(deck.deckId)
             }
             // dismiss dialog when all decks have been selected
-            if (decksAdapter.itemCount == 0) {
+            if (decksAdapter.remainingDeckCount == 0) {
                 dialog!!.dismiss()
             }
         } else {
@@ -286,8 +286,14 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         private fun updateCurrentlyDisplayedDecks() {
             currentlyDisplayedDecks.clear()
-            currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
+            currentlyDisplayedDecks.addAll(allDecksList.filter { currentFilters.accept(it.fullDeckName) && isViewable(it) })
             notifyDataSetChanged()
+        }
+
+        private fun showSearchResults() {
+            // Expand the matching decks, so matching subdecks under them are listed too
+            allDecksList.filter { currentFilters.accept(it.fullDeckName) }.forEach { it.collapsed = false }
+            updateCurrentlyDisplayedDecks()
         }
 
         fun removeDeck(deckId: DeckId) {
@@ -297,8 +303,12 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
             updateCurrentlyDisplayedDecks()
         }
 
+        val remainingDeckCount: Int
+            get() = allDecksList.size
+
         private val allDecksList = ArrayList<DeckNode>()
         private val currentlyDisplayedDecks = ArrayList<DeckNode>()
+        private var currentFilters = DeckFilters.create("")
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -357,7 +367,8 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
             val parentNodeRef = deck.parent ?: return true
             // The parent belongs to the tree retained by [allDecksList], so should still exist.
             val parentNode = parentNodeRef.get()!!
-            return !parentNode.collapsed && isViewable(parentNode)
+            val hidesSubdecks = parentNode.collapsed && currentFilters.accept(parentNode.fullDeckName)
+            return !hidesSubdecks && isViewable(parentNode)
         }
 
         override fun getItemCount(): Int = currentlyDisplayedDecks.size
@@ -382,12 +393,8 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                 constraint: CharSequence?,
                 results: List<DeckNode>,
             ) {
-                results.forEach { it.collapsed = false }
-                currentlyDisplayedDecks.apply {
-                    clear()
-                    addAll(results)
-                }
-                notifyDataSetChanged()
+                currentFilters = DeckFilters.create(constraint ?: "")
+                showSearchResults()
             }
         }
 
@@ -416,7 +423,11 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                 }
 
                 allDecksList.addAll(allDecksSet)
-                updateCurrentlyDisplayedDecks()
+                if (currentFilters.isActive()) {
+                    showSearchResults()
+                } else {
+                    updateCurrentlyDisplayedDecks()
+                }
             }
         }
     }
