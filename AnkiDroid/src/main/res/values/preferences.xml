@@ -215,6 +215,7 @@
     <string name="pref_review_reminders_screen_key">reviewRemindersScreen</string>
     <string name="review_reminders_next_free_id">reviewRemindersNextFreeId</string>
     <string name="reminder_notifs_request_shown_key">reminderNotifsRequestShown</string>
+    <string name="should_show_review_reminders_intro_key">shouldShowReviewRemindersIntro</string>
     <string name="review_reminder_deserialization_errors_key">reviewReminderDeserializationErrors</string>
     <!-- Notifications -->
     <string name="notifications_bottom_sheet_below_33">notificationsBottomSheetBelow33</string>

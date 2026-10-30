@@ -304,6 +304,14 @@ open class PrefsRepository protected constructor(
     var reminderNotifsRequestShown by booleanPref(R.string.reminder_notifs_request_shown_key, defaultValue = false)
 
     /**
+     * Whether to introduce review reminders to a user who had a notification in the legacy
+     * notifications system, which review reminders replace.
+     *
+     * @see com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.RemoveLegacyNotificationPrefs
+     */
+    var shouldShowReviewRemindersIntro by booleanPref(R.string.should_show_review_reminders_intro_key, defaultValue = false)
+
+    /**
      * A list of all recent deserialization errors that have occurred when trying to load review reminders from storage.
      * For example, review reminders are deserialized and have their alarms scheduled when the device starts, but
      * if the deserialization process fails and no valid migrations are available, the error can be put into this string
