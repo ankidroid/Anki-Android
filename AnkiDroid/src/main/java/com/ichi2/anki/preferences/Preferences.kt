@@ -10,7 +10,9 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
 import androidx.core.view.ViewCompat
@@ -46,7 +48,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
 class PreferencesFragment :
-    Fragment(R.layout.fragment_preferences),
+    Fragment(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
     /**
@@ -54,7 +56,7 @@ class PreferencesFragment :
      * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
      * Otherwise, the same view is used to show the list of categories first, and then one specific category.
      */
-    private val settingsIsSplit get() = !resources.isWindowCompact()
+    private var settingsIsSplit = false
 
     private val childFragmentOnBackPressedCallback =
         object : OnBackPressedCallback(enabled = false) {
@@ -68,6 +70,24 @@ class PreferencesFragment :
         FragmentManager.OnBackStackChangedListener {
             childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val fitsSplit = !resources.isWindowCompact() && resources.configuration.run { smallestScreenWidthDp / fontScale >= 600 }
+        settingsIsSplit = savedInstanceState?.getBoolean(STATE_SETTINGS_IS_SPLIT, fitsSplit) ?: fitsSplit
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_SETTINGS_IS_SPLIT, settingsIsSplit)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View =
+        inflater.inflate(if (settingsIsSplit) R.layout.fragment_preferences_split else R.layout.fragment_preferences, container, false)
 
     override fun onViewCreated(
         view: View,
@@ -231,6 +251,10 @@ class PreferencesFragment :
         childFragmentManager.commit {
             replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
         }
+    }
+
+    companion object {
+        private const val STATE_SETTINGS_IS_SPLIT = "settingsIsSplit"
     }
 }
 
