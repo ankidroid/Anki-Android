@@ -167,62 +167,6 @@ class WhiteboardFragmentTest : RobolectricTest() {
         }
     }
 
-    private fun WhiteboardFragment.tapWithFingers(fingerCount: Int) {
-        dispatchFingerTouch(MotionEvent.ACTION_DOWN, 1)
-        for (count in 2..fingerCount) {
-            dispatchFingerTouch(
-                MotionEvent.ACTION_POINTER_DOWN or ((count - 1) shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
-                count,
-            )
-        }
-        for (count in fingerCount downTo 2) {
-            dispatchFingerTouch(
-                MotionEvent.ACTION_POINTER_UP or ((count - 1) shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
-                count,
-            )
-        }
-        dispatchFingerTouch(MotionEvent.ACTION_UP, 1)
-    }
-
-    private fun WhiteboardFragment.dispatchFingerTouch(
-        action: Int,
-        pointerCount: Int,
-    ) {
-        val event =
-            MotionEvent.obtain(
-                0L,
-                0L,
-                action,
-                pointerCount,
-                Array(pointerCount) { index ->
-                    MotionEvent.PointerProperties().apply {
-                        id = index
-                        toolType = MotionEvent.TOOL_TYPE_FINGER
-                    }
-                },
-                Array(pointerCount) { index ->
-                    MotionEvent.PointerCoords().apply {
-                        x = 50f + index * 20f
-                        y = 50f
-                    }
-                },
-                0,
-                0,
-                1f,
-                1f,
-                0,
-                0,
-                InputDevice.SOURCE_TOUCHSCREEN,
-                0,
-            )
-        try {
-            // Use the parent: rejecting ACTION_DOWN prevents later pointer events reaching the whiteboard.
-            binding.root.dispatchTouchEvent(event)
-        } finally {
-            event.recycle()
-        }
-    }
-
     private fun WhiteboardFragment.isBrushSelected(index: Int): Boolean {
         val recycler = binding.whiteboardToolbar.findViewById<RecyclerView>(R.id.brush_recycler_view)
         val adapter = recycler.adapter as BrushAdapter
@@ -294,5 +238,61 @@ class WhiteboardFragmentTest : RobolectricTest() {
             scenario.onFragment { fragment -> block(fragment) }
             advanceRobolectricLooper()
         }
+    }
+}
+
+internal fun WhiteboardFragment.tapWithFingers(fingerCount: Int) {
+    dispatchFingerTouch(MotionEvent.ACTION_DOWN, 1)
+    for (count in 2..fingerCount) {
+        dispatchFingerTouch(
+            MotionEvent.ACTION_POINTER_DOWN or ((count - 1) shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+            count,
+        )
+    }
+    for (count in fingerCount downTo 2) {
+        dispatchFingerTouch(
+            MotionEvent.ACTION_POINTER_UP or ((count - 1) shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+            count,
+        )
+    }
+    dispatchFingerTouch(MotionEvent.ACTION_UP, 1)
+}
+
+internal fun WhiteboardFragment.dispatchFingerTouch(
+    action: Int,
+    pointerCount: Int,
+) {
+    val event =
+        MotionEvent.obtain(
+            0L,
+            0L,
+            action,
+            pointerCount,
+            Array(pointerCount) { index ->
+                MotionEvent.PointerProperties().apply {
+                    id = index
+                    toolType = MotionEvent.TOOL_TYPE_FINGER
+                }
+            },
+            Array(pointerCount) { index ->
+                MotionEvent.PointerCoords().apply {
+                    x = 50f + index * 20f
+                    y = 50f
+                }
+            },
+            0,
+            0,
+            1f,
+            1f,
+            0,
+            0,
+            InputDevice.SOURCE_TOUCHSCREEN,
+            0,
+        )
+    try {
+        // Use the parent: rejecting ACTION_DOWN prevents later pointer events reaching the whiteboard.
+        binding.root.dispatchTouchEvent(event)
+    } finally {
+        event.recycle()
     }
 }

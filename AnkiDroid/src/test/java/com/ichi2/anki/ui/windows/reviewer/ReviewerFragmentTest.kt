@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.graphics.Path
 import android.text.InputType
 import android.view.KeyEvent
 import android.view.View
@@ -23,6 +24,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.CardViewerActivity
+import com.ichi2.anki.reviewer.Axis
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -38,6 +40,7 @@ import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.testutils.RecordingInputMethodManager
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.joystickEvent
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
@@ -296,7 +299,7 @@ class ReviewerFragmentTest : RobolectricTest() {
             bindToStudyScreenAndWhiteboard(ReviewerBinding.fromGesture(Gesture.SHAKE))
             withReviewer {
                 hideWhiteboard(this)
-                hearShake()
+                bindings.hearShake()
                 advanceUntilIdle()
                 advanceRobolectricLooper()
                 assertEquals(listOf(cardId), assertIs<SetDueDateDialog>(currentDialog).cardIds)
@@ -317,6 +320,45 @@ class ReviewerFragmentTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `whiteboard takes priority on key events`() =
+        checkWhiteboardTakesPriority(ReviewerBinding(Binding.KeyCode(KeyEvent.KEYCODE_F5), CardSide.BOTH)) {
+            dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_F5))
+        }
+
+    @Test
+    fun `whiteboard takes priority on shake events`() =
+        checkWhiteboardTakesPriority(ReviewerBinding.fromGesture(Gesture.SHAKE)) {
+            bindings.hearShake()
+        }
+
+    @Test
+    fun `whiteboard takes priority on joystick events`() =
+        checkWhiteboardTakesPriority(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.BOTH)) {
+            requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.X, 1f))
+        }
+
+    @Test
+    fun `whiteboard keeps the priority while the joystick is held`() =
+        checkWhiteboardTakesPriority(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.BOTH)) {
+            // a held joystick keeps sending events
+            repeat(2) { requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.X, 1f)) }
+        }
+
+    @Test
+    fun `joystick event reaches the study screen while the whiteboard is hidden`() =
+        runTest {
+            val cardId = addBasicNote().firstCard().id
+            bindToStudyScreenAndWhiteboard(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.BOTH))
+            withReviewer {
+                hideWhiteboard(this)
+                requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.X, 1f))
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                assertEquals(listOf(cardId), assertIs<SetDueDateDialog>(currentDialog).cardIds)
+            }
+        }
+
     private fun bindToStudyScreenAndWhiteboard(binding: ReviewerBinding) {
         val bindings = listOf(binding).toPreferenceString()
         targetContext.sharedPrefs().edit {
@@ -324,6 +366,27 @@ class ReviewerFragmentTest : RobolectricTest() {
             putString(WhiteboardAction.CLEAR.preferenceKey, bindings)
         }
         StudyScreenRepository().isWhiteboardEnabled = true
+    }
+
+    private fun checkWhiteboardTakesPriority(
+        binding: ReviewerBinding,
+        trigger: ReviewerFragment.() -> Unit,
+    ) = runTest {
+        addBasicNote()
+        bindToStudyScreenAndWhiteboard(binding)
+        withReviewer {
+            advanceRobolectricLooper()
+            val whiteboard =
+                assertIs<WhiteboardFragment>(childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName))
+            whiteboard.viewModel.addPath(Path().apply { lineTo(10f, 10f) })
+
+            trigger()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+
+            assertEquals(emptyList(), whiteboard.viewModel.paths.value, "the whiteboard binding should trigger")
+            assertNull(currentDialog, "the study screen binding should not trigger")
+        }
     }
 
     private fun TestScope.hideWhiteboard(reviewer: ReviewerFragment) {
@@ -359,7 +422,7 @@ class ReviewerFragmentTest : RobolectricTest() {
 
             withReviewer { controller ->
                 fun shake() {
-                    hearShake()
+                    bindings.hearShake()
                     advanceUntilIdle()
                     advanceRobolectricLooper()
                 }
