@@ -13,11 +13,11 @@ on:
         required: true
         type: choice
         # If you alter system names in default + options here, also alter osArray below to match
-        default: '["windows-latest", "macos-14", "ubuntu-latest"]'
+        default: '["windows-latest", "macos-15", "ubuntu-latest"]'
         options:
-          - '["windows-latest", "macos-14", "ubuntu-latest"]'
+          - '["windows-latest", "macos-15", "ubuntu-latest"]'
           - '["windows-latest"]'
-          - '["macos-14"]'
+          - '["macos-15"]'
           - '["ubuntu-latest"]'
   schedule:
     - cron: "42 0 * * 2"
@@ -59,10 +59,10 @@ jobs:
         with:
           script: |
             // by default, we will include all 3 platforms we test on
-            // "latest" would be easy everywhere, but "macos-14" doesn't always happen if you choose "latest"
-            // and we want macos-14 because it has Apple Silicon and is faster
+            // "latest" would be easy everywhere, but "macos-15" doesn't always happen if you choose "latest"
+            // and we want macos-15 because it has Apple Silicon and is faster
             // if you alter this, also alter it above in the workflow_dispatch options list
-            let osArray = ["ubuntu-latest", "macos-14", "windows-latest"]
+            let osArray = ["ubuntu-latest", "macos-15", "windows-latest"]
             
             // by default, we will run one iteration on each selected system
             let iterationArray = [1]
@@ -99,7 +99,7 @@ jobs:
               // we do this work to define 'name' so we don't need to update branch protection rules
               // if the os changes, the name is used in the expanded workflow run name, which is then
               // used as a "required check" on branch protection merge rules, this keeps it stable
-              // even if "macos-14" changes to "macos-15" in the future so we just change the list here
+              // even if "macos-15" changes to "macos-26" in the future so we just change the list here
               // but don't have to go into organization settings / protection rules etc etc
               includeArray.push({"os": os, "name": os.split('-')[0]});
             }
