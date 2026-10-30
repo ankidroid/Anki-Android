@@ -13,7 +13,6 @@ import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.testutils.BackupManagerTestUtilities
-import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -133,8 +132,9 @@ class DeckPickerSchedulerUpgradeTest : RobolectricTest() {
     }
 
     private fun refresh(activity: DeckPicker) {
-        runBlocking { activity.viewModel.reloadDeckCounts().join() }
-        advanceRobolectricLooper()
+        // Not runBlocking: the reload emits to flows DeckPicker collects on the main thread
+        val reload = activity.viewModel.reloadDeckCounts()
+        advanceRobolectricLooperUntil { reload.isCompleted }
     }
 
     private fun recreate(controller: ActivityController<DeckPicker>) {
