@@ -101,6 +101,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         if (!ensureStorageIsReady()) {
             return
         }
+        savedInstanceState?.let { currentPos = it.getInt(STATE_CURRENT_POS) }
         setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
@@ -132,6 +133,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             }
             dismissAllDialogFragments()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(STATE_CURRENT_POS, currentPos)
+        super.onSaveInstanceState(outState)
     }
 
     // ----------------------------------------------------------------------------
@@ -584,6 +590,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     companion object {
         const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
         const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
+        private const val STATE_CURRENT_POS = "currentPos"
     }
 }
 
