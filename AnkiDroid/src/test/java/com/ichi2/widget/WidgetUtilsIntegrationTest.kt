@@ -47,11 +47,6 @@ class WidgetUtilsIntegrationTest : RobolectricTest() {
         CardAnalysisWidget().onReceive(targetContext, widgetUpdateIntent())
     }
 
-    private fun widgetUpdateIntent() =
-        Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE).apply {
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(1))
-        }
-
     companion object {
         @BeforeClass
         @JvmStatic
