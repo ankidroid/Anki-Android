@@ -17,9 +17,9 @@
     "author": "AnkiDroid Open Source Team",
     "license": "GPL-3.0",
     "dependencies": {
-        "@crowdin/crowdin-api-client": "^1.59.1",
-        "axios": "^1.20.0",
-        "dotenv": "^18.0.8",
+        "@crowdin/crowdin-api-client": "^1.59.2",
+        "axios": "^1.21.0",
+        "dotenv": "^18.0.9",
         "extract-zip": "^2.0.1",
         "typescript": "^6.0.3"
     },
@@ -28,8 +28,8 @@
         "@eslint/js": "^10.0.1",
         "@types/jest": "^30.0.0",
         "@types/node": "^26.6.5",
-        "@typescript-eslint/eslint-plugin": "^8.72.0",
-        "@typescript-eslint/parser": "^8.72.0",
+        "@typescript-eslint/eslint-plugin": "^8.72.1",
+        "@typescript-eslint/parser": "^8.72.1",
         "eslint": "^10.13.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-config-standard": "^17.1.0",
