@@ -9,7 +9,6 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -28,7 +27,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.android.back.doubleBackPressCallback
 import com.ichi2.anki.cardviewer.Gesture
@@ -59,22 +57,23 @@ import com.ichi2.anki.common.android.R as CommonR
  */
 class WhiteboardFragment :
     Fragment(R.layout.fragment_whiteboard),
-    PopupMenu.OnMenuItemClickListener,
-    DispatchKeyEventListener {
+    PopupMenu.OnMenuItemClickListener {
     @VisibleForTesting
     internal val viewModel: WhiteboardViewModel by viewModels {
         WhiteboardViewModel.factory(AnkiDroidApp.sharedPrefs())
     }
 
     val binding by viewBinding(FragmentWhiteboardBinding::bind)
-    private lateinit var bindingMap: BindingMap<ReviewerBinding, WhiteboardAction>
+
+    /** The whiteboard bindings, for hosts that don't dispatch them themselves */
+    val bindingMap by lazy { BindingMap(sharedPrefs(), WhiteboardAction.entries, viewModel) }
     private var doubleBackCallback: OnBackPressedCallback? = null
 
     private var eraserPopup: PopupWindow? = null
     private var brushConfigPopup: PopupWindow? = null
 
-    /** Called when no bindings used the triggered gestures */
-    var gestureFallbackListener: ((Gesture) -> Unit)? = null
+    /** Handles the multi-finger taps on the whiteboard. By default, triggers the whiteboard bindings */
+    private var onGestureListener: (Gesture) -> Unit = { gesture -> bindingMap.onGesture(gesture) }
 
     override fun onViewCreated(
         view: View,
@@ -201,10 +200,6 @@ class WhiteboardFragment :
             viewModel.setIsToolbarShown(isShown)
         }
 
-        bindingMap = BindingMap(sharedPrefs(), WhiteboardAction.entries, viewModel)
-        binding.root.setOnGenericMotionListener { _, event ->
-            bindingMap.onGenericMotionEvent(event)
-        }
         binding.whiteboardView.setOnMultiTouchListener { touchNumber ->
             val gesture =
                 when (touchNumber) {
@@ -213,22 +208,23 @@ class WhiteboardFragment :
                     4 -> Gesture.FOUR_FINGER_TAP
                     else -> return@setOnMultiTouchListener
                 }
-            val result = onGesture(gesture)
-            if (!result) {
-                gestureFallbackListener?.invoke(gesture)
-            }
+            onGestureListener(gesture)
         }
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (isHidden || event.action != KeyEvent.ACTION_DOWN) return false
-        return bindingMap.onKeyDown(event)
+    /**
+     * Sets a listener to the multi-finger taps on the whiteboard, for hosts that
+     * dispatch the whiteboard bindings themselves.
+     */
+    fun setOnGestureListener(listener: (Gesture) -> Unit) {
+        onGestureListener = listener
     }
 
-    fun onScreenShake(): Boolean = !isHidden && onGesture(Gesture.SHAKE)
-
-    /** Handles gestures detected on the whiteboard or on the card beneath it in stylus mode. */
-    fun onGesture(gesture: Gesture): Boolean = bindingMap.onGesture(gesture)
+    /** Triggers the [action] of a whiteboard [binding] */
+    fun processAction(
+        action: WhiteboardAction,
+        binding: ReviewerBinding,
+    ): Boolean = viewModel.processAction(action, binding)
 
     /**
      * Sets up observers for the ViewModel's flows.
