@@ -214,6 +214,28 @@ class ProfileManagerTest {
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
+    fun `fallback to Default must not expose another profile's cookies`() {
+        val manager = ProfileManager.create(context)
+        val previous = manager.createNewProfile(ProfileName.fromTrustedSource("Alice"))
+        val unloadable = manager.createNewProfile(ProfileName.fromTrustedSource("Bob"))
+        val cookies = CookieManager.getInstance()
+        val url = "https://ankiweb.net/"
+        cookies.setCookie(url, "session=alice")
+        assertEquals("session=alice", cookies.getCookie(url))
+        prefs.edit(commit = true) {
+            putString(PREF_WEBVIEW_PROFILE_ID, previous.value)
+            putString(PREF_LAST_ACTIVE_PROFILE_ID, unloadable.value)
+        }
+        File(appDataRoot, unloadable.value).writeText("a file where the profile folder belongs")
+
+        assertNull(ProfileManager.createOrNull(context))
+
+        // AnkiDroidApp uses its unwrapped Default context when createOrNull returns null.
+        assertNull(cookies.getCookie(url), "Default must not inherit Alice's authenticated WebView session")
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O_MR1])
     fun `Legacy device keeps cookies on first run as the WebView data is already Default's (Pre-API 28)`() {
         val cookieManager = mockCookieManager()
         assertNull(prefs.getString(PREF_WEBVIEW_PROFILE_ID, null), "no WebView owner is recorded before the first run")
@@ -279,6 +301,30 @@ class ProfileManagerTest {
 
         verify(exactly = 2) { cookieManager.removeAllCookies(any()) }
         assertNull(prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
+    }
+
+    @Test
+    @Config(minSdk = Build.VERSION_CODES.P)
+    fun `a profile that fails to load leaves the WebView directory alone (API 28+)`() {
+        mockkStatic(WebView::class)
+        every { WebView.setDataDirectorySuffix(any()) } just runs
+        val unloadable = makeActiveProfileUnloadable()
+
+        assertNull(ProfileManager.createOrNull(context))
+
+        verify(exactly = 0) { WebView.setDataDirectorySuffix(unloadable.value) }
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O_MR1])
+    fun `a profile that fails to load keeps the WebView cookies (Pre-API 28)`() {
+        val cookieManager = mockCookieManager()
+        makeActiveProfileUnloadable()
+
+        assertNull(ProfileManager.createOrNull(context))
+
+        verify(exactly = 0) { cookieManager.removeAllCookies(any()) }
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
     }
 
     @Test
@@ -792,6 +838,13 @@ class ProfileManagerTest {
         val editors = mutableListOf<RecordingEditor>()
 
         override fun edit(): SharedPreferences.Editor = RecordingEditor(delegate.edit()).also { editors += it }
+    }
+
+    private fun makeActiveProfileUnloadable(): ProfileId {
+        val profileId = ProfileManager.create(context).createNewProfile(ProfileName.fromTrustedSource("Work"))
+        File(appDataRoot, profileId.value).writeText("a file where the profile folder belongs")
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, profileId.value) }
+        return profileId
     }
 
     private fun mockCookieManager(completesRemoval: Boolean = true): CookieManager {

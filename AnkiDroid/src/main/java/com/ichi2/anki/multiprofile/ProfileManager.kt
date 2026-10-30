@@ -160,8 +160,6 @@ class ProfileManager private constructor(
     }
 
     private fun loadProfileData(profileId: ProfileId) {
-        configureWebView(profileId)
-
         val profileBaseDir = resolveProfileDirectory(profileId)
 
         try {
@@ -175,8 +173,11 @@ class ProfileManager private constructor(
             ensureProfileCollectionPath(wrapper)
         } catch (e: Exception) {
             Timber.w(e, "Failed to load profile context for $profileId")
+            configureWebView(ProfileId.DEFAULT)
             throw RuntimeException("Failed to load profile environment", e)
         }
+
+        configureWebView(profileId)
 
         Timber.d("Profile loaded: $profileId at ${profileBaseDir.file.absolutePath}")
     }
