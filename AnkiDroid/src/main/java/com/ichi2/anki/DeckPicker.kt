@@ -155,6 +155,7 @@ import com.ichi2.anki.dialogs.FatalErrorDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportViewModel
+import com.ichi2.anki.dialogs.ProfileLoadFailureDialog
 import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
@@ -162,6 +163,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.dialogs.registerProfileLoadFailureClosedHandler
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResultListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
@@ -170,6 +172,7 @@ import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.mediacheck.MediaCheckFragment
+import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.progress.observeProgress
@@ -671,6 +674,11 @@ open class DeckPicker :
             openScheduleReminders(did)
         }
 
+        // A fatal startup error waits until the profile explanation is closed, so it can't cover it
+        registerProfileLoadFailureClosedHandler {
+            (viewModel.flowOfStartupResponse.value as? StartupResponse.FatalError)?.let { handleStartupFailure(it.failure) }
+        }
+
         pullToSyncWrapper.configureView(
             this,
             IMPORT_MIME_TYPES,
@@ -961,6 +969,7 @@ open class DeckPicker :
                     viewModel.flowOfStartupResponse.value = null
                     invalidateOptionsMenu()
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
+                    showProfileLoadFailureIfAny()
 
                     if (tryShowStudyOptionsPanel()) {
                         ResizablePaneManager(
@@ -980,7 +989,11 @@ open class DeckPicker :
                     // built by the time a failure arrives; rebuild it so onCreateOptionsMenu
                     // sees the error and blanks it
                     invalidateOptionsMenu()
-                    handleStartupFailure(response.failure)
+                    if (showProfileLoadFailureIfAny()) {
+                        Timber.i("Showing the startup failure once the profile load failure is closed")
+                    } else {
+                        handleStartupFailure(response.failure)
+                    }
                 }
             }
         }
@@ -1915,6 +1928,15 @@ open class DeckPicker :
                 BackupPromptDialog.showIfAvailable(this@DeckPicker)
             }
         }
+    }
+
+    private fun showProfileLoadFailureIfAny(): Boolean {
+        val failure = ProfileManager.consumeLoadFailure()
+        if (supportFragmentManager.findFragmentByTag(ProfileLoadFailureDialog.TAG) != null) return true
+        if (failure == null) return false
+        Timber.i("Showing the profile load failure")
+        ProfileLoadFailureDialog.newInstance(failure).show(supportFragmentManager, ProfileLoadFailureDialog.TAG)
+        return true
     }
 
     private fun showCollectionErrorDialog() {

@@ -22,6 +22,7 @@ import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FIL
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.runs
 import io.mockk.unmockkAll
@@ -39,6 +40,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowEnvironment
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
 import java.util.UUID
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -101,6 +103,104 @@ class ProfileManagerTest {
 
         assertNull(manager, "must not brick startup")
         assertNotNull(ProfileManager.attachError, "Failure must be recorded for later logging")
+        assertNull(ProfileManager.consumeLoadFailure(), "no profile name to report")
+    }
+
+    @Test
+    fun `a profile that fails to load is reported by name once`() {
+        registerUnloadableProfile()
+
+        assertNull(ProfileManager.createOrNull(context))
+
+        assertEquals(loadFailure("Work", "Home"), ProfileManager.consumeLoadFailure())
+        assertNull(ProfileManager.consumeLoadFailure(), "reported once per start")
+    }
+
+    @Test
+    fun `a reported failure stays known until the next start`() {
+        registerUnloadableProfile()
+        ProfileManager.createOrNull(context)
+
+        ProfileManager.consumeLoadFailure()
+
+        assertEquals(loadFailure("Work", "Home"), ProfileManager.loadFailure)
+    }
+
+    @Test
+    fun `choosing Default after a failed load opens Default on the next start`() {
+        registerUnloadableProfile()
+        ProfileManager.createOrNull(context)
+
+        assertTrue(ProfileManager.selectDefaultProfile(context))
+
+        assertEquals(ProfileId.DEFAULT, ProfileManager.createOrNull(context)?.activeProfileContext?.profileId)
+    }
+
+    @Test
+    fun `choosing Default reports a registry that is not saved`() {
+        val editor = mockk<SharedPreferences.Editor>()
+        every { editor.putString(any(), any()) } returns editor
+        every { editor.commit() } returns false
+        val unsaved =
+            object : ContextWrapper(context) {
+                override fun getSharedPreferences(
+                    name: String,
+                    mode: Int,
+                ): SharedPreferences = mockk { every { edit() } returns editor }
+            }
+
+        assertFalse(ProfileManager.selectDefaultProfile(unsaved))
+    }
+
+    @Test
+    fun `a profile that opens again clears the earlier failure`() {
+        val work = registerUnloadableProfile()
+        ProfileManager.createOrNull(context)
+
+        File(appDataRoot, work.value).delete()
+
+        assertEquals(work, ProfileManager.createOrNull(context)?.activeProfileContext?.profileId)
+        assertNull(ProfileManager.loadFailure)
+        assertNull(ProfileManager.consumeLoadFailure())
+    }
+
+    @Test
+    fun `a Default profile that fails to load is not reported`() {
+        mockkObject(ProfileContextWrapper)
+        every { ProfileContextWrapper.create(any(), any(), any()) } throws IOException("storage unavailable")
+
+        assertNull(ProfileManager.createOrNull(context))
+
+        assertNull(ProfileManager.consumeLoadFailure(), "Default is what AnkiDroid falls back to")
+    }
+
+    @Test
+    fun `a profile missing from the registry is reported by its ID`() {
+        ProfileManager.create(context)
+        val missing = ProfileId("p_0000beef")
+        File(appDataRoot, missing.value).writeText("a file where the profile folder belongs")
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, missing.value) }
+
+        assertNull(ProfileManager.createOrNull(context))
+
+        assertEquals(
+            loadFailure(missing.value, "Default"),
+            ProfileManager.consumeLoadFailure(),
+        )
+    }
+
+    private fun loadFailure(
+        profileName: String,
+        defaultProfileName: String,
+    ) = ProfileManager.LoadFailure(ProfileName.fromTrustedSource(profileName), ProfileName.fromTrustedSource(defaultProfileName))
+
+    private fun registerUnloadableProfile(): ProfileId {
+        val manager = ProfileManager.create(context)
+        manager.renameProfile(ProfileId.DEFAULT, ProfileName.fromTrustedSource("Home"))
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        File(appDataRoot, work.value).writeText("a file where the profile folder belongs")
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, work.value) }
+        return work
     }
 
     @Test

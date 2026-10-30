@@ -3,11 +3,13 @@
 
 package com.ichi2.anki.multiprofile
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.CookieManager
 import android.webkit.WebView
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -704,6 +706,11 @@ class ProfileManager private constructor(
      */
     object ProfileSwitchContext
 
+    data class LoadFailure(
+        val profileName: ProfileName,
+        val defaultProfileName: ProfileName,
+    )
+
     companion object {
         private const val MAX_ATTEMPTS = 10
         const val PROFILE_REGISTRY_FILENAME = "profiles_prefs"
@@ -749,6 +756,22 @@ class ProfileManager private constructor(
         var attachError: Throwable? = null
             private set
 
+        var loadFailure: LoadFailure? = null
+            private set
+
+        private var unreportedLoadFailure: LoadFailure? = null
+
+        fun consumeLoadFailure(): LoadFailure? = unreportedLoadFailure.also { unreportedLoadFailure = null }
+
+        @CheckResult
+        @SuppressLint("UseKtx") // edit {} drops the commit result, which tells the dialog whether it can close
+        fun selectDefaultProfile(context: Context): Boolean =
+            context
+                .getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE)
+                .edit()
+                .putString(PREF_LAST_ACTIVE_PROFILE_ID, ProfileId.DEFAULT.value)
+                .commit()
+
         /**
          * Loads the active profile, or returns null when its environment cannot be
          * loaded.
@@ -761,16 +784,37 @@ class ProfileManager private constructor(
         fun createOrNull(base: Context): ProfileManager? =
             try {
                 attachError = null
+                loadFailure = null
+                unreportedLoadFailure = null
                 create(base)
             } catch (e: Exception) {
-                // TODO: show this to the user instead of silently falling back to the Default profile
                 attachError = e
+                loadFailure = readLoadFailure(base)
+                unreportedLoadFailure = loadFailure
                 null
             }
+
+        private fun readLoadFailure(base: Context): LoadFailure? {
+            try {
+                val registryPrefs = (base.applicationContext ?: base).getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE)
+                val registry = ProfileRegistry(registryPrefs)
+                val failedId = registry.getLastActiveProfileId()?.takeUnless { it.isDefault() } ?: return null
+                return LoadFailure(
+                    profileName = registry.getProfileMetadata(failedId)?.displayName ?: ProfileName.fromTrustedSource(failedId.value),
+                    defaultProfileName =
+                        registry.getProfileMetadata(ProfileId.DEFAULT)?.displayName
+                            ?: ProfileName.fromTrustedSource(DEFAULT_PROFILE_DISPLAY_NAME),
+                )
+            } catch (e: Exception) {
+                return null
+            }
+        }
 
         @VisibleForTesting
         fun resetForTesting() {
             attachError = null
+            loadFailure = null
+            unreportedLoadFailure = null
         }
 
         /**
