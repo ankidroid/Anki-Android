@@ -158,6 +158,9 @@
     <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Deck for new cards</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="use_learn_ahead" maxLength="41">Learn ahead</string>
+    <string name="pref_learn_ahead_stepper_title" maxLength="41">Show cards due within</string>
+    <string name="pref_learn_ahead_help_summary">When no other cards are due, study learning cards early to finish studying for the day in one session.</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="timeboxing" maxLength="41">Timeboxing</string>
     <string name="use_timebox" maxLength="41">Use timebox</string>

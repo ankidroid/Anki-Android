@@ -6,6 +6,8 @@ import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.preferences.LearnAheadLimit
+import com.ichi2.anki.preferences.toLearnAheadLimit
 import timber.log.Timber
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -68,6 +70,10 @@ object CollectionPreferences {
     //endregion
 
     //region Scheduling
+    suspend fun getLearnAhead(): LearnAheadLimit? = getLearnAheadLimit().toLearnAheadLimit()
+
+    suspend fun setLearnAhead(limit: LearnAheadLimit?) = setLearnAheadLimit(limit?.toDuration() ?: Duration.ZERO)
+
     suspend fun getLearnAheadLimit(): Duration = withCol { getPreferences() }.scheduling.learnAheadSecs.toDuration(DurationUnit.SECONDS)
 
     suspend fun setLearnAheadLimit(limit: Duration) {

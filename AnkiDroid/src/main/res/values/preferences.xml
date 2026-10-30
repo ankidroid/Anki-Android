@@ -11,6 +11,7 @@
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
+    <string name="custom_learn_ahead_limit_key">customLearnAheadLimit</string>
     <string name="time_limit_preference">timeLimit</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="double_tap_timeout_pref_key">doubleTapTimeout</string>

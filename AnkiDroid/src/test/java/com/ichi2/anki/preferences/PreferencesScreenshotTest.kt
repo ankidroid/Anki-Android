@@ -140,6 +140,26 @@ class PreferencesScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun learnAheadSettingsFragmentDisabled() =
+        runTest {
+            CollectionPreferences.setLearnAheadLimit(0.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(LearnAheadSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("LearnAheadSettingsFragment_disabled")
+            }
+        }
+
+    @Test
+    fun learnAheadSettingsFragmentEnabled() =
+        runTest {
+            CollectionPreferences.setLearnAheadLimit(20.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(LearnAheadSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("LearnAheadSettingsFragment_enabled")
+            }
+        }
+
+    @Test
     fun `capture all preference fragments`() {
         Prefs.isNewStudyScreenEnabled = true
         val fragments = PreferenceTestUtils.getAllPreferencesFragments(targetContext)
