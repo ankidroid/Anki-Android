@@ -7,9 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
-import androidx.activity.OnBackPressedCallback
 import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
@@ -25,38 +23,28 @@ class AnkiPackageImporterFragment : PageFragment() {
 
     override val minimumWebViewVersion: WebViewVersion = OLDEST_WORKING_WEBVIEW_VERSION
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        // the back callback is only enabled when import is running and showing progress
-        val backCallback =
-            object : OnBackPressedCallback(false) {
-                override fun handleOnBackPressed() {
-                    CollectionManager.getBackend().setWantsAbort()
-                    // once triggered the callback is not needed as the import process can't be resumed
-                    remove()
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
-        return AnkiPackageImporterWebViewClient(backCallback)
-    }
+    private val backCallback = ImportBackCallback()
+
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient = AnkiPackageImporterWebViewClient()
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.title = TR.actionsImport()
     }
 
-    class AnkiPackageImporterWebViewClient(
-        private val backCallback: OnBackPressedCallback,
-    ) : PageWebViewClient() {
-        /**
-         * Ideally, to handle the state of the back callback, we would just need to check for
-         * `/latestProgress` calls followed by one `/importDone` call. However there are some extra
-         * calls to `/latestProgress` AFTER `/importDone` and this property keeps track of this.
-         */
-        private var isDone = false
+    override suspend fun handlePostRequest(
+        uri: PostRequestUri,
+        bytes: ByteArray,
+    ): ByteArray {
+        backCallback.onPostRequest(uri)
+        return super.handlePostRequest(uri, bytes)
+    }
 
+    class AnkiPackageImporterWebViewClient : PageWebViewClient() {
         override fun onPageFinished(
             view: WebView?,
             url: String?,
@@ -64,23 +52,6 @@ class AnkiPackageImporterFragment : PageFragment() {
             view!!.evaluateJavascript(hideShowButtonCss) {
                 super.onPageFinished(view, url)
             }
-        }
-
-        override fun onLoadResource(
-            view: WebView?,
-            url: String?,
-        ) {
-            super.onLoadResource(view, url)
-            backCallback.isEnabled =
-                when {
-                    url == null -> false
-                    url.endsWith("latestProgress") && !isDone -> true
-                    url.endsWith("importDone") -> {
-                        isDone = true // import was done so disable any back callback changes after this call
-                        false
-                    }
-                    else -> false
-                }
         }
     }
 
