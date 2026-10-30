@@ -194,6 +194,10 @@ jobs:
       # file check still posts the size when an earlier step failed, and this step
       # runs before emulator, alignment, and upload failures. The later smoke test
       # rebuilds with TEST_RELEASE_BUILD=false, so the notice must stay here.
+      # The notice records the commit that was built and its first parent: on
+      # pull_request, HEAD is GitHub's merge of the PR into the base branch and
+      # HEAD^1 is the base-branch commit it merged into. compare_apk_size.yml uses
+      # that parent as the baseline, so both APKs differ only by this PR.
       - name: Post play-release APK size
         if: >-
           always() &&
@@ -211,8 +215,10 @@ jobs:
             echo "play-release APK size is not an integer: $bytes"
             exit 1
           fi
-          echo "::notice title=play-release-apk-bytes::${bytes}"
-          echo "play-release APK size: ${bytes} bytes" >> "$GITHUB_STEP_SUMMARY"
+          commit="$(git rev-parse HEAD)"
+          first_parent="$(git rev-parse HEAD^1)"
+          echo "::notice title=play-release-apk-build::${commit} ${first_parent} ${bytes}"
+          echo "play-release APK size: ${bytes} bytes (built ${commit}, first parent ${first_parent})" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Install Android Emulator
         # Retry to work around https://github.com/ReactiveCircus/android-emulator-runner/issues/496

@@ -7,12 +7,18 @@ const test = require("node:test");
 const {
     isPlayReleaseSizeJob,
     orderBaselineRuns,
-    parsePlayReleaseApkBytes,
+    parsePlayReleaseApkBuild,
     selectBaselineRun,
+    selectComparisonComment,
     selectPlayReleaseSizeJob,
 } = require("./apk-size-notice");
 
 const HEAD = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+const BASE = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+
+function notice(message, title = "play-release-apk-build") {
+    return { title, message, annotation_level: "notice" };
+}
 
 function run(overrides) {
     return {
@@ -159,30 +165,71 @@ test("ignores successful runs for a different SHA", () => {
     assert.equal(selected.id, 2);
 });
 
-test("parses a matching notice title", () => {
-    const parsed = parsePlayReleaseApkBytes([
-        { title: "other", message: "1", annotation_level: "notice" },
-        { title: "play-release-apk-bytes", message: " 48291023 ", annotation_level: "notice" },
-    ]);
-    assert.deepEqual(parsed, { ok: true, bytes: 48291023 });
+test("does not reuse pull_request runs whose checkout is a synthetic merge commit", () => {
+    const ordered = orderBaselineRuns(
+        [
+            run({ id: 1, event: "pull_request", created_at: "2026-02-01T00:00:00Z" }),
+            run({ id: 2, event: "push" }),
+            run({ id: 3, event: "workflow_dispatch" }),
+        ],
+        HEAD,
+    );
+    assert.deepEqual(
+        ordered.map(candidate => candidate.id),
+        [2],
+    );
 });
 
-test("rejects a missing or non-numeric notice", () => {
-    assert.deepEqual(parsePlayReleaseApkBytes([]), { ok: false, reason: "missing" });
+test("parses APK size with the exact tested commit and base parent", () => {
     assert.deepEqual(
-        parsePlayReleaseApkBytes([
-            { title: "apk-size", message: "12", annotation_level: "notice" },
-        ]),
+        parsePlayReleaseApkBuild([notice("1", "other"), notice(` ${HEAD} ${BASE} 48291023 `)]),
+        { ok: true, commitSha: HEAD, baseSha: BASE, bytes: 48291023 },
+    );
+});
+
+test("rejects missing, repeated, or malformed APK build notices", () => {
+    assert.deepEqual(parsePlayReleaseApkBuild([]), { ok: false, reason: "missing" });
+    assert.deepEqual(parsePlayReleaseApkBuild(null), { ok: false, reason: "missing" });
+    assert.deepEqual(
+        parsePlayReleaseApkBuild([notice(`${HEAD} ${BASE} 12`, "play-release-apk-bytes")]),
         { ok: false, reason: "missing" },
     );
-    assert.equal(parsePlayReleaseApkBytes(null).ok, false);
-    for (const message of ["nope", "", "0", "-5", "1.5", "00", "12 bytes"]) {
-        const parsed = parsePlayReleaseApkBytes([
-            { title: "play-release-apk-bytes", message, annotation_level: "notice" },
-        ]);
-        assert.equal(parsed.ok, false, message);
-        assert.equal(parsed.reason, "not-positive-integer", message);
+    assert.deepEqual(
+        parsePlayReleaseApkBuild([notice(`${HEAD} ${BASE} 1`), notice(`${HEAD} ${BASE} 1`)]),
+        { ok: false, reason: "ambiguous" },
+    );
+    for (const message of [
+        "",
+        "48291023",
+        `${HEAD} 48291023`,
+        `${HEAD} not-a-sha 48291023`,
+        `${HEAD} ${BASE} 1 2`,
+    ]) {
+        assert.deepEqual(
+            parsePlayReleaseApkBuild([notice(message)]),
+            { ok: false, reason: "malformed" },
+            message,
+        );
     }
+    for (const size of ["nope", "0", "-5", "1.5", "00"]) {
+        assert.deepEqual(
+            parsePlayReleaseApkBuild([notice(`${HEAD} ${BASE} ${size}`)]),
+            { ok: false, reason: "not-positive-integer" },
+            size,
+        );
+    }
+});
+
+test("only selects this workflow's comparison comment", () => {
+    const marker = "<!-- apk-size-comparison -->";
+    const comments = [
+        { id: 1, user: { login: "contributor" }, body: marker },
+        { id: 2, user: { login: "github-actions[bot]" }, body: marker },
+        { id: 3, user: { login: "github-actions[bot]" }, body: "unrelated" },
+    ];
+    assert.equal(selectComparisonComment(comments, marker).id, 2);
+    assert.equal(selectComparisonComment(comments.slice(0, 1), marker), null);
+    assert.equal(selectComparisonComment(null, marker), null);
 });
 
 test("recognizes only the play-release size matrix cell", () => {

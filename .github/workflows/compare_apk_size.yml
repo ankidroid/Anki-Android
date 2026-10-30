@@ -1,3 +1,29 @@
+# Posts the play-release APK size change of a pull request as a PR comment.
+#
+# How the two sizes are obtained:
+#
+# 1. PR size. On pull_request, tests_emulator.yml checks out GitHub's synthetic merge
+#    commit (refs/pull/N/merge = base-branch tip + this PR) and builds the play-release
+#    APK. It then posts one notice:
+#        play-release-apk-build: <built commit> <first parent> <bytes>
+#    The first parent of that merge commit is the base-branch commit the PR was merged
+#    with. This workflow reads the notice from the run that triggered it.
+#
+# 2. Baseline size. The baseline is that first parent, not `git merge-base`: the PR APK
+#    already contains every base-branch commit up to the first parent, so comparing with
+#    an older merge base would count other people's changes as this PR's.
+#    The first parent normally landed through the merge queue, so its merge_group (or
+#    push) emulator run already posted the same notice with <built commit> equal to the
+#    run's head_sha. That size is reused. pull_request runs are never reused: they build
+#    a merge commit, not their head_sha. If no reusable notice exists, the baseline APK
+#    is assembled here with the same TEST_RELEASE_BUILD and fallback signing.
+#
+# Trust: workflow_run runs with a write token, but the pull_request run used the PR's
+# own copy of tests_emulator.yml, so its notice is untrusted input. Its size is only ever
+# printed. Its first parent is only used after checking that it is a commit on the base
+# branch, so this workflow never checks out or builds PR code. The PR number comes from
+# the GitHub API, not from the run, and only this workflow's bot comment is updated.
+
 name: APK Size Comparison
 
 on:
@@ -69,7 +95,6 @@ jobs:
 
             core.setOutput('number', String(matches[0].number));
             core.setOutput('base_ref', matches[0].base.ref);
-            core.setOutput('head_sha', matches[0].head.sha);
 
       - name: Checkout repository history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -77,48 +102,26 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
 
-      - name: Find merge base for PR
-        id: merge-base
-        env:
-          PR_NUMBER: ${{ steps.pull-request.outputs.number }}
-          BASE_REF: ${{ steps.pull-request.outputs.base_ref }}
-          EXPECTED_HEAD_SHA: ${{ steps.pull-request.outputs.head_sha }}
-        run: |
-          git fetch --no-tags origin "+refs/heads/$BASE_REF:refs/remotes/origin/$BASE_REF"
-          git fetch --no-tags origin "+refs/pull/$PR_NUMBER/head:refs/remotes/pull/$PR_NUMBER/head"
-          actual_head_sha=$(git rev-parse "refs/remotes/pull/$PR_NUMBER/head")
-          if [[ "$actual_head_sha" != "$EXPECTED_HEAD_SHA" ]]; then
-            echo "PR head changed after the emulator run; waiting for the newer run is required."
-            exit 1
-          fi
-
-          merge_base=$(git merge-base "refs/remotes/origin/$BASE_REF" "refs/remotes/pull/$PR_NUMBER/head")
-          if [[ -z "$merge_base" ]]; then
-            echo "Could not find the PR merge base."
-            exit 1
-          fi
-          echo "Resolved APK baseline to merge base $merge_base"
-          echo "sha=$merge_base" >> "$GITHUB_OUTPUT"
-
       - name: Read APK size notices
         id: sizes
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           TRIGGER_RUN_ID: ${{ github.event.workflow_run.id }}
-          MERGE_BASE: ${{ steps.merge-base.outputs.sha }}
+          BASE_REF: ${{ steps.pull-request.outputs.base_ref }}
         with:
           script: |
             const path = require('path');
+            const { execFileSync } = require('child_process');
             const {
               orderBaselineRuns,
-              parsePlayReleaseApkBytes,
+              parsePlayReleaseApkBuild,
               selectPlayReleaseSizeJob,
             } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/scripts/apk-size-notice.js'));
 
             const triggerRunId = Number(process.env.TRIGGER_RUN_ID);
-            const mergeBase = process.env.MERGE_BASE;
-            if (!Number.isInteger(triggerRunId) || !/^[0-9a-f]{40}$/.test(mergeBase || '')) {
-              throw new Error('APK size lookup requires the triggering run id and merge-base SHA');
+            const baseRef = process.env.BASE_REF;
+            if (!Number.isInteger(triggerRunId) || !baseRef) {
+              throw new Error('APK size lookup requires the triggering run id and base branch');
             }
 
             async function annotationsForRun(runId) {
@@ -146,25 +149,45 @@ jobs:
               });
             }
 
-            const pullRequestNotice = parsePlayReleaseApkBytes(await annotationsForRun(triggerRunId));
+            const pullRequestNotice = parsePlayReleaseApkBuild(await annotationsForRun(triggerRunId));
             if (!pullRequestNotice.ok) {
-              throw new Error(`play-release-apk-bytes notice is missing or not a positive integer (${pullRequestNotice.reason})`);
+              throw new Error(`play-release-apk-build notice is unusable (${pullRequestNotice.reason})`);
             }
             core.setOutput('pr_bytes', String(pullRequestNotice.bytes));
+
+            // The PR run built a merge commit; its first parent is the base-branch commit
+            // the PR was tested on. The notice came from PR-controlled workflow code, so
+            // only accept a first parent that is already on the base branch: nothing in
+            // this workflow may check out or build PR code.
+            const baseSha = pullRequestNotice.baseSha;
+            const git = (...args) => execFileSync('git', args, { stdio: 'inherit' });
+            git('fetch', '--no-tags', 'origin', `+refs/heads/${baseRef}:refs/remotes/origin/${baseRef}`);
+            try {
+              git('merge-base', '--is-ancestor', baseSha, `refs/remotes/origin/${baseRef}`);
+            } catch {
+              throw new Error(`PR run's first parent ${baseSha} is not a commit on ${baseRef}`);
+            }
+            core.info(`PR run built ${pullRequestNotice.commitSha}; baseline is its first parent ${baseSha}.`);
+            core.setOutput('base_sha', baseSha);
 
             const runs = await github.paginate(github.rest.actions.listWorkflowRuns, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'tests_emulator.yml',
-              head_sha: mergeBase,
+              head_sha: baseSha,
               per_page: 100,
             });
             let selected = null;
             let baselineNotice = null;
-            for (const candidate of orderBaselineRuns(runs, mergeBase)) {
-              const notice = parsePlayReleaseApkBytes(await annotationsForRun(candidate.id));
+            for (const candidate of orderBaselineRuns(runs, baseSha)) {
+              const notice = parsePlayReleaseApkBuild(await annotationsForRun(candidate.id));
               if (!notice.ok) {
                 core.info(`Baseline run ${candidate.id} (${candidate.event}) has no usable size notice (${notice.reason}).`);
+                continue;
+              }
+              // Only reuse a size measured on exactly baseSha, not on a commit built on top of it.
+              if (notice.commitSha !== candidate.head_sha) {
+                core.info(`Baseline run ${candidate.id} built ${notice.commitSha}, not ${candidate.head_sha}.`);
                 continue;
               }
               selected = candidate;
@@ -172,7 +195,7 @@ jobs:
               break;
             }
             if (!selected) {
-              core.info(`No successful emulator run for merge base ${mergeBase} has a size notice; assembling that APK.`);
+              core.info(`No successful merge_group or push emulator run for ${baseSha} has a size notice; assembling that APK.`);
               core.setOutput('baseline_source', 'assembled');
               return;
             }
@@ -180,16 +203,16 @@ jobs:
               throw new Error(`Baseline run ${selected.id} did not include an event name and run URL`);
             }
 
-            core.info(`Using ${selected.event} run ${selected.id} for the merge-base APK size.`);
+            core.info(`Using ${selected.event} run ${selected.id} for the baseline APK size.`);
             core.setOutput('baseline_source', selected.event);
             core.setOutput('baseline_bytes', String(baselineNotice.bytes));
             core.setOutput('baseline_run_url', selected.html_url);
 
-      - name: Checkout merge base
+      - name: Checkout baseline
         if: steps.sizes.outputs.baseline_source == 'assembled'
         env:
-          MERGE_BASE: ${{ steps.merge-base.outputs.sha }}
-        run: git checkout --detach "$MERGE_BASE"
+          BASE_SHA: ${{ steps.sizes.outputs.base_sha }}
+        run: git checkout --detach "$BASE_SHA"
 
       - name: Configure JDK
         if: steps.sizes.outputs.baseline_source == 'assembled'
@@ -208,7 +231,7 @@ jobs:
           cache-provider: basic
           cache-read-only: true
 
-      - name: Assemble merge-base APK
+      - name: Assemble baseline APK
         if: steps.sizes.outputs.baseline_source == 'assembled'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
@@ -221,7 +244,7 @@ jobs:
         id: compare
         shell: bash
         env:
-          MERGE_BASE: ${{ steps.merge-base.outputs.sha }}
+          BASE_SHA: ${{ steps.sizes.outputs.base_sha }}
           PR_BYTES: ${{ steps.sizes.outputs.pr_bytes }}
           BASELINE_SOURCE: ${{ steps.sizes.outputs.baseline_source }}
           BASELINE_BYTES: ${{ steps.sizes.outputs.baseline_bytes }}
@@ -234,7 +257,7 @@ jobs:
           fi
           new_size="$PR_BYTES"
           if [[ ! "$old_size" =~ ^[0-9]+$ || ! "$new_size" =~ ^[0-9]+$ || "$old_size" -eq 0 || "$new_size" -eq 0 ]]; then
-            echo "Merge-base or PR APK size was not a positive integer."
+            echo "Baseline or PR APK size was not a positive integer."
             exit 1
           fi
           difference=$((new_size - old_size))
@@ -245,7 +268,7 @@ jobs:
             echo "new_size=$new_size"
             echo "difference=$difference"
             echo "percent=$percent"
-            echo "merge_base=$MERGE_BASE"
+            echo "base_sha=$BASE_SHA"
             echo "baseline_source=$BASELINE_SOURCE"
             echo "baseline_run_url=$BASELINE_RUN_URL"
           } >> "$GITHUB_OUTPUT"
@@ -258,7 +281,7 @@ jobs:
           NEW_SIZE: ${{ steps.compare.outputs.new_size }}
           DIFFERENCE: ${{ steps.compare.outputs.difference }}
           PERCENT: ${{ steps.compare.outputs.percent }}
-          MERGE_BASE: ${{ steps.compare.outputs.merge_base }}
+          BASE_SHA: ${{ steps.compare.outputs.base_sha }}
           BASELINE_SOURCE: ${{ steps.compare.outputs.baseline_source }}
           BASELINE_RUN_URL: ${{ steps.compare.outputs.baseline_run_url }}
         with:
@@ -268,14 +291,14 @@ jobs:
             const newSize = Number(process.env.NEW_SIZE);
             const difference = Number(process.env.DIFFERENCE);
             const percent = process.env.PERCENT;
-            const mergeBase = process.env.MERGE_BASE;
+            const baseSha = process.env.BASE_SHA;
             const baselineSource = process.env.BASELINE_SOURCE;
             const baselineRunUrl = process.env.BASELINE_RUN_URL || '';
             if (!Number.isSafeInteger(prNumber) || !Number.isSafeInteger(oldSize) || !Number.isSafeInteger(newSize) || !Number.isSafeInteger(difference)) {
               throw new Error('APK size comment is missing numeric comparison outputs');
             }
-            if (!mergeBase || !/^-?\d+\.\d{2}$/.test(percent || '')) {
-              throw new Error('APK size comment is missing the merge base or percent');
+            if (!baseSha || !/^-?\d+\.\d{2}$/.test(percent || '')) {
+              throw new Error('APK size comment is missing the baseline SHA or percent');
             }
             const sourceText = baselineSource === 'assembled'
               ? 'assembled'
@@ -284,12 +307,14 @@ jobs:
               throw new Error('APK size comment is missing the baseline source');
             }
 
+            const path = require('path');
+            const { selectComparisonComment } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/scripts/apk-size-notice.js'));
             const marker = '<!-- apk-size-comparison -->';
             const body = [
               marker,
               '**APK size comparison**',
               '',
-              `Baseline (merge base ${mergeBase.slice(0, 7)}): ${oldSize.toLocaleString()} bytes`,
+              `Baseline (${baseSha.slice(0, 7)}, the base-branch commit this PR was tested against): ${oldSize.toLocaleString()} bytes`,
               `Baseline source: ${sourceText}`,
               `PR: ${newSize.toLocaleString()} bytes`,
               `Difference: ${difference.toLocaleString()} bytes (${percent}%)`,
@@ -300,7 +325,8 @@ jobs:
               repo: context.repo.repo,
               issue_number: prNumber,
             });
-            const existing = comments.find(comment => comment.body?.includes(marker));
+            // Anyone can paste the marker; only update this workflow's own comment.
+            const existing = selectComparisonComment(comments, marker);
             if (existing) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
