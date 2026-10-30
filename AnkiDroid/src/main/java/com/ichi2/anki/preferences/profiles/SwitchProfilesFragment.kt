@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.multiprofile.safeRestartApp
 import com.ichi2.compose.theme.AnkiDroidTheme
 import timber.log.Timber
 
@@ -42,7 +43,10 @@ class SwitchProfilesFragment : Fragment() {
             }
             return View(requireContext())
         }
-        val viewModel: SwitchProfilesViewModel by viewModels { SwitchProfilesViewModel.factory(profileManager) }
+        val appContext = requireContext().applicationContext
+        val viewModel: SwitchProfilesViewModel by viewModels {
+            SwitchProfilesViewModel.factory(profileManager) { safeRestartApp(appContext) }
+        }
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
@@ -50,17 +54,25 @@ class SwitchProfilesFragment : Fragment() {
                     val profiles by viewModel.profiles.collectAsStateWithLifecycle()
                     val isAddProfileDialogVisible by viewModel.isAddProfileDialogVisible.collectAsStateWithLifecycle()
                     val profileBeingRenamed by viewModel.profileBeingRenamed.collectAsStateWithLifecycle()
+                    val profileToSwitchTo by viewModel.profileToSwitchTo.collectAsStateWithLifecycle()
+                    val isSwitchBlocked by viewModel.isSwitchBlocked.collectAsStateWithLifecycle()
                     SwitchProfilesScreen(
                         profiles = profiles,
                         isAddProfileDialogVisible = isAddProfileDialogVisible,
                         profileBeingRenamed = profileBeingRenamed,
+                        profileToSwitchTo = profileToSwitchTo,
+                        isSwitchBlocked = isSwitchBlocked,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
+                        onProfileClick = viewModel::requestSwitch,
                         onAddProfileClick = viewModel::showAddProfileDialog,
                         onAddProfileConfirm = viewModel::addProfile,
                         onAddProfileDismiss = viewModel::dismissAddProfileDialog,
                         onEditProfile = viewModel::showRenameProfileDialog,
                         onRenameProfileConfirm = viewModel::renameProfile,
                         onRenameProfileDismiss = viewModel::dismissRenameProfileDialog,
+                        onSwitchProfileConfirm = viewModel::switchProfile,
+                        onSwitchProfileDismiss = viewModel::dismissSwitchProfileDialog,
+                        onSwitchBlockedDismiss = viewModel::dismissSwitchBlockedMessage,
                         onDeleteProfile = viewModel::deleteProfile,
                     )
                 }

@@ -4,6 +4,7 @@
 package com.ichi2.anki.preferences.profiles
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,12 +14,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,13 +52,19 @@ fun SwitchProfilesScreen(
     profiles: List<ProfileItem>,
     isAddProfileDialogVisible: Boolean,
     profileBeingRenamed: ProfileItem?,
+    profileToSwitchTo: ProfileItem?,
+    isSwitchBlocked: Boolean,
     onNavigateUp: () -> Unit,
+    onProfileClick: (ProfileItem) -> Unit,
     onAddProfileClick: () -> Unit,
     onAddProfileConfirm: (ProfileName) -> Unit,
     onAddProfileDismiss: () -> Unit,
     onEditProfile: (ProfileItem) -> Unit,
     onRenameProfileConfirm: (ProfileName) -> Unit,
     onRenameProfileDismiss: () -> Unit,
+    onSwitchProfileConfirm: () -> Unit,
+    onSwitchProfileDismiss: () -> Unit,
+    onSwitchBlockedDismiss: () -> Unit,
     onDeleteProfile: (ProfileItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -91,6 +100,7 @@ fun SwitchProfilesScreen(
             items(profiles, key = { it.id.value }) { profile ->
                 ProfileRow(
                     profile = profile,
+                    onClick = { onProfileClick(profile) },
                     onEditClick = { onEditProfile(profile) },
                     onDeleteClick = { onDeleteProfile(profile) },
                 )
@@ -114,6 +124,36 @@ fun SwitchProfilesScreen(
             onConfirm = onRenameProfileConfirm,
         )
     }
+
+    profileToSwitchTo?.let { profile ->
+        AlertDialog(
+            onDismissRequest = onSwitchProfileDismiss,
+            title = { Text(stringResource(CommonString.switch_profile_title, profile.name)) },
+            text = { Text(stringResource(CommonString.switch_profile_message)) },
+            confirmButton = {
+                TextButton(onClick = onSwitchProfileConfirm) {
+                    Text(stringResource(CommonString.switch_profile_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onSwitchProfileDismiss) {
+                    Text(stringResource(CommonString.dialog_cancel))
+                }
+            },
+        )
+    }
+
+    if (isSwitchBlocked) {
+        AlertDialog(
+            onDismissRequest = onSwitchBlockedDismiss,
+            text = { Text(stringResource(CommonString.switch_profile_blocked)) },
+            confirmButton = {
+                TextButton(onClick = onSwitchBlockedDismiss) {
+                    Text(stringResource(CommonString.dialog_ok))
+                }
+            },
+        )
+    }
 }
 
 private val AvatarSize = 40.dp
@@ -121,6 +161,7 @@ private val AvatarSize = 40.dp
 @Composable
 private fun ProfileRow(
     profile: ProfileItem,
+    onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -129,6 +170,7 @@ private fun ProfileRow(
         modifier =
             modifier
                 .fillMaxWidth()
+                .clickable(onClick = onClick)
                 .padding(
                     horizontal = MaterialTheme.dimensions.space200,
                     vertical = MaterialTheme.dimensions.space100,
@@ -190,13 +232,19 @@ private fun SwitchProfilesScreenPreview() {
                 ),
             isAddProfileDialogVisible = false,
             profileBeingRenamed = null,
+            profileToSwitchTo = null,
+            isSwitchBlocked = false,
             onNavigateUp = {},
+            onProfileClick = {},
             onAddProfileClick = {},
             onAddProfileConfirm = {},
             onAddProfileDismiss = {},
             onEditProfile = {},
             onRenameProfileConfirm = {},
             onRenameProfileDismiss = {},
+            onSwitchProfileConfirm = {},
+            onSwitchProfileDismiss = {},
+            onSwitchBlockedDismiss = {},
             onDeleteProfile = {},
         )
     }
