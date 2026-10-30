@@ -74,7 +74,13 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     }
 
     private fun showPermissionsFragment(permissionSet: StoragePermissionSet) {
-        val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
+        val permissionsFragmentClass =
+            permissionSet.permissionsFragment ?: run {
+                Timber.w("%s has no permissions to request", permissionSet)
+                decideStorageAndFinish()
+                return
+            }
+        val permissionsFragment = permissionsFragmentClass.getDeclaredConstructor().newInstance()
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
         }

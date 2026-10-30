@@ -30,6 +30,7 @@ import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -135,7 +136,12 @@ class PermissionsActivityTest : RobolectricTest() {
         testActivity { activity ->
             val permissionSets: List<PermissionSet> = StoragePermissionSet.entries + OptionalPermissionSet.entries
             for (permissionSet in permissionSets) {
-                val fragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
+                val fragmentClass = permissionSet.permissionsFragment
+                if (fragmentClass == null) {
+                    assertThat(permissionSet.permissions, empty())
+                    continue
+                }
+                val fragment = fragmentClass.getDeclaredConstructor().newInstance()
                 activity.supportFragmentManager.commitNow {
                     replace(R.id.fragment_container, fragment)
                 }
