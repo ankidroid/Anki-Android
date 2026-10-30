@@ -70,19 +70,20 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     }
 
     /**
-     * Accepts a [MotionEvent] and determines if one or more commands need to be executed
-     * @return whether one or more commands were executed
+     * Triggers the actions bound to axis movements past their threshold, once per movement.
+     *
+     * @return whether [ev] is part of a movement whose action was handled by the [processor].
+     * That way, the rest of a handled movement doesn't reach other bindings, or Android's
+     * joystick-to-D-pad conversion
      */
     fun onGenericMotionEvent(ev: MotionEvent?): Boolean {
         if (ev == null || axisDetectors.isEmpty()) return false
 
-        var processed = false
+        var handled = false
         for (detector in axisDetectors) {
-            val action = detector.getAction(ev) ?: continue
-            processed = true
-            processor?.processAction(action, detector.mappableBinding)
+            if (detector.onGenericMotionEvent(ev, processor)) handled = true
         }
-        return processed
+        return handled
     }
 
     fun onGesture(gesture: Gesture): Boolean {
