@@ -6,8 +6,10 @@ import org.junit.Test
 import org.junit.runner.Description
 import org.junit.runners.model.MultipleFailureException
 import org.junit.runners.model.Statement
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 
@@ -36,10 +38,22 @@ class TestInputMethodRuleTest {
         assertEquals(listOf(original, restoreFailure, disableFailure), failure.failures)
     }
 
+    @Test
+    fun selectionFailureReportsImeOutput() {
+        val shell = KeyboardShell(ignoresSelection = true)
+
+        val failure = assertFailsWith<AssertionError> { shell.evaluate {} }
+
+        val message = assertNotNull(failure.message)
+        assertContains(message, "now enabled for user #0")
+        assertContains(message, "selected for user #0")
+    }
+
     /** Models keyboard selection without changing the emulator's keyboard. */
     private class KeyboardShell(
         private val restoreFailure: Throwable? = null,
         private val disableFailure: Throwable? = null,
+        private val ignoresSelection: Boolean = false,
     ) {
         val previous = "previous.ime/.Keyboard"
         var selected = previous
@@ -57,11 +71,16 @@ class TestInputMethodRuleTest {
             when {
                 command == "settings get secure default_input_method" -> return selected
                 command == "ime list -s" -> return listOfNotNull(previous, enabledIme).joinToString("\n")
-                command.startsWith("ime enable ") -> enabledIme = command.removePrefix("ime enable ")
+                command.startsWith("ime enable ") -> {
+                    val ime = command.removePrefix("ime enable ")
+                    enabledIme = ime
+                    return "Input method $ime: now enabled for user #0\n"
+                }
                 command.startsWith("ime set ") -> {
                     val ime = command.removePrefix("ime set ")
                     if (ime == previous) restoreFailure?.let { throw it }
-                    selected = ime
+                    if (!ignoresSelection) selected = ime
+                    return "Input method $ime selected for user #0\n"
                 }
                 command.startsWith("ime disable ") -> {
                     disableFailure?.let { throw it }

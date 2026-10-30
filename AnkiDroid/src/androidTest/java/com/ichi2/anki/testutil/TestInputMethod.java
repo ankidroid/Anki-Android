@@ -16,8 +16,10 @@ import android.os.Process;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * A real IME: metadata and input travel through Android's active connection.
@@ -87,11 +89,23 @@ public class TestInputMethod extends InputMethodService {
                     != PackageManager.SIGNATURE_MATCH) {
                 throw new SecurityException("Test IME control requires a matching signature");
             }
-            FutureTask<Bundle> task = new FutureTask<>(() ->
+            return runOn(Looper.getMainLooper(), 5, TimeUnit.SECONDS, () ->
                     instance == null ? new Bundle() : instance.command(method, arg));
-            new Handler(Looper.getMainLooper()).post(task);
+        }
+
+        static Bundle runOn(Looper looper, long timeout, TimeUnit unit, Callable<Bundle> command) {
+            FutureTask<Bundle> task = new FutureTask<>(command);
+            new Handler(looper).post(task);
             try {
-                return task.get(5, TimeUnit.SECONDS);
+                return task.get(timeout, unit);
+            } catch (TimeoutException e) {
+                Thread thread = looper.getThread();
+                StringBuilder message = new StringBuilder("Test IME did not respond. Its ")
+                        .append(thread.getName()).append(" thread is at:");
+                for (StackTraceElement frame : thread.getStackTrace()) {
+                    message.append("\n\tat ").append(frame);
+                }
+                throw new IllegalStateException(message.toString(), e);
             } catch (Exception e) {
                 throw new IllegalStateException("Test IME did not respond", e);
             }

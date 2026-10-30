@@ -38,9 +38,13 @@ class TestInputMethodRule(
                 val wasEnabled = executeShellCommand("ime list -s").lineSequence().any { it.trim() == ime }
                 val failures = mutableListOf<Throwable>()
                 try {
-                    executeShellCommand("ime enable $ime")
-                    executeShellCommand("ime set $ime")
-                    assertEquals(ime, executeShellCommand("settings get secure default_input_method").trim())
+                    val enableOutput = executeShellCommand("ime enable $ime")
+                    val selectOutput = executeShellCommand("ime set $ime")
+                    assertEquals(
+                        ime,
+                        executeShellCommand("settings get secure default_input_method").trim(),
+                        "Failed to select test keyboard $ime: $enableOutput$selectOutput",
+                    )
                     base.evaluate()
                 } catch (failure: Throwable) {
                     failures.add(failure)
