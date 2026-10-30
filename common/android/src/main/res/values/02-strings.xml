@@ -467,5 +467,10 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
     <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+
+    <!-- Profile that could not be opened -->
+    <string name="profile_load_failed_title" comment="Title of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of that profile">Couldn’t open profile “%1$s”</string>
+    <string name="profile_load_failed_message" comment="Message of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of the profile that was opened instead, %2$s is the name of the profile that could not be opened">AnkiDroid opened the “%1$s” profile instead. It will try “%2$s” again the next time it starts.</string>
+    <string name="profile_load_failed_use_default" comment="Button in the dialog shown when the selected profile could not be opened. It makes AnkiDroid open the other profile from the next start. %1$s is the name of that other profile">Use “%1$s”</string>
 </resources>
 
