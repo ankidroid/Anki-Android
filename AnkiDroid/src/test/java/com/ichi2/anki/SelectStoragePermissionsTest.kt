@@ -36,7 +36,6 @@ class SelectStoragePermissionsTest {
             arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.INTERNET,
             )
 
         // force a safe startup before Q
@@ -66,7 +65,6 @@ class SelectStoragePermissionsTest {
             arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.INTERNET,
             )
 
         selectStoragePermissions(

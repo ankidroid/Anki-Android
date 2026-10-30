@@ -32,7 +32,6 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDa
 import com.ichi2.anki.startup.StoragePolicy
 import com.ichi2.anki.startup.folderToPersist
 import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
-import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.LegacyNotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
@@ -239,7 +238,9 @@ object InitialActivity {
  */
 sealed interface PermissionSet : Parcelable {
     val permissions: List<String>
-    val permissionsFragment: Class<out PermissionsFragment>
+
+    /** The screen requesting [permissions], or `null` if there are none to request */
+    val permissionsFragment: Class<out PermissionsFragment>?
 
     fun hasRequiredPermissions(context: Context): Boolean = hasAllPermissions(context, permissions)
 }
@@ -252,14 +253,15 @@ sealed interface PermissionSet : Parcelable {
 @Parcelize
 enum class StoragePermissionSet(
     override val permissions: List<String>,
-    override val permissionsFragment: Class<out PermissionsFragment>,
+    override val permissionsFragment: Class<out PermissionsFragment>?,
 ) : PermissionSet {
     LEGACY_ACCESS(Permissions.legacyStorageAccessStartupPermissions, PermissionsUntil29Fragment::class.java),
 
     @RequiresApi(Build.VERSION_CODES.R)
     EXTERNAL_MANAGER(Permissions.externalManagerStorageAccessStartupPermissions, PermissionsStartingAt30Fragment::class.java),
 
-    APP_PRIVATE(Permissions.appPrivateStartupPermissions, InternetPermissionFragment::class.java),
+    /** The app's own folder needs no permission */
+    APP_PRIVATE(permissions = emptyList(), permissionsFragment = null),
     ;
 
     /** Who chooses the collection folder on a fresh install. */
