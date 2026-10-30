@@ -5,6 +5,7 @@ package com.ichi2.anki.workarounds
 import android.content.Context
 import android.print.PrintDocumentAdapter
 import android.util.AttributeSet
+import android.view.KeyEvent
 import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
@@ -152,6 +153,17 @@ open class SafeWebViewLayout :
     fun focusOnWebView() {
         activeWebView?.requestFocus()
     }
+
+    /**
+     * Passes gamepad buttons to the [WebView] even if it isn't focused,
+     * after which `navigator.getGamepads()` displays the gamepad.
+     *
+     * [WebView.onKeyDown] and [WebView.onKeyUp] don't reach the WebView's Gamepad API,
+     * so [WebView.dispatchKeyEvent] is used.
+     */
+    @MainThread
+    fun dispatchGamepadKeyEvent(event: KeyEvent): Boolean =
+        KeyEvent.isGamepadButton(event.keyCode) && activeWebView?.dispatchKeyEvent(event) ?: false
 
     @MainThread
     fun scrollVerticallyBy(y: Int) {
