@@ -270,6 +270,8 @@ open class PrefsRepository protected constructor(
     val shouldFetchMedia: ShouldFetchMedia
         get() = getEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
 
+    val warnAboutMissingMedia by booleanPref(R.string.missing_media_warning_key, defaultValue = true)
+
     var networkTimeoutSecs by intPref(R.string.sync_io_timeout_secs_key, defaultValue = 60)
 
     //region Custom sync server

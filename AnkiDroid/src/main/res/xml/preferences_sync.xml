@@ -19,6 +19,11 @@
         android:title="@string/sync_fetch_missing_media"
         app:useSimpleSummaryProvider="true"/>
     <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="@string/missing_media_warning_key"
+        android:title="@string/missing_media_warning_title"
+        android:summary="@string/missing_media_warning_summary" />
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/automatic_sync_choice_key"
         android:summary="@string/automatic_sync_choice_summ"

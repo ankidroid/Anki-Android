@@ -137,6 +137,17 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
+    fun `missing media warnings can be turned off`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.missing_media_warning_key), false) }
+        val viewer = getViewer(addCard = true)
+
+        viewer.displayCouldNotFindMediaSnackbar("missing-image.jpg")
+        advanceRobolectricLooper()
+
+        assertThat(viewer.snackbarText, nullValue())
+    }
+
+    @Test
     fun `rejected web link launch shows an error and consumes navigation`() {
         editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
         targetContext.registerWebBrowser()
