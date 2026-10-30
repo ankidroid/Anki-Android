@@ -282,7 +282,11 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         private fun updateCurrentlyDisplayedDecks() {
             currentlyDisplayedDecks.clear()
-            currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
+            if (currentFilters.isActive()) {
+                currentlyDisplayedDecks.addAll(allDecksList.filter { currentFilters.accept(it.fullDeckName) })
+            } else {
+                currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
+            }
             notifyDataSetChanged()
         }
 
@@ -295,6 +299,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         private val allDecksList = ArrayList<DeckNode>()
         private val currentlyDisplayedDecks = ArrayList<DeckNode>()
+        private var currentFilters = DeckFilters.create("")
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -378,6 +383,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                 constraint: CharSequence?,
                 results: List<DeckNode>,
             ) {
+                currentFilters = DeckFilters.create(constraint ?: "")
                 results.forEach { it.collapsed = false }
                 currentlyDisplayedDecks.apply {
                     clear()
