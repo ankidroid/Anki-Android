@@ -5,7 +5,7 @@ package com.ichi2.anki.reviewer
 import android.content.Context
 import android.view.MotionEvent
 
-data class SingleAxisDetector<B : MappableBinding, A : MappableAction<B>>(
+class SingleAxisDetector<B : MappableBinding, A : MappableAction<B>>(
     private val action: A,
     val mappableBinding: B,
 ) {
