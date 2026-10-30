@@ -12,6 +12,8 @@ import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.widgets.R
 
 class AddNoteWidget : AnalyticsWidgetProvider() {
+    override val requiresCollection = false
+
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,

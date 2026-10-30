@@ -30,6 +30,8 @@ import timber.log.Timber
  * - Override [onUpdate] if additional logic is required beyond [performUpdate].
  */
 abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
+    protected open val requiresCollection = true
+
     /**
      * Called when the widget is enabled. Sends an analytics event.
      *
@@ -76,7 +78,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        if (CollectionHelper.storageDecision(context.sharedPrefs()) == StorageDecision.Undecided) {
+        if (requiresCollection && CollectionHelper.storageDecision(context.sharedPrefs()) == StorageDecision.Undecided) {
             Timber.w("Opening widget ${this.javaClass.name} without storage access")
             return
         }
