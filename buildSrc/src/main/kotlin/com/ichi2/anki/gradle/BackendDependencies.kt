@@ -12,8 +12,8 @@ import java.util.Properties
 // the published library from the version catalog.
 
 // Paths within the `Anki-Android-Backend` checkout, which sits beside the repo root.
-private const val RSDROID_AAR =
-    "rsdroid/build/outputs/aar/rsdroid-release.aar"
+private const val RSDROID_JAR =
+    "rsdroid/build/libs/rsdroid.jar"
 private const val RSDROID_ANDROID_AAR =
     "rsdroid-android/build/outputs/aar/rsdroid-android-release.aar"
 private const val RSDROID_TESTING_JAR =
@@ -35,7 +35,7 @@ fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
             configuration = "implementation",
             useLocalBackend = useLocalBackend,
             catalogAlias = "ankiBackend-backend",
-            localPaths = arrayOf(RSDROID_AAR, RSDROID_ANDROID_AAR),
+            localPaths = arrayOf(RSDROID_JAR, RSDROID_ANDROID_AAR),
         )
         addBackendArtifact(
             configuration = "testImplementation",
@@ -52,7 +52,7 @@ fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
                 configuration = "testFixturesImplementation",
                 useLocalBackend = useLocalBackend,
                 catalogAlias = "ankiBackend-backend",
-                localPaths = arrayOf(RSDROID_AAR, RSDROID_ANDROID_AAR),
+                localPaths = arrayOf(RSDROID_JAR, RSDROID_ANDROID_AAR),
             )
             addBackendArtifact(
                 configuration = "testFixturesImplementation",
@@ -84,7 +84,7 @@ private fun Project.addBackendArtifact(
     if (useLocalBackend) {
         // ../Anki-Android-Backend
         val backendCheckout = File(rootProject.projectDir.parentFile, "Anki-Android-Backend")
-        // Local AARs have no Maven metadata, so both the API and Android artifacts are needed.
+        // Local artifacts have no Maven metadata, so both the core JAR and Android AAR are needed.
         dependencies.add(configuration, files(localPaths.map { File(backendCheckout, it) }))
     } else {
         dependencies.addProvider(configuration, libsLibrary(catalogAlias))
