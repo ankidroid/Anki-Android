@@ -27,6 +27,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
+import java.util.TimeZone
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -110,6 +111,23 @@ class PreferencesScreenshotTest : ScreenshotTest() {
             activity.scrollSettingsToBottom()
             captureScreen("HeaderFragment_gesture_bar_hidden_scrolled_to_bottom")
         }
+
+    @Test
+    fun syncSettingsMediaSyncIncomplete() {
+        val defaultTimeZone = TimeZone.getDefault()
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+        try {
+            Prefs.hkey = "test"
+            Prefs.username = "user@example.com"
+            Prefs.recordMediaSync(time = 1_700_000_000_000L, failed = true)
+            withPreferencesActivity(SyncSettingsFragment::class) {
+                advanceRobolectricLooper()
+                captureScreen("SyncSettingsFragment_media_sync_incomplete")
+            }
+        } finally {
+            TimeZone.setDefault(defaultTimeZone)
+        }
+    }
 
     @Test
     fun headerFragmentGestureBarScrolledToBottom() =

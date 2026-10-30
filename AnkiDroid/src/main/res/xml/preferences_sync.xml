@@ -11,6 +11,11 @@
         android:summary="@string/sync_account_summ_logged_out"
         tools:title="AnkiWeb account" >
     </Preference>
+    <Preference
+        android:key="@string/media_sync_status_key"
+        android:title="@string/media_sync_status_title"
+        android:icon="@drawable/ic_sync"
+        android:persistent="false" />
     <ListPreference
         android:defaultValue="@string/sync_media_always_value"
         android:entries="@array/sync_media_entries"
