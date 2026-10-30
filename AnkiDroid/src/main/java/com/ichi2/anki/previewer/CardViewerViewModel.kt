@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.previewer
 
-import androidx.annotation.CallSuper
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -16,7 +15,6 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.multimedia.replaceAvRefsWithPlayButtons
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.pages.PostRequestUri
 import kotlinx.coroutines.Deferred
@@ -53,13 +51,6 @@ abstract class CardViewerViewModel(
         }
     abstract var currentCard: Deferred<Card>
 
-    abstract val server: AnkiServer
-
-    @CallSuper
-    override fun onCleared() {
-        server.stop()
-    }
-
     /* *********************************************************************************************
      ************************ Public methods: meant to be used by the View **************************
      ********************************************************************************************* */
@@ -70,8 +61,6 @@ abstract class CardViewerViewModel(
      * @param isAfterRecreation whether this is being called after an `Activity` recreation
      */
     abstract fun onPageFinished(isAfterRecreation: Boolean)
-
-    fun baseUrl(): String = server.baseUrl()
 
     fun setSoundPlayerEnabled(isEnabled: Boolean) {
         viewModelScope.launch {
