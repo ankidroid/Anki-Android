@@ -1777,7 +1777,12 @@ class DeckPickerTest : RobolectricTest() {
                     ViewCompat.dispatchApplyWindowInsets(browserView, insets)
 
                     assertThat(browserView.findViewById<View>(R.id.toolbar_container).paddingTop, equalTo(statusBarHeight))
-                    assertThat(browserView.findViewById<RecyclerFastScroller>(R.id.browser_scroller).handleBottomInset, equalTo(0))
+                    // content scrolls beneath the bottom navigation: only the scrollbar handle is kept above it
+                    val bottomNavigation = binding.bottomNavigation!!
+                    assertThat(
+                        browserView.findViewById<RecyclerFastScroller>(R.id.browser_scroller).handleBottomInset,
+                        equalTo(48 + bottomNavigation.height - bottomNavigation.paddingBottom),
+                    )
                 }
             }
         }
