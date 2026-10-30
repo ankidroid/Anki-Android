@@ -53,7 +53,6 @@ import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.utils.IntentUtil
-import com.ichi2.widget.WidgetPermissionReceiver
 import timber.log.Timber
 import com.ichi2.anki.common.android.R as CommonR
 
@@ -222,8 +221,6 @@ abstract class NavigationDrawerActivity(
         drawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
-        val intent = Intent(this, WidgetPermissionReceiver::class.java).setAction("com.ichi2.widget.UPDATE_WIDGET")
-        this.sendBroadcast(intent)
     }
 
     /**
