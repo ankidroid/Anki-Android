@@ -146,7 +146,8 @@ class DeckPickerSchedulerUpgradeTest : RobolectricTest() {
     }
 
     private fun upgradeDialog(activity: DeckPicker): AlertDialog {
-        val dialogs = ShadowDialog.getShownDialogs().filterIsInstance<AlertDialog>().filter { it.isShowing }
+        advanceRobolectricLooperUntil { showingAlertDialogs().isNotEmpty() }
+        val dialogs = showingAlertDialogs()
         assertEquals(1, dialogs.size)
         return dialogs.single().also {
             assertTrue(it.isShowing)
@@ -154,6 +155,8 @@ class DeckPickerSchedulerUpgradeTest : RobolectricTest() {
             assertEquals(activity.getString(CommonString.scheduler_upgrade_required_dialog_title), it.title)
         }
     }
+
+    private fun showingAlertDialogs() = ShadowDialog.getShownDialogs().filterIsInstance<AlertDialog>().filter { it.isShowing }
 
     private fun assertNoUpgradePrompt() {
         assertFalse(ShadowDialog.getShownDialogs().any { it.isShowing })
