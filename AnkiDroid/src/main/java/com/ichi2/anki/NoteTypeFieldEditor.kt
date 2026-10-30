@@ -74,7 +74,9 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     private val binding by viewBinding(ActivityNoteTypeFieldEditorBinding::bind)
 
     // Position of the current field selected
-    private var currentPos = 0
+    private val currentPos: Int
+        get() = selectedFieldName?.let { fieldsLabels.indexOf(it) } ?: 0
+    private var selectedFieldName: String? = null
     private var fieldNameInput: EditText? = null
 
     // Backing field for [notetype]. Not with _ because it's only allowed for public field.
@@ -101,6 +103,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         if (!ensureStorageIsReady()) {
             return
         }
+        savedInstanceState?.let { selectedFieldName = it.getString(STATE_SELECTED_FIELD) }
         setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
@@ -132,6 +135,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             }
             dismissAllDialogFragments()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(STATE_SELECTED_FIELD, selectedFieldName)
+        super.onSaveInstanceState(outState)
     }
 
     // ----------------------------------------------------------------------------
@@ -166,7 +174,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         binding.fields.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
-                currentPos = position
+                selectedFieldName = fieldsLabels[position]
             }
         binding.btnAdd.contentDescription = TR.sentenceCase.addField
         binding.btnAdd.setOnClickListener { addFieldDialog() }
@@ -584,6 +592,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     companion object {
         const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
         const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
+        private const val STATE_SELECTED_FIELD = "selectedField"
     }
 }
 
