@@ -10,11 +10,9 @@ import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
-import com.ichi2.anki.common.coroutines.applicationScope
-import com.ichi2.anki.common.storage.grantedStoragePermissions
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import timber.log.Timber
 
 /**
@@ -66,7 +64,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     }
 
     /**
-     * Called to update the widget. Checks storage permissions and delegates to [performUpdate].
+     * Called to update the widget. Checks that storage is set up and delegates to [performUpdate].
      *
      * @param context The context in which the receiver is running.
      * @param appWidgetManager The AppWidgetManager instance to use for updating widgets.
@@ -78,19 +76,12 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        val widgetName = javaClass.name
-        applicationScope.launch {
-            val hasStorageAccess =
-                withContext(Dispatchers.IO) {
-                    runCatching { grantedStoragePermissions(context) }.getOrNull() == true
-                }
-            if (!hasStorageAccess) {
-                Timber.w("Opening widget $widgetName without storage access")
-                return@launch
-            }
-            Timber.d("$widgetName: performUpdate")
-            performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds))
+        if (CollectionHelper.storageDecision(context.sharedPrefs()) == StorageDecision.Undecided) {
+            Timber.w("Opening widget ${this.javaClass.name} without storage access")
+            return
         }
+        Timber.d("${this.javaClass.name}: performUpdate")
+        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds))
     }
 
     /**
