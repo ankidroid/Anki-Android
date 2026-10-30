@@ -131,6 +131,22 @@ class AnkiDroidAppTest {
     }
 
     @Test
+    fun `databases follow a non-default profile`() {
+        profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_routed") }
+
+        val app = startApplication()
+        app.openOrCreateDatabase("meta.db", Context.MODE_PRIVATE, null).close()
+        app.openOrCreateDatabase("helper.db", Context.MODE_PRIVATE, null, null).close()
+
+        val profileDatabase = File(frameworkBase.dataDir, "p_routed/databases/meta.db")
+        assertTrue(profileDatabase.exists())
+        assertTrue(File(frameworkBase.dataDir, "p_routed/databases/helper.db").exists())
+        assertFalse(File(frameworkBase.dataDir, "databases/meta.db").exists())
+        assertTrue(app.deleteDatabase("meta.db"))
+        assertFalse(profileDatabase.exists())
+    }
+
+    @Test
     fun `ID snapshots use base storage when no profile was loaded`() =
         runBlocking {
             val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
