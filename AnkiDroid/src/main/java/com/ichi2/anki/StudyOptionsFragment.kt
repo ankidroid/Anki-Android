@@ -76,6 +76,11 @@ class StudyOptionsFragment :
     @VisibleForTesting
     internal val viewModel: StudyOptionsViewModel by viewModels()
 
+    val selectedDeckId: DeckId get() = viewModel.selectedDeckId
+
+    var shownDeckId: DeckId? = null
+        private set
+
     private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
@@ -374,6 +379,7 @@ class StudyOptionsFragment :
         displayedDeckId = viewModel.selectedDeckId
 
         updateDeckNameView(state)
+        shownDeckId = viewModel.selectedDeckId
 
         when (state) {
             is StudyOptionsState.Empty -> {
