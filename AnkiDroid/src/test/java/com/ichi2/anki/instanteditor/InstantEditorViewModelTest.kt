@@ -11,6 +11,7 @@ import com.ichi2.anki.instantnoteeditor.InstantEditorProgress
 import com.ichi2.anki.instantnoteeditor.InstantEditorViewModel
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.instantnoteeditor.SaveNoteResult
+import com.ichi2.anki.instantnoteeditor.clozePattern
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.progress.ViewModelProgress
 import org.junit.Assert.assertEquals
@@ -149,6 +150,14 @@ class InstantEditorViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `buildClozeText does not use a cloze number for text without a word`() =
+        runViewModelTest {
+            assertEquals("🙂", buildClozeText("🙂"))
+
+            assertEquals("{{c1::test}}", buildClozeText("test"))
+        }
+
+    @Test
     fun testExtractWordsIncludingClozes() =
         runViewModelTest {
             val sentence = "This is a {{c1::test}} sentence with {{c2::multiple}} clozes."
@@ -166,6 +175,54 @@ class InstantEditorViewModelTest : RobolectricTest() {
             val expectedWords = listOf("This", "is", "a", "{{c1::test}}!!", "sentence", "with", "{{c2::multiple}}", "clozes?")
             val extractedWords = getWordsFromFieldText()
             assertEquals(expectedWords, extractedWords)
+        }
+
+    @Test
+    fun `words keep text touching a cloze`() =
+        runViewModelTest {
+            setClozeFieldText("at {{c1::20}}°C or €{{c2::100}}")
+            val expectedWords = listOf("at", "{{c1::20}}°C", "or", "€{{c2::100}}")
+            assertEquals(expectedWords, getWordsFromFieldText())
+        }
+
+    @Test
+    fun `touching clozes are separate words`() =
+        runViewModelTest {
+            setClozeFieldText("{{c1::a}}-{{c2::b}}{{c3::c}}")
+            val expectedWords = listOf("{{c1::a}}-", "{{c2::b}}", "{{c3::c}}")
+            assertEquals(expectedWords, getWordsFromFieldText())
+        }
+
+    @Test
+    fun `removing a cloze after re-reading the words keeps the text`() =
+        runViewModelTest {
+            setClozeFieldText("at 20°C")
+            val words = getWordsFromFieldText().toMutableList()
+            toggleClozeDeletion(words, 1)
+            setClozeFieldText(words.joinToString(" "))
+
+            // the words are read again, e.g. when switching back from the edit mode
+            val rereadWords = getWordsFromFieldText().toMutableList()
+            toggleClozeDeletion(rereadWords, 1)
+
+            assertEquals("at 20°C", rereadWords.joinToString(" "))
+        }
+
+    @Test
+    fun `changing first chip number preserves second cloze number`() =
+        runViewModelTest {
+            setClozeFieldText("{{c1::Paris}}ỲÜí{{c2::France}}")
+            val words = getWordsFromFieldText().toMutableList()
+
+            // EditorChips performs this update after a long press on the first chip.
+            words[0] = updateClozeNumber(words[0], 3)
+            setClozeFieldText(words.joinToString(" "))
+
+            assertEquals(
+                "renumbering the first chip must preserve the other card",
+                listOf(3, 2),
+                clozePattern.findAll(actualClozeFieldText.value!!).map { it.groupValues[2].toInt() }.toList(),
+            )
         }
 
     @Test
