@@ -248,9 +248,6 @@ class ScheduleRemindersFragment :
             )
         binding.recyclerView.adapter = adapter
 
-        // Retrieve reminders based on the editing scope
-        launchCatchingViewTask { loadDatabaseRemindersIntoUI() }
-
         // If the user creates or edits a review reminder, the dialog for doing so opens
         // Once their changes are complete, the dialog closes and this fragment is reloaded
         // Hence, we check for any fragment results and update the database accordingly
@@ -654,6 +651,11 @@ class ScheduleRemindersFragment :
         adapter.submitList(listToDisplay)
         binding.noRemindersPlaceholder.isVisible = listToDisplay.isEmpty()
         flowOfHasReminders.value = listToDisplay.isNotEmpty()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        launchCatchingViewTask { loadDatabaseRemindersIntoUI() }
     }
 
     override fun onResume() {
