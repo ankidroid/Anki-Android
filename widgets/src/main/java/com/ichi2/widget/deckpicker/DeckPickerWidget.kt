@@ -27,6 +27,7 @@ import com.ichi2.anki.common.destinations.ReviewDeckDestination
 import com.ichi2.anki.common.destinations.WidgetConfigDestination
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.widgets.R
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
@@ -40,7 +41,6 @@ import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
 import com.ichi2.widget.updateAppWidget
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -82,18 +82,18 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 showEmptyWidget(context, appWidgetManager, appWidgetId, remoteViews)
                 return
             }
-            applicationScope.launch {
+            applicationScope.launchCatching(errorMessageHandler = {}) {
                 val isCollectionEmpty = isCollectionEmpty()
                 if (isCollectionEmpty) {
                     showEmptyCollection(context, appWidgetManager, appWidgetId, remoteViews)
-                    return@launch
+                    return@launchCatching
                 }
 
                 val deckData = getDeckNamesAndStats(deckIds.toList())
 
                 if (deckData.isEmpty()) {
                     showEmptyWidget(context, appWidgetManager, appWidgetId, remoteViews)
-                    return@launch
+                    return@launchCatching
                 }
 
                 val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
