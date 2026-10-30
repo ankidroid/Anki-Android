@@ -32,6 +32,52 @@ import org.robolectric.annotation.Config
 @Category(EmptyApplicationCategory::class)
 class StableScrollbarLayoutManagerTest {
     @Test
+    fun `refresh and reanchor cannot resurrect an invalidated offset`() {
+        val rows = List(90) { SHORT_ROW }
+        val list = ScrollbarTestList(rows)
+        list.scrollBy(4000)
+        val changed = rows.toMutableList().apply { this[0] = 10 * SHORT_ROW }
+
+        list.refreshAndReanchor(changed)
+        list.scrollToEndCollecting { list.scrollRange }
+        // An incorrectly calibrated range must not survive subsequent full passes.
+        list.scrollToStartCollecting { list.scrollRange }
+        list.scrollToEndCollecting { list.scrollRange }
+
+        assertThat(list.scrollRange, equalTo(changed.sum()))
+    }
+
+    @Test
+    fun `single row update and reanchor cannot resurrect an invalidated offset`() {
+        val rows = List(90) { SHORT_ROW }
+        val list = ScrollbarTestList(rows)
+        list.scrollBy(4000)
+        val changed = rows.toMutableList().apply { this[0] = 2 * SHORT_ROW }
+
+        list.refreshAndReanchor(changed, changedPosition = 0)
+        list.scrollToEndCollecting { list.scrollRange }
+        list.scrollToStartCollecting { list.scrollRange }
+        list.scrollToEndCollecting { list.scrollRange }
+
+        assertThat(list.scrollRange, equalTo(changed.sum()))
+    }
+
+    @Test
+    fun `updating an unchanged visible row preserves the calibrated thumb`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        list.scrollToEndCollecting { list.scrollRange }
+        list.scrollToStartCollecting { list.scrollRange }
+        list.scrollBy(1000)
+        assertThat(list.scrollRange, equalTo(shortThenTallRows.sum()))
+        val before = list.thumb.height
+
+        list.refreshFirstVisibleRow()
+
+        assertThat("range after row update: ${list.scrollRange}", list.thumb.height, equalTo(before))
+        assertThat(list.scrollRange, equalTo(shortThenTallRows.sum()))
+    }
+
+    @Test
     fun `thumb never moves backwards on a short mixed height list`() {
         val list = ScrollbarTestList(List(4) { 800 } + List(4) { 200 })
 
@@ -322,6 +368,31 @@ private class ScrollbarTestList(
     ) {
         adapter.rowHeights = rowHeights
         adapter.notifyItemChanged(position)
+        layout()
+    }
+
+    fun refreshAndReanchor(
+        rowHeights: List<Int>,
+        changedPosition: Int? = null,
+    ) {
+        val lm = recyclerView.layoutManager as StableScrollbarLayoutManager
+        val first = lm.findFirstVisibleItemPosition()
+        val top = lm.findViewByPosition(first)!!.top
+        adapter.rowHeights = rowHeights
+        if (changedPosition == null) {
+            adapter.notifyDataSetChanged()
+        } else {
+            adapter.notifyItemChanged(changedPosition)
+        }
+        lm.scrollToPositionWithOffset(first, top)
+        scroller.requestLayout()
+        layout()
+    }
+
+    fun refreshFirstVisibleRow() {
+        val lm = recyclerView.layoutManager as StableScrollbarLayoutManager
+        adapter.notifyItemChanged(lm.findFirstVisibleItemPosition())
+        scroller.requestLayout()
         layout()
     }
 

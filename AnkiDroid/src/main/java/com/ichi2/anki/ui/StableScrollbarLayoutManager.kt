@@ -72,6 +72,7 @@ class StableScrollbarLayoutManager(
         rememberRowHeights()
         measuredRange = measuredRange?.copy(calibrated = false)
         scrolledFromTop = null
+        pendingAnchor = null
     }
 
     override fun onItemsUpdated(
@@ -81,8 +82,13 @@ class StableScrollbarLayoutManager(
     ) {
         super.onItemsUpdated(recyclerView, positionStart, itemCount)
         rememberRowHeights()
-        measuredRange = measuredRange?.copy(calibrated = false)
-        if (positionStart < findFirstVisibleItemPosition()) scrolledFromTop = null
+        if ((positionStart until positionStart + itemCount).any { findViewByPosition(it) == null }) {
+            measuredRange = measuredRange?.copy(calibrated = false)
+        }
+        if (positionStart < findFirstVisibleItemPosition()) {
+            scrolledFromTop = null
+            pendingAnchor = null
+        }
     }
 
     override fun computeVerticalScrollRange(state: RecyclerView.State): Int = stableRange(state) ?: super.computeVerticalScrollRange(state)
