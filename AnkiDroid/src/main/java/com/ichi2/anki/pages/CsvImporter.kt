@@ -7,9 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
-import androidx.activity.OnBackPressedCallback
 import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
@@ -29,19 +27,14 @@ class CsvImporter : PageFragment() {
 
     override val minimumWebViewVersion: WebViewVersion = OLDEST_WORKING_WEBVIEW_VERSION
 
+    /** Replaced on each page load: a recreated WebView reloads the page, which may start another import */
+    private var backCallback: ImportBackCallback? = null
+
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        // the back callback is only enabled when import is running and showing progress
-        val backCallback =
-            object : OnBackPressedCallback(false) {
-                override fun handleOnBackPressed() {
-                    CollectionManager.getBackend().setWantsAbort()
-                    // once triggered the callback is not needed as the import process can't be resumed
-                    remove()
-                }
-            }
+        backCallback?.remove()
+        backCallback = ImportBackCallback().also { requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it) }
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
-        return CsvImporterWebViewClient(backCallback)
+        return CsvImporterWebViewClient()
     }
 
     override fun onViewCreated(
@@ -52,16 +45,15 @@ class CsvImporter : PageFragment() {
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.title = TR.actionsImport()
     }
 
-    inner class CsvImporterWebViewClient(
-        private val backCallback: OnBackPressedCallback,
-    ) : PageWebViewClient() {
-        /**
-         * Ideally, to handle the state of the back callback, we would just need to check for
-         * `/latestProgress` calls followed by one `/importDone` call. However there are some extra
-         * calls to `/latestProgress` AFTER `/importDone` and this property keeps track of this.
-         */
-        private var isDone = false
+    override suspend fun handlePostRequest(
+        uri: PostRequestUri,
+        bytes: ByteArray,
+    ): ByteArray {
+        backCallback?.onPostRequest(uri)
+        return super.handlePostRequest(uri, bytes)
+    }
 
+    inner class CsvImporterWebViewClient : PageWebViewClient() {
         override fun onPageFinished(
             view: WebView?,
             url: String?,
@@ -69,23 +61,6 @@ class CsvImporter : PageFragment() {
             view!!.evaluateJavascript(hideShowButtonCss) {
                 super.onPageFinished(view, url)
             }
-        }
-
-        override fun onLoadResource(
-            view: WebView?,
-            url: String?,
-        ) {
-            super.onLoadResource(view, url)
-            backCallback.isEnabled =
-                when {
-                    url == null -> false
-                    url.endsWith("latestProgress") && !isDone -> true
-                    url.endsWith("importDone") -> {
-                        isDone = true // import was done so disable any back callback changes after this call
-                        false
-                    }
-                    else -> false
-                }
         }
     }
 
