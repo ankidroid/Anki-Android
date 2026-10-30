@@ -6,7 +6,6 @@ package com.ichi2.anki
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
@@ -36,8 +35,7 @@ import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.anki.dialogs.DatabaseErrorDialog
-import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.dialogs.databaseErrorDialogs
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
@@ -184,11 +182,7 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.e(exc, errorMessage)
                 DatabaseCorruption.isDetected = true
                 if (callerTrace != null) Timber.e(callerTrace)
-                (this as? AnkiActivity)
-                    ?.showDatabaseErrorDialog(
-                        errorDialogType = DatabaseErrorDialogType.DIALOG_LOAD_FAILED,
-                        exceptionData = DatabaseErrorDialog.CustomExceptionData.fromException(exc),
-                    )
+                databaseErrorDialogs.showLoadFailed(this, exc)
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
@@ -360,14 +354,6 @@ fun Context.showError(
         crashReportData?.sendCrashReport()
     }
 }
-
-/** The dialog's [Context] is wrapped (e.g. ContextThemeWrapper); walk the chain to find the activity. */
-internal tailrec fun Context.findAnkiActivity(): AnkiActivity? =
-    when (this) {
-        is AnkiActivity -> this
-        is ContextWrapper -> baseContext.findAnkiActivity()
-        else -> null
-    }
 
 /** In most cases, you'll want [AnkiActivity.withProgress]
  * instead. This lower-level routine can be used to integrate your own
@@ -786,13 +772,11 @@ data class CrashReportData(
         data object OpenCheckDatabase : HelpAction() {
             override fun buttonText(context: Context): CharSequence = with(context) { TR.sentenceCase.checkDatabase }
 
-            override fun canExecute(context: Context): Boolean = context.findAnkiActivity() != null
+            override fun canExecute(context: Context): Boolean = databaseErrorDialogs.canConfirmDatabaseCheck(context)
 
             override suspend fun execute(context: Context): Boolean {
                 Timber.i("Opening 'Check Database'")
-                context.findAnkiActivity()!!.showDatabaseErrorDialog(
-                    errorDialogType = DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK,
-                )
+                databaseErrorDialogs.confirmDatabaseCheck(context)
                 return true
             }
         }
