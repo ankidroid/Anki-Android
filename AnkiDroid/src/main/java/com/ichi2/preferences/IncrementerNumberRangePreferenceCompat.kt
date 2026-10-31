@@ -4,22 +4,32 @@
 package com.ichi2.preferences
 
 import android.content.Context
+import android.os.Bundle
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import androidx.core.widget.doAfterTextChanged
+import androidx.appcompat.app.AlertDialog
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextRange
+import androidx.preference.EditTextPreference
+import androidx.preference.PreferenceDialogFragmentCompat
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CommonString
-import com.ichi2.anki.databinding.DialogIncrementerPreferenceBinding
-import com.ichi2.utils.NonLeadingZeroInputFilter
-import com.ichi2.utils.moveCursorToEnd
+import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.compose.ui.components.IncrementerNumberPicker
+import com.ichi2.compose.ui.components.NumberPickerState
+import com.ichi2.utils.numberRangeTitle
 import com.ichi2.utils.positiveButton
 
 /** Marker class to be used in preferences */
 class IncrementerNumberRangePreferenceCompat :
     NumberRangePreferenceCompat,
     DialogFragmentProvider {
+    private var inputBindingListener: EditTextPreference.OnBindEditTextListener? = null
+
+    override fun setOnBindEditTextListener(listener: EditTextPreference.OnBindEditTextListener?) {
+        super.setOnBindEditTextListener(listener)
+        inputBindingListener = listener
+    }
+
     @Suppress("unused")
     constructor(
         context: Context,
@@ -37,163 +47,109 @@ class IncrementerNumberRangePreferenceCompat :
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
-    class IncrementerNumberRangeDialogFragmentCompat : NumberRangeDialogFragmentCompat() {
-        private var bindingRef: DialogIncrementerPreferenceBinding? = null
-        private val binding get() = bindingRef!!
-        private var lastValidEntry = 0
+    class IncrementerNumberRangeDialogFragmentCompat : PreferenceDialogFragmentCompat() {
+        private var picker: NumberPickerState? = null
+        private var savedInput: Bundle? = null
+        private var pausedInput: Bundle? = null
+        private val numberRangePreference get() = preference as IncrementerNumberRangePreferenceCompat
 
-        // Reference to the system OK button
-        private var positiveButton: Button? = null
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            savedInput = savedInstanceState
+        }
 
-        /**
-         * Sets [.mEditText] width and gravity.
-         */
-        override fun onBindDialogView(view: View) {
-            super.onBindDialogView(view)
-
-            lastValidEntry =
-                try {
-                    editText.text.toString().toInt()
-                } catch (nfe: NumberFormatException) {
-                    // This should not be possible but just in case, recover with a valid minimum from superclass
-                    numberRangePreference.min
+        override fun onCreateDialogView(context: Context): View =
+            NumberPickerState(
+                numberRangePreference.min,
+                numberRangePreference.max,
+                savedInput?.getString(STATE_TEXT) ?: numberRangePreference.text.orEmpty(),
+                savedInput?.let { TextRange(it.getInt(STATE_SELECTION_START), it.getInt(STATE_SELECTION_END)) }
+                    ?: TextRange(numberRangePreference.text.orEmpty().length),
+            ).let { state ->
+                picker = state
+                ComposeView(context).apply {
+                    setContent {
+                        AnkiDroidTheme {
+                            IncrementerNumberPicker(
+                                state,
+                                requestFocus = true,
+                                onDone = {
+                                    (dialog as? AlertDialog)
+                                        ?.takeIf { it.isShowing }
+                                        ?.positiveButton
+                                        ?.takeIf { it.isEnabled }
+                                        ?.performClick()
+                                },
+                                onBindInput = {
+                                    numberRangePreference.inputBindingListener?.onBindEditText(it)
+                                },
+                            )
+                        }
+                    }
                 }
-            editText.filters += NonLeadingZeroInputFilter
-            // Validate the final value, not individual character changes
-            editText.doAfterTextChanged { updateButtonState() }
+            }
 
-            // Initial check to set correct button states on open
-            updateButtonState()
+        override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
+            super.onPrepareDialogBuilder(builder)
+            builder.numberRangeTitle(preference.dialogTitle ?: preference.title, requireContext())
+        }
+
+        override fun needInputMethod(): Boolean = true
+
+        override fun onSaveInstanceState(outState: Bundle) {
+            super.onSaveInstanceState(outState)
+            pausedInput?.let {
+                outState.putAll(it)
+                return
+            }
+            saveInput(outState)
+        }
+
+        override fun onPause() {
+            // Retain the edited text and selection before the dialog view is stopped.
+            pausedInput = Bundle().also(::saveInput)
+            super.onPause()
+        }
+
+        override fun onResume() {
+            super.onResume()
+            pausedInput = null
+        }
+
+        private fun saveInput(outState: Bundle) {
+            picker?.input?.let {
+                outState.putString(STATE_TEXT, it.text.toString())
+                outState.putInt(STATE_SELECTION_START, it.selection.start)
+                outState.putInt(STATE_SELECTION_END, it.selection.end)
+            }
         }
 
         override fun onStart() {
             super.onStart()
-            positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
+            dialog?.window?.clearFlags(android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            val positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
             positiveButton?.text = TR.actionsSave()
-
-            // Rerun validation now that we have the OK button reference
-            updateButtonState()
+            picker!!.onValidityChanged = { positiveButton?.isEnabled = it }
+            positiveButton?.isEnabled = picker?.value != null
         }
 
-        /**
-         * Sets appropriate Text and OnClickListener for buttons
-         *
-         * Sets orientation for layout
-         */
-        override fun onCreateDialogView(context: Context): View {
-            bindingRef = DialogIncrementerPreferenceBinding.inflate(LayoutInflater.from(context))
-
-            binding.incrementButton.setOnClickListener { updateEditText(true) }
-            binding.decrementButton.setOnClickListener { updateEditText(false) }
-
-            return binding.root
-        }
-
-        /**
-         * Increments/Decrements the value of [.mEditText] by 1 based on the parameter value.
-         *
-         * @param isIncrement Indicator for whether to increase or decrease the value.
-         */
-        private fun updateEditText(isIncrement: Boolean) {
-            var value: Int =
-                try {
-                    editText.text.toString().toInt()
-                } catch (e: NumberFormatException) {
-                    // If the user entered a non-number then incremented, restore to a good value
-                    lastValidEntry
-                }
-            value = if (isIncrement) value + 1 else value - 1
-
-            // Make sure value is within range
-            lastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
-            editText.setText(lastValidEntry.toString())
-            editText.moveCursorToEnd()
-
-            updateButtonState()
+        override fun onDialogClosed(positiveResult: Boolean) {
+            if (!positiveResult) return
+            val value = picker?.value ?: return
+            if (numberRangePreference.callChangeListener(value)) numberRangePreference.setValue(value)
         }
 
         override fun onDestroyView() {
             super.onDestroyView()
-            bindingRef = null
-            positiveButton = null
+            picker?.onValidityChanged = {}
+            picker = null
         }
 
-        /**
-         * Validates the current input and updates the state of buttons
-         *
-         * Displays specific error messages for overflow and range limits
-         */
-        private fun updateButtonState() {
-            val text = editText.text.toString()
-            val value = text.toIntOrNull()
-
-            val result = validate(text, value, numberRangePreference.min, numberRangePreference.max)
-
-            binding.textInputLayout.error = null
-            binding.textInputLayout.isErrorEnabled = false
-
-            binding.incrementButton.isEnabled = false
-            binding.decrementButton.isEnabled = false
-            positiveButton?.isEnabled = false
-
-            when (result) {
-                ValidationResult.VALID -> {
-                    positiveButton?.isEnabled = true
-                    // Even if valid, we might be at the edge of the range, so update +/- buttons
-                    if (value != null) {
-                        binding.incrementButton.isEnabled = value < numberRangePreference.max
-                        binding.decrementButton.isEnabled = value > numberRangePreference.min
-                    }
-                }
-                ValidationResult.OVERFLOW -> {
-                    binding.decrementButton.isEnabled = true
-                    binding.textInputLayout.error = getString(CommonString.maximum_value_is, numberRangePreference.max)
-                }
-                ValidationResult.UNDERFLOW -> {
-                    binding.incrementButton.isEnabled = true
-                    binding.textInputLayout.error = getString(CommonString.minimum_value_is, numberRangePreference.min)
-                }
-                ValidationResult.INVALID -> {
-                    binding.textInputLayout.error = getString(CommonString.invalid_value)
-                }
-                ValidationResult.EMPTY -> {
-                    // Empty input is invalid for submission, but doesn't warrant an error message yet
-                }
-            }
+        private companion object {
+            const val STATE_TEXT = "picker.text"
+            const val STATE_SELECTION_START = "picker.selectionStart"
+            const val STATE_SELECTION_END = "picker.selectionEnd"
         }
-    }
-
-    companion object {
-        enum class ValidationResult {
-            VALID,
-            INVALID,
-            EMPTY,
-            OVERFLOW,
-            UNDERFLOW,
-        }
-
-        /**
-         * Validation logic for the preference input.
-         *
-         * @param text The raw string from the EditText.
-         * @param value The parsed integer value (or null if parsing failed).
-         * @param min The minimum allowed value.
-         * @param max The maximum allowed value.
-         * @return A [ValidationResult] representing the state of the input.
-         */
-        fun validate(
-            text: String,
-            value: Int?,
-            min: Int,
-            max: Int,
-        ): ValidationResult =
-            when {
-                text.isEmpty() -> ValidationResult.EMPTY
-                value == null -> ValidationResult.INVALID
-                value > max -> ValidationResult.OVERFLOW
-                value < min -> ValidationResult.UNDERFLOW
-                else -> ValidationResult.VALID
-            }
     }
 
     override fun makeDialogFragment() = IncrementerNumberRangeDialogFragmentCompat()
