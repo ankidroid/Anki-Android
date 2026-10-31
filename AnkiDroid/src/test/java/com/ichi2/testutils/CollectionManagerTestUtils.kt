@@ -37,3 +37,15 @@ internal fun withCollectionTestDispatcher(
         "CollectionManager dispatcher was not restored. Save and restore it in a finally block.",
     )
 }
+
+/** Exercise callers while opening the collection fails, restoring the previous failure mode. */
+internal inline fun withNullCollection(block: () -> Unit) {
+    val previousFailure = CollectionManager.emulatedOpenFailure
+    CollectionManager.closeCollectionBlocking()
+    CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
+    try {
+        block()
+    } finally {
+        CollectionManager.emulatedOpenFailure = previousFailure
+    }
+}

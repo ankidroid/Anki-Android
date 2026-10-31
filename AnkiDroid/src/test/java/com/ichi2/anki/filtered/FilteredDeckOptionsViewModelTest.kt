@@ -3,7 +3,7 @@
 package com.ichi2.anki.filtered
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.lifecycle.ViewModelStore
 import anki.decks.Deck
 import anki.decks.Deck.Filtered.SearchTerm.Order
 import anki.decks.DeckKt.FilteredKt.searchTerm
@@ -11,28 +11,38 @@ import anki.decks.DeckKt.filtered
 import anki.decks.filteredDeckForUpdate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.InvalidSearchException
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
+import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
 import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class FilteredDeckOptionsViewModelTest : RobolectricTest() {
+class FilteredDeckOptionsViewModelTest : JvmTest() {
+    private val viewModels = ViewModelStore()
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
     @Test
     fun `retrievability orders are hidden without FSRS`() =
         runTest {
@@ -491,6 +501,11 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             }
         }
 
+    private var nextViewModelId = 0
+
+    private fun createViewModel(handle: SavedStateHandle) =
+        FilteredDeckOptionsViewModel(handle).also { viewModels.put("filtered-${nextViewModelId++}", it) }
+
     /** Returns the current state as a [FilteredDeckOptions] or throw otherwise */
     private val FilteredDeckOptionsViewModel.current: FilteredDeckOptions
         get() = state.value as FilteredDeckOptions
@@ -511,17 +526,15 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 set(FilteredDeckOptionsFragment.ARG_SEARCH, null as String?)
                 set(FilteredDeckOptionsFragment.ARG_SEARCH_2, null as String?)
             }
-        FilteredDeckOptionsViewModel(handle).apply {
+        createViewModel(handle).apply {
             advanceUntilIdle()
-            advanceRobolectricLooper()
             beforeDestroy()
         }
         advanceUntilIdle()
-        advanceRobolectricLooper()
 
-        val restoredViewModel = FilteredDeckOptionsViewModel(handle)
+        viewModels.clear()
+        val restoredViewModel = createViewModel(handle)
         advanceUntilIdle()
-        advanceRobolectricLooper()
         restoredViewModel.action()
     }
 
@@ -537,9 +550,8 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 set(FilteredDeckOptionsFragment.ARG_SEARCH, search)
                 set(FilteredDeckOptionsFragment.ARG_SEARCH_2, search2)
             }
-        val viewModel = FilteredDeckOptionsViewModel(handle)
+        val viewModel = createViewModel(handle)
         advanceUntilIdle()
-        advanceRobolectricLooper()
         viewModel.action()
     }
 

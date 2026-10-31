@@ -2,13 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.lifecycle.ViewModelStore
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.withNullCollection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +19,8 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.instanceOf
+import org.junit.After
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
@@ -26,9 +28,19 @@ import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class StudyOptionsViewModelTest : RobolectricTest() {
-    private val viewModel = StudyOptionsViewModel()
+class StudyOptionsViewModelTest : JvmTest() {
+    private val viewModels = ViewModelStore()
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
+    private val viewModel = StudyOptionsViewModel().also { viewModels.put("study", it) }
 
     @Test
     fun `refreshData suspends without blocking the caller while sync holds the collection queue`() =
@@ -387,7 +399,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         }
     }
 
-    /** Hold the production queue as a sync would; restore Robolectric's lock after all work finishes. */
+    /** Hold the production queue as a sync would; restore the test dispatcher after all work finishes. */
     private suspend fun withBlockedCollectionQueue(block: suspend CoroutineScope.(releaseQueue: () -> Unit) -> Unit) {
         val previousQueue = CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
         val queueHeld = CountDownLatch(1)
