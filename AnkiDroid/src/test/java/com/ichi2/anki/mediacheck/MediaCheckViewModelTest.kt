@@ -2,29 +2,23 @@
 // SPDX-FileCopyrightText: Copyright (c) 2026 Ashish Yadav <mailtoashish693@gmail.com>
 package com.ichi2.anki.mediacheck
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.testutils.OnDiskJvmTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.setMain
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class MediaCheckViewModelTest : RobolectricTest() {
+class MediaCheckViewModelTest : OnDiskJvmTest() {
     private val viewModel = MediaCheckViewModel()
-
-    // backend media operations need a real collection folder
-    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
 
     @Test
     fun `checkMedia reports progress and publishes the result`() =
