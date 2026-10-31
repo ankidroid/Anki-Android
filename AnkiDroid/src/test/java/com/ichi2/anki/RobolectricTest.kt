@@ -51,7 +51,7 @@ import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.rules.CollectionStorageRule
-import kotlinx.coroutines.CoroutineDispatcher
+import com.ichi2.testutils.withCollectionTestDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
@@ -77,7 +77,6 @@ import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
 import kotlin.test.assertNotNull
-import kotlin.test.assertSame
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
@@ -506,20 +505,7 @@ open class RobolectricTest(
     override fun withTestDispatcher(
         dispatcher: TestDispatcher,
         block: () -> Unit,
-    ) {
-        val previousDispatcher = CollectionManager.setTestDispatcher(dispatcher)
-        val dispatcherAfterTest: CoroutineDispatcher
-        try {
-            block()
-        } finally {
-            dispatcherAfterTest = CollectionManager.setTestDispatcher(previousDispatcher)
-        }
-        assertSame(
-            dispatcher,
-            dispatcherAfterTest,
-            "CollectionManager dispatcher was not restored. Save and restore it in a finally block.",
-        )
-    }
+    ) = withCollectionTestDispatcher(dispatcher, block)
 }
 
 private fun getLatestAlertDialog(): AlertDialog =

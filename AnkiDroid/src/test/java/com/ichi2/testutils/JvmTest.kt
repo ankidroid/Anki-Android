@@ -49,4 +49,9 @@ open class JvmTest : InMemoryAnkiTest() {
         super.setupTestDispatcher(dispatcher)
         ioDispatcher = dispatcher
     }
+
+    override fun withTestDispatcher(
+        dispatcher: TestDispatcher,
+        block: () -> Unit,
+    ) = withCollectionTestDispatcher(dispatcher, block)
 }
