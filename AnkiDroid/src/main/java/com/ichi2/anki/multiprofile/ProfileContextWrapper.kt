@@ -6,6 +6,8 @@ package com.ichi2.anki.multiprofile
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
+import android.database.DatabaseErrorHandler
+import android.database.sqlite.SQLiteDatabase
 import com.ichi2.utils.withFileNameSafe
 import timber.log.Timber
 import java.io.File
@@ -60,6 +62,34 @@ class ProfileContextWrapper private constructor(
 
         return dbDir.withFileNameSafe(name)
     }
+
+    override fun openOrCreateDatabase(
+        name: String,
+        mode: Int,
+        factory: SQLiteDatabase.CursorFactory?,
+    ): SQLiteDatabase = openOrCreateDatabase(name, mode, factory, null)
+
+    override fun openOrCreateDatabase(
+        name: String,
+        mode: Int,
+        factory: SQLiteDatabase.CursorFactory?,
+        errorHandler: DatabaseErrorHandler?,
+    ): SQLiteDatabase {
+        if (profileId.isDefault()) {
+            return super.openOrCreateDatabase(name, mode, factory, errorHandler)
+        }
+        var flags = SQLiteDatabase.CREATE_IF_NECESSARY
+        if (mode and MODE_ENABLE_WRITE_AHEAD_LOGGING != 0) flags = flags or SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING
+        if (mode and MODE_NO_LOCALIZED_COLLATORS != 0) flags = flags or SQLiteDatabase.NO_LOCALIZED_COLLATORS
+        return SQLiteDatabase.openDatabase(getDatabasePath(name).path, factory, flags, errorHandler)
+    }
+
+    override fun deleteDatabase(name: String): Boolean =
+        if (profileId.isDefault()) {
+            super.deleteDatabase(name)
+        } else {
+            SQLiteDatabase.deleteDatabase(getDatabasePath(name))
+        }
 
     /**
      * Used for things like ACRA, textures, etc.
