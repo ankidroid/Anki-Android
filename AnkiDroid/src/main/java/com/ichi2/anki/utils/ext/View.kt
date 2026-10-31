@@ -34,6 +34,10 @@ fun View.onGlobalLayout(
     )
 }
 
+fun <T : View> T.postSelf(action: (T) -> Unit) {
+    post { action(this) }
+}
+
 fun View.isTouchWithinBounds(event: MotionEvent): Boolean {
     val rect = Rect().apply { getDrawingRect(this) }
     return rect.contains((left + event.x).toInt(), (top + event.y).toInt())

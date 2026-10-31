@@ -4,7 +4,6 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.view.View
 import android.widget.EditText
 import android.widget.ListView
@@ -27,18 +26,15 @@ import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditor
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
-import io.mockk.every
-import io.mockk.mockkObject
+import com.ichi2.testutils.saveAndDestroy
 import io.mockk.unmockkObject
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import java.util.Locale
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
@@ -162,9 +158,7 @@ class NoteTypeFieldEditorRecreationTest : RobolectricTest() {
             confirm()
             val savedAgain = saveAndDestroy()
             unmockkObject(CollectionManager)
-            controller = Robolectric.buildActivity(NoteTypeFieldEditor::class.java, launchIntent)
-            saveControllerForCleanup(controller)
-            controller.setup(savedAgain)
+            controller = restoreActivityController(NoteTypeFieldEditor::class.java, launchIntent, savedAgain)
             releaseLoad.countDown()
             advanceRobolectricLooperUntil(lazyMessage = { "Fields after second restore: " + fieldNames() }) { fieldNames().size == 3 }
             switchNightMode()
@@ -188,9 +182,7 @@ class NoteTypeFieldEditorRecreationTest : RobolectricTest() {
             confirm()
             val savedAgain = saveAndDestroy()
             unmockkObject(CollectionManager)
-            controller = Robolectric.buildActivity(NoteTypeFieldEditor::class.java, launchIntent)
-            saveControllerForCleanup(controller)
-            controller.setup(savedAgain)
+            controller = restoreActivityController(NoteTypeFieldEditor::class.java, launchIntent, savedAgain)
             releaseLoad.countDown()
             advanceRobolectricLooper()
             assertEquals(listOf("Back", "Front"), fieldNames())
@@ -543,19 +535,11 @@ class NoteTypeFieldEditorRecreationTest : RobolectricTest() {
 
     private fun saveAndDestroy(): Bundle {
         launchIntent = Intent(controller.get().intent)
-        return Bundle().also {
-            controller
-                .pause()
-                .stop()
-                .saveInstanceState(it)
-                .destroy()
-        }
+        return controller.saveAndDestroy()
     }
 
     private fun restore(saved: Bundle) {
-        controller = Robolectric.buildActivity(NoteTypeFieldEditor::class.java, launchIntent)
-        saveControllerForCleanup(controller)
-        controller.setup(saved)
+        controller = restoreActivityController(NoteTypeFieldEditor::class.java, launchIntent, saved)
         advanceRobolectricLooper()
     }
 
@@ -599,30 +583,9 @@ class NoteTypeFieldEditorRecreationTest : RobolectricTest() {
     private fun withColdRestore(
         saved: Bundle,
         block: (CountDownLatch) -> Unit,
-    ) {
-        val realCollection = col
-        val loadStarted = CountDownLatch(1)
-        val releaseLoad = CountDownLatch(1)
-        mockkObject(CollectionManager)
-        every { CollectionManager.isOpenUnsafe() } returns false
-        every { CollectionManager.getColUnsafe() } answers {
-            if (Looper.myLooper() != Looper.getMainLooper()) {
-                loadStarted.countDown()
-                check(releaseLoad.await(15, TimeUnit.SECONDS)) { "Background load was not released" }
-            }
-            realCollection
-        }
-        try {
-            controller = Robolectric.buildActivity(NoteTypeFieldEditor::class.java, launchIntent)
-            saveControllerForCleanup(controller)
-            controller.setup(saved)
-            check(loadStarted.await(5, TimeUnit.SECONDS)) { "Collection load did not begin" }
-            block(releaseLoad)
-        } finally {
-            releaseLoad.countDown()
-            unmockkObject(CollectionManager)
-            advanceRobolectricLooper()
-        }
+    ) = restoreWhileCollectionLoads(NoteTypeFieldEditor::class.java, launchIntent, saved) { restored, releaseLoad ->
+        controller = restored
+        block(releaseLoad)
     }
 
     private fun awaitFields() {

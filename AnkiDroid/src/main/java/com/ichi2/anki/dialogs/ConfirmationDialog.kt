@@ -7,8 +7,10 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
@@ -132,6 +134,13 @@ class ConfirmationDialog : DialogFragment() {
 }
 
 fun FragmentActivity.registerConfirmationHandler(
+    requestKey: String,
+    action: (result: Bundle) -> Unit,
+) {
+    setFragmentResultListener(requestKey) { _, result -> action(result) }
+}
+
+fun Fragment.registerConfirmationHandler(
     requestKey: String,
     action: (result: Bundle) -> Unit,
 ) {
