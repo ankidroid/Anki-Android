@@ -1,14 +1,9 @@
-import com.android.build.api.dsl.LibraryExtension
 import com.ichi2.anki.gradle.addAnkiBackendDependencies
 
 plugins {
-    id("ankidroid.android.library")
+    id("ankidroid.jvm.library")
+    `java-test-fixtures`
     alias(libs.plugins.kotlin.serialization)
-}
-
-configure<LibraryExtension> {
-    namespace = "com.ichi2.anki.libanki"
-    testFixtures.enable = true
 }
 
 dependencies {
@@ -19,15 +14,13 @@ dependencies {
     addAnkiBackendDependencies(project)
 
     // JVM dependencies
-    implementation(libs.jakewharton.timber)
+    implementation(libs.slf4j.api)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
 
-    // Android interface dependencies
+    // Annotations and Android-compatible JSON types
     implementation(libs.androidx.annotation)
-    implementation(libs.androidx.sqlite.framework)
-    testImplementation(libs.androidx.sqlite.framework)
-    testImplementation(libs.androidx.test.rules) // @SdkSuppress
+    compileOnly(libs.json)
 
     // test dependencies
     testImplementation(libs.hamcrest)
@@ -36,13 +29,14 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation(libs.json)
 
     // testFixtures dependencies
     testFixturesImplementation(project(":common"))
-    testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.slf4j.api)
     testFixturesImplementation(libs.junit.vintage.engine)
     testFixturesImplementation(libs.kotlinx.coroutines.core)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
-    testFixturesImplementation(libs.androidx.sqlite.framework)
+    testFixturesCompileOnly(libs.json)
 }

@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.libanki.testutils
 
-import android.annotation.SuppressLint
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.Collection
@@ -18,7 +17,9 @@ import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestName
-import timber.log.Timber
+import org.slf4j.LoggerFactory
+
+private val logger = LoggerFactory.getLogger(InMemoryAnkiTest::class.java)
 
 @Suppress("RestrictedApi", "VisibleForTests")
 abstract class InMemoryAnkiTest : AnkiTest {
@@ -45,26 +46,6 @@ abstract class InMemoryAnkiTest : AnkiTest {
         println("""-- executing test "${testName.methodName}"""")
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
 
-        Timber.Forest.plant(
-            object : Timber.DebugTree() {
-                @SuppressLint("PrintStackTraceUsage")
-                override fun log(
-                    priority: Int,
-                    tag: String?,
-                    message: String,
-                    t: Throwable?,
-                ) {
-                    // This is noisy in test environments
-                    if (tag == "Backend\$checkMainThreadOp") {
-                        return
-                    }
-                    // use println(): Timber may not work under the Jvm
-                    println("$tag: $message")
-                    t?.printStackTrace()
-                }
-            },
-        )
-
         maybeSetupBackend()
         // access 'col' ensuring that it's set up using the correct CollectionManager
         // PERF: This makes tests which do not need the collection less efficient, as this
@@ -79,7 +60,7 @@ abstract class InMemoryAnkiTest : AnkiTest {
             _col?.close()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
-                Timber.Forest.w(ex, "Collection was already disposed - may have been a problem")
+                logger.warn("Collection was already disposed - may have been a problem", ex)
             } else {
                 throw ex
             }
@@ -89,7 +70,6 @@ abstract class InMemoryAnkiTest : AnkiTest {
         _col = null
         Dispatchers.resetMain()
         runBlocking { collectionManager.discardBackend() }
-        Timber.Forest.uprootAll()
         println("""-- completed test "${testName.methodName}"""")
     }
 

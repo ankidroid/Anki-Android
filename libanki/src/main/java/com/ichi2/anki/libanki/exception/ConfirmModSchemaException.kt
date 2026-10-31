@@ -3,14 +3,16 @@
 
 package com.ichi2.anki.libanki.exception
 
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import java.lang.Exception
+
+private val logger = LoggerFactory.getLogger(ConfirmModSchemaException::class.java)
 
 class ConfirmModSchemaException : Exception() {
     /**
      * Add the current exception to log.
      */
     fun log() {
-        Timber.v(this)
+        logger.trace("Schema change requires confirmation", this)
     }
 }

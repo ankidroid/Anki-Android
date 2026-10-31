@@ -30,12 +30,15 @@ private const val RSDROID_TESTING_JAR =
 fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
     with(project) {
         val useLocalBackend = localBackendEnabled()
+        val useAndroidBackend = plugins.hasPlugin("com.android.library") || plugins.hasPlugin("com.android.application")
+        val backendAlias = if (useAndroidBackend) "ankiBackend-backend" else "ankiBackend-core"
+        val backendPaths = if (useAndroidBackend) arrayOf(RSDROID_JAR, RSDROID_ANDROID_AAR) else arrayOf(RSDROID_JAR)
 
         addBackendArtifact(
             configuration = "implementation",
             useLocalBackend = useLocalBackend,
-            catalogAlias = "ankiBackend-backend",
-            localPaths = arrayOf(RSDROID_JAR, RSDROID_ANDROID_AAR),
+            catalogAlias = backendAlias,
+            localPaths = backendPaths,
         )
         addBackendArtifact(
             configuration = "testImplementation",
@@ -51,8 +54,8 @@ fun DependencyHandlerScope.addAnkiBackendDependencies(project: Project) {
             addBackendArtifact(
                 configuration = "testFixturesImplementation",
                 useLocalBackend = useLocalBackend,
-                catalogAlias = "ankiBackend-backend",
-                localPaths = arrayOf(RSDROID_JAR, RSDROID_ANDROID_AAR),
+                catalogAlias = backendAlias,
+                localPaths = backendPaths,
             )
             addBackendArtifact(
                 configuration = "testFixturesImplementation",
@@ -84,7 +87,7 @@ private fun Project.addBackendArtifact(
     if (useLocalBackend) {
         // ../Anki-Android-Backend
         val backendCheckout = File(rootProject.projectDir.parentFile, "Anki-Android-Backend")
-        // Local artifacts have no Maven metadata, so both the core JAR and Android AAR are needed.
+        // Local artifacts have no Maven metadata, so Android consumers also need the Android AAR.
         dependencies.add(configuration, files(localPaths.map { File(backendCheckout, it) }))
     } else {
         dependencies.addProvider(configuration, libsLibrary(catalogAlias))

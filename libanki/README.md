@@ -1,6 +1,15 @@
 # `:libanki`
 
-A 1:1 port of Anki's [`pylib`](https://github.com/ankitects/anki/tree/main/pylib), defining core domain types and wrapping the Rust backend.
+A Kotlin/JVM library containing a 1:1 port of Anki's [`pylib`](https://github.com/ankitects/anki/tree/main/pylib), defining core domain types and wrapping the Rust backend.
+
+## Building and testing
+
+Run `./gradlew :libanki:test` to test the library on the JVM. Tests use the native Rust
+backend and require neither an Android runtime nor Robolectric. The backend's JVM core
+JAR supplies the API; Android database and cursor adapters live in the Android modules.
+
+`org.json` is a compile-only dependency in production so Android applications use the
+platform implementation. JVM consumers must provide their own JSON implementation.
 
 ## Aims
 

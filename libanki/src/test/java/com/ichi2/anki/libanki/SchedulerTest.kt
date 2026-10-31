@@ -2,8 +2,6 @@
 
 package com.ichi2.anki.libanki
 
-import android.annotation.SuppressLint
-import androidx.test.filters.SdkSuppress
 import anki.scheduler.CardAnswer.Rating
 import anki.scheduler.UnburyDeckRequest
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
@@ -33,8 +31,6 @@ import kotlin.math.roundToLong
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@SdkSuppress
-@SuppressLint("NewApi") // java.time.Instant needs API 26+/desugaring. Test-only
 open class SchedulerTest : InMemoryAnkiTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)

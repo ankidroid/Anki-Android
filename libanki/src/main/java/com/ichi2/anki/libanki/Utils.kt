@@ -7,12 +7,14 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.libanki.Consts.FIELD_SEPARATOR
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.Locale
+
+private val logger = LoggerFactory.getLogger(Utils::class.java)
 
 // TODO switch to standalone functions and properties and remove Utils container
 object Utils {
@@ -105,10 +107,10 @@ object Utils {
             md = MessageDigest.getInstance("SHA1")
             digest = md.digest(data.toByteArray(charset("UTF-8")))
         } catch (e: NoSuchAlgorithmException) {
-            Timber.e(e, "Utils.checksum: No such algorithm.")
+            logger.error("Utils.checksum: No such algorithm.", e)
             throw RuntimeException(e)
         } catch (e: UnsupportedEncodingException) {
-            Timber.e(e, "Utils.checksum :: UnsupportedEncodingException")
+            logger.error("Utils.checksum :: UnsupportedEncodingException", e)
         }
         val biginteger = BigInteger(1, digest)
         var result = biginteger.toString(16)

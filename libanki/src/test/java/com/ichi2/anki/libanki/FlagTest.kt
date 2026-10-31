@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.libanki
 
-import android.annotation.SuppressLint
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.newNote
@@ -15,7 +14,7 @@ class FlagTest : InMemoryAnkiTest() {
     /*****************
      ** Flags        *
      *****************/
-    @SuppressLint("CheckResult")
+    @Suppress("CheckResult")
     @Test
     fun test_flags() {
         val n = col.newNote()

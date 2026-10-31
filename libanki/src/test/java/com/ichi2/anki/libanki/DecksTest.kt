@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.libanki
 
-import android.annotation.SuppressLint
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
@@ -37,7 +36,7 @@ class DecksTest : InMemoryAnkiTest() {
     }
 
     @Test
-    @SuppressLint("CheckResult")
+    @Suppress("CheckResult")
     fun test_rename() {
         var id = addDeck("hello::world")
         // should be able to rename into a completely different branch, creating

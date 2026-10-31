@@ -10,9 +10,10 @@ import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.libanki.Storage.collection
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.jetbrains.annotations.VisibleForTesting
-import timber.log.Timber
+import org.slf4j.LoggerFactory
+
+private val logger = LoggerFactory.getLogger(TestCollectionManager::class.java)
 
 /**
  * Trimmed down version of `com.ichi2.anki.CollectionManager` which can be used without a reference
@@ -95,7 +96,7 @@ open class InMemoryCollectionManager : TestCollectionManager {
         try {
             collection!!.close()
         } catch (exc: Exception) {
-            Timber.e("swallowing error on close: $exc")
+            logger.error("swallowing error on close: $exc")
         }
         collection = null
     }
@@ -106,4 +107,4 @@ open class InMemoryCollectionManager : TestCollectionManager {
  * Caller is responsible for opening&closing the database.
  */
 @DuplicatedCode("anki-common:createDatabaseUsingRustBackend")
-fun createDatabaseUsingRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
+fun createDatabaseUsingRustBackend(backend: Backend): DB = DB(backend)

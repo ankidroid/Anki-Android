@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.libanki.testutils
 
-import android.annotation.SuppressLint
 import anki.notetypes.Notetype
 import anki.notetypes.copy
 import com.ichi2.anki.libanki.Card
@@ -30,12 +29,14 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
+
+private val logger = LoggerFactory.getLogger(AnkiTest::class.java)
 
 /**
  * marker interface for classes which contain tests and access the Anki collection
@@ -294,7 +295,7 @@ interface AnkiTest {
     }
 
     /** Helper method to update a note */
-    @SuppressLint("CheckResult")
+    @Suppress("CheckResult")
     fun Note.update(block: Note.() -> Unit): Note {
         block(this)
         col.updateNote(this)
@@ -364,7 +365,7 @@ interface AnkiTest {
     fun Note.numberOfCards() = this.numberOfCards(col)
 
     // TODO remove this. not in libanki
-    @SuppressLint("CheckResult")
+    @Suppress("CheckResult")
     fun Note.flush() {
         col.updateNote(this)
     }
@@ -408,7 +409,7 @@ interface AnkiTest {
 
         withTestDispatcher(dispatcher) {
             repeat(times) {
-                if (times != 1) Timber.d("------ Executing test $it/$times ------")
+                if (times != 1) logger.debug("------ Executing test $it/$times ------")
                 kotlinx.coroutines.test.runTest(context + scheduler, dispatchTimeout, testBody)
             }
         }

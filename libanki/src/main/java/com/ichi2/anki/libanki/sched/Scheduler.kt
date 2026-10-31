@@ -45,10 +45,12 @@ import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.roundToLong
+
+private val logger = LoggerFactory.getLogger(Scheduler::class.java)
 
 /**
  * A parameter for [Scheduler.setDueDate]
@@ -238,7 +240,7 @@ open class Scheduler(
      */
     open fun suspendCards(ids: Iterable<CardId>): OpChangesWithCount {
         val cids = ids.toList()
-        Timber.i("suspending %d card(s)", cids.size)
+        logger.info("suspending {} card(s)", cids.size)
         return col.backend.buryOrSuspendCards(
             cardIds = cids,
             noteIds = listOf(),
@@ -258,7 +260,7 @@ open class Scheduler(
      */
     open fun unsuspendCards(ids: Iterable<CardId>): OpChanges {
         val cids = ids.toList()
-        Timber.i("unsuspending %d card(s)", cids.size)
+        logger.info("unsuspending {} card(s)", cids.size)
         return col.backend.restoreBuriedAndSuspendedCards(
             cids = cids,
         )
@@ -364,7 +366,7 @@ open class Scheduler(
             key = null
         }
 
-        Timber.i("updating due date of %d card(s) to '%s'", cardIds.size, days.value)
+        logger.info("updating due date of {} card(s) to '{}'", cardIds.size, days.value)
 
         return col.backend.setDueDate(
             cardIds = cardIds,
