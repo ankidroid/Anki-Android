@@ -9,6 +9,7 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.createBasicTypingNoteType
 import com.ichi2.utils.LanguageUtil
+import net.ankiweb.rsdroid.BackendFactory
 
 /**
  * Closes and reopens the backend using the provided [language], typically for
@@ -20,9 +21,14 @@ import com.ichi2.utils.LanguageUtil
  */
 @Suppress("UnusedReceiverParameter")
 suspend fun Collection.reopenWithLanguage(language: String) {
-    LanguageUtil.setDefaultBackendLanguages(language)
-    CollectionManager.discardBackend()
-    CollectionManager.getColUnsafe()
+    val previousLanguages = BackendFactory.defaultLanguages
+    try {
+        LanguageUtil.setDefaultBackendLanguages(language)
+        CollectionManager.discardBackend()
+        CollectionManager.getColUnsafe()
+    } finally {
+        BackendFactory.defaultLanguages = previousLanguages
+    }
 }
 
 /**
