@@ -12,7 +12,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceResponse
-import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -25,7 +24,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.testutils.insetsOf
+import com.ichi2.testutils.webView
 import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
@@ -84,7 +85,7 @@ class SharedDecksScreenshotTest : ScreenshotTest() {
         withSharedDecks { activity ->
             activity.simulateNavigationBar()
             val response = mock<WebResourceResponse> { on { statusCode } doReturn HTTP_STATUS_TOO_MANY_REQUESTS }
-            activity.webViewClient.onReceivedHttpError(activity.findViewById<WebView>(R.id.web_view), mock(), response)
+            activity.webViewClient.onReceivedHttpError(activity.findViewById<SafeWebViewLayout>(R.id.web_view).webView, mock(), response)
             advanceRobolectricLooper()
             captureScreen("login_required_dialog")
         }
