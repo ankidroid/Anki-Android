@@ -18,16 +18,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
-class ProfileSwitchChecksTest : RobolectricTest() {
+class ProfileSwitchQueuedWorkTest : RobolectricTest() {
     private fun enqueueMediaSync() = targetContext.enqueueWaiting(UniqueWorkNames.SYNC_MEDIA)
 
     private fun enqueueSync() = targetContext.enqueueWaiting(UniqueWorkNames.SYNC)
-
-    @Test
-    fun `no media sync means no reason to block`() =
-        runTest {
-            assertNull(mediaSyncCheck().verify())
-        }
 
     @Test
     fun `a media sync waiting for the network does not block the switch`() =
@@ -35,6 +29,22 @@ class ProfileSwitchChecksTest : RobolectricTest() {
             enqueueMediaSync()
 
             assertNull(mediaSyncCheck().verify(), "queued work has nothing to interrupt")
+        }
+
+    @Test
+    fun `a sync waiting for the network does not block the switch`() =
+        runTest {
+            enqueueSync()
+
+            assertNull(syncCheck().verify(), "offline, a queued sync would block switching forever")
+        }
+}
+
+class ProfileSwitchChecksTest {
+    @Test
+    fun `no media sync means no reason to block`() =
+        runTest {
+            assertNull(mediaSyncCheck().verify())
         }
 
     @Test
@@ -53,14 +63,6 @@ class ProfileSwitchChecksTest : RobolectricTest() {
     fun `no background sync means no reason to block`() =
         runTest {
             assertNull(syncCheck().verify())
-        }
-
-    @Test
-    fun `a sync waiting for the network does not block the switch`() =
-        runTest {
-            enqueueSync()
-
-            assertNull(syncCheck().verify(), "offline, a queued sync would block switching forever")
         }
 
     @Test
