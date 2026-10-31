@@ -24,7 +24,6 @@ class WidgetUtilsIntegrationTest : RobolectricTest() {
     @Test
     fun `app runs with no widget manager`() {
         super.startRegularActivity<DeckPicker>() // WARN: This didn't crash before fixes applied
-        WidgetPermissionReceiver().onReceive(targetContext, Intent())
     }
 
     @Test

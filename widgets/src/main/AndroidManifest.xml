@@ -18,13 +18,6 @@
                 />
         </receiver>
 
-        <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
-            </intent-filter>
-        </receiver>
-
         <!-- #14372: Handles updates after the day rollover (04:00). -->
         <receiver android:name="com.ichi2.widget.DayRolloverAlarm"
             android:exported="false">

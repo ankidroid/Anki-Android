@@ -2,30 +2,29 @@
 // SPDX-FileCopyrightText: Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
 
 import android.appwidget.AppWidgetManager
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
-import com.ichi2.anki.common.storage.grantedStoragePermissions
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.editPreferences
 import com.ichi2.testutils.targetContext
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetIds
 import io.mockk.every
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.mockk.unmockkObject
-import io.mockk.unmockkStatic
 import io.mockk.verify
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.TimeUnit
-import kotlin.test.assertEquals
+import java.io.File
 import kotlin.test.assertFalse
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
@@ -36,13 +35,11 @@ class AnalyticalWidgetProviderTest : AndroidTest {
     fun setUp() {
         mockkObject(Analytics)
         every { Analytics.send(any()) } answers { }
-        mockkStatic(STORAGE_CHECKS)
     }
 
     @After
     fun tearDown() {
         unmockkObject(Analytics)
-        unmockkStatic(STORAGE_CHECKS)
     }
 
     @Test
@@ -57,24 +54,30 @@ class AnalyticalWidgetProviderTest : AndroidTest {
     }
 
     @Test
-    fun `storage check runs off the main thread`() {
-        val checkedOnMainThread = CompletableFuture<Boolean>()
-        every { grantedStoragePermissions(any()) } answers {
-            checkedOnMainThread.complete(Looper.getMainLooper().isCurrentThread)
-            true
-        }
+    fun `update does not list storage directories`() {
+        editPreferences { putString(CollectionHelper.PREF_COLLECTION_PATH, File(targetContext.filesDir, "AnkiDroid").path) }
+        val context = StorageDirectoriesSpy(targetContext)
         val widgetProvider = TestWidgetProvider()
 
-        widgetProvider.receiveUpdate()
+        widgetProvider.receiveUpdate(context)
 
-        assertFalse(checkedOnMainThread.get(5, TimeUnit.SECONDS), "storage check ran on the main thread")
-        advanceMainLooperUntil { widgetProvider.updatedOnMainThread != null }
-        assertEquals(true, widgetProvider.updatedOnMainThread, "widget updated off the main thread")
+        advanceMainLooperUntil { widgetProvider.updated }
+        assertFalse(context.listedStorageDirectories, "storage directories were listed")
     }
 
-    private fun TestWidgetProvider.receiveUpdate() =
+    @Test
+    fun `update is skipped until storage is decided`() {
+        val widgetProvider = TestWidgetProvider()
+
+        widgetProvider.receiveUpdate(targetContext)
+
+        shadowOf(Looper.getMainLooper()).idle()
+        assertFalse(widgetProvider.updated, "widget updated before storage was decided")
+    }
+
+    private fun TestWidgetProvider.receiveUpdate(context: Context) =
         onReceive(
-            targetContext,
+            context,
             Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE).putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(1)),
         )
 
@@ -87,20 +90,28 @@ class AnalyticalWidgetProviderTest : AndroidTest {
         }
     }
 
-    private class TestWidgetProvider : AnalyticsWidgetProvider() {
+    private class StorageDirectoriesSpy(
+        base: Context,
+    ) : ContextWrapper(base) {
         @Volatile
-        var updatedOnMainThread: Boolean? = null
+        var listedStorageDirectories = false
 
-        override fun performUpdate(
-            context: android.content.Context,
-            appWidgetManager: AppWidgetManager,
-            appWidgetIds: AppWidgetIds,
-        ) {
-            updatedOnMainThread = Looper.getMainLooper().isCurrentThread
+        override fun getExternalFilesDirs(type: String?): Array<File> {
+            listedStorageDirectories = true
+            return super.getExternalFilesDirs(type)
         }
     }
 
-    companion object {
-        private const val STORAGE_CHECKS = "com.ichi2.anki.common.storage.LegacyStorageKt"
+    private class TestWidgetProvider : AnalyticsWidgetProvider() {
+        @Volatile
+        var updated = false
+
+        override fun performUpdate(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetIds: AppWidgetIds,
+        ) {
+            updated = true
+        }
     }
 }
