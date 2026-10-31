@@ -3,12 +3,10 @@
 
 package com.ichi2.anki.jsaddons
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.common.storage.CollectionHelper
-import com.ichi2.testutils.ShadowStatFs
+import android.content.Context
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.spyk
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
@@ -16,38 +14,27 @@ import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.hamcrest.io.FileMatchers.anExistingFile
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertFailsWith
 
-@RunWith(AndroidJUnit4::class)
-class TgzPackageExtractTest : RobolectricTest() {
+class TgzPackageExtractTest {
+    @get:Rule
+    val temporaryFolder = TemporaryFolder()
+
     private lateinit var tarballPath: String
     private lateinit var addonDir: File
     private lateinit var addonPackage: TgzPackageExtract
 
     @Before
-    override fun setUp() {
-        super.setUp()
-
-        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
-        ShadowStatFs.markAsNonEmpty(currentAnkiDroidDirectory)
-        addonPackage = TgzPackageExtract(targetContext)
-        addonDir = File(currentAnkiDroidDirectory, "addons")
+    fun setUp() {
+        addonPackage = TgzPackageExtract(mockk<Context>(relaxed = true), bytesAvailable = { Long.MAX_VALUE })
+        addonDir = temporaryFolder.newFolder("addons")
         tarballPath = getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")
-        if (!addonDir.exists()) {
-            addonDir.mkdirs()
-        }
-    }
-
-    @After
-    override fun tearDown() {
-        super.tearDown()
-        ShadowStatFs.reset()
     }
 
     /**

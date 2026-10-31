@@ -88,6 +88,7 @@ typealias AddonsPackageDir = File
 
 class TgzPackageExtract(
     private val context: Context,
+    private val bytesAvailable: (String) -> Long = FileUtil::determineBytesAvailable,
 ) {
     private val gzipSignature = byteArrayOf(0x1f, 0x8b.toByte())
     private var requiredMinSpace: Long = 0
@@ -141,7 +142,7 @@ class TgzPackageExtract(
 
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
         requiredMinSpace = tarballFile.length() * 2
-        availableSpace = FileUtil.determineBytesAvailable(addonsPackageDir.canonicalPath)
+        availableSpace = bytesAvailable(addonsPackageDir.canonicalPath)
         InsufficientSpaceException.throwIfInsufficientSpace(context, requiredMinSpace, availableSpace)
 
         // If space available then unGZip it
@@ -407,7 +408,7 @@ class TgzPackageExtract(
      * @param outputDir output directory
      */
     private fun enforceSpaceUsedLessThanHalfAvailable(outputDir: File) {
-        val newAvailableSpace: Long = FileUtil.determineBytesAvailable(outputDir.canonicalPath)
+        val newAvailableSpace: Long = bytesAvailable(outputDir.canonicalPath)
         if (newAvailableSpace <= availableSpace / 2) {
             throw ArchiveException(context.getString(CommonString.file_extract_exceeds_storage_space))
         }
