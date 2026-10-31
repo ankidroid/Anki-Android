@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelStore
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
@@ -27,6 +28,7 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.rules.BackendOverrideRule
 import com.ichi2.testutils.withAllFilesAccess
@@ -43,6 +45,7 @@ import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThan
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -59,12 +62,21 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.measureTime
 
 /** Test of [DeckPickerViewModel] */
-@RunWith(AndroidJUnit4::class)
-class DeckPickerViewModelTest : RobolectricTest() {
-    @get:Rule
-    val backendOverride = BackendOverrideRule()
+class DeckPickerViewModelTest : JvmTest() {
+    private val viewModels = ViewModelStore()
+    private var viewModelCount = 0
+    private val viewModel: DeckPickerViewModel by lazy { buildViewModel() }
 
-    private val viewModel: DeckPickerViewModel by lazy { DeckPickerViewModel() }
+    private fun buildViewModel() = DeckPickerViewModel().also { viewModels.put("deck-picker-${viewModelCount++}", it) }
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
 
     @Test
     fun `delete confirmation includes cards in subdecks`() =
@@ -251,64 +263,6 @@ class DeckPickerViewModelTest : RobolectricTest() {
         }
     }
 
-    @Test // Issue 13574: the storage decision may be deferred until permissions are granted
-    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
-    fun `startup decides a collection path once permissions are granted`() =
-        runTest {
-            targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
-
-            withManageExternalStorageInManifest {
-                withAllFilesAccess {
-                    viewModel.handleStartup(externalManagerEnvironment())
-                    advanceRobolectricLooperUntil { viewModel.startupJob?.isCompleted == true }
-                }
-            }
-
-            assertEquals(publicCollectionPath, targetContext.sharedPrefs().getString(CollectionHelper.PREF_COLLECTION_PATH, null))
-            assertEquals(DeckPickerViewModel.StartupResponse.Success, viewModel.flowOfStartupResponse.value)
-        }
-
-    @Test // Issue 13574: the storage decision must not be made before the user grants or skips
-    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
-    fun `startup requests permissions without deciding a collection path`() {
-        targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
-
-        withManageExternalStorageInManifest { viewModel.handleStartup(externalManagerEnvironment()) }
-
-        assertEquals(
-            DeckPickerViewModel.StartupResponse.RequestPermissions(StoragePermissionSet.EXTERNAL_MANAGER),
-            viewModel.flowOfStartupResponse.value,
-        )
-        assertThat(
-            "no collection path is decided before permissions are granted",
-            !targetContext.sharedPrefs().contains(CollectionHelper.PREF_COLLECTION_PATH),
-        )
-    }
-
-    /**
-     * `DeckPicker`'s environment on a build declaring `MANAGE_EXTERNAL_STORAGE`, on Android 11+.
-     *
-     * Not `@Config(sdk = R)`: startup opens the backend, which is unavailable in Robolectric's
-     * per-SDK sandbox. The default SDK satisfies `EXTERNAL_MANAGER`'s API requirement.
-     */
-    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
-    private fun externalManagerEnvironment() =
-        object : DeckPickerViewModel.AnkiDroidEnvironment {
-            override val requiredPermissions = StoragePermissionSet.EXTERNAL_MANAGER
-
-            override fun hasRequiredPermissions() = requiredPermissions.hasRequiredPermissions(targetContext)
-
-            override val preferences: SharedPreferences
-                get() = targetContext.sharedPrefs()
-
-            override fun decideStorageIfUndecided() {
-                check(hasRequiredPermissions()) { "the storage decision requires granted permissions" }
-                InitialActivity.decideStorageIfUndecided(targetContext)
-            }
-
-            override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(targetContext)
-        }
-
     @Test
     fun `deleteDeck reports progress`() =
         runProgressTest {
@@ -322,7 +276,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
         runTest {
             col.decks.select(addDeck("Deleted"))
 
-            DeckPickerViewModel().run {
+            buildViewModel().run {
                 withQueuedCollectionAccess {
                     val deletion = deleteSelectedDeck()
                     val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(progressManager.progress.value)
@@ -364,7 +318,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
     private fun runProgressTest(testBody: suspend DeckPickerViewModel.() -> Unit) =
         runTest {
             Dispatchers.setMain(StandardTestDispatcher(testScheduler))
-            DeckPickerViewModel().testBody()
+            buildViewModel().testBody()
         }
 
     private suspend fun TestScope.withQueuedCollectionAccess(block: suspend () -> Unit) {
@@ -570,6 +524,82 @@ class DeckPickerViewModelTest : RobolectricTest() {
             // Default is the nearest previous row, but deleting its last child hides it.
             assertEquals(expected, col.decks.selected())
             assertEquals(expected, viewModel.focusedDeck)
+        }
+}
+
+@RunWith(AndroidJUnit4::class)
+class DeckPickerStartupViewModelTest : RobolectricTest() {
+    @get:Rule
+    val backendOverride = BackendOverrideRule()
+
+    private val viewModels = ViewModelStore()
+    private val viewModel by lazy { DeckPickerViewModel().also { viewModels.put("deck-picker", it) } }
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
+    @Test // Issue 13574: the storage decision may be deferred until permissions are granted
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
+    fun `startup decides a collection path once permissions are granted`() =
+        runTest {
+            targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+
+            withManageExternalStorageInManifest {
+                withAllFilesAccess {
+                    viewModel.handleStartup(externalManagerEnvironment())
+                    advanceRobolectricLooperUntil { viewModel.startupJob?.isCompleted == true }
+                }
+            }
+
+            assertEquals(publicCollectionPath, targetContext.sharedPrefs().getString(CollectionHelper.PREF_COLLECTION_PATH, null))
+            assertEquals(DeckPickerViewModel.StartupResponse.Success, viewModel.flowOfStartupResponse.value)
+        }
+
+    @Test // Issue 13574: the storage decision must not be made before the user grants or skips
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
+    fun `startup requests permissions without deciding a collection path`() {
+        targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+
+        withManageExternalStorageInManifest { viewModel.handleStartup(externalManagerEnvironment()) }
+
+        assertEquals(
+            DeckPickerViewModel.StartupResponse.RequestPermissions(StoragePermissionSet.EXTERNAL_MANAGER),
+            viewModel.flowOfStartupResponse.value,
+        )
+        assertThat(
+            "no collection path is decided before permissions are granted",
+            !targetContext.sharedPrefs().contains(CollectionHelper.PREF_COLLECTION_PATH),
+        )
+    }
+
+    /**
+     * `DeckPicker`'s environment on a build declaring `MANAGE_EXTERNAL_STORAGE`, on Android 11+.
+     *
+     * Not `@Config(sdk = R)`: startup opens the backend, which is unavailable in Robolectric's
+     * per-SDK sandbox. The default SDK satisfies `EXTERNAL_MANAGER`'s API requirement.
+     */
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
+    private fun externalManagerEnvironment() =
+        object : DeckPickerViewModel.AnkiDroidEnvironment {
+            override val requiredPermissions = StoragePermissionSet.EXTERNAL_MANAGER
+
+            override fun hasRequiredPermissions() = requiredPermissions.hasRequiredPermissions(targetContext)
+
+            override val preferences: SharedPreferences
+                get() = targetContext.sharedPrefs()
+
+            override fun decideStorageIfUndecided() {
+                check(hasRequiredPermissions()) { "the storage decision requires granted permissions" }
+                InitialActivity.decideStorageIfUndecided(targetContext)
+            }
+
+            override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(targetContext)
         }
 
     @Test
