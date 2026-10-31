@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: MIT AND GPL-3.0-or-later
+  SPDX-FileCopyrightText: Microsoft Corporation
+  SPDX-FileCopyrightText: Contributors to the AnkiDroid project
+  SPDX-FileComment: Microsoft Fluent Emoji, Card file box, Flat, with the AnkiDroid star.
+  Box source (MIT): https://raw.githubusercontent.com/microsoft/fluentui-emoji/e8a613a0baedbca8f144fa70950714f2583318a8/assets/Card%20file%20box/Flat/card_file_box_flat.svg
+  Star source (GPL-3.0-or-later): https://github.com/ankidroid/Anki-Android/blob/2e899c167c8d27a0217412574f2a3812e669814c/AnkiDroid/src/main/res/drawable/ic_star_notify.xml
+  Changes: Converted to VectorDrawable and recoloured with AnkiDroid blue (#2196F3),
+  related blue shades and white. Replaced the three tabbed cards with two plain cards.
+  Added the AnkiDroid star to the rear card, partly obscured by the front card.
+  Original box path geometry is unchanged.
+  Licence notices: LICENSES/MIT.txt and LICENSES/GPL-3.0-or-later.txt
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="180dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path
+        android:fillColor="@color/material_blue_500"
+        android:pathData="M27.8774 29.9491H4.12258C2.95017 29.9491 2 28.9989 2 27.8265L1.99998 15.7788C1.99998 13.6918 3.69181 12 5.77881 12H26.2212C28.3082 12 30 13.6918 30 15.7788L30 27.8265C30 28.9989 29.0492 29.9491 27.8774 29.9491Z" />
+
+    <path
+        android:fillColor="@color/material_blue_200"
+        android:pathData="M4.12258 5H27.8774C29.0492 5 30 5.95017 30 7.12258V16.3934C30 17.5658 29.0498 18.516 27.8774 18.516H4.12258C2.95017 18.516 2 17.5658 2 16.3934V7.12258C2 5.95017 2.95017 5 4.12258 5Z" />
+
+    <path
+        android:fillColor="@color/material_blue_200"
+        android:pathData="M13.4995 21H18.5005C19.3277 21 20 21.6731 20 22.5V25.5C20 26.3269 19.3271 27 18.5005 27H13.4995C12.6729 27 12 26.3269 12 25.5V22.5C12 21.6731 12.6729 21 13.4995 21Z" />
+
+    <path
+        android:fillColor="@color/material_blue_700"
+        android:pathData="M27.8774 6.51849C28.2214 6.51849 28.5017 6.7988 28.5017 7.14278V16.3757C28.5017 16.7197 28.2214 17 27.8774 17H27L16 15.5L5 17H4.12258C3.7786 17 3.49829 16.7197 3.49829 16.3757V7.14278C3.49829 6.7988 3.7786 6.51849 4.12258 6.51849H27.8774Z" />
+
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M18.5002 26H13.4998C13.2237 26 13 25.7763 13 25.5V22.5C13 22.2237 13.2237 22 13.4998 22H18.5002C18.7763 22 19 22.2237 19 22.5V25.5C19 25.7763 18.7763 26 18.5002 26Z" />
+
+    <path
+        android:fillColor="#E3F2FD"
+        android:pathData="M6.2 17V10.522222C6.2 9.583322 6.9611 8.822222 7.9 8.822222H25.3C26.2389 8.822222 27 9.583322 27 10.522222V17H6.2Z" />
+
+    <group>
+        <clip-path
+            android:pathData="M6.2 17V10.522222C6.2 9.583322 6.9611 8.822222 7.9 8.822222H25.3C26.2389 8.822222 27 9.583322 27 10.522222V17H6.2Z" />
+        <group
+            android:scaleX="0.045"
+            android:scaleY="0.045"
+            android:translateX="17.777778"
+            android:translateY="9.533333">
+            <path
+                android:fillColor="@color/material_blue_500"
+                android:pathData="M 48 0 C 47 0 45.9 0.1 44.9 0.4 C 40.7 1.8 38.6 5.8 37.6 9.5 C 36.6 13.2 36.4 17.3 36.3 21.4 C 36.2 25.5 36.1 29.7 35.8 33.1 C 35.5 36.5 34.6 39 34.1 39.7 C 33.6 40.4 31.4 42 28.3 43.3 C 25.2 44.7 21.3 46 17.4 47.4 C 13.5 48.8 9.7 50.3 6.4 52.3 C 3.2 54.3 0 57.5 0 62 C 0 66.5 3.1 69.6 6.4 71.7 C 9.7 73.8 13.4 75.2 17.3 76.7 C 21.2 78.1 25.1 79.4 28.2 80.8 C 31.3 82.2 33.5 83.7 34 84.4 C 34.5 85.1 35.3 87.7 35.6 91.1 C 35.9 94.5 36 98.6 36.1 102.8 C 36.2 106.9 36.5 111 37.4 114.7 C 38.3 118.4 40.4 122.4 44.6 123.8 C 48.8 125.2 52.8 123.2 55.8 120.7 C 58.8 118.2 61.4 115.1 63.9 111.9 C 66.4 108.7 68.9 105.3 71.2 102.8 C 73.5 100.3 75.6 98.6 76.5 98.4 C 77.3 98.1 80 98.2 83.3 98.9 C 86.6 99.6 90.6 100.9 94.5 102 C 98.5 103.1 102.4 104.2 106.2 104.4 C 110 104.6 114.4 103.9 117.1 100.3 C 119.7 96.7 119.1 92.3 117.7 88.7 C 116.3 85.1 114.1 81.7 111.8 78.3 C 109.5 74.9 107.1 71.5 105.4 68.6 C 103.7 65.7 102.8 63.1 102.8 62.2 C 102.8 61.2 103.9 58.2 106.1 54.8 C 108.2 51.4 111.1 47.5 113.6 43.7 C 115.6 40.7 117.3 37.6 118.4 34.5 C 119.4 31.3 119.7 27.4 117.4 24.2 C 114.8 20.6 110.4 19.9 106.5 20.1 C 102.7 20.3 98.7 21.4 94.7 22.5 C 90.7 23.6 86.8 24.9 83.5 25.6 C 80.2 26.3 77.5 26.3 76.7 26.1 C 75.9 25.9 73.7 24.2 71.4 21.7 C 69.1 19.1 66.7 15.8 64.2 12.5 C 61.7 9.2 59.1 6.1 56.1 3.6 C 53.8 1.7 51 0.1 48 0 Z" />
+        </group>
+    </group>
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5 17V14C5 13.0611 5.7611 12.3 6.7 12.3H24.3C25.2389 12.3 26 13.0611 26 14V17H5Z" />
+</vector>
