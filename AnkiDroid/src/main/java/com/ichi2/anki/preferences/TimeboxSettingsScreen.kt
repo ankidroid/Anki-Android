@@ -234,7 +234,7 @@ private fun TimeboxDurationCard(
         }
     }
 
-    val validRange = TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES..TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES
+    val validRange = TimeboxTimeLimit.INPUT_RANGE
     val count = textValue.toIntOrNull() ?: minutes
     val safeCount = if (count in validRange) count else minutes
     val unitSuffix = pluralStringResource(CommonPlurals.timebox_minutes_suffix, safeCount)
@@ -293,7 +293,7 @@ private fun TimeboxDurationCard(
                     shape = RoundedCornerShape(16.dp),
                     colors = buttonColors,
                     border = controlBorder,
-                    enabled = (textValue.toIntOrNull() ?: minutes) > TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES,
+                    enabled = (textValue.toIntOrNull() ?: minutes) > validRange.first,
                 ) {
                     Icon(
                         painter = painterResource(CommonR.drawable.ic_remove),
@@ -311,7 +311,8 @@ private fun TimeboxDurationCard(
                             } else {
                                 digits
                             }
-                        val filtered = noLeadingZeros.take(3)
+                        val maxDigits = validRange.last.toString().length
+                        val filtered = noLeadingZeros.take(maxDigits)
                         textValue = filtered
                         val p = filtered.toIntOrNull()
                         if (p != null && p in validRange) {
@@ -390,7 +391,7 @@ private fun TimeboxDurationCard(
                     shape = RoundedCornerShape(16.dp),
                     colors = buttonColors,
                     border = controlBorder,
-                    enabled = (textValue.toIntOrNull() ?: minutes) < TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES,
+                    enabled = (textValue.toIntOrNull() ?: minutes) < validRange.last,
                 ) {
                     Icon(
                         painter = painterResource(CommonR.drawable.ic_add),
