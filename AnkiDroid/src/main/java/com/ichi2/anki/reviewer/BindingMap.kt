@@ -13,7 +13,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
  *
  * That way, key presses and joystick movements can be detected to trigger their actions.
  *
- * * [onKeyDown]: captures key presses
+ * * [dispatchKeyEvent]: captures key presses
  * * [onGenericMotionEvent]: captures joystick/pedal input. Axes can either be bidirectional,
  *   or unidirectional.
  */
@@ -25,6 +25,9 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     private val keyMap = HashMap<Binding, List<Pair<A, B>>>()
     private val axisDetectors: List<SingleAxisDetector<B, A>>
     private val gestureMap = HashMap<Gesture, List<Pair<A, B>>>()
+
+    /** Key codes of the current presses handled by [dispatchKeyEvent] */
+    private val handledKeyCodes = mutableSetOf<Int>()
 
     init {
         val axisList = mutableListOf<SingleAxisDetector<B, A>>()
@@ -55,10 +58,29 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
         axisDetectors = axisList.toList()
     }
 
-    fun onKeyDown(event: KeyEvent): Boolean {
-        if (event.repeatCount > 0) {
-            return false
+    /**
+     * Triggers the actions bound to key presses, and consumes the repeats and the release of the
+     * presses it handled.
+     *
+     * Otherwise, they could reach a WebView, which returns a release without its press as unhandled,
+     * and Android then performs the key's fallback action (e.g. 'B' -> 'Back')
+     *
+     * @return whether [event] was handled
+     */
+    fun dispatchKeyEvent(event: KeyEvent): Boolean =
+        when (event.action) {
+            KeyEvent.ACTION_DOWN ->
+                if (event.repeatCount == 0) {
+                    handledKeyCodes.remove(event.keyCode)
+                    processKeyPress(event).also { handled -> if (handled) handledKeyCodes.add(event.keyCode) }
+                } else {
+                    event.keyCode in handledKeyCodes
+                }
+            KeyEvent.ACTION_UP -> handledKeyCodes.remove(event.keyCode)
+            else -> false
         }
+
+    private fun processKeyPress(event: KeyEvent): Boolean {
         val bindings = possibleKeyBindings(event)
         for (binding in bindings) {
             val actionAndMappableBindings = keyMap[binding] ?: continue

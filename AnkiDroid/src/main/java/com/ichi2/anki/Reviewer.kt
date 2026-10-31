@@ -1417,7 +1417,7 @@ open class Reviewer :
         if (answerFieldIsFocused()) {
             return super.onKeyDown(keyCode, event)
         }
-        if (processor.onKeyDown(event) || super.onKeyDown(keyCode, event)) {
+        if (processor.dispatchKeyEvent(event) || super.onKeyDown(keyCode, event)) {
             return true
         }
         return false

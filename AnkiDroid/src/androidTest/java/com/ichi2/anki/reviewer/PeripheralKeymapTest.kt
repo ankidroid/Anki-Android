@@ -24,7 +24,7 @@ class PeripheralKeymapTest : InstrumentedTest() {
         val bindingMap =
             BindingMap(sharedPrefs, ViewerCommand.entries) { e: ViewerCommand, _ -> processed.add(e) }
 
-        bindingMap.onKeyDown(
+        bindingMap.dispatchKeyEvent(
             getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1),
         )
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
@@ -34,5 +34,5 @@ class PeripheralKeymapTest : InstrumentedTest() {
         )
     }
 
-    private fun getNumpadEvent(keycode: Int): KeyEvent = KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON)
+    private fun getNumpadEvent(keycode: Int): KeyEvent = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, keycode, 0, KeyEvent.META_NUM_LOCK_ON)
 }

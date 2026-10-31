@@ -31,10 +31,42 @@ class BindingMapTest {
 
         assertThat(event.unicodeChar.toChar(), equalTo('\u0000'))
         assertThat(event.getUnicodeChar(0).toChar(), equalTo('1'))
-        bindingMap.onKeyDown(event)
+        bindingMap.dispatchKeyEvent(event)
 
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
         assertThat(processed[0], equalTo(ViewerCommand.TOGGLE_FLAG_RED))
+    }
+
+    @Test
+    fun `dispatchKeyEvent consumes the whole handled press`() {
+        val processed = mutableListOf<ViewerCommand>()
+        val bindingMap = BindingMap(SPMockBuilder().createSharedPreferences(), ViewerCommand.entries) { e, _ -> processed.add(e) }
+
+        assertTrue(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B)), "press")
+        assertTrue(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B, repeatCount = 1)), "repeat")
+        assertTrue(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_B)), "release")
+        assertThat(processed, hasSize(1))
+    }
+
+    @Test
+    fun `dispatchKeyEvent does not consume unhandled presses`() {
+        val bindingMap = BindingMap(SPMockBuilder().createSharedPreferences(), ViewerCommand.entries) { _, _ -> true }
+
+        assertFalse(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_L1)), "press")
+        assertFalse(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_L1, repeatCount = 1)), "repeat")
+        assertFalse(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_L1)), "release")
+    }
+
+    @Test
+    fun `dispatchKeyEvent forgets a handled press when the key is pressed again`() {
+        var handle = true
+        val bindingMap = BindingMap(SPMockBuilder().createSharedPreferences(), ViewerCommand.entries) { _, _ -> handle }
+        // the release of this press never arrives, e.g. another view took the focus
+        assertTrue(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B)))
+
+        handle = false
+        assertFalse(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B)), "press")
+        assertFalse(bindingMap.dispatchKeyEvent(keyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_B)), "release")
     }
 
     @Test
@@ -84,6 +116,17 @@ class BindingMapTest {
 
         override fun getBindings(prefs: SharedPreferences) = listOf(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.ANSWER))
     }
+
+    private fun keyEvent(
+        action: Int,
+        keyCode: Int,
+        repeatCount: Int = 0,
+    ): KeyEvent =
+        mock(KeyEvent::class.java).also {
+            whenever(it.action).thenReturn(action)
+            whenever(it.keyCode).thenReturn(keyCode)
+            whenever(it.repeatCount).thenReturn(repeatCount)
+        }
 
     private fun axisEvent(x: Float): MotionEvent =
         mock(MotionEvent::class.java).also {

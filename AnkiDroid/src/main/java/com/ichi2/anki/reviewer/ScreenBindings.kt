@@ -38,8 +38,8 @@ class ScreenBindings(
         }
     }
 
-    /** Triggers the bindings of key presses. Their repeats and releases aren't handled */
-    fun dispatchKeyEvent(event: KeyEvent): Boolean = event.action == KeyEvent.ACTION_DOWN && bindingMaps.any { it.onKeyDown(event) }
+    /** Triggers the bindings of key presses, and consumes the repeats and the release of the handled ones */
+    fun dispatchKeyEvent(event: KeyEvent): Boolean = bindingMaps.any { it.dispatchKeyEvent(event) }
 
     /**
      * Triggers the bindings of joystick movements. They go to the focused view, so take them from the whole screen.
