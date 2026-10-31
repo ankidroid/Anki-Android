@@ -230,6 +230,7 @@
 
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_missing_media" comment="Shown while studying when an image or sound on the card can’t be found">This card has missing media</string>
 
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Search decks</string>
