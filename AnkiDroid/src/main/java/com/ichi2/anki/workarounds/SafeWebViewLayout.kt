@@ -167,6 +167,16 @@ open class SafeWebViewLayout :
     fun dispatchGamepadKeyEvent(event: KeyEvent): Boolean =
         KeyEvent.isGamepadButton(event.keyCode) && activeWebView?.dispatchKeyEvent(event) ?: false
 
+    /**
+     * Passes joystick movements to the [WebView] even if it isn't focused, so `navigator.getGamepads()`
+     * reports the gamepad axes, including the D-pads that report as a joystick.
+     *
+     * While no page reads the gamepads, the [WebView] scrolls with the left stick instead.
+     */
+    @MainThread
+    fun dispatchGamepadMotionEvent(event: MotionEvent): Boolean =
+        event.isFromSource(InputDevice.SOURCE_JOYSTICK) && activeWebView?.dispatchGenericMotionEvent(event) ?: false
+
     @MainThread
     fun scrollVerticallyBy(y: Int) {
         val webView = activeWebView ?: return

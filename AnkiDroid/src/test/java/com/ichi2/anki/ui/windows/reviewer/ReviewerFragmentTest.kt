@@ -5,6 +5,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.graphics.Path
 import android.text.InputType
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -402,6 +403,21 @@ class ReviewerFragmentTest : RobolectricTest() {
 
                 val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
                 assertEquals(listOf(press, release), webView.dispatchedKeyEvents)
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `unbound joystick movements are passed to the card WebView Issue 21395`() =
+        runTest {
+            addBasicNote()
+            withReviewer {
+                // Joystick events go to the focused view, which is the study screen, not the WebView.
+                // Some gamepads report their D-pad as a joystick: this is the D-pad pressed right
+                requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.HAT_X, 1f))
+
+                val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
+                assertEquals(1f, webView.genericMotionEvents.last().getAxisValue(MotionEvent.AXIS_HAT_X))
             }
         }
 

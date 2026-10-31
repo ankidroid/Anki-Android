@@ -365,8 +365,11 @@ class ReviewerFragment :
             }
         // the whiteboard bindings take priority over the study screen ones
         bindings = ScreenBindings(this, whiteboardBindingMap, bindingMap)
-        // joystick events follow the focus, which the root layout keeps
-        binding.root.setOnGenericMotionListener { _, event -> bindings.onGenericMotionEvent(event) }
+        // joystick events follow the focus, which the root layout keeps,
+        // so the WebView only receives the joystick movements passed to it
+        binding.root.setOnGenericMotionListener { _, event ->
+            bindings.onGenericMotionEvent(event) || webViewLayout.dispatchGamepadMotionEvent(event)
+        }
     }
 
     private fun setupAnswerButtons() {
