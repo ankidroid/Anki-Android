@@ -2,11 +2,11 @@
 
 package com.ichi2.anki.browser
 
-import android.content.Context
 import androidx.core.content.edit
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.preferences.SharedPreferencesProvider
 
 interface LastDeckIdRepository {
     var lastDeckId: DeckId?
@@ -20,28 +20,29 @@ interface LastDeckIdRepository {
  * [Decks.select] is not used in the Card Browser: this can be launched from a review session and
  * should not affect the session
  */
-class SharedPreferencesLastDeckIdRepository : LastDeckIdRepository {
+class SharedPreferencesLastDeckIdRepository(
+    private val preferences: SharedPreferencesProvider =
+        SharedPreferencesProvider { appContext.getSharedPreferences(PERSISTENT_STATE_FILE, 0) },
+) : LastDeckIdRepository {
     override var lastDeckId: DeckId?
         get() =
-            appContext
-                .getSharedPreferences(PERSISTENT_STATE_FILE, 0)
+            preferences
+                .sharedPrefs()
                 .getLong(PREF_LAST_DECK_ID, Decks.NOT_FOUND_DECK_ID)
                 .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
-        set(value) =
-            if (value == null) {
-                clearLastDeckId()
-            } else {
-                appContext.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
+        set(value) {
+            preferences.sharedPrefs().edit {
+                if (value == null) {
+                    remove(PREF_LAST_DECK_ID)
+                } else {
                     putLong(PREF_LAST_DECK_ID, value)
                 }
             }
+        }
 
     companion object {
         fun clearLastDeckId() {
-            val context: Context = appContext
-            context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-                remove(PREF_LAST_DECK_ID)
-            }
+            SharedPreferencesLastDeckIdRepository().lastDeckId = null
         }
 
         private const val PERSISTENT_STATE_FILE = "DeckPickerState"
