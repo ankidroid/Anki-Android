@@ -3,10 +3,8 @@
 package com.ichi2.anki.dialogs
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.lifecycle.ViewModelStore
 import app.cash.turbine.test
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.ChangeNoteTypeViewModel.Companion.ARG_NOTE_IDS
 import com.ichi2.anki.dialogs.ChangeNoteTypeViewModelTest.Launch.Cloze
 import com.ichi2.anki.dialogs.ChangeNoteTypeViewModelTest.Launch.Custom
@@ -14,16 +12,29 @@ import com.ichi2.anki.dialogs.ChangeNoteTypeViewModelTest.Launch.Regular
 import com.ichi2.anki.dialogs.SelectedIndex.NOTHING
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.Job
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
-@RunWith(AndroidJUnit4::class)
-class ChangeNoteTypeViewModelTest : RobolectricTest() {
+class ChangeNoteTypeViewModelTest : JvmTest() {
+    private val viewModels = ViewModelStore()
+    private var viewModelCount = 0
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
     @Test
     fun `no changes to save`() =
         // on Anki Desktop, this keeps the screen open with a 'no changes to save' alert
@@ -31,7 +42,7 @@ class ChangeNoteTypeViewModelTest : RobolectricTest() {
             val expectedException =
                 assertFailsWith<ChangeNoteTypeException> { executeChangeNoteTypeAsync().await() }
             assertThat(expectedException.message, equalTo("No changes to save"))
-            assertThat(expectedException.kind.toString(targetContext), equalTo("No changes to save"))
+            assertThat(expectedException.kind, equalTo(ChangeNoteTypeException.Kind.NO_CHANGES))
         }
 
     @Test
@@ -487,7 +498,7 @@ class ChangeNoteTypeViewModelTest : RobolectricTest() {
             SavedStateHandle(
                 mapOf(ARG_NOTE_IDS to noteIds.toLongArray()),
             ),
-        )
+        ).also { viewModels.put("change-note-type-${viewModelCount++}", it) }
 
     fun Launch.setup(): List<NoteId> =
         when (this) {

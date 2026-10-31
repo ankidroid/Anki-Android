@@ -26,6 +26,11 @@ import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class ChangeNoteTypeDialogTest : RobolectricTest() {
+    @Test
+    fun `no changes failure has a translated message`() {
+        assertThat(ChangeNoteTypeException.Kind.NO_CHANGES.toString(targetContext), equalTo("No changes to save"))
+    }
+
     /**
      * #20944: with an accessibility service enabled, a Spinner reports its initial selection.
      * A template selection is meaningless for cloze, and used to be fatal
