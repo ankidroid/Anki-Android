@@ -8,7 +8,9 @@ import org.gradle.api.tasks.testing.Test
 
 /** Configures Android unit-test resources, Robolectric SDK prefetch, and JVM options. */
 fun Project.configureRobolectricUnitTests(unitTests: UnitTestOptions) {
-    unitTests.isIncludeAndroidResources = true
+    val usesRobolectric = hasRobolectricUnitTestDependency()
+    unitTests.isIncludeAndroidResources = usesRobolectric
+    if (!usesRobolectric) return
 
     val robolectricDependencies = project(":AnkiDroid").layout.buildDirectory.file("robolectric-deps.properties")
     unitTests.all { test ->
@@ -20,6 +22,11 @@ fun Project.configureRobolectricUnitTests(unitTests: UnitTestOptions) {
         test.configureRobolectricJvm()
     }
 }
+
+private fun Project.hasRobolectricUnitTestDependency(): Boolean =
+    configurations.findByName("testImplementation")?.allDependencies?.any {
+        it.group == "org.robolectric" && it.name == "robolectric"
+    } == true
 
 /**
  * Opens the JDK internals required by Robolectric on Java 17 and higher.
