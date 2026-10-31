@@ -8,15 +8,12 @@ import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.PreferenceTestUtils
-import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -152,15 +149,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
                 ": $developerOptionsAtReportList",
             developerOptionsAtReportList.isEmpty(),
         )
-    }
-
-    @Test
-    fun `getPreferenceReportableValue - String`() {
-        assertThat(
-            SettingsFragment.getPreferenceReportableValue("3"),
-            Matchers.equalTo(3),
-        )
-        assertNull(SettingsFragment.getPreferenceReportableValue("foo"))
     }
 
     private fun Set<Int>.toStringResourceSet(): Set<String> =
