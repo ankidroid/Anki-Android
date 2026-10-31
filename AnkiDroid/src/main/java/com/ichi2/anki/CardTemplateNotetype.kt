@@ -32,9 +32,9 @@ class CardTemplateNotetype(
     private var originalTemplateOrds: ArrayList<CardOrdinal?> = notetype.templates.mapTo(ArrayList()) { it.ord }
     private var deletedTemplateOrds = ArrayList<CardOrdinal>()
 
-    fun toBundle(): Bundle =
+    fun toBundle(cacheDirectory: File = appContext.cacheDir): Bundle =
         Bundle().apply {
-            putString(STATE_EDITED_NOTE_TYPE_FILENAME, saveTempNoteType(appContext, notetype))
+            putString(STATE_EDITED_NOTE_TYPE_FILENAME, saveTempNoteType(cacheDirectory, notetype))
             putSerializable(STATE_ORIGINAL_TEMPLATE_ORDS, originalTemplateOrds)
             putSerializable(STATE_DELETED_TEMPLATE_ORDS, deletedTemplateOrds)
         }
@@ -96,7 +96,7 @@ class CardTemplateNotetype(
         Notetypes._updateTemplOrds(notetype)
     }
 
-    suspend fun saveToDatabase() {
+    suspend fun saveToDatabase(cacheDirectory: File = appContext.cacheDir) {
         Timber.d("saveToDatabase() called")
         val updated = notetype.deepClone()
         for ((i, template) in updated.templates.withIndex()) {
@@ -105,7 +105,7 @@ class CardTemplateNotetype(
         undoableOp {
             notetypes.updateDict(updated)
         }
-        clearTempNoteTypeFiles()
+        clearTempNoteTypeFiles(cacheDirectory)
     }
 
     /** Database ordinals of pending deletions, including the proposed editor position. */
@@ -152,11 +152,16 @@ class CardTemplateNotetype(
         fun saveTempNoteType(
             context: Context,
             tempNoteType: NotetypeJson,
+        ): String? = saveTempNoteType(context.cacheDir, tempNoteType)
+
+        fun saveTempNoteType(
+            cacheDirectory: File,
+            tempNoteType: NotetypeJson,
         ): String? {
             Timber.d("saveTempNoteType() saving tempNoteType")
             var tempNoteTypeFile: File
             try {
-                tempNoteTypeFile = File.createTempFile("editedTemplate", ".json", context.cacheDir)
+                tempNoteTypeFile = File.createTempFile("editedTemplate", ".json", cacheDirectory)
                 tempNoteTypeFile.writeJson(tempNoteType.jsonObject)
             } catch (ioe: IOException) {
                 Timber.e(ioe, "Unable to create+write temp file for note type")
@@ -181,9 +186,9 @@ class CardTemplateNotetype(
         }
 
         /** Clear any temp note type files saved into internal cache directory  */
-        fun clearTempNoteTypeFiles(): Int {
+        fun clearTempNoteTypeFiles(cacheDirectory: File = appContext.cacheDir): Int {
             var deleteCount = 0
-            for (c in appContext.cacheDir.listFiles() ?: arrayOf()) {
+            for (c in cacheDirectory.listFiles() ?: arrayOf()) {
                 val absolutePath = c.absolutePath
                 if (absolutePath.contains("editedTemplate") && absolutePath.endsWith("json")) {
                     if (!c.delete()) {
