@@ -8,7 +8,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
-import com.ichi2.anki.libanki.DB
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
 import java.io.File
@@ -21,7 +20,7 @@ import java.io.FileNotFoundException
 fun createDatabaseUsingAndroidFramework(
     context: Context,
     path: File,
-): DB {
+): FrameworkDatabase {
     val db =
         AnkiSupportSQLiteDatabase.withFramework(
             context,
@@ -30,7 +29,7 @@ fun createDatabaseUsingAndroidFramework(
         )
     db.disableWriteAheadLogging()
     db.query("PRAGMA synchronous = 2")
-    return DB(db)
+    return FrameworkDatabase(db)
 }
 
 /**
@@ -48,7 +47,7 @@ fun getDatabaseVersion(
     if (!collectionFile.exists()) {
         throw UnknownDatabaseVersionException(FileNotFoundException(collectionFile.absolutePath))
     }
-    var db: DB? = null
+    var db: FrameworkDatabase? = null
     return try {
         db = createDatabaseUsingAndroidFramework(context, collectionFile)
         db.queryScalar("SELECT ver FROM col")

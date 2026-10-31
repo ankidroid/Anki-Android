@@ -20,7 +20,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import java.util.Calendar
 import kotlin.test.assertFailsWith
 
@@ -329,7 +329,7 @@ class FinderTest : InMemoryAnkiTest() {
             assertEquals(2, col.findCards("rated:1").size)
             assertEquals(1, col.findCards("rated:2:2").size)
         } else {
-            Timber.w("some find tests disabled near cutoff")
+            LoggerFactory.getLogger(FinderTest::class.java).warn("some find tests disabled near cutoff")
         }
         // empty field
         assertEquals(0, col.findCards("front:").size)

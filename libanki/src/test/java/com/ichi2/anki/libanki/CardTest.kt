@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.libanki
 
-import android.annotation.SuppressLint
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
@@ -58,7 +57,7 @@ class CardTest : InMemoryAnkiTest() {
     }
 
     @Test
-    @SuppressLint("CheckResult") // col.models.current()!!.id
+    @Suppress("CheckResult") // col.models.current()!!.id
     fun test_misc_cards() {
         val note = col.newNote()
         note.setItem("Front", "1")

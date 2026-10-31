@@ -3,11 +3,23 @@
 // Convention plugin: applies the Kotlin JVM plugin and pins Java/Kotlin
 // toolchain settings for pure-JVM (non-Android) modules in this project.
 
+import com.ichi2.anki.gradle.libsLibrary
+import com.ichi2.anki.gradle.libsVersionFor
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
+    jacoco
+}
+
+configure<JacocoPluginExtension> {
+    toolVersion = libsVersionFor("jacoco")
+}
+
+dependencies {
+    "testRuntimeOnly"(libsLibrary("junit-platform-launcher"))
 }
 
 tasks.withType(JavaCompile::class).configureEach {
@@ -28,6 +40,8 @@ if (path != ":lint-rules") {
         "lintChecks"(project(":lint-rules"))
     }
     configure<com.android.build.api.dsl.Lint> {
+        lintConfig = rootProject.file("lint-release.xml")
+
         // Only relevant to lint implementations; :lint-rules is excluded above.
         disable += "UElementAsPsi"
 

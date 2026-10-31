@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.libanki
 
-import android.annotation.SuppressLint
 import anki.notetypes.StockNotetype
 import anki.notetypes.notetypeId
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
@@ -26,7 +25,7 @@ class NotetypesTest : InMemoryAnkiTest() {
         col.notetypes.addFieldLegacy(notetype, col.notetypes.newField("NewField"))
         assertThat("field added", fieldCount(), equalTo(3))
 
-        @SuppressLint("CheckResult")
+        @Suppress("CheckResult")
         col.notetypes.restoreNotetypeToStock(
             notetypeId { ntid = notetype.id },
             forceKind = StockNotetype.Kind.KIND_BASIC,

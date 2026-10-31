@@ -13,8 +13,10 @@ import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import java.io.File
+
+private val logger = LoggerFactory.getLogger(Media::class.java)
 
 /**
  * Media manager - handles the addition and removal of media files from the media directory (collection.media) and
@@ -36,10 +38,10 @@ open class Media(
     }
 
     init {
-        Timber.v("dir %s", col.mediaFolder)
+        logger.trace("dir {}", col.mediaFolder)
         col.mediaFolder?.let {
             if (!it.exists()) {
-                Timber.i("Creating collection.media")
+                logger.info("Creating collection.media")
                 it.mkdirs()
             }
         }
@@ -167,7 +169,7 @@ open class Media(
     /** Move provided files to the trash. */
     @LibAnkiAlias("trash_files")
     fun trashFiles(fnames: List<String>) {
-        Timber.i("Deleting %d file(s) from %s", fnames.size, dir)
+        logger.info("Deleting {} file(s) from {}", fnames.size, dir)
         col.backend.trashMediaFiles(fnames = fnames)
     }
 

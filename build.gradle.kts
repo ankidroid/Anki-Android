@@ -83,6 +83,20 @@ subprojects {
     tasks.withType<Test>().configureEach {
         // Stop on the first test failure in the merge queue; keep all results for other runs.
         failFast = providers.environmentVariable("GITHUB_EVENT_NAME").orNull == "merge_group"
+
+        // Keep backend behavior deterministic in Android and JVM tests alike.
+        environment("ANKI_TEST_MODE", "1")
+        maxHeapSize = "${unitTestForkMaxHeapGb}g"
+        useJUnitPlatform()
+        testLogging {
+            events("failed", "skipped")
+            showStackTraces = true
+            exceptionFormat = TestExceptionFormat.FULL
+        }
+        reportBackendTempLibraries(backendTempLibraryService)
+        testSummaryService?.let { service ->
+            addTestListener(GitHubActionsTestListener(service))
+        }
     }
 
     afterEvaluate {
@@ -103,26 +117,8 @@ subprojects {
                     robolectricDependencies.get().asFile.absolutePath,
                 )
 
-                // tell backend to avoid rollover time, and disable interval fuzzing
-                it.environment("ANKI_TEST_MODE", "1")
-
-                it.maxHeapSize = "${unitTestForkMaxHeapGb}g"
                 it.minHeapSize = "1g"
-
                 it.configureRobolectricJvm()
-                it.reportBackendTempLibraries(backendTempLibraryService)
-
-                it.useJUnitPlatform()
-                it.testLogging {
-                    events("failed", "skipped")
-                    showStackTraces = true
-                    exceptionFormat = TestExceptionFormat.FULL
-                }
-
-                // CI: Log test results to the GitHub Actions step summary.
-                testSummaryService?.let { service ->
-                    it.addTestListener(GitHubActionsTestListener(service))
-                }
 
                 it.maxParallelForks = gradleTestMaxParallelForks
                 it.forkEvery = 40

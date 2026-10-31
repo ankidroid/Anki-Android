@@ -41,7 +41,9 @@ import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONObject
-import timber.log.Timber
+import org.slf4j.LoggerFactory
+
+private val logger = LoggerFactory.getLogger(Notetypes::class.java)
 
 class NoteTypeNameID(
     val name: String,
@@ -674,24 +676,24 @@ class Notetypes(
         val cardIdsToDeleteSql =
             "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in ${Utils.ids2str(ords)}"
         val cids: List<CardId> = col.db.queryLongList(cardIdsToDeleteSql, noteTypeId)
-        // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
-        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, noteTypeId, Utils.ids2str(ords))
+        // logger.debug("cardIdsToDeleteSql was ' {}' and got {}", cardIdsToDeleteSql, Utils.ids2str(cids));
+        logger.debug("getCardIdsForModel found {} cards to delete for model {} and ords {}", cids.size, noteTypeId, Utils.ids2str(ords))
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
         val noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)"
         val preDeleteNoteCount: Int = col.db.queryScalar(noteCountPreDeleteSql, noteTypeId)
-        Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql)
-        Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount)
+        logger.debug("noteCountPreDeleteSql was '{}'", noteCountPreDeleteSql)
+        logger.debug("preDeleteNoteCount is {}", preDeleteNoteCount)
         val noteCountPostDeleteSql =
             "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in ${Utils.ids2str(ords)}"
-        Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql)
+        logger.debug("noteCountPostDeleteSql was '{}'", noteCountPostDeleteSql)
         val postDeleteNoteCount: Int = col.db.queryScalar(noteCountPostDeleteSql, noteTypeId)
-        Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount)
+        logger.debug("postDeleteNoteCount would be {}", postDeleteNoteCount)
         if (preDeleteNoteCount != postDeleteNoteCount) {
-            Timber.d("There will be orphan notes if these cards are deleted.")
+            logger.debug("There will be orphan notes if these cards are deleted.")
             return null
         }
-        Timber.d("Deleting these cards will not orphan notes.")
+        logger.debug("Deleting these cards will not orphan notes.")
         return cids
     }
 

@@ -23,6 +23,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.api.Flag
+import com.ichi2.anki.backend.queryCursor
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -291,7 +292,7 @@ class CardContentProvider : ContentProvider() {
                 // Search for notes using direct SQL query
                 val proj = sanitizeNoteProjection(projection)
                 val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null)
-                col.db.query(sql, *(selectionArgs ?: arrayOf()))
+                col.db.queryCursor(sql, *(selectionArgs ?: arrayOf()))
             }
             NOTES -> {
                 // Search for notes using the libanki browser syntax
@@ -301,7 +302,7 @@ class CardContentProvider : ContentProvider() {
                 if (noteIds.isNotEmpty()) {
                     val sel = "id in (${noteIds.joinToString(",")})"
                     val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null)
-                    col.db.query(sql)
+                    col.db.queryCursor(sql)
                 } else {
                     null
                 }
@@ -311,7 +312,7 @@ class CardContentProvider : ContentProvider() {
                 val noteId = uri.pathSegments[1]
                 val proj = sanitizeNoteProjection(projection)
                 val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null)
-                col.db.query(sql, noteId)
+                col.db.queryCursor(sql, noteId)
             }
             NOTES_ID_CARDS -> {
                 val currentNote = getNoteFromUri(uri, col)

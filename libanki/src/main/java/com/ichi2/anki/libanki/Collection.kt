@@ -86,8 +86,10 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendIoException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import java.io.File
+
+private val logger = LoggerFactory.getLogger(Collection::class.java)
 
 typealias ImportLogWithChanges = anki.import_export.ImportResponse
 
@@ -295,7 +297,7 @@ class Collection(
                 backend.closeCollection(downgrade)
             }
             dbInternal = null
-            Timber.i("Collection closed")
+            logger.info("Collection closed")
         }
     }
 
@@ -327,7 +329,7 @@ class Collection(
                     OpenDbArgs.Path(collectionFiles.colDb)
                 }
             }
-        Timber.i("(Re)opening Database: %s", reopenArgs)
+        logger.info("(Re)opening Database: {}", reopenArgs)
         return if (dbClosed) {
             val (database, created) =
                 Storage.openDB(
@@ -755,7 +757,7 @@ class Collection(
         cardIds: Iterable<CardId> = listOf(),
     ): OpChangesWithCount =
         backend.removeNotes(noteIds = noteIds, cardIds = cardIds).also {
-            Timber.d("removeNotes: %d changes", it.count)
+            logger.debug("removeNotes: {} changes", it.count)
         }
 
     @LibAnkiAlias("remove_notes_by_card")

@@ -13,7 +13,9 @@ import com.ichi2.anki.common.json.jsonLong
 import com.ichi2.anki.common.json.jsonString
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
-import timber.log.Timber
+import org.slf4j.LoggerFactory
+
+private val logger = LoggerFactory.getLogger(DeckConfig::class.java)
 
 /**
  * Creates a copy from [JSONObject] and use it as a string
@@ -66,11 +68,11 @@ data class DeckConfig(
                 // #6089 - Anki 2.1.24 changed this to a bool, reverted in 2.1.25.
                 jsonObject.getInt("timer") != 0
             } catch (e: Exception) {
-                Timber.w(e)
+                logger.warn("Unable to read timer configuration as an integer", e)
                 try {
                     jsonObject.getBoolean("timer")
                 } catch (ex: Exception) {
-                    Timber.w(ex)
+                    logger.warn("Unable to read timer configuration as a boolean", ex)
                     true
                 }
             }

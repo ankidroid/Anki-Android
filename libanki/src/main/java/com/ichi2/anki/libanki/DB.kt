@@ -7,47 +7,34 @@
 
 package com.ichi2.anki.libanki
 
-import android.content.ContentValues
-import android.database.Cursor
-import android.database.SQLException
-import android.database.sqlite.SQLiteDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import timber.log.Timber
+import net.ankiweb.rsdroid.database.SQLHandler
+import org.slf4j.LoggerFactory
+import java.sql.SQLException
 
-/**
- * Database layer for AnkiDroid. Wraps a [SupportSQLiteDatabase], and provides some helpers on top.
- *
- * @param database the SQLite database containing the collection data.
- */
+private val logger = LoggerFactory.getLogger(DB::class.java)
+
+/** SQL helpers for the collection's Rust-backed database, independent of Android. */
 class DB(
-    val database: SupportSQLiteDatabase,
+    val database: SQLHandler,
 ) {
     var mod = false
 
-    fun close() {
-        try {
-            database.close()
-            Timber.d("Database %s closed = %s", database.path, !database.isOpen)
-        } catch (e: Exception) {
-            // The pre-framework requery API ate this exception, but the framework API exposes it.
-            // We may want to propagate it in the future, but for now maintain the old API and log.
-            Timber.e(e, "Failed to close database %s", database.path)
-        }
-    }
+    /** The collection owns the connection; this wrapper does not close it. */
+    fun close() = Unit
 
     // Allows to avoid using new Object[]
     fun query(
         query: String,
-        vararg selectionArgs: Any,
-    ): Cursor = database.query(query, selectionArgs)
+        vararg selectionArgs: Any?,
+    ): DBCursor = DBCursor(database, query, selectionArgs)
 
     fun queryScalar(
         query: String,
-        vararg selectionArgs: Any,
+        vararg selectionArgs: Any?,
     ): Int {
         val scalar: Int
-        database.query(query, selectionArgs).use { cursor ->
+        query(query, *selectionArgs).use { cursor ->
             if (!cursor.moveToNext()) {
                 return 0
             }
@@ -58,22 +45,22 @@ class DB(
 
     fun queryString(
         query: String,
-        vararg bindArgs: Any,
+        vararg bindArgs: Any?,
     ): String {
-        database.query(query, bindArgs).use { cursor ->
+        query(query, *bindArgs).use { cursor ->
             if (!cursor.moveToNext()) {
                 throw SQLException("No result for query: $query")
             }
-            return cursor.getString(0)
+            return cursor.getString(0) ?: throw SQLException("Null string result for query: $query")
         }
     }
 
     fun queryLongScalar(
         query: String,
-        vararg bindArgs: Any,
+        vararg bindArgs: Any?,
     ): Long {
         var scalar: Long
-        database.query(query, bindArgs).use { cursor ->
+        query(query, *bindArgs).use { cursor ->
             if (!cursor.moveToNext()) {
                 return 0
             }
@@ -84,10 +71,10 @@ class DB(
 
     fun queryLongList(
         query: String,
-        vararg bindArgs: Any,
+        vararg bindArgs: Any?,
     ): ArrayList<Long> {
         val results = ArrayList<Long>()
-        database.query(query, bindArgs).use { cursor ->
+        query(query, *bindArgs).use { cursor ->
             while (cursor.moveToNext()) {
                 results.add(cursor.getLong(0))
             }
@@ -97,12 +84,12 @@ class DB(
 
     fun queryStringList(
         query: String,
-        vararg bindArgs: Any,
+        vararg bindArgs: Any?,
     ): ArrayList<String> {
         val results = ArrayList<String>()
-        database.query(query, bindArgs).use { cursor ->
+        query(query, *bindArgs).use { cursor ->
             while (cursor.moveToNext()) {
-                results.add(cursor.getString(0))
+                results.add(cursor.getString(0) ?: throw SQLException("Null string result for query: $query"))
             }
         }
         return results
@@ -119,9 +106,9 @@ class DB(
     ) {
         // permalink: https://github.com/ankitects/anki/blob/83c615cc7f9aef3c336936fa797671965538f89c/rslib/src/backend/dbproxy.rs#L170-L178
         if (!sql.lowercase().trim().startsWith("select")) {
-            Timber.i("clearing undo and study queues")
+            logger.info("clearing undo and study queues")
         }
-        database.execSQL(sql, `object`)
+        DBCursor(database, sql, `object`).close()
     }
 
     /**
@@ -134,27 +121,11 @@ class DB(
         val queries = sql.split(";")
         for (query in queries) {
             if (query.isNotEmpty()) {
-                database.execSQL(query)
+                execute(query)
             }
         }
     }
 
-    fun update(
-        table: String,
-        values: ContentValues,
-        whereClause: String?,
-        whereArgs: Array<String>?,
-    ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
-
-    fun insert(
-        table: String,
-        values: ContentValues,
-    ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
-
     val path: String
-        get() = database.path ?: ":memory:"
-
-    companion object {
-        private val MOD_SQL_STATEMENTS = arrayOf("insert", "update", "delete")
-    }
+        get() = "<rust>"
 }
