@@ -69,6 +69,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
@@ -309,6 +310,7 @@ open class DeckPicker :
 
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
+    private var lastFocusedDeck: DeckId? = null
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -504,6 +506,7 @@ open class DeckPicker :
         }
 
         super.onCreate(savedInstanceState)
+        lastFocusedDeck = savedInstanceState?.getLong(STATE_LAST_FOCUSED_DECK)?.takeIf { it != 0L }
         enableEdgeToEdge(
             statusBarStyle =
                 SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) {
@@ -584,6 +587,8 @@ open class DeckPicker :
                     Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
                 },
             )
+        // The first list may arrive after RecyclerView restores its view hierarchy.
+        deckListAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         deckPickerBinding.decks.adapter = deckListAdapter
         if (bottomNavigationEnabled) {
             deckPickerBinding.decks.addItemDecoration(
@@ -925,8 +930,14 @@ open class DeckPicker :
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
-            if (deckId != null) tryShowStudyOptionsPanel()
-            val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
+            // A fresh ViewModel has no focused deck until the collection is loaded.
+            if (deckId == null) return
+            tryShowStudyOptionsPanel()
+            // A new collector replays the selection after recreation. Let RecyclerView restore
+            // its scroll position unless the selected deck actually changed.
+            if (deckId == lastFocusedDeck) return
+            lastFocusedDeck = deckId
+            val position = viewModel.findDeckPosition(deckId)
 
             // Skip centering if the deck is already on screen.
             // Scrolling during a tap animation causes deck labels to overlap on older devices.
@@ -1607,6 +1618,7 @@ open class DeckPicker :
     public override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
+        lastFocusedDeck?.let { outState.putLong(STATE_LAST_FOCUSED_DECK, it) }
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
                 outState.putString("dbRestorationPath", it.newAnkiDroidDirectory.absolutePath)
@@ -2561,6 +2573,7 @@ open class DeckPicker :
 
         private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
         private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
+        private const val STATE_LAST_FOCUSED_DECK = "lastFocusedDeck"
 
         /**
          * Builds an intent for [DeckPicker]
