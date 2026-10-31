@@ -2,15 +2,20 @@
 
 package com.ichi2.anki.instanteditor
 
-import com.ichi2.anki.RobolectricTest
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ichi2.anki.instanteditor.InstantEditorViewModelTest.Companion.runInstantEditorViewModelTest
+import com.ichi2.testutils.JvmTest
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner as Parameterized
+import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-class InstantEditorViewModelParameterizedTest : RobolectricTest() {
+class InstantEditorViewModelParameterizedTest : JvmTest() {
+    @get:Rule
+    val instantTaskExecutor = InstantTaskExecutorRule()
+
     @JvmField // required for Parameter
     @Parameterized.Parameter(0)
     var input: String? = null

@@ -3,24 +3,27 @@
 
 package com.ichi2.anki.instanteditor
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.instantnoteeditor.InstantEditorProgress
 import com.ichi2.anki.instantnoteeditor.InstantEditorViewModel
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.instantnoteeditor.SaveNoteResult
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.testutils.JvmTest
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertIs
 
-@RunWith(AndroidJUnit4::class)
-class InstantEditorViewModelTest : RobolectricTest() {
+class InstantEditorViewModelTest : JvmTest() {
+    @get:Rule
+    val instantTaskExecutor = InstantTaskExecutorRule()
+
     @Test
     fun testSetUpNoteType_with_Cloze_NoteType() =
         runViewModelTest {
@@ -29,22 +32,14 @@ class InstantEditorViewModelTest : RobolectricTest() {
 
     @Test
     fun testSetUpNoteType_with_NoCloze_NoteType() =
-        runViewModelTest {
-            val noteTypes = col.notetypes.all().filter { it.isCloze }
-
-            for (note in noteTypes) {
-                col.backend.removeNotetype(note.id)
-            }
-
-            advanceRobolectricLooper()
-
-            // Reinitialize the viewModel
-            runViewModelTest({ InstantEditorViewModel() }) {
-                assertEquals(
-                    InstantNoteEditorActivity.DialogType.NO_CLOZE_NOTE_TYPES_DIALOG,
-                    dialogType.value,
-                )
-            }
+        runTest {
+            col.notetypes
+                .all()
+                .filter { it.isCloze }
+                .forEach { col.backend.removeNotetype(it.id) }
+            val viewModel = InstantEditorViewModel()
+            advanceUntilIdle()
+            assertEquals(InstantNoteEditorActivity.DialogType.NO_CLOZE_NOTE_TYPES_DIALOG, viewModel.dialogType.value)
         }
 
     @Test

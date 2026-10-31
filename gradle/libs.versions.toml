@@ -30,6 +30,8 @@ androidxActivity = "1.12.4"
 androidxAnnotation = "1.11.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.8.0"
+# https://developer.android.com/jetpack/androidx/releases/arch-core
+androidxArchCore = "2.2.0"
 # https://developer.android.com/jetpack/androidx/releases/benchmark
 androidxBenchmark = "1.5.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
@@ -147,6 +149,7 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
 androidx-core = { module = "androidx.core:core", version.ref = "androidxCore" }
+androidx-arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxArchCore" }
 androidx-concurrent-futures-ktx = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
