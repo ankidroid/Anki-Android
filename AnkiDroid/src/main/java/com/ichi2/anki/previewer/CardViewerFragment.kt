@@ -34,6 +34,7 @@ import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.showExternalAppLaunchBlockedDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
@@ -64,7 +65,14 @@ abstract class CardViewerFragment(
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
 
-    private val appPermission by lazy { AppPermissions(requireContext()) { showSnackbar(it) } }
+    private val appPermission
+        by lazy {
+            AppPermissions(
+                requireContext(),
+                showSnackbar = { showSnackbar(it) },
+                showLaunchDeniedDialog = { showExternalAppLaunchBlockedDialog(requireActivity()) },
+            )
+        }
 
     /** The [PermissionRequest] being asked about via [optInDialog] or [microphonePermissionLauncher] */
     private var activeRequest: PermissionRequest? = null
