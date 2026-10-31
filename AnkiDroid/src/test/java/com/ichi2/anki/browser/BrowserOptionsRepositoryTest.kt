@@ -2,9 +2,7 @@
 
 package com.ichi2.anki.browser
 
-import android.os.Build
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AnkiDroidApp
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.ignoreAccentsInSearch
@@ -15,18 +13,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.shadows.ShadowBuild
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
-@RunWith(AndroidJUnit4::class)
 class BrowserOptionsRepositoryTest : JvmTest() {
     @Test
     fun `latest ignore accents save wins while earlier save is queued`() =
         runTest {
             col.config.ignoreAccentsInSearch = false
-            val repository = BrowserOptionsRepository(AnkiDroidApp.sharedPrefs())
+            val repository = BrowserOptionsRepository(SPMockBuilder().createSharedPreferences())
             repository.load()
 
             withQueuedCollectionAccess {
@@ -45,7 +40,7 @@ class BrowserOptionsRepositoryTest : JvmTest() {
     fun `latest mode save wins while earlier save is queued`() =
         runTest {
             CardsOrNotes.CARDS.saveToCollection(col)
-            val repository = BrowserOptionsRepository(AnkiDroidApp.sharedPrefs())
+            val repository = BrowserOptionsRepository(SPMockBuilder().createSharedPreferences())
             repository.load()
 
             withQueuedCollectionAccess {
@@ -64,15 +59,12 @@ class BrowserOptionsRepositoryTest : JvmTest() {
             }
         }
 
-    /** Exercise the production collection queue; Robolectric normally runs collection access synchronously. */
+    /** Queue collection work on the test scheduler to exercise suspended, competing writes. */
     private suspend fun TestScope.withQueuedCollectionAccess(block: suspend TestScope.() -> Unit) {
-        val fingerprint = Build.FINGERPRINT
-        val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler))
+        val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
         try {
-            ShadowBuild.setFingerprint("test-production-queue")
             block()
         } finally {
-            ShadowBuild.setFingerprint(fingerprint)
             CollectionManager.setTestDispatcher(previousQueue)
         }
     }
