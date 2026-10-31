@@ -1,0 +1,10 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
+SPDX-FileCopyrightText: Alex Fraser
+SPDX-FileComment: Alex Fraser's attribution covers the inherited Anki star.
+SPDX-License-Identifier: GPL-3.0-or-later
+SPDX-FileComment: Subsequent AnkiDroid adaptations.
+SPDX-License-Identifier: LicenseRef-AnkiDroid-Logo-Public-Domain
+SPDX-FileContributor: Tom Svoboda
+SPDX-FileComment: Tom Svoboda's original contribution is public domain.
+SPDX-FileComment: Byte-for-byte snapshot of https://github.com/ankidroid/Anki-Android/blob/cc369ff2299abe701ddb0c4d9fbc721b8fa33cc7/docs/graphics/logos/ankidroid_logo.png
+SPDX-FileComment: See docs/licenses/LOGO_LICENSE.md
