@@ -3,9 +3,6 @@
 package com.ichi2.anki.api
 
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -19,8 +16,6 @@ import kotlin.test.assertNull
  * E-mail: rcbresan@gmail.com
  * Slack: bresan
  */
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [35])
 internal class ApiUtilsTest {
     @Test
     fun joinFieldsShouldJoinWhenListIsValid() {
