@@ -344,7 +344,8 @@ class ReviewerFragment :
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (view?.let { binding.typeAnswerEditText }?.isFocused == true) return false
-        return bindings.dispatchKeyEvent(event)
+        // the root layout keeps the focus, so the WebView only receives the gamepad buttons passed to it
+        return bindings.dispatchKeyEvent(event) || webViewLayout.dispatchGamepadKeyEvent(event)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {

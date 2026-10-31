@@ -38,6 +38,7 @@ import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.testutils.RecordingInputMethodManager
+import com.ichi2.testutils.RecordingWebView
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
 import com.ichi2.testutils.joystickEvent
@@ -384,6 +385,50 @@ class ReviewerFragmentTest : RobolectricTest() {
                 advanceUntilIdle()
                 advanceRobolectricLooper()
                 assertEquals(listOf(cardId), assertIs<SetDueDateDialog>(currentDialog).cardIds)
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `unbound gamepad buttons are passed to the card WebView Issue 21395`() =
+        runTest {
+            addBasicNote()
+            withReviewer {
+                // `navigator.getGamepads()` only lists a gamepad after the WebView receives a button press
+                val press = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_L1)
+                val release = KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_L1)
+                requireActivity().dispatchKeyEvent(press)
+                requireActivity().dispatchKeyEvent(release)
+
+                val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
+                assertEquals(listOf(press, release), webView.dispatchedKeyEvents)
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `gamepad presses handled by the study screen are not passed to the card WebView`() =
+        runTest {
+            addBasicNote()
+            addBasicNote()
+            val answerGood = ReviewerBinding(Binding.KeyCode(KeyEvent.KEYCODE_BUTTON_B), CardSide.ANSWER)
+            targetContext.sharedPrefs().edit {
+                putString(ViewerAction.ANSWER_GOOD.preferenceKey, listOf(answerGood).toPreferenceString())
+            }
+            withReviewer {
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                val answeredCardId = viewModel.getCardId()
+
+                requireActivity().dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B))
+                advanceUntilIdle()
+                assertNotEquals(answeredCardId, viewModel.getCardId(), "'B' answers the card")
+                // The release arrives on the next question, where 'B' isn't bound. The WebView returns
+                // a release without its press as unhandled, and Android performs 'B' -> 'Back'
+                requireActivity().dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_B))
+
+                val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
+                assertEquals(emptyList(), webView.dispatchedKeyEvents)
             }
         }
 
