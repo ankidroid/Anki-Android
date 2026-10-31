@@ -3,7 +3,6 @@
 package com.ichi2.anki.dialogs
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.ARG_DECK_ID
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_DESCRIPTION
@@ -14,19 +13,13 @@ import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType.Sav
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.NeedsRobolectric
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /**
  * Tests [EditDeckDescriptionDialogViewModel]
  */
-@RunWith(AndroidJUnit4::class)
-@NeedsRobolectric(
-    "Schedule CollectionManager work on the test dispatcher before removing the Android runner; initialization currently races assertions.",
-)
 class EditDeckDescriptionDialogViewModelTest : JvmTest() {
     @Test
     fun `title is set`() =

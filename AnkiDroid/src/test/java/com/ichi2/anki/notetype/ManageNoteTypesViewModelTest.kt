@@ -2,16 +2,14 @@
 
 package com.ichi2.anki.notetype
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.CombinedException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
 import com.ichi2.anki.libanki.removeNotetype
 import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
 import com.ichi2.anki.progress.ViewModelProgress
-import com.ichi2.testutils.NeedsRobolectric
+import com.ichi2.testutils.JvmTest
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
@@ -28,7 +26,6 @@ import org.hamcrest.Matchers.hasProperty
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
-import org.junit.runner.RunWith
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -36,11 +33,7 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-@NeedsRobolectric(
-    "Preserve RobolectricTest's scoped CollectionManager dispatcher when switching to JvmTest; initialization and progress updates currently race assertions.",
-)
-class ManageNoteTypesViewModelTest : RobolectricTest() {
+class ManageNoteTypesViewModelTest : JvmTest() {
     @Test
     fun `multiple selection with one entry works as expected`() =
         runTest {

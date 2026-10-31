@@ -2,19 +2,16 @@
 
 package com.ichi2.anki.deckpicker
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.decks.SetDeckCollapsedRequest
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.testutils.JvmTest
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class DeckDeletionTest : RobolectricTest() {
+class DeckDeletionTest : JvmTest() {
     private val noFilter = deckFilter()
 
     private fun deckFilter(search: String = "") = DeckFilters.create(search)
