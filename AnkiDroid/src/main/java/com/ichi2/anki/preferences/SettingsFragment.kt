@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewGroupCompat
@@ -23,6 +22,7 @@ import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
+import com.ichi2.anki.common.analytics.getPreferenceReportableValue
 import com.ichi2.anki.databinding.FragmentSettingsBinding
 import com.ichi2.preferences.DialogFragmentProvider
 import dev.androidbroadcast.vbpd.viewBinding
@@ -146,34 +146,6 @@ abstract class SettingsFragment :
 
     companion object {
         const val ARG_PREFERENCE_KEY = "key"
-
-        /**
-         * Converts a preference value to a numeric number that
-         * can be reported to analytics, since analytics events only accept
-         * [Int] as value ([AnalyticsEvent.SettingChanged]),
-         * or null if it can't be converted.
-         *
-         * Boolean preferences will return 1 if true and 0 if false
-         *
-         * String preferences whose values are stored in a numeric format,
-         * e.g. fullscreen mode whose values are "0", "1" and "2",
-         * can have their values reported as well.
-         * */
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        fun getPreferenceReportableValue(value: Any?): Int? =
-            when (value) {
-                is Int -> value
-                is String ->
-                    try {
-                        value.toInt()
-                    } catch (e: NumberFormatException) {
-                        null
-                    }
-                is Boolean -> if (value) 1 else 0
-                is Float -> value.toInt()
-                is Long -> value.toInt()
-                else -> null
-            }
     }
 }
 
