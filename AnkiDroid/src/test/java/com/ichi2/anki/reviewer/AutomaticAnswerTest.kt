@@ -20,6 +20,14 @@ import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTask
 @Category(EmptyApplicationCategory::class)
 class AutomaticAnswerTest {
     @Test
+    fun `default instance buries cards`() {
+        assertThat(
+            AutomaticAnswer.defaultInstance(automaticallyAnsweredMock()).settings.answerAction,
+            equalTo(AutomaticAnswerAction.BURY_CARD),
+        )
+    }
+
+    @Test
     fun disableWorks() {
         val answer = validAnswer(automaticallyAnsweredMock())
         answer.enable()

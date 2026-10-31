@@ -2,42 +2,31 @@
 
 package com.ichi2.anki.reviewer
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
-import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.junit.experimental.categories.Category
-import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
-import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
-@Category(EmptyApplicationCategory::class)
-class AutomaticAnswerAndroidTest : JvmTest() {
+class AutomaticAnswerSettingsTest : JvmTest() {
     @Test
     fun default_is_bury() {
-        assertThat("no value", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
-        assertThat("default", AutomaticAnswer.defaultInstance(mock()).settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
+        assertThat("no value", createInstance().answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
     }
 
     @Test
     fun preference_sets_action() {
         setActionType(AutomaticAnswerAction.ANSWER_AGAIN)
-        assertThat(createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.ANSWER_AGAIN))
+        assertThat(createInstance().answerAction, equalTo(AutomaticAnswerAction.ANSWER_AGAIN))
         // reset the value
         resetPrefs()
-        assertThat("default", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
+        assertThat("default", createInstance().answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
     }
 
     @Test
     fun `milliseconds are handled`() {
         setShowQuestionDuration(1.5)
-        assertThat(createInstance().settings.millisecondsToShowQuestionFor, equalTo(1500))
+        assertThat(createInstance().millisecondsToShowQuestionFor, equalTo(1500))
     }
 
     private fun resetPrefs() {
@@ -66,5 +55,5 @@ class AutomaticAnswerAndroidTest : JvmTest() {
         col.decks.save(conf)
     }
 
-    private fun createInstance() = AutomaticAnswer.createInstance(mock(), super.col)
+    private fun createInstance() = AutomaticAnswerSettings.createInstance(super.col)
 }
