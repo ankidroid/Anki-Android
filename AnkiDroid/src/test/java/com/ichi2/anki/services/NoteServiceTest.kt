@@ -3,14 +3,13 @@
 
 package com.ichi2.anki.services
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.testutils.OnDiskJvmTest
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
@@ -21,17 +20,12 @@ import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import org.junit.runner.RunWith
 import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-@RunWith(AndroidJUnit4::class)
-class NoteServiceTest : RobolectricTest() {
-    // TODO: Storage.kt needs a different openCollection override, and accepting media files
-    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
-
+class NoteServiceTest : OnDiskJvmTest() {
     // temporary directory to test importMediaToDirectory function
     @get:Rule
     var directory = TemporaryFolder()

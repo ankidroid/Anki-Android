@@ -22,8 +22,10 @@ open class JvmTest : InMemoryAnkiTest() {
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 
-    @get:Rule
-    val collectionStorage = CollectionStorageRule { CollectionFiles.InMemory }
+    protected open val collectionFiles: CollectionFiles get() = CollectionFiles.InMemory
+
+    @get:Rule(order = 1)
+    val collectionStorage = CollectionStorageRule { collectionFiles }
 
     override val collectionManager = ProductionCollectionManager
 
