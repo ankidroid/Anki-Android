@@ -2,14 +2,17 @@
 
 package com.ichi2.anki
 
+import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.JvmTest
 import com.ichi2.widget.WidgetStatus
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
+import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.runs
 import io.mockk.unmockkObject
@@ -19,16 +22,20 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertFalse
 
-@RunWith(AndroidJUnit4::class)
-class AppLifecycleObserverTest : RobolectricTest() {
-    private val owner = TestLifecycleOwner()
+class AppLifecycleObserverTest : JvmTest() {
+    @get:Rule
+    val instantTaskExecutor = InstantTaskExecutorRule()
+
+    private val context = mockk<Context>()
+    private lateinit var owner: TestLifecycleOwner
 
     @Before
     fun mockWidgetUpdates() {
+        owner = TestLifecycleOwner()
         mockkObject(WidgetStatus)
         every { WidgetStatus.updateInBackground(any()) } just runs
     }
@@ -51,20 +58,20 @@ class AppLifecycleObserverTest : RobolectricTest() {
                 true
             }
 
-            AppLifecycleObserver(targetContext).onStop(owner)
+            AppLifecycleObserver(context).onStop(owner)
             runCurrent()
             verify(exactly = 0) { WidgetStatus.updateInBackground(any()) }
 
             syncFinished.complete(Unit)
             advanceUntilIdle()
-            verify(exactly = 1) { WidgetStatus.updateInBackground(targetContext) }
+            verify(exactly = 1) { WidgetStatus.updateInBackground(context) }
         }
 
     @Test
     fun `backgrounding with a closed collection does not open it or update widgets`() =
         runTest {
             CollectionManager.ensureClosed()
-            AppLifecycleObserver(targetContext).onStop(owner)
+            AppLifecycleObserver(context).onStop(owner)
             advanceUntilIdle()
 
             verify(exactly = 0) { WidgetStatus.updateInBackground(any()) }
