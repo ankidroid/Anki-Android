@@ -2,13 +2,11 @@
 
 package com.ichi2.anki.study
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.testutils.JvmTest
 import org.json.JSONArray
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -16,8 +14,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
-@RunWith(AndroidJUnit4::class)
-class DeckStudyStateTest : RobolectricTest() {
+class DeckStudyStateTest : JvmTest() {
     @Test
     fun `hidden Default retains its identity and empty regular deck state`() {
         addDeck("Other")

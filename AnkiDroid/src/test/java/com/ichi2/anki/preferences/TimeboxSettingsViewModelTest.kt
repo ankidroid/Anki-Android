@@ -2,18 +2,16 @@
 
 package com.ichi2.anki.preferences
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.utils.CollectionPreferences
+import com.ichi2.testutils.JvmTest
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-@RunWith(AndroidJUnit4::class)
-class TimeboxSettingsViewModelTest : RobolectricTest() {
+class TimeboxSettingsViewModelTest : JvmTest() {
     @Test
     fun `TimeboxUiState defaults to loading`() {
         val defaultState = TimeboxUiState()
@@ -26,7 +24,7 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             CollectionPreferences.setTimeboxTimeLimit(0.toDuration(DurationUnit.MINUTES))
 
             val viewModel = TimeboxSettingsViewModel()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             val state = viewModel.uiState.value
             assertThat("Should not be loading", state.isLoading, equalTo(false))
@@ -44,7 +42,7 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             CollectionPreferences.setTimeboxTimeLimit(15.toDuration(DurationUnit.MINUTES))
 
             val viewModel = TimeboxSettingsViewModel()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             val state = viewModel.uiState.value
             assertThat("Should be enabled", state.isEnabled, equalTo(true))
@@ -57,10 +55,10 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             CollectionPreferences.setTimeboxTimeLimit(0.toDuration(DurationUnit.MINUTES))
 
             val viewModel = TimeboxSettingsViewModel()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             viewModel.toggleEnabled(true)
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             assertThat("UI state should be enabled", viewModel.uiState.value.isEnabled, equalTo(true))
             val savedMinutes = CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)
@@ -73,10 +71,10 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             CollectionPreferences.setTimeboxTimeLimit(15.toDuration(DurationUnit.MINUTES))
 
             val viewModel = TimeboxSettingsViewModel()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             viewModel.toggleEnabled(false)
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             assertThat("UI state should be disabled", viewModel.uiState.value.isEnabled, equalTo(false))
             val savedMinutes = CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)
@@ -89,15 +87,15 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             CollectionPreferences.setTimeboxTimeLimit(10.toDuration(DurationUnit.MINUTES))
 
             val viewModel = TimeboxSettingsViewModel()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             viewModel.increment()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
             assertThat(viewModel.uiState.value.minutes, equalTo(11))
             assertThat(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES), equalTo(11))
 
             viewModel.decrement()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
             assertThat(viewModel.uiState.value.minutes, equalTo(10))
             assertThat(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES), equalTo(10))
         }
@@ -108,7 +106,7 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             CollectionPreferences.setTimeboxTimeLimit(10.toDuration(DurationUnit.MINUTES))
 
             val viewModel = TimeboxSettingsViewModel()
-            advanceRobolectricLooper()
+            advanceUntilIdle()
 
             viewModel.setMinutes(0)
             assertThat(viewModel.uiState.value.minutes, equalTo(TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES))

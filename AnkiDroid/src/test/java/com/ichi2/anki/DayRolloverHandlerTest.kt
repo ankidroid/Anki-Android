@@ -2,8 +2,8 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.testutils.JvmTest
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetStatus
 import io.mockk.every
@@ -18,10 +18,8 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import org.junit.After
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class DayRolloverHandlerTest : RobolectricTest() {
+class DayRolloverHandlerTest : JvmTest() {
     @After
     fun clearMocks() {
         unmockkAll()

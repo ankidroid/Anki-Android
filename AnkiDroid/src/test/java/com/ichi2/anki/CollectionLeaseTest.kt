@@ -2,13 +2,13 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.collectionLease
 import com.ichi2.anki.CollectionManager.tryWithCol
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.CollectionManager.withLeaseForTest
 import com.ichi2.anki.exception.CollectionLockedException
+import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
@@ -26,7 +26,6 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.coroutines.CoroutineContext
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -36,8 +35,7 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /** Test of [CollectionLease], and of the callers which react to one being held */
-@RunWith(AndroidJUnit4::class)
-class CollectionLeaseTest : RobolectricTest() {
+class CollectionLeaseTest : JvmTest() {
     @Test
     fun `no lease is held by default`() =
         runTest {
@@ -414,7 +412,7 @@ class CollectionLeaseTest : RobolectricTest() {
             }
         }
 
-    /** Exercise the withContext queue, and restore Robolectric's lock before teardown. */
+    /** Exercise the withContext queue, and restore the collection queue before teardown. */
     private suspend fun TestScope.withCollectionQueue(
         dispatcher: CoroutineDispatcher,
         block: suspend CoroutineScope.() -> Unit,
