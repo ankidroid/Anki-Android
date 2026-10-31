@@ -56,7 +56,6 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -87,7 +86,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
-import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.EXTRA_PERMISSIONS_SET
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -1984,21 +1982,17 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    fun `when INTERNET is denied, PermissionsActivity is shown`() =
+    fun `when INTERNET is denied, PermissionsActivity isn't shown`() =
         runTest {
+            // the app works offline, and the app private folder needs no permission
             withDeniedPermissions(INTERNET) {
                 deckPicker {
-                    val intent = assertNotNull(shadowOf(this@deckPicker).nextStartedActivity)
+                    val intent = shadowOf(this@deckPicker).nextStartedActivity
 
                     assertThat(
-                        intent.component?.shortClassName,
-                        equalTo(PermissionsActivity::class.java.name),
+                        intent?.component?.shortClassName,
+                        not(equalTo(PermissionsActivity::class.java.name)),
                     )
-
-                    val extra = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
-
-                    assertNotNull(extra)
-                    assertThat(extra.permissions, equalTo(listOf(INTERNET)))
                 }
             }
         }

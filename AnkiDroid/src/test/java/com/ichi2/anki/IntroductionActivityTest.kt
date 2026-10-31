@@ -3,8 +3,10 @@
 
 package com.ichi2.anki
 
-import android.Manifest.permission.INTERNET
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.SingleFragmentActivity.Companion.EXTRA_FRAGMENT_NAME
@@ -21,19 +23,20 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import kotlin.reflect.jvm.jvmName
 import kotlin.test.assertNotNull
 
 /** Tests [IntroductionActivity] */
 @RunWith(AndroidJUnit4::class)
 class IntroductionActivityTest : RobolectricTest() {
+    // At API 29, selectStoragePermissions returns StoragePermissionSet.LEGACY_ACCESS, which can be denied.
+    // StoragePermissionSet.APP_PRIVATE requires no permission
+    @Config(sdk = [Build.VERSION_CODES.Q])
     @Test
     fun `Sync without storage permission opens PermissionsActivity`() =
         runTest {
-            // Robolectric runs at API 35 where selectStoragePermissions returns StoragePermissionSet.APP_PRIVATE,
-            // which is just [INTERNET]. Denying INTERNET is the cheapest
-            // way to make hasCollectionStoragePermissions() return false in this environment.
-            withDeniedPermissions(INTERNET) {
+            withDeniedPermissions(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE) {
                 val activity = startRegularActivity<IntroductionActivity>(Intent())
 
                 activity.clickSync()

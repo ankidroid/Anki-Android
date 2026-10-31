@@ -124,6 +124,7 @@ object PreferenceUpgradeService {
                     yield(UpgradeAnswerControls())
                     yield(RemoveDeveloperFindReplace())
                     yield(ResetAnalyticsOptIn2())
+                    yield(RemoveFixedReviewerPort())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -905,6 +906,16 @@ object PreferenceUpgradeService {
          */
         internal class ResetAnalyticsOptIn2 : PreferenceUpgrade(29) {
             override fun upgrade(preferences: SharedPreferences) = preferences.edit { remove("analytics_opt_in") }
+        }
+
+        /** Removes the 'localStorage in Study Screen' setting: the study screen no longer uses a server port */
+        internal class RemoveFixedReviewerPort : PreferenceUpgrade(30) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit {
+                    remove("useFixedPort")
+                    remove("reviewerPort")
+                }
+            }
         }
     }
 }
