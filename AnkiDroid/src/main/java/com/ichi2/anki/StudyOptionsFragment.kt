@@ -22,7 +22,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.constraintlayout.widget.Group
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
@@ -76,7 +75,6 @@ class StudyOptionsFragment :
     @VisibleForTesting
     internal val viewModel: StudyOptionsViewModel by viewModels()
 
-    private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
     private lateinit var textDeckDescription: TextView
@@ -223,7 +221,6 @@ class StudyOptionsFragment :
     private fun initAllContentViews(studyOptionsView: View) {
         studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility =
             if (fragmented) View.VISIBLE else View.GONE
-        deckInfoLayout = studyOptionsView.findViewById(R.id.group_counts)
         textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
         textDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
@@ -377,21 +374,17 @@ class StudyOptionsFragment :
 
         when (state) {
             is StudyOptionsState.Empty -> {
-                deckInfoLayout.visibility = View.VISIBLE
                 buttonStart.visibility = View.GONE
             }
             is StudyOptionsState.Congrats -> {
                 if (!state.isDynamic) {
-                    deckInfoLayout.visibility = View.GONE
                     buttonStart.visibility = View.VISIBLE
                     buttonStart.text = TR.sentenceCase.customStudy
                 } else {
-                    deckInfoLayout.visibility = View.VISIBLE
                     buttonStart.visibility = View.GONE
                 }
             }
             is StudyOptionsState.StudyOptions -> {
-                deckInfoLayout.visibility = View.VISIBLE
                 buttonStart.visibility = View.VISIBLE
                 buttonStart.setText(CommonString.studyoptions_start)
             }
@@ -405,18 +398,12 @@ class StudyOptionsFragment :
                 else -> false
             }
 
-        val description =
-            when (state) {
-                is StudyOptionsState.StudyOptions -> state.deckDescription
-                else -> null
-            }
-
         @Language("HTML")
         val desc: String =
             if (isDynamic) {
                 resources.getString(CommonString.dyn_deck_desc)
             } else {
-                description ?: ""
+                state.deckDescriptionOrNull() ?: ""
             }
         if (desc.isNotEmpty()) {
             val imageGetter =
@@ -444,7 +431,7 @@ class StudyOptionsFragment :
         buryInfoLabel.isVisible = data.hasBuriedCards
 
         fun TextView.updateBuryText(count: Int) {
-            this.isVisible = deckInfoLayout.isVisible && count > 0
+            this.isVisible = count > 0
             this.text =
                 when {
                     count > 0 ->

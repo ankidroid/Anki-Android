@@ -129,11 +129,13 @@ class StudyOptionsViewModel :
                 study.isEmptyRegularDeck ->
                     StudyOptionsState.Empty(
                         deckName = deck.name,
+                        deckDescription = description,
                         data = data,
                     )
                 study.availability == StudyAvailability.NoCardsAvailable ->
                     StudyOptionsState.Congrats(
                         deckName = deck.name,
+                        deckDescription = description,
                         isDynamic = isDynamic,
                         data = data,
                     )
@@ -179,12 +181,14 @@ sealed interface StudyOptionsState {
 
     data class Congrats(
         val deckName: String,
+        val deckDescription: String?,
         val isDynamic: Boolean,
         val data: DeckStudyData,
     ) : StudyOptionsState
 
     data class Empty(
         val deckName: String,
+        val deckDescription: String?,
         val data: DeckStudyData,
     ) : StudyOptionsState
 }
@@ -204,5 +208,14 @@ fun StudyOptionsState.deckNameOrNull(): String? =
         is StudyOptionsState.StudyOptions -> deckName
         is StudyOptionsState.Congrats -> deckName
         is StudyOptionsState.Empty -> deckName
+        is StudyOptionsState.Loading -> null
+    }
+
+/** The deck description for any non-[StudyOptionsState.Loading] state, or `null` while loading or for a filtered deck. */
+fun StudyOptionsState.deckDescriptionOrNull(): String? =
+    when (this) {
+        is StudyOptionsState.StudyOptions -> deckDescription
+        is StudyOptionsState.Congrats -> deckDescription
+        is StudyOptionsState.Empty -> deckDescription
         is StudyOptionsState.Loading -> null
     }
