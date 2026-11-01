@@ -20,6 +20,7 @@ import com.ichi2.anki.common.destinations.ReviewDeckDestination
 import com.ichi2.anki.common.destinations.WidgetConfigDestination
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.anki.widgets.R
@@ -37,7 +38,6 @@ import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
 import com.ichi2.widget.updateAppWidget
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -80,11 +80,11 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 return
             }
 
-            applicationScope.launch {
+            applicationScope.launchCatching(errorMessageHandler = {}) {
                 val isCollectionEmpty = isCollectionEmpty()
                 if (isCollectionEmpty) {
                     showCollectionDeck(context, appWidgetManager, appWidgetId, remoteViews)
-                    return@launch
+                    return@launchCatching
                 }
 
                 val deckData = getDeckNameAndStats(deckId)
@@ -93,7 +93,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     // This ensures that the widget does not retain a reference to a non-existent or invalid deck.
                     CardAnalysisWidgetPreferences(context).saveSelectedDeck(appWidgetId, NOT_FOUND_DECK_ID)
                     showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
-                    return@launch
+                    return@launchCatching
                 }
                 showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
             }
