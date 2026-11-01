@@ -20,6 +20,7 @@ import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.millisecondsSinceLastSyncAttempt
 import com.ichi2.anki.servicelayer.ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall
 import com.ichi2.anki.servicelayer.ScopedStorageService.userIsPromptedToDeleteCollectionOnUninstall
+import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -30,6 +31,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
+import java.io.File
 
 /**
  * Prompts a user to backup via either sync or 'export collection'
@@ -159,6 +161,15 @@ class BackupPromptDialog private constructor(
                 alertDialog.show()
             }
             return true
+        }
+
+        fun onFileExported(
+            context: Context,
+            file: File,
+        ) {
+            if (!ImportUtils.isCollectionPackage(file.name)) return
+            Timber.i("Collection exported, postponing the backup reminder")
+            BackupPromptDialog(context).onBackup()
         }
 
         /**

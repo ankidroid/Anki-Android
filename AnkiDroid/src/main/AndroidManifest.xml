@@ -521,6 +521,9 @@
         <receiver
             android:name="com.ichi2.anki.receiver.CopyToClipboardReceiver"
             android:exported="false" />
+        <receiver
+            android:name="com.ichi2.anki.receiver.ExportSharedReceiver"
+            android:exported="false" />
 
         <!-- Configuration view for the DeckPickerWidget.
              It is opened when adding a new deck picker widget and
