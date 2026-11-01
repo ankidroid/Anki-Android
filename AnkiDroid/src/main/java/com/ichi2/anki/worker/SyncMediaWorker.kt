@@ -33,6 +33,7 @@ import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.recordMediaSyncAttempt
 import com.ichi2.anki.sync.syncMedia
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
@@ -87,12 +88,14 @@ class SyncMediaWorker(
             }
         } catch (cancellationException: CancellationException) {
             Timber.w(cancellationException, "SyncMediaWorker cancelled (user tapped Cancel or WorkManager cancelled)")
+            recordMediaSyncAttempt(failed = true)
             notificationManager?.cancel(NotificationId.SYNC_MEDIA)
             Timber.d("SyncMediaWorker: progress notification cancelled after worker cancellation")
             cancelMediaSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {
             Timber.w(throwable, "SyncMediaWorker failed")
+            recordMediaSyncAttempt(failed = true)
             notify {
                 // TODO: add a contentIntent, so tapping the notification opens the app
                 //  (ideally showing the media sync log: an AlertDialog in DeckPicker)
@@ -114,6 +117,7 @@ class SyncMediaWorker(
             Timber.d("SyncMediaWorker: showing failure notification")
             return Result.failure()
         }
+        recordMediaSyncAttempt(failed = false)
         Timber.d("SyncMediaWorker: cancelling progress notification (sync completed)")
         notificationManager?.cancel(NotificationId.SYNC_MEDIA)
 

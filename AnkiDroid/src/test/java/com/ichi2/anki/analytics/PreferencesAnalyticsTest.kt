@@ -65,6 +65,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_reset_languages_key, // resetLanguages
             R.string.pref_keyboard_shortcuts_key, // showKeyboardShortcuts
             R.string.search_preference_key, // searchPreference
+            CommonPreferenceKey.media_sync_status_key, // mediaSyncStatus
             // Opens App Bar buttons fragment
             R.string.custom_buttons_link_preference, // custom_buttons_link
             // Opens Custom sync server fragment
