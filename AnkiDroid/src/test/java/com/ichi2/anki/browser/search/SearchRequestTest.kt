@@ -36,6 +36,12 @@ class SearchRequestTest : JvmTest() {
     }
 
     @Test
+    fun `search string generation - deck named underscore star is escaped`() {
+        val entry = SearchRequest(query = "", filters = SearchFilters.partial(decks = listOf(DeckNameId("_*", 2))))
+        assertThat(entry.toValidSearchString(), equalTo("""deck:\_\*"""))
+    }
+
+    @Test
     fun `search string generation - complex`() {
         assertThat(
             validEntry().toValidSearchString(),
