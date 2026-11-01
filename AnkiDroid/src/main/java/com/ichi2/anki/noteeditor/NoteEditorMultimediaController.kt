@@ -21,11 +21,13 @@ import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.multimedia.MultimediaActionHandler
 import com.ichi2.anki.multimedia.MultimediaActivityExtra
+import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.ContentResolverUtil
 import com.ichi2.utils.openInputStreamSafe
@@ -72,6 +74,10 @@ internal class NoteEditorMultimediaController(
 
                 fragment.multimediaViewModel.multimediaAction.first { action ->
                     Timber.i("Selected multimedia action: %s", action)
+                    if (action == MultimediaAction.SELECT_AUDIO_RECORDING && Prefs.devInlineAudioRecorderEnabled) {
+                        fragment.showInlineAudioRecorder(fieldIndex)
+                        return@first true
+                    }
                     val handler = MultimediaActionHandler.forAction(action)
                     if (handler == MultimediaActionHandler.ImageFile) {
                         // An empty image editor would be exposed during the picker's back animation.

@@ -110,5 +110,10 @@
             android:summary="Replaces the navigation drawer with a bottom nav bar"
             android:key="@string/dev_bottom_nav_key"
             android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="Inline audio recorder"
+            android:summary="Records audio inside the note editor instead of a separate screen"
+            android:key="@string/dev_inline_audio_recorder_key"
+            android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
