@@ -48,9 +48,11 @@ var Config.addingDefaultsMode by configProperty(ConfigKey.Bool.ADDING_DEFAULTS_T
  *
  * When enabled, both 'uber' and 'über' match `["uber", "über", "Über"]`.
  *
- * [Manual: Searching - Ignoring accents/combining characters](https://docs.ankiweb.net/searching.html#ignoring-accentscombining-characters)
+ * The default for `IGNORE_ACCENTS_IN_SEARCH` is `false` upstream.
  *
+ * [Manual: Searching - Ignoring accents/combining characters](https://docs.ankiweb.net/searching.html#ignoring-accentscombining-characters)
  * [Added in Anki#1667](https://github.com/ankitects/anki/pull/1667)
+ * [source](https://github.com/ankitects/anki/blob/main/rslib/src/config/bool.rs)
  */
 var Config.ignoreAccentsInSearch by configProperty(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH)
 
@@ -60,7 +62,13 @@ var Config.pasteImagesAsPng by configProperty(ConfigKey.Bool.PASTE_IMAGES_AS_PNG
 /** Whether rendered cards hide their audio play buttons. */
 val Config.hideAudioPlayButtons by configProperty(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
 
-/** The `Custom scheduling` global setting in deck options. */
+/**
+ * The `Custom scheduling` global setting in deck options.
+ *
+ * The default for `CARD_STATE_CUSTOMIZER` is `""` (empty string) upstream.
+ *
+ * [source](https://github.com/ankitects/anki/blob/main/rslib/src/config/string.rs)
+ */
 var Config.cardStateCustomizer by configProperty(ConfigKey.String.CARD_STATE_CUSTOMIZER)
 
 /** Whether the browser displays cards or notes. */
@@ -99,6 +107,9 @@ var Config.flagLabels by ConfigProperty(
  * Saved searches in the collection. Names are case-sensitive.
  * Anki Desktop orders them by name, regardless of the order written here.
  *
+ * Defaults to an empty map when the `savedFilters` collection config key is absent.
+ *
+ * [source](https://github.com/ankitects/anki/blob/main/qt/aqt/browser/sidebar/tree.py)
  * @see SavedSearch
  */
 var Config.savedFilters by jsonConfigProperty<Map<String, String>>("savedFilters").orDefault(emptyMap()).mapped(
