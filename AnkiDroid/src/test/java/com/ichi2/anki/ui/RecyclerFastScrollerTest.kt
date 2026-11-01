@@ -12,25 +12,80 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.RelativeLayout
+import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.closeTo
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.greaterThanOrEqualTo
+import org.hamcrest.Matchers.lessThan
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
+import org.robolectric.shadows.ShadowChoreographer
+import org.robolectric.shadows.ShadowView
 import java.time.Duration
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
 class RecyclerFastScrollerTest {
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    @Config(sdk = [35])
+    fun `downward drag out of an expanded row never draws an upward frame`() {
+        ShadowView.setUseRealDrawTraversals(true)
+        ShadowChoreographer.setPaused(true)
+        ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
+        val list = FastScrollerTestList(listOf(10000) + evenRows(100))
+        list.press()
+        list.holdStill()
+        val startOfTrack = list.thumbCenter.toFloat()
+        val endOfTrack = list.viewportHeight - startOfTrack
+        list.drawnScrollPositions.clear()
+
+        // Send one move per display refresh, without waiting for corrections.
+        repeat(8) { step ->
+            list.moveFingerTo(startOfTrack + (endOfTrack - startOfTrack) * (step + 1) / 200f)
+        }
+
+        assertThat(list.drawnScrollPositions.last(), greaterThan(list.drawnScrollPositions.first()))
+        assertThat(list.drawnScrollPositions.firstStepBack(), nullValue())
+    }
+
+    @Test
+    fun `last pixel after a slow drag into expanded final rows does not jump a screen`() {
+        val list = FastScrollerTestList(evenRows(100) + List(2) { 4000 })
+        val startOfTrack = list.thumbCenter.toFloat()
+        val endOfTrack = list.viewportHeight - startOfTrack
+        list.press()
+        // Populate the height cache by dragging through the short rows first.
+        for (step in 1..199) {
+            list.moveFingerTo(startOfTrack + (endOfTrack - startOfTrack) * step / 200f)
+            list.holdStill()
+        }
+        list.moveFingerTo(endOfTrack - 1f)
+        list.holdStill()
+        val scrollBeforeLastPixel = list.scrollY
+        assertThat(list.canScrollDown, equalTo(true))
+
+        list.moveFingerTo(endOfTrack)
+        list.holdStill()
+
+        assertThat(list.canScrollDown, equalTo(false))
+        assertThat(list.scrollY - scrollBeforeLastPixel, lessThan(list.viewportHeight))
+    }
+
     @Test
     fun `scroller hides after a thumb drag`() {
         val list = FastScrollerTestList(evenRows(200))
@@ -56,11 +111,267 @@ class RecyclerFastScrollerTest {
 
         assertThat(list.isScrollerHidden, equalTo(true))
     }
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    @Config(sdk = [35])
+    fun `dragging across offscreen rows continues drawing frames`() {
+        // Enable real drawing and allow one display refresh per touch event.
+        ShadowView.setUseRealDrawTraversals(true)
+        ShadowChoreographer.setPaused(true)
+        ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
+        val list = FastScrollerTestList(evenRows(20000))
+        list.press()
+        list.holdStill()
+        val drawsBeforeDrag = list.drawCount
+        val scrollBeforeDrag = list.scrollY
+        assertThat(drawsBeforeDrag, greaterThan(0))
+
+        // Send one move per frame, without pausing for the deferred correction.
+        repeat(80) { list.moveFingerTo(list.fingerY + 3f) }
+
+        assertThat(list.scrollY, greaterThan(scrollBeforeDrag))
+        assertThat(list.drawCount - drawsBeforeDrag, greaterThan(40))
+    }
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    @Config(sdk = [35])
+    fun `reversing before a pending correction reaches the latest requested row`() {
+        ShadowView.setUseRealDrawTraversals(true)
+        ShadowChoreographer.setPaused(true)
+        ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
+        val latestMoveOnly = FastScrollerTestList(evenRows(20000))
+        latestMoveOnly.press()
+        latestMoveOnly.moveTo(trackProportion = 0.75f)
+        latestMoveOnly.holdStill()
+        latestMoveOnly.moveTo(trackProportion = 0.4015f)
+        latestMoveOnly.holdStill()
+
+        val reversed = FastScrollerTestList(evenRows(20000))
+        reversed.press()
+        reversed.moveTo(trackProportion = 0.75f)
+        reversed.holdStill()
+        reversed.moveTo(trackProportion = 0.399f)
+        // The first layout ran, and its fractional correction is pending.
+        reversed.moveTo(trackProportion = 0.4015f)
+        reversed.holdStill()
+
+        assertThat(reversed.scrollY, equalTo(latestMoveOnly.scrollY))
+    }
+
+    @Test
+    fun `short starting rows scroll before a quarter of the track`() {
+        val list = FastScrollerTestList(evenRows(4) + List(4) { 4 * ROW_HEIGHT })
+        list.press()
+
+        list.moveTo(trackProportion = 0.25f)
+        list.holdStill()
+
+        assertThat(list.scrollY, greaterThan(0))
+    }
+
+    @Test
+    fun `slow drag moves the list in one direction only`() {
+        val list = FastScrollerTestList(evenRows(200))
+
+        val positions = list.slowDragToEndCollecting { list.scrollY }
+
+        assertThat(positions.firstStepBack(), nullValue())
+    }
+
+    @Test
+    fun `slow drag over rows of different heights moves the list in one direction only`() {
+        val list = FastScrollerTestList(evenRows(10) + List(6) { 4 * ROW_HEIGHT } + evenRows(10))
+
+        val positions = list.slowDragToEndCollecting { list.scrollY }
+
+        assertThat(positions.firstStepBack(), nullValue())
+    }
+
+    @Test
+    fun `thumb stays under the finger on a short list`() {
+        val list = FastScrollerTestList(evenRows(40))
+
+        list.press()
+        list.moveTo(trackProportion = 0.25f)
+        list.holdStill()
+
+        assertThat(list.thumbCenter, closeTo(list.fingerY.toDouble(), 1.0))
+    }
+
+    @Test
+    fun `list reaches its last row only at the end of the track`() {
+        val list = FastScrollerTestList(evenRows(200))
+        list.press()
+
+        list.moveTo(trackProportion = 0.95f)
+        list.holdStill()
+        assertThat(list.canScrollDown, equalTo(true))
+
+        list.moveTo(trackProportion = 1f)
+        list.holdStill()
+        assertThat(list.canScrollDown, equalTo(false))
+    }
+
+    @Test
+    fun `releasing after a jump to an offscreen row keeps the list still`() {
+        val list = FastScrollerTestList(evenRows(200))
+        list.press()
+        list.moveTo(trackProportion = 0.251f)
+        list.holdStill()
+        val scrollBeforeRelease = list.scrollY
+        assertThat(scrollBeforeRelease, greaterThan(0))
+
+        list.release()
+        list.holdStill()
+
+        assertThat(list.scrollY, equalTo(scrollBeforeRelease))
+    }
+
+    @Test
+    fun `slow upward drag never moves the list downward`() {
+        val list = FastScrollerTestList(evenRows(200))
+
+        val positions = list.slowDragToStartCollecting { list.scrollY }
+
+        assertThat(positions.first(), greaterThan(positions.last()))
+        assertThat(positions.last(), equalTo(0))
+        assertThat(positions.zipWithNext().firstOrNull { (before, after) -> after > before }, nullValue())
+    }
+
+    @Test
+    fun `last pixel of a drag over taller final rows does not jump a screen`() {
+        val list = FastScrollerTestList(evenRows(100) + List(20) { 4 * ROW_HEIGHT })
+        // Keep the finger coordinates fixed even if the thumb resizes during the drag.
+        val endOfTrack = list.viewportHeight - list.thumbCenter.toFloat()
+        list.press()
+        list.moveFingerTo(endOfTrack - 2f)
+        list.holdStill()
+        list.moveFingerTo(endOfTrack - 1f)
+        list.holdStill()
+        val scrollBeforeLastPixel = list.scrollY
+
+        list.moveFingerTo(endOfTrack)
+        list.holdStill()
+
+        assertThat(list.scrollY - scrollBeforeLastPixel, lessThan(list.viewportHeight))
+    }
+
+    @Test
+    fun `shorter final rows do not reach the bottom before the end of the track`() {
+        val list = FastScrollerTestList(List(20) { 4 * ROW_HEIGHT } + evenRows(100))
+        list.press()
+
+        list.moveTo(trackProportion = 0.95f)
+        list.holdStill()
+
+        assertThat(list.canScrollDown, equalTo(true))
+    }
+
+    @Test
+    fun `end of track exposes the bottom of a final row taller than the viewport`() {
+        val list = FastScrollerTestList(evenRows(100) + listOf(4000))
+        val endOfTrack = list.viewportHeight - list.thumbCenter.toFloat()
+        list.press()
+
+        list.moveFingerTo(endOfTrack)
+        list.holdStill()
+
+        assertThat(list.canScrollDown, equalTo(false))
+    }
+
+    @Test
+    fun `slow downward drag over short rows between tall rows never moves the list upward`() {
+        val list = FastScrollerTestList(List(2) { 4 * ROW_HEIGHT } + evenRows(4) + List(2) { 4 * ROW_HEIGHT })
+
+        val positions = list.slowDragToEndCollecting { list.scrollY }
+
+        assertThat(positions.first(), lessThan(positions.last()))
+        assertThat(list.canScrollDown, equalTo(false))
+        assertThat(positions.firstStepBack(), nullValue())
+    }
+
+    @Test
+    fun `slow upward drag over short rows between tall rows never moves the list downward`() {
+        val list = FastScrollerTestList(List(2) { 4 * ROW_HEIGHT } + evenRows(4) + List(2) { 4 * ROW_HEIGHT })
+
+        val positions = list.slowDragToStartCollecting { list.scrollY }
+
+        assertThat(positions.first(), greaterThan(positions.last()))
+        assertThat(positions.last(), equalTo(0))
+        assertThat(positions.zipWithNext().firstOrNull { (before, after) -> after > before }, nullValue())
+    }
+
+    @Test
+    fun `small downward move after jumping to a shorter row never moves the list upward`() {
+        val list = FastScrollerTestList(List(20) { 4 * ROW_HEIGHT } + evenRows(100))
+        // Keep the finger coordinates fixed even if the thumb resizes after the jump.
+        val startOfTrack = list.thumbCenter.toFloat()
+        val endOfTrack = list.viewportHeight - startOfTrack
+        list.press()
+        list.moveFingerTo(startOfTrack + 0.505f * (endOfTrack - startOfTrack))
+        list.holdStill()
+        val scrollBeforeMove = list.scrollY
+        assertThat(scrollBeforeMove, greaterThan(0))
+
+        list.moveFingerTo(list.fingerY + 2f)
+        list.holdStill()
+
+        assertThat(list.scrollY, greaterThanOrEqualTo(scrollBeforeMove))
+    }
+
+    @Test
+    fun `two moves before layout reach the same position as the latest move alone`() {
+        val singleMove = FastScrollerTestList(evenRows(200))
+        singleMove.press()
+        singleMove.moveTo(trackProportion = 0.51f)
+        singleMove.holdStill()
+
+        val batchedMoves = FastScrollerTestList(evenRows(200))
+        batchedMoves.press()
+        batchedMoves.advanceFrameAfterTouch = false
+        batchedMoves.moveTo(trackProportion = 0.50f)
+        batchedMoves.moveTo(trackProportion = 0.51f)
+        batchedMoves.holdStill()
+
+        assertThat(batchedMoves.scrollY, equalTo(singleMove.scrollY))
+    }
+
+    @Test
+    fun `jump from expanded rows to short final rows leaves track travel`() {
+        val list = FastScrollerTestList(List(20) { 4000 } + evenRows(100))
+        list.press()
+        list.moveTo(trackProportion = 0.905f)
+        list.holdStill()
+
+        assertThat(list.canScrollDown, equalTo(true))
+    }
+
+    @Test
+    fun `last pixel after jumping near an expanded final row does not jump a screen`() {
+        val list = FastScrollerTestList(evenRows(100) + listOf(4000))
+        // Keep the finger coordinates fixed even if the thumb resizes after the jump.
+        val endOfTrack = list.viewportHeight - list.thumbCenter.toFloat()
+        list.press()
+        list.moveFingerTo(endOfTrack - 1f)
+        list.holdStill()
+        val scrollBeforeLastPixel = list.scrollY
+        assertThat(list.canScrollDown, equalTo(true))
+
+        list.moveFingerTo(endOfTrack)
+        list.holdStill()
+
+        assertThat(list.canScrollDown, equalTo(false))
+        assertThat(list.scrollY - scrollBeforeLastPixel, lessThan(list.viewportHeight))
+    }
 }
 
 private const val ROW_HEIGHT = 150
 
 private fun evenRows(count: Int) = List(count) { ROW_HEIGHT }
+
+private fun List<Int>.firstStepBack() = zipWithNext().firstOrNull { (before, after) -> after < before }
 
 private class FastScrollerTestList(
     rowHeights: List<Int>,
@@ -80,14 +391,38 @@ private class FastScrollerTestList(
                 RelativeLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT).apply { addRule(RelativeLayout.ALIGN_PARENT_END) },
             )
         }
+    private val rowTops = rowHeights.runningFold(0, Int::plus)
     private val downTime = SystemClock.uptimeMillis()
-    private var fingerY = 0f
+
+    val drawnScrollPositions = mutableListOf<Int>()
+
+    var drawCount = 0
+        private set
+
+    var fingerY = 0f
+        private set
 
     val isThumbPressed: Boolean get() = scroller.handle.isPressed
 
     val isScrollerHidden: Boolean get() = scroller.translationX == scroller.hiddenTranslationX.toFloat()
 
+    val scrollY: Int
+        get() {
+            val firstRow = recyclerView.getChildAt(0)
+            return rowTops[recyclerView.getChildAdapterPosition(firstRow)] - firstRow.top
+        }
+
+    val canScrollDown: Boolean get() = recyclerView.canScrollVertically(1)
+
+    val viewportHeight: Int get() = recyclerView.height
+
+    val thumbCenter: Double get() = (scroller.handle.top + scroller.handle.bottom) / 2.0
+
     init {
+        root.viewTreeObserver.addOnDrawListener {
+            drawCount++
+            if (recyclerView.isNotEmpty()) drawnScrollPositions.add(scrollY)
+        }
         scroller.attachRecyclerView(recyclerView)
         activity.setContentView(root, ViewGroup.LayoutParams(WIDTH, HEIGHT))
         showNextFrame()
@@ -100,9 +435,45 @@ private class FastScrollerTestList(
         touch(MotionEvent.ACTION_MOVE, thumbHeight / 2f + trackProportion * (HEIGHT - thumbHeight))
     }
 
+    fun moveFingerTo(y: Float) = touch(MotionEvent.ACTION_MOVE, y)
+
     fun release() = touch(MotionEvent.ACTION_UP, fingerY)
 
     fun waitPastAutoHide() = shadowOf(Looper.getMainLooper()).idleFor(AUTO_HIDE_WAIT)
+
+    fun holdStill() = shadowOf(Looper.getMainLooper()).idleFor(SLOW_DRAG_PAUSE)
+
+    fun <T> slowDragToEndCollecting(value: () -> T): List<T> {
+        val values = mutableListOf<T>()
+        press()
+        while (fingerY < HEIGHT) {
+            touch(MotionEvent.ACTION_MOVE, fingerY + SLOW_DRAG_STEP)
+            values.add(value())
+            holdStill()
+            values.add(value())
+        }
+        release()
+        values.add(value())
+        return values
+    }
+
+    fun <T> slowDragToStartCollecting(value: () -> T): List<T> {
+        press()
+        moveTo(trackProportion = 1f)
+        holdStill()
+        val values = mutableListOf(value())
+        while (fingerY > 0f) {
+            touch(MotionEvent.ACTION_MOVE, (fingerY - SLOW_DRAG_STEP).coerceAtLeast(0f))
+            values.add(value())
+            holdStill()
+            values.add(value())
+        }
+        release()
+        values.add(value())
+        return values
+    }
+
+    var advanceFrameAfterTouch = true
 
     private fun touch(
         action: Int,
@@ -112,7 +483,7 @@ private class FastScrollerTestList(
         val event = MotionEvent.obtain(downTime, SystemClock.uptimeMillis(), action, scroller.width / 2f, y, 0)
         scroller.dispatchTouchEvent(event)
         event.recycle()
-        showNextFrame()
+        if (advanceFrameAfterTouch) showNextFrame()
     }
 
     private fun showNextFrame() = shadowOf(Looper.getMainLooper()).idleFor(FRAME_INTERVAL)
@@ -120,7 +491,9 @@ private class FastScrollerTestList(
     private companion object {
         const val WIDTH = 1000
         const val HEIGHT = 2000
+        const val SLOW_DRAG_STEP = 3
         val FRAME_INTERVAL: Duration = Duration.ofMillis(16)
+        val SLOW_DRAG_PAUSE: Duration = Duration.ofMillis(50)
         val AUTO_HIDE_WAIT: Duration = Duration.ofSeconds(2)
     }
 }
