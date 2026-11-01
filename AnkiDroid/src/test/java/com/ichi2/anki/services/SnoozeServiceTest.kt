@@ -17,6 +17,7 @@ import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.testutils.ext.insertReminder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

@@ -28,6 +28,7 @@ import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.ext.insertReminder
 import com.ichi2.testutils.positiveButton
 import com.ichi2.testutils.scrollToLastPosition
 import com.ichi2.testutils.simulateSystemBars

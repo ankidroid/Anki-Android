@@ -10,6 +10,7 @@ import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.ext.insertReminder
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
@@ -141,9 +142,11 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `insertReminder and getRemindersForScope should read and write reminders correctly`() =
+    fun `upsertOrDeleteReminder inserts and getRemindersForScope should read and write reminders correctly`() =
         runTest {
-            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
+            allTestReminders.forEach { reminder ->
+                ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reminder)
+            }
             val remindersForDeckOne = ReviewRemindersDatabase.getRemindersForScope(scope1)
             val remindersForDeckTwo = ReviewRemindersDatabase.getRemindersForScope(scope2)
             val appWideReminders = ReviewRemindersDatabase.getRemindersForScope(ReviewReminderScope.Global)
@@ -162,9 +165,11 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `insertReminder and getAllReminders should read and write reminders correctly`() =
+    fun `upsertOrDeleteReminder inserts and getAllReminders should read and write reminders correctly`() =
         runTest {
-            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
+            allTestReminders.forEach { reminder ->
+                ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reminder)
+            }
             val allReminders = ReviewRemindersDatabase.getAllReminders()
             assertThat(
                 allReminders.getRemindersList().toSet(),
@@ -173,11 +178,13 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `toggleReminder should toggle the enabled state of the correct reminder`() =
+    fun `setReminderEnabled should set the enabled state of the correct reminder`() =
         runTest {
-            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
-            ReviewRemindersDatabase.toggleReminder(reviewReminderOne)
-            ReviewRemindersDatabase.toggleReminder(reviewReminderFive)
+            allTestReminders.forEach { reminder ->
+                ReviewRemindersDatabase.insertReminder(reminder)
+            }
+            ReviewRemindersDatabase.setReminderEnabled(reviewReminderOne, !reviewReminderOne.enabled)
+            ReviewRemindersDatabase.setReminderEnabled(reviewReminderFive, !reviewReminderFive.enabled)
             val allReminders = ReviewRemindersDatabase.getAllReminders()
 
             val expectedFlippedReminders = setOf(reviewReminderOne, reviewReminderFive)
@@ -192,11 +199,64 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `deleteReminder should delete the correct reminders`() =
+    fun `setReminderEnabled is idempotent`() =
         runTest {
-            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
-            ReviewRemindersDatabase.deleteReminder(reviewReminderTwo)
-            ReviewRemindersDatabase.deleteReminder(reviewReminderSix)
+            ReviewRemindersDatabase.insertReminder(reviewReminderOne)
+            ReviewRemindersDatabase.setReminderEnabled(reviewReminderOne, true)
+            ReviewRemindersDatabase.setReminderEnabled(reviewReminderOne, true)
+            assertThat(ReviewRemindersDatabase.getAllReminders()[reviewReminderOne.id]!!.enabled, equalTo(true))
+        }
+
+    @Test
+    fun `setReminderEnabled does nothing if the reminder is not stored`() =
+        runTest {
+            ReviewRemindersDatabase.setReminderEnabled(reviewReminderOne, true)
+            assertThat(ReviewRemindersDatabase.getAllReminders(), equalTo(emptyReminderGroup))
+        }
+
+    @Test
+    fun `upsertOrDeleteReminder should move a reminder to a different scope`() =
+        runTest {
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reviewReminderOne)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reviewReminderTwo)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = reviewReminderOne, newReminder = reviewReminderThree)
+            assertThat(
+                ReviewRemindersDatabase.getRemindersForScope(scope1).getRemindersList(),
+                equalTo(listOf(reviewReminderTwo)),
+            )
+            assertThat(
+                ReviewRemindersDatabase.getRemindersForScope(scope2).getRemindersList(),
+                equalTo(listOf(reviewReminderThree)),
+            )
+        }
+
+    @Test
+    fun `upsertOrDeleteReminder should replace a reminder within the same scope`() =
+        runTest {
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reviewReminderFive)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = reviewReminderFive, newReminder = reviewReminderSix)
+            assertThat(
+                ReviewRemindersDatabase.getAllReminders().getRemindersList(),
+                equalTo(listOf(reviewReminderSix)),
+            )
+        }
+
+    @Test
+    fun `upsertOrDeleteReminder with no reminders should do nothing`() =
+        runTest {
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = null)
+            assertThat(ReviewRemindersDatabase.getAllReminders(), equalTo(emptyReminderGroup))
+            assertThat(ReviewRemindersDatabase.remindersSharedPrefs.all.isEmpty(), equalTo(true))
+        }
+
+    @Test
+    fun `upsertOrDeleteReminder should delete the correct reminders`() =
+        runTest {
+            allTestReminders.forEach { reminder ->
+                ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reminder)
+            }
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = reviewReminderTwo, newReminder = null)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = reviewReminderSix, newReminder = null)
             val remindersForDeckOne = ReviewRemindersDatabase.getRemindersForScope(scope1)
             val remindersForDeckTwo = ReviewRemindersDatabase.getRemindersForScope(scope2)
             val allReminders = ReviewRemindersDatabase.getAllReminders()
@@ -386,12 +446,12 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `deleteReminder should delete SharedPreferences key if no reminders are returned`() =
+    fun `upsertOrDeleteReminder should delete SharedPreferences key if no reminders are returned`() =
         runTest {
-            ReviewRemindersDatabase.insertReminder(reviewReminderOne)
-            ReviewRemindersDatabase.insertReminder(reviewReminderTwo)
-            ReviewRemindersDatabase.deleteReminder(reviewReminderOne)
-            ReviewRemindersDatabase.deleteReminder(reviewReminderTwo)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reviewReminderOne)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = null, newReminder = reviewReminderTwo)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = reviewReminderOne, newReminder = null)
+            ReviewRemindersDatabase.upsertOrDeleteReminder(oldReminder = reviewReminderTwo, newReminder = null)
             val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForScope(scope1)
             assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
             assertThat(

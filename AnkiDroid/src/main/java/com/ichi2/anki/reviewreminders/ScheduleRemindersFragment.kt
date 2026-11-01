@@ -59,6 +59,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Fragment for creating, viewing, editing, and deleting review reminders.
@@ -445,52 +446,52 @@ class ScheduleRemindersFragment :
     /**
      * When a [AddEditReminderDialog] instance finishes, we handle the result of the dialog fragment via this method.
      */
-    private fun handleAddEditDialogResult(
+    @VisibleForTesting
+    internal fun handleAddEditDialogResult(
         newOrModifiedReminder: ReviewReminder?,
         modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
     ) {
         Timber.d("Handling add/edit dialog result: mode=%s reminder=%s", modeOfFinishedDialog, newOrModifiedReminder)
-        updateDatabaseForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
+        val oldReminder = (modeOfFinishedDialog as? AddEditReminderDialog.DialogMode.Edit)?.reminderToBeEdited
         updateUIForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
-        updateAlarmsForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
-        // Feedback
-        if (flowOfShowTroubleshooting.value) return // Don't override the troubleshooting snackbar, which is more important
-        showSnackbar(
-            when (modeOfFinishedDialog) {
-                is AddEditReminderDialog.DialogMode.Add -> getString(CommonString.schedule_reminders_added)
-                is AddEditReminderDialog.DialogMode.Edit -> {
-                    when (newOrModifiedReminder) {
-                        null -> getString(CommonString.schedule_reminders_deleted)
-                        else -> getString(CommonString.schedule_reminders_edited)
+        launchCatchingTask {
+            persistReminderChange {
+                ReviewReminderMutations.upsertOrDeleteReminder(
+                    context = requireContext(),
+                    oldReminder = oldReminder,
+                    newReminder = newOrModifiedReminder,
+                )
+            }
+            // Feedback
+            // Don't override the troubleshooting snackbar, which is more important
+            if (flowOfShowTroubleshooting.value) return@launchCatchingTask
+            showSnackbar(
+                when (modeOfFinishedDialog) {
+                    is AddEditReminderDialog.DialogMode.Add -> getString(CommonString.schedule_reminders_added)
+                    is AddEditReminderDialog.DialogMode.Edit -> {
+                        when (newOrModifiedReminder) {
+                            null -> getString(CommonString.schedule_reminders_deleted)
+                            else -> getString(CommonString.schedule_reminders_edited)
+                        }
                     }
-                }
-            },
-        )
+                },
+            )
+        }
     }
 
     /**
-     * Write the new or modified reminder to the database.
-     * @see handleAddEditDialogResult
+     * Awaits a reminder change which has already been shown in the UI.
+     * The change continues if this fragment is destroyed; see [ReviewReminderMutations].
+     * If the change fails, the reminders are reloaded so the UI shows what was actually stored, and the error is rethrown.
      */
-    private fun updateDatabaseForAddEditDialog(
-        newOrModifiedReminder: ReviewReminder?,
-        modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
-    ) {
-        launchCatchingTask {
-            catchDatabaseExceptions {
-                if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
-                    // Delete the existing reminder if we're in edit mode
-                    // This action must be separated from writing the modified reminder because the user may have updated the reminder's deck,
-                    // meaning we need to delete the old reminder in the old deck, then add a new reminder to the new deck
-                    val reminderToDelete = modeOfFinishedDialog.reminderToBeEdited
-                    Timber.d("Deleting old reminder from database")
-                    ReviewRemindersDatabase.deleteReminder(reminderToDelete)
-                }
-                newOrModifiedReminder?.let { reminder ->
-                    Timber.d("Writing new or modified reminder to database")
-                    ReviewRemindersDatabase.insertReminder(reminder)
-                }
-            }
+    private suspend fun persistReminderChange(change: suspend () -> Unit) {
+        try {
+            catchDatabaseExceptions { change() }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            loadDatabaseRemindersIntoUI()
+            throw e
         }
     }
 
@@ -513,31 +514,6 @@ class ScheduleRemindersFragment :
             }
         }
         triggerUIUpdate()
-    }
-
-    /**
-     * Update the AlarmManager notifications for the new or modified reminder.
-     * @see handleAddEditDialogResult
-     */
-    private fun updateAlarmsForAddEditDialog(
-        newOrModifiedReminder: ReviewReminder?,
-        modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
-    ) {
-        if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
-            ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(
-                requireContext(),
-                modeOfFinishedDialog.reminderToBeEdited,
-            )
-        }
-        newOrModifiedReminder?.let {
-            if (it.enabled) {
-                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
-                    requireContext(),
-                    it,
-                    attemptImmediateNotification = false,
-                )
-            }
-        }
     }
 
     /**
@@ -572,32 +548,22 @@ class ScheduleRemindersFragment :
 
     /**
      * Toggles whether a review reminder is enabled, i.e. whether its notifications will fire.
-     * Saves this information immediately to the database and then updates the UI.
+     * Eagerly updates the UI, then saves the change to the database and updates the scheduled notifications.
      */
-    private fun toggleReminder(reminder: ReviewReminder) {
+    @VisibleForTesting
+    internal fun toggleReminder(reminder: ReviewReminder) {
         Timber.d("Toggling reminder enabled state: %s", reminder.id)
-
-        // Update database
-        launchCatchingTask {
-            catchDatabaseExceptions {
-                ReviewRemindersDatabase.toggleReminder(reminder)
-            }
-        }
+        val enabled = !reminder.enabled
 
         // Update UI
         reminders.toggleEnabled(reminder.id)
         triggerUIUpdate()
 
-        // Update scheduled AlarmManager notifications
-        val updatedReminder = reminders[reminder.id] ?: return
-        when (updatedReminder.enabled) {
-            true ->
-                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
-                    requireContext(),
-                    updatedReminder,
-                    attemptImmediateNotification = false,
-                )
-            false -> ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(requireContext(), reminder)
+        // Update database, then scheduled AlarmManager notifications
+        launchCatchingTask {
+            persistReminderChange {
+                ReviewReminderMutations.setReminderEnabled(requireContext(), reminder, enabled)
+            }
         }
     }
 

@@ -18,6 +18,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER_ID
 import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER_SCOPE
 import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.testutils.ext.insertReminder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
