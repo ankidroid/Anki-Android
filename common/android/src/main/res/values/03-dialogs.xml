@@ -302,4 +302,10 @@ also changes the interval of the card"
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+
+    <!-- Switch profile dialogs -->
+    <string name="switch_profile_title" comment="Title of the dialog that confirms switching to another profile. %1$s is the profile name">Switch to “%1$s”?</string>
+    <string name="switch_profile_message" comment="Message of the dialog that confirms switching to another profile">AnkiDroid will restart to open this profile.</string>
+    <string name="switch_profile_confirm" comment="Button that confirms switching to another profile">Switch</string>
+    <string name="switch_profile_blocked" comment="Shown when the user tries to switch profiles while a sync or backup is running">AnkiDroid is syncing or backing up. Try again when it finishes.</string>
 </resources>

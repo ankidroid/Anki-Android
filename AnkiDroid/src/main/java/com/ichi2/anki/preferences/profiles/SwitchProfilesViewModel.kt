@@ -5,12 +5,20 @@ package com.ichi2.anki.preferences.profiles
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileName
+import com.ichi2.anki.multiprofile.ProfileSwitchGuard
+import com.ichi2.anki.multiprofile.backupCheck
+import com.ichi2.anki.multiprofile.mediaSyncCheck
+import com.ichi2.anki.multiprofile.syncCheck
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
@@ -19,6 +27,8 @@ import timber.log.Timber
  */
 class SwitchProfilesViewModel(
     private val profileManager: ProfileManager,
+    private val switchGuard: ProfileSwitchGuard,
+    private val restartApp: suspend () -> Unit,
 ) : ViewModel() {
     /** Profiles shown in the list. */
     val profiles: StateFlow<List<ProfileItem>>
@@ -29,6 +39,12 @@ class SwitchProfilesViewModel(
 
     val profileBeingRenamed: StateFlow<ProfileItem?>
         field = MutableStateFlow<ProfileItem?>(null)
+
+    val profileToSwitchTo: StateFlow<ProfileItem?>
+        field = MutableStateFlow<ProfileItem?>(null)
+
+    val isSwitchBlocked: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
     fun showAddProfileDialog() {
         isAddProfileDialogVisible.value = true
@@ -62,6 +78,34 @@ class SwitchProfilesViewModel(
         refresh()
     }
 
+    fun requestSwitch(profile: ProfileItem) {
+        if (profile.id == profileManager.activeProfileContext.profileId) return
+        profileToSwitchTo.value = profile
+    }
+
+    fun dismissSwitchProfileDialog() {
+        profileToSwitchTo.value = null
+    }
+
+    fun switchProfile() {
+        val profile = profileToSwitchTo.value ?: return
+        profileToSwitchTo.value = null
+        Timber.i("Switch profile confirmed: %s", profile.id)
+        viewModelScope.launch {
+            when (val result = withContext(ioDispatcher) { switchGuard(profile.id) }) {
+                ProfileSwitchGuard.Result.Success -> restartApp()
+                is ProfileSwitchGuard.Result.Blocked -> {
+                    Timber.i("Profile switch blocked: %s", result.reasons)
+                    isSwitchBlocked.value = true
+                }
+            }
+        }
+    }
+
+    fun dismissSwitchBlockedMessage() {
+        isSwitchBlocked.value = false
+    }
+
     fun deleteProfile(profile: ProfileItem) {
         Timber.i("Delete profile requested: %s", profile.id)
         // TODO: implement profile deletion via ProfileManager
@@ -73,10 +117,17 @@ class SwitchProfilesViewModel(
     }
 
     companion object {
-        fun factory(profileManager: ProfileManager): ViewModelProvider.Factory =
+        fun factory(
+            profileManager: ProfileManager,
+            restartApp: suspend () -> Unit,
+        ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    SwitchProfilesViewModel(profileManager)
+                    SwitchProfilesViewModel(
+                        profileManager = profileManager,
+                        switchGuard = ProfileSwitchGuard(profileManager, listOf(syncCheck(), mediaSyncCheck(), backupCheck())),
+                        restartApp = restartApp,
+                    )
                 }
             }
 
