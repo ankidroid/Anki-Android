@@ -17,6 +17,7 @@ import androidx.webkit.WebViewCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.utils.openUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,13 +34,18 @@ value class WebViewVersionCode(
 )
 
 /** The Android package version code which corresponds to the Webview version. */
-internal val OLDEST_WORKING_WEBVIEW_VERSION_CODE = WebViewVersionCode(418306960L)
-
-/** The minimum supported Webview version(Human readable). */
-internal val OLDEST_WORKING_WEBVIEW_VERSION = WebViewVersion(85)
+internal val OLDEST_WORKING_WEBVIEW_VERSION_CODE = WebViewVersionCode(584500000L)
 
 /**
- * Shows a dialog if the current WebView version is older than the last supported version.
+ * The minimum supported Webview version(Human readable).
+ *
+ * 116 is the first stable version with all the APIs used by [com.ichi2.anki.pages.PostRequestBridge].
+ */
+internal val OLDEST_WORKING_WEBVIEW_VERSION = WebViewVersion(116)
+
+/**
+ * Shows a dialog if the current WebView version is older than the last supported version,
+ * or if it lacks the APIs used by [PostRequestBridge], as non-Google WebViews may.
  */
 
 context(context: Context)
@@ -47,7 +53,15 @@ fun showDialogIfWebViewOutdated(
     minimumWebViewVersion: WebViewVersion = OLDEST_WORKING_WEBVIEW_VERSION,
     onOutdated: () -> Unit = {},
 ): Boolean {
-    val userVisibleCode = getChromeLikeWebViewVersionIfOutdated(context, minimumWebViewVersion) ?: return false
+    if (WebViewCompat.getCurrentWebViewPackage(context) == null) return false
+    val outdatedVersion = getChromeLikeWebViewVersionIfOutdated(context, minimumWebViewVersion)
+    val message =
+        when {
+            outdatedVersion != null ->
+                context.getString(CommonString.webview_update_message, outdatedVersion, OLDEST_WORKING_WEBVIEW_VERSION.value)
+            !PostRequestBridge.isSupported() -> context.getString(CommonString.webview_unsupported_message)
+            else -> return false
+        }
 
     // Provide guidance to the user if the WebView is outdated
     val webviewPackageInfo = WebViewCompat.getCurrentWebViewPackage(context)
@@ -55,10 +69,10 @@ fun showDialogIfWebViewOutdated(
     // TODO modify the alert dialog text to handle the usage of developer builds for system WebView
     if (legacyWebViewPackageInfo != null) {
         Timber.w("WebView is outdated. %s: %s", legacyWebViewPackageInfo.packageName, legacyWebViewPackageInfo.versionName)
-        showOutdatedWebViewDialog(context, userVisibleCode, R.string.link_legacy_webview_update, onOutdated)
+        showOutdatedWebViewDialog(context, message, R.string.link_legacy_webview_update, onOutdated)
     } else {
         Timber.w("WebView is outdated. %s: %s", webviewPackageInfo?.packageName, webviewPackageInfo?.versionName)
-        showOutdatedWebViewDialog(context, userVisibleCode, R.string.link_webview_update, onOutdated)
+        showOutdatedWebViewDialog(context, message, R.string.link_webview_update, onOutdated)
     }
     return true
 }
@@ -171,12 +185,12 @@ suspend fun getWebViewInfo(context: Context): WebViewInfo =
 
 private fun showOutdatedWebViewDialog(
     context: Context,
-    installedVersion: Int,
+    message: String,
     @StringRes learnMoreUrl: Int,
     onDismiss: () -> Unit = {},
 ) {
     AlertDialog.Builder(context).show {
-        setMessage(context.getString(CommonString.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION.value))
+        setMessage(message)
         setPositiveButton(CommonString.scoped_storage_learn_more) { _, _ ->
             context.openUrl(learnMoreUrl)
         }

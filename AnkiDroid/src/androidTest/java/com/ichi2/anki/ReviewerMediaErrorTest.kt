@@ -15,7 +15,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
+import com.ichi2.anki.pages.PostRequestBridge.Companion.LOCALHOST
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
@@ -25,7 +25,6 @@ import com.ichi2.anki.testutil.ensureWebViewIsSupported
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.waitUntil
-import fi.iki.elonen.NanoHTTPD
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
@@ -55,11 +54,9 @@ class ReviewerMediaErrorTest : InstrumentedTest() {
 
     @Test
     fun apiTransportFailureDoesNotHideMissingMediaSnackbar() {
-        // Reserve a port without listening, so connections are refused and no server can claim it.
-        Socket().use { socket ->
-            socket.bind(InetSocketAddress(LOCALHOST, 0))
+        withUnusedBaseUrl { apiBaseUrl ->
             assertApiFailureDoesNotHideMissingMediaSnackbar(
-                apiBaseUrl = "http://$LOCALHOST:${socket.localPort}",
+                apiBaseUrl = apiBaseUrl,
                 expectedApiErrorCode = WebViewClient.ERROR_CONNECT,
             )
         }
@@ -69,16 +66,16 @@ class ReviewerMediaErrorTest : InstrumentedTest() {
         apiBaseUrl: String? = null,
         expectedApiErrorCode: Int = 500,
     ) {
-        withErrorServer { mediaBaseUrl ->
+        withUnusedBaseUrl { errorBaseUrl ->
             withReviewer { scenario ->
-                val errors = scenario.recordWebViewErrors()
+                val errors = scenario.recordWebViewErrors(errorBaseUrl)
                 scenario.evaluateJavascript(
-                    "fetch('${apiBaseUrl ?: mediaBaseUrl}/jsapi/cardDue', {method: 'POST'}).catch(() => {});",
+                    "fetch('${apiBaseUrl ?: errorBaseUrl}/jsapi/cardDue', {method: 'POST'}).catch(() => {});",
                 )
                 assertEquals("/jsapi/cardDue" to expectedApiErrorCode, errors.poll(10, TimeUnit.SECONDS))
                 onView(withId(MaterialR.id.snackbar_text)).check(doesNotExist())
 
-                scenario.assertMissingImageIsReported(mediaBaseUrl, errors)
+                scenario.assertMissingImageIsReported(errorBaseUrl, errors)
             }
         }
     }
@@ -101,27 +98,30 @@ class ReviewerMediaErrorTest : InstrumentedTest() {
         }
     }
 
-    private fun withErrorServer(block: (baseUrl: String) -> Unit) {
-        val server =
-            object : NanoHTTPD(LOCALHOST, 0) {
-                override fun serve(session: IHTTPSession): Response {
-                    val status =
-                        when {
-                            session.method == Method.OPTIONS -> Response.Status.OK
-                            session.uri == "/jsapi/cardDue" -> Response.Status.INTERNAL_ERROR
-                            else -> Response.Status.NOT_FOUND
-                        }
-                    return newFixedLengthResponse(status, "text/plain", "Deliberate test failure").apply {
-                        addHeader("Access-Control-Allow-Origin", "*")
-                    }
-                }
-            }
-        try {
-            server.start()
-            block("http://$LOCALHOST:${server.listeningPort}")
-        } finally {
-            server.stop()
+    /** Reserves a port without listening, so connections to it are refused and no server can claim it */
+    private fun withUnusedBaseUrl(block: (baseUrl: String) -> Unit) {
+        Socket().use { socket ->
+            socket.bind(InetSocketAddress(LOCALHOST, 0))
+            block("http://$LOCALHOST:${socket.localPort}")
         }
+    }
+
+    /** Fails like a server would: the API with a 500, and anything else with a 404 */
+    private fun errorResponse(request: WebResourceRequest): WebResourceResponse {
+        val (status, reason) =
+            when {
+                request.method == "OPTIONS" -> 200 to "OK"
+                request.url.path == "/jsapi/cardDue" -> 500 to "Internal Server Error"
+                else -> 404 to "Not Found"
+            }
+        return WebResourceResponse(
+            "text/plain",
+            "utf-8",
+            status,
+            reason,
+            mapOf("Access-Control-Allow-Origin" to "*"),
+            "Deliberate test failure".byteInputStream(),
+        )
     }
 
     private fun ActivityScenario<Reviewer>.awaitCardLoaded() {
@@ -136,7 +136,8 @@ class ReviewerMediaErrorTest : InstrumentedTest() {
         }
     }
 
-    private fun ActivityScenario<Reviewer>.recordWebViewErrors(): LinkedBlockingQueue<Pair<String?, Int>> {
+    /** @param errorBaseUrl its requests are answered by [errorResponse] */
+    private fun ActivityScenario<Reviewer>.recordWebViewErrors(errorBaseUrl: String): LinkedBlockingQueue<Pair<String?, Int>> {
         val errors = LinkedBlockingQueue<Pair<String?, Int>>()
         onActivity { reviewer ->
             val client = checkNotNull(reviewer.webViewClient)
@@ -145,7 +146,12 @@ class ReviewerMediaErrorTest : InstrumentedTest() {
                     override fun shouldInterceptRequest(
                         view: WebView,
                         request: WebResourceRequest,
-                    ): WebResourceResponse? = client.shouldInterceptRequest(view, request)
+                    ): WebResourceResponse? =
+                        if ("${request.url.scheme}://${request.url.encodedAuthority}" == errorBaseUrl) {
+                            errorResponse(request)
+                        } else {
+                            client.shouldInterceptRequest(view, request)
+                        }
 
                     override fun onReceivedError(
                         view: WebView,

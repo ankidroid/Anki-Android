@@ -379,9 +379,6 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
     <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary"
-        >Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
 
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
