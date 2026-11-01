@@ -11,6 +11,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.database.DatabaseErrorHandler
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -165,6 +167,23 @@ open class AnkiDroidApp :
     override fun getNoBackupFilesDir(): File = profileContext?.noBackupFilesDir ?: super.getNoBackupFilesDir()
 
     override fun getDatabasePath(name: String): File = profileContext?.getDatabasePath(name) ?: super.getDatabasePath(name)
+
+    override fun openOrCreateDatabase(
+        name: String,
+        mode: Int,
+        factory: SQLiteDatabase.CursorFactory?,
+    ): SQLiteDatabase = profileContext?.openOrCreateDatabase(name, mode, factory) ?: super.openOrCreateDatabase(name, mode, factory)
+
+    override fun openOrCreateDatabase(
+        name: String,
+        mode: Int,
+        factory: SQLiteDatabase.CursorFactory?,
+        errorHandler: DatabaseErrorHandler?,
+    ): SQLiteDatabase =
+        profileContext?.openOrCreateDatabase(name, mode, factory, errorHandler)
+            ?: super.openOrCreateDatabase(name, mode, factory, errorHandler)
+
+    override fun deleteDatabase(name: String): Boolean = profileContext?.deleteDatabase(name) ?: super.deleteDatabase(name)
 
     override fun getDir(
         name: String,
