@@ -79,6 +79,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -91,6 +92,7 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.handleExportReadyRequest
 import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.receiver.ExportSharedReceiver
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -773,6 +775,7 @@ open class AnkiActivity(
             Intent.createChooser(
                 sendIntent,
                 getString(CommonString.export_share_title),
+                ExportSharedReceiver.getIntentSender(this, attachment),
             )
         if (shareFileIntent.resolveActivity(packageManager) != null) {
             startActivity(shareFileIntent)
@@ -821,6 +824,7 @@ open class AnkiActivity(
                     }
 
                 if (isSuccessful) {
+                    BackupPromptDialog.onFileExported(this@AnkiActivity, File(fileExportPath))
                     showSnackbar(CommonString.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
                 } else {
                     showSnackbar(CommonString.export_save_apkg_unsuccessful)
