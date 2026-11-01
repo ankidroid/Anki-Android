@@ -54,16 +54,6 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 // ============================================================================
 
 (() => {
-    function localRequest(endpoint, payload = {}) {
-        fetch(`ankidroid/${endpoint}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        }).catch(err => console.log("Failed to reach local server:", err));
-    }
-
     /**
      * Checks if the target element is a text input field.
      * @param {Event} event
@@ -76,13 +66,13 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 
     document.addEventListener("focusin", event => {
         if (isTextInput(event)) {
-            localRequest("focusin");
+            ankidroid.request("focusin");
         }
     });
 
     document.addEventListener("focusout", event => {
         if (isTextInput(event)) {
-            localRequest("focusout");
+            ankidroid.request("focusout");
         }
     });
 })();
@@ -92,7 +82,6 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 // ============================================================================
 
 (() => {
-    const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
     const GESTURE_TIMEOUT = 800;
     const TOUCH_SLOP = 10;
@@ -182,7 +171,7 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
                 if (elapsed > MULTI_TOUCH_TIMEOUT || hadMovedPastSlop) {
                     return;
                 }
-                window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
+                ankidroid.request("multiFingerTap", { touchCount });
                 return;
             }
 
@@ -196,18 +185,14 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             }
 
             // Swipes and tap detection
-            const scrollDirection = getScrollDirection(event.target);
-            const params = new URLSearchParams({
+            ankidroid.request("tapOrSwipe", {
                 x: Math.round(endX),
                 y: Math.round(endY),
                 deltaX: Math.round(endX - startX),
                 deltaY: Math.round(endY - startY),
                 time: Date.now(),
+                scrollDirection: getScrollDirection(event.target),
             });
-            if (scrollDirection !== null) {
-                params.append("scrollDirection", scrollDirection);
-            }
-            window.location.href = `${SCHEME}://tapOrSwipe/?${params.toString()}`;
         },
         { passive: true },
     );

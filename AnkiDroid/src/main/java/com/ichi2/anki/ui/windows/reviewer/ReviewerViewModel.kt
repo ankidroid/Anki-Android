@@ -108,6 +108,7 @@ class ReviewerViewModel(
     val voiceRecorderEnabledFlow = MutableStateFlow(repository.isRecordVoiceEnabled)
     val whiteboardEnabledFlow = MutableStateFlow(repository.isWhiteboardEnabled)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
+    val gestureFlow = MutableSharedFlow<RawGesture>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
     val pageUpFlow = MutableSharedFlow<Unit>()
     val pageDownFlow = MutableSharedFlow<Unit>()
@@ -456,6 +457,14 @@ class ReviewerViewModel(
                 onStateMutationCallback()
                 return byteArrayOf()
             }
+            "multiFingerTap" -> {
+                gestureFlow.emit(RawGesture.MultiTouch(bytes))
+                return byteArrayOf()
+            }
+            "tapOrSwipe" -> {
+                gestureFlow.emit(RawGesture.TapOrSwipe(bytes))
+                return byteArrayOf()
+            }
         }
         return when (uri.backendMethodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
@@ -492,7 +501,7 @@ class ReviewerViewModel(
         statesMutationEvalFlow.emit(
             """
             anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js })
-                .finally(() => fetch("ankidroid/statesMutated", { method: "POST" }));
+                .finally(() => ankidroid.request("statesMutated"));
             """,
         )
     }
