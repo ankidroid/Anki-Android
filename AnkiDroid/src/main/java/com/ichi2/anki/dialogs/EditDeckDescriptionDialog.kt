@@ -25,6 +25,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.create
 import com.ichi2.utils.handleOutsideTouch
 import com.ichi2.utils.moveCursorToEnd
@@ -95,6 +96,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 insets
             }
         }
+        setDialogKeyboardResize(dialog)
     }
 
     private fun setupDialogView(view: View) {
