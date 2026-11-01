@@ -6,6 +6,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
@@ -76,7 +77,12 @@ class ConfirmationDialog : DialogFragment() {
         AlertDialog.Builder(requireContext()).create {
             title(text = title)
             message(text = message)
-            positiveButton(text = positiveButtonText) { confirm.run() }
+            positiveButton(text = positiveButtonText) {
+                requireArguments().getString(ARG_REQUEST_KEY)?.let { requestKey ->
+                    setFragmentResult(requestKey, requireArguments().getBundle(ARG_RESULT) ?: Bundle())
+                }
+                confirm.run()
+            }
             negativeButton(CommonString.dialog_cancel) { cancel.run() }
         }
 
@@ -91,5 +97,20 @@ class ConfirmationDialog : DialogFragment() {
 
         /** Optional text for the positive button. Default: "OK" */
         private const val ARG_POSITIVE_BUTTON_TEXT = "positiveButtonText"
+
+        private const val ARG_REQUEST_KEY = "requestKey"
+        private const val ARG_RESULT = "result"
+
+        fun newInstance(
+            requestKey: String,
+            message: String,
+            title: String? = null,
+            positiveButtonText: String? = null,
+            result: Bundle = Bundle(),
+        ) = ConfirmationDialog().apply {
+            setArgs(title, message, positiveButtonText)
+            requireArguments().putString(ARG_REQUEST_KEY, requestKey)
+            requireArguments().putBundle(ARG_RESULT, result)
+        }
     }
 }
