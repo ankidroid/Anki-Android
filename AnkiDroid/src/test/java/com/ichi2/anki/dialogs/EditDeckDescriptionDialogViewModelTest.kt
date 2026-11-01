@@ -13,8 +13,11 @@ import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType.Clo
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType.Saved
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.NeedsRobolectric
+import io.mockk.mockk
+import io.mockk.verify
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -60,6 +63,29 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
             saveAndExit()
 
             assertThat("format as markdown updated after save", defaultDeck.descriptionAsMarkdown, equalTo(true))
+        }
+
+    @Test
+    fun `saving notifies change subscribers`() =
+        runViewModelTest {
+            val subscriber = mockk<ChangeManager.Subscriber>(relaxed = true)
+            ChangeManager.subscribe(subscriber)
+            description = "foo"
+
+            saveAndExit().join()
+
+            verify(exactly = 1) { subscriber.opExecuted(match { it.deck }, any()) }
+        }
+
+    @Test
+    fun `saving can be undone`() =
+        runViewModelTest {
+            description = "foo"
+            saveAndExit().join()
+
+            col.undo()
+
+            assertThat("description restored by undo", defaultDeck.description, equalTo(""))
         }
 
     @Test
