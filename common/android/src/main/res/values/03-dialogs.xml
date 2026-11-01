@@ -211,6 +211,12 @@
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
 
+    <string name="storage_setup_title">Safer storage</string>
+    <string name="allow_file_access">Allow file access</string>
+    <string name="storage_permission_explanation">With file access permissions, local cards and backups survive uninstalling. If you skip, uninstalling deletes them.</string>
+    <string name="continue_without_access">Skip</string>
+    <string name="use_app_folder">Use app folder</string>
+
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 
     <!-- Set Due Date -->
