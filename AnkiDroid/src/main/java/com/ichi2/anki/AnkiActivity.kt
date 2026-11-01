@@ -79,6 +79,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -776,6 +777,7 @@ open class AnkiActivity(
             )
         if (shareFileIntent.resolveActivity(packageManager) != null) {
             startActivity(shareFileIntent)
+            BackupPromptDialog.onFileExported(this, attachment)
         } else {
             // Try to save it?
             showSnackbar(CommonString.export_send_no_handlers)
@@ -821,6 +823,7 @@ open class AnkiActivity(
                     }
 
                 if (isSuccessful) {
+                    BackupPromptDialog.onFileExported(this@AnkiActivity, File(fileExportPath))
                     showSnackbar(CommonString.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
                 } else {
                     showSnackbar(CommonString.export_save_apkg_unsuccessful)
