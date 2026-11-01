@@ -14,6 +14,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardRepository
+import com.ichi2.anki.ui.windows.reviewer.whiteboard.tapWithFingers
 import com.ichi2.testutils.mockWebResourceRequest
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -62,6 +63,37 @@ class ReviewerWhiteboardGestureTest : RobolectricTest() {
                 sendMultiFingerTap(2)
                 advanceUntilIdle()
                 assertTrue(viewModel.showingAnswer.value)
+            }
+        }
+
+    @Test
+    fun `unbound whiteboard tap reaches the study screen after recreation`() =
+        runTest {
+            val twoFingerTap = listOf(ReviewerBinding.fromGesture(Gesture.TWO_FINGER_TAP)).toPreferenceString()
+            editPreferences { putString(ViewerAction.SHOW_ANSWER.preferenceKey, twoFingerTap) }
+            StudyScreenRepository().isWhiteboardEnabled = true
+            WhiteboardRepository(getPreferences()).stylusOnlyMode = false
+            addBasicNote()
+            val intent = ReviewerFragment.getIntent(targetContext)
+            Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+                controller.setup().windowFocusChanged(true)
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                // A configuration change that the activity doesn't handle, e.g. attaching a hardware keyboard
+                controller.recreate().windowFocusChanged(true)
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                val reviewer = assertIs<ReviewerFragment>(controller.get().fragment)
+                reviewer.viewModel.onPageFinished(false)
+                advanceUntilIdle()
+                val whiteboard =
+                    assertIs<WhiteboardFragment>(reviewer.childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName))
+                assertFalse(reviewer.viewModel.showingAnswer.value)
+
+                whiteboard.tapWithFingers(2)
+                advanceUntilIdle()
+
+                assertTrue(reviewer.viewModel.showingAnswer.value)
             }
         }
 
