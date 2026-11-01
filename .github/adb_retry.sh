@@ -4,28 +4,24 @@
 set -euo pipefail
 
 # ADB can report the device offline just after boot (#22033/#22042).
-# Retry only connection failures reported before the command is dispatched.
-# Only use for short-lived commands: stderr is captured until they exit.
-stderr_file=$(mktemp)
-trap 'rm -f "$stderr_file"' EXIT
+serial="emulator-$EMULATOR_PORT"
+
+adb_connection() {
+  adb devices -l 2>/dev/null | awk -v serial="$serial" '$1 == serial { for (i = 3; i <= NF; i++) if ($i ~ /^transport_id:/) print $2, $i }' || true
+}
 
 for ((attempt = 1; attempt <= 5; attempt++)); do
-  # Keep retry messages out of stdout so getprop results remain usable.
-  if adb "$@" 2>"$stderr_file"; then
-    cat "$stderr_file" >&2
+  connection=$(adb_connection)
+  if "$@"; then
     exit 0
   else
-    adb_status=$?
+    status=$?
   fi
-  cat "$stderr_file" >&2
 
-  if ((attempt == 5)); then
-    exit "$adb_status"
+  if ((attempt == 5)) || [[ "$connection" == "device "* && "$(adb_connection)" == "$connection" ]]; then
+    exit "$status"
   fi
-  case "$(<"$stderr_file")" in
-    "adb: device offline"|"error: device offline") ;;
-    *) exit "$adb_status" ;;
-  esac
-  printf 'ADB device offline; retrying in 1 second (attempt %s/5).\n' "$((attempt + 1))" >&2
-  sleep 1
+  # Keep retry messages out of stdout so getprop results remain usable.
+  printf 'ADB lost %s; retrying once it reconnects (attempt %s/5).\n' "$serial" "$((attempt + 1))" >&2
+  timeout 60s adb -s "$serial" wait-for-device || exit "$status"
 done

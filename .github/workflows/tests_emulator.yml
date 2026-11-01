@@ -244,7 +244,7 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
-            bash .github/adb_retry.sh logcat --clear
+            bash .github/adb_retry.sh adb logcat --clear
             echo "Generated AVD snapshot for caching."
 
         # This step is separate so pure install time may be calculated as a step
@@ -271,10 +271,10 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
-            bash .github/adb_retry.sh shell su root "setprop ctl.restart zygote"
+            bash .github/adb_retry.sh adb shell su root "setprop ctl.restart zygote"
             sleep 10
             sleep $FIRST_BOOT_DELAY
-            bash .github/adb_retry.sh logcat --clear
+            bash .github/adb_retry.sh adb logcat --clear
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
@@ -296,8 +296,8 @@ jobs:
             touch adb-log.txt
             bash .github/disable_art_metrics.sh
             # Fix "Speech Recognition and Synthesis from Google keeps stopping" causing RootViewWithoutFocusException  
-            bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
-            bash .github/adb_retry.sh emu screenrecord start --time-limit 1800 video.webm
+            bash .github/adb_retry.sh adb shell settings put global hide_error_dialogs 1
+            bash .github/adb_retry.sh adb emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             bash .github/with_emulator_log.sh adb-log.txt python3 .github/run_emulator_tests.py
 
@@ -323,8 +323,8 @@ jobs:
           disable-animations: true
           script: |
             bash .github/disable_art_metrics.sh
-            bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
-            TEST_RELEASE_BUILD=false bash .github/with_emulator_cleanup.sh ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon --stacktrace
+            bash .github/adb_retry.sh adb shell settings put global hide_error_dialogs 1
+            TEST_RELEASE_BUILD=false bash .github/with_emulator_cleanup.sh bash .github/adb_retry.sh ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon --stacktrace
 
       - name: Configure NDK tools PATH for alignment checking
         run: |
