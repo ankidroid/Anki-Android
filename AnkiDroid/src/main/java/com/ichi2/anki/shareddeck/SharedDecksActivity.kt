@@ -16,7 +16,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -34,7 +33,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.utils.FileNameAndExtension
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -53,7 +53,9 @@ import com.ichi2.anki.common.android.R as CommonR
  *
  * @see SharedDecksDownloadFragment
  */
-class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
+class SharedDecksActivity :
+    AnkiActivity(R.layout.activity_shared_decks),
+    OnWebViewRecreatedListener {
     private val binding by viewBinding(ActivitySharedDecksBinding::bind)
     lateinit var downloadManager: DownloadManager
 
@@ -67,13 +69,16 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
     private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
     private val onBackPressedCallback =
-        object : OnBackPressedCallback(true) {
+        object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 if (isReturningAfterLogin) return
                 if (binding.webView.canGoBack()) {
                     binding.webView.goBack()
                 } else {
-                    pagesBeforeLogin.removeLastOrNull()?.let { returnTo(it) }
+                    pagesBeforeLogin.removeLastOrNull()?.let { returnTo(it) } ?: run {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
                 }
             }
         }
@@ -86,7 +91,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
      * an extra entry in the history since the previous page would not get cleared.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal inner class SharedDeckWebViewClient : WebViewClient() {
+    internal inner class SharedDeckWebViewClient : SafeWebViewClient() {
         override fun doUpdateVisitedHistory(
             view: WebView?,
             url: String?,
@@ -279,7 +284,13 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                 }
             }
         }
-        binding.webView.webViewClient = webViewClient
+        binding.webView.setWebViewClient(webViewClient)
+    }
+
+    override fun onWebViewRecreated() {
+        onBackPressedCallback.isEnabled = false
+        pagesBeforeLogin.clear()
+        setupWebView()
     }
 
     /** Applies edge-to-edge insets for the screen */
@@ -332,7 +343,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
     override fun onDestroy() {
         loginRequiredDialog?.dismiss()
-        SafeWebViewLayout.destroyWebView(binding.webView)
+        binding.webView.destroy()
         super.onDestroy()
     }
 }
