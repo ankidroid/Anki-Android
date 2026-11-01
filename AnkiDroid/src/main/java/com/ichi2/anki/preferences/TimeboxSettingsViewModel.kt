@@ -4,25 +4,27 @@ package com.ichi2.anki.preferences
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.CollectionPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 data class TimeboxUiState(
     val isLoading: Boolean = true,
     val isEnabled: Boolean = false,
-    val minutes: Int = TimeboxSettingsViewModel.DEFAULT_TIMEBOX_MINUTES,
+    val limit: TimeboxTimeLimit = TimeboxTimeLimit.DEFAULT,
 )
 
 /**
  * State holder for [TimeboxSettingsFragment] and [TimeboxSettingsScreen].
  */
-class TimeboxSettingsViewModel : ViewModel() {
+class TimeboxSettingsViewModel(
+    private val prefs: PrefsRepository = Prefs,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(TimeboxUiState())
     val uiState: StateFlow<TimeboxUiState> = _uiState.asStateFlow()
 
@@ -32,14 +34,20 @@ class TimeboxSettingsViewModel : ViewModel() {
 
     private fun loadSettings() {
         viewModelScope.launch {
-            val limitMinutes = CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)
-            val isEnabled = limitMinutes > 0
-            val minutes = if (isEnabled) limitMinutes else DEFAULT_TIMEBOX_MINUTES
+            val collectionLimit = CollectionPreferences.getTimeboxLimit()
+            val isEnabled = collectionLimit.isEnabled
+            val limit =
+                if (isEnabled) {
+                    prefs.timeboxCustomLimit = collectionLimit
+                    collectionLimit
+                } else {
+                    prefs.timeboxCustomLimit
+                }
             _uiState.value =
                 TimeboxUiState(
                     isLoading = false,
                     isEnabled = isEnabled,
-                    minutes = minutes,
+                    limit = limit,
                 )
         }
     }
@@ -47,29 +55,28 @@ class TimeboxSettingsViewModel : ViewModel() {
     fun toggleEnabled(enabled: Boolean) {
         _uiState.update { it.copy(isEnabled = enabled) }
         viewModelScope.launch {
-            // TODO: Follow-up issue: persist the old non-zero time limit in Android storage when disabled so the value is restored on re-enabling
-            val minutesToSave = if (enabled) _uiState.value.minutes else 0
-            CollectionPreferences.setTimeboxTimeLimit(minutesToSave.toDuration(DurationUnit.MINUTES))
+            val limitToSave =
+                if (enabled) {
+                    _uiState.value.limit
+                } else {
+                    TimeboxTimeLimit.DISABLED
+                }
+            CollectionPreferences.setTimeboxLimit(limitToSave)
         }
     }
 
     fun setMinutes(newMinutes: Int) {
-        val clamped = newMinutes.coerceIn(MIN_TIMEBOX_MINUTES, MAX_TIMEBOX_MINUTES)
-        _uiState.update { it.copy(minutes = clamped) }
+        val limit = TimeboxTimeLimit.fromMinutes(newMinutes) ?: return
+        _uiState.update { it.copy(limit = limit) }
+        prefs.timeboxCustomLimit = limit
         if (_uiState.value.isEnabled) {
             viewModelScope.launch {
-                CollectionPreferences.setTimeboxTimeLimit(clamped.toDuration(DurationUnit.MINUTES))
+                CollectionPreferences.setTimeboxLimit(limit)
             }
         }
     }
 
-    fun increment() = setMinutes(_uiState.value.minutes + 1)
+    fun increment() = setMinutes(_uiState.value.limit.minutes + 1)
 
-    fun decrement() = setMinutes(_uiState.value.minutes - 1)
-
-    companion object {
-        const val DEFAULT_TIMEBOX_MINUTES = 20
-        const val MIN_TIMEBOX_MINUTES = 1
-        const val MAX_TIMEBOX_MINUTES = 999
-    }
+    fun decrement() = setMinutes(_uiState.value.limit.minutes - 1)
 }

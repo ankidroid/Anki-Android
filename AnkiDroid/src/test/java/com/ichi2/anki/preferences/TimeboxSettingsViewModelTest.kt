@@ -4,6 +4,7 @@ package com.ichi2.anki.preferences
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -33,8 +34,8 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             assertThat("Should be disabled", state.isEnabled, equalTo(false))
             assertThat(
                 "Default minutes should be 20",
-                state.minutes,
-                equalTo(TimeboxSettingsViewModel.DEFAULT_TIMEBOX_MINUTES),
+                state.limit.minutes,
+                equalTo(TimeboxTimeLimit.DEFAULT_TIMEBOX_MINUTES),
             )
         }
 
@@ -48,7 +49,7 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
 
             val state = viewModel.uiState.value
             assertThat("Should be enabled", state.isEnabled, equalTo(true))
-            assertThat("Minutes should match configured value", state.minutes, equalTo(15))
+            assertThat("Minutes should match configured value", state.limit.minutes, equalTo(15))
         }
 
     @Test
@@ -93,17 +94,17 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
 
             viewModel.increment()
             advanceRobolectricLooper()
-            assertThat(viewModel.uiState.value.minutes, equalTo(11))
+            assertThat(viewModel.uiState.value.limit.minutes, equalTo(11))
             assertThat(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES), equalTo(11))
 
             viewModel.decrement()
             advanceRobolectricLooper()
-            assertThat(viewModel.uiState.value.minutes, equalTo(10))
+            assertThat(viewModel.uiState.value.limit.minutes, equalTo(10))
             assertThat(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES), equalTo(10))
         }
 
     @Test
-    fun `clamping enforces bounds between 1 and 999`() =
+    fun `setMinutes rejects out-of-range values`() =
         runTest {
             CollectionPreferences.setTimeboxTimeLimit(10.toDuration(DurationUnit.MINUTES))
 
@@ -111,9 +112,90 @@ class TimeboxSettingsViewModelTest : RobolectricTest() {
             advanceRobolectricLooper()
 
             viewModel.setMinutes(0)
-            assertThat(viewModel.uiState.value.minutes, equalTo(TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES))
+            assertThat("Below minimum should be rejected", viewModel.uiState.value.limit.minutes, equalTo(10))
 
-            viewModel.setMinutes(1000)
-            assertThat(viewModel.uiState.value.minutes, equalTo(TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES))
+            viewModel.setMinutes(10000)
+            assertThat("Above maximum should be rejected", viewModel.uiState.value.limit.minutes, equalTo(10))
+
+            viewModel.setMinutes(9999)
+            assertThat("Valid upper bound should be accepted", viewModel.uiState.value.limit.minutes, equalTo(9999))
+        }
+
+    @Test
+    fun `initializes with persisted custom limit when disabled`() =
+        runTest {
+            Prefs.customTimeboxLimit = 45
+            CollectionPreferences.setTimeboxTimeLimit(0.toDuration(DurationUnit.MINUTES))
+
+            val viewModel = TimeboxSettingsViewModel()
+            advanceRobolectricLooper()
+
+            val state = viewModel.uiState.value
+            assertThat("Should be disabled", state.isEnabled, equalTo(false))
+            assertThat("Should restore persisted minutes", state.limit.minutes, equalTo(45))
+        }
+
+    @Test
+    fun `setting custom minutes persists to prefs and restores on toggle re-enable`() =
+        runTest {
+            CollectionPreferences.setTimeboxTimeLimit(15.toDuration(DurationUnit.MINUTES))
+
+            val viewModel = TimeboxSettingsViewModel()
+            advanceRobolectricLooper()
+
+            viewModel.setMinutes(45)
+            advanceRobolectricLooper()
+
+            assertThat("Prefs should persist customized limit", Prefs.customTimeboxLimit, equalTo(45))
+
+            viewModel.toggleEnabled(false)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "Collection limit should be zero when disabled",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(0),
+            )
+            assertThat("UI state should retain minutes when disabled", viewModel.uiState.value.limit.minutes, equalTo(45))
+
+            viewModel.toggleEnabled(true)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "Collection limit should restore custom minutes on re-enable",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(45),
+            )
+        }
+
+    @Test
+    fun `custom limit is preserved across viewModel re-initialization while disabled`() =
+        runTest {
+            CollectionPreferences.setTimeboxTimeLimit(35.toDuration(DurationUnit.MINUTES))
+
+            val firstViewModel = TimeboxSettingsViewModel()
+            advanceRobolectricLooper()
+
+            firstViewModel.toggleEnabled(false)
+            advanceRobolectricLooper()
+            assertThat(
+                "Collection limit should be zero",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(0),
+            )
+
+            val secondViewModel = TimeboxSettingsViewModel()
+            advanceRobolectricLooper()
+
+            assertThat("New ViewModel should be disabled", secondViewModel.uiState.value.isEnabled, equalTo(false))
+            assertThat("New ViewModel should restore 35 minutes", secondViewModel.uiState.value.limit.minutes, equalTo(35))
+
+            secondViewModel.toggleEnabled(true)
+            advanceRobolectricLooper()
+            assertThat(
+                "Collection limit should restore 35 minutes",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(35),
+            )
         }
 }
