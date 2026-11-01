@@ -33,6 +33,7 @@ import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -204,8 +205,9 @@ abstract class CardViewerFragment(
                 // allow videos to autoplay via our JavaScript eval
                 mediaPlaybackRequiresUserGesture = false
             }
+            PostRequestBridge(viewModel, viewLifecycleOwner.lifecycleScope).attachTo(this)
             loadDataWithBaseURL(
-                viewModel.baseUrl(),
+                PostRequestBridge.BASE_URL,
                 onLoadInitialHtml(),
                 "text/html",
                 null,

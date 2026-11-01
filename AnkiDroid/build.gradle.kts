@@ -780,7 +780,6 @@ dependencies {
     implementation(libs.androidx.webkit)
     implementation(libs.google.material)
     implementation(libs.android.image.cropper)
-    implementation(libs.nanohttpd)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.seismic)
     implementation(libs.process.phoenix)
