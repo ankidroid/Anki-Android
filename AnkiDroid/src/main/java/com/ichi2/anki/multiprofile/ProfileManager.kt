@@ -704,6 +704,11 @@ class ProfileManager private constructor(
      */
     object ProfileSwitchContext
 
+    data class LoadFailure(
+        val profileName: String,
+        val defaultProfileName: String,
+    )
+
     companion object {
         private const val MAX_ATTEMPTS = 10
         const val PROFILE_REGISTRY_FILENAME = "profiles_prefs"
@@ -749,6 +754,16 @@ class ProfileManager private constructor(
         var attachError: Throwable? = null
             private set
 
+        private var loadFailure: LoadFailure? = null
+
+        fun consumeLoadFailure(): LoadFailure? = loadFailure.also { loadFailure = null }
+
+        fun selectDefaultProfile(context: Context) {
+            context.getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE).edit(commit = true) {
+                putString(PREF_LAST_ACTIVE_PROFILE_ID, ProfileId.DEFAULT.value)
+            }
+        }
+
         /**
          * Loads the active profile, or returns null when its environment cannot be
          * loaded.
@@ -761,16 +776,32 @@ class ProfileManager private constructor(
         fun createOrNull(base: Context): ProfileManager? =
             try {
                 attachError = null
+                loadFailure = null
                 create(base)
             } catch (e: Exception) {
-                // TODO: show this to the user instead of silently falling back to the Default profile
                 attachError = e
+                loadFailure = readLoadFailure(base)
                 null
             }
+
+        private fun readLoadFailure(base: Context): LoadFailure? {
+            try {
+                val registryPrefs = (base.applicationContext ?: base).getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE)
+                val registry = ProfileRegistry(registryPrefs)
+                val failedId = registry.getLastActiveProfileId()?.takeUnless { it.isDefault() } ?: return null
+                return LoadFailure(
+                    profileName = registry.getProfileMetadata(failedId)?.displayName?.value ?: failedId.value,
+                    defaultProfileName = registry.getProfileMetadata(ProfileId.DEFAULT)?.displayName?.value ?: DEFAULT_PROFILE_DISPLAY_NAME,
+                )
+            } catch (e: Exception) {
+                return null
+            }
+        }
 
         @VisibleForTesting
         fun resetForTesting() {
             attachError = null
+            loadFailure = null
         }
 
         /**
