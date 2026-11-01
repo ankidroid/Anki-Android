@@ -5,6 +5,7 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import androidx.annotation.XmlRes
 import androidx.fragment.app.Fragment
+import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -150,4 +151,16 @@ object PreferenceTestUtils {
     }
 
     fun getDeveloperOptionsKeys(context: Context): Set<String> = getKeysFromXml(context, R.xml.preferences_developer_options).toSet()
+
+    /** Launches [PreferencesActivity], showing [HeaderFragment] in its settings pane */
+    context(test: RobolectricTest)
+    fun withHeaderFragment(block: (HeaderFragment) -> Unit) {
+        val intent = PreferencesActivity.getIntent(test.targetContext, HeaderFragment::class)
+        ActivityScenario.launch<PreferencesActivity>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val preferences = activity.fragment as PreferencesFragment
+                block(preferences.childFragmentManager.findFragmentById(R.id.settings_container) as HeaderFragment)
+            }
+        }
+    }
 }

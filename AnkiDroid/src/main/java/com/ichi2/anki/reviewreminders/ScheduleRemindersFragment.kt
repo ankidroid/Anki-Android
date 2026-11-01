@@ -41,6 +41,7 @@ import com.ichi2.anki.launchCatchingViewTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -258,6 +259,19 @@ class ScheduleRemindersFragment :
             Timber.i("Received result from add/edit dialog: mode=%s reminder=%s", modeOfFinishedDialog, newOrModifiedReminder)
             handleAddEditDialogResult(newOrModifiedReminder, modeOfFinishedDialog)
         }
+
+        showIntroIfNeeded()
+    }
+
+    /**
+     * Introduces review reminders to users of the legacy notifications system, once.
+     * Cleared on opening this screen from anywhere, so the settings menu stops drawing attention to it.
+     */
+    private fun showIntroIfNeeded() {
+        if (!Prefs.shouldShowReviewRemindersIntro) return
+        Timber.i("Showing review reminders intro")
+        childFragmentManager.showDialogFragment(ReviewRemindersIntroDialog())
+        Prefs.shouldShowReviewRemindersIntro = false
     }
 
     override fun onDestroyView() {

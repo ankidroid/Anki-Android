@@ -124,6 +124,7 @@ object PreferenceUpgradeService {
                     yield(UpgradeAnswerControls())
                     yield(RemoveDeveloperFindReplace())
                     yield(ResetAnalyticsOptIn2())
+                    yield(RemoveLegacyNotificationPrefs())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -905,6 +906,30 @@ object PreferenceUpgradeService {
          */
         internal class ResetAnalyticsOptIn2 : PreferenceUpgrade(29) {
             override fun upgrade(preferences: SharedPreferences) = preferences.edit { remove("analytics_opt_in") }
+        }
+
+        /**
+         * Removes the preferences of the legacy notifications system, which review reminders replace.
+         *
+         * Users who had a legacy due-cards notification are told about review reminders,
+         * see [com.ichi2.anki.settings.PrefsRepository.shouldShowReviewRemindersIntro].
+         */
+        internal class RemoveLegacyNotificationPrefs : PreferenceUpgrade(30) {
+            override fun upgrade(preferences: SharedPreferences) {
+                // "Notify when" stored a due-card threshold. Two sentinels disabled the notification:
+                // 1000000 ("Pending messages available") and 2000000 ("Never notify")
+                val minimumCardsDue = preferences.getString("minimumCardsDueForNotification", null)?.toIntOrNull()
+                val hadLegacyNotification = minimumCardsDue != null && minimumCardsDue < 1000000
+                preferences.edit {
+                    remove("minimumCardsDueForNotification")
+                    remove("widgetVibrate")
+                    remove("widgetBlink")
+                    remove("newReviewReminders")
+                    if (hadLegacyNotification) {
+                        putBoolean("shouldShowReviewRemindersIntro", true)
+                    }
+                }
+            }
         }
     }
 }

@@ -126,12 +126,7 @@
     <string name="language" maxLength="41">Language</string>
     <string name="language_system">System language</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
-    <string name="notification_pref_title" maxLength="41">Notify when</string>
-    <string name="never_notify">Never notify</string>
-    <string name="notify_when_pending">Pending messages available</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d&#160;cards due</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
-    <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
+    <string name="settings_header_badge_state" comment="Read by screen readers for a settings category which is marked with a dot, drawing attention to it. For example, because it contains a new feature">New</string>
     <string name="select_locale_title">Select language</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
@@ -233,6 +228,7 @@
     <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
     <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
     <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
+    <string name="review_reminders_intro_message" comment="Shown once to users of the broken legacy notifications system, which review reminders replace.">AnkiDroid now has review reminders. Try setting one to remind yourself to review your cards, or to review a specific deck in particular.</string>
     <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
 
     <!-- Schedule reminders screen -->

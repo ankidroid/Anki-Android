@@ -85,7 +85,7 @@ class PreferencesNavigationTest {
         onView(allOf(withId(com.bytehamster.lib.preferencesearch.R.id.search), hasFocus())).perform(typeText("Card"))
         onView(withText(CommonString.card_zoom)).perform(click())
         onView(withId(R.id.settings_container)).check(matches(isDisplayed()))
-        onView(withText(CommonString.notification_pref)).perform(click())
+        onView(withText(CommonString.pref_cat_sync)).perform(click())
         pressBack()
         onView(withClassName(endsWith("PreferencesActivity"))).check(doesNotExist())
     }

@@ -2,12 +2,14 @@
 
 package com.ichi2.anki.preferences
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
+import androidx.preference.children
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
@@ -31,6 +33,11 @@ class HeaderFragment : SettingsFragment() {
 
     private var highlightedPreferenceKey: String = ""
 
+    // SharedPreferences keeps its listeners in a WeakHashMap. Without this field referencing it,
+    // the listener could be garbage collected, and would then silently stop being called
+    private val refreshBadgesOnPreferenceChange =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> refreshBadges() }
+
     override fun initSubscreen() {
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
             .title = TR.preferencesBackups()
@@ -53,9 +60,10 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_developer_options_screen_key)
             .isVisible = Prefs.isDeveloperOptionsEnabled
 
-        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
-        requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
         requirePreference<HeaderPreference>(R.string.pref_switch_profile_screen_key).isVisible = Prefs.switchProfileEnabled
+
+        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
+            .showBadgeWhen = { Prefs.shouldShowReviewRemindersIntro }
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
@@ -71,6 +79,25 @@ class HeaderFragment : SettingsFragment() {
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        refreshBadges()
+        Prefs.sharedPrefs.registerOnSharedPreferenceChangeListener(refreshBadgesOnPreferenceChange)
+    }
+
+    override fun onStop() {
+        Prefs.sharedPrefs.unregisterOnSharedPreferenceChangeListener(refreshBadgesOnPreferenceChange)
+        super.onStop()
+    }
+
+    /**
+     * Re-checks [HeaderPreference.showBadgeWhen] when a preference changes, so a badge clears as soon as
+     * its condition does, including when this fragment stays visible beside the opened screen on large screens.
+     */
+    private fun refreshBadges() {
+        preferenceScreen.children.filterIsInstance<HeaderPreference>().forEach { it.refreshBadge() }
     }
 
     fun highlightPreference(
@@ -101,15 +128,11 @@ class HeaderFragment : SettingsFragment() {
                 index(R.xml.preferences_custom_sync_server)
                     .addBreadcrumb(CommonString.pref_cat_sync)
 
-                if (Prefs.newReviewRemindersEnabled) {
-                    indexItem()
-                        .withKey(activity.getString(R.string.pref_review_reminders_screen_key))
-                        .withTitle(activity.getString(CommonString.review_reminders_title))
-                        .withResId(R.xml.preferences_review_reminders)
-                        .withSummary(activity.getString(CommonString.notification_pref))
-                } else {
-                    index(R.xml.preferences_notifications)
-                }
+                indexItem()
+                    .withKey(activity.getString(R.string.pref_review_reminders_screen_key))
+                    .withTitle(activity.getString(CommonString.review_reminders_title))
+                    .withResId(R.xml.preferences_review_reminders)
+                    .withSummary(activity.getString(CommonString.notification_pref))
 
                 index(R.xml.preferences_appearance)
                 if (!Prefs.isNewStudyScreenEnabled) {
@@ -205,12 +228,6 @@ class HeaderFragment : SettingsFragment() {
                 searchConfiguration.index(R.xml.preferences_advanced)
             }
 
-            // From [NotificationsSettingsFragment.initSubscreen]
-            if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
-                searchConfiguration.ignorePreference(activity.getString(R.string.pref_notifications_vibrate_key))
-                searchConfiguration.ignorePreference(activity.getString(R.string.pref_notifications_blink_key))
-            }
-
             // From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs]
             if (!CompatHelper.hasScrollKeys()) {
                 searchConfiguration.ignorePreference(activity.getString(R.string.double_scrolling_gap_key))
@@ -242,7 +259,6 @@ class HeaderFragment : SettingsFragment() {
                 is GeneralSettingsFragment -> R.string.pref_general_screen_key
                 is ReviewingSettingsFragment, is TimeboxSettingsFragment -> R.string.pref_reviewing_screen_key
                 is SyncSettingsFragment, is CustomSyncServerSettingsFragment -> R.string.pref_sync_screen_key
-                is NotificationsSettingsFragment -> R.string.pref_notifications_screen_key
                 is ScheduleRemindersFragment -> R.string.pref_review_reminders_screen_key
                 is AppearanceSettingsFragment, is CustomButtonsSettingsFragment -> R.string.pref_appearance_screen_key
                 is ControlsSettingsFragment -> R.string.pref_controls_screen_key

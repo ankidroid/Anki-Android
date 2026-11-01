@@ -50,7 +50,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.progress.observeProgress
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
@@ -324,7 +323,6 @@ class StudyOptionsFragment :
         if (state is StudyOptionsState.Congrats || state is StudyOptionsState.Empty) {
             menu.findItem(R.id.action_custom_study)?.isVisible = false
         }
-        menu.findItem(R.id.action_schedule_reminders)?.isVisible = Prefs.newReviewRemindersEnabled
         menu.findItem(R.id.action_unbury)?.isVisible = viewModel.haveBuried
     }
 

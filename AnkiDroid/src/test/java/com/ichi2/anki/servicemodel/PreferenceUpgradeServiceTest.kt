@@ -21,6 +21,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeThemes
 import com.ichi2.anki.servicelayer.RemovedPreferences
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.targetContext
@@ -379,5 +380,39 @@ class PreferenceUpgradeServiceTest : AndroidTest {
         assertThat("Preserves SHOW_ANSWER binding", bindings.contains(existingShowBinding), equalTo(true))
         assertThat("Migrates 'Again' question binding", bindings.contains(questionBinding), equalTo(true))
         assertThat("Splits 'Good' Both binding to Question side", bindings.contains(bothBinding), equalTo(true))
+    }
+
+    @Test
+    fun `legacy notification prefs are removed`() {
+        prefs.edit {
+            putString("minimumCardsDueForNotification", "1000000")
+            putBoolean("widgetVibrate", true)
+            putBoolean("widgetBlink", true)
+            putBoolean("newReviewReminders", true)
+        }
+
+        PreferenceUpgrade.RemoveLegacyNotificationPrefs().performUpgrade(prefs)
+
+        for (key in listOf("minimumCardsDueForNotification", "widgetVibrate", "widgetBlink", "newReviewReminders")) {
+            assertThat("$key should be removed", prefs.contains(key), equalTo(false))
+        }
+    }
+
+    @Test
+    fun `review reminders intro is shown only to users with a legacy notification`() {
+        fun showsIntroAfterUpgrade(minimumCardsDue: String?): Boolean {
+            prefs.edit {
+                clear()
+                if (minimumCardsDue != null) putString("minimumCardsDueForNotification", minimumCardsDue)
+            }
+            PreferenceUpgrade.RemoveLegacyNotificationPrefs().performUpgrade(prefs)
+            return PrefsRepository(prefs, targetContext.resources).shouldShowReviewRemindersIntro
+        }
+
+        assertThat("notify with 10+ cards due", showsIntroAfterUpgrade("10"), equalTo(true))
+        assertThat("notify with 500+ cards due", showsIntroAfterUpgrade("500"), equalTo(true))
+        assertThat("pending messages only", showsIntroAfterUpgrade("1000000"), equalTo(false))
+        assertThat("never notify", showsIntroAfterUpgrade("2000000"), equalTo(false))
+        assertThat("never configured", showsIntroAfterUpgrade(null), equalTo(false))
     }
 }
