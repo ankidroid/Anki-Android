@@ -92,7 +92,7 @@ class LayoutValidationTest : InstrumentedTest() {
                 listOf(
                     com.ichi2.anki.R.layout.activity_introduction,
                     com.ichi2.anki.R.layout.fragment_reviewer,
-                    com.ichi2.anki.R.layout.fragment_preferences,
+                    com.ichi2.anki.R.layout.fragment_preferences_split,
                     com.ichi2.anki.R.layout.fragment_drawing,
                     com.ichi2.anki.R.layout.fragment_card_browser_searchview,
                 ) +
