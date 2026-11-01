@@ -68,6 +68,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withStarted
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
@@ -138,6 +139,7 @@ import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
@@ -198,6 +200,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
+import com.ichi2.anki.utils.awaitDismissal
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
@@ -206,6 +209,7 @@ import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -231,8 +235,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import net.ankiweb.rsdroid.Translations
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import timber.log.Timber
@@ -490,6 +496,31 @@ open class DeckPicker :
             x = request.x,
             y = request.y,
         )
+    }
+
+    private fun findDatabaseRecovery() =
+        supportFragmentManager.fragments.firstOrNull {
+            it is DatabaseErrorDialog && it.lifecycle.currentState != Lifecycle.State.DESTROYED
+        }
+
+    private suspend fun awaitDatabaseRecovery() {
+        while (true) {
+            val recovery = findDatabaseRecovery() ?: return
+            recovery.lifecycle.currentStateFlow.first { it == Lifecycle.State.DESTROYED }
+            yield()
+        }
+    }
+
+    private suspend fun withStartedAfterRecovery(block: () -> Unit) {
+        do {
+            awaitDatabaseRecovery()
+            val recoveryOpened =
+                withStarted {
+                    val opened = findDatabaseRecovery() != null
+                    if (!opened) block()
+                    opened
+                }
+        } while (recoveryOpened)
     }
 
     // ----------------------------------------------------------------------------
@@ -945,6 +976,12 @@ open class DeckPicker :
             fragment?.refreshInterface()
         }
 
+        fun onCreatedDeckSelected(param: Unit) {
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
+
         fun onStartupResponse(response: StartupResponse) {
             Timber.d("onStartupResponse: %s", response)
             when (response) {
@@ -986,11 +1023,15 @@ open class DeckPicker :
         }
 
         fun onError(errorMessage: String) {
-            AlertDialog
-                .Builder(this)
-                .setTitle(CommonString.vague_error)
-                .setMessage(errorMessage)
-                .show()
+            launchCatchingTask {
+                withStartedAfterRecovery {
+                    AlertDialog
+                        .Builder(this@DeckPicker)
+                        .setTitle(CommonString.vague_error)
+                        .setMessage(errorMessage)
+                        .show()
+                }
+            }
         }
 
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
@@ -1009,6 +1050,11 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
         viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
+            var dialog: AlertDialog? = null
+            withStartedAfterRecovery { dialog = showException(error) }
+            dialog?.awaitDismissal()
+        }
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().launchCollectionInLifecycleScope(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
@@ -1019,6 +1065,7 @@ open class DeckPicker :
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
+        viewModel.flowOfCreatedDeckSelected.launchCollectionInLifecycleScope(::onCreatedDeckSelected)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
         viewModel.flowOfShowContextMenu.launchCollectionInLifecycleScope(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.launchCollectionInLifecycleScope(::showDeckPickerRightClickContextMenu)
@@ -2397,41 +2444,22 @@ open class DeckPicker :
      * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
      * is often the hidden Default deck.
      */
-    private fun onDeckCreated(deckId: DeckId) =
-        launchCatchingTask {
-            viewModel.selectDeck(deckId).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
-        }
+    private fun onDeckCreated(deckId: DeckId) = viewModel.selectCreatedDeck(deckId)
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
      * @param did ID of the deck to delete
      */
-    fun deleteDeck(did: DeckId) =
-        launchCatchingTask {
-            viewModel.deleteDeck(did).join()
-        }
+    fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() =
-        launchCatchingTask {
-            viewModel.deleteSelectedDeck().join()
-        }
+    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck(shownDeckId = fragment?.shownDeckId)
 
-    @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.rebuildFilteredDeck(did).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-        }
+        viewModel.rebuildFilteredDeck(did)
     }
 
     private fun emptyFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.emptyFilteredDeck(did).join()
-        }
+        viewModel.emptyFilteredDeck(did)
     }
 
     override fun onAttachedToWindow() {
