@@ -18,6 +18,7 @@ import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.preferences.LearnAheadLimit
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
@@ -387,6 +388,10 @@ open class PrefsRepository protected constructor(
 
     val doubleTapInterval by intPref(R.string.double_tap_timeout_pref_key, defaultValue = 200)
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
+    var customLearnAheadLimit by intPref(
+        R.string.custom_learn_ahead_limit_key,
+        defaultValue = LearnAheadLimit.DEFAULT_LEARN_AHEAD_MINUTES,
+    )
 
     val swipeSensitivity: Float
         get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
