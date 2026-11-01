@@ -8,6 +8,7 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import androidx.annotation.IntDef
 import com.ichi2.anki.common.android.appContext
+import kotlinx.coroutines.CompletableDeferred
 
 /**
  * Since it is assumed that only advanced users will use the JavaScript api,
@@ -15,6 +16,13 @@ import com.ichi2.anki.common.android.appContext
  * https://developer.android.com/reference/android/speech/tts/TextToSpeech
  */
 class JavaScriptTTS internal constructor() : OnInitListener {
+    private val initialized = CompletableDeferred<Boolean>()
+    private val ttsParams = Bundle()
+    private val tts = TextToSpeech(appContext, this)
+    private var closed = false
+
+    private suspend fun isReady(): Boolean = initialized.await() && !closed
+
     @IntDef(TTS_SUCCESS, TTS_ERROR)
     annotation class ErrorOrSuccess
 
@@ -28,7 +36,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     override fun onInit(
         @ErrorOrSuccess status: Int,
     ) {
-        ttsOk = status == TextToSpeech.SUCCESS
+        initialized.complete(status == TextToSpeech.SUCCESS)
     }
 
     /**
@@ -38,10 +46,10 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun speak(
+    suspend fun speak(
         text: String?,
         @QueueMode queueMode: Int,
-    ): Int = tts.speak(text, queueMode, ttsParams, "stringId")
+    ): Int = if (isReady()) tts.speak(text, queueMode, ttsParams, "stringId") else TTS_ERROR
 
     /**
      * If only a string is given, set QUEUE_FLUSH to the default behavior.
@@ -49,7 +57,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun speak(text: String?): Int = tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams, "stringId")
+    suspend fun speak(text: String?): Int = speak(text, TTS_QUEUE_FLUSH)
 
     /**
      * Sets the text-to-speech language.
@@ -62,7 +70,9 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      *     <li> -2 Denotes the language is not supported.
      */
     @TTSLangResult
-    fun setLanguage(loc: String): Int {
+    suspend fun setLanguage(loc: String): Int {
+        // matches TextToSpeech.setLanguage when the engine is unavailable
+        if (!isReady()) return TTS_LANG_NOT_SUPPORTED
         // The Int values will be returned
         // Code indicating the support status for the locale. See LANG_AVAILABLE, LANG_COUNTRY_AVAILABLE, LANG_COUNTRY_VAR_AVAILABLE, LANG_MISSING_DATA and LANG_NOT_SUPPORTED.
         return tts.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
@@ -74,7 +84,8 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun setPitch(pitch: Float): Int {
+    suspend fun setPitch(pitch: Float): Int {
+        if (!isReady()) return TTS_ERROR
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
         return tts.setPitch(pitch)
@@ -86,7 +97,8 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun setSpeechRate(speechRate: Float): Int {
+    suspend fun setSpeechRate(speechRate: Float): Int {
+        if (!isReady()) return TTS_ERROR
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
         return tts.setSpeechRate(speechRate)
@@ -98,15 +110,21 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * been sent to the audio mixer, or written to a file.
      *
      */
-    val isSpeaking: Boolean
-        get() = tts.isSpeaking
+    suspend fun isSpeaking(): Boolean = isReady() && tts.isSpeaking
 
     /**
      * Interrupts the current utterance (whether played or rendered to file) and discards other utterances in the queue.
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun stop(): Int = tts.stop()
+    suspend fun stop(): Int = if (isReady()) tts.stop() else TTS_ERROR
+
+    fun close() {
+        closed = true
+        // Release pending calls even if the engine never reports initialization.
+        initialized.complete(false)
+        tts.shutdown()
+    }
 
     companion object {
         private const val TTS_SUCCESS = TextToSpeech.SUCCESS
@@ -118,13 +136,5 @@ class JavaScriptTTS internal constructor() : OnInitListener {
         private const val TTS_LANG_COUNTRY_VAR_AVAILABLE = TextToSpeech.LANG_COUNTRY_VAR_AVAILABLE
         private const val TTS_LANG_MISSING_DATA = TextToSpeech.LANG_MISSING_DATA
         private const val TTS_LANG_NOT_SUPPORTED = TextToSpeech.LANG_NOT_SUPPORTED
-        private lateinit var tts: TextToSpeech
-        private var ttsOk = false
-        private val ttsParams = Bundle()
-    }
-
-    init {
-        val context = appContext
-        tts = TextToSpeech(context, this)
     }
 }
