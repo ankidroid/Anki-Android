@@ -7,11 +7,22 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 
-/** Configures the JaCoCo agent for JVM tests. */
+/** Uses the shared include list for test instrumentation and cache invalidation. */
 fun Project.configureJacocoAgent() {
+    val includeFile = rootProject.layout.projectDirectory.file("gradle/jacoco-includes.txt")
+    val includes =
+        providers
+            .fileContents(includeFile)
+            .asText
+            .get()
+            .lines()
+            .filter { it.isNotBlank() }
+
     tasks.withType<Test>().configureEach {
+        inputs.file(includeFile).withPropertyName("coverageIncludes")
         val jacoco = extensions.getByType(JacocoTaskExtension::class.java)
         jacoco.isIncludeNoLocationClasses = true
+        jacoco.includes = includes
         jacoco.excludes = listOf("jdk.internal.*")
     }
 }
