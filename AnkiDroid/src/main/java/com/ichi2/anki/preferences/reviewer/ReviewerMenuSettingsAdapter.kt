@@ -36,16 +36,15 @@ class ReviewerMenuSettingsAdapter(
         viewType: Int,
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            ReviewerMenuSettingsRecyclerItem.ACTION_VIEW_TYPE -> {
+        return when (ReviewerMenuSettingsType.fromCode(viewType)) {
+            ReviewerMenuSettingsType.Action -> {
                 val binding = ItemReviewerMenuBinding.inflate(inflater, parent, false)
                 ActionViewHolder(binding)
             }
-            ReviewerMenuSettingsRecyclerItem.DISPLAY_TYPE_VIEW_TYPE -> {
+            ReviewerMenuSettingsType.DisplayType -> {
                 val binding = ItemReviewerMenuDisplayTypeBinding.inflate(inflater, parent, false)
                 DisplayTypeViewHolder(binding)
             }
-            else -> throw IllegalArgumentException("Unexpected viewType")
         }
     }
 
@@ -62,7 +61,7 @@ class ReviewerMenuSettingsAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    override fun getItemViewType(position: Int): Int = items[position].viewType
+    override fun getItemViewType(position: Int) = items[position].viewType.code
 
     override fun getItemId(position: Int): Long {
         val item = items[position]
@@ -102,22 +101,29 @@ class ReviewerMenuSettingsAdapter(
     }
 }
 
+enum class ReviewerMenuSettingsType(
+    val code: Int,
+) {
+    Action(0),
+    DisplayType(1),
+    ;
+
+    companion object {
+        fun fromCode(c: Int) = ReviewerMenuSettingsType.entries.first { it.code == c }
+    }
+}
+
 /**
  * @param viewType type to be returned at [RecyclerView.Adapter.getItemViewType]
  */
 sealed class ReviewerMenuSettingsRecyclerItem(
-    val viewType: Int,
+    val viewType: ReviewerMenuSettingsType,
 ) {
     data class Action(
         val viewerAction: ViewerAction,
-    ) : ReviewerMenuSettingsRecyclerItem(ACTION_VIEW_TYPE)
+    ) : ReviewerMenuSettingsRecyclerItem(ReviewerMenuSettingsType.Action)
 
     data class DisplayType(
         val menuDisplayType: MenuDisplayType,
-    ) : ReviewerMenuSettingsRecyclerItem(DISPLAY_TYPE_VIEW_TYPE)
-
-    companion object {
-        const val ACTION_VIEW_TYPE = 0
-        const val DISPLAY_TYPE_VIEW_TYPE = 1
-    }
+    ) : ReviewerMenuSettingsRecyclerItem(ReviewerMenuSettingsType.DisplayType)
 }
