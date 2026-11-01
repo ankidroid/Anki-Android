@@ -243,10 +243,13 @@ object ImportUtils {
                     return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 }
             // The package WebView/backend route expects encoded filenames on disk; CSV uses a raw path.
+            // Only the filename is encoded: encoding the whole path breaks on hosts whose cache dir
+            // contains encodable characters (e.g. `C:\` on Windows becomes a single root-level name).
             val tempOutDir =
                 when (file) {
                     is ImportResolution.Text -> checkFile.absolutePath
-                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage -> Uri.fromFile(checkFile).encodedPath!!
+                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage ->
+                        File(checkFile.parentFile, Uri.encode(checkFile.name)).absolutePath
                 }
 
             copyFileToCache(context, file.source.uri, tempOutDir).asErrorDetails()?.let { details ->

@@ -89,7 +89,7 @@ class DeckPickerImportTest : RobolectricTest() {
             }
             ShadowContentResolver.registerProviderInternal("import", provider)
             shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) { "package contents".byteInputStream() }
-            val cachedPath = Uri.fromFile(File(activity.cacheDir, fileName)).encodedPath!!
+            val cachedPath = File(activity.cacheDir, Uri.encode(fileName)).absolutePath
             try {
                 activity.onSelectedFileToImport(Intent(Intent.ACTION_VIEW, uri))
                 advanceRobolectricLooper()
