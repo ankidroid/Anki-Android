@@ -3,12 +3,21 @@
 
 package com.ichi2.anki.dialogs
 
+import android.view.View
+import android.widget.Filterable
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.testing.launchFragment
+import androidx.recyclerview.widget.RecyclerView
 import anki.decks.deckTreeNode
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
+import kotlinx.coroutines.test.StandardTestDispatcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.containsInAnyOrder
@@ -17,6 +26,9 @@ import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
+import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(RobolectricTestRunner::class)
 class DeckSelectionDialogTest : RobolectricTest() {
@@ -73,6 +85,77 @@ class DeckSelectionDialogTest : RobolectricTest() {
 
         assertThat(idsToRemove, containsInAnyOrder(1L, 2L, 3L, 4L))
     }
+
+    @Test
+    fun `search entered while the deck tree loads remains applied`() {
+        addDeck("Chosen")
+        addDeck("Unrelated")
+        val decks = allDecks()
+        val queue = StandardTestDispatcher()
+        val previousQueue = CollectionManager.setTestDispatcher(queue, useReentrantLock = false)
+        try {
+            launchDeckSelectionDialog(decks).use { scenario ->
+                scenario.onFragment { dialog ->
+                    val search = dialog.openSearch()
+                    search.setQuery("Chosen", false)
+                    val recycler = dialog.decksView()
+                    var filtered = false
+                    // Wait for filtering to finish while collection access is still held.
+                    assertIs<Filterable>(recycler.adapter).filter.filter("Chosen") { filtered = true }
+                    advanceRobolectricLooperUntil { filtered }
+                    assertEquals(0, recycler.adapter!!.itemCount)
+
+                    queue.scheduler.advanceUntilIdle()
+                    advanceRobolectricLooper()
+
+                    assertEquals("Chosen", search.query.toString())
+                    assertEquals("The active search should only show Chosen", 1, recycler.adapter!!.itemCount)
+                }
+            }
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
+
+    @Test
+    fun `collapsing a search result keeps unrelated decks filtered out`() {
+        addDeck("Parent::Child")
+        addDeck("Unrelated")
+        launchDeckSelectionDialog(allDecks()).use { scenario ->
+            advanceRobolectricLooper()
+            scenario.onFragment { dialog ->
+                val search = dialog.openSearch()
+                search.setQuery("Parent", false)
+                val recycler = dialog.decksView()
+                advanceRobolectricLooperUntil { recycler.adapter!!.itemCount == 1 }
+                advanceRobolectricLooper()
+
+                val row = requireNotNull(recycler.findViewHolderForAdapterPosition(0))
+                assertTrue(row.itemView.findViewById<View>(R.id.expander).performClick())
+                advanceRobolectricLooper()
+
+                assertEquals("Parent", search.query.toString())
+                assertEquals("Only the collapsed matching parent should remain", 1, recycler.adapter!!.itemCount)
+            }
+        }
+    }
+
+    private fun allDecks() = col.decks.allNamesAndIds().map { SelectableDeck.Deck(it) }
+
+    private fun launchDeckSelectionDialog(decks: List<SelectableDeck>) =
+        launchFragment<DeckSelectionDialog>(
+            fragmentArgs = DeckSelectionDialog.newInstance(decks = decks).arguments,
+            themeResId = CommonR.style.Theme_Light,
+        )
+
+    private fun DeckSelectionDialog.openSearch(): SearchView {
+        val toolbar = requireNotNull(requireDialog().findViewById<Toolbar>(R.id.toolbar))
+        val searchItem = toolbar.menu.findItem(R.id.action_filter)
+        searchItem.expandActionView()
+        return assertIs<SearchView>(searchItem.actionView)
+    }
+
+    private fun DeckSelectionDialog.decksView(): RecyclerView = requireNotNull(requireDialog().findViewById(R.id.decks))
 
     private fun makeNode(
         name: String,
