@@ -2085,6 +2085,36 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
+    fun `clicking the Undo button on the action bar triggers the undo action - issue 22856`() =
+        withBrowser(noteCount = 1) {
+            val cardId = viewModel.getRowAtPosition(0).cardOrNoteId
+
+            suspend fun isSuspended() =
+                withCol {
+                    getCard(cardId).queue == QueueType.Suspended
+                }
+
+            // Select the first row card and verify it is initially unsuspended.
+            selectRowsWithPositions(0)
+            assertEquals(false, isSuspended(), "Card should initially be unsuspended")
+
+            // Perform "Toggle suspend" action and verify the card is suspended.
+            cardBrowserFragment.toggleSuspendCards()
+            assertEquals(true, isSuspended(), "Unsuspended card should be suspended after toggleSuspend")
+
+            // Get the Undo menu item on the action bar and its action view (the Undo button).
+            val undoItem = menu.findItem(R.id.action_undo)
+            val actionView = undoItem?.actionView
+
+            // Simulate user's tapping the Undo button.
+            val clicked = actionView?.performClick() ?: false
+
+            // Verify the tap is handled and the card is unsuspended.
+            assertEquals(true, clicked, "Action view should handle click")
+            assertEquals(false, isSuspended(), "Just-suspended card should be unsuspended after clicking undo button")
+        }
+
+    @Test
     @Ignore("[0] is not guaranteed to be the first item. Can be fixed when legacy menu is removed")
     fun `options menu - new ui - preview is first if results`() =
         withOptionsMenu(
