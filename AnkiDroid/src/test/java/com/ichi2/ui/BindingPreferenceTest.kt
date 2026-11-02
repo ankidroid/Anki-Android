@@ -2,7 +2,6 @@
 
 package com.ichi2.ui
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.KeyCode
@@ -14,10 +13,8 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
 class BindingPreferenceTest {
     @Test
     fun serialization_deserialization_returns_same_result() {
