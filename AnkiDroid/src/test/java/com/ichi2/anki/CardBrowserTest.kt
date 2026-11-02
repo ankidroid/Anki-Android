@@ -123,7 +123,6 @@ import org.hamcrest.CoreMatchers.sameInstance
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
-import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.startsWith
@@ -149,7 +148,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserTest : RobolectricTest() {
@@ -312,50 +310,21 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
-    fun canChangeDeckToRegularDeck() =
-        runTest {
-            addDeck("Hello")
-            val b = getBrowserWithNotes(5)
-
-            val decks = b.validDecksForChangeDeck
-
-            for (d in decks) {
-                if (d.name == "Hello") {
-                    return@runTest
-                }
-            }
-            fail("Added deck was not found in the Card Browser")
-        }
-
-    @Test
-    fun cannotChangeDeckToDynamicDeck() =
-        runTest {
-            // 5932 - dynamic decks are meant to have cards added to them through "Rebuild".
-            addDynamicDeck("World")
-            val b = getBrowserWithNotes(5)
-
-            val decks = b.validDecksForChangeDeck
-
-            if (decks.any { it.name == "World" }) {
-                fail("Dynamic decks should not be transferred to by the browser.")
-            }
-        }
-
-    @Test
     fun changeDeckIntegrationTestDynamicAndNon() =
         runTest {
-            addDeck("Hello")
+            val helloDeckId = addDeck("Hello")
             addDynamicDeck("World")
+            selectDefaultDeck()
+            val browser = getBrowserWithNotes(5)
+            browser.viewModel.selectRowAtPosition(0)
 
-            val validNames = hashSetOf("Default", "Hello")
+            browser.cardBrowserFragment.showChangeDeckDialog()
+            advanceRobolectricLooperUntil { browser.supportFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG) != null }
 
-            val b = getBrowserWithNotes(5)
-
-            val decks = b.validDecksForChangeDeck
-            for (d in decks) {
-                assertThat(validNames, hasItem(d.name))
-            }
-            assertThat("Additional unexpected decks were present", decks.size, equalTo(2))
+            val dialog = assertNotNull(browser.supportFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG))
+            val deckIds = assertNotNull(dialog.requireArguments().getLongArray("arg_deck_ids"))
+            assertEquals(setOf(requireNotNull(col.decks.idForName("Default")), helloDeckId), deckIds.toSet())
+            assertEquals(2, deckIds.size)
         }
 
     @Test
@@ -405,19 +374,6 @@ class CardBrowserTest : RobolectricTest() {
             for (cardId in cardIds) {
                 assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
             }
-        }
-
-    @Test // see #13391
-    fun newlyCreatedDeckIsShownAsOptionInBrowser() =
-        runTest {
-            val deckOneId = addDeck("one")
-            val browser = browserWithNoNewCards
-            assertEquals(2, browser.validDecksForChangeDeck.size) // 1 added + default deck
-            assertEquals(1, browser.validDecksForChangeDeck.count { it.deckId == deckOneId })
-            val deckTwoId = addDeck("two")
-            assertEquals(3, browser.validDecksForChangeDeck.size) // 2 added + default deck
-            assertEquals(1, browser.validDecksForChangeDeck.count { it.deckId == deckOneId })
-            assertEquals(1, browser.validDecksForChangeDeck.count { it.deckId == deckTwoId })
         }
 
     @Test
@@ -2314,9 +2270,6 @@ fun CardBrowser.longClickRowAtPosition(pos: Int) = viewModel.handleRowLongPress(
 
 val CardBrowser.lastDeckId
     get() = viewModel.lastDeckId
-
-val CardBrowser.validDecksForChangeDeck
-    get() = runBlocking { viewModel.getAvailableDecks() }
 
 suspend fun CardBrowser.searchCardsSync(query: String) {
     searchCards(query)

@@ -40,7 +40,6 @@ import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.REQUEST_SELECT_DECK
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.RESULT_SELECTED_DECK
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
@@ -544,16 +543,12 @@ fun Fragment.startDeckSelection(
     launchCatchingTask {
         val decks =
             withProgress {
-                val backendDecks =
-                    withCol {
-                        decks.allNamesAndIds(
-                            includeFiltered = allowFiltered,
-                            // Parent decks must remain selectable so users can include their subdecks.
-                            skipEmptyDefault = skipEmptyDefault && decks.children(DEFAULT_DECK_ID).isEmpty(),
-                        )
-                    }
                 val decks: MutableList<SelectableDeck> =
-                    backendDecks.map { SelectableDeck.Deck(it) }.toMutableList()
+                    SelectableDeck
+                        .fromCollection(
+                            includeFiltered = allowFiltered,
+                            skipEmptyDefault = skipEmptyDefault,
+                        ).toMutableList()
                 if (allowAll) {
                     decks.add(0, SelectableDeck.AllDecks)
                 }
@@ -600,16 +595,12 @@ fun FragmentActivity.startDeckSelection(
     launchCatchingTask {
         val decks =
             withProgress {
-                val backendDecks =
-                    withCol {
-                        decks.allNamesAndIds(
-                            includeFiltered = allowFiltered,
-                            // Parent decks must remain selectable so users can include their subdecks.
-                            skipEmptyDefault = skipEmptyDefault && decks.children(DEFAULT_DECK_ID).isEmpty(),
-                        )
-                    }
                 val decks: MutableList<SelectableDeck> =
-                    backendDecks.map { SelectableDeck.Deck(it) }.toMutableList()
+                    SelectableDeck
+                        .fromCollection(
+                            includeFiltered = allowFiltered,
+                            skipEmptyDefault = skipEmptyDefault,
+                        ).toMutableList()
                 if (allowAll) {
                     decks.add(0, SelectableDeck.AllDecks)
                 }

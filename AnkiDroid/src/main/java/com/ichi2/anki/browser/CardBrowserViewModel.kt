@@ -1635,8 +1635,6 @@ class CardBrowserViewModel(
             flowOfSaveSearchNamePrompt.emit(query)
         }
 
-    suspend fun getAvailableDecks(): List<SelectableDeck.Deck> = SelectableDeck.fromCollection(includeFiltered = false)
-
     /**
      * Builds a [SearchState.Completed] event reflecting the current ViewModel state.
      *
