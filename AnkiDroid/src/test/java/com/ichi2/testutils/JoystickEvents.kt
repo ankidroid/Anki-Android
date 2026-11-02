@@ -10,14 +10,21 @@ import com.ichi2.anki.reviewer.Axis
 fun joystickEvent(
     axis: Axis,
     value: Float,
-): MotionEvent =
+): MotionEvent = joystickEvent(axis to value)
+
+/** A joystick movement of each axis to its value. The other axes are at rest */
+fun joystickEvent(vararg axisValues: Pair<Axis, Float>): MotionEvent =
     MotionEvent.obtain(
         0L,
         0L,
         MotionEvent.ACTION_MOVE,
         1,
         arrayOf(MotionEvent.PointerProperties().apply { id = 0 }),
-        arrayOf(MotionEvent.PointerCoords().apply { setAxisValue(axis.motionEventValue, value) }),
+        arrayOf(
+            MotionEvent.PointerCoords().apply {
+                for ((axis, value) in axisValues) setAxisValue(axis.motionEventValue, value)
+            },
+        ),
         0,
         0,
         1f,
