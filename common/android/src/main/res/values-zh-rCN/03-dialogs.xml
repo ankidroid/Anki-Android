@@ -43,8 +43,8 @@
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
     <string name="intent_aedict_category">向 AnkiDroid 中添加卡牌需要删除所有 Notepad 类别，或者添加“默认”类别。</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_extend_limits_title">扩大每日限制</string>
+    <string name="custom_study_increase">增加</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
     <string name="custom_study_ahead_description">复习接下去多久到期的卡片：</string>
     <string name="custom_study_preview">预览过去 x 天内添加的新卡片：</string>

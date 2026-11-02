@@ -238,15 +238,15 @@
          ####################################################################################### -->
     <!-- Entry points -->
     <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Upomínky opakování</string>
-    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
-    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
-    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
+    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">Pro celou aplikaci</string>
+    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Pro balíček</string>
+    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">Nastala chyba při načítání upomínek opakování, poškozené upomínky byly odstraněny. Podrobnosti:</string>
     <!-- Schedule reminders screen -->
-    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
+    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Naplánovat upomínky</string>
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Přidat upomínku</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Nemáte žádné upomínky opakování</string>
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
-    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
+    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Nastavení oznámení</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
     <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Balíček nenalezen</string>
     <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Upomínky nejsou k dispozici</string>
@@ -263,22 +263,22 @@
     <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Práh karet:</string>
     <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Neposílejte mi oznámení, pokud je méně než tento počet karet ke zkoušení</string>
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Upozornit mě pouze v případě, že dnes nebyly opakovány žádné karty</string>
-    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
-    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
-    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">Count these cards toward the threshold:</string>
-    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
-    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
+    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Zadejte prosím počet karet jako celé číslo</string>
+    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">Práh musí být nejméňe 0</string>
+    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">Počítat tyto karty do limitu:</string>
+    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Odstranit tuto upomínku?</string>
+    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">Tuto akci nelze vrátit zpět.</string>
     <!-- Reminder troubleshooting screen -->
     <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Upomínky nejsou k dispozici.</string>
     <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Upomínky nemusí fungovat správně.</string>
     <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Vaše upomínky by měly fungovat podle očekávání.</string>
-    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
+    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Různá zařízení mají různá nastavení omezení oznámení. Zkontrolujte nastavení systému nebo hledejte online, pokud problémy přetrvávají.</string>
     <!-- Troubleshooting check titles -->
-    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>
-    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Notification channel</string>
-    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
-    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Battery optimization</string>
-    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Power saving mode</string>
+    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Povolení oznámení</string>
+    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Kanál oznámení</string>
+    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Režim nerušit</string>
+    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Optimalizace baterie</string>
+    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Režim úspory energie</string>
     <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
     <!-- Troubleshooting check statuses -->
     <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>

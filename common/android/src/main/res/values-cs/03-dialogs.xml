@@ -49,11 +49,11 @@
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
     <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_extend_limits_title">Zvýšit denní limit</string>
+    <string name="custom_study_increase">Zvýšit</string>
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_ahead_description">Opakovat karty, které jsou ke zkoušení v následujícím počtu dní:</string>
+    <string name="custom_study_preview">Zobrazit nové karty přidané v posledních dnech:</string>
     <string name="custom_study_tags">Vybrat x karet z balíčku:</string>
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
@@ -82,7 +82,7 @@
     <string name="dialog_positive_overwrite">Přepsat</string>
     <string name="dialog_positive_repair">Opravit</string>
     <string name="dialog_positive_replace">Nahradit</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nOpravte datum a čas, nebo zapněte automatický datum a čas, a poté znovu synchronizujte.\n\nAktuální čas vašeho zařízení je: %2$s</string>
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
     <string name="dialog_invalid_custom_certificate">Zadaný text neposkytuje platný certifikát X509 v kódování PEM.</string>
     <string name="dialog_invalid_custom_certificate_title">Chyba zpracování certifikátu</string>
@@ -244,8 +244,8 @@
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
     <string name="compress">Komprimovat</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
-    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
+    <string name="tts_no_engine_title">Není nainstalován žádný převod textu na řeč</string>
+    <string name="tts_no_engine_message">Nainstalujte aplikaci, která poskytuje převod textu na řeč pro vaše zařízení.</string>
     <string name="tts_error_dialog_title">Jazyk není podporován</string>
     <string name="tts_error_dialog_reason_text">Modul převodu textu na řeč <b>%1$s</b> nepodporuje následující jazyk: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Změnit modul</string>
@@ -270,14 +270,14 @@
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Pole</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Speciální</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
+    <string name="special_field_front_side_help">Obsah šablony líce. Zvuk se nepřehrává automaticky</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Celý balíček karty, včetně nadřazených balíčků%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Aktuální balíček karty, nezahrnuje nadřazené balíčky%s</string>
+    <string name="special_field_flag_help">Zobrazí „%1$s“, kde %2$s je kód příznaku (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Štítky poznámky%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">ID karty%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Název šablony karty%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Název typu poznámky%s</string>
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Z</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">Na</string>
