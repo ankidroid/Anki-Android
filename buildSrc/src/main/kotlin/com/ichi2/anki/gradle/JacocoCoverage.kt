@@ -182,16 +182,13 @@ private fun Project.includeTestExecutionData(
     includeModule: () -> Boolean = { true },
 ) {
     val coverageProject = this
-    // Restrict the input to this producer's declared outputs. In particular, do
-    // not pick up stale coverage from other flavors or build types.
-    // AGP may register the producer later, so use a live task collection.
-    val testTasks = tasks.named { it == taskName }
-    val testTaskPath = "$path:$taskName"
-    val coverageFiles = files(testTasks).asFileTree.matching { include(pattern) }
     report.configure {
         if (!includeModule()) return@configure
+        val testTask = coverageProject.tasks.named(taskName)
+        // Restrict coverage to the declared outputs
+        val coverageFiles = coverageProject.files(testTask).asFileTree.matching { include(pattern) }
         executionData.from(coverageFiles)
-        dependsOn(testTaskPath)
+        dependsOn(testTask)
         if (pattern == "**/*.exec") {
             runUnitTestsWithoutCaching(this, coverageProject, taskName)
         }
