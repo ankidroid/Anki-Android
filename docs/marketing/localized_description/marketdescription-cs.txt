@@ -11,7 +11,7 @@ Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo p�
 ★ Klíčové funkce:
 • podporovaný obsah kartiček: text, obrázky, zvuky, LaTeX
 • opakování v rozestupech (FSRS algoritmus optimalizovaný AI)
-• integrované předčítání textu
+• integrovaný převod textu na řeč
 • více než 10 000 předem vytvořených balíčků
 • widget postupu
 • podrobné statistiky

@@ -167,7 +167,7 @@
     <string name="image_occlusion">Аклюзія відарыса</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Мікрафон</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Дазваляе вам дадаваць гукі ў картку і прайграваць голас пры паўтарэнні</string>
-    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Уключае фонавую сінхранізацыю медыяфайлаў і дазваляе вам ствараць напаміны пра навучанне</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Уключае фонавую сінхранізацыю медыяфайлаў і дазваляе вам ствараць напаміны аб паўтарэннях</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Абавязкова</string>
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Неабавязкова</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Гэтыя дазволы неабходна ўручную выдаць з налад</string>

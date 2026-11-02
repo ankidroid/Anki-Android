@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
     <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
     <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_extend_limits_title">Estender límites diarios</string>
+    <string name="custom_study_increase">Aumentar</string>
     <string name="custom_study_forgotten">Repasar as tarxetas esquecidas nos últimos x días:</string>
     <string name="custom_study_ahead_description">Repasar as tarxetas pendentes nos vindeiros:</string>
     <string name="custom_study_preview">Previsualizar as tarxetas novas engadidas nos últimos:</string>

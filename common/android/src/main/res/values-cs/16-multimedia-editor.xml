@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Nelze vytvořit nástrojovou lištu pro nahrávání</string>
     <!-- Crop function-->
     <string name="crop_image">Chcete oříznout tento obrázek?</string>
-    <string name="crop_button" maxLength="28">Crop</string>
+    <string name="crop_button" maxLength="28">Oříznout</string>
     <string name="external_image_editor_no_changes">No changes were returned.</string>
     <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej zkomprimovat?</string>
     <string name="select_image_failed">"Výběr obrázku selhal, zkuste to prosím znovu"</string>
