@@ -3,7 +3,6 @@
 
 package com.ichi2.anki
 
-import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesOnly
 import anki.import_export.ImportAnkiPackageRequest
@@ -13,12 +12,15 @@ import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.libanki.importCsvRaw
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.utils.ImportUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 
 suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
     val request = ImportAnkiPackageRequest.parseFrom(input)
-    val path = Uri.encode(request.packagePath, "/")
+    // The page decodes the cached path from ImportUtils; restore its encoded filename.
+    val path = ImportUtils.encodeFileName(File(request.packagePath))
     return withContext(Dispatchers.Main) {
         val output = withCol { importAnkiPackage(path, request.options) }
         undoableOp { output.changes }

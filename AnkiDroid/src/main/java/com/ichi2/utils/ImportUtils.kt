@@ -79,6 +79,11 @@ object ImportUtils {
         uri: Uri,
     ): String? = FileImporter().getFileCachedCopy(context, uri)
 
+    /**
+     * [file]'s absolute path with only its filename Uri-encoded.
+     */
+    internal fun encodeFileName(file: File): String = File(file.parentFile, Uri.encode(file.name)).absolutePath
+
     fun showImportUnsuccessfulDialog(
         activity: Activity,
         failure: ImportResult.Failure,
@@ -246,7 +251,7 @@ object ImportUtils {
             val tempOutDir =
                 when (file) {
                     is ImportResolution.Text -> checkFile.absolutePath
-                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage -> Uri.fromFile(checkFile).encodedPath!!
+                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage -> encodeFileName(checkFile)
                 }
 
             copyFileToCache(context, file.source.uri, tempOutDir).asErrorDetails()?.let { details ->
