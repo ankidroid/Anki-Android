@@ -61,6 +61,24 @@ class BindingMapTest {
         assertThat(processed, hasSize(1))
     }
 
+    @Test
+    fun `onGenericMotionEvent leaves a handled movement to its binding`() {
+        val heldAxes = mutableSetOf<Axis>()
+        var lowerPriorityActions = 0
+        val bindingMap = BindingMap(SPMockBuilder().createSharedPreferences(), listOf(AxisAction)) { _, _ -> true }
+        val lowerPriorityBindingMap =
+            BindingMap(SPMockBuilder().createSharedPreferences(), listOf(AxisAction)) { _, _ ->
+                lowerPriorityActions++
+                true
+            }
+
+        bindingMap.onGenericMotionEvent(axisEvent(1f), heldAxes)
+        lowerPriorityBindingMap.onGenericMotionEvent(axisEvent(1f), heldAxes)
+
+        assertThat(heldAxes, equalTo(setOf(Axis.X)))
+        assertThat("the lower priority binding is ignored", lowerPriorityActions, equalTo(0))
+    }
+
     private object AxisAction : MappableAction<ReviewerBinding> {
         override val preferenceKey = "axis_action"
 

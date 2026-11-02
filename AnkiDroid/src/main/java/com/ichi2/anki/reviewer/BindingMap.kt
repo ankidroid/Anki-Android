@@ -71,20 +71,28 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
 
     /**
      * Triggers the actions bound to axis movements past their threshold, once per movement.
+     * A handled movement belongs to its binding until released.
      *
+     * @param heldAxes the axes of the movements handled by bindings of higher priority, which are
+     * ignored here. The axes of the movements handled here are added to it
      * @return whether [ev] should be consumed: it triggered a handled action, or it continues a
      * handled movement that Android would otherwise convert into D-pad presses. A joystick event
      * carries all the axes of the device, so the movements of other axes still reach Android's
      * joystick-to-D-pad conversion
      */
-    fun onGenericMotionEvent(ev: MotionEvent?): Boolean {
+    fun onGenericMotionEvent(
+        ev: MotionEvent?,
+        heldAxes: MutableSet<Axis> = mutableSetOf(),
+    ): Boolean {
         if (ev == null || axisDetectors.isEmpty()) return false
 
-        var handled = false
+        var consumed = false
         for (detector in axisDetectors) {
-            if (detector.onGenericMotionEvent(ev, processor)) handled = true
+            if (detector.axis in heldAxes) continue
+            if (detector.onGenericMotionEvent(ev, processor)) consumed = true
         }
-        return handled
+        axisDetectors.filter { it.isHandled }.mapNotNullTo(heldAxes) { it.axis }
+        return consumed
     }
 
     fun onGesture(gesture: Gesture): Boolean {

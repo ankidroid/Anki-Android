@@ -9,14 +9,15 @@ class SingleAxisDetector<B : MappableBinding, A : MappableAction<B>>(
     private val action: A,
     val mappableBinding: B,
 ) {
-    private val axis: Axis? = (mappableBinding.binding as? Binding.AxisButtonBinding)?.axis
+    val axis: Axis? = (mappableBinding.binding as? Binding.AxisButtonBinding)?.axis
     private val threshold: Float = (mappableBinding.binding as? Binding.AxisButtonBinding)?.threshold ?: 0F
 
     /** If the command has been executed and we have not returned lower than the threshold */
     private var sentAction: Boolean = false
 
-    /** If the command executed since we reached the threshold was handled */
-    private var isHandled: Boolean = false
+    /** If the command executed since we reached the threshold was handled: the movement belongs to it until released */
+    var isHandled: Boolean = false
+        private set
 
     /**
      * Given a [MotionEvent], determine whether we've reached [threshold].

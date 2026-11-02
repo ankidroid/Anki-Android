@@ -40,7 +40,6 @@ import com.ichi2.anki.databinding.PopupBrushOptionsBinding
 import com.ichi2.anki.databinding.PopupEraserOptionsBinding
 import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.reviewer.BindingMap
-import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
@@ -67,7 +66,9 @@ class WhiteboardFragment :
     }
 
     val binding by viewBinding(FragmentWhiteboardBinding::bind)
-    private lateinit var bindingMap: BindingMap<ReviewerBinding, WhiteboardAction>
+
+    /** The whiteboard bindings, for hosts that don't dispatch them themselves */
+    val bindingMap by lazy { BindingMap(sharedPrefs(), WhiteboardAction.entries, viewModel) }
     private var doubleBackCallback: OnBackPressedCallback? = null
 
     private var eraserPopup: PopupWindow? = null
@@ -201,7 +202,6 @@ class WhiteboardFragment :
             viewModel.setIsToolbarShown(isShown)
         }
 
-        bindingMap = BindingMap(sharedPrefs(), WhiteboardAction.entries, viewModel)
         binding.root.setOnGenericMotionListener { _, event ->
             bindingMap.onGenericMotionEvent(event)
         }
