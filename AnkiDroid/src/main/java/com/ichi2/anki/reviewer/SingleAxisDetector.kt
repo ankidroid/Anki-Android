@@ -15,39 +15,49 @@ class SingleAxisDetector<B : MappableBinding, A : MappableAction<B>>(
     /** If the command has been executed and we have not returned lower than the threshold */
     private var sentAction: Boolean = false
 
-    /**
-     * If multiple events above the threshold are obtained, only return 1 command
-     * until the value is under the threshold
-     */
-    private val debouncedAction: A?
-        get() {
-            if (sentAction) return null
-            sentAction = true
-            return action
-        }
+    /** If the command executed since we reached the threshold was handled */
+    private var isHandled: Boolean = false
 
     /**
      * Given a [MotionEvent], determine whether we've reached [threshold].
      *
      * If we have, and [action] has not been sent in the period that we reached the threshold
-     * then send the command once and wait for the value to go back under the threshold
+     * then send it once to [processor] and wait for the value to go back under the threshold
      *
-     * @return [action] or `null`
+     * @return whether [ev] should be consumed: it triggered a handled [action], or it continues
+     * a handled movement that Android would otherwise convert into D-pad presses
      */
-    fun getAction(ev: MotionEvent): A? {
+    fun onGenericMotionEvent(
+        ev: MotionEvent,
+        processor: BindingProcessor<B, A>?,
+    ): Boolean {
+        if (!hasReachedThreshold(ev)) {
+            sentAction = false
+            isHandled = false
+            return false
+        }
+        if (!sentAction) {
+            sentAction = true
+            isHandled = processor?.processAction(action, mappableBinding) == true
+            return isHandled
+        }
+        return isHandled && axis in DPAD_AXES
+    }
+
+    private fun hasReachedThreshold(ev: MotionEvent): Boolean {
         // TODO: We may need to handle historical events as well
         val value = ev.getAxisValue(axis?.motionEventValue ?: MotionEvent.INVALID_POINTER_ID)
-        when {
-            threshold > 0 -> {
-                if (value >= threshold) return debouncedAction
-            }
-            threshold < 0 -> {
-                if (value <= threshold) return debouncedAction
-            }
+        return when {
+            threshold > 0 -> value >= threshold
+            threshold < 0 -> value <= threshold
+            else -> false
         }
-        sentAction = false
-        return null
     }
 
     fun toDisplayString(context: Context) = mappableBinding.toDisplayString(context)
+
+    companion object {
+        /** The axes whose unhandled movements Android converts into D-pad presses */
+        private val DPAD_AXES = setOf(Axis.X, Axis.Y, Axis.HAT_X, Axis.HAT_Y)
+    }
 }
