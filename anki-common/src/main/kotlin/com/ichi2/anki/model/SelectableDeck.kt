@@ -4,9 +4,10 @@ package com.ichi2.anki.model
 
 import android.content.Context
 import android.os.Parcelable
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -64,9 +65,22 @@ sealed class SelectableDeck : Parcelable {
          * @param includeFiltered Whether to include filtered decks in the output
          * @return all [SelectableDecks][SelectableDeck] in the collection satisfying the filter
          */
-        suspend fun fromCollection(includeFiltered: Boolean): List<Deck> =
-            CollectionManager
-                .withCol { decks.allNamesAndIds(includeFiltered = includeFiltered) }
-                .map { nameAndId -> Deck(nameAndId) }
+        suspend fun fromCollection(
+            includeFiltered: Boolean,
+            skipEmptyDefault: Boolean = false,
+        ): List<Deck> = withCol { fromCollection(this, includeFiltered, skipEmptyDefault) }
+
+        /** Query an explicit collection without requiring an Android context or global state. */
+        fun fromCollection(
+            collection: Collection,
+            includeFiltered: Boolean,
+            skipEmptyDefault: Boolean = false,
+        ): List<Deck> =
+            collection.decks
+                .allNamesAndIds(
+                    includeFiltered = includeFiltered,
+                    // Parent decks must remain selectable so users can include their subdecks.
+                    skipEmptyDefault = skipEmptyDefault && collection.decks.children(DEFAULT_DECK_ID).isEmpty(),
+                ).map { nameAndId -> Deck(nameAndId) }
     }
 }
