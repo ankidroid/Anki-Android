@@ -68,7 +68,7 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew :AnkiDroid:compileFullDebugJavaWithJavac compileLint lint-rules:compileTestJava --daemon
+          command: ./gradlew :AnkiDroid:compileFullDebugJavaWithJavac :AnkiDroid:generateFullDebugAndroidTestLintModel generateDebugAndroidTestLintModel compileLint lint-rules:compileTestJava --daemon
 
       - name: Run Lint Debug
         # "lintAll" opts in all modules in 1 flavor to lint, pinning :AnkiDroid to lintFullDebug
