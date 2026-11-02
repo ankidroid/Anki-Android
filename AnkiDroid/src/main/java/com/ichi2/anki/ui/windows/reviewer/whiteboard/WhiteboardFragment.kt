@@ -92,6 +92,7 @@ class WhiteboardFragment :
         binding.whiteboardView.onNewPath = viewModel::addPath
         binding.whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
         binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsToPoint
+        binding.whiteboardView.onEraseGestureCancel = viewModel::cancelPathEraseGesture
         binding.whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
         binding.whiteboardView.onStylusButtonStateChanged = { isPressed ->
             viewModel.setStylusButtonPressed(isPressed)
