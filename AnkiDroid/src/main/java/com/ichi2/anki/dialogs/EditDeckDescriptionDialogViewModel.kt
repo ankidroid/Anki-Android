@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.utils.ext.update
+import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -120,11 +120,13 @@ class EditDeckDescriptionDialogViewModel(
 
     private suspend fun save() {
         Timber.i("updating deck description")
-        withCol {
-            decks.update(deckId) {
-                this.description = dialogState.description
-                this.descriptionAsMarkdown = dialogState.formatAsMarkdown
-            }
+        undoableOp {
+            val deck =
+                decks.getLegacy(deckId)!!.apply {
+                    description = dialogState.description
+                    descriptionAsMarkdown = dialogState.formatAsMarkdown
+                }
+            decks.updateDict(deck)
         }
     }
 

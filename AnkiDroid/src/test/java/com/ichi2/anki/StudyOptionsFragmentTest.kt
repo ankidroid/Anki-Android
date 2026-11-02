@@ -59,6 +59,9 @@ import kotlin.test.assertTrue
  */
 @RunWith(AndroidJUnit4::class)
 class StudyOptionsFragmentTest : RobolectricTest() {
+    // a deck description resolves the media folder
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     /** Issue 22249: backend deletion can leave the tablet showing hidden Default. */
     @Test
     @Config(qualifiers = "xlarge")
@@ -102,14 +105,36 @@ class StudyOptionsFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `empty filtered deck shows counts after a finished regular deck`() =
+    fun `empty deck shows description`() =
+        runTest {
+            setDefaultDeckDescription("Deck description")
+            withStudyOptions {
+                assertIs<StudyOptionsState.Empty>(viewModel.state)
+                assertDescriptionShown("Deck description")
+            }
+        }
+
+    @Test
+    fun `finished deck shows description`() =
+        runTest {
+            setDefaultDeckDescription("Deck description")
+            val note = addBasicNote()
+            col.sched.suspendCards(note.cardIds(col))
+            withStudyOptions {
+                assertIs<StudyOptionsState.Congrats>(viewModel.state)
+                assertDescriptionShown("Deck description")
+            }
+        }
+
+    @Test
+    fun `finished regular deck and empty filtered deck show counts`() =
         runTest {
             val note = addBasicNote()
             col.sched.suspendCards(note.cardIds(col))
             withStudyOptions {
                 assertIs<StudyOptionsState.Congrats>(viewModel.state)
                 val counts = requireView().findViewById<View>(R.id.group_counts)
-                assertEquals(View.GONE, counts.visibility)
+                assertEquals(View.VISIBLE, counts.visibility)
 
                 col.decks.select(col.decks.newFiltered("Filtered deck"))
                 refreshAndAwait()
@@ -434,6 +459,18 @@ class StudyOptionsFragmentTest : RobolectricTest() {
 
     private val StudyOptionsFragment.binding
         get() = FragmentStudyOptionsBinding.bind(requireView())
+
+    private fun setDefaultDeckDescription(description: String) {
+        val deck = col.decks.getLegacy(DEFAULT_DECK_ID)!!
+        deck.description = description
+        col.decks.save(deck)
+    }
+
+    private fun StudyOptionsFragment.assertDescriptionShown(description: String) =
+        with(binding.studyoptionsDeckDescription) {
+            assertEquals(View.VISIBLE, visibility)
+            assertEquals(description, text.toString())
+        }
 
     private fun StudyOptionsFragment.assertBuryCountsHidden() =
         with(binding) {

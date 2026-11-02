@@ -340,7 +340,6 @@ class Decks(
     }
 
     @LibAnkiAlias("update_dict")
-    @Suppress("unused")
     fun updateDict(deck: Deck): OpChanges = col.backend.updateDeckLegacy(toJsonBytes(deck))
 
     /** Rename deck prefix to NAME if not exists. Updates children. */

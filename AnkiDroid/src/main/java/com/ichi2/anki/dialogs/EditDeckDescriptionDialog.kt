@@ -3,6 +3,7 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -25,6 +26,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.create
 import com.ichi2.utils.handleOutsideTouch
 import com.ichi2.utils.moveCursorToEnd
@@ -95,6 +97,17 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 insets
             }
         }
+        setDialogKeyboardResize(dialog)
+    }
+
+    /** TODO Remove once DeckPicker stops handling rotation itself. Ensure description dialog works under rotation. */
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // DeckPicker handles rotation itself, so the dialog keeps the background insets
+        // chosen for the previous screen height. In landscape, the portrait insets leave
+        // no room for the description, so use the insets Material picks for the new height
+        val materialDialog = MaterialAlertDialogBuilder(requireContext()).create()
+        alertDialog.window?.setBackgroundDrawable(materialDialog.window?.decorView?.background)
     }
 
     private fun setupDialogView(view: View) {
