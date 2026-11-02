@@ -8,6 +8,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
+import android.os.Build
+import android.service.chooser.ChooserResult
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.IntentCompat
 import com.ichi2.anki.AnkiDroidApp
@@ -21,8 +23,9 @@ class ExportSharedReceiver : BroadcastReceiver() {
         intent: Intent,
     ) {
         val target = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_CHOSEN_COMPONENT, ComponentName::class.java)
-        Timber.i("Export shared with %s", target?.packageName)
-        if (target == null || target.packageName == context.packageName) return
+        val crossProfile = intent.isCrossProfileShare()
+        Timber.i("Export shared with %s, cross-profile: %b", target?.packageName, crossProfile)
+        if (!crossProfile && (target == null || target.packageName == context.packageName)) return
         val path = intent.getStringExtra(EXTRA_EXPORT_PATH) ?: return
         BackupPromptDialog.onFileExported(AnkiDroidApp.wrapForActiveProfile(context), File(path))
     }
@@ -43,4 +46,10 @@ class ExportSharedReceiver : BroadcastReceiver() {
                     true,
                 )?.intentSender
     }
+}
+
+private fun Intent.isCrossProfileShare(): Boolean {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) return false
+    val result = IntentCompat.getParcelableExtra(this, Intent.EXTRA_CHOOSER_RESULT, ChooserResult::class.java)
+    return result?.type == ChooserResult.CHOOSER_RESULT_UNKNOWN
 }
