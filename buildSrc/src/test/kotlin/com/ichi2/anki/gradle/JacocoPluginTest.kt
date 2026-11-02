@@ -57,6 +57,26 @@ class JacocoPluginTest {
     }
 
     @Test
+    fun `coverage reports do not realize unrelated tasks`() {
+        // AGP 9.5 registers Compose Preview tasks that fail during configuration
+        // for variants without unit tests. Coverage must leave those tasks lazy.
+        for (module in listOf("app", "library")) {
+            File(projectDir, "$module/build.gradle").appendText(
+                """
+
+                tasks.register('unrelatedPreviewTask') {
+                    throw new GradleException('Coverage must not realize unrelated tasks')
+                }
+                """.trimIndent(),
+            )
+        }
+
+        val output = runCoverage(":app:jacocoAndroidTestReport", "--dry-run").output
+        assertThat(output, containsString(":app:jacocoUnitTestReport SKIPPED"))
+        assertThat(output, containsString(":app:jacocoAndroidTestReport SKIPPED"))
+    }
+
+    @Test
     fun `library without unit tests is included as uncovered in the report`() {
         // A valid, empty execution file represents a run that never touched this class.
         ExecFileLoader().save(File(projectDir, "app/build/jacoco/testPlayDebugUnitTest.exec"), false)
