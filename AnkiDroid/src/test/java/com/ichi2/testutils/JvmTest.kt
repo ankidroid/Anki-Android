@@ -4,6 +4,7 @@
 package com.ichi2.testutils
 
 import androidx.annotation.CallSuper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.CollectionFiles
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
@@ -39,9 +40,15 @@ open class JvmTest : InMemoryAnkiTest() {
     @CallSuper
     override fun tearDown() {
         try {
-            super.tearDown()
+            if (CollectionManager.isOpenUnsafe()) {
+                col.debugEnsureNoOpenPointers()
+            }
         } finally {
-            ioDispatcher = Dispatchers.IO
+            try {
+                super.tearDown()
+            } finally {
+                ioDispatcher = Dispatchers.IO
+            }
         }
     }
 
