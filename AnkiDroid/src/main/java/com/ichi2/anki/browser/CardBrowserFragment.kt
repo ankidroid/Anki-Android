@@ -123,6 +123,7 @@ import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.formatCardCount
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
@@ -1713,7 +1714,8 @@ class CardBrowserFragment :
     }
 
     fun showFilteredDeckScreen() {
-        launchCatchingTask {
+        // an invalid query is the user's input, so show the error without a crash report
+        launchCatchingTask(skipCrashReport = { it is InvalidSearchException }) {
             withProgress {
                 // the selected deck sits outside the search box, so build the same search the
                 // browser uses, which combines the query and the filters via the backend

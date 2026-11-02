@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.update
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.any
@@ -28,7 +27,6 @@ import org.robolectric.shadows.ShadowDialog
 @RunWith(AndroidJUnit4::class)
 class CardBrowserFilteredDeckReviewRegressionTest : RobolectricTest() {
     @Test
-    @Ignore("TODO: resolve the selected deck's current name by ID after a rename")
     fun `filtered deck retains selected deck identity after its old name is reused`() =
         withCardBrowserFragment {
             val selected = addBasicNote("selected").apply { moveToDeck("Selected") }
@@ -49,7 +47,6 @@ class CardBrowserFilteredDeckReviewRegressionTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("TODO: handle invalid filtered-deck searches without generating crash reports")
     fun `invalid browser query is not reported as a crash when creating a filtered deck`() {
         val originalReporter = CrashReportService.getReporter()
         val originalThrowOnShowError = throwOnShowError
