@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
+import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -154,6 +155,7 @@ import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
+import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
@@ -567,6 +569,9 @@ class CardBrowserFragment :
                     if (vm.isInMultiSelectMode) return
                     Timber.d("onCreateMenu()")
                     menuInflater.inflate(R.menu.card_browser, menu)
+
+                    menu.wireUndoItemRtlCompliantAction { onMenuItemSelected(it) }
+
                     menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
                     // note: this menu item is available with and without a selection of items
                     menu.findItem(R.id.action_find_replace)?.title = TR.sentenceCase.findAndReplace
@@ -742,6 +747,9 @@ class CardBrowserFragment :
                 ) {
                     if (!activityViewModel.isInMultiSelectMode) return
                     menuInflater.inflate(R.menu.card_browser_multiselect, menu)
+
+                    menu.wireUndoItemRtlCompliantAction { onMenuItemSelected(it) }
+
                     menu.findItem(R.id.action_flag).subMenu?.setupFlags()
                     requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(menu)
                 }
@@ -1562,6 +1570,17 @@ class CardBrowserFragment :
         launchCatchingTask {
             undoAndShowSnackbar()
         }
+
+    /**
+     * Wires the Undo menu item's [RtlCompliantActionProvider] click handler
+     * to [onMenuItemSelected].
+     */
+    private fun Menu.wireUndoItemRtlCompliantAction(onMenuItemSelected: (MenuItem) -> Boolean) {
+        val undoItem = findItem(R.id.action_undo) ?: return
+        val undoItemRtlCompliantActionProvider = MenuItemCompat.getActionProvider(undoItem) as? RtlCompliantActionProvider
+
+        undoItemRtlCompliantActionProvider?.clickHandler = { _, _ -> onMenuItemSelected(undoItem) }
+    }
 
     fun displayCardInfo() =
         launchCatchingTask {
