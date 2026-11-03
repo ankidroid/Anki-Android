@@ -68,6 +68,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.notes.NoteFieldsCheckResponse
@@ -136,11 +137,13 @@ import com.ichi2.anki.multimedia.MultimediaResultContract
 import com.ichi2.anki.multimedia.MultimediaUtils.canTakePicture
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.FieldState.Type
+import com.ichi2.anki.noteeditor.InlineAudioRecorderFragment
 import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorMultimediaController
 import com.ichi2.anki.noteeditor.Toolbar
@@ -148,6 +151,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.noteeditor.ToolbarLayoutDialogHost
 import com.ichi2.anki.noteeditor.data.ToolbarPreferences
+import com.ichi2.anki.noteeditor.registerInlineRecordingHandler
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
@@ -230,6 +234,7 @@ class NoteEditorFragment :
     internal val binding by viewBinding(FragmentNoteEditorBinding::bind)
 
     private var bottomInsetPx = 0
+    private var sideInsets = Insets.NONE
 
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
@@ -526,8 +531,11 @@ class NoteEditorFragment :
             }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
+        val recorder = this@NoteEditorFragment.view?.let { binding.inlineAudioRecorderContainer }
         val view = this@NoteEditorFragment.view?.findViewById<Toolbar?>(R.id.editor_toolbar)
-        if (view?.isVisible == true) {
+        if (recorder != null && recorder.height > 0) {
+            anchorView = recorder
+        } else if (view?.isVisible == true) {
             anchorView = view
         }
     }
@@ -592,6 +600,7 @@ class NoteEditorFragment :
         toolbarLayoutDialog.bind(binding.toolbarLayoutDialog, toolbarPreferences, savedInstanceState, ::updateToolbar)
         setupEdgeToEdge()
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
+        registerInlineRecordingHandler(::insertRecording)
         try {
             setupEditor(getColUnsafe, savedInstanceState)
             if (addNote) {
@@ -764,7 +773,7 @@ class NoteEditorFragment :
             editOcclusionsButton?.visibility = View.VISIBLE
             editOcclusionsButton?.text = resources.getString(CommonString.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
-                setupImageOcclusionEditor()
+                discardRecordingFirst { setupImageOcclusionEditor() }
             }
         }
 
@@ -1201,6 +1210,9 @@ class NoteEditorFragment :
         if (!collectionHasLoaded()) {
             return false
         }
+        if (inlineAudioRecorder?.hasRecording == true) {
+            return true
+        }
 
         fun fieldsEdited(): Boolean {
             // Editing an existing note: Check to see if the fields are changed
@@ -1321,7 +1333,12 @@ class NoteEditorFragment :
     @VisibleForTesting
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
     @KotlinCleanup("fix !! on oldNoteType/newNoteType")
-    suspend fun saveNote() {
+    suspend fun saveNote(): Boolean {
+        if (inlineAudioRecorder?.hasRecording == true) {
+            Timber.i("Not saving: the recording was not inserted")
+            showSnackbar(CommonString.insert_or_delete_recording)
+            return false
+        }
         if (selectedTags == null) {
             selectedTags = ArrayList(0)
         }
@@ -1390,7 +1407,7 @@ class NoteEditorFragment :
 
             if (!modified) {
                 closeNoteEditor()
-                return
+                return true
             }
 
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
@@ -1408,8 +1425,9 @@ class NoteEditorFragment :
             }
 
             closeNoteEditorAfterSave()
-            return
+            return true
         }
+        return true
     }
 
     /**
@@ -1477,9 +1495,11 @@ class NoteEditorFragment :
      */
     private fun launchChangeNoteTypeDialog() {
         val noteId = editorNote?.id ?: return
-        Timber.i("Launching ChangeNoteTypeDialog for note %d", noteId)
-        val dialog = ChangeNoteTypeDialog.newInstance(listOf(noteId))
-        showDialogFragment(dialog)
+        discardRecordingFirst {
+            Timber.i("Launching ChangeNoteTypeDialog for note %d", noteId)
+            val dialog = ChangeNoteTypeDialog.newInstance(listOf(noteId))
+            showDialogFragment(dialog)
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -1825,15 +1845,17 @@ class NoteEditorFragment :
     }
 
     private fun showCardTemplateEditor() {
-        val intent =
-            CardTemplateEditor.getIntent(
-                requireContext(),
-                noteTypeId = currentlySelectedNotetype!!.id,
-                // Also pass the note id and ord if not adding new note
-                noteId = if (addNote) null else currentEditedCard?.nid,
-                ord = if (addNote) null else currentEditedCard?.ord,
-            )
-        requestTemplateEditLauncher.launch(intent)
+        discardRecordingFirst {
+            val intent =
+                CardTemplateEditor.getIntent(
+                    requireContext(),
+                    noteTypeId = currentlySelectedNotetype!!.id,
+                    // Also pass the note id and ord if not adding new note
+                    noteId = if (addNote) null else currentEditedCard?.nid,
+                    ord = if (addNote) null else currentEditedCard?.ord,
+                )
+            requestTemplateEditLauncher.launch(intent)
+        }
     }
 
     /** Appends a string at the selection point, or appends to the end if not in focus  */
@@ -1876,6 +1898,48 @@ class NoteEditorFragment :
     /** Records that a multimedia capture has modified the note. */
     internal fun markMultimediaChanged() {
         changed = true
+    }
+
+    private val inlineAudioRecorder: InlineAudioRecorderFragment?
+        get() = childFragmentManager.findFragmentById(R.id.inline_audio_recorder_container) as? InlineAudioRecorderFragment
+
+    internal fun showInlineAudioRecorder(fieldIndex: Int) {
+        val fieldName = currentFields[fieldIndex].name
+        val recorder = inlineAudioRecorder
+        if (recorder != null) {
+            recorder.retarget(fieldIndex, fieldName)
+            return
+        }
+        val newRecorder =
+            InlineAudioRecorderFragment.newInstance(fieldIndex, fieldName).apply {
+                setSideInsets(sideInsets.left, sideInsets.right)
+            }
+        childFragmentManager.commit { add(R.id.inline_audio_recorder_container, newRecorder) }
+    }
+
+    fun interruptRecording() {
+        inlineAudioRecorder?.interrupt()
+    }
+
+    private fun discardRecordingFirst(action: () -> Unit) {
+        val recorder = inlineAudioRecorder
+        if (recorder?.hasRecording != true) return action()
+        DiscardChangesDialog.showDialog(requireContext(), message = TR.addingDiscardCurrentInput()) {
+            recorder.close()
+            action()
+        }
+    }
+
+    private fun insertRecording(
+        fieldIndex: Int,
+        recording: File,
+    ) {
+        val field =
+            AudioRecordingField().apply {
+                mediaFile = recording
+                hasTemporaryMedia = true
+            }
+        multimediaController.handleResult(MultimediaResult.Success(fieldIndex, field))
     }
 
     /** Determines whether pasted images should be handled as PNG format. **/
@@ -1992,6 +2056,7 @@ class NoteEditorFragment :
             editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
         }
+        inlineAudioRecorder?.onFieldsChanged(currentFields.map { it.name })
     }
 
     private fun getActionModeCallback(
@@ -2312,6 +2377,8 @@ class NoteEditorFragment :
             val bars = insets.paneInsets()
             bottomInsetPx = bars.bottom
             toolbar.updatePadding(left = bars.left, right = bars.right)
+            sideInsets = bars
+            inlineAudioRecorder?.setSideInsets(bars.left, bars.right)
             // move the toolbar as low as possible, without being impacted by rounded corners
             val corners = insets.bottomCornerSideClearance(bars.bottom)
             toolbar.setSideClearance(
@@ -2328,6 +2395,10 @@ class NoteEditorFragment :
                 right = initial.padding.right + bars.right,
             )
         }
+        binding.inlineAudioRecorderContainer.addOnLayoutChangeListener { recorder, _, top, _, bottom, _, oldTop, _, oldBottom ->
+            if (bottom - top == oldBottom - oldTop) return@addOnLayoutChangeListener
+            recorder.post { if (recorder.isAttachedToWindow) applyBottomInset() }
+        }
         ViewCompat.requestApplyInsets(binding.rootLayout)
     }
 
@@ -2335,8 +2406,12 @@ class NoteEditorFragment :
         val toolbarHeight =
             if (toolbar.isVisible) resources.getDimensionPixelSize(R.dimen.note_editor_toolbar_height) else 0
         toolbar.updatePadding(bottom = bottomInsetPx)
+        val recorder = binding.inlineAudioRecorderContainer
+        recorder.updateLayoutParams<MarginLayoutParams> {
+            bottomMargin = if (toolbar.isVisible) 0 else bottomInsetPx
+        }
         binding.noteEditorLayout.updateLayoutParams<MarginLayoutParams> {
-            bottomMargin = toolbarHeight + bottomInsetPx
+            bottomMargin = toolbarHeight + bottomInsetPx + recorder.height
         }
     }
 

@@ -394,7 +394,7 @@ open class CardBrowser :
             message = this.getString(CommonString.save_changes_message),
             positiveMethod = {
                 launchCatchingTask {
-                    fragment?.saveNote()
+                    if (fragment?.saveNote() == false) return@launchCatchingTask
                     loadNoteEditorFragment(destination)
                 }
             },
@@ -523,6 +523,7 @@ open class CardBrowser :
                         navigate(command.destination)
                     }
                     NoteEditorCommand.HidePane -> {
+                        fragment?.interruptRecording()
                         binding.noteEditorFrame?.isVisible = false
                         invalidateOptionsMenu()
                     }
