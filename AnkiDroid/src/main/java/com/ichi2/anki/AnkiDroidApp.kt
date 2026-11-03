@@ -187,23 +187,9 @@ open class AnkiDroidApp :
             return
         }
 
-        setupCrashReporting()
+        val crashReporting = CrashReportingContext.apply { setupCrashReporting() }
         setupApplicationDependencies()
-        val logType = LogType.value
-        when (logType) {
-            LogType.DEBUG -> Timber.plant(DebugTree())
-            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
-            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
-        }
-        Timber.plant(ReminderLogTree(this))
-        if (BuildConfig.ENABLE_LEAK_CANARY && !isRobolectric) {
-            LeakCanaryConfiguration.setInitialConfigFor(this)
-        } else {
-            LeakCanaryConfiguration.disable()
-        }
-        Timber.tag(TAG)
-        Timber.d("Startup - Application Start")
-        Timber.i("Timber config: $logType")
+        with(crashReporting) { setupLogging() }
 
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         initializeAnalytics()
@@ -361,6 +347,29 @@ open class AnkiDroidApp :
                 getString(CommonString.database_locked_summary_new, getString(CommonString.col_path))
             }
             ChangeManager.throwOnDuplicateSubscription = BuildConfig.DEBUG
+        }
+    }
+
+    // Keep crash reporting ahead of logging setup so failures while planting trees or configuring
+    // LeakCanary can be reported.
+    context(_: CrashReportingContext)
+    private fun setupLogging() {
+        setup("setupLogging") {
+            val logType = LogType.value
+            when (logType) {
+                LogType.DEBUG -> Timber.plant(DebugTree())
+                LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
+                LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
+            }
+            Timber.plant(ReminderLogTree(this))
+            if (BuildConfig.ENABLE_LEAK_CANARY && !isRobolectric) {
+                LeakCanaryConfiguration.setInitialConfigFor(this)
+            } else {
+                LeakCanaryConfiguration.disable()
+            }
+            Timber.tag(TAG)
+            Timber.d("Startup - Application Start")
+            Timber.i("Timber config: $logType")
         }
     }
 
@@ -635,6 +644,9 @@ open class AnkiDroidApp :
      */
 
     object AnkiContext
+
+    /** Crash reporting is initialized for dependent diagnostics and to capture later startup failures. */
+    private object CrashReportingContext
 
     companion object {
         /**
