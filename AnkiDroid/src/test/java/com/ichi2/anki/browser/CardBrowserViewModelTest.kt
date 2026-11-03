@@ -44,6 +44,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
+import com.ichi2.anki.browser.CardBrowserViewModelTestBase.InitMode
 import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
@@ -77,7 +78,6 @@ import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.defaultBrowserSearch
 import com.ichi2.testutils.IntentAssert
-import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
@@ -112,8 +112,6 @@ import org.junit.runner.RunWith
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import kotlin.io.path.createTempDirectory
-import kotlin.io.path.pathString
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
@@ -122,13 +120,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class CardBrowserViewModelTest : JvmTest() {
-    override fun setUp() {
-        super.setUp()
-        Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
-        preventDayRolloverAlarmFromUnburyingCards()
-    }
-
+class CardBrowserViewModelTest : CardBrowserViewModelTestBase() {
     @Test
     fun `delete search history - Issue 14989`() =
         runViewModelTest {
@@ -2342,111 +2334,9 @@ class CardBrowserViewModelTest : JvmTest() {
                 putBoolean("card_browser_show_media_filenames", value)
             }
 
-    private fun runViewModelNotesTest(
-        notes: Int = 0,
-        initMode: InitMode = InitMode.AUTOMATIC,
-        options: CardBrowserLaunchOptions? = null,
-        testBody: suspend CardBrowserViewModel.() -> Unit,
-    ) = runTest {
-        CardsOrNotes.NOTES.saveToCollection(col)
-        repeat(notes) {
-            // ensure 1 note = 2 cards
-            addBasicAndReversedNote()
-        }
-        val viewModel =
-            CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                idsFileDirectory = createTransientDirectory(),
-                options = options,
-                initialDeckId = null,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
-                manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
-                savedStateHandle = SavedStateHandle(),
-            )
-        // makes ignoreValuesFromViewModelLaunch work under test
-        if (initMode == InitMode.AUTOMATIC) {
-            viewModel.manualInit()
-        }
-        testBody(viewModel)
-    }
-
-    private fun runViewModelTest(
-        notes: Int = 0,
-        initMode: InitMode = InitMode.AUTOMATIC,
-        savedStateHandle: SavedStateHandle = SavedStateHandle(),
-        options: CardBrowserLaunchOptions? = null,
-        isFragmented: Boolean = false,
-        cacheDir: File = createTransientDirectory(),
-        testBody: suspend CardBrowserViewModel.() -> Unit,
-    ) = runTest {
-        repeat(notes) {
-            addBasicNote()
-        }
-        notes.ifNotZero { count -> Timber.d("added %d notes", count) }
-        val viewModel =
-            CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                idsFileDirectory = cacheDir,
-                options = options,
-                initialDeckId = null,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = isFragmented,
-                manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
-                savedStateHandle = savedStateHandle,
-            )
-        // makes ignoreValuesFromViewModelLaunch work under test
-        if (initMode == InitMode.AUTOMATIC) {
-            viewModel.manualInit()
-        }
-        testBody(viewModel)
-        Timber.d("end runViewModelTest")
-    }
-
     companion object {
         const val EXPECTED_SOUND = "\uD83D\uDD09david.mp3\uD83D\uDD09"
         const val EXPECTED_TTS = "\uD83D\uDCACTest\uD83D\uDCAC"
-
-        private suspend fun viewModel(
-            lastDeckId: DeckId? = null,
-            initialDeckId: DeckId? = null,
-            intent: CardBrowserLaunchOptions? = null,
-            mode: CardsOrNotes = CardsOrNotes.CARDS,
-            savedStateHandle: SavedStateHandle = SavedStateHandle(),
-            lastDeckIdRepository: LastDeckIdRepository =
-                object : LastDeckIdRepository {
-                    override var lastDeckId: DeckId? = lastDeckId
-                },
-        ): CardBrowserViewModel {
-            // default is CARDS, do nothing in this case
-            if (mode == CardsOrNotes.NOTES) {
-                CollectionManager.withCol { mode.saveToCollection(this@withCol) }
-            }
-
-            val cache = File(createTempDirectory().pathString)
-            return CardBrowserViewModel(
-                lastDeckIdRepository = lastDeckIdRepository,
-                idsFileDirectory = cache,
-                options = intent,
-                initialDeckId = initialDeckId,
-                isFragmented = false,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                savedStateHandle = savedStateHandle,
-            ).apply {
-                invokeInitialSearch()
-            }
-        }
-    }
-
-    enum class InitMode {
-        /** init { } runs as normal */
-        NO_DELAY,
-
-        /** init { } is delayed, via a call to [CardBrowserViewModel.manualInit] is called */
-        AUTOMATIC,
-
-        /** init is not run, and a manual invocation of [CardBrowserViewModel.manualInit] is necessary */
-        MANUAL,
     }
 }
 
