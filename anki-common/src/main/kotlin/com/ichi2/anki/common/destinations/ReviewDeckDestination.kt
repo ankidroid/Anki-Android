@@ -4,6 +4,7 @@ package com.ichi2.anki.common.destinations
 
 import android.content.Intent
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.multiprofile.ProfileId
 
 /**
  * Opens the reviewer: either the legacy or the new reviewer, based on
@@ -19,9 +20,11 @@ sealed class ReviewDeckDestination : Destination() {
      * Opens the reviewer for [deckId] via the app's entry point, for entry points outside the
      * app: widgets, shortcuts and reminders.
      *
+     * @property profileId the profile [deckId] belongs to. The deck doesn't open in other profiles.
      * @see Intent.FLAG_ACTIVITY_CLEAR_TOP
      */
     data class ExternalLaunch(
         val deckId: DeckId,
+        val profileId: ProfileId,
     ) : ReviewDeckDestination()
 }
