@@ -24,7 +24,7 @@ class AnswerFeedbackView : AppCompatImageView {
             }
             animate()
                 .alpha(0f)
-                .setDuration(250.milliseconds)
+                .setDuration(FADE_OUT_DURATION)
                 .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_linear_in))
                 .withEndAction { visibility = GONE }
                 .start()
@@ -41,16 +41,22 @@ class AnswerFeedbackView : AppCompatImageView {
 
         if (!Animations.areAnimationsEnabled(context)) {
             alpha = 1f
-            postDelayed(fadeOut, 800.milliseconds)
+            postDelayed(fadeOut, FADE_IN_DURATION + HOLD_DURATION + FADE_OUT_DURATION)
             return
         }
 
         alpha = 0f
         animate()
             .alpha(1f)
-            .setDuration(150.milliseconds)
+            .setDuration(FADE_IN_DURATION)
             .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in))
-            .withEndAction { postDelayed(fadeOut, 400.milliseconds) }
+            .withEndAction { postDelayed(fadeOut, HOLD_DURATION) }
             .start()
+    }
+
+    companion object {
+        private val FADE_IN_DURATION = 150.milliseconds
+        private val HOLD_DURATION = 400.milliseconds
+        private val FADE_OUT_DURATION = 250.milliseconds
     }
 }
