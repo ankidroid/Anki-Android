@@ -23,6 +23,7 @@ import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Manages the creation, loading, and switching of user profiles.
@@ -35,6 +36,15 @@ class ProfileManager private constructor(
 
     lateinit var activeProfileContext: ProfileContextWrapper
         private set
+
+    private val switching = AtomicBoolean(false)
+
+    val isSwitching: Boolean
+        get() = switching.get()
+
+    fun tryStartSwitch(): Boolean = switching.compareAndSet(false, true)
+
+    fun endSwitch() = switching.set(false)
 
     fun isActive(profileId: ProfileId): Boolean = profileId == activeProfileContext.profileId
 
