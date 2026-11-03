@@ -256,7 +256,7 @@ class DeckPickerViewModel :
                             filter = DeckFilters.create(flowOfDeckSearchQuery.value),
                         )
                     }
-                focusedDeck = withCol { decks.selected() }
+                withCol { focusedDeck = decks.selected() }
 
                 deckDeletedNotification.emit(
                     DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
@@ -336,8 +336,10 @@ class DeckPickerViewModel :
     fun selectDeck(deckId: DeckId) =
         viewModelScope.launch {
             // TODO: should we always reset the Card Browser default deck here?
-            withCol { decks.select(deckId) }
-            focusedDeck = deckId
+            withCol {
+                decks.select(deckId)
+                focusedDeck = deckId
+            }
             flowOfRefreshDeckList.emit(Unit)
         }
 
@@ -469,7 +471,7 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\n", " ") }
+                withCol { flowOfStudiedTodayStats.value = sched.studiedToday().replace("\n", " ") }
 
                 /**
                  * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
@@ -486,7 +488,7 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // current deck may have changed
-                focusedDeck = withCol { decks.current().id }
+                withCol { focusedDeck = decks.current().id }
                 refreshUndoMenuState()
 
                 // Reopening can leave the counts and selection unchanged after a skipped display refresh.

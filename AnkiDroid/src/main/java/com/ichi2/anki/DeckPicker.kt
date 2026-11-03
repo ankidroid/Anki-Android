@@ -2281,12 +2281,12 @@ open class DeckPicker :
         val study =
             withCol {
                 decks.select(did)
+                viewModel.focusedDeck = did
                 currentDeckStudyState()
             }
         deckListAdapter.updateSelectedDeck(did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
-        viewModel.focusedDeck = did
 
         if (study.availability == StudyAvailability.CardsAvailable) {
             openReviewerOrStudyOptions(selectionType)
