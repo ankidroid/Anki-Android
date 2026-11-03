@@ -2,12 +2,13 @@
 
 package com.ichi2.anki.browser.search
 
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.CardBrowserViewModelTestBase
 import com.ichi2.anki.browser.ColumnType
-import com.ichi2.anki.browser.runCardBrowserViewModelTest
+import com.ichi2.anki.browser.JvmCardBrowserViewModelTestBase
 import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment.ColumnUiModel
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -16,11 +17,10 @@ import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
 /** Tests [SortOrderBottomSheetFragment.ColumnUiModel] */
-@RunWith(AndroidJUnit4::class)
-class SortColumnUiModelTest : RobolectricTest() {
+class SortColumnUiModelTest : JvmCardBrowserViewModelTestBase() {
     @Test
     fun `ordering is correct`() =
-        runCardBrowserViewModelTest {
+        runViewModelTest {
             updateActiveColumns(
                 CardBrowserColumn.ORIGINAL_POSITION,
                 CardBrowserColumn.QUESTION,
@@ -71,18 +71,8 @@ class SortColumnUiModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `properties of initial item`() =
-        runCardBrowserViewModelTest {
-            val initialItem = ColumnUiModel.buildList(this).first()
-
-            val item = assertInstanceOf<ColumnUiModel.NoOrdering>(initialItem)
-            assertEquals(true, item.available)
-            assertEquals("No sorting", item.getLabel(targetContext))
-        }
-
-    @Test
     fun `properties of unselected column`() =
-        runCardBrowserViewModelTest {
+        runViewModelTest {
             val column =
                 ColumnUiModel
                     .buildList(this)
@@ -100,7 +90,7 @@ class SortColumnUiModelTest : RobolectricTest() {
 
     @Test
     fun `column type is assigned by key`() =
-        runCardBrowserViewModelTest {
+        runViewModelTest {
             val typeByKey =
                 ColumnUiModel
                     .buildList(this)
@@ -118,7 +108,7 @@ class SortColumnUiModelTest : RobolectricTest() {
 
     @Test
     fun `properties of selected column`() =
-        runCardBrowserViewModelTest {
+        runViewModelTest {
             updateActiveColumns(CardBrowserColumn.EASE)
 
             val column =
@@ -137,7 +127,7 @@ class SortColumnUiModelTest : RobolectricTest() {
 
     @Test
     fun `properties of unusable column`() =
-        runCardBrowserViewModelTest {
+        runViewModelTest {
             val column =
                 ColumnUiModel
                     .buildList(this)
@@ -154,7 +144,7 @@ class SortColumnUiModelTest : RobolectricTest() {
 
     @Test
     fun `properties of unusable column in UI`() =
-        runCardBrowserViewModelTest {
+        runViewModelTest {
             updateActiveColumns(CardBrowserColumn.QUESTION)
 
             val column =
@@ -181,3 +171,16 @@ val ColumnUiModel.keyOrNull get() =
         is ColumnUiModel.NoOrdering -> null
         is ColumnUiModel.AnkiColumn -> this.key.value
     }
+
+@RunWith(AndroidJUnit4::class)
+class SortColumnUiModelAndroidTest : CardBrowserViewModelTestBase() {
+    @Test
+    fun `properties of initial item`() =
+        runViewModelTest {
+            val initialItem = ColumnUiModel.buildList(this).first()
+
+            val item = assertInstanceOf<ColumnUiModel.NoOrdering>(initialItem)
+            assertEquals(true, item.available)
+            assertEquals("No sorting", item.getLabel(ApplicationProvider.getApplicationContext()))
+        }
+}

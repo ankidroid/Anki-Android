@@ -3,20 +3,44 @@
 package com.ichi2.anki.browser
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModelStore
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
+import org.junit.After
+import org.junit.Rule
 import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 
 abstract class CardBrowserViewModelTestBase : JvmTest() {
+    private val viewModels = ViewModelStore()
+    private var nextViewModelId = 0
+
+    private fun own(viewModel: CardBrowserViewModel) {
+        viewModels.put("browser-${nextViewModelId++}", viewModel)
+    }
+
+    protected open fun createLastDeckIdRepository(): LastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
     override fun setUp() {
         super.setUp()
         Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
@@ -36,7 +60,7 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
         }
         val viewModel =
             CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+                lastDeckIdRepository = createLastDeckIdRepository(),
                 idsFileDirectory = createTransientDirectory(),
                 options = options,
                 initialDeckId = null,
@@ -44,7 +68,7 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
                 isFragmented = false,
                 manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
                 savedStateHandle = SavedStateHandle(),
-            )
+            ).also(::own)
         // makes ignoreValuesFromViewModelLaunch work under test
         if (initMode == InitMode.AUTOMATIC) {
             viewModel.manualInit()
@@ -67,7 +91,7 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
         notes.ifNotZero { count -> Timber.d("added %d notes", count) }
         val viewModel =
             CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+                lastDeckIdRepository = createLastDeckIdRepository(),
                 idsFileDirectory = cacheDir,
                 options = options,
                 initialDeckId = null,
@@ -75,7 +99,7 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
                 isFragmented = isFragmented,
                 manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
                 savedStateHandle = savedStateHandle,
-            )
+            ).also(::own)
         // makes ignoreValuesFromViewModelLaunch work under test
         if (initMode == InitMode.AUTOMATIC) {
             viewModel.manualInit()
@@ -109,7 +133,7 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
             isFragmented = false,
             preferences = AnkiDroidApp.sharedPreferencesProvider,
             savedStateHandle = savedStateHandle,
-        ).apply {
+        ).also(::own).apply {
             invokeInitialSearch()
         }
     }
@@ -124,4 +148,14 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
         /** init is not run, and a manual invocation of [CardBrowserViewModel.manualInit] is necessary */
         MANUAL,
     }
+}
+
+abstract class JvmCardBrowserViewModelTestBase : CardBrowserViewModelTestBase() {
+    @get:Rule(order = 0)
+    val preferences = JvmPreferencesRule()
+
+    private val lastDeckPreferences = SPMockBuilder().createSharedPreferences()
+
+    override fun createLastDeckIdRepository(): LastDeckIdRepository =
+        SharedPreferencesLastDeckIdRepository(SharedPreferencesProvider { lastDeckPreferences })
 }
