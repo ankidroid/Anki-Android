@@ -12,11 +12,13 @@ dependencies {
     testImplementation(libs.json)
     implementation(libs.androidx.annotation)
     implementation(libs.slf4j.api)
+    api(libs.commons.collections4) // UniqueArrayList exposes SetUniqueList in its API.
 
     // sealedSubclasses in AnalyticsEventTest needs full reflection
     testImplementation(libs.kotlin.reflect)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.hamcrest)
     testImplementation(libs.junit.platform.launcher)
     testImplementation(kotlin("test"))

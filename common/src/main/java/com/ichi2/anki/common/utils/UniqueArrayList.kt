@@ -7,7 +7,7 @@
     "ktlint:standard:kdoc", // private constructor docs
 )
 
-package com.ichi2.utils
+package com.ichi2.anki.common.utils
 
 import org.apache.commons.collections4.list.SetUniqueList
 import java.util.Arrays
