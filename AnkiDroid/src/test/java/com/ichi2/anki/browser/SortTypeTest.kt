@@ -3,8 +3,7 @@
 package com.ichi2.anki.browser
 
 import androidx.core.content.edit
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.R
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
@@ -12,19 +11,23 @@ import com.ichi2.anki.model.SortType.CollectionOrdering
 import com.ichi2.anki.model.SortType.NoOrdering
 import com.ichi2.anki.model.cardBrowserNoSorting
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.JvmPreferencesRule
+import com.ichi2.testutils.JvmTest
 import org.junit.Before
 import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
-@RunWith(AndroidJUnit4::class)
-class SortTypeTest : RobolectricTest() {
+class SortTypeTest : JvmTest() {
+    @get:Rule(order = 0)
+    val preferences = JvmPreferencesRule()
+
     @Before
     override fun setUp() {
         super.setUp()
-        Prefs.sharedPrefs.edit { remove("cardBrowserNoSorting") }
+        Prefs.sharedPrefs.edit { remove(Prefs.key(R.string.pref_browser_no_sorting)) }
     }
 
     @Test

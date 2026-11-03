@@ -3,8 +3,11 @@
 package com.ichi2.anki.browser
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.lifecycle.ViewModelStore
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import kotlinx.coroutines.CompletableDeferred
@@ -13,22 +16,37 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
 class CardBrowserConcurrentSearchTest : JvmTest() {
+    @get:Rule(order = 0)
+    val preferences = JvmPreferencesRule()
+
+    private val lastDeckPreferences = SPMockBuilder().createSharedPreferences()
+    private val viewModels = ViewModelStore()
+
+    @After
+    override fun tearDown() {
+        try {
+            viewModels.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
     @Test
     fun `queued searches cancel the earlier search after UI notification resumes`() =
         runTest {
             addBasicNote("cat", "meows")
             val viewModel =
                 CardBrowserViewModel(
-                    lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+                    lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(SharedPreferencesProvider { lastDeckPreferences }),
                     idsFileDirectory = createTransientDirectory(),
                     options = null,
                     preferences = AnkiDroidApp.sharedPreferencesProvider,
@@ -36,7 +54,7 @@ class CardBrowserConcurrentSearchTest : JvmTest() {
                     initialDeckId = null,
                     savedStateHandle = SavedStateHandle(),
                     manualInit = true,
-                )
+                ).also { viewModels.put("browser", it) }
             viewModel.manualInit()
             viewModel.searchJob?.join()
             Dispatchers.setMain(StandardTestDispatcher(testScheduler))
