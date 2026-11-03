@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
@@ -33,20 +32,21 @@ import com.ichi2.anki.databinding.FragmentMyAccountBinding
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.progress.observeProgress
-import com.ichi2.anki.showError
-import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.showErrorAndAwaitDismissal
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.isCompactWidth
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.utils.showAndAwaitDismissal
+import com.ichi2.anki.utils.showSnackbarAndAwaitDismissal
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_my_account) {
@@ -130,7 +130,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
 
         binding.username.doOnTextChanged { text, _, _, _ ->
-            onUsernameChanged(text.toString())
+            viewModel.onTextChanged(text.toString(), binding.password.text.toString())
         }
     }
 
@@ -155,7 +155,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
 
         binding.password.doOnTextChanged { text, _, _, _ ->
-            onPasswordChanged(text.toString())
+            viewModel.onTextChanged(binding.username.text.toString(), text.toString())
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -184,66 +184,56 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
     }
 
-    private fun onUsernameChanged(newUsername: String) {
-        viewModel.onTextChanged(newUsername, binding.password.text.toString())
-    }
-
-    private fun onPasswordChanged(newPassword: String) {
-        viewModel.onTextChanged(binding.username.text.toString(), newPassword)
-    }
-
     private fun initObservers() {
         observeProgress(viewModel) { getString(CommonString.sign_in) }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loginButtonEnabled.collect { isEnabled ->
-                binding.loginButton.isEnabled = isEnabled
-            }
+        observeMessages(viewModel.pendingMessages, viewModel::messageShown, ::showMessage)
+
+        viewModel.loginButtonEnabled.launchCollectionInViewLifecycleScope { isEnabled ->
+            binding.loginButton.isEnabled = isEnabled
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.userNameError.collect { error ->
-                binding.usernameLayout.error = error?.toHumanReadableString(requireContext())
-            }
+        viewModel.userNameError.launchCollectionInViewLifecycleScope { error ->
+            binding.usernameLayout.error = error?.toHumanReadableString(requireContext())
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.passwordError.collect { error ->
-                binding.passwordLayout.error = error?.toHumanReadableString(requireContext())
-            }
+        viewModel.passwordError.launchCollectionInViewLifecycleScope { error ->
+            binding.passwordLayout.error = error?.toHumanReadableString(requireContext())
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loginState.collect { state ->
-                when (state) {
-                    is LoginState.Success -> {
-                        Timber.i("Login Successful")
-                        val activity = requireActivity()
-                        val isForResult = arguments?.getBoolean(ARG_START_FOR_RESULT) ?: false
+    /** Returns once the user has dealt with [message], so it is shown again if the screen is recreated first */
+    private suspend fun showMessage(message: LoginMessage) {
+        when (message) {
+            LoginMessage.LoggedIn -> onLoginSuccess()
+            is LoginMessage.Failed -> showLoginError(message.exception)
+        }
+    }
 
-                        // If the user explicitly came from a sync prompt (onboarding/pressing sync)
-                        // then their intent was to sync after login success
-                        if (isForResult) {
-                            activity.setResult(RESULT_OK)
-                            activity.finish()
-                            return@collect
-                        }
-                        showLoginSuccessDialog()
-                    }
-                    is LoginState.Error -> {
-                        when (val exception = state.exception) {
-                            // the locked-collection guidance is too long for a snackbar
-                            is CollectionLockedException ->
-                                requireContext().showError(
-                                    exception.localizedMessage!!,
-                                    exception.toCrashReportData(requireContext(), reportException = false),
-                                )
-                            else -> showSnackbar(text = exception.message.toString())
-                        }
-                    }
-                    is LoginState.Idle -> { /* Not needed */ }
-                }
-            }
+    private suspend fun onLoginSuccess() {
+        Timber.i("Login Successful")
+        val activity = requireActivity()
+        val isForResult = arguments?.getBoolean(ARG_START_FOR_RESULT) ?: false
+
+        // If the user explicitly came from a sync prompt (onboarding/pressing sync)
+        // then their intent was to sync after login success
+        if (isForResult) {
+            activity.setResult(RESULT_OK)
+            activity.finish()
+            return
+        }
+        showLoginSuccessDialog()
+    }
+
+    private suspend fun showLoginError(exception: Exception) {
+        when (exception) {
+            // the locked-collection guidance is too long for a snackbar
+            is CollectionLockedException ->
+                requireContext().showErrorAndAwaitDismissal(
+                    exception.localizedMessage!!,
+                    exception.toCrashReportData(requireContext(), reportException = false),
+                )
+            else -> showSnackbarAndAwaitDismissal(exception.message.toString())
         }
     }
 
@@ -253,7 +243,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
      * * **Positive:** opens the Deck Picker and starts a sync
      * * **Negative:** continues to [LoggedInFragment]
      */
-    private fun showLoginSuccessDialog() {
+    private suspend fun showLoginSuccessDialog() {
         /** @see LoggedInFragment */
         fun showLoggedInView() {
             Timber.i("Showing LoggedIn view")
@@ -281,7 +271,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             requireActivity().finish()
         }
 
-        MaterialAlertDialogBuilder(requireContext()).show {
+        MaterialAlertDialogBuilder(requireContext()).showAndAwaitDismissal {
             Timber.i("Showing dialog: 'Sync now?'")
             setTitle(CommonString.login_successful)
             setIcon(R.drawable.ic_sync)

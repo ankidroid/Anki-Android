@@ -40,7 +40,7 @@ class LoginViewModelTest : RobolectricTest() {
 
             assertEquals(USERNAME, Prefs.username)
             assertEquals(TEST_HKEY, Prefs.hkey)
-            assertEquals(LoginState.Success, viewModel.loginState.value)
+            assertEquals(listOf<LoginMessage>(LoginMessage.LoggedIn), viewModel.messages)
         }
 
     @Test
@@ -55,7 +55,7 @@ class LoginViewModelTest : RobolectricTest() {
 
             assertEquals("", Prefs.username)
             assertEquals("", Prefs.hkey)
-            val failure = assertIs<LoginState.Error>(viewModel.loginState.value)
+            val failure = assertIs<LoginMessage.Failed>(viewModel.messages.single())
             assertIs<BackendSyncAuthFailedException>(failure.exception)
         }
 
@@ -69,6 +69,7 @@ class LoginViewModelTest : RobolectricTest() {
             viewModel.login(USERNAME, PASSWORD)
 
             assertEquals(2, loginAttempts)
+            assertEquals(1, viewModel.messages.size, "a new attempt replaces the earlier failure")
         }
 
     @Test
@@ -89,7 +90,7 @@ class LoginViewModelTest : RobolectricTest() {
 
             assertEquals(1, loginAttempts)
             assertEquals(ViewModelProgress.Idle, viewModel.progressManager.progress.value)
-            assertEquals(LoginState.Success, viewModel.loginState.value)
+            assertEquals(listOf<LoginMessage>(LoginMessage.LoggedIn), viewModel.messages)
         }
 
     @Test
@@ -102,7 +103,7 @@ class LoginViewModelTest : RobolectricTest() {
             viewModel.login(username = USERNAME, password = "")
 
             assertEquals(0, loginAttempts)
-            assertEquals(LoginState.Idle, viewModel.loginState.value)
+            assertTrue(viewModel.messages.isEmpty())
         }
 
     private suspend fun emulateLogin(login: (SyncLoginRequest) -> SyncAuth) =
@@ -122,6 +123,9 @@ class LoginViewModelTest : RobolectricTest() {
                 message = "invalid credentials"
             },
         )
+
+    private val LoginViewModel.messages: List<LoginMessage>
+        get() = pendingMessages.value.map { it.message }
 
     companion object {
         private const val USERNAME = "user@example.com"

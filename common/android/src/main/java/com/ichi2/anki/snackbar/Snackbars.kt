@@ -375,6 +375,17 @@ fun Snackbar.setMaxLines(maxLines: Int) {
     view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = maxLines
 }
 
+/** Calls [action] when this snackbar is dismissed, for any reason. */
+fun Snackbar.doOnDismissed(action: () -> Unit): Snackbar =
+    addCallback(
+        object : Snackbar.Callback() {
+            override fun onDismissed(
+                transientBottomBar: Snackbar?,
+                event: Int,
+            ) = action()
+        },
+    )
+
 /**
  * When bottom inset change, for instance, when keyboard is open or closed,
  * snackbar fails to adjust its margins and can appear too high or too low.
