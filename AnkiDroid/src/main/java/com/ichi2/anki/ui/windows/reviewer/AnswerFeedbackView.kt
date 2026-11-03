@@ -4,8 +4,9 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.utils.ext.setDuration
 import com.ichi2.anki.utils.postDelayed
@@ -25,7 +26,7 @@ class AnswerFeedbackView : AppCompatImageView {
             animate()
                 .alpha(0f)
                 .setDuration(FADE_OUT_DURATION)
-                .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_linear_in))
+                .setInterpolator(FastOutLinearInInterpolator())
                 .withEndAction { visibility = GONE }
                 .start()
         }
@@ -49,7 +50,7 @@ class AnswerFeedbackView : AppCompatImageView {
         animate()
             .alpha(1f)
             .setDuration(FADE_IN_DURATION)
-            .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in))
+            .setInterpolator(FastOutSlowInInterpolator())
             .withEndAction { postDelayed(fadeOut, HOLD_DURATION) }
             .start()
     }
