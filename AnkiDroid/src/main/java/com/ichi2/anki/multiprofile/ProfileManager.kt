@@ -164,13 +164,16 @@ class ProfileManager private constructor(
      * Persists [newProfileId] as the active profile.
      *
      * @param newProfileId The [ProfileId] to activate on next launch.
+     * @return false if the switch could not be saved, in which case the current profile stays active
      */
     @VisibleForTesting
     context(_: ProfileSwitchContext)
-    fun switchActiveProfile(newProfileId: ProfileId) {
+    fun switchActiveProfile(newProfileId: ProfileId): Boolean {
         Timber.i("Switching profile to ID: $newProfileId")
         // commit, not apply: the app restarts straight after a switch, and a pending apply() would be lost
-        profileRegistry.setLastActiveProfileId(newProfileId, commit = true)
+        val saved = profileRegistry.commitLastActiveProfileId(newProfileId)
+        if (!saved) Timber.w("Could not save the switch to $newProfileId")
+        return saved
     }
 
     private fun loadProfileData(profileId: ProfileId) {
@@ -613,11 +616,18 @@ class ProfileManager private constructor(
             return id?.let { ProfileId(it) }
         }
 
-        fun setLastActiveProfileId(
-            id: ProfileId,
-            commit: Boolean = false,
-        ) {
-            globalPrefs.edit(commit = commit) { putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value) }
+        fun setLastActiveProfileId(id: ProfileId) {
+            globalPrefs.edit { putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value) }
+        }
+
+        /** @return whether [id] was saved to disk. If it wasn't, the previous ID is put back. */
+        fun commitLastActiveProfileId(id: ProfileId): Boolean {
+            val previous = globalPrefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null)
+            val editor = globalPrefs.edit()
+            editor.putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value)
+            if (editor.commit()) return true
+            globalPrefs.edit { putString(PREF_LAST_ACTIVE_PROFILE_ID, previous) }
+            return false
         }
 
         fun getWebViewProfileId(): ProfileId? {

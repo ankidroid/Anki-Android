@@ -309,4 +309,5 @@ also changes the interval of the card"
     <string name="switch_profile_message" comment="Message of the dialog that confirms switching to another profile">AnkiDroid will restart to open this profile.</string>
     <string name="switch_profile_confirm" comment="Button that confirms switching to another profile">Switch</string>
     <string name="switch_profile_blocked" comment="Shown when the user tries to switch profiles while a sync or backup is running">AnkiDroid is syncing or backing up. Try again when it finishes.</string>
+    <string name="switch_profile_failed" comment="Shown when AnkiDroid could not switch to another profile. %1$s is the profile name">Couldn’t switch to “%1$s”. Try again.</string>
 </resources>
