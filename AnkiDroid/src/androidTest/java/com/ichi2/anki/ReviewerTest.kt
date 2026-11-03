@@ -3,19 +3,14 @@
 
 package com.ichi2.anki
 
-import androidx.core.content.edit
-import androidx.recyclerview.widget.RecyclerView
+import android.content.Intent
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
@@ -23,11 +18,8 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
-import com.ichi2.anki.testutil.closeBackupCollectionDialogIfExists
-import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
-import com.ichi2.anki.testutil.useResumedActivity
 import com.ichi2.anki.testutil.waitUntil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -35,7 +27,6 @@ import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import timber.log.Timber
 import java.util.UUID
 
 @RunWith(AndroidJUnit4::class)
@@ -43,32 +34,11 @@ class ReviewerTest : InstrumentedTest() {
     @get:Rule(order = 0)
     val avoidDayRollover = AvoidDayRolloverRule()
 
-    // Launch IntroductionActivity instead of DeckPicker activity because in CI
-    // builds, it seems to create IntroductionActivity after the DeckPicker,
-    // causing the DeckPicker activity to be destroyed. As a consequence, this
-    // will throw RootViewWithoutFocusException when Espresso tries to interact
-    // with an already destroyed activity. By launching IntroductionActivity, we
-    // ensure that IntroductionActivity is launched first and navigate to the
-    // DeckPicker -> Reviewer activities
-    @get:Rule(order = 1)
-    val activityScenarioRule = ActivityScenarioRule(IntroductionActivity::class.java)
-
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
     /** The collection is shared between tests: review a deck which only contains this test's cards */
     private var testDeckId: DeckId = 0
-
-    override fun runBeforeEachTest() {
-        super.runBeforeEachTest()
-
-        // 17298: for an unknown reason, we were using the beta Reviewer
-        // This works on my MacBook, fails in CI
-        // failure is due to the card not being flipped
-        // since the feature is currently in beta and unexpectedly enabled, disable it
-        // TODO: remove this
-        disableNewReviewer()
-    }
 
     @After
     fun tearDown() {
@@ -106,9 +76,7 @@ class ReviewerTest : InstrumentedTest() {
             true,
         )
 
-        closeGetStartedScreenIfExists()
-        closeBackupCollectionDialogIfExists()
-        reviewDeckWithName(testDeckName) {
+        withReviewer {
             var cardFromDb = col.getCard(card.id).toBackendCard()
             assertThat(cardFromDb.easeFactor, equalTo(card.factor))
             assertThat(cardFromDb.interval, equalTo(card.ivl))
@@ -137,48 +105,17 @@ class ReviewerTest : InstrumentedTest() {
         col.config.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
         addNoteUsingBasicNoteType().firstCard(col).update { did = testDeckId }
 
-        closeGetStartedScreenIfExists()
-        closeBackupCollectionDialogIfExists()
-        reviewDeckWithName(testDeckName) {
+        withReviewer {
             clickShowAnswer()
 
             ensureAnswerButtonsAreDisplayed()
         }
     }
 
-    private fun clickOnDeckWithName(deckName: String) {
-        onView(withId(R.id.decks)).checkWithTimeout(matches(hasDescendant(withText(deckName))))
-        onView(withId(R.id.decks)).perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                hasDescendant(withText(deckName)),
-                click(),
-            ),
-        )
-    }
-
-    private fun clickOnStudyButtonIfExists() {
-        onView(withId(R.id.studyoptions_start))
-            .withFailureHandler { _, _ -> }
-            .perform(click())
-    }
-
-    private fun reviewDeckWithName(
-        deckName: String,
-        block: () -> Unit,
-    ) {
-        // The activity rule only owns IntroductionActivity. Close both activities before restoring
-        // rollover, so neither can refresh against a collection that is being torn down.
-        useResumedActivity<DeckPicker> {
-            clickOnDeckWithName(deckName)
-            // Adding cards directly to the database while in the Deck Picker screen
-            // will not update the page with correct card counts. Hence, clicking
-            // on the deck will bring us to the study options page where we need to
-            // click on the Study button. If we have added cards to the database
-            // before the Deck Picker screen has fully loaded, then we skip clicking
-            // the Study button
-            clickOnStudyButtonIfExists()
-            useResumedActivity<Reviewer> { block() }
-        }
+    private fun withReviewer(block: () -> Unit) {
+        // Issue 22912: a deck tap can become a long press on a slow emulator, opening its menu.
+        // Launch the legacy reviewer explicitly and close it before collection/rollover cleanup.
+        ActivityScenario.launch<Reviewer>(Intent(testContext, Reviewer::class.java)).use { block() }
     }
 
     private fun clickShowAnswerAndAnswerGood() {
@@ -200,17 +137,5 @@ class ReviewerTest : InstrumentedTest() {
             matches(isDisplayed()),
             100,
         )
-    }
-
-    private fun disableNewReviewer() {
-        val newReviewerPrefKey = testContext.getString(R.string.new_reviewer_options_key)
-        val prefs = testContext.sharedPrefs()
-        val isUsingNewReviewer = prefs.getBoolean(newReviewerPrefKey, false)
-        if (!isUsingNewReviewer) return
-
-        Timber.w("unexpectedly using new reviewer: disabling it")
-        prefs.edit {
-            putBoolean(newReviewerPrefKey, false)
-        }
     }
 }
