@@ -217,8 +217,7 @@ open class AnkiDroidApp :
         val anki = AnkiContext.apply { setupAnkiBackend() }
         with(anki) { initializeAnkiDroidDirectory() }
         with(anki) { setupDayRollover() }
-
-        restoreRecurringAlarms(this, RECURRING_WIDGETS)
+        setupRecurringAlarms()
 
         setupLifecycleLogging()
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
@@ -546,6 +545,12 @@ open class AnkiDroidApp :
             DayRolloverHandler.listenForRolloverEvents(this)
             DayRolloverAlarm.scheduleNext(this)
         }
+
+    private fun setupRecurringAlarms() {
+        setup("setupRecurringAlarms") {
+            restoreRecurringAlarms(this, RECURRING_WIDGETS)
+        }
+    }
 
     private fun setupLifecycleLogging() =
         setup("setupLifecycleLogging") {
