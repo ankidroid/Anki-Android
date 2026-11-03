@@ -13,6 +13,7 @@ import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard
+import com.ichi2.anki.multiprofile.ProfileSwitchGuard.BlockReason
 import com.ichi2.anki.multiprofile.backupCheck
 import com.ichi2.anki.multiprofile.mediaSyncCheck
 import com.ichi2.anki.multiprofile.safeRestartApp
@@ -49,6 +50,9 @@ class SwitchProfilesViewModel(
 
     val isSwitchBlocked: StateFlow<Boolean>
         field = MutableStateFlow(false)
+
+    val profileSwitchFailed: StateFlow<ProfileItem?>
+        field = MutableStateFlow<ProfileItem?>(null)
 
     fun showAddProfileDialog() {
         isAddProfileDialogVisible.value = true
@@ -99,19 +103,40 @@ class SwitchProfilesViewModel(
         viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
             withContext(NonCancellable) {
                 when (val result = withContext(ioDispatcher) { switchGuard(profile.id) }) {
-                    ProfileSwitchGuard.Result.Success -> restartApp()
+                    ProfileSwitchGuard.Result.Success -> restartInto(profile)
                     is ProfileSwitchGuard.Result.Blocked -> {
                         Timber.i("Profile switch blocked: %s", result.reasons)
                         profileManager.endSwitch()
                         isSwitchBlocked.value = true
                     }
+                    ProfileSwitchGuard.Result.Failed -> onSwitchFailed(profile)
                 }
             }
         }
     }
 
+    private suspend fun restartInto(profile: ProfileItem) {
+        try {
+            restartApp()
+        } catch (e: Exception) {
+            Timber.w(e, "Restarting into %s failed", profile.id)
+            val runningProfile = profileManager.activeProfileContext.profileId
+            withContext(ioDispatcher) { switchGuard(runningProfile, skipReasons = BlockReason.entries.toSet()) }
+            onSwitchFailed(profile)
+        }
+    }
+
+    private fun onSwitchFailed(profile: ProfileItem) {
+        profileManager.endSwitch()
+        profileSwitchFailed.value = profile
+    }
+
     fun dismissSwitchBlockedMessage() {
         isSwitchBlocked.value = false
+    }
+
+    fun dismissSwitchFailedMessage() {
+        profileSwitchFailed.value = null
     }
 
     fun deleteProfile(profile: ProfileItem) {
