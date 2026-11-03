@@ -5,6 +5,7 @@ package com.ichi2.anki.preferences.profiles
 
 import android.content.Context
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelStore
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.ioDispatcher
@@ -17,6 +18,7 @@ import com.ichi2.anki.multiprofile.ProfileName.ValidationResult
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard.BlockReason
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard.SafetyCheck
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -71,6 +73,12 @@ class SwitchProfilesViewModelTest {
         get() = (ProfileName.validate("Work") as ValidationResult.Valid).name
 
     private fun createProfile(name: String) = profileManager.createNewProfile(nameOf(name))
+
+    private fun waitingFor(saving: CompletableDeferred<Unit>) =
+        SafetyCheck {
+            saving.await()
+            null
+        }
 
     private fun nameOf(raw: String) = (ProfileName.validate(raw) as ValidationResult.Valid).name
 
@@ -200,6 +208,72 @@ class SwitchProfilesViewModelTest {
         assertTrue(viewModel.isSwitchBlocked.value)
         assertEquals(ProfileId.DEFAULT.value, lastActiveProfileId)
         assertEquals(0, restarts)
+    }
+
+    @Test
+    fun `another profile cannot be picked while a switch is saving`() {
+        val work = createProfile("Work")
+        createProfile("Personal")
+        val saving = CompletableDeferred<Unit>()
+        val viewModel = viewModel(waitingFor(saving))
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+        viewModel.switchProfile()
+
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.name == "Personal" })
+        saving.complete(Unit)
+
+        assertNull(viewModel.profileToSwitchTo.value, "the app is about to restart into Work")
+        assertEquals(work.value, lastActiveProfileId)
+        assertEquals(1, restarts)
+    }
+
+    @Test
+    fun `confirming twice switches once`() {
+        val work = createProfile("Work")
+        var checks = 0
+        val viewModel =
+            viewModel(
+                SafetyCheck {
+                    checks++
+                    null
+                },
+            )
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+
+        viewModel.switchProfile()
+        viewModel.switchProfile()
+
+        assertEquals(1, checks)
+        assertEquals(1, restarts)
+    }
+
+    @Test
+    fun `another profile can be picked after a blocked switch`() {
+        createProfile("Work")
+        val personal = createProfile("Personal")
+        val viewModel = viewModel(SafetyCheck { BlockReason.SYNC_IN_PROGRESS })
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.name == "Work" })
+        viewModel.switchProfile()
+
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == personal })
+
+        assertEquals(personal, viewModel.profileToSwitchTo.value?.id)
+    }
+
+    @Test
+    fun `leaving the screen while a switch is saving still restarts into it`() {
+        val work = createProfile("Work")
+        val saving = CompletableDeferred<Unit>()
+        val store = ViewModelStore()
+        val viewModel = viewModel(waitingFor(saving)).also { store.put("profiles", it) }
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+        viewModel.switchProfile()
+
+        store.clear()
+        saving.complete(Unit)
+
+        assertEquals(work.value, lastActiveProfileId)
+        assertEquals(1, restarts)
     }
 
     @Test

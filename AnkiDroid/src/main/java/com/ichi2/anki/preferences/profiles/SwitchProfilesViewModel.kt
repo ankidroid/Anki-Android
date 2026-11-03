@@ -17,6 +17,8 @@ import com.ichi2.anki.multiprofile.backupCheck
 import com.ichi2.anki.multiprofile.mediaSyncCheck
 import com.ichi2.anki.multiprofile.safeRestartApp
 import com.ichi2.anki.multiprofile.syncCheck
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -81,7 +83,7 @@ class SwitchProfilesViewModel(
     }
 
     fun requestSwitch(profile: ProfileItem) {
-        if (profileManager.isActive(profile.id)) return
+        if (profileManager.isSwitching || profileManager.isActive(profile.id)) return
         profileToSwitchTo.value = profile
     }
 
@@ -92,13 +94,17 @@ class SwitchProfilesViewModel(
     fun switchProfile() {
         val profile = profileToSwitchTo.value ?: return
         profileToSwitchTo.value = null
+        if (!profileManager.tryStartSwitch()) return
         Timber.i("Switch profile confirmed: %s", profile.id)
-        viewModelScope.launch {
-            when (val result = withContext(ioDispatcher) { switchGuard(profile.id) }) {
-                ProfileSwitchGuard.Result.Success -> restartApp()
-                is ProfileSwitchGuard.Result.Blocked -> {
-                    Timber.i("Profile switch blocked: %s", result.reasons)
-                    isSwitchBlocked.value = true
+        viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
+            withContext(NonCancellable) {
+                when (val result = withContext(ioDispatcher) { switchGuard(profile.id) }) {
+                    ProfileSwitchGuard.Result.Success -> restartApp()
+                    is ProfileSwitchGuard.Result.Blocked -> {
+                        Timber.i("Profile switch blocked: %s", result.reasons)
+                        profileManager.endSwitch()
+                        isSwitchBlocked.value = true
+                    }
                 }
             }
         }
