@@ -5,7 +5,9 @@ package com.ichi2.anki.workarounds
 import android.content.Context
 import android.print.PrintDocumentAdapter
 import android.util.AttributeSet
+import android.view.InputDevice
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
@@ -63,7 +65,7 @@ open class SafeWebViewLayout :
     protected open fun createWebView() = WebView(context)
 
     init {
-        addView(uncheckedWebView, webViewLayoutParams)
+        addInnerWebView()
     }
 
     // Not guarded when not [WebViewState.ACTIVE]: callers rarely use these after destroy and a no-op is impossible.
@@ -240,8 +242,13 @@ open class SafeWebViewLayout :
     private fun recreateInnerWebView(listener: OnWebViewRecreatedListener) {
         uncheckedWebView = createWebView()
         webViewState = WebViewState.ACTIVE
-        addView(uncheckedWebView, webViewLayoutParams)
+        addInnerWebView()
         listener.onWebViewRecreated()
+    }
+
+    private fun addInnerWebView() {
+        addView(uncheckedWebView, webViewLayoutParams)
+        startTrackingGamepads(uncheckedWebView)
     }
 
     private fun tryRecoverDestroyedWebViewIfNeeded(listener: OnWebViewRecreatedListener) {
@@ -290,6 +297,24 @@ open class SafeWebViewLayout :
     }
 
     companion object {
+        /**
+         * Lets `navigator.getGamepads()` list a gamepad from its first button press.
+         *
+         * The WebView only starts tracking gamepads when it first forwards a key or joystick event to
+         * its content, and Chromium ignores the buttons already pressed when it starts tracking a
+         * gamepad. So the first gamepad button passed to the WebView was ignored.
+         *
+         * A joystick event at rest starts tracking the gamepads, and does nothing else.
+         */
+        private fun startTrackingGamepads(webView: WebView) {
+            val joystickAtRest =
+                MotionEvent.obtain(0, 0, MotionEvent.ACTION_MOVE, 0f, 0f, 0).apply {
+                    source = InputDevice.SOURCE_JOYSTICK
+                }
+            webView.onGenericMotionEvent(joystickAtRest)
+            joystickAtRest.recycle()
+        }
+
         private val webViewLayoutParams =
             ViewGroup.LayoutParams(
                 LayoutParams.MATCH_PARENT,
