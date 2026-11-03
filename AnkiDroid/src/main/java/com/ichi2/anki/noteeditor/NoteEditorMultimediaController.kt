@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
+import androidx.lifecycle.withStarted
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.MediaRegistration
@@ -22,12 +23,14 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.multimedia.MultimediaActionHandler
 import com.ichi2.anki.multimedia.MultimediaActivityExtra
 import com.ichi2.anki.multimedia.MultimediaBottomSheet
+import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.ContentResolverUtil
@@ -77,6 +80,7 @@ internal class NoteEditorMultimediaController(
      */
     fun handleActions(fieldIndex: Int) {
         actionJob?.cancel()
+        val chosenFor = fragment.recordingNote
         actionJob =
             fragment.launchCatchingTask {
                 // Must come before loading the note, or a choice made while the collection is busy is lost.
@@ -85,6 +89,10 @@ internal class NoteEditorMultimediaController(
                 val note = fragment.getCurrentMultimediaEditableNote()
                 if (note.isEmpty) return@launchCatchingTask
 
+                if (action == MultimediaAction.SELECT_AUDIO_RECORDING && Prefs.devInlineAudioRecorderEnabled) {
+                    fragment.withStarted { fragment.showInlineAudioRecorder(fieldIndex, chosenFor) }
+                    return@launchCatchingTask
+                }
                 val handler = MultimediaActionHandler.forAction(action)
                 if (handler == MultimediaActionHandler.ImageFile) {
                     // An empty image editor would be exposed during the picker's back animation.
@@ -257,13 +265,13 @@ internal class NoteEditorMultimediaController(
     }
 
     /** Imports the captured media into the collection if the result carries any. */
-    fun handleResult(result: MultimediaResult.Success) {
+    fun handleResult(result: MultimediaResult.Success): Job? {
         val field = result.field
         if (field.type != EFieldType.TEXT || field.mediaFile != null) {
-            performAddMedia(result.fieldIndex, field, skipSizeCheck = false)
-        } else {
-            Timber.i("field imagePath and audioPath are both null")
+            return performAddMedia(result.fieldIndex, field, skipSizeCheck = false)
         }
+        Timber.i("field imagePath and audioPath are both null")
+        return null
     }
 
     suspend fun awaitMediaImports() {
@@ -283,9 +291,9 @@ internal class NoteEditorMultimediaController(
         index: Int,
         field: IField,
         skipSizeCheck: Boolean,
-    ) {
+    ): Job {
         mediaImports.removeAll { it.isCompleted }
-        mediaImports +=
+        val import =
             fragment.launchCatchingTask {
                 try {
                     // Import field media before setting formattedValue so media paths
@@ -315,6 +323,8 @@ internal class NoteEditorMultimediaController(
                     throw Exception(oomError)
                 }
             }
+        mediaImports += import
+        return import
     }
 
     companion object {

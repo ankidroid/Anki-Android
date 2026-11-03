@@ -241,6 +241,7 @@ open class CardBrowser :
         } else {
             binding?.noteEditorFrame?.isVisible = false
             binding?.cardBrowserResizingDivider?.isVisible = false
+            fragment?.interruptRecording()
         }
 
         // must be called once we have an accessible collection
@@ -390,31 +391,38 @@ open class CardBrowser :
         }
     }
 
-    private fun showSaveChangesDialog(destination: NoteEditorDestination) {
-        DiscardChangesDialog.showDialog(
-            context = this,
-            positiveButtonText = this.getString(CommonString.save),
-            negativeButtonText = this.getString(CommonString.discard),
-            // The neutral button allows the user to back out of the action,
-            // e.g., if they accidentally triggered a navigation or card selection.
-            neutralButtonText = this.getString(CommonString.dialog_cancel),
-            message = this.getString(CommonString.save_changes_message),
-            positiveMethod = {
-                launchCatchingTask {
-                    fragment?.saveNote()
-                    loadNoteEditorFragment(destination)
-                }
-            },
-            negativeMethod = {
-                loadNoteEditorFragment(destination)
-            },
-            neutralMethod = {},
-        )
+    private fun showSaveChangesDialog(command: NoteEditorCommand.LoadInPane) {
+        DiscardChangesDialog
+            .showDialog(
+                context = this,
+                positiveButtonText = this.getString(CommonString.save),
+                negativeButtonText = this.getString(CommonString.discard),
+                // The neutral button allows the user to back out of the action,
+                // e.g., if they accidentally triggered a navigation or card selection.
+                neutralButtonText = this.getString(CommonString.dialog_cancel),
+                message = this.getString(CommonString.save_changes_message),
+                positiveMethod = {
+                    launchCatchingTask {
+                        var saved = false
+                        try {
+                            saved = fragment?.saveNote() != false
+                        } finally {
+                            if (!saved) viewModel.restoreEditorRow(fragment?.currentEditedCard)
+                        }
+                        if (saved) loadNoteEditorFragment(command)
+                    }
+                },
+                negativeMethod = {
+                    loadNoteEditorFragment(command)
+                },
+                neutralMethod = { viewModel.restoreEditorRow(fragment?.currentEditedCard) },
+            ).setOnCancelListener { viewModel.restoreEditorRow(fragment?.currentEditedCard) }
     }
 
-    private fun loadNoteEditorFragment(destination: NoteEditorDestination) {
+    private fun loadNoteEditorFragment(command: NoteEditorCommand.LoadInPane) {
+        viewModel.onPaneEditorShown(command.row)
         supportFragmentManager.commit {
-            replace(R.id.note_editor_frame, NoteEditorFragment.newInstance(destination))
+            replace(R.id.note_editor_frame, NoteEditorFragment.newInstance(command.destination))
         }
         // Invalidate options menu so that note editor menu will show
         invalidateOptionsMenu()
@@ -425,6 +433,11 @@ open class CardBrowser :
      */
     val fragment: NoteEditorFragment?
         get() = supportFragmentManager.findFragmentById(R.id.note_editor_frame) as? NoteEditorFragment
+
+    override fun openDeckPicker() {
+        val editor = fragment ?: return super.openDeckPicker()
+        editor.discardRecordingFirst(onKeepEditing = { selectNavigationItem(R.id.nav_browser) }) { super.openDeckPicker() }
+    }
 
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
@@ -516,18 +529,32 @@ open class CardBrowser :
                             // place: recreating the fragment is expensive enough to ANR when
                             // searches complete in quick succession. If there are unsaved
                             // changes, keep them: this is a redundant refresh, not a navigation
-                            editor != null && editor.isEditingSameCards(command.destination) ->
-                                if (!editor.hasUnsavedChanges()) {
+                            editor != null && editor.isEditingSameCards(command.destination) -> {
+                                viewModel.onPaneEditorShown(command.row)
+                                if (!editor.hasUnsavedNoteChanges()) {
                                     editor.reloadNoteFromCollection()
+                                } else {
+                                    editor.forgetRecordingFieldIfMoved()
                                 }
-                            editor?.hasUnsavedChanges() == true -> showSaveChangesDialog(command.destination)
-                            else -> loadNoteEditorFragment(command.destination)
+                            }
+                            editor != null && editor.hasRecording && !editor.hasUnsavedNoteChanges() &&
+                                command.destination is NoteEditorDestination.EditSelection &&
+                                editor.isEditingNoteOf(command.destination) -> {
+                                viewModel.onPaneEditorShown(command.row)
+                                editor.reloadNoteFromCollection(command.destination.cardIds)
+                            }
+                            editor?.hasUnsavedChanges() == true -> {
+                                editor.forgetRecordingFieldIfMoved()
+                                showSaveChangesDialog(command)
+                            }
+                            else -> loadNoteEditorFragment(command)
                         }
                     }
                     is NoteEditorCommand.LaunchActivity -> {
                         navigate(command.destination)
                     }
                     NoteEditorCommand.HidePane -> {
+                        fragment?.interruptRecording()
                         binding?.noteEditorFrame?.isVisible = false
                         invalidateOptionsMenu()
                     }
