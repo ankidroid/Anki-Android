@@ -348,8 +348,15 @@ class CardBrowserViewModel(
     var paneRow: CardOrNoteId?
         get() = flowOfPaneRow.value
         private set(value) {
+            if (value != flowOfPaneRow.value) previousPaneRow = flowOfPaneRow.value
             flowOfPaneRow.value = value
         }
+
+    private var previousPaneRow: CardOrNoteId? = null
+
+    fun restorePreviousPaneRow() {
+        paneRow = previousPaneRow
+    }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 

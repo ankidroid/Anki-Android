@@ -16,10 +16,13 @@ import com.ichi2.anki.recorder.PlayerState
 import com.ichi2.anki.recorder.PlayerStub
 import com.ichi2.anki.recorder.RecorderState
 import com.ichi2.anki.recorder.VoiceRecorder
+import com.ichi2.anki.recorder.ui.RecorderStatus
+import com.ichi2.anki.recorder.ui.RecorderUiState
 import com.ichi2.testutils.rules.MainDispatcherRule
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -34,6 +37,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
@@ -137,6 +141,61 @@ class AudioRecordingViewModelTest {
             assertNull(viewModel.failure.value, "failure")
             assertEquals(RecorderState.Idle, viewModel.recorderState.value, "state")
             assertEquals(0, playerStub.createdCount, "players created")
+        }
+
+    @Test
+    fun `toggleRecording starts, pauses and resumes a recording`() =
+        runViewModelTest { viewModel ->
+            assertTrue(viewModel.toggleRecording(), "starting")
+            assertFalse(viewModel.toggleRecording(), "pausing")
+            assertEquals(RecorderState.Paused, viewModel.recorderState.value, "state after pausing")
+            assertTrue(viewModel.toggleRecording(), "resuming")
+            viewModel.stopRecording()
+            val recorded = viewModel.recorderState.value
+
+            assertFalse(viewModel.toggleRecording(), "a finished recording")
+            assertEquals(recorded, viewModel.recorderState.value, "the finished recording is kept")
+        }
+
+    @Test
+    fun `toggleRecording reports a recording that fails to start`() =
+        runViewModelTest { viewModel ->
+            mediaRecorderStub.failStart = true
+
+            assertFalse(viewModel.toggleRecording(), "started")
+            assertEquals(Failure.RECORDING, viewModel.failure.value, "failure")
+        }
+
+    @Test
+    fun `the ui state keeps the length of a finished recording`() =
+        runViewModelTest { viewModel ->
+            assertEquals(RecorderUiState(), viewModel.uiState.value, "before recording")
+            viewModel.startRecording()
+            advanceTimeBy(2.5.seconds)
+            assertEquals(RecorderUiState(RecorderStatus.RECORDING, 2), viewModel.uiState.value, "recording")
+            viewModel.pauseRecording()
+            assertEquals(RecorderUiState(RecorderStatus.PAUSED, 2), viewModel.uiState.value, "paused")
+            viewModel.stopRecording()
+            assertEquals(RecorderUiState(RecorderStatus.RECORDED, 2), viewModel.uiState.value, "recorded")
+
+            viewModel.discard()
+            assertEquals(RecorderUiState(), viewModel.uiState.value, "after discarding")
+        }
+
+    @Test
+    fun `the waveform keeps the levels of a recording until it is discarded`() =
+        runViewModelTest { viewModel ->
+            every { mediaRecorderStub.mediaRecorder.maxAmplitude } returns 32767
+            viewModel.startRecording()
+            advanceTimeBy(160.milliseconds)
+            val levels = viewModel.waveform.size
+            assertTrue(levels > 0, "levels while recording")
+            assertEquals(1f, viewModel.waveform.levelAt(0, visibleSlots = 1), "a full scale level")
+
+            viewModel.stopRecording()
+            assertEquals(levels, viewModel.waveform.size, "levels once recorded")
+            viewModel.discard()
+            assertEquals(0, viewModel.waveform.size, "levels after discarding")
         }
 
     @Test
@@ -362,6 +421,7 @@ class AudioRecordingViewModelTest {
                     AudioRecorder(ApplicationProvider.getApplicationContext()),
                     playerStub.factory,
                     recordingsFolder.root,
+                    testScheduler.timeSource,
                 ).also { viewModelStore.put(VIEW_MODEL_KEY, it) }
             try {
                 testBody(viewModel)

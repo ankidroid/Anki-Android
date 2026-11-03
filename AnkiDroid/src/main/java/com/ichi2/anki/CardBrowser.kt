@@ -239,6 +239,7 @@ open class CardBrowser :
         } else {
             binding?.noteEditorFrame?.isVisible = false
             binding?.cardBrowserResizingDivider?.isVisible = false
+            fragment?.interruptRecording()
         }
 
         // must be called once we have an accessible collection
@@ -389,25 +390,29 @@ open class CardBrowser :
     }
 
     private fun showSaveChangesDialog(destination: NoteEditorDestination) {
-        DiscardChangesDialog.showDialog(
-            context = this,
-            positiveButtonText = this.getString(CommonString.save),
-            negativeButtonText = this.getString(CommonString.discard),
-            // The neutral button allows the user to back out of the action,
-            // e.g., if they accidentally triggered a navigation or card selection.
-            neutralButtonText = this.getString(CommonString.dialog_cancel),
-            message = this.getString(CommonString.save_changes_message),
-            positiveMethod = {
-                launchCatchingTask {
-                    fragment?.saveNote()
+        DiscardChangesDialog
+            .showDialog(
+                context = this,
+                positiveButtonText = this.getString(CommonString.save),
+                negativeButtonText = this.getString(CommonString.discard),
+                // The neutral button allows the user to back out of the action,
+                // e.g., if they accidentally triggered a navigation or card selection.
+                neutralButtonText = this.getString(CommonString.dialog_cancel),
+                message = this.getString(CommonString.save_changes_message),
+                positiveMethod = {
+                    launchCatchingTask {
+                        if (fragment?.saveNote() == false) {
+                            viewModel.restorePreviousPaneRow()
+                            return@launchCatchingTask
+                        }
+                        loadNoteEditorFragment(destination)
+                    }
+                },
+                negativeMethod = {
                     loadNoteEditorFragment(destination)
-                }
-            },
-            negativeMethod = {
-                loadNoteEditorFragment(destination)
-            },
-            neutralMethod = {},
-        )
+                },
+                neutralMethod = viewModel::restorePreviousPaneRow,
+            ).setOnCancelListener { viewModel.restorePreviousPaneRow() }
     }
 
     private fun loadNoteEditorFragment(destination: NoteEditorDestination) {
@@ -423,6 +428,11 @@ open class CardBrowser :
      */
     val fragment: NoteEditorFragment?
         get() = supportFragmentManager.findFragmentById(R.id.note_editor_frame) as? NoteEditorFragment
+
+    override fun openDeckPicker() {
+        val editor = fragment ?: return super.openDeckPicker()
+        editor.discardRecordingFirst(onKeepEditing = { selectNavigationItem(R.id.nav_browser) }) { super.openDeckPicker() }
+    }
 
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
@@ -515,9 +525,13 @@ open class CardBrowser :
                             // searches complete in quick succession. If there are unsaved
                             // changes, keep them: this is a redundant refresh, not a navigation
                             editor != null && editor.isEditingSameCards(command.destination) ->
-                                if (!editor.hasUnsavedChanges()) {
+                                if (!editor.hasUnsavedNoteChanges()) {
                                     editor.reloadNoteFromCollection()
                                 }
+                            editor != null && editor.hasRecording && !editor.hasUnsavedNoteChanges() &&
+                                command.destination is NoteEditorDestination.EditSelection &&
+                                editor.isEditingNoteOf(command.destination) ->
+                                editor.reloadNoteFromCollection(command.destination.cardIds)
                             editor?.hasUnsavedChanges() == true -> showSaveChangesDialog(command.destination)
                             else -> loadNoteEditorFragment(command.destination)
                         }
@@ -526,6 +540,7 @@ open class CardBrowser :
                         navigate(command.destination)
                     }
                     NoteEditorCommand.HidePane -> {
+                        fragment?.interruptRecording()
                         binding?.noteEditorFrame?.isVisible = false
                         invalidateOptionsMenu()
                     }
