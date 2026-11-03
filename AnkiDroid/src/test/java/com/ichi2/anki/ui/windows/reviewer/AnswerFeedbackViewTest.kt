@@ -5,6 +5,7 @@ import android.app.Activity
 import android.os.Looper
 import android.view.View
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.testutils.setSystemAnimationsEnabled
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +24,7 @@ class AnswerFeedbackViewTest {
     @Test
     fun `feedback fades in, holds, then hides`() {
         setSystemAnimationsEnabled(true)
-        view.toggle()
+        view.show(Rating.GOOD)
         assertEquals(View.VISIBLE, view.visibility)
 
         advanceBy(500.milliseconds)
@@ -36,11 +37,11 @@ class AnswerFeedbackViewTest {
     @Test
     fun `feedback is opaque when animations are disabled after an animated hide`() {
         setSystemAnimationsEnabled(true)
-        view.toggle()
+        view.show(Rating.GOOD)
         advanceBy(1000.milliseconds)
 
         setSystemAnimationsEnabled(false)
-        view.toggle()
+        view.show(Rating.GOOD)
 
         assertEquals(View.VISIBLE, view.visibility)
         assertEquals(1f, view.alpha)
@@ -49,12 +50,12 @@ class AnswerFeedbackViewTest {
     }
 
     @Test
-    fun `toggle during fade out cancels the pending hide`() {
+    fun `showing during fade out cancels the pending hide`() {
         setSystemAnimationsEnabled(true)
-        view.toggle()
+        view.show(Rating.GOOD)
         advanceBy(600.milliseconds)
 
-        view.toggle()
+        view.show(Rating.GOOD)
         advanceBy(500.milliseconds)
 
         assertEquals(View.VISIBLE, view.visibility)
