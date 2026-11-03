@@ -188,16 +188,7 @@ open class AnkiDroidApp :
         }
 
         setupCrashReporting()
-        initializeNavigator()
-        initializeWidgetRepository()
-        initializeDatabaseErrorDialogs()
-        WidgetNotificationScheduler.register { scheduleNotification() }
-        WidgetStatus.register(Prefs) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
-        Animations.setPreferencesProvider { context -> PrefsRepository(context) }
-        CollectionLockedException.messageProvider = {
-            getString(CommonString.database_locked_summary_new, getString(CommonString.col_path))
-        }
-        ChangeManager.throwOnDuplicateSubscription = BuildConfig.DEBUG
+        setupApplicationDependencies()
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())
@@ -354,6 +345,22 @@ open class AnkiDroidApp :
     private fun setupCrashReporting() {
         setup("setupCrashReporting") {
             initializeAcraCrashReporter()
+        }
+    }
+
+    /** Registers the application-specific implementations used by shared modules. */
+    private fun setupApplicationDependencies() {
+        setup("setupApplicationDependencies") {
+            initializeNavigator()
+            initializeWidgetRepository()
+            initializeDatabaseErrorDialogs()
+            WidgetNotificationScheduler.register { scheduleNotification() }
+            WidgetStatus.register(Prefs) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
+            Animations.setPreferencesProvider { context -> PrefsRepository(context) }
+            CollectionLockedException.messageProvider = {
+                getString(CommonString.database_locked_summary_new, getString(CommonString.col_path))
+            }
+            ChangeManager.throwOnDuplicateSubscription = BuildConfig.DEBUG
         }
     }
 
