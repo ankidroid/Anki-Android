@@ -1578,6 +1578,10 @@ class CardBrowserViewModel(
         )
     }
 
+    suspend fun loadColumnSelection(cardsOrNotes: CardsOrNotes) = progressManager.withProgress { previewColumnHeadings(cardsOrNotes) }
+
+    suspend fun loadFindAndReplaceNoteIds() = progressManager.withProgress { queryAllSelectedNoteIds() }
+
     /**
      * Replaces occurrences of search with the new value.
      *

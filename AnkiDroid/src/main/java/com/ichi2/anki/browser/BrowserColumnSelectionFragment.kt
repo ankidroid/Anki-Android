@@ -34,7 +34,6 @@ import com.ichi2.anki.launchCatchingViewTask
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.requireParcelable
-import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
@@ -105,10 +104,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_co
 
         if (savedInstanceState == null) {
             launchCatchingViewTask {
-                val (active, available) =
-                    withProgress {
-                        viewModel.previewColumnHeadings(cardsOrNotes)
-                    }
+                val (active, available) = viewModel.loadColumnSelection(cardsOrNotes)
                 setupRecyclerView(active, available)
             }
         } else {
