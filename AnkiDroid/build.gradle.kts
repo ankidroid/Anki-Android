@@ -817,7 +817,6 @@ dependencies {
     implementation(libs.acra.http)
 
     implementation(libs.commons.compress)
-    implementation(libs.commons.collections4) // SetUniqueList
     implementation(libs.commons.io) // FileUtils.contentEquals
     implementation(libs.okhttp)
     implementation(libs.slf4j.api)

@@ -3,11 +3,11 @@
 
 package com.ichi2.anki.dialogs.tags
 
+import com.ichi2.anki.common.utils.UniqueArrayList
+import com.ichi2.anki.common.utils.UniqueArrayList.Companion.from
 import com.ichi2.utils.TagsUtil.compareTag
 import com.ichi2.utils.TagsUtil.getTagAncestors
 import com.ichi2.utils.TagsUtil.getTagRoot
-import com.ichi2.utils.UniqueArrayList
-import com.ichi2.utils.UniqueArrayList.Companion.from
 import java.util.ArrayList
 import java.util.TreeSet
 

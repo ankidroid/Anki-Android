@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
 
-package com.ichi2.utils
+package com.ichi2.anki.common.utils
 
-import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
@@ -69,7 +68,7 @@ class UniqueArrayListTest {
         val uniqueList = UniqueArrayList.from(longs)
         longs.sort()
         uniqueList.sort()
-        assertListEquals(longs, uniqueList)
+        assertEquals(longs, uniqueList)
     }
 
     @Test // #8807
@@ -83,7 +82,7 @@ class UniqueArrayListTest {
         mockStatic(Collections::class.java).use { mockCollection ->
             val uniqueList = UniqueArrayList.from(longs)
             uniqueList.sort()
-            assertListEquals(sorted, uniqueList)
+            assertEquals(sorted, uniqueList)
 
             mockCollection.verify({ Collections.sort(any(), any<Comparator<in Any>>()) }, never())
         }
@@ -95,13 +94,13 @@ class UniqueArrayListTest {
         val uniqueList = UniqueArrayList.from(longs)
         longs.sort()
         uniqueList.sort()
-        assertListEquals(longs, uniqueList)
+        assertEquals(longs, uniqueList)
 
         uniqueList.addAll(longs)
         uniqueList.add(10)
         uniqueList.add(5, 65)
 
-        assertListEquals(longs, uniqueList)
+        assertEquals(longs, uniqueList)
 
         uniqueList.add(575757)
         assertNotSameLists(longs, uniqueList)
@@ -157,7 +156,7 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f"), uniqueArrayList)
     }
 
     @Test
@@ -167,7 +166,7 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f"), uniqueArrayList)
 
         uniqueArrayList.add("a")
         uniqueArrayList.add("Z")
@@ -179,7 +178,7 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f"), uniqueArrayList)
     }
 
     @Test
@@ -192,7 +191,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.set(1, "m")
 
-        assertListEquals(listOf("a", "m", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "m", "f"), uniqueArrayList)
         assertEquals("Z", res)
     }
 
@@ -206,7 +205,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.set(1, "a")
 
-        assertListEquals(listOf("a", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "f"), uniqueArrayList)
         assertEquals("Z", res)
     }
 
@@ -218,7 +217,7 @@ class UniqueArrayListTest {
         uniqueArrayList[0] = "b"
         uniqueArrayList.add("a")
 
-        assertListEquals(listOf("b", "a"), uniqueArrayList)
+        assertEquals(listOf("b", "a"), uniqueArrayList)
     }
 
     @Test
@@ -231,7 +230,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(listOf("a", "Z", "f"))
 
-        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f"), uniqueArrayList)
         assertFalse(res)
     }
 
@@ -245,7 +244,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(listOf("w", "x", "y"))
 
-        assertListEquals(listOf("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -259,7 +258,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(listOf("f", "Y", "Z"))
 
-        assertListEquals(listOf("a", "Z", "f", "Y"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f", "Y"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -273,7 +272,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(1, listOf("a", "Z", "f"))
 
-        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f"), uniqueArrayList)
         assertFalse(res)
     }
 
@@ -287,7 +286,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(1, listOf("w", "x", "y"))
 
-        assertListEquals(listOf("a", "w", "x", "y", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "w", "x", "y", "Z", "f"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -301,7 +300,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(1, listOf("f", "Y", "Z"))
 
-        assertListEquals(listOf("a", "Y", "Z", "f"), uniqueArrayList)
+        assertEquals(listOf("a", "Y", "Z", "f"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -315,7 +314,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.addAll(uniqueArrayList.size, listOf("w", "x", "y"))
 
-        assertListEquals(listOf("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
+        assertEquals(listOf("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -325,13 +324,13 @@ class UniqueArrayListTest {
 
         val l1 = listOf(1, 2, 3, 4, 5)
         assertTrue(uniqueArrayList.addAll(l1))
-        assertListEquals(l1, uniqueArrayList)
+        assertEquals(l1, uniqueArrayList)
 
         val l2 = listOf(5, 4, 3, 2, 1, 0)
         assertTrue(uniqueArrayList.addAll(0, l2))
 
         val l3 = listOf(0, 1, 2, 3, 4, 5)
-        assertListEquals(l3, uniqueArrayList)
+        assertEquals(l3, uniqueArrayList)
     }
 
     @Test
@@ -340,12 +339,12 @@ class UniqueArrayListTest {
 
         val l1 = listOf(1, 2, 3, 4, 5)
         assertTrue(uniqueArrayList.addAll(l1))
-        assertListEquals(l1, uniqueArrayList)
+        assertEquals(l1, uniqueArrayList)
 
         val l2 = listOf(0, 1, 2, 3, 4, 5)
         assertTrue(uniqueArrayList.addAll(0, l2))
 
-        assertListEquals(l2, uniqueArrayList)
+        assertEquals(l2, uniqueArrayList)
     }
 
     @Test
@@ -587,7 +586,7 @@ class UniqueArrayListTest {
                 13L,
             )
 
-        assertListEquals(arr, uniqueList)
+        assertEquals(arr, uniqueList)
     }
 
     @Test
@@ -612,7 +611,7 @@ class UniqueArrayListTest {
                 13L,
             )
 
-        assertListEquals(arr, uniqueList)
+        assertEquals(arr, uniqueList)
 
         assertThat(uniqueList[0], instanceOf(Long::class.java))
     }
