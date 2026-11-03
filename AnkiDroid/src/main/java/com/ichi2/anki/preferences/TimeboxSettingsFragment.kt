@@ -35,7 +35,7 @@ class TimeboxSettingsFragment : Fragment() {
                     TimeboxSettingsScreen(
                         isLoading = state.isLoading,
                         isEnabled = state.isEnabled,
-                        minutes = state.minutes,
+                        minutes = state.limit.minutes,
                         onToggleEnabled = viewModel::toggleEnabled,
                         onIncrement = viewModel::increment,
                         onDecrement = viewModel::decrement,

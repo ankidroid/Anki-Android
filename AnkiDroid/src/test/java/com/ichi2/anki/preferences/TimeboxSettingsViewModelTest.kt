@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.preferences
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.testutils.JvmTest
@@ -9,9 +10,11 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.runner.RunWith
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+@RunWith(AndroidJUnit4::class)
 class TimeboxSettingsViewModelTest : JvmTest() {
     @Test
     fun `TimeboxUiState defaults to loading`() {
@@ -32,8 +35,8 @@ class TimeboxSettingsViewModelTest : JvmTest() {
             assertThat("Should be disabled", state.isEnabled, equalTo(false))
             assertThat(
                 "Default minutes should be 20",
-                state.minutes,
-                equalTo(TimeboxSettingsViewModel.DEFAULT_TIMEBOX_MINUTES),
+                state.limit.minutes,
+                equalTo(TimeboxTimeLimit.DEFAULT_TIMEBOX_MINUTES),
             )
         }
 
@@ -47,7 +50,7 @@ class TimeboxSettingsViewModelTest : JvmTest() {
 
             val state = viewModel.uiState.value
             assertThat("Should be enabled", state.isEnabled, equalTo(true))
-            assertThat("Minutes should match configured value", state.minutes, equalTo(15))
+            assertThat("Minutes should match configured value", state.limit.minutes, equalTo(15))
         }
 
     @Test
@@ -92,17 +95,17 @@ class TimeboxSettingsViewModelTest : JvmTest() {
 
             viewModel.increment()
             advanceUntilIdle()
-            assertThat(viewModel.uiState.value.minutes, equalTo(11))
+            assertThat(viewModel.uiState.value.limit.minutes, equalTo(11))
             assertThat(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES), equalTo(11))
 
             viewModel.decrement()
             advanceUntilIdle()
-            assertThat(viewModel.uiState.value.minutes, equalTo(10))
+            assertThat(viewModel.uiState.value.limit.minutes, equalTo(10))
             assertThat(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES), equalTo(10))
         }
 
     @Test
-    fun `clamping enforces bounds between 1 and 999`() =
+    fun `setMinutes rejects out-of-range values`() =
         runTest {
             CollectionPreferences.setTimeboxTimeLimit(10.toDuration(DurationUnit.MINUTES))
 
@@ -110,10 +113,13 @@ class TimeboxSettingsViewModelTest : JvmTest() {
             advanceUntilIdle()
 
             viewModel.setMinutes(0)
-            assertThat(viewModel.uiState.value.minutes, equalTo(TimeboxSettingsViewModel.MIN_TIMEBOX_MINUTES))
+            assertThat("Below minimum should be rejected", viewModel.uiState.value.limit.minutes, equalTo(10))
 
-            viewModel.setMinutes(1000)
-            assertThat(viewModel.uiState.value.minutes, equalTo(TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES))
+            viewModel.setMinutes(10000)
+            assertThat("Above maximum should be rejected", viewModel.uiState.value.limit.minutes, equalTo(10))
+
+            viewModel.setMinutes(9999)
+            assertThat("Valid upper bound should be accepted", viewModel.uiState.value.limit.minutes, equalTo(9999))
         }
 
     @Test
@@ -127,7 +133,7 @@ class TimeboxSettingsViewModelTest : JvmTest() {
 
             val state = viewModel.uiState.value
             assertThat("Should be disabled", state.isEnabled, equalTo(false))
-            assertThat("Should restore persisted minutes", state.minutes, equalTo(45))
+            assertThat("Should restore persisted minutes", state.limit.minutes, equalTo(45))
         }
 
     @Test
@@ -151,7 +157,7 @@ class TimeboxSettingsViewModelTest : JvmTest() {
                 CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
                 equalTo(0),
             )
-            assertThat("UI state should retain minutes when disabled", viewModel.uiState.value.minutes, equalTo(45))
+            assertThat("UI state should retain minutes when disabled", viewModel.uiState.value.limit.minutes, equalTo(45))
 
             viewModel.toggleEnabled(true)
             advanceUntilIdle()
@@ -183,7 +189,7 @@ class TimeboxSettingsViewModelTest : JvmTest() {
             advanceUntilIdle()
 
             assertThat("New ViewModel should be disabled", secondViewModel.uiState.value.isEnabled, equalTo(false))
-            assertThat("New ViewModel should restore 35 minutes", secondViewModel.uiState.value.minutes, equalTo(35))
+            assertThat("New ViewModel should restore 35 minutes", secondViewModel.uiState.value.limit.minutes, equalTo(35))
 
             secondViewModel.toggleEnabled(true)
             advanceUntilIdle()
@@ -193,4 +199,32 @@ class TimeboxSettingsViewModelTest : JvmTest() {
                 equalTo(35),
             )
         }
+
+    @Test
+    fun `TimeboxTimeLimit canIncrement and canDecrement adhere to bounds`() {
+        assertThat(TimeboxTimeLimit.canDecrement(TimeboxTimeLimit.MIN_TIMEBOX_MINUTES), equalTo(false))
+        assertThat(TimeboxTimeLimit.canDecrement(TimeboxTimeLimit.MIN_TIMEBOX_MINUTES + 1), equalTo(true))
+        assertThat(TimeboxTimeLimit.canIncrement(TimeboxTimeLimit.MAX_TIMEBOX_MINUTES), equalTo(false))
+        assertThat(TimeboxTimeLimit.canIncrement(TimeboxTimeLimit.MAX_TIMEBOX_MINUTES - 1), equalTo(true))
+    }
+
+    @Test
+    fun `TimeboxTimeLimit orElse returns self when enabled and fallback when disabled`() {
+        val fallback = TimeboxTimeLimit(25)
+        assertThat(TimeboxTimeLimit(10).orElse(fallback), equalTo(TimeboxTimeLimit(10)))
+        assertThat(TimeboxTimeLimit.DISABLED.orElse(fallback), equalTo(fallback))
+    }
+
+    @Test
+    fun `resolveDisplayLimit updates prefs when enabled and falls back when disabled`() {
+        Prefs.customTimeboxLimit = 20
+        val enabledLimit = TimeboxTimeLimit(45)
+        val resolvedEnabled = enabledLimit.resolveDisplayLimit(Prefs)
+        assertThat(resolvedEnabled, equalTo(TimeboxTimeLimit(45)))
+        assertThat(Prefs.customTimeboxLimit, equalTo(45))
+
+        val disabledLimit = TimeboxTimeLimit.DISABLED
+        val resolvedDisabled = disabledLimit.resolveDisplayLimit(Prefs)
+        assertThat(resolvedDisabled, equalTo(TimeboxTimeLimit(45)))
+    }
 }
