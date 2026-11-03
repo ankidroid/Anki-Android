@@ -19,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsAddEditReminderHandler
@@ -40,7 +39,6 @@ import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -182,7 +180,7 @@ class StudyOptionsActivity :
     }
 
     private fun refreshUndoState() {
-        lifecycleScope.launch {
+        launchCatchingTask {
             val newUndoState =
                 withCol {
                     UndoState(
