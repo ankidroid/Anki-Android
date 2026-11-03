@@ -220,7 +220,7 @@ open class AnkiDroidApp :
         setupRecurringAlarms()
 
         setupLifecycleLogging()
-        activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        setupActivityAgnosticDialogs()
         setupTextToSpeech()
         setupCustomFieldFilters()
     }
@@ -598,6 +598,12 @@ open class AnkiDroidApp :
                 },
             )
         }
+
+    private fun setupActivityAgnosticDialogs() {
+        setup("setupActivityAgnosticDialogs") {
+            activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        }
+    }
 
     private fun setupTextToSpeech() {
         setup("setupTextToSpeech") {
