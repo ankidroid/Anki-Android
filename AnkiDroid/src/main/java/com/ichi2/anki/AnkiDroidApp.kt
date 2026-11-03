@@ -201,9 +201,6 @@ open class AnkiDroidApp :
             return
         }
         setupMainProcessMaintenance()
-
-        setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
-
         setupContextMenus()
 
         setup("makeBackendUsable") { makeBackendUsable(this) }
@@ -212,7 +209,7 @@ open class AnkiDroidApp :
         setupBackendChangeManager()
 
         // Probe WebView availability before any other init touches it (#5794).
-        if (!checkWebViewAvailable()) {
+        if (!setupWebView()) {
             return
         }
 
@@ -522,6 +519,13 @@ open class AnkiDroidApp :
     private fun setupBackendChangeManager() =
         setup("setupBackendChangeManager") {
             ChangeManager.subscribe(this)
+        }
+
+    /** Configures WebView and records a fatal initialization error if it is unavailable. */
+    private fun setupWebView(): Boolean =
+        setup("setupWebView") {
+            setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
+            checkWebViewAvailable()
         }
 
     private fun setupAnkiBackend() =
