@@ -192,11 +192,7 @@ open class AnkiDroidApp :
         with(crashReporting) {
             setupLogging()
             setupUsageAnalytics()
-        }
-
-        applicationScope.launch {
-            Timber.i("AnkiDroidApp: listing debug info")
-            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+            launchStartupLogging()
         }
 
         // Stop after analytics and logging are initialised.
@@ -378,6 +374,23 @@ open class AnkiDroidApp :
             initializeAnalytics()
             // Install the filter last so it sanitizes exceptions before either reporting handler sees them.
             ThrowableFilterService.initialize()
+        }
+    }
+
+    /**
+     * Launches startup diagnostics after Timber is configured.
+     *
+     * [DebugInfoService.getDebugInfo] reads `CrashReportService.isEnabled()` to include the
+     * crash-reporting status. Before the reporter is initialized, that read warns and returns
+     * the default `false`, so crash reporting must be set up before collecting the diagnostics.
+     */
+    context(_: CrashReportingContext)
+    private fun launchStartupLogging() {
+        setup("launchStartupLogging") {
+            applicationScope.launch {
+                Timber.i("AnkiDroidApp: listing debug info")
+                Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+            }
         }
     }
 
