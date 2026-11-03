@@ -18,12 +18,14 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.ensureWebViewIsSupported
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.waitUntil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -137,5 +139,11 @@ class ReviewerTest : InstrumentedTest() {
             matches(isDisplayed()),
             100,
         )
+    }
+
+    companion object {
+        @JvmStatic
+        @BeforeClass
+        fun checkWebView() = ensureWebViewIsSupported()
     }
 }
