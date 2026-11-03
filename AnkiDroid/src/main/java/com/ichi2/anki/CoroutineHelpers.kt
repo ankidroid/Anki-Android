@@ -38,6 +38,7 @@ import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.dialogs.showDatabaseErrorDialogInDeckPicker
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
@@ -801,7 +802,7 @@ data class CrashReportData(
 
             override suspend fun execute(context: Context): Boolean {
                 Timber.i("Opening 'Check Database'")
-                context.findAnkiActivity()!!.showDatabaseErrorDialog(
+                context.findAnkiActivity()!!.showDatabaseErrorDialogInDeckPicker(
                     errorDialogType = DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK,
                 )
                 return true

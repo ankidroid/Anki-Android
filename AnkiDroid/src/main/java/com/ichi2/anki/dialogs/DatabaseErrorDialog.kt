@@ -5,6 +5,7 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
@@ -33,6 +34,8 @@ import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_DB_ERROR
@@ -46,6 +49,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_RESTORE_BACKUP
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.ShowDatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createList
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.exception.SystemStorageException
@@ -428,7 +432,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
     /** @see DeckPicker.showDatabaseErrorDialog */
     private fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
-        requireDeckPicker().showDatabaseErrorDialog(errorDialogType, exceptionData)
+        requireAnkiActivity().showDatabaseErrorDialogInDeckPicker(errorDialogType, exceptionData)
     }
 
     /**
@@ -702,12 +706,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     /** Database error dialog */
     class ShowDatabaseErrorDialog(
         val dialogType: DatabaseErrorDialogType,
+        val exceptionData: CustomExceptionData? = null,
     ) : DialogHandlerMessage(
             which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
             analyticName = "DatabaseErrorDialog",
         ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
-            activity.showDatabaseErrorDialog(dialogType)
+            activity.showDatabaseErrorDialog(dialogType, exceptionData)
         }
 
         override fun toMessage(): Message =
@@ -716,13 +721,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 data =
                     Bundle().apply {
                         putParcelable(ARG_DIALOG, dialogType)
+                        exceptionData?.let { putParcelable(ARG_EXCEPTION, it) }
                     }
             }
 
         companion object {
             fun fromMessage(message: Message): ShowDatabaseErrorDialog {
                 val dialogType = BundleCompat.getParcelable(message.data, ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
-                return ShowDatabaseErrorDialog(dialogType)
+                val exceptionData = BundleCompat.getParcelable(message.data, ARG_EXCEPTION, CustomExceptionData::class.java)
+                return ShowDatabaseErrorDialog(dialogType, exceptionData)
             }
         }
     }
@@ -750,6 +757,19 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
         }
     }
+}
+
+fun AnkiActivity.showDatabaseErrorDialogInDeckPicker(
+    errorDialogType: DatabaseErrorDialogType,
+    exceptionData: CustomExceptionData? = null,
+) {
+    if (this is DeckPicker) {
+        showDatabaseErrorDialog(errorDialogType, exceptionData)
+        return
+    }
+    Timber.i("Opening the Deck Picker to show %s", errorDialogType)
+    DialogHandler.storeMessage(ShowDatabaseErrorDialog(errorDialogType, exceptionData).toMessage())
+    startActivity(DeckPicker.getIntent(this).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))
 }
 
 private enum class ErrorHandlingEntries {
