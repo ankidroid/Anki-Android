@@ -3,13 +3,17 @@
 
 package com.ichi2.anki.dialogs
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
 import com.ichi2.anki.utils.ext.requireString
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.utils.create
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -76,9 +80,17 @@ class ConfirmationDialog : DialogFragment() {
         AlertDialog.Builder(requireContext()).create {
             title(text = title)
             message(text = message)
-            positiveButton(text = positiveButtonText) { confirm.run() }
+            positiveButton(text = positiveButtonText) {
+                setConfirmationResult()
+                confirm.run()
+            }
             negativeButton(CommonString.dialog_cancel) { cancel.run() }
         }
+
+    private fun setConfirmationResult() {
+        val requestKey = requireArguments().getString(ARG_REQUEST_KEY) ?: return
+        setFragmentResult(requestKey, requireArguments().getBundle(ARG_RESULT) ?: Bundle())
+    }
 
     companion object {
         /** The dialog message (required) */
@@ -91,5 +103,37 @@ class ConfirmationDialog : DialogFragment() {
 
         /** Optional text for the positive button. Default: "OK" */
         private const val ARG_POSITIVE_BUTTON_TEXT = "positiveButtonText"
+
+        private const val ARG_REQUEST_KEY = "requestKey"
+        private const val ARG_RESULT = "result"
+
+        fun newInstance(
+            requestKey: String,
+            message: String,
+            title: String? = null,
+            positiveButtonText: String? = null,
+            result: Bundle = Bundle(),
+        ) = ConfirmationDialog().apply {
+            setArgs(title, message, positiveButtonText)
+            requireArguments().putString(ARG_REQUEST_KEY, requestKey)
+            requireArguments().putBundle(ARG_RESULT, result)
+        }
+
+        fun newFullSyncInstance(
+            context: Context,
+            requestKey: String,
+            result: Bundle = Bundle(),
+        ) = newInstance(
+            requestKey = requestKey,
+            message = context.getString(CommonString.full_sync_confirmation),
+            result = result,
+        )
     }
+}
+
+fun FragmentActivity.registerConfirmationHandler(
+    requestKey: String,
+    action: (result: Bundle) -> Unit,
+) {
+    setFragmentResultListener(requestKey) { _, result -> action(result) }
 }

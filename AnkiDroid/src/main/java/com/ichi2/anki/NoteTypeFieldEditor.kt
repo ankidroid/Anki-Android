@@ -19,6 +19,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -27,6 +28,8 @@ import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withStarted
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -41,6 +44,7 @@ import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.REQUEST_HINT_LOCAL
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.RESULT_SELECTED_LOCALE
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditorContextMenuAction
+import com.ichi2.anki.dialogs.registerConfirmationHandler
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Fields
 import com.ichi2.anki.libanki.NotetypeJson
@@ -50,6 +54,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.getLongOrNull
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -63,6 +69,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
@@ -75,8 +82,15 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
 
     // Position of the current field selected
     private val currentPos: Int
-        get() = selectedFieldName?.let { fieldsLabels.indexOf(it) } ?: 0
+        get() {
+            val name = selectedFieldName ?: return 0
+            val index = fieldsLabels.indexOf(name)
+            val id = selectedFieldId
+            return if (index == -1 || id == null || noteFields[index].id == id) index else -1
+        }
     private var selectedFieldName: String? = null
+    private var selectedFieldId: Long? = null
+    private var pendingInput: Bundle? = null
     private var fieldNameInput: EditText? = null
 
     // Backing field for [notetype]. Not with _ because it's only allowed for public field.
@@ -103,7 +117,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         if (!ensureStorageIsReady()) {
             return
         }
-        savedInstanceState?.let { selectedFieldName = it.getString(STATE_SELECTED_FIELD) }
+        savedInstanceState?.let {
+            selectedFieldName = it.getString(STATE_SELECTED_FIELD)
+            selectedFieldId = it.getLongOrNull(STATE_SELECTED_FIELD_ID)
+            pendingInput = it.getBundle(STATE_PENDING_INPUT)
+        }
         setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
@@ -123,22 +141,16 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         }
         binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()
-        setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
-            val selectedLocale =
-                BundleCompat.getSerializable(
-                    bundle,
-                    RESULT_SELECTED_LOCALE,
-                    Locale::class.java,
-                )
-            if (selectedLocale != null) {
-                addFieldLocaleHint(selectedLocale)
-            }
-            dismissAllDialogFragments()
+        setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION, ::onDialogInput)
+        for (requestKey in listOf(REQUEST_ADD_FIELD, REQUEST_DELETE_FIELD, REQUEST_REPOSITION_FIELD, REQUEST_SORT_FIELD)) {
+            registerConfirmationHandler(requestKey) { result -> onDialogInput(requestKey, result) }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString(STATE_SELECTED_FIELD, selectedFieldName)
+        selectedFieldId?.let { outState.putLong(STATE_SELECTED_FIELD_ID, it) }
+        outState.putBundle(STATE_PENDING_INPUT, pendingInput)
         super.onSaveInstanceState(outState)
     }
 
@@ -148,6 +160,94 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         initialize()
+        if (notetypeBackup == null) return
+        val pending = pendingInput ?: return
+        lifecycleScope.launch {
+            withStarted {
+                pendingInput = null
+                applyDialogInput(pending.requireString(PENDING_KEY), pending.getBundle(PENDING_VALUE) ?: Bundle())
+            }
+        }
+    }
+
+    private fun onDialogInput(
+        key: String,
+        result: Bundle,
+    ) {
+        if (notetypeBackup == null) {
+            if (pendingInput != null) {
+                Timber.i("Ignoring %s while an earlier input waits for the collection", key)
+                return
+            }
+            pendingInput = bundleOf(PENDING_KEY to key, PENDING_VALUE to result)
+        } else {
+            applyDialogInput(key, result)
+        }
+    }
+
+    private fun applyDialogInput(
+        key: String,
+        result: Bundle,
+    ) {
+        if (key != REQUEST_ADD_FIELD && currentPos == -1) {
+            Timber.w("The chosen field is no longer in the note type")
+            dismissAllDialogFragments()
+            return
+        }
+        when (key) {
+            INPUT_CONTEXT_MENU_ACTION -> performAction(NoteTypeFieldEditorContextMenuAction.valueOf(result.requireString(INPUT_ACTION)))
+            REQUEST_HINT_LOCALE_SELECTION -> {
+                val selectedLocale =
+                    BundleCompat.getSerializable(
+                        result,
+                        RESULT_SELECTED_LOCALE,
+                        Locale::class.java,
+                    )
+                if (selectedLocale != null) {
+                    addFieldLocaleHint(selectedLocale)
+                }
+                dismissAllDialogFragments()
+            }
+            REQUEST_ADD_FIELD -> {
+                val fieldName = result.getString(RESULT_FIELD_NAME) ?: return
+                if (fieldName in fieldsLabels) {
+                    showThemedToast(this, resources.getString(CommonString.toast_duplicate_field), true)
+                    return
+                }
+                try {
+                    addField(fieldName, false)
+                } catch (e: ConfirmModSchemaException) {
+                    e.log()
+                    // This should never be thrown
+                }
+            }
+            REQUEST_DELETE_FIELD -> {
+                if (fieldsLabels.size < 2) {
+                    showThemedToast(this, resources.getString(CommonString.toast_last_field), true)
+                    dismissAllDialogFragments()
+                    return
+                }
+                getColUnsafe.modSchema(check = false)
+                deleteField()
+
+                // This ensures that the context menu closes after the field has been deleted
+                supportFragmentManager.popBackStackImmediate(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
+                )
+            }
+            REQUEST_REPOSITION_FIELD ->
+                try {
+                    getColUnsafe.modSchema(check = false)
+                    repositionField(result.getInt(RESULT_FIELD_INDEX))
+                } catch (e: JSONException) {
+                    throw RuntimeException(e)
+                }
+            REQUEST_SORT_FIELD -> {
+                getColUnsafe.modSchema(check = false)
+                launchCatchingTask { changeSortField(notetype, currentPos) }
+            }
+        }
     }
 
     // ----------------------------------------------------------------------------
@@ -175,6 +275,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 selectedFieldName = fieldsLabels[position]
+                selectedFieldId = noteFields[position].id
             }
         binding.btnAdd.contentDescription = TR.sentenceCase.addField
         binding.btnAdd.setOnClickListener { addFieldDialog() }
@@ -235,19 +336,13 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                         e.log()
 
                         // Create dialogue to for schema change
-                        val c = ConfirmationDialog()
-                        c.setArgs(resources.getString(CommonString.full_sync_confirmation))
-                        val confirm =
-                            Runnable {
-                                try {
-                                    addField(fieldName, false)
-                                } catch (e1: ConfirmModSchemaException) {
-                                    e1.log()
-                                    // This should never be thrown
-                                }
-                            }
-                        c.setConfirm(confirm)
-                        this@NoteTypeFieldEditor.showDialogFragment(c)
+                        this@NoteTypeFieldEditor.showDialogFragment(
+                            ConfirmationDialog.newFullSyncInstance(
+                                context = this@NoteTypeFieldEditor,
+                                requestKey = REQUEST_ADD_FIELD,
+                                result = bundleOf(RESULT_FIELD_NAME to fieldName),
+                            ),
+                        )
                     }
                     getColUnsafe.notetypes.update(notetype)
                     initialize()
@@ -287,40 +382,23 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm =
-            Runnable {
-                getColUnsafe.modSchema(check = false)
-                deleteField()
-
-                // This ensures that the context menu closes after the field has been deleted
-                supportFragmentManager.popBackStackImmediate(
-                    null,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
-                )
-            }
-
         if (fieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(CommonString.toast_last_field), true)
         } else {
             try {
                 getColUnsafe.modSchema(check = true)
                 val fieldName = noteFields[currentPos].name
-                ConfirmationDialog().let {
-                    it.setArgs(
+                showDialogFragment(
+                    ConfirmationDialog.newInstance(
+                        requestKey = REQUEST_DELETE_FIELD,
                         title = fieldName,
                         message = resources.getString(CommonString.field_delete_warning),
                         positiveButtonText = getString(CommonString.dialog_positive_delete),
-                    )
-                    it.setConfirm(confirm)
-                    showDialogFragment(it)
-                }
+                    ),
+                )
             } catch (e: ConfirmModSchemaException) {
                 e.log()
-                ConfirmationDialog().let {
-                    it.setConfirm(confirm)
-                    it.setArgs(resources.getString(CommonString.full_sync_confirmation))
-                    showDialogFragment(it)
-                }
+                showDialogFragment(ConfirmationDialog.newFullSyncInstance(this, REQUEST_DELETE_FIELD))
             }
         }
     }
@@ -441,19 +519,13 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                 e.log()
 
                 // Handle mod schema confirmation
-                val c = ConfirmationDialog()
-                c.setArgs(resources.getString(CommonString.full_sync_confirmation))
-                val confirm =
-                    Runnable {
-                        try {
-                            getColUnsafe.modSchema(check = false)
-                            repositionField(newPosition - 1)
-                        } catch (e1: JSONException) {
-                            throw RuntimeException(e1)
-                        }
-                    }
-                c.setConfirm(confirm)
-                this@NoteTypeFieldEditor.showDialogFragment(c)
+                this@NoteTypeFieldEditor.showDialogFragment(
+                    ConfirmationDialog.newFullSyncInstance(
+                        context = this@NoteTypeFieldEditor,
+                        requestKey = REQUEST_REPOSITION_FIELD,
+                        result = bundleOf(RESULT_FIELD_INDEX to newPosition - 1),
+                    ),
+                )
             }
         }
     }
@@ -506,15 +578,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         } catch (e: ConfirmModSchemaException) {
             e.log()
             // Handler mMod schema confirmation
-            val c = ConfirmationDialog()
-            c.setArgs(resources.getString(CommonString.full_sync_confirmation))
-            val confirm =
-                Runnable {
-                    getColUnsafe.modSchema(check = false)
-                    launchCatchingTask { changeSortField(notetype, currentPos) }
-                }
-            c.setConfirm(confirm)
-            this@NoteTypeFieldEditor.showDialogFragment(c)
+            this@NoteTypeFieldEditor.showDialogFragment(ConfirmationDialog.newFullSyncInstance(this, REQUEST_SORT_FIELD))
         }
     }
 
@@ -537,6 +601,10 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     }
 
     fun handleAction(contextMenuAction: NoteTypeFieldEditorContextMenuAction) {
+        onDialogInput(INPUT_CONTEXT_MENU_ACTION, bundleOf(INPUT_ACTION to contextMenuAction.name))
+    }
+
+    private fun performAction(contextMenuAction: NoteTypeFieldEditorContextMenuAction) {
         when (contextMenuAction) {
             NoteTypeFieldEditorContextMenuAction.Sort -> sortByField()
             NoteTypeFieldEditorContextMenuAction.Reposition -> repositionFieldDialog()
@@ -593,6 +661,18 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
         const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
         private const val STATE_SELECTED_FIELD = "selectedField"
+        private const val STATE_SELECTED_FIELD_ID = "selectedFieldId"
+        private const val STATE_PENDING_INPUT = "pendingInput"
+        private const val PENDING_KEY = "key"
+        private const val PENDING_VALUE = "value"
+        private const val INPUT_CONTEXT_MENU_ACTION = "context_menu_action"
+        private const val INPUT_ACTION = "action"
+        private const val REQUEST_ADD_FIELD = "request_add_field"
+        private const val REQUEST_DELETE_FIELD = "request_delete_field"
+        private const val REQUEST_REPOSITION_FIELD = "request_reposition_field"
+        private const val REQUEST_SORT_FIELD = "request_sort_field"
+        private const val RESULT_FIELD_NAME = "field_name"
+        private const val RESULT_FIELD_INDEX = "field_index"
     }
 }
 
