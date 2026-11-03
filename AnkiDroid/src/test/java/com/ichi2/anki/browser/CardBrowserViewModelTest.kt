@@ -970,6 +970,24 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `loadFindAndReplaceNoteIds reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+            val selectedNoteIds = queryAllSelectedNoteIds()
+
+            assertProgressAround { assertThat(loadFindAndReplaceNoteIds(), equalTo(selectedNoteIds)) }
+        }
+
+    @Test
+    fun `loadColumnSelection reports progress`() =
+        runViewModelTest(notes = 1) {
+            assertProgressAround {
+                val (displayed, _) = loadColumnSelection(CardsOrNotes.CARDS)
+                assertThat(displayed.map { it.columnType }, equalTo(listOf(SFLD, CARD, DUE, DECK)))
+            }
+        }
+
+    @Test
     fun `editSelectedCardsTags reports progress and tags the selected note`() =
         runViewModelTest(notes = 2) {
             selectRowsWithPositions(0)

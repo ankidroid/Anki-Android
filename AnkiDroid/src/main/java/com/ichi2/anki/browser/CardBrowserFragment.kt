@@ -1833,11 +1833,9 @@ class CardBrowserFragment :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun showFindAndReplaceDialog() {
         lifecycleScope.launch {
-            withProgress {
-                val noteIds = activityViewModel.queryAllSelectedNoteIds()
-                val fragment = FindAndReplaceDialogFragment.newInstance(requireContext(), noteIds)
-                fragment.show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
-            }
+            val noteIds = activityViewModel.loadFindAndReplaceNoteIds()
+            val fragment = FindAndReplaceDialogFragment.newInstance(requireContext(), noteIds)
+            fragment.show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
         }
     }
 
