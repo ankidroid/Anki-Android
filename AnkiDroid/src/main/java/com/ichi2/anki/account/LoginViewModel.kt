@@ -15,6 +15,8 @@ import com.ichi2.anki.progress.HasProgress
 import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +27,20 @@ import timber.log.Timber
 /** The operation [LoginViewModel] is running, shown as a progress message by the UI. */
 enum class LoginProgress {
     LOGGING_IN,
+}
+
+/** The outcome of a login attempt, which the UI shows and then acknowledges. */
+sealed interface LoginMessage {
+    data object LoggedIn : LoginMessage
+
+    /**
+     * The exception from the login attempt itself i.e. [BackendSyncException.BackendSyncAuthFailedException]
+     *
+     * This may contain PII as it comes from the backend
+     */
+    data class Failed(
+        val exception: Exception,
+    ) : LoginMessage
 }
 
 /**
@@ -45,8 +61,12 @@ class LoginViewModel :
     val passwordError: StateFlow<LoginError?>
         field = MutableStateFlow<LoginError?>(null)
 
-    val loginState: StateFlow<LoginState>
-        field = MutableStateFlow<LoginState>(LoginState.Idle)
+    private val messageQueue = MessageQueue<LoginMessage>()
+
+    /** Login outcomes in display order. Collecting does not consume them; acknowledge with [messageShown]. */
+    val pendingMessages = messageQueue.messages
+
+    fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
 
     /** Whether a login is running or has succeeded. Further attempts are ignored. */
     private var loginStarted = false
@@ -73,7 +93,8 @@ class LoginViewModel :
     }
 
     /**
-     * Attempts to authenticate the user with the provided credentials, updating [loginState].
+     * Attempts to authenticate the user with the provided credentials,
+     * adding the outcome to [pendingMessages].
      *
      * Ignored if a credential is missing, or a login is running or has succeeded.
      *
@@ -95,6 +116,10 @@ class LoginViewModel :
         // set before launching: the login may complete before `launch` returns
         loginStarted = true
         Timber.i("Logging in")
+        // a new attempt makes earlier failures obsolete, so its outcome doesn't wait for them to be dismissed
+        pendingMessages.value
+            .filter { it.message is LoginMessage.Failed }
+            .forEach { messageQueue.acknowledge(it.id) }
         viewModelScope.launch {
             try {
                 progressManager.withProgress(
@@ -105,7 +130,7 @@ class LoginViewModel :
                     Timber.i("Login success")
                     updateLogin(username, auth.hkey)
                 }
-                loginState.value = LoginState.Success
+                messageQueue.enqueue(LoginMessage.LoggedIn)
             } catch (exc: CancellationException) {
                 throw exc
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
@@ -122,7 +147,7 @@ class LoginViewModel :
 
     private fun onLoginFailed(exception: Exception) {
         loginStarted = false
-        loginState.value = LoginState.Error(exception)
+        messageQueue.enqueue(LoginMessage.Failed(exception))
     }
 
     private suspend fun syncLogin(
@@ -155,20 +180,4 @@ enum class LoginError(
     ;
 
     fun toHumanReadableString(context: Context): String = context.getString(this.messageResId)
-}
-
-/** Handles the Login State */
-sealed class LoginState {
-    data object Idle : LoginState()
-
-    data object Success : LoginState()
-
-    /**
-     * The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException]
-     *
-     * This may contain PII as it comes from the backend
-     */
-    data class Error(
-        val exception: Exception,
-    ) : LoginState()
 }

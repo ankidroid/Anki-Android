@@ -16,6 +16,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.EmptyAnkiActivity
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,6 +25,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import com.ichi2.anki.common.android.R as CommonR
 
@@ -54,6 +56,37 @@ class MessageQueueObserverTest : RobolectricTest() {
 
             assertEquals(listOf("result"), shown)
             assertEquals(emptyList(), queue.messages.value)
+        }
+    }
+
+    @Test
+    fun `message removed while shown is dismissed`() {
+        val shown = mutableListOf<String>()
+        var dismissed = false
+        observeInFragment {
+            observeMessages(queue.messages, queue::acknowledge) {
+                shown += it
+                try {
+                    awaitCancellation()
+                } finally {
+                    if (it == "stale") dismissed = true
+                }
+            }
+        }.use {
+            queue.enqueue("stale")
+            queue.enqueue("next")
+            advanceRobolectricLooper()
+            assertFalse(dismissed, "a message is shown until it is dismissed or removed")
+
+            queue.acknowledge(
+                queue.messages.value
+                    .first()
+                    .id,
+            )
+            advanceRobolectricLooper()
+
+            assertTrue(dismissed)
+            assertEquals(listOf("stale", "next"), shown)
         }
     }
 
