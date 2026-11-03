@@ -32,7 +32,7 @@ import com.ichi2.anki.account.AccountActivity.Companion.ARG_START_FOR_RESULT
 import com.ichi2.anki.databinding.FragmentMyAccountBinding
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.exception.CollectionLockedException
-import com.ichi2.anki.getEndpoint
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -41,13 +41,11 @@ import com.ichi2.anki.utils.ext.isCompactWidth
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.anki.withProgress
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -107,12 +105,17 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
     private fun login() {
         hideKeyboard()
-        val username =
-            binding.username.text
-                .toString()
-                .trim()
-        val password = binding.password.text.toString()
-        handleNewLogin(username, password)
+        submitCredentials()
+    }
+
+    private fun submitCredentials() {
+        viewModel.login(
+            username =
+                binding.username.text
+                    .toString()
+                    .trim(),
+            password = binding.password.text.toString(),
+        )
     }
 
     private fun initListeners() {
@@ -159,7 +162,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             binding.password.setAutoFillListener {
                 binding.passwordLayout.isEndIconVisible = false
                 Timber.i("Attempting login from autofill")
-                attemptLogin()
+                submitCredentials()
             }
         }
     }
@@ -190,6 +193,8 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
     }
 
     private fun initObservers() {
+        observeProgress(viewModel) { getString(CommonString.sign_in) }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.loginButtonEnabled.collect { isEnabled ->
                 binding.loginButton.isEnabled = isEnabled
@@ -284,44 +289,6 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             positiveButton(CommonString.button_sync) { openDeckPickerAndSync() }
             negativeButton(CommonString.dialog_continue) { showLoggedInView() }
             setOnCancelListener { showLoggedInView() }
-        }
-    }
-
-    private fun attemptLogin() {
-        val username =
-            binding.username.text
-                .toString()
-                .trim()
-        val password = binding.password.text.toString()
-        if (username.isEmpty() || password.isEmpty()) {
-            Timber.i("Auto-login cancelled - username/password missing")
-            return
-        }
-        Timber.i("Attempting auto-login")
-        handleNewLogin(username, password)
-    }
-
-    private fun handleNewLogin(
-        username: String,
-        password: String,
-    ) {
-        val endpoint = getEndpoint()
-
-        lifecycleScope.launch {
-            requireActivity().withProgress(
-                extractProgress = {
-                    text = getString(CommonString.sign_in)
-                },
-                onCancel = { backend -> backend.setWantsAbort() },
-            ) {
-                viewModel.handleLogin(
-                    username,
-                    password,
-                    endpoint,
-                )
-
-                viewModel.loginState.first { it is LoginState.Success || it is LoginState.Error }
-            }
         }
     }
 
