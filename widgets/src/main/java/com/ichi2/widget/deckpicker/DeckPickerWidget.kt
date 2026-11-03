@@ -27,6 +27,7 @@ import com.ichi2.anki.common.destinations.WidgetConfigDestination
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.launchCatching
+import com.ichi2.anki.multiprofile.activeProfileId
 import com.ichi2.anki.widgets.R
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
@@ -144,7 +145,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
                 val intent =
                     if (!isEmptyDeck) {
-                        with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(deck.deckId).toIntent() }
+                        with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(deck.deckId, context.activeProfileId()).toIntent() }
                     } else {
                         with(DeferredNavigation) { DeckOptionsDestination.fromDeckId(deck.deckId).toIntent() }
                     }

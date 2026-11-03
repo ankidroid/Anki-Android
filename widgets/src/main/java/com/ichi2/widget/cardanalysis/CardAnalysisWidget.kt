@@ -29,6 +29,7 @@ import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
+import com.ichi2.anki.multiprofile.activeProfileId
 import com.ichi2.anki.widgets.R
 import com.ichi2.anki.widgets.databinding.WidgetCardAnalysisBinding
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
@@ -200,7 +201,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
             val intent =
                 if (!isEmptyDeck) {
-                    with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(deckData.deckId).toIntent() }
+                    with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(deckData.deckId, context.activeProfileId()).toIntent() }
                 } else {
                     with(DeferredNavigation) { DeckOptionsDestination.fromDeckId(deckData.deckId).toIntent() }
                 }
