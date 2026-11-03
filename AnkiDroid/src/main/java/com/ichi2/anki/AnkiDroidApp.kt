@@ -213,8 +213,7 @@ open class AnkiDroidApp :
             return
         }
 
-        // Forget the last deck that was used in the CardBrowser
-        CardBrowser.clearLastDeckId()
+        setupCardBrowser()
         val anki = AnkiContext.apply { setupAnkiBackend() }
         with(anki) { initializeAnkiDroidDirectory() }
         with(anki) { setupDayRollover() }
@@ -527,6 +526,13 @@ open class AnkiDroidApp :
             setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
             checkWebViewAvailable()
         }
+
+    private fun setupCardBrowser() {
+        setup("setupCardBrowser") {
+            // Forget the last deck that was used in the CardBrowser.
+            CardBrowser.clearLastDeckId()
+        }
+    }
 
     private fun setupAnkiBackend() =
         setup("setupAnkiBackend") {
