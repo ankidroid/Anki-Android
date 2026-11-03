@@ -76,6 +76,11 @@ class StudyOptionsFragment :
     @VisibleForTesting
     internal val viewModel: StudyOptionsViewModel by viewModels()
 
+    private var shownState: StudyOptionsState = StudyOptionsState.Loading
+
+    @VisibleForTesting
+    val shownDeckId: DeckId? get() = shownState.deckIdOrNull()
+
     private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
@@ -286,18 +291,21 @@ class StudyOptionsFragment :
             }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
-                viewModel.unbury()
+                val deckId = shownDeckId ?: return false
+                viewModel.unbury(deckId)
                 item.isVisible = false
                 return true
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                launchCatchingTask { viewModel.rebuildCram() }
+                val deckId = shownDeckId?.takeIf { shownState.isFiltered() } ?: return false
+                launchCatchingTask { viewModel.rebuildCram(deckId) }
                 return true
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
-                launchCatchingTask { viewModel.emptyCram() }
+                val deckId = shownDeckId?.takeIf { shownState.isFiltered() } ?: return false
+                launchCatchingTask { viewModel.emptyCram(deckId) }
                 return true
             }
             else -> return false
@@ -310,14 +318,13 @@ class StudyOptionsFragment :
         val state = viewModel.state
         if (state is StudyOptionsState.Loading) return
 
+        val showsFilteredDeck = shownState.isFiltered()
+        menu.findItem(R.id.action_rebuild)?.isVisible = showsFilteredDeck
+        menu.findItem(R.id.action_empty)?.isVisible = showsFilteredDeck
         if (viewModel.isFilteredDeck) {
-            menu.findItem(R.id.action_rebuild)?.isVisible = true
-            menu.findItem(R.id.action_empty)?.isVisible = true
             menu.findItem(R.id.action_custom_study)?.isVisible = false
             menu.findItem(R.id.action_deck_or_study_options)?.setTitle(CommonString.menu__study_options)
         } else {
-            menu.findItem(R.id.action_rebuild)?.isVisible = false
-            menu.findItem(R.id.action_empty)?.isVisible = false
             menu.findItem(R.id.action_custom_study)?.isVisible = true
             menu.findItem(R.id.action_deck_or_study_options)?.title = TR.sentenceCase.deckOptions
         }
@@ -374,6 +381,7 @@ class StudyOptionsFragment :
         displayedDeckId = viewModel.selectedDeckId
 
         updateDeckNameView(state)
+        shownState = state
 
         when (state) {
             is StudyOptionsState.Empty -> {

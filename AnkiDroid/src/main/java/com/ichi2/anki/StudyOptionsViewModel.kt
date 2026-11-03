@@ -56,25 +56,25 @@ class StudyOptionsViewModel :
         withOpenColOrNull { updateStateFromCollection() }
     }
 
-    suspend fun rebuildCram() {
+    suspend fun rebuildCram(deckId: DeckId) {
         Timber.d("doInBackground - RebuildCram")
         progressManager.withProgress(message = StudyOptionsProgress.REBUILDING_FILTERED_DECK) {
-            undoableOp { sched.rebuildFilteredDeck(selectedDeckId) }
+            undoableOp { sched.rebuildFilteredDeck(deckId) }
             withCol { updateStateFromCollection() }
         }
     }
 
-    suspend fun emptyCram() {
+    suspend fun emptyCram(deckId: DeckId) {
         Timber.d("doInBackgroundEmptyCram")
         progressManager.withProgress(message = StudyOptionsProgress.EMPTYING_FILTERED_DECK) {
-            undoableOp { sched.emptyFilteredDeck(selectedDeckId) }
+            undoableOp { sched.emptyFilteredDeck(deckId) }
             withCol { updateStateFromCollection() }
         }
     }
 
-    fun unbury(): Job =
+    fun unbury(deckId: DeckId): Job =
         viewModelScope.launch {
-            undoableOp<OpChanges> { sched.unburyDeck(selectedDeckId) }
+            undoableOp<OpChanges> { sched.unburyDeck(deckId) }
         }
 
     /**
@@ -128,17 +128,20 @@ class StudyOptionsViewModel :
             when {
                 study.isEmptyRegularDeck ->
                     StudyOptionsState.Empty(
+                        deckId = deckId,
                         deckName = deck.name,
                         data = data,
                     )
                 study.availability == StudyAvailability.NoCardsAvailable ->
                     StudyOptionsState.Congrats(
+                        deckId = deckId,
                         deckName = deck.name,
                         isDynamic = isDynamic,
                         data = data,
                     )
                 else ->
                     StudyOptionsState.StudyOptions(
+                        deckId = deckId,
                         deckName = deck.name,
                         deckDescription = description,
                         isDynamic = isDynamic,
@@ -171,6 +174,7 @@ sealed interface StudyOptionsState {
     data object Loading : StudyOptionsState
 
     data class StudyOptions(
+        val deckId: DeckId,
         val deckName: String,
         val deckDescription: String?,
         val isDynamic: Boolean,
@@ -178,12 +182,14 @@ sealed interface StudyOptionsState {
     ) : StudyOptionsState
 
     data class Congrats(
+        val deckId: DeckId,
         val deckName: String,
         val isDynamic: Boolean,
         val data: DeckStudyData,
     ) : StudyOptionsState
 
     data class Empty(
+        val deckId: DeckId,
         val deckName: String,
         val data: DeckStudyData,
     ) : StudyOptionsState
@@ -204,5 +210,21 @@ fun StudyOptionsState.deckNameOrNull(): String? =
         is StudyOptionsState.StudyOptions -> deckName
         is StudyOptionsState.Congrats -> deckName
         is StudyOptionsState.Empty -> deckName
+        is StudyOptionsState.Loading -> null
+    }
+
+fun StudyOptionsState.isFiltered(): Boolean =
+    when (this) {
+        is StudyOptionsState.StudyOptions -> isDynamic
+        is StudyOptionsState.Congrats -> isDynamic
+        is StudyOptionsState.Empty -> false
+        is StudyOptionsState.Loading -> false
+    }
+
+fun StudyOptionsState.deckIdOrNull(): DeckId? =
+    when (this) {
+        is StudyOptionsState.StudyOptions -> deckId
+        is StudyOptionsState.Congrats -> deckId
+        is StudyOptionsState.Empty -> deckId
         is StudyOptionsState.Loading -> null
     }
