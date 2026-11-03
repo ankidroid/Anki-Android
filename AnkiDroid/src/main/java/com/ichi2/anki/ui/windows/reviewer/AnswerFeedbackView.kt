@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import anki.scheduler.CardAnswer.Rating
+import com.ichi2.anki.R
 import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.utils.ext.setDuration
 import com.ichi2.anki.utils.postDelayed
@@ -32,10 +34,19 @@ class AnswerFeedbackView : AppCompatImageView {
         }
 
     /**
-     * Shows the feedback for 800ms
+     * Shows the icon of [rating] for 800ms
      * with a quick fade in, brief hold, then gentle fade out.
      */
-    fun toggle() {
+    fun show(rating: Rating) {
+        setImageResource(
+            when (rating) {
+                Rating.AGAIN -> R.drawable.ic_ease_again
+                Rating.HARD -> R.drawable.ic_ease_hard
+                Rating.GOOD -> R.drawable.ic_ease_good
+                Rating.EASY -> R.drawable.ic_ease_easy
+                Rating.UNRECOGNIZED -> throw IllegalArgumentException("Invalid rating")
+            },
+        )
         animate().cancel()
         removeCallbacks(fadeOut)
         visibility = VISIBLE

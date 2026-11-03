@@ -35,7 +35,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DispatchKeyEventListener
@@ -230,19 +229,8 @@ class ReviewerFragment :
         binding.webViewContainer.setFrameStyle()
 
         if (Prefs.showAnswerFeedback) {
-            viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
-                val drawableId =
-                    when (ease) {
-                        Rating.AGAIN -> R.drawable.ic_ease_again
-                        Rating.HARD -> R.drawable.ic_ease_hard
-                        Rating.GOOD -> R.drawable.ic_ease_good
-                        Rating.EASY -> R.drawable.ic_ease_easy
-                        Rating.UNRECOGNIZED -> throw IllegalArgumentException("Invalid rating")
-                    }
-                binding.answerFeedback.apply {
-                    setImageResource(drawableId)
-                    toggle()
-                }
+            viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { rating ->
+                binding.answerFeedback.show(rating)
             }
         }
 
