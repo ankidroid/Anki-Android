@@ -2,8 +2,12 @@
 
 package com.ichi2.anki.account
 
+import android.app.Activity.RESULT_OK
+import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityManager
 import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -16,23 +20,33 @@ import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.findAnkiActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.throwOnShowError
 import com.ichi2.testutils.BackendEmulatingOpenConflict
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.rules.BackendOverrideRule
 import com.ichi2.testutils.withQueuedCollectionAccess
 import com.ichi2.ui.TextInputEditField
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.test.advanceUntilIdle
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowDialog
+import java.time.Duration
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
+import kotlin.test.assertNotNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -52,6 +66,56 @@ class LoginFragmentTest : RobolectricTest() {
             startLoginScreen().logIn()
 
             assertContains(getAlertDialogText(checkDismissed = true).orEmpty(), "Advanced settings")
+        }
+
+    @Test
+    fun `locked collection guidance survives activity recreation`() =
+        runTest {
+            lockCollection()
+            val login = startLoginScreen()
+            login.logIn()
+            assertContains(getAlertDialogText(checkDismissed = true).orEmpty(), "Advanced settings")
+
+            login.recreate()
+            advanceRobolectricLooper()
+
+            // ShadowDialog retains the old dialog, so checking only its text can falsely pass.
+            val dialog = assertNotNull(ShadowDialog.getLatestDialog())
+            assertSame(login.get(), dialog.context.findAnkiActivity(), "the guidance must be displayed by the recreated activity")
+            assertTrue(dialog.isShowing)
+            assertContains(getAlertDialogText(checkDismissed = true).orEmpty(), "Advanced settings")
+        }
+
+    @Test
+    fun `dismissed login error is not shown again after recreation`() =
+        runTest {
+            lockCollection()
+            val login = startLoginScreen()
+            login.logIn()
+            clickAlertDialogButton { positiveButton }
+            val dismissed = ShadowDialog.getLatestDialog()
+
+            login.recreate()
+            advanceRobolectricLooper()
+
+            assertSame(dismissed, ShadowDialog.getLatestDialog())
+        }
+
+    @Test
+    fun `login error still being displayed survives recreation`() =
+        runTest {
+            failAuthentication()
+            val login = startLoginScreen()
+            login.enterCredentials()
+            login.get().findViewById<Button>(R.id.login_button).performClick()
+            // less than the snackbar's duration
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(300))
+            assertEquals("invalid credentials", login.get().snackbarText)
+
+            login.recreate()
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(300))
+
+            assertEquals("invalid credentials", login.get().snackbarText, "recreation must not discard a login error before it can be read")
         }
 
     @Test
@@ -91,6 +155,81 @@ class LoginFragmentTest : RobolectricTest() {
         }
 
     @Test
+    fun `successful login while stopped shows the success dialog on return`() =
+        runTest {
+            succeedAuthentication()
+            val login = startLoginScreen()
+
+            withQueuedCollectionAccess {
+                login.logIn()
+                login.pause().stop()
+                advanceUntilIdle()
+            }
+            advanceRobolectricLooper()
+            assertEquals(TEST_HKEY, Prefs.hkey)
+
+            login.start().resume()
+            advanceRobolectricLooper()
+
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `continue after repeated enter submissions leaves no success dialog`() =
+        runTest {
+            succeedAuthentication()
+            val login = startLoginScreen()
+            login.enterCredentials()
+            login.get().findViewById<TextInputEditField>(R.id.password).requestFocus()
+
+            repeat(2) {
+                login.get().dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+                login.get().dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
+            }
+            advanceRobolectricLooper()
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+
+            clickAlertDialogButton { negativeButton }
+            advanceRobolectricLooper()
+
+            assertIs<LoggedInFragment>(login.get().supportFragmentManager.findFragmentById(R.id.fragment_container))
+            assertTrue(ShadowDialog.getShownDialogs().none { it.isShowing }, "Continue must not leave a success dialog")
+        }
+
+    @Test
+    fun `successful retry does not wait for the previous error to time out`() =
+        runTest {
+            var attempts = 0
+            backend.replaceWith {
+                object : Backend() {
+                    override fun syncLogin(input: SyncLoginRequest): SyncAuth {
+                        if (++attempts == 1) throw authFailure()
+                        return syncAuth { hkey = TEST_HKEY }
+                    }
+                }
+            }
+            // Android's 'Time to take action' setting can keep a snackbar visible for minutes
+            shadowOf(targetContext.getSystemService(AccessibilityManager::class.java)).apply {
+                setInteractiveUiTimeout(120_000)
+                setNonInteractiveUiTimeout(120_000)
+            }
+            val login = startLoginScreen(forResult = true)
+            login.enterCredentials()
+            login.get().findViewById<Button>(R.id.login_button).performClick()
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(300))
+            assertEquals("invalid credentials", login.get().snackbarText)
+
+            login.get().findViewById<Button>(R.id.login_button).performClick()
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(5))
+
+            assertEquals(2, attempts)
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            assertTrue(login.get().isFinishing, "a successful retry must not wait for the previous error to time out")
+            assertEquals(RESULT_OK, shadowOf(login.get()).resultCode)
+        }
+
+    @Test
     @Config(qualifiers = "w480dp-h320dp-land")
     fun `logo is hidden in a compact landscape window`() {
         val login = startLoginScreen()
@@ -106,15 +245,17 @@ class LoginFragmentTest : RobolectricTest() {
     private suspend fun failAuthentication() =
         backend.replaceWith {
             object : Backend() {
-                override fun syncLogin(input: SyncLoginRequest): SyncAuth =
-                    throw BackendSyncAuthFailedException(
-                        backendError {
-                            kind = BackendError.Kind.SYNC_AUTH_ERROR
-                            message = "invalid credentials"
-                        },
-                    )
+                override fun syncLogin(input: SyncLoginRequest): SyncAuth = throw authFailure()
             }
         }
+
+    private fun authFailure() =
+        BackendSyncAuthFailedException(
+            backendError {
+                kind = BackendError.Kind.SYNC_AUTH_ERROR
+                message = "invalid credentials"
+            },
+        )
 
     private suspend fun succeedAuthentication() =
         backend.replaceWith {
@@ -123,10 +264,10 @@ class LoginFragmentTest : RobolectricTest() {
             }
         }
 
-    private fun startLoginScreen(): ActivityController<AccountActivity> =
+    private fun startLoginScreen(forResult: Boolean = false): ActivityController<AccountActivity> =
         startActivityControllerNormallyOpenCollectionWithIntent(
             AccountActivity::class.java,
-            AccountActivity.getIntent(targetContext),
+            AccountActivity.getIntent(targetContext, forResult),
         )
 
     private fun ActivityController<AccountActivity>.enterCredentials() {
