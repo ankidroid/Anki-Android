@@ -25,13 +25,19 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.databinding.FragmentStudyOptionsBinding
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.ext.triggerDeckNotFoundInLimitsMap
 import com.ichi2.testutils.launchFragmentInContainer
 import com.ichi2.testutils.withFragment
 import com.ichi2.utils.neutralButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -43,6 +49,9 @@ import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import java.util.Locale
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -416,6 +425,183 @@ class StudyOptionsFragmentTest : RobolectricTest() {
             AppCompatResources.getDrawable(rtlContext, R.drawable.shadow_left) as GradientDrawable
         assertEquals(GradientDrawable.Orientation.RIGHT_LEFT, rtlDrawable.orientation)
     }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Empty acts on the shown deck before a refresh redraws the panel`() {
+        val (shown, other) = addFilteredDecksWithACardEach()
+
+        withPanelBehindSelection(
+            shown,
+            other,
+            whileBehind = { selectPanelItem(R.id.action_empty) },
+            doneWhen = { col.decks.cardCount(shown) + col.decks.cardCount(other) == 1 },
+        )
+
+        assertEquals(0, col.decks.cardCount(shown))
+        assertEquals(1, col.decks.cardCount(other))
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Rebuild acts on the shown deck before a refresh redraws the panel`() {
+        val (shown, other) = addFilteredDecksWithACardEach()
+        col.sched.emptyFilteredDeck(shown)
+        col.sched.emptyFilteredDeck(other)
+
+        withPanelBehindSelection(
+            shown,
+            other,
+            whileBehind = { selectPanelItem(R.id.action_rebuild) },
+            doneWhen = { col.decks.cardCount(shown) + col.decks.cardCount(other) == 1 },
+        )
+
+        assertEquals(1, col.decks.cardCount(shown))
+        assertEquals(0, col.decks.cardCount(other))
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Unbury acts on the shown deck before a refresh redraws the panel`() {
+        val shown = addDeck("Shown", setAsSelected = true)
+        val other = addDeck("Other")
+        col.sched.deckDueTree()
+        addNoteToDeck(shown, queueType = QueueType.ManuallyBuried)
+        addNoteToDeck(other, queueType = QueueType.ManuallyBuried)
+        val queueIn = { name: String -> col.getCard(col.findCards("deck:$name").single()).queue }
+
+        withPanelBehindSelection(
+            shown,
+            other,
+            whileBehind = { selectPanelItem(R.id.action_unbury) },
+            doneWhen = { queueIn("Shown") == QueueType.New || queueIn("Other") == QueueType.New },
+        )
+
+        assertEquals(QueueType.New, queueIn("Shown"))
+        assertEquals(QueueType.ManuallyBuried, queueIn("Other"))
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Rebuild and Empty stay hidden until the panel shows the filtered deck`() {
+        val shown = addDeck("Shown", setAsSelected = true)
+        addNoteToDeck(shown)
+        addNoteToDeck(addDeck("OtherHome"))
+        val other = addDynamicDeck("Other", search = "deck:OtherHome")
+        col.decks.select(shown)
+
+        withPanelBehindSelection(
+            shown,
+            other,
+            whileBehind = {
+                val menu = menu()
+                fragment!!.onPrepareMenu(menu)
+                assertFalse(menu.findItem(R.id.action_rebuild).isVisible)
+                assertFalse(menu.findItem(R.id.action_empty).isVisible)
+            },
+            doneWhen = { true },
+        )
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Rebuild offered for a filtered deck does nothing once the panel shows a regular deck`() =
+        assertFilteredActionIgnoredAfterRedraw(R.id.action_rebuild)
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Empty offered for a filtered deck does nothing once the panel shows a regular deck`() =
+        assertFilteredActionIgnoredAfterRedraw(R.id.action_empty)
+
+    private fun assertFilteredActionIgnoredAfterRedraw(itemId: Int) {
+        addNoteToDeck(addDeck("Home"))
+        val filtered = addDynamicDeck("Filtered", search = "deck:Home")
+        val regular = addDeck("Regular")
+        addNoteToDeck(regular)
+        col.decks.select(filtered)
+
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            advanceRobolectricLooperUntil {
+                deckPicker.fragment?.shownDeckId == filtered &&
+                    deckPicker.viewModel.loadDeckCounts?.isCompleted == true
+            }
+            advanceRobolectricLooper()
+            val panel = assertNotNull(deckPicker.fragment)
+            val menu = MenuBuilder(deckPicker)
+            panel.onCreateMenu(menu, deckPicker.menuInflater)
+            panel.onPrepareMenu(menu)
+            val item = menu.findItem(itemId)
+            assertTrue(item.isVisible)
+
+            col.decks.select(regular)
+            panel.refreshInterface()
+            advanceRobolectricLooperUntil { panel.shownDeckId == regular }
+            val undoStatus = col.undoStatus()
+
+            panel.onMenuItemSelected(item)
+            runBlocking { CollectionManager.withCol { } }
+            advanceRobolectricLooperUntil { panel.viewModel.progressManager.progress.value is ViewModelProgress.Idle }
+            advanceRobolectricLooper()
+
+            assertEquals(undoStatus, col.undoStatus())
+        }
+    }
+
+    private fun addFilteredDecksWithACardEach(): Pair<DeckId, DeckId> {
+        addNoteToDeck(addDeck("ShownHome"))
+        addNoteToDeck(addDeck("OtherHome"))
+        val other = addDynamicDeck("Other", search = "deck:OtherHome")
+        val shown = addDynamicDeck("Shown", search = "deck:ShownHome")
+        col.decks.select(shown)
+        return shown to other
+    }
+
+    private fun withPanelBehindSelection(
+        shown: DeckId,
+        selected: DeckId,
+        whileBehind: DeckPicker.() -> Unit,
+        doneWhen: DeckPicker.() -> Boolean,
+    ) = withDeckPicker(deckCount = 0) { deckPicker ->
+        advanceRobolectricLooperUntil {
+            deckPicker.fragment?.shownDeckId == shown &&
+                deckPicker.viewModel.loadDeckCounts?.isCompleted == true
+        }
+        advanceRobolectricLooper()
+        val panel = assertNotNull(deckPicker.fragment)
+        col.decks.select(selected)
+        val published = CountDownLatch(1)
+        val release = CountDownLatch(1)
+        val observer =
+            CoroutineScope(Dispatchers.Unconfined).launch {
+                panel.viewModel.flowOfSelectedDeckId.collect { id ->
+                    if (id == selected) {
+                        published.countDown()
+                        check(release.await(10, TimeUnit.SECONDS)) { "Timed out waiting to release the study options refresh" }
+                    }
+                }
+            }
+        val previousQueue = CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
+        val refresh = thread(name = "study-options-refresh") { runBlocking { panel.viewModel.refreshData() } }
+        try {
+            assertTrue(published.await(5, TimeUnit.SECONDS), "The refresh did not read the selected deck")
+            assertEquals(shown, panel.shownDeckId)
+            deckPicker.whileBehind()
+            release.countDown()
+            refresh.join()
+            advanceRobolectricLooperUntil {
+                deckPicker.doneWhen() && panel.viewModel.progressManager.progress.value is ViewModelProgress.Idle
+            }
+            runBlocking { CollectionManager.withCol { } }
+            advanceRobolectricLooper()
+        } finally {
+            release.countDown()
+            refresh.join()
+            observer.cancel()
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
+
+    private fun DeckPicker.selectPanelItem(itemId: Int) = fragment!!.onMenuItemSelected(menu().findItem(itemId))
 
     private fun assertLifecycleFailure(
         message: String,

@@ -158,7 +158,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             addDynamicDeck("Filtered", "")
             viewModel.refreshData()
 
-            viewModel.rebuildCram()
+            viewModel.rebuildCram(viewModel.selectedDeckId)
 
             val state = viewModel.state
             assertThat(state, instanceOf(StudyOptionsState::class.java))
@@ -173,7 +173,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             viewModel.refreshData()
 
             ensureOpsExecuted(1) {
-                viewModel.emptyCram()
+                viewModel.emptyCram(viewModel.selectedDeckId)
             }
         }
 
@@ -185,7 +185,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             viewModel.refreshData()
 
             ensureOpsExecuted(1) {
-                viewModel.rebuildCram()
+                viewModel.rebuildCram(viewModel.selectedDeckId)
             }
         }
 
@@ -196,7 +196,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             addDynamicDeck("Filtered", "")
             viewModel.refreshData()
 
-            assertProgressAround(StudyOptionsProgress.REBUILDING_FILTERED_DECK) { viewModel.rebuildCram() }
+            assertProgressAround(StudyOptionsProgress.REBUILDING_FILTERED_DECK) { viewModel.rebuildCram(viewModel.selectedDeckId) }
         }
 
     @Test
@@ -206,7 +206,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             addDynamicDeck("Filtered", "")
             viewModel.refreshData()
 
-            assertProgressAround(StudyOptionsProgress.EMPTYING_FILTERED_DECK) { viewModel.emptyCram() }
+            assertProgressAround(StudyOptionsProgress.EMPTYING_FILTERED_DECK) { viewModel.emptyCram(viewModel.selectedDeckId) }
         }
 
     @Test
@@ -220,7 +220,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             viewModel.refreshData()
 
             ensureOpsExecuted(1) {
-                viewModel.unbury().join()
+                viewModel.unbury(viewModel.selectedDeckId).join()
             }
         }
 
@@ -233,7 +233,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             viewModel.refreshData()
             val other = addDynamicDeck("Other", search = "deck:OtherHome")
 
-            viewModel.emptyCram()
+            viewModel.emptyCram(viewModel.selectedDeckId)
 
             assertEquals(0, col.decks.cardCount(shown))
             assertEquals(1, col.decks.cardCount(other))
@@ -249,7 +249,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             val other = addDynamicDeck("Other", search = "deck:OtherHome")
             col.sched.emptyFilteredDeck(shown)
 
-            viewModel.rebuildCram()
+            viewModel.rebuildCram(viewModel.selectedDeckId)
 
             assertEquals(1, col.decks.cardCount(shown))
             assertEquals(1, col.decks.cardCount(other))
@@ -265,7 +265,7 @@ class StudyOptionsViewModelTest : JvmTest() {
             addNoteToDeck(other, queueType = QueueType.ManuallyBuried)
             col.decks.select(other)
 
-            viewModel.unbury().join()
+            viewModel.unbury(viewModel.selectedDeckId).join()
 
             assertEquals(QueueType.New, col.getCard(col.findCards("deck:Shown").single()).queue)
             assertEquals(QueueType.ManuallyBuried, col.getCard(col.findCards("deck:Other").single()).queue)
