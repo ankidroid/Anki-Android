@@ -9,6 +9,7 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
+import anki.collection.OpChanges
 import anki.decks.SetDeckCollapsedRequest
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager
@@ -27,23 +28,29 @@ import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.testutils.publicCollectionPath
+import com.ichi2.testutils.rules.BackendOverrideRule
 import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.setMain
+import net.ankiweb.rsdroid.Backend
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThan
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -54,6 +61,9 @@ import kotlin.time.measureTime
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
 class DeckPickerViewModelTest : RobolectricTest() {
+    @get:Rule
+    val backendOverride = BackendOverrideRule()
+
     private val viewModel: DeckPickerViewModel by lazy { DeckPickerViewModel() }
 
     @Test
@@ -653,6 +663,48 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 releaseStartup.countDown()
             }
         }
+
+    @Test
+    fun `emptying a filtered deck empties it even if another deck is selected meanwhile`() {
+        val selectOther = AtomicBoolean(false)
+        val emptied = AtomicLong(0)
+        var filtered = 0L
+        var other = 0L
+        var selection: Job? = null
+        backendOverride.replaceWith {
+            object : Backend() {
+                override fun setCurrentDeck(did: Long): OpChanges {
+                    val changes = super.setCurrentDeck(did)
+                    if (did == filtered && selectOther.compareAndSet(true, false)) selection = viewModel.selectDeck(other)
+                    return changes
+                }
+
+                override fun emptyFilteredDeck(did: Long): OpChanges {
+                    emptied.set(did)
+                    return super.emptyFilteredDeck(did)
+                }
+            }
+        }
+        filtered = addDynamicDeck("Filtered")
+        other = addDeck("Other")
+
+        withCollectionThread {
+            selectOther.set(true)
+            val empty = viewModel.emptyFilteredDeck(filtered)
+            advanceRobolectricLooperUntil { empty.isCompleted && selection?.isCompleted == true }
+        }
+
+        assertEquals(filtered, emptied.get())
+    }
+
+    private fun withCollectionThread(block: () -> Unit) {
+        val previousQueue = CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
+        try {
+            block()
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
 
     private fun startupEnvironmentHeldUntil(release: CountDownLatch) =
         object : DeckPickerViewModel.AnkiDroidEnvironment by grantedPermissionsEnvironment {

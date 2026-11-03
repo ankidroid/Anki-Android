@@ -13,8 +13,8 @@ import org.junit.rules.ExternalResource
  * Use [replaceWith] to swap in a test backend. The default backend is restored after the test.
  */
 class BackendOverrideRule : ExternalResource() {
-    suspend fun replaceWith(backend: () -> Backend) {
-        CollectionManager.discardBackend()
+    fun replaceWith(backend: () -> Backend) {
+        runBlocking { CollectionManager.discardBackend() }
         BackendFactory.setOverride { backend() }
         CollectionManager.getBackend()
     }
