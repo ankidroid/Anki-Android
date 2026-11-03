@@ -12,6 +12,7 @@
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
     <string name="time_limit_preference">timeLimit</string>
+    <string name="custom_timebox_limit_key">customTimeboxLimit</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="double_tap_timeout_pref_key">doubleTapTimeout</string>
     <!-- Sync -->

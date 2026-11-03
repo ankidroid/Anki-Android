@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.preferences
 
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -113,5 +114,83 @@ class TimeboxSettingsViewModelTest : JvmTest() {
 
             viewModel.setMinutes(1000)
             assertThat(viewModel.uiState.value.minutes, equalTo(TimeboxSettingsViewModel.MAX_TIMEBOX_MINUTES))
+        }
+
+    @Test
+    fun `initializes with persisted custom limit when disabled`() =
+        runTest {
+            Prefs.customTimeboxLimit = 45
+            CollectionPreferences.setTimeboxTimeLimit(0.toDuration(DurationUnit.MINUTES))
+
+            val viewModel = TimeboxSettingsViewModel()
+            advanceUntilIdle()
+
+            val state = viewModel.uiState.value
+            assertThat("Should be disabled", state.isEnabled, equalTo(false))
+            assertThat("Should restore persisted minutes", state.minutes, equalTo(45))
+        }
+
+    @Test
+    fun `setting custom minutes persists to prefs and restores on toggle re-enable`() =
+        runTest {
+            CollectionPreferences.setTimeboxTimeLimit(15.toDuration(DurationUnit.MINUTES))
+
+            val viewModel = TimeboxSettingsViewModel()
+            advanceUntilIdle()
+
+            viewModel.setMinutes(45)
+            advanceUntilIdle()
+
+            assertThat("Prefs should persist customized limit", Prefs.customTimeboxLimit, equalTo(45))
+
+            viewModel.toggleEnabled(false)
+            advanceUntilIdle()
+
+            assertThat(
+                "Collection limit should be zero when disabled",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(0),
+            )
+            assertThat("UI state should retain minutes when disabled", viewModel.uiState.value.minutes, equalTo(45))
+
+            viewModel.toggleEnabled(true)
+            advanceUntilIdle()
+
+            assertThat(
+                "Collection limit should restore custom minutes on re-enable",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(45),
+            )
+        }
+
+    @Test
+    fun `custom limit is preserved across viewModel re-initialization while disabled`() =
+        runTest {
+            CollectionPreferences.setTimeboxTimeLimit(35.toDuration(DurationUnit.MINUTES))
+
+            val firstViewModel = TimeboxSettingsViewModel()
+            advanceUntilIdle()
+
+            firstViewModel.toggleEnabled(false)
+            advanceUntilIdle()
+            assertThat(
+                "Collection limit should be zero",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(0),
+            )
+
+            val secondViewModel = TimeboxSettingsViewModel()
+            advanceUntilIdle()
+
+            assertThat("New ViewModel should be disabled", secondViewModel.uiState.value.isEnabled, equalTo(false))
+            assertThat("New ViewModel should restore 35 minutes", secondViewModel.uiState.value.minutes, equalTo(35))
+
+            secondViewModel.toggleEnabled(true)
+            advanceUntilIdle()
+            assertThat(
+                "Collection limit should restore 35 minutes",
+                CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES),
+                equalTo(35),
+            )
         }
 }
