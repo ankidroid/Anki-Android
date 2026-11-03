@@ -13,7 +13,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.analytics.AnalyticsExceptionHandler
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.multimedia.MultimediaArgsStorage
 import com.ichi2.anki.multiprofile.ProfileManager
@@ -34,12 +36,15 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.time.Duration.Companion.days
@@ -112,6 +117,33 @@ class AnkiDroidAppTest {
 
         assertSame(ThrowableFilterService.uncaughtExceptionHandler, Thread.getDefaultUncaughtExceptionHandler())
         assertIs<AnalyticsExceptionHandler>(ThrowableFilterService.originalUncaughtExceptionHandler)
+    }
+
+    @Test
+    @Config(application = AcraSenderApplication::class)
+    fun `ACRA sender initializes reporting without normal application startup`() {
+        val app = ApplicationProvider.getApplicationContext<AcraSenderApplication>()
+
+        assertNotSame(
+            app.reporterBeforeStartup,
+            CrashReportService.getReporter(),
+            "ACRA sender startup must install a crash reporter",
+        )
+        assertSame(app, AnkiDroidApp.instance)
+        assertSame(ThrowableFilterService.uncaughtExceptionHandler, Thread.getDefaultUncaughtExceptionHandler())
+        assertIs<AnalyticsExceptionHandler>(ThrowableFilterService.originalUncaughtExceptionHandler)
+        assertNull(app.profileManager)
+        assertFailsWith<UninitializedPropertyAccessException> { app.activityAgnosticDialogs }
+    }
+
+    @Test
+    @Config(application = PhoenixApplication::class)
+    fun `phoenix process skips application initialization`() {
+        val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+
+        assertFalse(AnkiDroidApp.isInitialized)
+        assertNull(app.profileManager)
+        assertFailsWith<UninitializedPropertyAccessException> { app.activityAgnosticDialogs }
     }
 
     @Test
@@ -265,5 +297,27 @@ class AnkiDroidAppTest {
 
     private class AttachableApp : AnkiDroidApp() {
         fun attach(base: Context) = attachBaseContext(base)
+    }
+
+    class AcraSenderApplication : AnkiDroidApp() {
+        lateinit var reporterBeforeStartup: CrashReporter
+            private set
+
+        override fun attachBaseContext(base: Context) {
+            CrashReportService.resetForTesting()
+            reporterBeforeStartup = CrashReportService.getReporter()
+            mockkStatic(::isAcraSenderProcess)
+            every { isAcraSenderProcess() } returns true
+            super.attachBaseContext(base)
+        }
+    }
+
+    class PhoenixApplication : AnkiDroidApp() {
+        override fun attachBaseContext(base: Context) {
+            simulateRestoreFromBackup()
+            mockkStatic(::isPhoenixProcess)
+            every { isPhoenixProcess() } returns true
+            super.attachBaseContext(base)
+        }
     }
 }

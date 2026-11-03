@@ -200,14 +200,7 @@ open class AnkiDroidApp :
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
         }
-        launchPreviousAnrReporting()
-        ProfileManager.attachError?.let {
-            Timber.w(it, "Failed to load the profile environment, running on the base context")
-        }
-        launchCacheCleanup()
-        if (AdaptionUtil.isUserATestClient) {
-            showThemedToast(this.applicationContext, getString(CommonString.user_is_a_robot), false)
-        }
+        setupMainProcessMaintenance()
 
         setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
 
@@ -390,6 +383,20 @@ open class AnkiDroidApp :
             applicationScope.launch {
                 Timber.i("AnkiDroidApp: listing debug info")
                 Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+            }
+        }
+    }
+
+    /** Starts maintenance and diagnostics which must not run in the ACRA sender process. */
+    private fun setupMainProcessMaintenance() {
+        setup("setupMainProcessMaintenance") {
+            launchPreviousAnrReporting()
+            ProfileManager.attachError?.let {
+                Timber.w(it, "Failed to load the profile environment, running on the base context")
+            }
+            launchCacheCleanup()
+            if (AdaptionUtil.isUserATestClient) {
+                showThemedToast(applicationContext, getString(CommonString.user_is_a_robot), false)
             }
         }
     }
