@@ -4,6 +4,8 @@
 package com.ichi2.anki.preferences.profiles
 
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModelStore
 import androidx.test.core.app.ApplicationProvider
@@ -65,6 +67,34 @@ class SwitchProfilesViewModelTest {
             switchGuard = ProfileSwitchGuard(profileManager, checks.toList()),
             restartApp = { restarts++ },
         )
+
+    private fun viewModelWithRestart(
+        vararg checks: SafetyCheck,
+        restartApp: suspend () -> Unit,
+    ) = SwitchProfilesViewModel(profileManager, ProfileSwitchGuard(profileManager, checks.toList()), restartApp)
+
+    private fun viewModelThatCannotSave(): SwitchProfilesViewModel {
+        val registry = prefs
+        val cannotSave =
+            object : SharedPreferences by registry {
+                override fun edit(): SharedPreferences.Editor =
+                    object : SharedPreferences.Editor by registry.edit() {
+                        override fun commit() = false
+                    }
+            }
+        val manager =
+            ProfileManager.create(
+                object : ContextWrapper(context) {
+                    override fun getApplicationContext(): Context? = null
+
+                    override fun getSharedPreferences(
+                        name: String,
+                        mode: Int,
+                    ): SharedPreferences = if (name == PROFILE_REGISTRY_FILENAME) cannotSave else super.getSharedPreferences(name, mode)
+                },
+            )
+        return SwitchProfilesViewModel(manager, ProfileSwitchGuard(manager, emptyList())) { restarts++ }
+    }
 
     private val lastActiveProfileId: String?
         get() = prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null)
@@ -274,6 +304,75 @@ class SwitchProfilesViewModelTest {
 
         assertEquals(work.value, lastActiveProfileId)
         assertEquals(1, restarts)
+    }
+
+    @Test
+    fun `a switch that cannot be saved says so and does not restart`() {
+        val viewModel = viewModelThatCannotSave()
+        val work = createProfile("Work")
+        viewModel.refresh()
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+
+        viewModel.switchProfile()
+
+        assertEquals(work, viewModel.profileSwitchFailed.value?.id)
+        assertEquals(ProfileId.DEFAULT.value, lastActiveProfileId)
+        assertEquals(0, restarts)
+    }
+
+    @Test
+    fun `another profile can be picked after a failed switch`() {
+        val viewModel = viewModelThatCannotSave()
+        createProfile("Work")
+        val personal = createProfile("Personal")
+        viewModel.refresh()
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.name == "Work" })
+        viewModel.switchProfile()
+
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == personal })
+
+        assertEquals(personal, viewModel.profileToSwitchTo.value?.id)
+    }
+
+    @Test
+    fun `dismissing the failure message hides it`() {
+        val viewModel = viewModelThatCannotSave()
+        createProfile("Work")
+        viewModel.refresh()
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.name == "Work" })
+        viewModel.switchProfile()
+
+        viewModel.dismissSwitchFailedMessage()
+
+        assertNull(viewModel.profileSwitchFailed.value)
+    }
+
+    @Test
+    fun `a restart that fails switches back and says so`() {
+        val work = createProfile("Work")
+        val viewModel = viewModelWithRestart { throw IllegalStateException("cannot start activities") }
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+
+        viewModel.switchProfile()
+
+        assertEquals(work, viewModel.profileSwitchFailed.value?.id)
+        assertEquals(ProfileId.DEFAULT.value, lastActiveProfileId, "the next start must not open Work unasked")
+    }
+
+    @Test
+    fun `a restart that fails switches back even if a sync has started`() {
+        val work = createProfile("Work")
+        var restartFailed = false
+        val viewModel =
+            viewModelWithRestart(SafetyCheck { BlockReason.SYNC_IN_PROGRESS.takeIf { restartFailed } }) {
+                restartFailed = true
+                throw IllegalStateException("cannot start activities")
+            }
+        viewModel.requestSwitch(viewModel.profiles.value.single { it.id == work })
+
+        viewModel.switchProfile()
+
+        assertEquals(ProfileId.DEFAULT.value, lastActiveProfileId)
     }
 
     @Test

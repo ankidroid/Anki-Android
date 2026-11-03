@@ -55,6 +55,7 @@ fun SwitchProfilesScreen(
     profileBeingRenamed: ProfileItem?,
     profileToSwitchTo: ProfileItem?,
     isSwitchBlocked: Boolean,
+    profileSwitchFailed: ProfileItem?,
     onNavigateUp: () -> Unit,
     onProfileClick: (ProfileItem) -> Unit,
     onAddProfileClick: () -> Unit,
@@ -66,6 +67,7 @@ fun SwitchProfilesScreen(
     onSwitchProfileConfirm: () -> Unit,
     onSwitchProfileDismiss: () -> Unit,
     onSwitchBlockedDismiss: () -> Unit,
+    onSwitchFailedDismiss: () -> Unit,
     onDeleteProfile: (ProfileItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -142,6 +144,18 @@ fun SwitchProfilesScreen(
             text = { Text(stringResource(CommonString.switch_profile_blocked, stringResource(CommonString.app_name))) },
             confirmButton = {
                 TextButton(onClick = onSwitchBlockedDismiss) {
+                    Text(stringResource(CommonString.dialog_ok))
+                }
+            },
+        )
+    }
+
+    profileSwitchFailed?.let { profile ->
+        AlertDialog(
+            onDismissRequest = onSwitchFailedDismiss,
+            text = { Text(stringResource(CommonString.switch_profile_failed, profile.name)) },
+            confirmButton = {
+                TextButton(onClick = onSwitchFailedDismiss) {
                     Text(stringResource(CommonString.dialog_ok))
                 }
             },
@@ -227,6 +241,7 @@ private fun SwitchProfilesScreenPreview() {
             profileBeingRenamed = null,
             profileToSwitchTo = null,
             isSwitchBlocked = false,
+            profileSwitchFailed = null,
             onNavigateUp = {},
             onProfileClick = {},
             onAddProfileClick = {},
@@ -238,6 +253,7 @@ private fun SwitchProfilesScreenPreview() {
             onSwitchProfileConfirm = {},
             onSwitchProfileDismiss = {},
             onSwitchBlockedDismiss = {},
+            onSwitchFailedDismiss = {},
             onDeleteProfile = {},
         )
     }

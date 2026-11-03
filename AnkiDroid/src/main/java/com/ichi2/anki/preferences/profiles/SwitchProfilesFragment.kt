@@ -52,6 +52,7 @@ class SwitchProfilesFragment : Fragment() {
                     val profileBeingRenamed by viewModel.profileBeingRenamed.collectAsStateWithLifecycle()
                     val profileToSwitchTo by viewModel.profileToSwitchTo.collectAsStateWithLifecycle()
                     val isSwitchBlocked by viewModel.isSwitchBlocked.collectAsStateWithLifecycle()
+                    val profileSwitchFailed by viewModel.profileSwitchFailed.collectAsStateWithLifecycle()
                     // TODO: pass the user actions as one sealed class (MVI) instead of a callback each
                     SwitchProfilesScreen(
                         profiles = profiles,
@@ -59,6 +60,7 @@ class SwitchProfilesFragment : Fragment() {
                         profileBeingRenamed = profileBeingRenamed,
                         profileToSwitchTo = profileToSwitchTo,
                         isSwitchBlocked = isSwitchBlocked,
+                        profileSwitchFailed = profileSwitchFailed,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
                         onProfileClick = viewModel::requestSwitch,
                         onAddProfileClick = viewModel::showAddProfileDialog,
@@ -70,6 +72,7 @@ class SwitchProfilesFragment : Fragment() {
                         onSwitchProfileConfirm = viewModel::switchProfile,
                         onSwitchProfileDismiss = viewModel::dismissSwitchProfileDialog,
                         onSwitchBlockedDismiss = viewModel::dismissSwitchBlockedMessage,
+                        onSwitchFailedDismiss = viewModel::dismissSwitchFailedMessage,
                         onDeleteProfile = viewModel::deleteProfile,
                     )
                 }

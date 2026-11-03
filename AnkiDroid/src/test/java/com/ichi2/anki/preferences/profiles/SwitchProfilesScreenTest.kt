@@ -73,14 +73,35 @@ class SwitchProfilesScreenTest : RobolectricTest() {
         composeRule.onNodeWithText(targetContext.getString(CommonString.switch_profile_blocked, appName)).assertIsDisplayed()
     }
 
+    @Test
+    fun `a failed switch names the profile it could not open`() {
+        val work = ProfileItem(id = ProfileId("p_work"), name = "Work")
+        setScreen(profiles = listOf(default, work), profileSwitchFailed = work)
+
+        composeRule.onNodeWithText(targetContext.getString(CommonString.switch_profile_failed, "Work")).assertIsDisplayed()
+    }
+
+    @Test
+    fun `the failure message closes with OK`() {
+        val work = ProfileItem(id = ProfileId("p_work"), name = "Work")
+        var dismissed = false
+        setScreen(profiles = listOf(default, work), profileSwitchFailed = work, onSwitchFailedDismiss = { dismissed = true })
+
+        composeRule.onNodeWithText(targetContext.getString(CommonString.dialog_ok)).performClick()
+
+        assertTrue(dismissed)
+    }
+
     private fun setScreen(
         profiles: List<ProfileItem>,
         profileBeingRenamed: ProfileItem? = null,
         profileToSwitchTo: ProfileItem? = null,
         isSwitchBlocked: Boolean = false,
+        profileSwitchFailed: ProfileItem? = null,
         onProfileClick: (ProfileItem) -> Unit = {},
         onRenameProfileConfirm: (ProfileName) -> Unit = {},
         onSwitchProfileConfirm: () -> Unit = {},
+        onSwitchFailedDismiss: () -> Unit = {},
     ) {
         composeRule.setContent {
             AnkiDroidTheme {
@@ -90,6 +111,7 @@ class SwitchProfilesScreenTest : RobolectricTest() {
                     profileBeingRenamed = profileBeingRenamed,
                     profileToSwitchTo = profileToSwitchTo,
                     isSwitchBlocked = isSwitchBlocked,
+                    profileSwitchFailed = profileSwitchFailed,
                     onNavigateUp = {},
                     onProfileClick = onProfileClick,
                     onAddProfileClick = {},
@@ -101,6 +123,7 @@ class SwitchProfilesScreenTest : RobolectricTest() {
                     onSwitchProfileConfirm = onSwitchProfileConfirm,
                     onSwitchProfileDismiss = {},
                     onSwitchBlockedDismiss = {},
+                    onSwitchFailedDismiss = onSwitchFailedDismiss,
                     onDeleteProfile = {},
                 )
             }
