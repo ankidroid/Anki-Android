@@ -18,6 +18,7 @@ import com.ichi2.anki.common.destinations.ReviewDeckDestination
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import com.ichi2.anki.toIntent
+import com.ichi2.anki.utils.ShortcutUtils
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -70,6 +71,18 @@ class ProfileDeckLaunchTest : RobolectricTest() {
 
         assertFalse(launched.any { it.component?.className == Reviewer::class.java.name }, "Default's deck 1 is not Work's")
         assertEquals(targetContext.getString(CommonString.deck_in_other_profile, "Work"), ShadowToast.getTextOfLatestToast())
+    }
+
+    @Test
+    fun `deck shortcut ids in Default stay the deck id`() {
+        assertEquals("1", ShortcutUtils.deckShortcutId(1L, ProfileId.DEFAULT), "pinned shortcuts made before profiles must keep their id")
+    }
+
+    @Test
+    fun `deck shortcuts in another profile do not reuse Default's ids`() {
+        val work = createProfile("Work")
+
+        assertEquals("${work.value}_1", ShortcutUtils.deckShortcutId(1L, work), "Default's pinned shortcut for deck 1 would be replaced")
     }
 
     private fun createProfile(name: String) =
