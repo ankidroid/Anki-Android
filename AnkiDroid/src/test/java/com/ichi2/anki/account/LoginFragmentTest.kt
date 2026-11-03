@@ -3,8 +3,10 @@
 package com.ichi2.anki.account
 
 import android.os.Looper
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.R
@@ -19,6 +21,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import kotlin.test.assertFalse
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
 
@@ -51,6 +55,14 @@ class LoginFragmentTest : RobolectricTest() {
         activity.waitForLoginToFinish()
 
         assertThat(getAlertDialogText(true), containsString("Advanced settings"))
+    }
+
+    @Test
+    @Config(qualifiers = "w480dp-h320dp-land")
+    fun `logo is hidden in a compact landscape window`() {
+        val activity = startRegularActivity<AccountActivity>(AccountActivity.getIntent(targetContext))
+
+        assertFalse(activity.findViewById<View>(R.id.login_logo).isVisible)
     }
 
     private fun AccountActivity.waitForLoginToFinish() {
