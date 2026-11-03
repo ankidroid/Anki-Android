@@ -26,13 +26,7 @@ class ScreenshotPluginTest {
             writeFile("build/outputs/roborazzi/$path", contents)
         }
 
-        val runner =
-            GradleRunner
-                .create()
-                .withProjectDir(projectDir)
-                .withTestKitDir(File("build/test-kit").absoluteFile)
-                .withPluginClasspath()
-                .withArguments("compareScreenshots", "-Pscreenshot", "--build-cache", "--configuration-cache", "--stacktrace")
+        val runner = runner("compareScreenshots")
 
         // Run changed → matching once normally, then repeat with both results restored from cache.
         listOf(TaskOutcome.SUCCESS, TaskOutcome.FROM_CACHE).forEach { outcome ->
@@ -51,6 +45,20 @@ class ScreenshotPluginTest {
             }
         }
     }
+
+    internal fun downloadDependencies() {
+        writeFixture()
+        writeFile("changed.txt", "false")
+        runner("testDebugUnitTest", "--test-dry-run").build()
+    }
+
+    private fun runner(vararg arguments: String): GradleRunner =
+        GradleRunner
+            .create()
+            .withProjectDir(projectDir)
+            .withTestKitDir(File("build/test-kit").absoluteFile)
+            .withPluginClasspath()
+            .withArguments(*arguments, "-Pscreenshot", "--build-cache", "--configuration-cache", "--stacktrace")
 
     private fun fileContents(directory: String): Map<String, String> {
         val root = File(projectDir, "build/$directory")

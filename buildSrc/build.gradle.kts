@@ -39,6 +39,14 @@ tasks.test {
     inputs.file("../gradle/libs.versions.toml")
 }
 
+// Run from the repository root: ./gradlew -p buildSrc downloadTestKitDependencies
+tasks.register<JavaExec>("downloadTestKitDependencies") {
+    group = "build setup"
+    description = "Warms the TestKit dependency cache without running test assertions."
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass.set("com.ichi2.anki.gradle.DownloadTestKitDependenciesKt")
+}
+
 configure<KtlintExtension> {
     version.set(libs.versions.ktlint.get())
 }

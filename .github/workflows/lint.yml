@@ -52,9 +52,6 @@ jobs:
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
-      - name: Test build logic
-        run: ./gradlew -p buildSrc test --daemon
-
       # Reject versionCode decreases and increases over 100,000.
       - name: Validate versionCode
         env:
@@ -68,7 +65,12 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew :AnkiDroid:compileFullDebugJavaWithJavac :AnkiDroid:generateFullDebugAndroidTestLintModel generateDebugAndroidTestLintModel compileLint lint-rules:compileTestJava --daemon
+          command: |
+            ./gradlew -p buildSrc downloadTestKitDependencies --daemon &&
+            ./gradlew :AnkiDroid:compileFullDebugJavaWithJavac :AnkiDroid:generateFullDebugAndroidTestLintModel generateDebugAndroidTestLintModel compileLint lint-rules:compileTestJava --daemon
+
+      - name: Test build logic
+        run: ./gradlew -p buildSrc test --daemon
 
       - name: Run Lint Debug
         # "lintAll" opts in all modules in 1 flavor to lint, pinning :AnkiDroid to lintFullDebug
