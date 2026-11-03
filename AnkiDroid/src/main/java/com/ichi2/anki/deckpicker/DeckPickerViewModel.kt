@@ -459,13 +459,10 @@ class DeckPickerViewModel :
         val loadDeckCounts =
             viewModelScope.launch(Dispatchers.IO) {
                 Timber.d("Refreshing deck list")
-                val (deckDueTree, collectionHasNoCards) =
-                    withCol {
-                        Pair(sched.deckDueTree(), isEmpty)
-                    }
-                dueTree = deckDueTree
-
-                flowOfCollectionHasNoCards.value = collectionHasNoCards
+                withCol {
+                    dueTree = sched.deckDueTree()
+                    flowOfCollectionHasNoCards.value = isEmpty
+                }
 
                 // TODO: This is in the wrong place
                 // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
@@ -508,16 +505,17 @@ class DeckPickerViewModel :
 
     fun toggleDeckExpand(deckId: DeckId) =
         viewModelScope.launch {
-            // update stored state
-            dueTree?.find(deckId)?.run {
-                collapsed = !collapsed
-                // Anki uses scope as Reviewer in deck browser
-                withCol {
+            withCol {
+                // update stored state
+                dueTree?.find(deckId)?.run {
+                    val collapse = !collapsed
+                    // Anki uses scope as Reviewer in deck browser
                     decks.setCollapsed(
                         did,
-                        collapsed = collapsed,
+                        collapsed = collapse,
                         SetDeckCollapsedRequest.Scope.REVIEWER,
                     )
+                    collapsed = collapse
                 }
             }
             flowOfRefreshDeckList.emit(Unit)
