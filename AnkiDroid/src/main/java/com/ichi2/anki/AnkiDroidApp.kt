@@ -187,7 +187,7 @@ open class AnkiDroidApp :
             return
         }
 
-        initializeAcraCrashReporter()
+        setupCrashReporting()
         initializeNavigator()
         initializeWidgetRepository()
         initializeDatabaseErrorDialogs()
@@ -348,6 +348,12 @@ open class AnkiDroidApp :
             ApplicationContextInitializer.setInstance(this)
             appName = getString(R.string.app_name)
             true
+        }
+    }
+
+    private fun setupCrashReporting() {
+        setup("setupCrashReporting") {
+            initializeAcraCrashReporter()
         }
     }
 
