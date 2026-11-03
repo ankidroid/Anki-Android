@@ -187,9 +187,6 @@ open class AnkiDroidApp :
             return
         }
 
-        ApplicationContextInitializer.setInstance(this)
-        appName = getString(R.string.app_name)
-
         initializeAcraCrashReporter()
         initializeNavigator()
         initializeWidgetRepository()
@@ -348,6 +345,8 @@ open class AnkiDroidApp :
                 }
             }
             instance = this
+            ApplicationContextInitializer.setInstance(this)
+            appName = getString(R.string.app_name)
             true
         }
     }
