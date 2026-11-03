@@ -189,12 +189,10 @@ open class AnkiDroidApp :
 
         val crashReporting = CrashReportingContext.apply { setupCrashReporting() }
         setupApplicationDependencies()
-        with(crashReporting) { setupLogging() }
-
-        // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
-        initializeAnalytics()
-        // Last in the UncaughtExceptionHandlers chain is our filter service
-        ThrowableFilterService.initialize()
+        with(crashReporting) {
+            setupLogging()
+            setupUsageAnalytics()
+        }
 
         applicationScope.launch {
             Timber.i("AnkiDroidApp: listing debug info")
@@ -370,6 +368,16 @@ open class AnkiDroidApp :
             Timber.tag(TAG)
             Timber.d("Startup - Application Start")
             Timber.i("Timber config: $logType")
+        }
+    }
+
+    context(_: CrashReportingContext)
+    private fun setupUsageAnalytics() {
+        setup("setupUsageAnalytics") {
+            // Analytics chains UncaughtExceptionHandlers, while ACRA does not, so initialize ACRA first.
+            initializeAnalytics()
+            // Install the filter last so it sanitizes exceptions before either reporting handler sees them.
+            ThrowableFilterService.initialize()
         }
     }
 
