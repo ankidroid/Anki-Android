@@ -32,18 +32,20 @@ import kotlin.reflect.KProperty
 
 // TODO move this to `com.ichi2.anki.preferences`
 //  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
-// Use a provider to avoid retaining SharedPreferences from a previous Robolectric test.
-object Prefs : PrefsRepository(AnkiDroidApp.sharedPreferencesProvider, AnkiDroidApp.appResources)
+// Resolve both dependencies from the current application rather than retaining a previous instance.
+object Prefs : PrefsRepository(AnkiDroidApp.sharedPreferencesProvider, { AnkiDroidApp.appResources })
 
 // TODO: enforce that `preferences.xml` is used
 open class PrefsRepository protected constructor(
     private val preferences: SharedPreferencesProvider,
-    private val resources: Resources,
+    private val resourcesProvider: () -> Resources,
 ) : AnimationPreferences,
     NotificationPreferences {
-    constructor(sharedPrefs: SharedPreferences, resources: Resources) : this(SharedPreferencesProvider { sharedPrefs }, resources)
+    constructor(sharedPrefs: SharedPreferences, resources: Resources) : this(SharedPreferencesProvider { sharedPrefs }, { resources })
 
     constructor(context: Context) : this(context.sharedPrefs(), context.resources)
+
+    private val resources: Resources get() = resourcesProvider()
 
     val sharedPrefs: SharedPreferences
         get() = preferences.sharedPrefs()

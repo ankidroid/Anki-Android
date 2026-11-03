@@ -2,20 +2,36 @@
 
 package com.ichi2.anki.settings
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.content.res.Resources
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CommonPreferenceKey
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.NotificationPreferences
+import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.withBooleanPreference
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class PrefsSingletonTest : RobolectricTest() {
+class PrefsSingletonTest {
+    @get:Rule
+    val preferences = JvmPreferencesRule()
+
+    @Test
+    fun `resource lookups follow the current application resources`() {
+        val keyResource = CommonPreferenceKey.pref_new_review_reminders
+        assertEquals(keyResource.toString(), Prefs.key(keyResource))
+        val replacement = mockk<Resources>()
+        every { replacement.getString(any()) } returns "replacement key"
+        AnkiDroidApp.resourcesTestingOverride = replacement
+
+        assertEquals("replacement key", Prefs.key(keyResource))
+    }
+
     @Test
     fun `reads and writes follow the current application preferences`() =
         withBooleanPreference(CommonPreferenceKey.pref_new_review_reminders, true) {
@@ -24,7 +40,7 @@ class PrefsSingletonTest : RobolectricTest() {
             val original = Prefs.sharedPrefs
             val originalOverride = AnkiDroidApp.sharedPreferencesTestingOverride
             val replacement = SPMockBuilder().createSharedPreferences()
-            val key = targetContext.getString(CommonPreferenceKey.pref_new_review_reminders)
+            val key = Prefs.key(CommonPreferenceKey.pref_new_review_reminders)
 
             // Replace SharedPreferences to simulate starting another Robolectric test.
             // Verify that Prefs uses the provider instead of keeping the previous instance.
