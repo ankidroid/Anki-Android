@@ -3,19 +3,31 @@
 
 package com.ichi2.anki.multiprofile
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.Notification
+import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import androidx.core.app.NotificationCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.IntentCompat
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.WorkInfo
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.NotificationChannel
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.backupLock
 import com.ichi2.anki.libanki.LibAnki
+import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
+import com.ichi2.anki.reviewreminders.ReviewReminderTime
+import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.anki.worker.mediaSyncLock
 import com.ichi2.anki.worker.syncLock
@@ -110,6 +122,53 @@ class AppRestartTest : RobolectricTest() {
             } finally {
                 CollectionManager.setTestDispatcher(previousQueue)
             }
+        }
+
+    @Test
+    fun `restart clears the notifications of the profile being left`() =
+        runTest {
+            val notifications = context.getSystemService(NotificationManager::class.java)
+            notifications.notify(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, 0, notification("Private French"))
+            notifications.notify(SYNC_RESULT_NOTIFICATION_ID, notification("Sync complete"))
+
+            safeRestartApp(context)
+
+            assertEquals(emptyList(), notifications.activeNotifications.map { it.notification.extras.getString(Notification.EXTRA_TITLE) })
+        }
+
+    @Test
+    fun `restart unschedules the recurring and snoozed reminders of the profile being left`() =
+        runTest {
+            val daily = ReviewReminder.createReviewReminder(time = ReviewReminderTime(20, 0))
+            val deck = ReviewReminder.createReviewReminder(time = ReviewReminderTime(8, 30), scope = ReviewReminderScope.DeckSpecific(1L))
+            ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, daily, attemptImmediateNotification = false)
+            ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, deck, attemptImmediateNotification = false)
+            ReviewReminderAlarmManager.scheduleSnoozedNotification(context, deck, snoozeIntervalInMinutes = 5)
+            assertEquals(3, reminderAlarms().size)
+
+            safeRestartApp(context)
+
+            assertEquals(emptyList(), reminderAlarms(), "they would fire into the next profile's reminders")
+        }
+
+    @Test
+    fun `restart leaves alarms that are not reminders alone`() =
+        runTest {
+            val reminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(20, 0))
+            ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, reminder, attemptImmediateNotification = false)
+            val other =
+                PendingIntentCompat.getBroadcast(
+                    context,
+                    reminder.id.value,
+                    Intent(context, NotificationService::class.java),
+                    0,
+                    false,
+                )!!
+            context.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC_WAKEUP, Long.MAX_VALUE, other)
+
+            safeRestartApp(context)
+
+            assertEquals(listOf(other), scheduledAlarms())
         }
 
     @Test
@@ -224,6 +283,25 @@ class AppRestartTest : RobolectricTest() {
     fun `restart waits for a media sync that started after the checks passed`() =
         runTest { assertRestartWaitsFor(mediaSyncLock, "a media sync can start between the checks and the restart") }
 
+    private fun notification(title: String) =
+        NotificationCompat
+            .Builder(context, NotificationChannel.GENERAL.id)
+            .setSmallIcon(R.drawable.ic_star_notify)
+            .setContentTitle(title)
+            .build()
+
+    @Suppress("DEPRECATION")
+    private fun scheduledAlarms() = shadowOf(context.getSystemService(AlarmManager::class.java)).scheduledAlarms.map { it.operation }
+
+    private fun reminderAlarms() =
+        scheduledAlarms().filter {
+            shadowOf(it).savedIntent.action in
+                listOf(
+                    NotificationService.NotificationServiceAction.ScheduleRecurringNotifications.actionString,
+                    NotificationService.NotificationServiceAction.SnoozeNotification.actionString,
+                )
+        }
+
     @Suppress("DEPRECATION")
     private fun collectionIsOpen() = LibAnki.collection?.dbClosed == false
 
@@ -244,5 +322,9 @@ class AppRestartTest : RobolectricTest() {
         assertFalse(isPhoenixProcessName("com.ichi2.anki"))
         assertFalse(isPhoenixProcessName("com.ichi2.anki:acra"))
         assertFalse(isPhoenixProcessName(null))
+    }
+
+    companion object {
+        private const val SYNC_RESULT_NOTIFICATION_ID = 1000
     }
 }
