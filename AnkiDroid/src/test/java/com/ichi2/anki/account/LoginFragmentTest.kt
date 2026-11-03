@@ -17,6 +17,7 @@ import anki.sync.SyncAuth
 import anki.sync.SyncLoginRequest
 import anki.sync.syncAuth
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -30,6 +31,8 @@ import com.ichi2.testutils.withQueuedCollectionAccess
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.sun.net.httpserver.HttpServer
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.advanceUntilIdle
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException
@@ -40,7 +43,10 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
+import java.net.InetSocketAddress
 import java.time.Duration
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -48,6 +54,8 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeSource
 
 @RunWith(AndroidJUnit4::class)
 class LoginFragmentTest : RobolectricTest() {
@@ -196,6 +204,51 @@ class LoginFragmentTest : RobolectricTest() {
             assertIs<LoggedInFragment>(login.get().supportFragmentManager.findFragmentById(R.id.fragment_container))
             assertTrue(ShadowDialog.getShownDialogs().none { it.isShowing }, "Continue must not leave a success dialog")
         }
+
+    @Test
+    fun `cancelling login interrupts a server that has not responded`() {
+        val requestReceived = CountDownLatch(1)
+        val releaseResponse = CountDownLatch(1)
+        val server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
+        server.createContext("/") { exchange ->
+            requestReceived.countDown()
+            try {
+                check(releaseResponse.await(15, TimeUnit.SECONDS))
+                exchange.sendResponseHeaders(500, -1)
+            } finally {
+                exchange.close()
+            }
+        }
+        server.start()
+        Prefs.currentSyncUri = "http://127.0.0.1:${server.address.port}/"
+        val login = startLoginScreen()
+        val activity = login.get()
+        login.enterCredentials()
+        val backend = CollectionManager.getBackend()
+        // the login runs on a real thread, so it waits on the server without blocking the test
+        val previousQueue = CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
+        try {
+            activity.findViewById<Button>(R.id.login_button).performClick()
+            assertTrue(requestReceived.await(5, TimeUnit.SECONDS), "the real backend must reach the local server")
+            advanceRobolectricLooperUntil { ShadowDialog.getLatestDialog()?.isShowing == true }
+
+            ShadowDialog.getLatestDialog().cancel()
+            val cancelledAt = TimeSource.Monotonic.markNow()
+            while (activity.isBlockingTouches && cancelledAt.elapsedNow() < 3.seconds) {
+                Thread.sleep(10)
+                advanceRobolectricLooper()
+            }
+
+            assertFalse(activity.isBlockingTouches, "cancellation must unblock input without waiting for the server response")
+            assertEquals("", Prefs.hkey.orEmpty())
+        } finally {
+            backend.abortSync()
+            releaseResponse.countDown()
+            advanceRobolectricLooperUntil { !activity.isBlockingTouches }
+            CollectionManager.setTestDispatcher(previousQueue)
+            server.stop(0)
+        }
+    }
 
     @Test
     fun `successful retry does not wait for the previous error to time out`() =
