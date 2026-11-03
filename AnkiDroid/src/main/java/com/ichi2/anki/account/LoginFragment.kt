@@ -76,6 +76,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
 
         binding.loginButton.text = TR.sentenceCase.logIn
+        updateLogoVisibility(resources.configuration)
 
         initListeners()
         initObservers()
@@ -326,6 +327,10 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        binding.loginLogo.isVisible = !(isCompactWidth && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        updateLogoVisibility(newConfig)
+    }
+
+    private fun updateLogoVisibility(configuration: Configuration) {
+        binding.loginLogo.isVisible = !(isCompactWidth && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
     }
 }
