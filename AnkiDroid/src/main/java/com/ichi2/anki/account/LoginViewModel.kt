@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.cancelSync
 import com.ichi2.anki.getEndpoint
 import com.ichi2.anki.progress.HasProgress
 import com.ichi2.anki.progress.ProgressManager
@@ -124,7 +125,8 @@ class LoginViewModel :
             try {
                 progressManager.withProgress(
                     message = LoginProgress.LOGGING_IN,
-                    onCancel = { CollectionManager.getBackend().setWantsAbort() },
+                    // setWantsAbort alone doesn't interrupt a request waiting on the server
+                    onCancel = { cancelSync(CollectionManager.getBackend()) },
                 ) {
                     val auth = syncLogin(username, password, getEndpoint())
                     Timber.i("Login success")
