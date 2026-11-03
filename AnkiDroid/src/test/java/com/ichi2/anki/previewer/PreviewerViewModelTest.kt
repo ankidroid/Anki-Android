@@ -6,9 +6,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.mockWebResourceRequest
 import io.mockk.coEvery
 import io.mockk.spyk
 import kotlinx.coroutines.Job
@@ -72,6 +74,27 @@ class PreviewerViewModelTest : JvmTest() {
         viewModel.viewModelScope.cancel()
         super.tearDown()
     }
+
+    @Test
+    fun `a missing image on the previous answer does not suppress the next question warning`() =
+        runTest {
+            onNextButtonClick()
+            assertTrue(viewModel.showingAnswer.value)
+            val reportedFiles = mutableListOf<String>()
+            viewModel.mediaErrorHandler.processFailure(
+                mockWebResourceRequest("${PostRequestBridge.BASE_URL}first-missing.jpg", mainFrame = false),
+            ) { reportedFiles.add(it) }
+            assertEquals(listOf("first-missing.jpg"), reportedFiles)
+
+            onNextButtonClick()
+            assertEquals(1, viewModel.currentIndex.value)
+            assertFalse(viewModel.showingAnswer.value)
+            viewModel.mediaErrorHandler.processFailure(
+                mockWebResourceRequest("${PostRequestBridge.BASE_URL}second-missing.jpg", mainFrame = false),
+            ) { reportedFiles.add(it) }
+
+            assertEquals(listOf("first-missing.jpg", "second-missing.jpg"), reportedFiles)
+        }
 
     @Test
     fun `next button`() =
