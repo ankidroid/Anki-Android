@@ -30,6 +30,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.collection.OpChanges
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.customStudyDefaultsResponse
@@ -55,6 +56,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.sched.Scheduler
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.AnkiFragmentScenario
@@ -69,7 +71,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -205,6 +210,27 @@ class CustomStudyDialogTest : RobolectricTest() {
                 ioDispatcher = previousDispatcher
             }
         }
+
+    @Test
+    fun `selecting another deck notifies subscribers`() {
+        val target = addDeck("Target")
+        col.setDeck(listOf(addBasicNote().firstCard().id), target)
+
+        val changes = initializeAndCollectChanges(target)
+
+        assertEquals(target, col.decks.selected())
+        assertEquals(1, changes.count { it.studyQueues })
+    }
+
+    @Test
+    fun `initializing the current deck does not notify subscribers`() {
+        val target = addDeck("Target", setAsSelected = true)
+        col.setDeck(listOf(addBasicNote().firstCard().id), target)
+
+        val changes = initializeAndCollectChanges(target)
+
+        assertEquals(emptyList(), changes)
+    }
 
     @Test
     fun `empty initialization waits for resume before showing feedback`() =
@@ -1244,6 +1270,28 @@ class CustomStudyDialogTest : RobolectricTest() {
             shadowOf(Looper.getMainLooper()).idle()
             fragment.block(fragment.dialog as AlertDialog)
         }
+    }
+
+    private fun initializeAndCollectChanges(deckId: DeckId): List<OpChanges> {
+        val received = mutableListOf<OpChanges>()
+        val subscriber =
+            object : ChangeManager.Subscriber {
+                override fun opExecuted(
+                    changes: OpChanges,
+                    handler: Any?,
+                ) {
+                    received.add(changes)
+                }
+            }
+        ChangeManager.subscribe(subscriber, owner = null)
+        try {
+            val viewModel = CustomStudyViewModel(SavedStateHandle(mapOf(CustomStudyViewModel.ARG_DECK_ID to deckId)))
+            val initialization = CoroutineScope(Dispatchers.IO).async { viewModel.initialize() }
+            advanceRobolectricLooperUntil { initialization.isCompleted }
+        } finally {
+            ChangeManager.unsubscribe(subscriber)
+        }
+        return received
     }
 
     private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse): Collection {

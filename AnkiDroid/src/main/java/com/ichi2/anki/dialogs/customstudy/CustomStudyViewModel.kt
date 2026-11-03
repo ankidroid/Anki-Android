@@ -5,6 +5,7 @@ package com.ichi2.anki.dialogs.customstudy
 import android.widget.AdapterView
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import anki.collection.opChanges
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyCardState
@@ -13,6 +14,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -58,7 +60,9 @@ class CustomStudyViewModel(
                 // The dialog may have closed while the backend was loading defaults.
                 context.ensureActive()
                 if (!canSelectDeck()) throw CancellationException("Custom Study initialization is no longer needed")
+                val changedSelection = decks.selected() != deckId
                 decks.select(deckId)
+                if (changedSelection) ChangeManager.publish(opChanges { studyQueues = true }, this@CustomStudyViewModel)
                 CustomStudyInitialization.Ready(deckId, defaults)
             }
         }
