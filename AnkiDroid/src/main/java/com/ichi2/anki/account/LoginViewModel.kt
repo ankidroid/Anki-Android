@@ -7,22 +7,35 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.getEndpoint
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.sync.SyncAuth
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
+/** The operation [LoginViewModel] is running, shown as a progress message by the UI. */
+enum class LoginProgress {
+    LOGGING_IN,
+}
+
 /**
  * ViewModel that manages the state for user login. It handles the login process,
  * validates input fields, and provides results for login operations.
  */
-class LoginViewModel : ViewModel() {
+class LoginViewModel :
+    ViewModel(),
+    HasProgress<LoginProgress> {
+    override val progressManager = ProgressManager<LoginProgress>()
+
     val loginButtonEnabled: StateFlow<Boolean>
         field = MutableStateFlow(false)
 
@@ -34,6 +47,9 @@ class LoginViewModel : ViewModel() {
 
     val loginState: StateFlow<LoginState>
         field = MutableStateFlow<LoginState>(LoginState.Idle)
+
+    /** Whether a login is running or has succeeded. Further attempts are ignored. */
+    private var loginStarted = false
 
     fun onUserNameFocusChange(
         hasFocus: Boolean,
@@ -57,36 +73,56 @@ class LoginViewModel : ViewModel() {
     }
 
     /**
-     * Handles the login process by attempting to authenticate the user with the provided credentials.
-     * If authentication is successful, it updates the login state; otherwise, it handles authentication failure.
+     * Attempts to authenticate the user with the provided credentials, updating [loginState].
+     *
+     * Ignored if a credential is missing, or a login is running or has succeeded.
      *
      * @param username The username entered by the user.
      * @param password The password entered by the user.
-     * @param endpoint An endpoint for authentication.
      */
-    @NeedsTest("updateLogin/_loginState changes after an exception")
-    fun handleLogin(
+    fun login(
         username: String,
         password: String,
-        endpoint: String?,
     ) {
+        if (username.isEmpty() || password.isEmpty()) {
+            Timber.i("Login cancelled - username/password missing")
+            return
+        }
+        if (loginStarted) {
+            Timber.i("Login cancelled - already logging in")
+            return
+        }
+        // set before launching: the login may complete before `launch` returns
+        loginStarted = true
         Timber.i("Logging in")
         viewModelScope.launch {
             try {
-                val auth = syncLogin(username, password, endpoint)
-                Timber.i("Login success")
-                updateLogin(username, auth.hkey)
+                progressManager.withProgress(
+                    message = LoginProgress.LOGGING_IN,
+                    onCancel = { CollectionManager.getBackend().setWantsAbort() },
+                ) {
+                    val auth = syncLogin(username, password, getEndpoint())
+                    Timber.i("Login success")
+                    updateLogin(username, auth.hkey)
+                }
                 loginState.value = LoginState.Success
+            } catch (exc: CancellationException) {
+                throw exc
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 Timber.i("Login auth failed")
                 updateLogin("", "")
-                loginState.value = LoginState.Error(exc)
+                onLoginFailed(exc)
             } catch (exc: Exception) {
                 // do not log the error, can contain PII
                 Timber.w("Login error")
-                loginState.value = LoginState.Error(exc)
+                onLoginFailed(exc)
             }
         }
+    }
+
+    private fun onLoginFailed(exception: Exception) {
+        loginStarted = false
+        loginState.value = LoginState.Error(exception)
     }
 
     private suspend fun syncLogin(
