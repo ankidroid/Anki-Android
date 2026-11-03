@@ -15,9 +15,6 @@ interface WidgetRepository {
 
     fun getWidgetSmallStatus(): SmallWidgetStatus
 
-    /** @return the number of due cards; always >= 0 */
-    fun dueCardsCount(): Int
-
     companion object {
         /** Use during app startup to set the global [WidgetRepository] instance. */
         fun register(repository: WidgetRepository) {

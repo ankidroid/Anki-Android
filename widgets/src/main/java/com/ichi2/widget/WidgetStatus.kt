@@ -5,7 +5,6 @@ package com.ichi2.widget
 import android.app.Application
 import android.content.Context
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.ext.allDecksCounts
@@ -19,16 +18,11 @@ import timber.log.Timber
  * The status of the widget.
  */
 object WidgetStatus {
-    private lateinit var notificationPreferences: NotificationPreferences
     private lateinit var updateWidget: (Context) -> Unit
 
-    /** Registers notification preferences and the small widget UI updater during app startup. */
+    /** Registers the small widget UI updater during app startup. */
     context(_: Application)
-    fun register(
-        preferences: NotificationPreferences,
-        updater: (Context) -> Unit,
-    ) {
-        notificationPreferences = preferences
+    fun register(updater: (Context) -> Unit) {
         updateWidget = updater
     }
 
@@ -46,21 +40,11 @@ object WidgetStatus {
         smallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
         val canExecuteTask = smallWidgetUpdateJob == null || smallWidgetUpdateJob?.isActive == false
 
-        if (notificationPreferences.newReviewRemindersEnabled) {
-            if (smallWidgetEnabled && canExecuteTask) {
-                Timber.d("WidgetStatus.update(): updating")
-                smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
-            } else {
-                Timber.d("WidgetStatus.update(): already running or not enabled")
-            }
+        if (smallWidgetEnabled && canExecuteTask) {
+            Timber.d("WidgetStatus.update(): updating")
+            smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
         } else {
-            val notificationEnabled = notificationPreferences.legacyNotificationsEnabled
-            if ((smallWidgetEnabled || notificationEnabled) && canExecuteTask) {
-                Timber.d("WidgetStatus.update(): updating")
-                smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
-            } else {
-                Timber.d("WidgetStatus.update(): already running or not enabled; enabled: %b", smallWidgetEnabled)
-            }
+            Timber.d("WidgetStatus.update(): already running or not enabled")
         }
     }
 
@@ -86,15 +70,10 @@ object WidgetStatus {
             Timber.i("triggering small widget UI update")
             updateWidget(context)
         }
-        if (!notificationPreferences.newReviewRemindersEnabled) {
-            widgetNotificationScheduler.scheduleNotification()
-        }
     }
 
     /** Returns the status of each of the decks.  */
     fun fetchSmall(): SmallWidgetStatus = widgetRepository.getWidgetSmallStatus()
-
-    fun fetchDue(): Int = widgetRepository.dueCardsCount()
 
     private suspend fun querySmallWidgetStatus(): SmallWidgetStatus =
         withCol {
