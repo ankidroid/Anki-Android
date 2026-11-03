@@ -15,6 +15,11 @@ import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.study.DeckKind
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.currentDeckStudyState
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.Message
+import com.ichi2.anki.utils.MessageQueue.MessageId
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +52,24 @@ class StudyOptionsViewModel :
     val flowOfMediaDir: StateFlow<File?>
         field = MutableStateFlow<File?>(null)
     val mediaDir: File? get() = flowOfMediaDir.value
+
+    private val errorQueue = MessageQueue<Exception>()
+
+    /** Errors waiting to be shown, oldest first. Acknowledge each with [errorShown] once its dialog is dismissed. */
+    val pendingErrors: StateFlow<List<Message<Exception>>> = errorQueue.messages
+
+    fun errorShown(id: MessageId) = errorQueue.acknowledge(id)
+
+    fun launchReportingErrors(block: suspend CoroutineScope.() -> Unit): Job =
+        viewModelScope.launch {
+            try {
+                block()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                errorQueue.enqueue(e)
+            }
+        }
 
     /**
      * Refreshes the deck statistics, deck name, description, and menu-state flags from
