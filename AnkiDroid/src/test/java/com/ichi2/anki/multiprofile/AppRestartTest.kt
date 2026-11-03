@@ -15,10 +15,12 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.backupLock
+import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.anki.worker.mediaSyncLock
 import com.ichi2.anki.worker.syncLock
 import com.jakewharton.processphoenix.PhoenixActivity
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -29,6 +31,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import kotlin.coroutines.CoroutineContext
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -76,6 +79,37 @@ class AppRestartTest : RobolectricTest() {
             safeRestartApp(context)
 
             assertFalse(CollectionManager.isOpenUnsafe(), "the process is killed next, and a write in flight could corrupt it")
+        }
+
+    @Test
+    fun `an operation queued during the restart cannot reopen the collection before the handover`() =
+        runTest {
+            CollectionManager.ensureOpen()
+            val queue = QueuedDispatcher()
+            val previousQueue = CollectionManager.setTestDispatcher(queue, useReentrantLock = false)
+            var openAtHandover: Boolean? = null
+            val observer =
+                object : ContextWrapper(context) {
+                    override fun startActivity(intent: Intent) {
+                        openAtHandover = collectionIsOpen()
+                        super.startActivity(intent)
+                    }
+                }
+            try {
+                val restart = launch { safeRestartApp(observer) }
+                advanceUntilIdle()
+                val lateOperation = launch { CollectionManager.withCol { } }
+                advanceUntilIdle()
+
+                while (queue.tasks.isNotEmpty()) queue.tasks.removeFirst().run()
+                advanceUntilIdle()
+                restart.join()
+                lateOperation.join()
+
+                assertEquals(false, openAtHandover, "ProcessPhoenix kills this process next, so an open collection could lose a write")
+            } finally {
+                CollectionManager.setTestDispatcher(previousQueue)
+            }
         }
 
     @Test
@@ -189,6 +223,20 @@ class AppRestartTest : RobolectricTest() {
     @Test
     fun `restart waits for a media sync that started after the checks passed`() =
         runTest { assertRestartWaitsFor(mediaSyncLock, "a media sync can start between the checks and the restart") }
+
+    @Suppress("DEPRECATION")
+    private fun collectionIsOpen() = LibAnki.collection?.dbClosed == false
+
+    private class QueuedDispatcher : CoroutineDispatcher() {
+        val tasks = ArrayDeque<Runnable>()
+
+        override fun dispatch(
+            context: CoroutineContext,
+            block: Runnable,
+        ) {
+            tasks.addLast(block)
+        }
+    }
 
     @Test
     fun `only the ProcessPhoenix process is recognised as it`() {

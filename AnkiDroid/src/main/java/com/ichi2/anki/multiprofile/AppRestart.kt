@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: 2026 Ashish Yadav <mailtoashish693@gmail.com>
 
+// TODO: move out of multiprofile, restarting the app isn't specific to profiles
 package com.ichi2.anki.multiprofile
 
 import android.content.Context
@@ -35,8 +36,9 @@ suspend fun safeRestartApp(context: Context) {
         }
         mediaSyncLock.holdUnlessThrows {
             backupLock.holdUnlessThrows {
-                CollectionManager.ensureClosed()
-                ProcessPhoenix.triggerRebirth(context, LauncherDestination.toIntent(context))
+                CollectionManager.withClosedCollection {
+                    ProcessPhoenix.triggerRebirth(context, LauncherDestination.toIntent(context))
+                }
             }
         }
     }
