@@ -757,6 +757,19 @@ class DeckPickerTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `rebuilding a filtered deck refreshes the deck list - issue 14285`() =
+        deckPicker {
+            repeat(4) { addBasicNote("$it", "") }
+            val deckId = addDynamicDeck("Filtered", search = "")
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_EMPTY, deckId)
+            advanceRobolectricLooperUntil { dueTree?.find(deckId)?.newCount == 0 }
+
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_REBUILD, deckId)
+
+            advanceRobolectricLooperUntil { dueTree?.find(deckId)?.newCount == 4 }
+        }
+
     private suspend fun <T> TestScope.withQueuedCollectionAccess(block: suspend () -> T): T {
         val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
         try {
