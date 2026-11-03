@@ -6,6 +6,7 @@ import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.common.json.jsonBoolean
 import com.ichi2.anki.common.json.jsonInt
 import com.ichi2.anki.common.json.jsonString
+import com.ichi2.anki.common.utils.ext.getLongOrNull
 import com.ichi2.anki.common.utils.ext.getStringOrNull
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
@@ -31,7 +32,6 @@ import org.json.JSONObject
  * * collapsed
  * * description - text to show inside the field when it's empty
  * * excludeFromSearch
- * * id
  * * plainText
  * * preventDeletion
  * * rtl
@@ -52,6 +52,9 @@ data class Field(
 
     /** The 0-based ordinal of the field */
     val ord by jsonInt("ord")
+
+    val id: Long?
+        get() = jsonObject.getLongOrNull("id")
 
     /**
      * If `false`, the note editor erases the content of this field after a note is created
