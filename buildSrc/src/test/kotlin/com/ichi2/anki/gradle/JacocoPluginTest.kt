@@ -270,6 +270,12 @@ class JacocoPluginTest {
 
     private fun dryRunCoverage(): String = runCoverage("--dry-run").output
 
+    internal fun downloadDependencies() {
+        setUp()
+        // Configuration-cache serialization resolves dependency artifacts even during a dry run.
+        runCoverage(":app:jacocoAndroidTestReport", "--dry-run")
+    }
+
     private fun assertUnitTestCoverage(
         enabled: Boolean,
         vararg arguments: String,
