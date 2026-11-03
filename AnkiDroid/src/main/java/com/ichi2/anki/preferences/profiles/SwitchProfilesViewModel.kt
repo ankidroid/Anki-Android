@@ -13,7 +13,6 @@ import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard
-import com.ichi2.anki.multiprofile.ProfileSwitchGuard.BlockReason
 import com.ichi2.anki.multiprofile.backupCheck
 import com.ichi2.anki.multiprofile.mediaSyncCheck
 import com.ichi2.anki.multiprofile.safeRestartApp
@@ -120,8 +119,7 @@ class SwitchProfilesViewModel(
             restartApp()
         } catch (e: Exception) {
             Timber.w(e, "Restarting into %s failed", profile.id)
-            val runningProfile = profileManager.activeProfileContext.profileId
-            withContext(ioDispatcher) { switchGuard(runningProfile, skipReasons = BlockReason.entries.toSet()) }
+            withContext(ioDispatcher) { profileManager.restoreRunningProfile() }
             onSwitchFailed(profile)
         }
     }
