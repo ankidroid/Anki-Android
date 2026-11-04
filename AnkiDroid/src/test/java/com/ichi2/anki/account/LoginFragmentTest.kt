@@ -33,7 +33,11 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException
 import org.junit.Rule
@@ -249,6 +253,35 @@ class LoginFragmentTest : RobolectricTest() {
             server.stop(0)
         }
     }
+
+    @Test
+    fun `back works after cancelling a login waiting for the collection`() =
+        runTest {
+            succeedAuthentication()
+            val login = startLoginScreen()
+            login.enterCredentials()
+            // never advanced: the login keeps waiting for the collection
+            val collectionScheduler = TestCoroutineScheduler()
+            val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(collectionScheduler), useReentrantLock = false)
+            try {
+                login.get().findViewById<Button>(R.id.login_button).performClick()
+                advanceTimeBy(601)
+                shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(601))
+                val progress = assertNotNull(ShadowDialog.getLatestDialog())
+                assertTrue(progress.isShowing)
+
+                progress.cancel()
+                shadowOf(Looper.getMainLooper()).idle()
+                runCurrent()
+                login.get().onBackPressedDispatcher.onBackPressed()
+
+                assertTrue(login.get().isFinishing, "cancelling must unblock Back without waiting for the collection")
+            } finally {
+                CollectionManager.setTestDispatcher(previousQueue)
+                collectionScheduler.runCurrent()
+            }
+            assertTrue(Prefs.hkey.isNullOrEmpty(), "a cancelled login must not log in")
+        }
 
     @Test
     fun `successful retry does not wait for the previous error to time out`() =
