@@ -3,6 +3,7 @@
 
 import com.ichi2.anki.gradle.VersionCodeTasks
 import com.ichi2.anki.gradle.WriteReleaseMetadata
+import com.ichi2.anki.gradle.isCoverageEnabled
 import java.io.ByteArrayOutputStream
 import java.util.Locale
 import java.util.Properties
@@ -205,8 +206,7 @@ android {
 
             // Issue 6009: allow disabling JaCoCo to speed up debug builds.
             // A Gradle property also allows the preference to be shared across worktrees.
-            isTestCoverageEnabled =
-                (providers.gradleProperty("enable_coverage").orNull ?: localProperties.getProperty("enable_coverage")) != "false"
+            isTestCoverageEnabled = project.isCoverageEnabled()
 
             // make the icon red if in debug mode
             resValue("color", "anki_foreground_icon_color_0", "#FFFF0000")
