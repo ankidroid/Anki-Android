@@ -11,6 +11,7 @@ import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.Companion.MAX_SEARCH_HISTORY_ENTRIES
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
 import com.ichi2.testutils.assertFalse
+import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.flow.map
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -415,11 +416,7 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
         block: suspend CardBrowserSearchViewModel.() -> Unit,
     ) = runTest {
         addNotes(count = cardCount)
-        block(
-            CardBrowserSearchViewModel(
-                SavedStateHandle(),
-            ),
-        )
+        withViewModel(CardBrowserSearchViewModel(SavedStateHandle()), block)
     }
 }
 

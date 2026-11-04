@@ -4,6 +4,7 @@ package com.ichi2.anki.tags
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.withViewModel
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -17,11 +18,12 @@ class TagNameTest : RobolectricTest() {
     fun `equivalent names persist collapse changes using the tree spelling`() =
         runTest {
             addBasicNote().update { addTag("café::child") }
-            val model = ManageTagsViewModel()
-            model.toggleCollapsed(TagName.asValid("cafe\u0301")).join()
-            assertTrue("café::child" in (model.state.value as ManageTagsState.Content).visibleTagNames)
-            model.refreshTags().join()
-            assertTrue("café::child" in (model.state.value as ManageTagsState.Content).visibleTagNames)
+            withViewModel(ManageTagsViewModel()) {
+                toggleCollapsed(TagName.asValid("cafe\u0301")).join()
+                assertTrue("café::child" in (state.value as ManageTagsState.Content).visibleTagNames)
+                refreshTags().join()
+                assertTrue("café::child" in (state.value as ManageTagsState.Content).visibleTagNames)
+            }
         }
 
     @Test

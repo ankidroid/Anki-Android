@@ -10,6 +10,7 @@ import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.testutils.NeedsRobolectric
+import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -318,20 +319,21 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `initial load failure allows search input and retry`() =
         runTest {
             addTags("science", "history")
-            val viewModel = withLockedCollection { ManageTagsViewModel() }
-            val failure = viewModel.state.value
-            assertThat(failure, instanceOf(ManageTagsState.Error::class.java))
-            assertThat((failure as ManageTagsState.Error).error, instanceOf(CollectionLockedException::class.java))
+            withViewModel(withLockedCollection { ManageTagsViewModel() }) {
+                val failure = state.value
+                assertThat(failure, instanceOf(ManageTagsState.Error::class.java))
+                assertThat((failure as ManageTagsState.Error).error, instanceOf(CollectionLockedException::class.java))
 
-            viewModel.filter("hist")
-            assertThat(viewModel.searchQuery.value, equalTo("hist"))
+                filter("hist")
+                assertThat(searchQuery.value, equalTo("hist"))
 
-            withQueuedCollectionAccess {
-                val retry = viewModel.refreshTags()
-                assertThat(viewModel.state.value, equalTo(ManageTagsState.Loading))
-                retry.join()
+                withQueuedCollectionAccess {
+                    val retry = refreshTags()
+                    assertThat(state.value, equalTo(ManageTagsState.Loading))
+                    retry.join()
+                }
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
             }
-            assertThat(viewModel.loadedState.visibleTagNames, equalTo(listOf("history")))
         }
 
     @Test
@@ -1087,7 +1089,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `merge updates descendants and deduplicates tags on notes`() =
         runTest {
             val note = addBasicNote().update { listOf("source", "source::child", "target", "target::child", "unrelated").forEach(::addTag) }
-            with(ManageTagsViewModel()) {
+            withViewModel {
                 renameTag("source", "target").join()
 
                 assertThat(col.getNote(note.id).tags, containsInAnyOrder("target", "target::child", "unrelated"))
@@ -1344,7 +1346,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
     }
 
-    private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = ManageTagsViewModel().block()
+    private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = withViewModel(ManageTagsViewModel(), block)
 
     /** Helper abstracting [com.ichi2.anki.libanki.Tags.all] */
     private fun checkCollectionTags(block: (List<String>) -> Unit) = block(col.tags.all())

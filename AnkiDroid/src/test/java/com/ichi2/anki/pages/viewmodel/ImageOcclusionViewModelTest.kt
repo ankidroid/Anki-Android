@@ -13,6 +13,7 @@ import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.ARG_IMAG
 import com.ichi2.anki.pages.viewmodel.NoteIdBuilder.Id
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.isJsonEqual
+import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.flow.first
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -175,7 +176,7 @@ fun AnkiTest.withViewModel(
             this[ARG_IMAGE_OCCLUSION] = args
         }
 
-    block(ImageOcclusionViewModel(savedStateHandle))
+    withViewModel(ImageOcclusionViewModel(savedStateHandle), block)
 }
 
 fun AnkiTest.withAddViewModel(

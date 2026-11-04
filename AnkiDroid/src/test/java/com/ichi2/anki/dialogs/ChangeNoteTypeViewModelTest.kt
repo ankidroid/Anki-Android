@@ -3,7 +3,6 @@
 package com.ichi2.anki.dialogs
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModelStore
 import app.cash.turbine.test
 import com.ichi2.anki.dialogs.ChangeNoteTypeViewModel.Companion.ARG_NOTE_IDS
 import com.ichi2.anki.dialogs.ChangeNoteTypeViewModelTest.Launch.Cloze
@@ -13,28 +12,16 @@ import com.ichi2.anki.dialogs.SelectedIndex.NOTHING
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
-import org.junit.After
 import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
 class ChangeNoteTypeViewModelTest : JvmTest() {
-    private val viewModels = ViewModelStore()
-    private var viewModelCount = 0
-
-    @After
-    override fun tearDown() {
-        try {
-            viewModels.clear()
-        } finally {
-            super.tearDown()
-        }
-    }
-
     @Test
     fun `no changes to save`() =
         // on Anki Desktop, this keeps the screen open with a 'no changes to save' alert
@@ -488,9 +475,7 @@ class ChangeNoteTypeViewModelTest : JvmTest() {
         block: suspend ChangeNoteTypeViewModel.() -> Unit,
     ) = runTest {
         val noteIds = noteTypeInput.setup()
-        block(
-            buildViewModel(noteIds = noteIds),
-        )
+        withViewModel(buildViewModel(noteIds = noteIds), block)
     }
 
     private fun buildViewModel(noteIds: List<NoteId>) =
@@ -498,7 +483,7 @@ class ChangeNoteTypeViewModelTest : JvmTest() {
             SavedStateHandle(
                 mapOf(ARG_NOTE_IDS to noteIds.toLongArray()),
             ),
-        ).also { viewModels.put("change-note-type-${viewModelCount++}", it) }
+        )
 
     fun Launch.setup(): List<NoteId> =
         when (this) {
