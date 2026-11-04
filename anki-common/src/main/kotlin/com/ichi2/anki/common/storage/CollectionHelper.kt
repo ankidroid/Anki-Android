@@ -148,7 +148,8 @@ object CollectionHelper {
      * @param preferences the preferences the collection path will be read from: pass the same
      * (profile) context's preferences as the [getCurrentAnkiDroidDirectory] call being gated
      *
-     * TODO: What if a user revokes full storage?
+     * Revoking storage permission does not undo this decision. Startup must restore access
+     * to the chosen directory rather than silently select a different collection.
      */
     fun storageDecision(preferences: SharedPreferences): StorageDecision {
         storageDecisionTestOverride?.let { return it }

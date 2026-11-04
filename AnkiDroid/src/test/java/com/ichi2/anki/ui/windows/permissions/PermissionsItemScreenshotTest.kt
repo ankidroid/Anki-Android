@@ -7,11 +7,11 @@ import android.graphics.Rect
 import androidx.core.content.edit
 import androidx.core.view.drawToBitmap
 import com.google.testing.junit.testparameterinjector.TestParameter
-import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.databinding.FragmentPermissionsStartingAt30Binding
 import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.simulateSystemBars
 import org.junit.Test
@@ -23,7 +23,7 @@ import kotlin.test.assertTrue
 /** Regression coverage for configured permission icons at normal and enlarged text sizes. */
 class PermissionsItemScreenshotTest : ScreenshotTest() {
     @Test
-    fun `configured permission icon is visible`(
+    fun `configured permission icon is visible and aligned with switch`(
         @TestParameter("1.0", "2.0") fontScale: Float,
         @TestParameter("EXTERNAL_MANAGER") permissionSet: StoragePermissionSet,
     ) {
@@ -36,7 +36,9 @@ class PermissionsItemScreenshotTest : ScreenshotTest() {
             advanceRobolectricLooper()
             captureScreen("permission_icon_font_$fontScale")
 
-            val icon = activity.findViewById<PermissionsItem>(R.id.all_files_permission).binding.icon
+            val fragment = activity.binding.fragmentContainer.getFragment<PermissionsStartingAt30Fragment>()
+            val itemBinding = FragmentPermissionsStartingAt30Binding.bind(fragment.requireView()).allFilesPermission.binding
+            val icon = itemBinding.icon
             val visibleBounds = Rect()
             assertTrue(
                 icon.getGlobalVisibleRect(visibleBounds),
@@ -44,6 +46,13 @@ class PermissionsItemScreenshotTest : ScreenshotTest() {
             )
             assertEquals(icon.width, visibleBounds.width())
             assertEquals(icon.height, visibleBounds.height())
+            val permissionSwitch = itemBinding.switchWidget
+            assertEquals(
+                permissionSwitch.top + permissionSwitch.height / 2.0,
+                icon.top + icon.height / 2.0,
+                1.0,
+                "The permission icon and switch must have the same vertical centre",
+            )
             val bitmap = icon.drawToBitmap()
             val pixels = IntArray(bitmap.width * bitmap.height)
             bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)

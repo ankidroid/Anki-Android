@@ -26,7 +26,6 @@ import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.SingleFragmentActivity
-import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.browser.IdsFile
@@ -41,6 +40,7 @@ import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.PreviewerFragment
+import com.ichi2.anki.selectStoragePermissions
 import com.ichi2.anki.shareddeck.SharedDecksActivity
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.AllPermissionsExplanationActivity
@@ -94,7 +94,7 @@ object ActivityList {
             get(ManageSpaceActivity::class.java),
             get(
                 PermissionsActivity::class.java,
-                normalIntent = { PermissionsActivity.getIntent(targetContext, StoragePermissionSet.entries.first()) },
+                normalIntent = { PermissionsActivity.getIntent(targetContext, selectStoragePermissions(targetContext)) },
             ),
             get(AllPermissionsExplanationActivity::class.java),
             get(SingleFragmentActivity::class.java, normalIntent = { DrawingFragment.getIntent(targetContext) }),

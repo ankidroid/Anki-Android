@@ -35,6 +35,9 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.fragment_pe
             }
         }
 
+    /** Opens the same Android permission screen as the all-files permission row. */
+    fun requestStoragePermission() = accessAllFilesLauncher.showManageAllFilesScreen()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

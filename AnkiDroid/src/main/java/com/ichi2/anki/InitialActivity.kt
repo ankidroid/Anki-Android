@@ -29,7 +29,9 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
+import com.ichi2.anki.startup.StorageChoiceCoordinator
 import com.ichi2.anki.startup.StoragePolicy
+import com.ichi2.anki.startup.acceptCurrentStorage
 import com.ichi2.anki.startup.folderToPersist
 import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
@@ -49,7 +51,9 @@ import timber.log.Timber
 object InitialActivity {
     /**
      * Persists the collection path chosen by the required [StoragePermissionSet]'s
-     * [StoragePolicy] if the user has not decided yet; no-op otherwise.
+     * [StoragePolicy] if the user has not decided yet, preserving an existing path.
+     * Once storage permissions are granted, invalidates older private-storage choices
+     * still running in another task.
      *
      * Safe to call without permissions: a policy deferring to the user leaves the
      * [StorageDecision] undecided. Startup calls this once permissions are granted, so a
@@ -59,7 +63,7 @@ object InitialActivity {
      */
     fun decideStorageIfUndecided(context: Context) {
         try {
-            maybeSetDefaultCollectionPath(context)
+            StorageChoiceCoordinator.acceptCurrentStorage(context)
         } catch (e: SystemStorageException) {
             // startup continues: getStartupFailureType reports the undecided state
             Timber.w(e, "unable to choose a default collection path")

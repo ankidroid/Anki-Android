@@ -11,12 +11,14 @@ import android.content.IntentFilter
 import android.os.Build
 import android.provider.Settings
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OptionalPermissionSet
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
@@ -24,6 +26,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.databinding.FragmentPermissionsStartingAt30Binding
+import com.ichi2.anki.selectStoragePermissions
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.publicCollectionPath
@@ -31,11 +35,14 @@ import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -45,6 +52,11 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
+    @Before
+    fun clearStorage() {
+        targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+    }
+
     @Test
     fun testActivityCantBeClosedByBackButton() {
         testActivity { activity ->
@@ -83,7 +95,7 @@ class PermissionsActivityTest : RobolectricTest() {
     @Test // Issue 13574: PermissionsStartingAt30Fragment completes the screen once 'All files access' is granted
     @Config(sdk = [Build.VERSION_CODES.R])
     @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R, guaranteed by @Config
-    fun `completing without Continue decides the collection path`() {
+    fun `allowing file access opens settings and decides the collection path`() {
         targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
         val settingsScreen = ComponentName("com.android.settings", "AllFilesAccessSettings")
@@ -100,20 +112,102 @@ class PermissionsActivityTest : RobolectricTest() {
 
         withManageExternalStorageInManifest {
             testActivity(StoragePermissionSet.EXTERNAL_MANAGER) { activity ->
-                assertFalse(activity.binding.continueButton.isEnabled)
-                activity.findViewById<PermissionsItem>(R.id.all_files_permission).performClick()
+                assertTrue(activity.binding.continueButton.isEnabled)
+                activity.binding.continueButton.performClick()
 
                 val shadowActivity = shadowOf(activity)
                 val settingsIntent = assertNotNull(shadowActivity.nextStartedActivityForResult).intent
                 assertEquals(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, settingsIntent.action)
                 assertNull(collectionPath)
 
+                shadowActivity.receiveResult(settingsIntent, Activity.RESULT_CANCELED, Intent())
+                assertNull(collectionPath)
+                assertFalse(activity.isFinishing)
+                assertTrue(activity.binding.continueWithoutAccess.isEnabled)
+                activity.binding.continueButton.performClick()
+                val retryIntent = assertNotNull(shadowActivity.nextStartedActivityForResult).intent
                 withAllFilesAccess {
-                    shadowActivity.receiveResult(settingsIntent, Activity.RESULT_CANCELED, Intent())
+                    shadowActivity.receiveResult(retryIntent, Activity.RESULT_CANCELED, Intent())
                 }
 
                 assertEquals(publicCollectionPath, collectionPath)
                 assertThat("activity is finishing", activity.isFinishing)
+            }
+        }
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.R])
+    fun `fresh storage setup does not display a permission switch`() {
+        testOptionalStorageActivity { activity ->
+            val fragment = activity.binding.fragmentContainer.getFragment<PermissionsStartingAt30Fragment>()
+            assertFalse(FragmentPermissionsStartingAt30Binding.bind(fragment.requireView()).allFilesPermission.isShown)
+        }
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.R])
+    fun `fresh setup explains file access without choosing storage`() {
+        testOptionalStorageActivity { activity ->
+            assertEquals(getResourceString(CommonString.allow_file_access), activity.binding.continueButton.text)
+            assertTrue(activity.binding.storagePermissionExplanation.isVisible)
+            assertEquals(getResourceString(CommonString.storage_permission_explanation), activity.binding.storagePermissionExplanation.text)
+            assertNull(collectionPath)
+            assertNull(ShadowDialog.getLatestDialog())
+            assertFalse(activity.isFinishing)
+        }
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.R])
+    fun `skipping selects app storage without a confirmation`() {
+        testOptionalStorageActivity { activity ->
+            activity.binding.continueWithoutAccess.performClick()
+            advanceRobolectricLooper()
+            assertNull(ShadowDialog.getLatestDialog())
+            val expectedPath = File(CollectionHelper.getAppSpecificExternalDirectories(activity).first(), "AnkiDroid").absolutePath
+            assertThat("collection path is set to private dir", collectionPath, equalTo(expectedPath))
+            assertTrue(activity.isFinishing)
+        }
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.Q, Build.VERSION_CODES.R])
+    fun `legacy storage permissions cannot be skipped`() {
+        testActivity(StoragePermissionSet.LEGACY_ACCESS) { activity ->
+            assertFalse(activity.binding.continueButton.isEnabled)
+            assertFalse(activity.binding.storagePermissionExplanation.isVisible)
+            assertEquals(getResourceString(CommonString.dialog_continue), activity.binding.continueButton.text)
+            activity.binding.continueButton.performClick()
+            advanceRobolectricLooper()
+
+            assertNull(ShadowDialog.getLatestDialog())
+            assertNull(collectionPath)
+            assertFalse(activity.isFinishing)
+        }
+    }
+
+    @SuppressLint("NewApi") // Callers use @Config(sdk = [R]), which guarantees EXTERNAL_MANAGER is available.
+    private fun testOptionalStorageActivity(action: ActivityAction<PermissionsActivity>) {
+        withManageExternalStorageInManifest {
+            testActivity(StoragePermissionSet.EXTERNAL_MANAGER, action)
+        }
+    }
+
+    @Test // Issue 21046
+    @Config(sdk = [Build.VERSION_CODES.R])
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R, guaranteed by @Config
+    fun `after choosing app folder, storage permissions are no longer required on startup`() {
+        withManageExternalStorageInManifest {
+            assertThat("this is a fresh install", InitialActivity.wasFreshInstall(targetContext.sharedPrefs()))
+            testActivity(StoragePermissionSet.EXTERNAL_MANAGER) { activity ->
+                activity.chooseAppFolder()
+                advanceRobolectricLooper()
+                assertThat(
+                    "no storage permissions are required for the app folder",
+                    selectStoragePermissions(activity),
+                    equalTo(StoragePermissionSet.APP_PRIVATE),
+                )
             }
         }
     }

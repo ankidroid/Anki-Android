@@ -4,23 +4,43 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.withStarted
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.StoragePermissionSet
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.isLegacyStorage
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
+import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.SystemStorageException
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.REQUEST_PERMISSIONS
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.RESULT_HAS_ALL_PERMISSIONS
+import com.ichi2.anki.ui.windows.permissions.PermissionsViewModel.StorageCompletion
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.isActive
 import timber.log.Timber
 
 /**
@@ -38,6 +58,22 @@ import timber.log.Timber
  */
 class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     internal val binding by viewBinding(ActivityPermissionsBinding::bind)
+    private val viewModel: PermissionsViewModel by viewModels { PermissionsViewModel.factory(application) }
+    private lateinit var requestedPermissions: StoragePermissionSet
+    private lateinit var permissionSet: StoragePermissionSet
+    private val completingStorage: Boolean
+        get() = viewModel.storageCompletion != null
+    private val showStorageSetup: Boolean
+        get() =
+            viewModel.choosingAppFolder ||
+                (!permissionSet.hasRequiredPermissions(this) && viewModel.canChooseAppPrivateStorage(permissionSet))
+    private var completionObserver: Job? = null
+    private val storagePathListener =
+        OnSharedPreferenceChangeListener { _, key ->
+            if (key == CollectionHelper.PREF_COLLECTION_PATH && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && !isFinishing) {
+                refreshPermissions()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -47,55 +83,173 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         enableEdgeToEdge()
         setViewBinding(binding)
 
-        binding.continueButton.setOnClickListener { decideStorageAndFinish() }
-
         // #20881: Activity should not be launchd without extras
-        val permissionSet = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
-        if (permissionSet == null) {
+        val requested = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
+        if (requested == null) {
             Timber.w("EXTRA_PERMISSIONS_SET not set; finishing")
             showThemedToast(this, CommonString.something_wrong, false)
             setResult(RESULT_CANCELED)
             finish()
             return
         }
-        configurePermissions(permissionSet)
-        // only close the activity by tapping the continue button
-        onBackPressedDispatcher.addCallback {}
-    }
-
-    private fun configurePermissions(permissionSet: StoragePermissionSet) {
-        setFragmentResultListener(REQUEST_PERMISSIONS) { _, bundle ->
-            val hasAllPermissions = bundle.getBoolean(RESULT_HAS_ALL_PERMISSIONS)
-            setContinueButtonEnabled(hasAllPermissions)
+        requestedPermissions = requested
+        // Android may restore the original public-storage request after the private choice was saved.
+        permissionSet = if (viewModel.choosingAppFolder) requestedPermissions else currentPermissions()
+        if (permissionSet != requestedPermissions && !completingStorage && permissionSet.hasRequiredPermissions(this)) {
+            finish()
+            return
         }
-        setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ -> decideStorageAndFinish() }
-
-        showPermissionsFragment(permissionSet)
+        configurePermissions()
+        // Back must not bypass the required permissions.
+        onBackPressedDispatcher.addCallback {}
+        viewModel.storageCompletion?.let(::observeStorageCompletion)
     }
 
-    private fun showPermissionsFragment(permissionSet: StoragePermissionSet) {
+    override fun onResume() {
+        super.onResume()
+        if (!::permissionSet.isInitialized || isFinishing) return
+        sharedPrefs().registerOnSharedPreferenceChangeListener(storagePathListener)
+        // Catch changes made while stopped, when preference notifications were not observed.
+        refreshPermissions()
+    }
+
+    override fun onPause() {
+        sharedPrefs().unregisterOnSharedPreferenceChangeListener(storagePathListener)
+        super.onPause()
+    }
+
+    private fun configurePermissions() {
+        binding.permissionsScrollArea.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            binding.storageSetupGradient.translationY = -scrollY.toFloat()
+        }
+        setFragmentResultListener(REQUEST_PERMISSIONS) { _, _ -> refreshPermissions() }
+        setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ ->
+            refreshPermissions()
+            // Accept a later public choice even while app-folder creation is still running.
+            if (permissionSet.hasRequiredPermissions(this)) completeStorageChoice()
+        }
+
+        showPermissionsFragment()
+        binding.continueButton.setOnClickListener {
+            refreshPermissions()
+            if (permissionSet.hasRequiredPermissions(this)) {
+                completeStorageChoice()
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && showStorageSetup) {
+                (supportFragmentManager.findFragmentById(R.id.fragment_container) as? PermissionsStartingAt30Fragment)
+                    ?.requestStoragePermission()
+            }
+        }
+        binding.continueWithoutAccess.setOnClickListener {
+            refreshPermissions()
+            if (!completingStorage && viewModel.canChooseAppPrivateStorage(permissionSet)) {
+                completeStorageChoice()
+            }
+        }
+        refreshPermissions()
+    }
+
+    private fun showPermissionsFragment() {
         val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
         }
     }
 
-    private fun setContinueButtonEnabled(isEnabled: Boolean) {
-        binding.continueButton.isEnabled = isEnabled
+    private fun currentPermissions(): StoragePermissionSet =
+        if (isLegacyStorage(this, setCollectionPath = false) == false) StoragePermissionSet.APP_PRIVATE else requestedPermissions
+
+    private fun refreshPermissions() {
+        if (isFinishing) return
+        // A previous task's worker can save the private path after its ViewModel has been cleared.
+        // Our own setup keeps its choice visible until the completion handler consumes the result.
+        val currentPermissions = if (viewModel.choosingAppFolder) requestedPermissions else currentPermissions()
+        if (permissionSet != currentPermissions) {
+            permissionSet = currentPermissions
+            showPermissionsFragment()
+        }
+        val hasRequiredPermissions = permissionSet.hasRequiredPermissions(this)
+        val canUseAppFolder = !hasRequiredPermissions && viewModel.canChooseAppPrivateStorage(permissionSet)
+        val showStorageSetup = showStorageSetup
+        binding.storageSetupArtwork.isVisible = showStorageSetup && resources.configuration.screenHeightDp >= 480
+        binding.storageSetupGradient.isVisible = binding.storageSetupArtwork.isVisible
+        binding.permissionsSpacer.isVisible = !showStorageSetup
+        binding.storagePermissionExplanation.isVisible = showStorageSetup
+        binding.fragmentContainer.isVisible = !showStorageSetup
+        binding.permissionsScrollArea.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            matchConstraintMaxWidth = if (showStorageSetup) 480.dp.toPx(this@PermissionsActivity) else 0
+        }
+        val actionPadding = (if (showStorageSetup) 32 else 16).dp.toPx(this)
+        binding.permissionActions.updatePadding(
+            left = actionPadding,
+            right = actionPadding,
+            top = if (showStorageSetup) 0 else actionPadding,
+            bottom = 16.dp.toPx(this),
+        )
+        binding.continueWithoutAccess.apply {
+            isVisible = showStorageSetup
+            isEnabled = !completingStorage && canUseAppFolder
+        }
+        binding.continueButton.apply {
+            minHeight = (if (showStorageSetup) 56 else 48).dp.toPx(this@PermissionsActivity)
+            isEnabled = showStorageSetup || (!completingStorage && hasRequiredPermissions)
+            setText(if (showStorageSetup) CommonString.allow_file_access else CommonString.dialog_continue)
+        }
+        binding.headline.apply {
+            setTextAppearance(
+                if (showStorageSetup) {
+                    com.google.android.material.R.style.TextAppearance_Material3_HeadlineLarge
+                } else {
+                    com.google.android.material.R.style.TextAppearance_Material3_HeadlineSmall
+                },
+            )
+            setTypeface(typeface, if (showStorageSetup) Typeface.BOLD else Typeface.NORMAL)
+            setTextColor(getColorFromAttr(this@PermissionsActivity, android.R.attr.textColorPrimary))
+            updatePadding(
+                top = 32.dp.toPx(this@PermissionsActivity),
+                bottom = (if (showStorageSetup) 12 else 32).dp.toPx(this@PermissionsActivity),
+            )
+            setText(if (showStorageSetup) CommonString.storage_setup_title else CommonString.permissions_screen_headline)
+        }
     }
 
-    /**
-     * Records the storage decision and closes the screen: the granted permissions
-     * determine the default collection path.
-     *
-     * Called on 'Continue', or when the fragment reports [REQUEST_PERMISSIONS_GRANTED].
-     * Preserves an existing collection path.
-     *
-     * @see InitialActivity.decideStorageIfUndecided
-     */
-    private fun decideStorageAndFinish() {
-        InitialActivity.decideStorageIfUndecided(this)
-        finish()
+    private fun completeStorageChoice() {
+        val completion = viewModel.completeStorageChoice(permissionSet)
+        refreshPermissions()
+        completion?.let(::observeStorageCompletion)
+    }
+
+    private fun observeStorageCompletion(completion: StorageCompletion) {
+        // A later choice replaces the observer, while its old worker may still finish on the collection queue.
+        completionObserver?.cancel()
+        completionObserver =
+            launchCatchingTask {
+                try {
+                    val accepted = completion.result.await()
+                    withStarted {
+                        if (accepted) {
+                            permissionSet = currentPermissions()
+                            if (permissionSet.hasRequiredPermissions(this@PermissionsActivity)) {
+                                finish()
+                            } else {
+                                // Internet may have been revoked after the storage path was saved.
+                                showPermissionsFragment()
+                            }
+                        }
+                    }
+                } catch (e: SystemStorageException) {
+                    Timber.w(e, "unable to obtain an app-private directory")
+                    withStarted { showThemedToast(this@PermissionsActivity, CommonString.something_wrong, false) }
+                } catch (e: StorageAccessException) {
+                    Timber.w(e, "unable to create an app-private directory")
+                    withStarted { showThemedToast(this@PermissionsActivity, CommonString.something_wrong, false) }
+                } finally {
+                    // A destroyed activity must leave the result for its replacement to consume.
+                    if (currentCoroutineContext().isActive) {
+                        viewModel.storageCompletionHandled(completion)
+                        if (!isFinishing) refreshPermissions()
+                    }
+                }
+            }
     }
 
     companion object {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,48 +7,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.windows.permissions.PermissionsActivity"
-    >
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/headline"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="32dp"
-            android:text="@string/permissions_screen_headline"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-            android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+    tools:context=".ui.windows.permissions.PermissionsActivity">
 
-        <ScrollView
-            android:id="@+id/permissions_scroll_area"
+    <View
+        android:id="@+id/storage_setup_gradient"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/intro_gradient"
+        android:importantForAccessibility="no"
+        android:visibility="gone"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/permissions_scroll_area"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/headline"
-            app:layout_constraintBottom_toTopOf="@id/continue_button"
-            >
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/storage_setup_artwork"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:minHeight="304dp"
+                android:importantForAccessibility="no"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:layout_width="240dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="40dp"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    app:srcCompat="@drawable/illustration_card_storage" />
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="32dp"
+                android:text="@string/permissions_screen_headline"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:textColor="?android:attr/textColorPrimary" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/storage_permission_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:paddingBottom="32dp"
+                android:text="@string/storage_permission_explanation"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="?android:attr/textColorSecondary"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </ScrollView>
+                android:layout_height="wrap_content" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/continue_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:paddingVertical="12dp"
-            android:text="@string/dialog_continue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <Space
+                android:id="@+id/permissions_spacer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <LinearLayout
+                android:id="@+id/permission_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/continue_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
+                    android:text="@string/allow_file_access" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/continue_without_access"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="200dp"
+                    android:minHeight="48dp"
+                    android:text="@string/continue_without_access"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

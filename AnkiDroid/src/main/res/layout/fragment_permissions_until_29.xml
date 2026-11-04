@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         app:permissionTitle="@string/internet_access_title"
         app:permissionSummary="@string/permission_access_summary"
+        app:permissionIcon="@drawable/ic_language_white"
         app:permission="@string/manage_internet_permission"
         />
 </LinearLayout>
