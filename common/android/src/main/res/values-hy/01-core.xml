@@ -165,10 +165,6 @@
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Հեռացնել հաշիվը</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Նոր քարտ</string>
-    <!-- Internet Permissions -->
-    <string name="internet_access_title" comment="used for notifying user to unable internet access">Ինտերնետ</string>
-    <string name="permission_access_summary">Պարտադիր է ծրագրի աշխատելու համար</string>
-    <string name="permission_required_message">Խնդրում ենք թույլ տալ AnkiDroid-ին \'%s\' թուլատվությունը շարունակելու համար</string>
     <!-- Multiple profile -->
     <string name="add_profile">Ավելացնել պրոֆիլ</string>
 </resources>
