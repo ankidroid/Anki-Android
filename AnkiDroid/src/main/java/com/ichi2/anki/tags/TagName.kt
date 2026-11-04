@@ -5,6 +5,7 @@ package com.ichi2.anki.tags
 import android.icu.lang.UCharacter
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import com.ichi2.anki.common.utils.ext.isAscii
 import com.ichi2.anki.libanki.Tags
 import com.ichi2.anki.libanki.utils.RustCompat
 import timber.log.Timber
@@ -65,8 +66,11 @@ class TagName private constructor(
          * [afc3c16219c9](https://github.com/seanmonstar/unicase/commit/afc3c16219c9720839f2f4c16a3ede52274df7d7).
          * Remove the rotation when the backend adopts that fix.
          */
-        private fun foldCase(spelling: String): String =
-            buildString {
+        private fun foldCase(spelling: String): String {
+            // If it's ASCII: avoid an ICU call and allocation per character.
+            if (spelling.isAscii()) return spelling.lowercase()
+
+            return buildString {
                 var offset = 0
                 while (offset < spelling.length) {
                     val codePoint = spelling.codePointAt(offset)
@@ -83,6 +87,7 @@ class TagName private constructor(
                     offset += Character.charCount(codePoint)
                 }
             }
+        }
 
         // Mirror tags/register.rs for identity only. Preserve the supplied spelling
         // and leave mutation validation (e.g. forbidden separators) to the backend.
