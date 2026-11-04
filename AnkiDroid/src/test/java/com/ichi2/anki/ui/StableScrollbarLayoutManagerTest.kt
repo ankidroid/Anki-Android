@@ -33,6 +33,16 @@ import org.robolectric.annotation.Config
 @Category(EmptyApplicationCategory::class)
 class StableScrollbarLayoutManagerTest {
     @Test
+    fun `refresh resizes thumb when scroller attaches before adapter`() {
+        val list = ScrollbarTestList(List(90) { 100 }, attachBeforeAdapter = true)
+        val expected = ScrollbarTestList(List(90) { 105 })
+
+        list.refreshRows(List(90) { 105 })
+
+        assertThat("thumb retained the old range", list.thumb.height, equalTo(expected.thumb.height))
+    }
+
+    @Test
     fun `scrolling tolerates a keyboard inset taller than the viewport`() {
         val list = ScrollbarTestList(List(90) { TALL_ROW })
         list.scrollBy(150)
@@ -479,6 +489,7 @@ private val shortThenTallRows = List(30) { SHORT_ROW } + List(30) { TALL_ROW } +
 
 private class ScrollbarTestList(
     rowHeights: List<Int>,
+    private val attachBeforeAdapter: Boolean = false,
 ) {
     private var viewportHeight = HEIGHT
     private val context: Context = ApplicationProvider.getApplicationContext()
@@ -486,7 +497,7 @@ private class ScrollbarTestList(
     private val recyclerView =
         RecyclerView(context).also {
             it.layoutManager = StableScrollbarLayoutManager(context)
-            it.adapter = adapter
+            if (!attachBeforeAdapter) it.adapter = adapter
         }
     private val scroller = RecyclerFastScroller(context)
     private val root =
@@ -508,6 +519,7 @@ private class ScrollbarTestList(
 
     init {
         scroller.attachRecyclerView(recyclerView)
+        if (attachBeforeAdapter) recyclerView.adapter = adapter
         layout()
     }
 
