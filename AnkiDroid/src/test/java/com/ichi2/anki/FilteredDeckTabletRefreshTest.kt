@@ -21,6 +21,9 @@ class FilteredDeckTabletRefreshTest : RobolectricTest() {
     @Test
     fun `rebuilding the selected filtered deck refreshes tablet study options once`() = assertSingleRefresh(selected = true)
 
+    @Test
+    fun `rebuilding another filtered deck refreshes tablet study options once`() = assertSingleRefresh(selected = false)
+
     private fun assertSingleRefresh(selected: Boolean) {
         repeat(4) { addBasicNote("$it", "") }
         val deckId = addDynamicDeck("Filtered", search = "")

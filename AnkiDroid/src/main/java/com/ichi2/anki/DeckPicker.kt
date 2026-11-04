@@ -938,10 +938,11 @@ open class DeckPicker :
             }, 10)
         }
 
-        fun onDecksReloaded(param: Unit) {
+        fun onDecksReloaded(focusedDeckChanged: Boolean) {
             hideProgressBar()
             // TODO: Refresh deck metadata in the reminder pane
-            fragment?.refreshInterface()
+            // A changed selection already refreshes the panel via onFocusedDeckChanged.
+            if (!focusedDeckChanged) fragment?.refreshInterface()
         }
 
         fun onStartupResponse(response: StartupResponse) {
