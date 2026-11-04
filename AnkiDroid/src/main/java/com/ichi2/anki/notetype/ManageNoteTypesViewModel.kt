@@ -21,6 +21,7 @@ import com.ichi2.anki.libanki.addNotetypeLegacy
 import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
+import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.removeNotetype
 import com.ichi2.anki.libanki.updateNotetype
@@ -62,6 +63,30 @@ class ManageNoteTypesViewModel :
             progressManager.withProgress { loadNoteTypes() }
         }
     }
+
+    internal suspend fun loadAddNoteTypeOptions(): Pair<List<AddNotetypeUiModel>, List<String>> =
+        progressManager.withProgress {
+            withCol {
+                val standardNotetypesModels =
+                    StockNotetype.Kind.entries
+                        .filter { it != StockNotetype.Kind.UNRECOGNIZED }
+                        .map {
+                            AddNotetypeUiModel(
+                                id = it.number.toLong(),
+                                name = getStockNotetype(it).name,
+                                isStandard = true,
+                            )
+                        }
+                val foundNotetypes = getNotetypeNames()
+                Pair(
+                    mutableListOf<AddNotetypeUiModel>().apply {
+                        addAll(standardNotetypesModels)
+                        addAll(foundNotetypes.map { it.toUiModel() })
+                    },
+                    foundNotetypes.map { it.name },
+                )
+            }
+        }
 
     fun addStockNoteType(
         newName: String,
