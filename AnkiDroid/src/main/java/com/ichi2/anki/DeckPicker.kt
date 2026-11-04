@@ -935,7 +935,7 @@ open class DeckPicker :
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
             if (deckId != null) tryShowStudyOptionsPanel()
-            val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
+            val position = deckId?.let { viewModel.findDeckPosition(it, viewModel.flowOfDeckList.value.data) } ?: 0
 
             // Skip centering if the deck is already on screen.
             // Scrolling during a tap animation causes deck labels to overlap on older devices.
