@@ -9,14 +9,17 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.deckpicker.DeckFilters
+import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.anki.widgets.deckNodeDiffCallback
 import com.ichi2.anki.withDeckPicker
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -66,6 +69,32 @@ class DeckAdapterTest : RobolectricTest() {
                 selectedBackground === originalRipple || android.R.attr.state_pressed !in selectedBackground.state,
                 "Selecting a pressed deck restarted its ripple",
             )
+        }
+    }
+
+    @Test
+    fun `card count changes allow the deck row to cross-fade`() {
+        val deckId = addDeck("Counts")
+        val original = col.sched.deckDueTree().find(deckId)!!
+        val before = DisplayDeckNode.from(original, matchesSearchOrChild = true, selectedDeckId = deckId)
+        val counts = original.node
+        val updates =
+            listOf(
+                counts.toBuilder().setNewCount(1).build(),
+                counts.toBuilder().setLearnCount(1).build(),
+                counts.toBuilder().setReviewCount(1).build(),
+            )
+        for (updatedCounts in updates) {
+            val after =
+                DisplayDeckNode.from(
+                    original.copy(node = updatedCounts),
+                    matchesSearchOrChild = true,
+                    selectedDeckId = deckId,
+                )
+
+            // A null payload allows cross-fading for both increasing and decreasing counts.
+            assertNull(deckNodeDiffCallback.getChangePayload(before, after))
+            assertNull(deckNodeDiffCallback.getChangePayload(after, before))
         }
     }
 
