@@ -11,11 +11,19 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.import_export.CsvMetadata
+import anki.import_export.importCsvRequest
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.anki.pages.PostRequestUri
+import com.ichi2.testutils.withCollectionAccessOn
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
+import kotlinx.coroutines.async
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runCurrent
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -40,6 +48,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 /** Preparation reports copy failures; UI dispatch uses the prepared path. */
 @RunWith(AndroidJUnit4::class)
@@ -143,6 +152,70 @@ class ImportPreparationTest : RobolectricTest() {
         verifyNoInteractions(crashReporter)
     }
 
+    @Test
+    fun `queued CSV import uses the source selected for that request`() =
+        runTest {
+            val firstUri = textSource("notes.csv", documentId = "first") { "First front,First back\n".byteInputStream() }
+            val first = assertIs<ImportResult.Success>(ImportUtils.prepareImport(targetContext, Intent(Intent.ACTION_VIEW, firstUri)))
+            val controller =
+                startActivityControllerNormallyOpenCollectionWithIntent(
+                    SingleFragmentActivity::class.java,
+                    CsvImporter.getIntent(targetContext, first.path),
+                )
+            val page = controller.get().fragment as CsvImporter
+            val csvMetadata = withCol { getCsvMetadata(first.path, CsvMetadata.Delimiter.COMMA) }
+            val body =
+                importCsvRequest {
+                    path = first.path
+                    metadata = csvMetadata
+                }.toByteArray()
+
+            controller.pause().stop()
+            val request = async { page.handlePostRequest(PostRequestUri("/_anki/importCsv"), body) }
+            runCurrent()
+            // A second file can be staged without opening a new importer, for example if the user backs out while staging.
+            val nextUri = textSource("notes.csv", documentId = "second") { "Second front,Second back\n".byteInputStream() }
+            assertIs<ImportResult.Success>(ImportUtils.prepareImport(targetContext, Intent(Intent.ACTION_VIEW, nextUri)))
+            controller.restart().start().resume()
+            request.await()
+
+            val fronts = withCol { findNotes("").map { getNote(it).fields.first() } }
+            assertEquals(listOf("First front"), fronts)
+        }
+
+    @Test
+    fun `Back cancels an import still waiting to start`() =
+        runTest {
+            val uri = textSource("cancel.csv") { "Front,Back\n".byteInputStream() }
+            val source = assertIs<ImportResult.Success>(ImportUtils.prepareImport(targetContext, Intent(Intent.ACTION_VIEW, uri)))
+            val controller =
+                startActivityControllerNormallyOpenCollectionWithIntent(
+                    SingleFragmentActivity::class.java,
+                    CsvImporter.getIntent(targetContext, source.path),
+                )
+            val activity = controller.get()
+            val page = activity.fragment as CsvImporter
+            val csvMetadata = withCol { getCsvMetadata(source.path, CsvMetadata.Delimiter.COMMA) }
+            val body =
+                importCsvRequest {
+                    path = source.path
+                    metadata = csvMetadata
+                }.toByteArray()
+
+            controller.pause().stop()
+            val request = async { runCatching { page.handlePostRequest(PostRequestUri("/_anki/importCsv"), body) } }
+            runCurrent()
+            // The web page marks a finished import as done. Otherwise it keeps polling for progress.
+            val callback = if (request.isCompleted) "importDone" else "latestProgress"
+            page.handlePostRequest(PostRequestUri("/_anki/$callback"), byteArrayOf())
+
+            withCollectionAccessOn(StandardTestDispatcher(testScheduler)) {
+                controller.restart().start().resume()
+                activity.onBackPressedDispatcher.onBackPressed()
+                assertTrue(activity.isFinishing || request.await().isFailure, "Back must cancel a pending import or dismiss a finished one")
+            }
+        }
+
     private fun importActivity(): Activity {
         val controller = Robolectric.buildActivity(Activity::class.java).create()
         saveControllerForCleanup(controller)
@@ -151,9 +224,10 @@ class ImportPreparationTest : RobolectricTest() {
 
     private fun textSource(
         fileName: String,
+        documentId: String = "123",
         open: () -> InputStream,
     ): Uri {
-        val uri = "content://import/document/123".toUri()
+        val uri = "content://import/document/$documentId".toUri()
         val provider = mock<ContentProvider>()
         whenever(provider.query(any(), anyOrNull(), anyOrNull<String>(), anyOrNull(), anyOrNull())).thenAnswer {
             MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME)).apply { addRow(arrayOf(fileName)) }
