@@ -925,29 +925,6 @@ open class DeckPicker :
             binding.studyoptionsFrame?.isVisible = !collectionHasNoCards
         }
 
-        fun onDeckListChanged(deckList: FlattenedDeckList) {
-            // Filtering must not recreate the study options fragment: its menu invalidation closes search.
-            deckListAdapter.submit(
-                data = deckList.data,
-                hasSubDecks = deckList.hasSubDecks,
-            )
-        }
-
-        fun onFocusedDeckChanged(deckId: DeckId?) {
-            if (deckId != null) tryShowStudyOptionsPanel()
-            val position = deckId?.let { viewModel.findDeckPosition(it, viewModel.flowOfDeckList.value.data) } ?: 0
-
-            // Skip centering if the deck is already on screen.
-            // Scrolling during a tap animation causes deck labels to overlap on older devices.
-            if (decksLayoutManager.positionIsVisible(position)) {
-                return
-            }
-            // HACK: a small delay is required before scrolling works
-            deckPickerBinding.decks.postDelayed({
-                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
-            }, 10)
-        }
-
         fun onDecksReloaded(param: Unit) {
             hideProgressBar()
             // TODO: Refresh deck metadata in the reminder pane
@@ -1039,6 +1016,29 @@ open class DeckPicker :
         // navigation should be done on RESUMED
         importViewModel.importAddFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importAdd)
         importViewModel.importReplaceFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importReplace)
+    }
+
+    private fun onDeckListChanged(deckList: FlattenedDeckList) {
+        // Filtering must not recreate the study options fragment: its menu invalidation closes search.
+        deckListAdapter.submit(
+            data = deckList.data,
+            hasSubDecks = deckList.hasSubDecks,
+        )
+    }
+
+    private fun onFocusedDeckChanged(deckId: DeckId?) {
+        if (deckId != null) tryShowStudyOptionsPanel()
+        val position = deckId?.let { viewModel.findDeckPosition(it, viewModel.flowOfDeckList.value.data) } ?: 0
+
+        // Skip centering if the deck is already on screen.
+        // Scrolling during a tap animation causes deck labels to overlap on older devices.
+        if (decksLayoutManager.positionIsVisible(position)) {
+            return
+        }
+        // HACK: a small delay is required before scrolling works
+        deckPickerBinding.decks.postDelayed({
+            decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
+        }, 10)
     }
 
     private val onReceiveContentListener =
