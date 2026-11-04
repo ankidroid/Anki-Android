@@ -416,6 +416,7 @@ class RecyclerFastScroller
         ) {
             super.onLayout(changed, left, top, right, bottom)
             if (recyclerView == null) return
+            attachAdapter(recyclerView!!.adapter)
 
             val scrollOffset = recyclerView!!.computeVerticalScrollOffset() + appBarLayoutOffset
             // The content range and the visible viewport come from the RecyclerView itself.
