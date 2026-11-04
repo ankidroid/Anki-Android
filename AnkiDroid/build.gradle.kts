@@ -42,7 +42,7 @@ keeper {
 baselineProfile {
     // Write generated profiles to `src/main/baselineProfiles/` instead of the
     // default per-variant `src/playRelease/generated/baselineProfiles/`. This
-    // ensures the profile is consumed by ALL variants (play, amazon, full) and
+    // ensures the profile is consumed by ALL variants (play, full) and
     // ALL buildTypes (release, benchmark), not just `playRelease`.
     mergeIntoMain = true
 }
@@ -253,9 +253,7 @@ android {
     }
 
     /*
-     * Product Flavors are used for Amazon App Store and Google Play Store.
-     * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
-     * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
+     * Product Flavors are used for Google Play Store restrictions.
      */
     flavorDimensions += "appStore"
     productFlavors {
@@ -265,9 +263,6 @@ android {
             // Google Play no longer considers Open Collective to be acceptable for
             // a 'tax-exempt' link. Temporarily remove our links
             buildConfigField("Boolean", "SHOW_DONATE_LINKS", "false")
-        }
-        create("amazon") {
-            dimension = "appStore"
         }
         // A 'full' build has no restrictions on storage/camera. Distributed on GitHub/F-Droid
         create("full") {
