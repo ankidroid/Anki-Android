@@ -172,6 +172,7 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.mediacheck.MediaCheckFragment
@@ -312,7 +313,7 @@ open class DeckPicker :
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
     private var lastFocusedDeck: DeckId? = null
-    private var pendingFocusedDeck: DeckId? = null
+    private var pendingDeckFocus: PendingDeckFocus? = null
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -943,6 +944,8 @@ open class DeckPicker :
 
         fun onDecksReloaded(param: Unit) {
             hideProgressBar()
+            // A new child of a collapsed deck may leave the displayed list unchanged.
+            scrollToFocusedDeck()
             // TODO: Refresh deck metadata in the reminder pane
             fragment?.refreshInterface()
         }
@@ -1030,34 +1033,69 @@ open class DeckPicker :
         }
     }
 
+    private data class PendingDeckFocus(
+        val deckId: DeckId,
+        val searchQuery: String,
+    )
+
     private fun scrollToFocusedDeck() {
-        val deckId = pendingFocusedDeck ?: return
+        val focus = pendingDeckFocus ?: return
+        val (deckId, searchQuery) = focus
         if (viewModel.flowOfFocusedDeck.value != deckId) return
-        if (deckListAdapter.currentList.isEmpty() || deckListAdapter.currentList != viewModel.flowOfDeckList.value.data) return
-        val position = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: 0
+        // The backend omits empty Default. Discard its focus instead of applying it when cards are added later.
+        val tree = viewModel.dueTree
+        val isHiddenDefault = deckId == DEFAULT_DECK_ID && tree != null && tree.find(deckId) == null
+        // Changing the search must not revive a focus request from an earlier query.
+        if (viewModel.deckSearchQuery != searchQuery || isHiddenDefault) {
+            lastFocusedDeck = deckId
+            pendingDeckFocus = null
+            return
+        }
+        val displayedDecks = deckListAdapter.currentList
+        if (displayedDecks.isEmpty() || displayedDecks != viewModel.flowOfDeckList.value.data) return
+        // A newly created deck may not be in the tree or the adapter yet. Keep its focus pending
+        // until the list diff is committed instead of interpreting a missing deck as position zero.
+        val position = viewModel.findDeckPosition(deckId, displayedDecks) ?: return
+        val decks = deckPickerBinding.decks
+        if (decks.hasPendingAdapterUpdates()) {
+            // Layout positions still describe the old list until the inserted rows are laid out.
+            decks.doOnNextLayout { scrollToFocusedDeck() }
+            return
+        }
 
         // Skip centering if the deck is already on screen.
         // Scrolling during a tap animation causes deck labels to overlap on older devices.
         if (decksLayoutManager.positionIsVisible(position)) {
             lastFocusedDeck = deckId
-            pendingFocusedDeck = null
+            pendingDeckFocus = null
             return
         }
         // Keep the scroll outside layout and the tap animation on older devices.
-        deckPickerBinding.decks.postDelayed({
-            if (viewModel.flowOfFocusedDeck.value != deckId || pendingFocusedDeck != deckId) return@postDelayed
-            decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
-            deckPickerBinding.decks.doOnNextLayout {
-                if (viewModel.flowOfFocusedDeck.value == deckId &&
-                    pendingFocusedDeck == deckId &&
-                    decksLayoutManager.positionIsVisible(position)
+        decks.postDelayed({
+            if (!isCurrentDeckFocus(focus)) return@postDelayed
+            if (decks.hasPendingAdapterUpdates()) {
+                decks.doOnNextLayout { scrollToFocusedDeck() }
+                return@postDelayed
+            }
+            val currentDecks = deckListAdapter.currentList
+            val currentPosition = viewModel.findDeckPosition(deckId, currentDecks) ?: return@postDelayed
+            decksLayoutManager.scrollToPositionWithOffset(currentPosition, decks.height / 2)
+            decks.doOnNextLayout {
+                if (isCurrentDeckFocus(focus) &&
+                    currentDecks === deckListAdapter.currentList &&
+                    decksLayoutManager.positionIsVisible(currentPosition)
                 ) {
                     lastFocusedDeck = deckId
-                    pendingFocusedDeck = null
+                    pendingDeckFocus = null
                 }
             }
         }, 10)
     }
+
+    private fun isCurrentDeckFocus(focus: PendingDeckFocus): Boolean =
+        pendingDeckFocus === focus &&
+            viewModel.flowOfFocusedDeck.value == focus.deckId &&
+            viewModel.deckSearchQuery == focus.searchQuery
 
     private fun onDeckListChanged(deckList: FlattenedDeckList) {
         // Filtering must not recreate the study options fragment: its menu invalidation closes search.
@@ -1074,7 +1112,7 @@ open class DeckPicker :
 
     private fun onFocusedDeckChanged(deckId: DeckId?) {
         // Let RecyclerView restore its viewport when the collector replays a handled selection.
-        pendingFocusedDeck = deckId?.takeUnless { it == lastFocusedDeck }
+        pendingDeckFocus = deckId?.takeUnless { it == lastFocusedDeck }?.let { PendingDeckFocus(it, viewModel.deckSearchQuery) }
         // A fresh ViewModel has no focused deck until the collection is loaded.
         if (deckId == null) return
         // Returning to the previous deck is still a new selection if another scroll was pending.
