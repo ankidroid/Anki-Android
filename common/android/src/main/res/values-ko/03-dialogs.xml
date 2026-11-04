@@ -218,6 +218,7 @@
     <string name="change_cloze_mode">Cloze 모드 바꾸기</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">system WebView 버전이 낮아 일부 기능이 동작하지 않을 수 있습니다. 업데이트가 필요합니다. \n\n현재 버전: %1$d\n최소 필요 버전: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">압축</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">No text-to-speech engine installed</string>

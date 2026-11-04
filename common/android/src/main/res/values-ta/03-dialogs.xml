@@ -226,6 +226,7 @@
     <string name="change_cloze_mode">குளோஸ் பயன்முறையை மாற்றவும்</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView அமைப்பு காலாவதியானது. சில அம்சங்கள் சரியாக வேலை செய்யாது. தயவுசெய்து அதைப் புதுப்பிக்கவும்.\n\nநிறுவப்பட்ட பதிப்பு: %1$d\nகுறைந்தபட்ச தேவையான பதிப்பு: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">சுருக்கவும்</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">No text-to-speech engine installed</string>

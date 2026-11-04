@@ -242,6 +242,7 @@
     <string name="change_cloze_mode">Změnit režim doplňovačky</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">Komprimovat</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">Není nainstalován žádný převod textu na řeč</string>

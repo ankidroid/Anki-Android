@@ -366,8 +366,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">שדרג לפורמט החדש של טקסט לדיבור</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
     <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
-    <string name="pref_fixed_port_title" maxLength="41">מסך אחסון מקומי בלימוד</string>
-    <string name="pref_fixed_port_summary">מפעיל אחסון מקומי של JavaScript באמצעות יציאת שרת קבועה במסך הלימוד</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">אפשרויות מפתח</string>
     <string name="dev_options_enabled_pref" maxLength="41">הפעלת מצב מפתח</string>

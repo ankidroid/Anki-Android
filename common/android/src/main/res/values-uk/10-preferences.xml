@@ -278,7 +278,7 @@
     <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Notification channel</string>
     <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
     <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Battery optimization</string>
-    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Power saving mode</string>
+    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Режим енергозбереження</string>
     <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
     <!-- Troubleshooting check statuses -->
     <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>
@@ -371,8 +371,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Оновіться, будь ласка, до нового формату синтезу мовлення</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
     <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage в екрані навчання</string>
-    <string name="pref_fixed_port_summary">Вмикає JavaScript localStorage використовуючи фіксований порт сервера в екрані навчання</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
     <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>

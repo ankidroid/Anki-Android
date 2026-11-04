@@ -363,8 +363,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Veuillez mettre à jour vers le nouveau format de synthèse vocale</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Autoriser les modèles à enregistrer de l\'audio</string>
     <string name="template_is_trying_to_record_audio">Ce modèle essaie d\'enregistrer de l\'audio</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage dans l\'écran de révision</string>
-    <string name="pref_fixed_port_summary">Active JavaScript localStorage en utilisant un serveur port fixé dans l\'écran de révision</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Options de développement</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activer les options de développement</string>

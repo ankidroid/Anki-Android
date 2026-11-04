@@ -50,7 +50,7 @@
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
     <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_increase">Збільшити</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preview new cards added in the last:</string>
@@ -74,7 +74,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Вийти</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка&#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">Дозволити</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
     <string name="dialog_positive_delete" maxLength="28">Видалити</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -91,7 +91,7 @@
     <string name="check_media_warning">У випадку великих медіа-колекцій це може забрати багато часу. Продовжити?</string>
     <string name="check_media_message">Перевіряємо мультимедіа&#8230;</string>
     <string name="check_media_adding_missing_tag">Додавання тегів&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Теги додано</string>
     <string name="delete_media_message">Видалення медіа&#8230;</string>
     <string name="delete_media_result_title">Результат видалення</string>
     <plurals name="delete_media_result_message">
@@ -145,7 +145,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Вибрати мову</string>
     <string name="locale_selection_dialog_summary">Деякі багатомовні клавіатури, такі як GBoard, підтримують зміну мови під час редагування тексту\n\nБудь ласка, попросіть функцію \"setImeHintLocals\" від виробника клавіатури, якщо ваша клавіатура не змінює мову.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Невідома мова [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Використання AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Інструкція для AnkiDroid</string>
@@ -242,10 +242,11 @@
     <string name="change_cloze_mode">Змінити режим Cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Системний WebView застарілий. Деякі функції не будуть правильно працювати. Оновіть його, будь ласка.\n\nВстановлена версія: %1$d\nЯк мінімум потрібна версія: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">Стиснути</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
-    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
+    <string name="tts_no_engine_title">Не встановлено синтез мовлення (TTS)</string>
+    <string name="tts_no_engine_message">Встановіть додаток, який забезпечить синтез мовлення для вашого пристрою.</string>
     <string name="tts_error_dialog_title">Мова не підтримується</string>
     <string name="tts_error_dialog_reason_text">Рушій перетворення тексту в мовлення <b>%1$s</b> не підтримує наступну мову: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Змінити рушій</string>
@@ -279,11 +280,11 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Назва шаблону картки%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Назва типу запису%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">З</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">На</string>
     <!-- Add and rename profile dialogs -->
-    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Перейменувати профіль</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Назва профілю</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Назва профілю не може бути порожньою</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Назва профілю повинна містити %1$d символів або менше</string>
 </resources>

@@ -379,8 +379,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يرجى التحديث إلى الصيغة الجديدة لتحويل النص إلى كلام</string>
     <string name="allow_templates_to_record_audio" maxLength="41">السماح للقوالب بتسجيل الصوت</string>
     <string name="template_is_trying_to_record_audio">يحاول هذا القالب تسجيل الصوت</string>
-    <string name="pref_fixed_port_title" maxLength="41">الذاكرة المحلية في شاشة الدراسة</string>
-    <string name="pref_fixed_port_summary">يفعل JavaScript localStorage باستخدام  مرفأ خادم ثابت في شاشة الدراسة</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">خيارات المطور</string>
     <string name="dev_options_enabled_pref" maxLength="41">تفعيل خيارات المطور</string>
