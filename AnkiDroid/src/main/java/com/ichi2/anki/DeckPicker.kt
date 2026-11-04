@@ -946,7 +946,7 @@ open class DeckPicker :
             // its scroll position unless the selected deck actually changed.
             if (deckId == lastFocusedDeck) return
             if (deckListAdapter.currentList.isEmpty() || deckListAdapter.currentList != viewModel.flowOfDeckList.value.data) return
-            val position = viewModel.findDeckPosition(deckId)
+            val position = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: 0
 
             // Skip centering if the deck is already on screen.
             // Scrolling during a tap animation causes deck labels to overlap on older devices.
