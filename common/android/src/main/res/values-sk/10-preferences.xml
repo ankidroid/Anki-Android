@@ -372,8 +372,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Povoliť šablónam nahrávať zvuk</string>
     <string name="template_is_trying_to_record_audio">Táto šablóna sa pokúša nahrávať zvuk</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage na obrazovke študovania</string>
-    <string name="pref_fixed_port_summary">Povoliť JavaScript localStorage (lokálne úložisko) použitím fixného portu servera na obrazovke študovania</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pre vývojárov</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povoliť vývojárske nastavenia</string>

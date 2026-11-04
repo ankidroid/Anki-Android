@@ -364,8 +364,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يېڭى تېكىستتىن ئاۋازغا پىچىمىغا يۈكسەلتىڭ</string>
     <string name="allow_templates_to_record_audio" maxLength="41">قېلىپنىڭ ئۈن خاتىرىلىشىگە يول قويىدۇ</string>
     <string name="template_is_trying_to_record_audio">بۇ قېلىپ ئۈن خاتىرىلەشنى سىناۋاتىدۇ</string>
-    <string name="pref_fixed_port_title" maxLength="41">ئۆگىنىش ئېكرانىدىكى يەرلىك ساقلىغۇچ</string>
-    <string name="pref_fixed_port_summary">ئۆگىنىش ئېكرانىدا مۇقىم مۇلازىمېتىر ئېغىزىنى ئىشلىتىپ JavaScript يەرلىك ساقلىغۇچنى قوزغىتىدۇ</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ئىجادكارلار تاللانمىسى</string>
     <string name="dev_options_enabled_pref" maxLength="41">ئىجادكارلار تاللانمىسىنى قوزغىتىدۇ</string>

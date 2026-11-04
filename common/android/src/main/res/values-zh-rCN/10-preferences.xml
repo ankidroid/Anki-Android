@@ -359,8 +359,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">请升级到新文本到语音格式</string>
     <string name="allow_templates_to_record_audio" maxLength="41">允许模板录制音频</string>
     <string name="template_is_trying_to_record_audio">此模板正在尝试录制音频</string>
-    <string name="pref_fixed_port_title" maxLength="41">学习屏中的本地存储</string>
-    <string name="pref_fixed_port_summary">在学习屏上使用固定服务器端口启用JavaScript本地存储</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>

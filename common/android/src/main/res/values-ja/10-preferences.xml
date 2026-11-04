@@ -359,8 +359,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
     <string name="allow_templates_to_record_audio" maxLength="41">テンプレートに音声の録音を許可</string>
     <string name="template_is_trying_to_record_audio">このテンプレートは音声を録音しようとしています</string>
-    <string name="pref_fixed_port_title" maxLength="41">JavaScriptのlocalStorageを有効にする</string>
-    <string name="pref_fixed_port_summary">サーバーの固定ポートを使用することによって、学習画面でJavaScriptのlocalStorage機能を使用できるようにします</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

@@ -226,6 +226,7 @@
     <string name="change_cloze_mode">بوش ئورۇننى تولدۇرۇش ھالىتىنى ئۆزگەرتىدۇ</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">سىستېما WebView نىڭ ۋاقتى ئۆتكەن. بەزى ئىقتىدارلار نورمال ئىشلىمەيدۇ. يېڭىلاڭ.\n\nئورنىتىلغان نەشرى: %1$d\nزۆرۈر بولغان ئەڭ تۆۋەن نەشرى: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">پىرېس</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">No text-to-speech engine installed</string>

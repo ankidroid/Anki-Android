@@ -364,8 +364,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">ದಯವಿಟ್ಟು ಹೊಸ ಪಠ್ಯವನ್ನು ಸ್ಪೀಚ್ ಫಾರ್ಮ್ಯಾಟ್‌ಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
     <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ಅಭಿವೃಧಿಕಾರರ ಸೂಚನೆಗಳು</string>
     <string name="dev_options_enabled_pref" maxLength="41">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>

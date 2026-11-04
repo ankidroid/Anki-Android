@@ -242,6 +242,7 @@
     <string name="change_cloze_mode">Змяніць рэжым Cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Сістэма WebView састарэла. Некаторыя функцыі будуць працаваць некарэктна. Неабходна абнаўленне.\n\nБягучая версія: %1$d\nМінімальна неабходная версія: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">Сціснуць</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">Рухавік пераўтварэння тэксту ў голас не ўсталяваны</string>

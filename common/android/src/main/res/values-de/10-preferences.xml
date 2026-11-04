@@ -364,8 +364,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Bitte upgraden Sie auf das neue Text-zu-Sprache-Format</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Erlauben Vorlagen, um Audio aufzunehmen</string>
     <string name="template_is_trying_to_record_audio">Diese Vorlage versucht, Audio aufzunehmen</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage im Lernbildschirm</string>
-    <string name="pref_fixed_port_summary">Aktiviert JavaScript localStorage durch Verwendung eines festen Server-Ports im Lernbildschirm</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Entwicklermodus</string>
     <string name="dev_options_enabled_pref" maxLength="41">Entwicklermodus aktivieren</string>

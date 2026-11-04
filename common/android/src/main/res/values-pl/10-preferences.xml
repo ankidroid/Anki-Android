@@ -371,8 +371,6 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Uaktualnij do nowego formatu przetwarzania tekstu na mowę</string>
     <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
     <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage na ekranie nauki</string>
-    <string name="pref_fixed_port_summary">Włącza pamięć lokalną JavaScript używając stałego portu serwera na ekranie nauki</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
     <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>

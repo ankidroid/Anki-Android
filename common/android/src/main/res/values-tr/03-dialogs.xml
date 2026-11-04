@@ -226,6 +226,7 @@
     <string name="change_cloze_mode">Boşluk modunu değiştir</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">Sıkıştır</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">Yüklü metin okuma motoru yok</string>

@@ -226,6 +226,7 @@
     <string name="change_cloze_mode">Vaihda aukkotehtävätilaa</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Järjestelmän WebView on vanhentunut. Jotkin ominaisuudet eivät toimi oikein. Päivitä se.\n\nAsennettu versio: %1$d\nVähimmäinen vaadittu versio: %2$d</string>
+    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
     <string name="compress">Pakkaa</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">No text-to-speech engine installed</string>
