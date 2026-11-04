@@ -117,6 +117,7 @@ class TagsDialog : AnalyticsDialogFragment {
                     noteIds = noteIds,
                     checkedTags = checkedTags,
                     isCustomStudying = isCustomStudying,
+                    scopeSearch = requireArguments().getString(ARG_SCOPE_SEARCH),
                 )
             }
         }
@@ -149,6 +150,7 @@ class TagsDialog : AnalyticsDialogFragment {
         type: DialogType,
         noteIds: List<NoteId> = emptyList(),
         checkedTags: ArrayList<String> = arrayListOf(),
+        scopeSearch: String? = null,
     ): TagsDialog {
         // TODO: checkedTags is unbounded and could exceed the bundle size
         val file = IdsFile(IdsFile.getDirectory(), noteIds, IdsFile.Purpose.TAGS)
@@ -156,6 +158,7 @@ class TagsDialog : AnalyticsDialogFragment {
             putParcelable(ARG_TAGS_FILE, file)
             putParcelable(ARG_DIALOG_TYPE, type)
             putStringArrayList(ARG_CHECKED_TAGS, checkedTags)
+            putString(ARG_SCOPE_SEARCH, scopeSearch)
         }
         return this
     }
@@ -487,6 +490,7 @@ class TagsDialog : AnalyticsDialogFragment {
     companion object {
         const val ARG_TAGS_FILE = "tagsFile"
         private const val ARG_DIALOG_TYPE = "dialogType"
+        private const val ARG_SCOPE_SEARCH = "scopeSearch"
         private const val ARG_CHECKED_TAGS = "checkedTags"
         private const val COMPACT_HEIGHT_DP = 480
 

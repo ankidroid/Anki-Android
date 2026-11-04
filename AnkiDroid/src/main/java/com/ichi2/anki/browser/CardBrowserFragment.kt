@@ -100,6 +100,7 @@ import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.getIcon
 import com.ichi2.anki.browser.search.iconRes
+import com.ichi2.anki.browser.search.toTagScopeSearch
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.NoteEditorDestination
@@ -1799,17 +1800,12 @@ class CardBrowserFragment :
     fun showFilterByTagsDialog() {
         launchCatchingTask {
             tagsDialogListenerAction = TagsDialogListenerAction.FILTER
+            val searchRequest = activityViewModel.searchRequestFlow.value.takeIf { useNewTaggingLogic }
             tagsDialogFactory.show(
                 requireActivity(),
                 type = TagsDialog.DialogType.FILTER_BY_TAG,
-                checkedTags =
-                    if (useNewTaggingLogic) {
-                        ArrayList(
-                            activityViewModel.searchRequestFlow.value.filters.tags,
-                        )
-                    } else {
-                        ArrayList()
-                    },
+                checkedTags = ArrayList(searchRequest?.filters?.tags.orEmpty()),
+                scopeSearch = searchRequest?.toTagScopeSearch(),
             )
         }
     }
