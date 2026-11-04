@@ -104,9 +104,11 @@ class SharedDecksScreenshotTest : ScreenshotTest() {
      * Shows [SharedDecksDownloadFragment] as the activity's download listener would,
      * with a mocked [DownloadManager] reporting a stable in-progress download.
      * A [percent] of -1 makes progress unavailable, showing the indeterminate indicator.
+     * A [percent] of 0 reports no bytes yet, showing the spinning ring.
      */
     private fun SharedDecksActivity.showDownloadFragment(percent: Int) {
-        if (percent < 0) {
+        val animatesForever = percent <= 0
+        if (animatesForever) {
             ShadowChoreographer.setPaused(true)
             ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
         }
@@ -140,8 +142,8 @@ class SharedDecksScreenshotTest : ScreenshotTest() {
                 SharedDecksActivity.SHARED_DECKS_DOWNLOAD_FRAGMENT,
             )
         }
-        if (percent < 0) {
-            // The indeterminate animation never ends. Capture a fixed frame instead of draining it.
+        if (animatesForever) {
+            // The animation never ends. Capture a fixed frame instead of draining it.
             shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(1))
         } else {
             advanceRobolectricLooper()

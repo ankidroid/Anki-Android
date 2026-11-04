@@ -23,6 +23,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
@@ -39,6 +40,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -154,8 +156,10 @@ class SharedDecksDownloadFragment : Fragment() {
             setContent {
                 AnkiDroidTheme {
                     val state by viewModel.uiState.collectAsStateWithLifecycle()
+                    val animationsEnabled = remember { requireActivity().animationEnabled() }
                     SharedDecksDownloadScreen(
                         state = state,
+                        animationsEnabled = animationsEnabled,
                         onCancelClick = {
                             Timber.i("Cancel download button clicked")
                             showCancelConfirmationDialog()

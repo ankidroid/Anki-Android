@@ -4,6 +4,7 @@
 package com.ichi2.anki.shareddeck
 
 import androidx.lifecycle.ViewModel
+import com.ichi2.anki.common.annotations.NeedsTest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -83,7 +84,12 @@ data class SharedDecksDownloadUiState(
     val secondsRemaining: Long? = null,
     val phase: DownloadPhase = DownloadPhase.Downloading,
     val isWaitingForNetwork: Boolean = false,
-)
+) {
+    /** The download is running, but no bytes have arrived yet. */
+    @NeedsTest("true only while Downloading with a known size and no bytes received")
+    val isWaitingToStart: Boolean
+        get() = phase == DownloadPhase.Downloading && percent != null && downloadedBytes <= 0
+}
 
 /** How far the download has got. Decides the status text and which buttons are offered. */
 enum class DownloadPhase {
