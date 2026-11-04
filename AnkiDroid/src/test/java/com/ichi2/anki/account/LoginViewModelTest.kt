@@ -94,6 +94,26 @@ class LoginViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `cancelling a login waiting for the collection does not authenticate`() =
+        runTest {
+            emulateLogin { syncAuth { hkey = TEST_HKEY } }
+            val viewModel = LoginViewModel()
+
+            withQueuedCollectionAccess {
+                viewModel.login(USERNAME, PASSWORD)
+                viewModel.progressManager.requestCancel()
+                assertEquals(ViewModelProgress.Idle, viewModel.progressManager.progress.value, "progress must end without the collection")
+                advanceUntilIdle()
+            }
+
+            assertEquals(0, loginAttempts, "a cancelled login must not send credentials once the collection is available")
+            assertTrue(viewModel.messages.isEmpty())
+
+            viewModel.login(USERNAME, PASSWORD)
+            assertEquals(1, loginAttempts, "a cancelled login can be retried")
+        }
+
+    @Test
     fun `login is ignored without credentials`() =
         runTest {
             emulateLogin { syncAuth { hkey = TEST_HKEY } }
