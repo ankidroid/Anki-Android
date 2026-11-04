@@ -45,6 +45,15 @@ env:
   JAVA_TOOL_OPTIONS: -Dkotlin.daemon.options=autoshutdownIdleSeconds=10
 
 jobs:
+  # Skips the test steps on a push to main of a commit the merge queue already tested.
+  already_tested:
+    uses: ./.github/workflows/already_tested.yml
+    with:
+      workflow: tests_unit.yml
+    permissions:
+      contents: read
+      actions: read
+
   # We want to generate our matrix dynamically
   # Initial job generates the matrix as a JSON, and following job will use deserialize and use the result
   matrix_prep:
@@ -117,7 +126,7 @@ jobs:
     name: JUnit Tests (${{ matrix.name }} run ${{ matrix.iteration }})
     # Do not run the scheduled jobs on forks
     if: (github.event_name == 'schedule' && github.repository == 'ankidroid/Anki-Android') || (github.event_name != 'schedule')
-    needs: matrix_prep
+    needs: [matrix_prep, already_tested]
     # Windows can take 40m+ on tests
     timeout-minutes: 60
     env:
@@ -190,6 +199,7 @@ jobs:
 
         # update workflows/README.md when modifying this step
       - name: Run Unit Tests
+        if: needs.already_tested.outputs.skip != 'true'
         run: ./gradlew jacocoUnitTestReport --daemon
 
 
@@ -240,6 +250,7 @@ jobs:
         run: ./gradlew --stop
 
       - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        if: needs.already_tested.outputs.skip != 'true'
         with:
           verbose: true
           fail_ci_if_error: ${{ github.repository == 'ankidroid/Anki-Android' }} # optional (default = false)
