@@ -832,7 +832,6 @@ open class DeckPicker :
 
         fun onDeckCountsChanged(unit: Unit) {
             updateDeckList()
-            tryShowStudyOptionsPanel()
         }
 
         fun onDestinationChanged(destination: Destination) {
