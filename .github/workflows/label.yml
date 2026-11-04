@@ -6,7 +6,8 @@ on:
 
 jobs:
   merge_job:
-    if: github.event.pull_request.merged == true
+    # Maintains ankidroid/Anki-Android's own issues and PRs; do nothing on forks
+    if: github.event.pull_request.merged == true && github.repository == 'ankidroid/Anki-Android'
     permissions:
       contents: read
       pull-requests: write
@@ -74,7 +75,7 @@ jobs:
           }
 
   add_label:
-    if: (!(github.event.action == 'closed' && github.event.pull_request.merged != true)) && github.event.pull_request.merged != true && github.event.pull_request.head.ref != 'i18n_sync'
+    if: ((!(github.event.action == 'closed' && github.event.pull_request.merged != true)) && github.event.pull_request.merged != true && github.event.pull_request.head.ref != 'i18n_sync') && github.repository == 'ankidroid/Anki-Android'
     permissions:
       contents: read
       pull-requests: write
@@ -203,7 +204,7 @@ jobs:
             }
 
   add_new_contributor_label:
-    if: github.event.action == 'opened'
+    if: github.event.action == 'opened' && github.repository == 'ankidroid/Anki-Android'
     permissions:
       contents: read
       pull-requests: write
@@ -237,7 +238,7 @@ jobs:
   
   # Add 'Needs Review' label to newly opened, non-draft PRs
   add_needs_review_label:
-    if: github.event.action == 'opened' && !github.event.pull_request.draft
+    if: (github.event.action == 'opened' && !github.event.pull_request.draft) && github.repository == 'ankidroid/Anki-Android'
     permissions:
       contents: read
       pull-requests: write
