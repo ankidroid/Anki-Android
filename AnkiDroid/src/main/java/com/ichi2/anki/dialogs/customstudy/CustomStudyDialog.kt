@@ -34,6 +34,7 @@ import anki.scheduler.copy
 import anki.scheduler.customStudyRequest
 import anki.search.SearchNode
 import anki.search.searchNode
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonPlurals
@@ -407,6 +408,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (isExtendLimits) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 gravity = Gravity.CENTER
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
             }
             if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
@@ -430,8 +432,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val horizontalPadding = 32.dp.toPx(requireContext())
         val verticalPadding = 16.dp.toPx(requireContext())
         val dialog =
-            AlertDialog
-                .Builder(requireActivity())
+            MaterialAlertDialogBuilder(requireActivity())
                 .apply {
                     if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                         title(text = contextMenuOption.getTitle(resources))
