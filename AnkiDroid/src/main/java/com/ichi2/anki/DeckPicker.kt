@@ -919,6 +919,8 @@ open class DeckPicker :
 
         fun onDecksReloaded(param: Unit) {
             hideProgressBar()
+            // A new child of a collapsed deck may leave the displayed list unchanged.
+            scrollToPendingFocusedDeck()
             // TODO: Refresh deck metadata in the reminder pane
             fragment?.refreshInterface()
         }
@@ -1005,7 +1007,13 @@ open class DeckPicker :
         importViewModel.importReplaceFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importReplace)
     }
 
-    private fun scrollToDeckPosition(position: Int) {
+    private fun scrollToPendingFocusedDeck() {
+        val deckId = pendingFocusedDeck ?: return
+        // A newly created deck may not be in the tree or the adapter yet. Keep its focus pending
+        // until the list diff is committed instead of interpreting a missing deck as position zero.
+        val position = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: return
+        pendingFocusedDeck = null
+
         // Skip centering if the deck is already on screen.
         // Scrolling during a tap animation causes deck labels to overlap on older devices.
         if (decksLayoutManager.positionIsVisible(position)) {
@@ -1013,15 +1021,10 @@ open class DeckPicker :
         }
         // HACK: a small delay is required before scrolling works
         deckPickerBinding.decks.postDelayed({
-            decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
+            if (viewModel.focusedDeck != deckId) return@postDelayed
+            val updatedPosition = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: return@postDelayed
+            decksLayoutManager.scrollToPositionWithOffset(updatedPosition, deckPickerBinding.decks.height / 2)
         }, 10)
-    }
-
-    private fun scrollToPendingFocusedDeck() {
-        val deckId = pendingFocusedDeck ?: return
-        val position = viewModel.findDeckPosition(deckId, viewModel.flowOfDeckList.value.data) ?: 0
-        pendingFocusedDeck = null
-        scrollToDeckPosition(position)
     }
 
     private fun onDeckListChanged(deckList: FlattenedDeckList) {
@@ -1035,11 +1038,6 @@ open class DeckPicker :
 
     private fun onFocusedDeckChanged(deckId: DeckId?) {
         if (deckId != null) tryShowStudyOptionsPanel()
-        // Preserve the existing null-focus fallback until pending focus is handled.
-        if (deckId == null) {
-            scrollToDeckPosition(0)
-            return
-        }
         pendingFocusedDeck = deckId
         scrollToPendingFocusedDeck()
     }
