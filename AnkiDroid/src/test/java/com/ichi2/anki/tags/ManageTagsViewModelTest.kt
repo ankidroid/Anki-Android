@@ -2,14 +2,13 @@
 
 package com.ichi2.anki.tags
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.observability.ensureOpsExecuted
-import com.ichi2.testutils.NeedsRobolectric
+import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelAndJoin
@@ -26,8 +25,8 @@ import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -40,11 +39,10 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 /** Integration tests for [ManageTagsViewModel] with a real collection */
-@RunWith(AndroidJUnit4::class)
-@NeedsRobolectric(
-    "Preserve RobolectricTest's scoped CollectionManager dispatcher when switching to JvmTest; tag operations must finish before assertions and teardown.",
-)
-class ManageTagsViewModelTest : RobolectricTest() {
+class ManageTagsViewModelTest : JvmTest() {
+    @get:Rule
+    val caseFolding = IcuCaseFoldingRule()
+
     @Test
     fun `row equality preserves parent spelling while tag identity ignores case`() {
         val original = tagListItem("parent::child", "child", 1, hasChildren = false, collapsed = false)

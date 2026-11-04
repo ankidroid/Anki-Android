@@ -2,18 +2,20 @@
 
 package com.ichi2.anki.tags
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class TagNameTest : RobolectricTest() {
+class TagNameTest : JvmTest() {
+    @get:Rule
+    val caseFolding = IcuCaseFoldingRule()
+
     @Test
     fun `equivalent names persist collapse changes using the tree spelling`() =
         runTest {

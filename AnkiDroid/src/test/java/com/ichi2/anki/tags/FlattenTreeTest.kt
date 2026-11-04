@@ -2,16 +2,18 @@
 
 package com.ichi2.anki.tags
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.tags.tagTreeNode
+import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /** Unit tests for [ManageTagsViewModel.flattenTree] (no collection needed) */
-@RunWith(AndroidJUnit4::class)
 class FlattenTreeTest {
+    @get:Rule
+    val caseFolding = IcuCaseFoldingRule()
+
     /** Composes flatten + filter to match the old two-arg flattenTree behavior */
     private fun flattenAndFilter(
         root: anki.tags.TagTreeNode,
