@@ -146,13 +146,18 @@ class DeckPickerSchedulerUpgradeTest : RobolectricTest() {
     }
 
     private fun upgradeDialog(activity: DeckPicker): AlertDialog {
-        advanceRobolectricLooperUntil { showingAlertDialogs().isNotEmpty() }
+        val expectedTitle = activity.getString(CommonString.scheduler_upgrade_required_dialog_title)
+        // Wait for the upgrade prompt itself: another dialog (e.g. a startup error) must time out
+        // with the dialogs that were showing, rather than fail the title check
+        val showingTitles = { showingAlertDialogs().map { it.title } }
+        advanceRobolectricLooperUntil(
+            lazyMessage = { "'$expectedTitle' was not shown. Showing dialogs: ${showingTitles()}" },
+        ) { expectedTitle in showingTitles() }
         val dialogs = showingAlertDialogs()
-        assertEquals(1, dialogs.size)
+        assertEquals(1, dialogs.size, "Showing dialogs: ${showingTitles()}")
         return dialogs.single().also {
             assertTrue(it.isShowing)
             assertSame(activity, it.context.findAnkiActivity())
-            assertEquals(activity.getString(CommonString.scheduler_upgrade_required_dialog_title), it.title)
         }
     }
 
