@@ -306,6 +306,7 @@ open class DeckPicker :
 
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
+    private var pendingFocusedDeck: DeckId? = null
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -1018,18 +1019,7 @@ open class DeckPicker :
         importViewModel.importReplaceFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importReplace)
     }
 
-    private fun onDeckListChanged(deckList: FlattenedDeckList) {
-        // Filtering must not recreate the study options fragment: its menu invalidation closes search.
-        deckListAdapter.submit(
-            data = deckList.data,
-            hasSubDecks = deckList.hasSubDecks,
-        )
-    }
-
-    private fun onFocusedDeckChanged(deckId: DeckId?) {
-        if (deckId != null) tryShowStudyOptionsPanel()
-        val position = deckId?.let { viewModel.findDeckPosition(it, viewModel.flowOfDeckList.value.data) } ?: 0
-
+    private fun scrollToDeckPosition(position: Int) {
         // Skip centering if the deck is already on screen.
         // Scrolling during a tap animation causes deck labels to overlap on older devices.
         if (decksLayoutManager.positionIsVisible(position)) {
@@ -1039,6 +1029,33 @@ open class DeckPicker :
         deckPickerBinding.decks.postDelayed({
             decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
         }, 10)
+    }
+
+    private fun scrollToPendingFocusedDeck() {
+        val deckId = pendingFocusedDeck ?: return
+        val position = viewModel.findDeckPosition(deckId, viewModel.flowOfDeckList.value.data) ?: 0
+        pendingFocusedDeck = null
+        scrollToDeckPosition(position)
+    }
+
+    private fun onDeckListChanged(deckList: FlattenedDeckList) {
+        // Filtering must not recreate the study options fragment: its menu invalidation closes search.
+        deckListAdapter.submit(
+            data = deckList.data,
+            hasSubDecks = deckList.hasSubDecks,
+            onListCommitted = ::scrollToPendingFocusedDeck,
+        )
+    }
+
+    private fun onFocusedDeckChanged(deckId: DeckId?) {
+        if (deckId != null) tryShowStudyOptionsPanel()
+        // Preserve the existing null-focus fallback until pending focus is handled.
+        if (deckId == null) {
+            scrollToDeckPosition(0)
+            return
+        }
+        pendingFocusedDeck = deckId
+        scrollToPendingFocusedDeck()
     }
 
     private val onReceiveContentListener =
