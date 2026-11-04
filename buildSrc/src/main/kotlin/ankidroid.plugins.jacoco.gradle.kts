@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import com.ichi2.anki.gradle.assertNonzeroAndroidTestCoverage
+import com.ichi2.anki.gradle.isCoverageEnabled
 import com.ichi2.anki.gradle.registerJacocoCoverageReports
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
@@ -20,6 +21,18 @@ val jacocoVersion: String =
 
 configure<JacocoPluginExtension> {
     toolVersion = jacocoVersion
+}
+
+// Toggle JaCoCo's unit test agents in all JaCoCo-enabled projects
+val coverageEnabled = project.isCoverageEnabled()
+rootProject.allprojects {
+    pluginManager.withPlugin("jacoco") {
+        tasks.withType<Test>().configureEach {
+            extensions.configure<JacocoTaskExtension> {
+                isEnabled = coverageEnabled
+            }
+        }
+    }
 }
 
 fun getLocalProperties(): Properties {

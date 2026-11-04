@@ -14,7 +14,10 @@ import org.jacoco.core.tools.ExecFileLoader
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import java.io.File
+import java.util.Properties
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.xpath.XPathFactory
 
@@ -32,12 +35,53 @@ class JacocoPluginTest {
             File(projectDir, module).mkdirs()
         }
         File("../gradle/libs.versions.toml").copyTo(File(projectDir, "libs.versions.toml"))
-        File("../local.properties").takeIf { it.isFile }?.copyTo(File(projectDir, "local.properties"))
+        val localProperties = Properties()
+        File("../local.properties").takeIf { it.isFile }?.inputStream()?.use { localProperties.load(it) }
+        // Preserve SDK settings without inheriting the checkout's coverage preference.
+        localProperties.remove("enable_coverage")
+        File(projectDir, "local.properties").outputStream().use { localProperties.store(it, null) }
         writeFile("gradle.properties", "org.gradle.workers.max=2\n")
         writeFile("library/src/test/java/ExampleTest.java", "class ExampleTest {}")
         writeFile("nested/core/src/test/kotlin/ExampleTest.kt", "class ExampleTest")
         // Resources alone must not cause a unit-test task to be scheduled.
         writeFile("empty/src/test/resources/example.txt", "Not a test source")
+    }
+
+    @ParameterizedTest
+    @CsvSource("false, false", "true, true")
+    fun `coverage flag controls app and library unit test agents`(
+        property: String,
+        enabled: Boolean,
+    ) {
+        assertUnitTestCoverage(enabled, "-Penable_coverage=$property")
+    }
+
+    @Test
+    fun `unit test coverage is enabled by default`() {
+        assertUnitTestCoverage(true)
+    }
+
+    @Test
+    fun `local properties can disable unit test coverage`() {
+        File(projectDir, "local.properties").appendText("\nenable_coverage=false\n")
+        assertUnitTestCoverage(false)
+    }
+
+    @Test
+    fun `Gradle property overrides local coverage preference`() {
+        File(projectDir, "local.properties").appendText("\nenable_coverage=false\n")
+        assertUnitTestCoverage(true, "-Penable_coverage=true")
+    }
+
+    @Test
+    fun `changing coverage preference invalidates configuration cache`() {
+        File(projectDir, "gradle.properties").appendText("enable_coverage=false\n")
+        assertUnitTestCoverage(false)
+        val cached = assertUnitTestCoverage(false)
+        assertThat(cached.output, containsString("Reusing configuration cache."))
+
+        File(projectDir, "gradle.properties").appendText("enable_coverage=true\n")
+        assertUnitTestCoverage(true)
     }
 
     @Test
@@ -131,13 +175,26 @@ class JacocoPluginTest {
 
     private fun dryRunCoverage(): String = runCoverage("--dry-run").output
 
-    private fun runCoverage(vararg arguments: String): BuildResult =
+    private fun assertUnitTestCoverage(
+        enabled: Boolean,
+        vararg arguments: String,
+    ): BuildResult {
+        val result = runGradle(":app:inspectUnitTestCoverage", *arguments)
+        for (task in listOf(":app:testPlayDebugUnitTest", ":library:testDebugUnitTest", ":nested:core:test")) {
+            assertThat(result.output, containsString("$task coverage=$enabled"))
+        }
+        return result
+    }
+
+    private fun runCoverage(vararg arguments: String): BuildResult = runGradle(":app:jacocoUnitTestReport", *arguments)
+
+    private fun runGradle(vararg arguments: String): BuildResult =
         GradleRunner
             .create()
             .withProjectDir(projectDir)
             .withTestKitDir(File("build/test-kit").absoluteFile)
             .withPluginClasspath()
-            .withArguments(":app:jacocoUnitTestReport", "--configuration-cache", "--stacktrace", *arguments)
+            .withArguments("--configuration-cache", "--stacktrace", *arguments)
             .build()
 
     private fun writeFile(
