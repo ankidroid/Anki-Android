@@ -247,6 +247,17 @@ class ManageNoteTypesViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `loadAddNoteTypeOptions reports progress`() =
+        runProgressTest {
+            assertProgressAround {
+                val (options, names) = loadAddNoteTypeOptions()
+                assertThat(names, hasItems(TEST_NAME_1))
+                assertEquals(names, options.filterNot { it.isStandard }.map { it.name })
+                assertTrue(options.any { it.isStandard })
+            }
+        }
+
+    @Test
     fun `refreshNoteTypes reports progress`() =
         runProgressTest {
             assertProgressAround { refreshNoteTypes() }
@@ -298,7 +309,7 @@ class ManageNoteTypesViewModelTest : JvmTest() {
             viewModel.testBody()
         }
 
-    private suspend fun ManageNoteTypesViewModel.assertProgressAround(op: () -> Unit) {
+    private suspend fun ManageNoteTypesViewModel.assertProgressAround(op: suspend () -> Unit) {
         progressManager.progress.test {
             assertIs<ViewModelProgress.Idle>(awaitItem())
             op()

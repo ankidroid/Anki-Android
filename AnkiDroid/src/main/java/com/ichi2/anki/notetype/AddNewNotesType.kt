@@ -12,17 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.DialogNewNoteTypeBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Utils
-import com.ichi2.anki.libanki.getNotetypeNames
-import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
@@ -35,29 +31,7 @@ class AddNewNotesType(
 
     suspend fun showAddNewNotetypeDialog() {
         binding = DialogNewNoteTypeBinding.inflate(LayoutInflater.from(activity))
-        val (allOptions, currentNames) =
-            activity.withProgress {
-                withCol {
-                    val standardNotetypesModels =
-                        StockNotetype.Kind.entries
-                            .filter { it != StockNotetype.Kind.UNRECOGNIZED }
-                            .map {
-                                AddNotetypeUiModel(
-                                    id = it.number.toLong(),
-                                    name = getStockNotetype(it).name,
-                                    isStandard = true,
-                                )
-                            }
-                    val foundNotetypes = getNotetypeNames()
-                    Pair(
-                        mutableListOf<AddNotetypeUiModel>().apply {
-                            addAll(standardNotetypesModels)
-                            addAll(foundNotetypes.map { it.toUiModel() })
-                        },
-                        foundNotetypes.map { it.name },
-                    )
-                }
-            }
+        val (allOptions, currentNames) = activity.viewModel.loadAddNoteTypeOptions()
         val dialog =
             AlertDialog
                 .Builder(activity)

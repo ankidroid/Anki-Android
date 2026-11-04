@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.LoadingDialogFragment
+import com.ichi2.anki.progress.ViewModelProgress
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -78,6 +79,25 @@ class ManageNotetypesTest : RobolectricTest() {
                 activity.viewModel.state.value.noteTypes
                     .none { it.id == noteType.id },
             )
+        }
+
+    @Test
+    fun `the Add dialog loads its note types under the screen's progress`() =
+        runTest {
+            ensureCollectionLoadIsSynchronous()
+            val activity = startRegularActivity<ManageNotetypes>()
+
+            withQueuedCollectionAccess {
+                activity.binding.floatingActionButton.performClick()
+                assertTrue("loading the note types", activity.viewModel.progressManager.progress.value is ViewModelProgress.Active)
+            }
+            advanceUntilIdle()
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            assertTrue("loaded", activity.viewModel.progressManager.progress.value is ViewModelProgress.Idle)
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            assertTrue("the Add dialog is shown", dialog.isShowing)
+            assertTrue("the Add dialog has note types", dialog.newNoteTypeBinding.notetypeNewType.count > 0)
         }
 
     @Test
