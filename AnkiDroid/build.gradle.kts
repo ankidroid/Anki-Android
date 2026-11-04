@@ -188,12 +188,9 @@ android {
             splits.abi.isUniversalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
             // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
+            val localProperties = Properties()
             if (project.rootProject.file("local.properties").exists()) {
-                val localProperties = Properties()
                 localProperties.load(project.rootProject.file("local.properties").inputStream())
-                // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
-                // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
-                isTestCoverageEnabled = localProperties["enable_coverage"] != "false"
                 // not profiled: optimization for build times
                 if (localProperties["enable_languages"] == "false") {
                     android.defaultConfig.resourceConfigurations += "en"
@@ -204,9 +201,12 @@ android {
                 } else {
                     buildConfigField("Boolean", "ENABLE_LEAK_CANARY", "true")
                 }
-            } else {
-                isTestCoverageEnabled = true
             }
+
+            // Issue 6009: allow disabling JaCoCo to speed up debug builds.
+            // A Gradle property also allows the preference to be shared across worktrees.
+            isTestCoverageEnabled =
+                (providers.gradleProperty("enable_coverage").orNull ?: localProperties.getProperty("enable_coverage")) != "false"
 
             // make the icon red if in debug mode
             resValue("color", "anki_foreground_icon_color_0", "#FFFF0000")

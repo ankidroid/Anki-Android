@@ -13,6 +13,11 @@ outside the `.gradle.kts` build scripts.
   * Closures inside `.kts` files can capture an implicit `this` reference, which is CC-incompatible.
 * Defining a convention plugin to reduce duplication in `.kts` files
 
+## Debug build coverage
+
+To disable JaCoCo instrumentation for debug builds across checkouts and worktrees, add
+`enable_coverage=false` to `~/.gradle/gradle.properties`.
+
 ## Backend test libraries
 
 `rsdroid-testing` keeps native libraries in the test JVM's temporary directory for reuse
