@@ -24,7 +24,17 @@ env:
   JAVA_TOOL_OPTIONS: -Dkotlin.daemon.options=autoshutdownIdleSeconds=10
 
 jobs:
+  # Skips the test steps on a push to main of a commit the merge queue already tested.
+  already_tested:
+    uses: ./.github/workflows/already_tested.yml
+    with:
+      workflow: lint.yml
+    permissions:
+      contents: read
+      actions: read
+
   lintKotlin:
+    needs: already_tested
     name: Lint Kotlin
     timeout-minutes: 20
     runs-on: ubuntu-latest
@@ -53,10 +63,12 @@ jobs:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Test build logic
+        if: needs.already_tested.outputs.skip != 'true'
         run: ./gradlew -p buildSrc test --daemon
 
       # Reject versionCode decreases and increases over 100,000.
       - name: Validate versionCode
+        if: needs.already_tested.outputs.skip != 'true'
         env:
           VERSION_CODE_BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before }}
         run: tools/validate-version-code.sh "$VERSION_CODE_BASE"
@@ -71,12 +83,15 @@ jobs:
           command: ./gradlew :AnkiDroid:compileFullDebugJavaWithJavac :AnkiDroid:generateFullDebugAndroidTestLintModel generateDebugAndroidTestLintModel compileLint lint-rules:compileTestJava --daemon
 
       - name: Run Lint Debug
+        if: needs.already_tested.outputs.skip != 'true'
         # "lintAll" opts in all modules in 1 flavor to lint, pinning :AnkiDroid to lintFullDebug
         # update workflows/README.md when modifying this line
         run: ./gradlew lintAll ktlintCheck lint-rules:test --daemon
 
   # update workflows/README.md when modifying commands
   lintJavascript:
+    needs: already_tested
+    if: needs.already_tested.outputs.skip != 'true'
     name: Lint Javascript
     timeout-minutes: 20
     runs-on: ubuntu-latest

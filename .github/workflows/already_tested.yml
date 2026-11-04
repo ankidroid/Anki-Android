@@ -1,0 +1,46 @@
+name: Already Tested Check
+
+# The merge queue tests a commit, then the same commit is pushed to main and
+# would be tested again. Called by those workflows: on a push to the default
+# branch it outputs skip=true when a merge_group run of the calling workflow
+# already succeeded on this exact commit. Every other event gets skip=false.
+# Callers keep the steps that save caches and skip only the test steps.
+
+on:
+  workflow_call:
+    inputs:
+      workflow:
+        description: "File name of the calling workflow, e.g. tests_unit.yml"
+        required: true
+        type: string
+    outputs:
+      skip:
+        description: "'true' when this commit already passed the merge queue"
+        value: ${{ jobs.check.outputs.skip }}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WORKFLOW: ${{ inputs.workflow }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          skip=false
+          if [ "$GITHUB_EVENT_NAME" = push ] && [ "$GITHUB_REF" = "refs/heads/$DEFAULT_BRANCH" ]; then
+            # On an API error, test anyway.
+            passed=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW/runs?event=merge_group&head_sha=$GITHUB_SHA&status=success" --jq .total_count || echo 0)
+            echo "Successful merge queue runs of $WORKFLOW on $GITHUB_SHA: $passed"
+            if [ "$passed" -gt 0 ]; then skip=true; fi
+          fi
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
