@@ -19,8 +19,10 @@ import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
@@ -122,18 +124,29 @@ class LoginViewModel :
             .filter { it.message is LoginMessage.Failed }
             .forEach { messageQueue.acknowledge(it.id) }
         viewModelScope.launch {
+            // Not a child of this coroutine, which would then wait for it when cancelled:
+            // waiting for collection access can't be interrupted, so the progress would remain
+            // until the collection is available
+            val auth = viewModelScope.async { syncLogin(username, password, getEndpoint()) }
+            val login = coroutineContext.job
             try {
                 progressManager.withProgress(
                     message = LoginProgress.LOGGING_IN,
-                    // setWantsAbort alone doesn't interrupt a request waiting on the server
-                    onCancel = { cancelSync(CollectionManager.getBackend()) },
+                    onCancel = {
+                        login.cancel()
+                        // neither cancelling nor setWantsAbort interrupts a request waiting on the server
+                        cancelSync(CollectionManager.getBackend())
+                    },
                 ) {
-                    val auth = syncLogin(username, password, getEndpoint())
+                    updateLogin(username, auth.await().hkey)
                     Timber.i("Login success")
-                    updateLogin(username, auth.hkey)
                 }
                 messageQueue.enqueue(LoginMessage.LoggedIn)
             } catch (exc: CancellationException) {
+                Timber.i("Login cancelled")
+                // if it's still waiting for the collection, the credentials are never sent
+                auth.cancel()
+                loginStarted = false
                 throw exc
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 Timber.i("Login auth failed")
