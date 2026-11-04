@@ -312,6 +312,7 @@ open class DeckPicker :
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
     private var lastFocusedDeck: DeckId? = null
+    private var pendingFocusedDeck: DeckId? = null
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -1030,10 +1031,8 @@ open class DeckPicker :
     }
 
     private fun scrollToFocusedDeck() {
-        val deckId = viewModel.flowOfFocusedDeck.value ?: return
-        // A new collector replays the selection after recreation. Let RecyclerView restore
-        // its scroll position unless the selected deck actually changed.
-        if (deckId == lastFocusedDeck) return
+        val deckId = pendingFocusedDeck ?: return
+        if (viewModel.flowOfFocusedDeck.value != deckId) return
         if (deckListAdapter.currentList.isEmpty() || deckListAdapter.currentList != viewModel.flowOfDeckList.value.data) return
         val position = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: 0
 
@@ -1041,15 +1040,20 @@ open class DeckPicker :
         // Scrolling during a tap animation causes deck labels to overlap on older devices.
         if (decksLayoutManager.positionIsVisible(position)) {
             lastFocusedDeck = deckId
+            pendingFocusedDeck = null
             return
         }
         // Keep the scroll outside layout and the tap animation on older devices.
         deckPickerBinding.decks.postDelayed({
-            if (viewModel.flowOfFocusedDeck.value != deckId || lastFocusedDeck == deckId) return@postDelayed
+            if (viewModel.flowOfFocusedDeck.value != deckId || pendingFocusedDeck != deckId) return@postDelayed
             decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
             deckPickerBinding.decks.doOnNextLayout {
-                if (viewModel.flowOfFocusedDeck.value == deckId && decksLayoutManager.positionIsVisible(position)) {
+                if (viewModel.flowOfFocusedDeck.value == deckId &&
+                    pendingFocusedDeck == deckId &&
+                    decksLayoutManager.positionIsVisible(position)
+                ) {
                     lastFocusedDeck = deckId
+                    pendingFocusedDeck = null
                 }
             }
         }, 10)
@@ -1069,6 +1073,8 @@ open class DeckPicker :
     }
 
     private fun onFocusedDeckChanged(deckId: DeckId?) {
+        // Let RecyclerView restore its viewport when the collector replays a handled selection.
+        pendingFocusedDeck = deckId?.takeUnless { it == lastFocusedDeck }
         // A fresh ViewModel has no focused deck until the collection is loaded.
         if (deckId == null) return
         // Returning to the previous deck is still a new selection if another scroll was pending.
