@@ -28,3 +28,11 @@ gradle.projectsEvaluated {
         }.sort()
     }
 }
+
+tasks.register('inspectUnitTestCoverage') {
+    def settings = [':app:testPlayDebugUnitTest', ':library:testDebugUnitTest', ':nested:core:test'].collect { path ->
+        def test = tasks.getByPath(path)
+        "${path} coverage=${test.extensions.getByName('jacoco').enabled}".toString()
+    }
+    doLast { settings.each { println it } }
+}

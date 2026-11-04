@@ -14,10 +14,12 @@ ext.androidTestVariantName = 'Debug'
 // tooling is on a separate configuration and must be excluded from coverage.
 configure([project(':nested:core'), project(':tooling')]) {
     apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'jacoco'
 }
 
 configure([project(':library'), project(':empty')]) {
     apply plugin: 'com.android.library'
+    apply plugin: 'jacoco'
     android {
         namespace = "regression.${project.name}"
         compileSdk = libs.versions.compileSdk.get().toInteger()
