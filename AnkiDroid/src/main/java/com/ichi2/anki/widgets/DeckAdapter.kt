@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isGone
@@ -262,7 +263,8 @@ class DeckAdapter(
     }
 }
 
-private val deckNodeDiffCallback =
+@VisibleForTesting
+internal val deckNodeDiffCallback =
     object : DiffUtil.ItemCallback<DisplayDeckNode>() {
         override fun areItemsTheSame(
             oldItem: DisplayDeckNode,
@@ -275,9 +277,19 @@ private val deckNodeDiffCallback =
         ): Boolean = oldItem == newItem
 
         // Reuse rows for expand/collapse updates to avoid cross-fading different chevrons.
+        // Count changes should cross-fade when cards move between normal and filtered decks.
         // Selection changes need a new row: replacing the background of a pressed row restarts its ripple.
         override fun getChangePayload(
             oldItem: DisplayDeckNode,
             newItem: DisplayDeckNode,
-        ): Any? = if (oldItem.isSelected != newItem.isSelected) null else true
+        ): Any? =
+            if (oldItem.isSelected != newItem.isSelected ||
+                oldItem.newCount != newItem.newCount ||
+                oldItem.lrnCount != newItem.lrnCount ||
+                oldItem.revCount != newItem.revCount
+            ) {
+                null
+            } else {
+                true
+            }
     }
