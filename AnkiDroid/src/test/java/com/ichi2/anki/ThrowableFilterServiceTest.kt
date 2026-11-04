@@ -212,7 +212,7 @@ class ThrowableFilterServiceTest {
         val exception = StorageAccessException("private path")
         val reports = mutableListOf<Throwable>()
         withReportingHandler(
-            Thread.UncaughtExceptionHandler { _, throwable -> reports.add(throwable) },
+            { _, throwable -> reports.add(throwable) },
         ) {
             ThrowableFilterService.reInitialize()
             val handler = assertNotNull(Thread.getDefaultUncaughtExceptionHandler())
@@ -233,7 +233,7 @@ class ThrowableFilterServiceTest {
         var forwarded: Throwable? = null
         var reports = 0
         withReportingHandler(
-            Thread.UncaughtExceptionHandler { thread, throwable ->
+            { thread, throwable ->
                 reports++
                 forwardedThread = thread
                 forwarded = throwable
@@ -271,7 +271,7 @@ class ThrowableFilterServiceTest {
         var forwarded: Throwable? = null
         var calls = 0
         withReportingHandler(
-            Thread.UncaughtExceptionHandler { actualThread, throwable ->
+            { actualThread, throwable ->
                 assertSame(thread, actualThread)
                 forwarded = throwable
                 calls++
