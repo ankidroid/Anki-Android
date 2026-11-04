@@ -29,7 +29,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
@@ -45,6 +44,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
@@ -195,7 +195,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 getString(CommonString.select)
             }
 
-        val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+        val tagsListLayout: RecyclerView.LayoutManager = StableScrollbarLayoutManager(requireContext())
         binding.tagsList.apply {
             requestFocus()
             layoutManager = tagsListLayout
