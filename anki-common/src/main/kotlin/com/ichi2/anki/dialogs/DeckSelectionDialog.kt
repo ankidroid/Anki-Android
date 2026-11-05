@@ -26,17 +26,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.opChanges
 import anki.decks.deckTreeNode
-import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
-import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.ankicommon.R
+import com.ichi2.anki.ankicommon.databinding.DialogDeckPickerBinding
+import com.ichi2.anki.ankicommon.databinding.ItemDeckPickerDialogBinding
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.DialogDeckPickerBinding
-import com.ichi2.anki.databinding.ItemDeckPickerDialogBinding
 import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.REQUEST_SELECT_DECK
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.RESULT_SELECTED_DECK
@@ -73,7 +72,7 @@ import com.ichi2.anki.common.android.R as CommonR
 @NeedsTest("test syncing the status of collapsing deck with teh deckPicker")
 class DeckSelectionDialog : AnalyticsDialogFragment() {
     @VisibleForTesting
-    internal lateinit var binding: DialogDeckPickerBinding
+    lateinit var binding: DialogDeckPickerBinding
         private set
     private lateinit var decksAdapter: DecksArrayAdapter
     private lateinit var decksRoot: DeckNode
@@ -525,7 +524,7 @@ fun Fragment.registerChildDeckSelectedHandler(
  * @param asChild if true [DeckSelectionDialog] will start as a child of [Fragment]([Fragment.getChildFragmentManager]
  * will be used to start it). If false, the [FragmentActivity.getSupportFragmentManager] will be used
  * instead to start [DeckSelectionDialog]
- * @param templateEditorMessage an optional message shown only when used by [CardTemplateEditor]
+ * @param templateEditorMessage an optional message shown only when used by `CardTemplateEditor`
  * @param requestKey specifies the request key to be used for this request
  * @param allowMultipleSelection if selection of multiple decks is permitted
  * @param allowAll shows 'All decks' option if true
@@ -582,7 +581,7 @@ fun Fragment.startDeckSelection(
  * result in all possible decks('All Decks', normal, filtered and the 'Default' deck) being shown.
  *
  * @param title the title for the selection dialog, uses [CommonString.select_decks_title] if not provided
- * @param templateEditorMessage an optional message shown only when used by [CardTemplateEditor]
+ * @param templateEditorMessage an optional message shown only when used by `CardTemplateEditor`
  * @param requestKey specifies the request key to be used for this request
  * @param allowMultipleSelection if selection of multiple decks is permitted
  * @param allowAll shows 'All decks' option if true

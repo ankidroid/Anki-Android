@@ -52,6 +52,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.google.android.material.R as MaterialR
+import com.ichi2.anki.ankicommon.R as AnkiCommonR
 
 /** Exercises the reminder dialogs through the UI and checks their persisted results. */
 @RunWith(AndroidJUnit4::class)
@@ -356,10 +357,10 @@ class ReviewRemindersTest : InstrumentedTest() {
         onView(withId(R.id.add_edit_reminder_deck_name)).perform(click())
         onView(withText(deckName)).checkWithTimeout(matches(isDisplayed()))
         // .click() can open "Create subdeck", so invoke the handler directly
-        onView(withId(R.id.decks)).perform(
+        onView(withId(AnkiCommonR.id.decks)).perform(
             actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText(deckName)),
-                clickChildViewWithId(R.id.DeckPickerHoriz),
+                clickChildViewWithId(AnkiCommonR.id.DeckPickerHoriz),
             ),
         )
         onView(withId(R.id.add_edit_reminder_deck_name)).inRoot(isDialog()).checkWithTimeout(matches(withText(deckName)))
