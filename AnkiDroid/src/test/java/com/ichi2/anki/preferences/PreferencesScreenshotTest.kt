@@ -15,6 +15,7 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
 import com.ichi2.testutils.dispatchInsets
@@ -138,6 +139,19 @@ class PreferencesScreenshotTest : ScreenshotTest() {
                 captureScreen("TimeboxSettingsFragment_enabled")
             }
         }
+
+    @Test
+    fun fetchMediaDialogWithMediaSyncOff() {
+        Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.NEVER)
+        withPreferencesActivity(SyncSettingsFragment::class) { activity ->
+            activity.simulateSystemBars()
+            (activity.settingsFragment as SyncSettingsFragment)
+                .requirePreference<Preference>(R.string.sync_fetch_media_key)
+                .performClick()
+            advanceRobolectricLooper()
+            captureScreen("FetchMediaPreferenceDialog_never")
+        }
+    }
 
     @Test
     fun `capture all preference fragments`() {

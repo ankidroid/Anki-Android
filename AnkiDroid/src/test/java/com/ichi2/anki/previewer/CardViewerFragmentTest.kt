@@ -6,25 +6,31 @@ import android.os.Build
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
 import android.webkit.WebView
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.assertOpenedUrl
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.registerWebBrowser
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.nullValue
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -67,6 +73,26 @@ class CardViewerFragmentTest : RobolectricTest() {
                 shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
                 targetContext.assertNoActivityStarted(url)
             }
+        }
+    }
+
+    @Test
+    fun `missing media warnings can be turned off while media sync is off`() {
+        turnOffMissingMediaWarnings(fetchMedia = ShouldFetchMedia.NEVER)
+        withCardViewerWebView { webView ->
+            reportMissingImage(webView)
+
+            assertThat(snackbarText, nullValue())
+        }
+    }
+
+    @Test
+    fun `missing media warnings stay on while media sync is on`() {
+        turnOffMissingMediaWarnings(fetchMedia = ShouldFetchMedia.ALWAYS)
+        withCardViewerWebView { webView ->
+            reportMissingImage(webView)
+
+            assertThat(snackbarText, equalTo(targetContext.getString(CommonString.card_viewer_could_not_find_image, "missing-image.jpg")))
         }
     }
 
@@ -145,6 +171,17 @@ class CardViewerFragmentTest : RobolectricTest() {
         }
     }
 
+    private fun turnOffMissingMediaWarnings(fetchMedia: ShouldFetchMedia) {
+        Prefs.putEnum(R.string.sync_fetch_media_key, fetchMedia)
+        editPreferences { putBoolean(targetContext.getString(R.string.missing_media_warning_key), false) }
+    }
+
+    private fun reportMissingImage(webView: WebView) {
+        val request = mockWebResourceRequest("http://$LOCALHOST/missing-image.jpg", mainFrame = false)
+        shadowOf(webView).webViewClient.onReceivedError(webView, request, mock(WebResourceError::class.java))
+        advanceRobolectricLooper()
+    }
+
     private fun audioCaptureRequest(): PermissionRequest =
         mock(PermissionRequest::class.java).also {
             whenever(it.resources).thenReturn(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
@@ -156,7 +193,7 @@ class CardViewerFragmentTest : RobolectricTest() {
             block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
         }
 
-    private fun withCardViewerWebView(block: (WebView) -> Unit) {
+    private fun withCardViewerWebView(block: CardViewerActivity.(WebView) -> Unit) {
         val note = addBasicAndReversedNote()
         val intent =
             PreviewerFragment.getIntent(
@@ -174,7 +211,7 @@ class CardViewerFragmentTest : RobolectricTest() {
                         .map { webViewLayout.getChildAt(it) }
                         .filterIsInstance<WebView>()
                         .single()
-                block(webView)
+                activity.block(webView)
             }
         }
     }

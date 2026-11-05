@@ -456,6 +456,7 @@ abstract class CardViewerFragment(
     }
 
     private fun showMediaErrorSnackbar(filename: String) {
+        if (!Prefs.showMissingMediaWarnings) return
         showSnackbar(getString(CommonString.card_viewer_could_not_find_image, filename)) {
             setAction(CommonString.help) { openUrl(R.string.link_faq_missing_media) }
         }
