@@ -225,12 +225,12 @@
     <string name="ankidroid_init_failed_storage">AnkiDroid не може отримати доступ до сховища через помилку Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Розмір шрифту</string>
-    <string name="note_editor_toolbar_layout" maxLength="28">Toolbar layout</string>
+    <string name="note_editor_toolbar_layout" maxLength="28">Вигляд панелі інструментів</string>
     <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
     <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
     <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Показати попередній перегляд</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Сховати попередній перегляд</string>
     <string name="format_insert_bold">Форматувати як жирний</string>
     <string name="format_insert_italic">Форматувати як курсив</string>
     <string name="format_insert_underline">Форматувати як підкреслений</string>
@@ -245,8 +245,8 @@
     <string name="edit_toolbar_item">Редагувати елемент панелі інструментів</string>
     <string name="toolbar_item_explain_edit_or_remove">Введіть HTML, який буде вставлений до і після виділеного тексту\n\nДовго натискайте на елемент панелі інструментів, щоб його редагувати або видалити</string>
     <string name="remove_toolbar_item">Видалити елемент панелі інструментів?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Потрібно ввести текст для кнопки</string>
+    <string name="before_after_text_requirement_error">Потрібно хоча б одне HTML-поле</string>
     <string name="note_editor_image_too_large">Зображення завелике, будь ласка, вставте зображення вручну</string>
     <string name="note_editor_video_too_large">Відеофайл завеликий, будь ласка, вставте відео вручну</string>
     <string name="note_editor_audio_too_large">Аудіофайл завеликий, будь ласка, вставте аудіо вручну</string>
@@ -280,8 +280,8 @@
     <string name="import_deck">Імпортувати колоду</string>
     <string name="something_wrong">Щось пішло не так. Будь ласка, спробуйте ще раз</string>
     <string name="download_failed">Не вдалося завантажити</string>
-    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
-    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/с</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/с</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
     <string name="download_speed_label">Швидкість</string>
     <string name="download_time_left_label">Залишилося часу</string>
@@ -393,7 +393,7 @@
     <string name="set_due_date_date_range">Діапазон дат</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Уже в процесі</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Змінити профіль</string>
     <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Редагувати профіль</string>
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Видалити профіль</string>
 </resources>
