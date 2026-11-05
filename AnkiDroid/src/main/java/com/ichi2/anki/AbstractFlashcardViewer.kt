@@ -969,7 +969,7 @@ abstract class AbstractFlashcardViewer :
             }
         }
         if (animationEnabled()) {
-            flipCardLayout?.setBackgroundResource(getResFromAttr(this, CommonR.attr.hardButtonRippleRef))
+            flipCardLayout?.setBackgroundResource(getResFromAttr(this, CommonR.attr.answerButtonRippleRef))
         }
         if (!buttonHeightSet && relativeButtonSize != 100) {
             val params = flipCardLayout!!.layoutParams
