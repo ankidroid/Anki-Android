@@ -52,8 +52,8 @@
     <string name="custom_study_extend_limits_title">Extend daily limits</string>
     <string name="custom_study_increase">Збільшити</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_ahead_description">Картки до повторень через:</string>
+    <string name="custom_study_preview">Переглянути нові картки додані за останні:</string>
     <string name="custom_study_tags">Вибрати x карток з колоди:</string>
     <string name="storage_full_title">Сховище заповнено</string>
     <string name="storage_almost_full_title">Сховище майже заповнено</string>
@@ -112,7 +112,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Відхилено доступ до запису звуку</string>
     <string name="permission_denied">Відмовлено у доступі</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Відмовлено в доступі до мікрофону. Надайте дозвіл у налаштуваннях додатку.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Все одно продовжити</string>
     <string name="integrity_check_insufficient_space">Перевірка бази даних використовує багато тимчасового сховища.\n\nНаполегливо рекомендується мати принаймні %s вільного місця на пристрої перед продовженням.</string>

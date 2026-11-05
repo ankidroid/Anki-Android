@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Не вдається створити панель інструментів аудіозапису</string>
     <!-- Crop function-->
     <string name="crop_image">Обрізати це зображення?</string>
-    <string name="crop_button" maxLength="28">Crop</string>
+    <string name="crop_button" maxLength="28">Обрізати</string>
     <string name="external_image_editor_no_changes">No changes were returned.</string>
     <string name="save_dialog_content">Поточний розмір зображення %sМБ. Розмір за замовчуванням обмежено до 1 МБ. Бажаєте стиснути його?</string>
     <string name="select_image_failed">"Не вдалося обрати зображення. Будь ласка, спробуйте ще"</string>
