@@ -6,6 +6,8 @@ import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.preferences.LearnAheadLimit
+import com.ichi2.anki.preferences.toLearnAheadLimit
 import timber.log.Timber
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -68,16 +70,25 @@ object CollectionPreferences {
     //endregion
 
     //region Scheduling
+    suspend fun getLearnAhead(): LearnAheadLimit? = getLearnAheadLimit().toLearnAheadLimit()
+
+    /**
+     * Sets the collection's learn ahead limit, or disables it (0s) when [limit] is `null`.
+     */
+    suspend fun setLearnAhead(limit: LearnAheadLimit?) = setLearnAheadLimit(limit?.toDuration() ?: Duration.ZERO)
+
+    // TODO: Refactor getLearnAheadLimit() and setLearnAheadLimit() to return and accept LearnAheadLimit instead of Duration.
     suspend fun getLearnAheadLimit(): Duration = withCol { getPreferences() }.scheduling.learnAheadSecs.toDuration(DurationUnit.SECONDS)
 
     suspend fun setLearnAheadLimit(limit: Duration) {
-        val prefs = withCol { getPreferences() }
-        val newPrefs =
-            prefs.copy {
-                scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
-            }
-
-        undoableOp { setPreferences(newPrefs) }
+        undoableOp {
+            val prefs = getPreferences()
+            val newPrefs =
+                prefs.copy {
+                    scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
+                }
+            setPreferences(newPrefs)
+        }
         Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
     }
 

@@ -18,6 +18,7 @@ import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.preferences.LearnAheadLimit
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.TimeboxTimeLimit
 import com.ichi2.anki.settings.enums.AppTheme
@@ -400,6 +401,16 @@ open class PrefsRepository protected constructor(
     var customTimeboxLimit by intPref(
         R.string.custom_timebox_limit_key,
         defaultValue = TimeboxTimeLimit.DEFAULT_TIMEBOX_MINUTES,
+    )
+
+    /**
+     * Stores the user's customized learn ahead limit in minutes.
+     *
+     * Persists the last chosen limit to restore when re-enabled, mirroring [customTimeboxLimit].
+     */
+    var customLearnAheadLimit by intPref(
+        R.string.custom_learn_ahead_limit_key,
+        defaultValue = LearnAheadLimit.DEFAULT_LEARN_AHEAD_MINUTES,
     )
 
     private val swipeSensitivityPercent by intPref(R.string.pref_swipe_sensitivity_key, 100)

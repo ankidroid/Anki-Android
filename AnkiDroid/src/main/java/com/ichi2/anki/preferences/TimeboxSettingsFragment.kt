@@ -11,8 +11,13 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.compose.theme.AnkiDroidTheme
+import kotlinx.coroutines.launch
 
 /**
  * Screen allowing users to enable/disable and configure the review timebox time limit.
@@ -45,4 +50,19 @@ class TimeboxSettingsFragment : Fragment() {
                 }
             }
         }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.errorEvents.collect { messageRes ->
+                    showThemedToast(requireContext(), messageRes, false)
+                    viewModel.consumeError()
+                }
+            }
+        }
+    }
 }
