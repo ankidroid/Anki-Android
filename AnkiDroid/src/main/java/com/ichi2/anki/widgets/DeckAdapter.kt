@@ -52,7 +52,7 @@ class DeckAdapter(
     private val newCountColor: Int
     private val learnCountColor: Int
     private val reviewCountColor: Int
-    private val rowCurrentDrawable: Int
+    private val rowCurrentDrawable: Int = CommonR.drawable.item_background_selected
     private val deckNameDefaultColor: Int
     private val deckNameDynColor: Int
     private val expandImage: Drawable
@@ -237,7 +237,6 @@ class DeckAdapter(
                 CommonR.attr.newCountColor,
                 CommonR.attr.learnCountColor,
                 CommonR.attr.reviewCountColor,
-                CommonR.attr.currentDeckBackground,
                 android.R.attr.textColor,
                 CommonR.attr.dynDeckColor,
                 CommonR.attr.expandRef,
@@ -248,12 +247,11 @@ class DeckAdapter(
         newCountColor = ta.getColor(1, context.getColor(CommonR.color.black))
         learnCountColor = ta.getColor(2, context.getColor(CommonR.color.black))
         reviewCountColor = ta.getColor(3, context.getColor(CommonR.color.black))
-        rowCurrentDrawable = ta.getResourceId(4, 0)
-        deckNameDefaultColor = ta.getColor(5, context.getColor(CommonR.color.black))
-        deckNameDynColor = ta.getColor(6, context.getColor(CommonR.color.material_blue_A700))
-        expandImage = ta.getDrawableOrThrow(7)
+        deckNameDefaultColor = ta.getColor(4, context.getColor(CommonR.color.black))
+        deckNameDynColor = ta.getColor(5, context.getColor(CommonR.color.material_blue_A700))
+        expandImage = ta.getDrawableOrThrow(6)
         expandImage.isAutoMirrored = true
-        collapseImage = ta.getDrawableOrThrow(8)
+        collapseImage = ta.getDrawableOrThrow(7)
         collapseImage.isAutoMirrored = true
         ta.recycle()
         context.withStyledAttributes(attrs = intArrayOf(android.R.attr.selectableItemBackground)) {

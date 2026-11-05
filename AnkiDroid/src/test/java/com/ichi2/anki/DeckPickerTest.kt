@@ -53,7 +53,6 @@ import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckFilters
@@ -1343,7 +1342,7 @@ class DeckPickerTest : RobolectricTest() {
 
             assertThat(
                 shadowOf(selectedDeck.background).createdFromResId,
-                equalTo(getResFromAttr(this, CommonR.attr.currentDeckBackground)),
+                equalTo(CommonR.drawable.item_background_selected),
             )
         }
     }
