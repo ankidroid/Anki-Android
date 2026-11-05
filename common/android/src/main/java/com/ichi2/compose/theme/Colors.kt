@@ -15,8 +15,7 @@ import androidx.compose.ui.graphics.Color
  * App specific colors that have no Material3 slot.
  *
  * FABs keep the accent the View screens use (the `fabNormalColor` theme attr)
- * instead of Material3's primaryContainer, which our bridged theme leaves at
- * the baseline purple.
+ * instead of Material3's paler primaryContainer.
  */
 @Immutable
 data class AnkiDroidColors(

@@ -76,12 +76,8 @@ internal fun Context.toMaterial3ColorScheme(): ColorScheme {
             base.copy(
                 primary = color(R.styleable.ComposeTheme_colorPrimary, base.primary),
                 onPrimary = color(R.styleable.ComposeTheme_colorOnPrimary, base.onPrimary),
-                // primaryContainer / onPrimaryContainer are intentionally NOT read from
-                // the AnkiDroid XML themes. Those XML values were chosen for legacy
-                // Material Components purposes (switch thumb, old-style FAB icon tint)
-                // and conflict with Material3's semantic (a real container background
-                // for FABs and similar). Falling back to the Material3 base colorScheme
-                // gives the right behavior for Compose components.
+                primaryContainer = color(R.styleable.ComposeTheme_colorPrimaryContainer, base.primaryContainer),
+                onPrimaryContainer = color(R.styleable.ComposeTheme_colorOnPrimaryContainer, base.onPrimaryContainer),
                 secondary = color(R.styleable.ComposeTheme_colorSecondary, base.secondary),
                 onSecondary = color(R.styleable.ComposeTheme_colorOnSecondary, base.onSecondary),
                 secondaryContainer = color(R.styleable.ComposeTheme_colorSecondaryContainer, base.secondaryContainer),

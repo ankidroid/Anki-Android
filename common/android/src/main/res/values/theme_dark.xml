@@ -16,8 +16,8 @@
         <item name="colorSurface">?android:colorBackground</item>
         <item name="colorSecondary">@color/material_blue_400</item>
         <item name="colorOnSurface">@color/white</item>
-        <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
-        <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
+        <item name="colorPrimaryContainer">@color/material_light_blue_900</item>
+        <item name="colorOnPrimaryContainer">@color/material_light_blue_100</item>
 
         <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
