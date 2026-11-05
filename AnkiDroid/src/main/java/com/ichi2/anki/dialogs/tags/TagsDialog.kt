@@ -37,7 +37,6 @@ import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogTagsBinding
 import com.ichi2.anki.launchCatchingTask
@@ -172,10 +171,6 @@ class TagsDialog : AnalyticsDialogFragment {
             listener
                 ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
 
-    @NeedsTest(
-        "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +
-            " filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
-    )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Resolve the selection before creating any controls that could submit an operation.
         try {
