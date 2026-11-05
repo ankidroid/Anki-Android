@@ -52,7 +52,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
-        <item name="actionModeBackground">@color/theme_dark_primary</item>
+        <item name="actionModeBackground">?attr/appBarColor</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
         <item name="tabActiveIconColor">@color/material_blue_500</item>
@@ -132,7 +132,7 @@
         <item name="editTextDisabled">@color/material_grey_500</item>
         <item name="overflowAndPopupMenuIconColor">#9effffff</item>
         <!-- StatusBar -->
-        <item name="android:statusBarColor">@color/theme_dark_primary</item>
+        <item name="android:statusBarColor">?attr/appBarColor</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Navbar -->
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>

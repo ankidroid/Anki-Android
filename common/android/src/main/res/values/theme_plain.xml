@@ -25,7 +25,6 @@
         <item name="widgetColorActivated">?attr/colorAccent</item>
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
-        <item name="actionModeBackground">@color/theme_plain_primary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
         <item name="tabActiveIconColor">@color/white</item>
@@ -66,8 +65,6 @@
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_500</item>
         <item name="overflowAndPopupMenuIconColor">?attr/colorPrimary</item>
-        <!-- StatusBar -->
-        <item name="android:statusBarColor">@color/theme_plain_primary</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>

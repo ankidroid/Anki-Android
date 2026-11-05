@@ -29,7 +29,6 @@
         <item name="appBarColor">@color/white</item>
         <item name="actionBarTextColor">@color/black</item>
         <item name="actionBarPopupTextColor">?android:attr/textColor</item>
-        <item name="actionModeBackground">@color/white</item>
 
         <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
         <item name="tabActiveIconColor">@color/white</item>
@@ -83,7 +82,6 @@
         <item name="overflowAndPopupMenuIconColor">@color/black</item>
         <item name="incrementerButtonBackground">@color/black</item>
 
-        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
