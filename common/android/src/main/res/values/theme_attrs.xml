@@ -16,8 +16,7 @@
     <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
     <attr name="widgetColorActivated" format="color"/>
     <!-- Deck list colors and expander -->
-    <attr name="currentDeckBackgroundColor" format="color"/>
-    <attr name="focusedRowBackgroundColor" format="color"/>
+    <attr name="selectedRowBackgroundColor" format="color"/> <!-- Selected deck, note type, browser row and settings header -->
     <attr name="dynDeckColor" format="color"/>
     <attr name="expandRef" format="reference"/>
     <attr name="collapseRef" format="reference"/>

@@ -5,5 +5,5 @@
   -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
         android:color="?attr/colorControlHighlight">
-    <item android:drawable="?attr/currentDeckBackgroundColor" />
+    <item android:drawable="?attr/selectedRowBackgroundColor" />
 </ripple>
