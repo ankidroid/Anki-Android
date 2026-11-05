@@ -25,7 +25,6 @@
         <item name="colorSurfaceContainer">#F0F0F0</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 
-        <item name="widgetColorActivated">?attr/colorPrimary</item>
         <item name="appBarColor">@color/white</item>
         <item name="actionBarTextColor">@color/black</item>
         <item name="actionBarPopupTextColor">?android:attr/textColor</item>

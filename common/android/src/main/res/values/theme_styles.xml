@@ -42,10 +42,6 @@
     </style>
 
     <style name="SliderStyle" parent="Widget.Material3.Slider">
-        <item name="trackColorActive">@color/slider_active_track_color</item>
-        <item name="trackColorInactive">@color/slider_inactive_track_color</item>
-        <item name="haloColor">@color/slider_halo_color</item>
-        <item name="thumbColor">@color/slider_thumb_color</item>
         <item name="labelStyle">@style/SliderLabelStyle</item>
         <item name="tickVisible">false</item>
     </style>

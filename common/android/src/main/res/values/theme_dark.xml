@@ -35,8 +35,6 @@
         <item name="colorSurfaceContainerHigh">#424C54</item>
         <item name="colorSurfaceContainer">#0F42A5F5</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
-        <!-- Widget colors -->
-        <item name="widgetColorActivated">?attr/colorSecondary</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
