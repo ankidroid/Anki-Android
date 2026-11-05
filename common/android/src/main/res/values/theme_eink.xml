@@ -15,6 +15,7 @@
         <item name="colorSurfaceVariant">#EEEEEE</item>
         <item name="colorOnSurfaceVariant">#444444</item>
         <item name="colorOutlineVariant">#777777</item>
+        <item name="colorOutline">@color/black</item>
         <item name="colorTertiary">#444444</item>
         <item name="colorOnTertiary">#FFFFFF</item>
         <item name="colorOnPrimaryContainer">@color/white</item>
