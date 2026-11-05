@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.storage.CollectionHelper
@@ -28,6 +29,7 @@ import org.junit.After
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -139,20 +141,18 @@ class PreferencesScreenshotTest : ScreenshotTest() {
             }
         }
 
+    /** One test per fragment: capturing all of them in a single test risks a timeout */
     @Test
-    fun `capture all preference fragments`() {
+    fun capturePreferenceFragment(
+        @TestParameter(valuesProvider = PreferenceFragmentsProvider::class) fragmentClass: KClass<out Fragment>,
+    ) {
         Prefs.isNewStudyScreenEnabled = true
-        val fragments = PreferenceTestUtils.getAllPreferencesFragments(targetContext)
-
-        fragments.forEach { fragment ->
-            val fragmentClass = fragment::class
-            withPreferencesActivity(
-                fragmentClass,
-                fullHeightList = fragment.fullHeightList(),
-                setup = { activity -> activity.stabilizeContent() },
-            ) {
-                captureScreen(fragmentClass.simpleName!!)
-            }
+        withPreferencesActivity(
+            fragmentClass,
+            fullHeightList = fragmentClass.fullHeightList(),
+            setup = { activity -> activity.stabilizeContent() },
+        ) {
+            captureScreen(fragmentClass.simpleName!!)
         }
     }
 
@@ -214,10 +214,14 @@ class PreferencesScreenshotTest : ScreenshotTest() {
         get() = (fragment as PreferencesFragment).childFragmentManager.findFragmentById(R.id.settings_container)
 
     /** @return the list which makes the screenshot full height, or null to capture at the device height */
-    private fun Fragment.fullHeightList(): ((PreferencesActivity) -> RecyclerView)? =
-        when (this) {
-            is PreferenceFragmentCompat -> { activity -> (activity.settingsFragment as PreferenceFragmentCompat).listView }
-            is ReviewerMenuSettingsFragment -> { activity -> activity.settingsFragment!!.requireView().findViewById(R.id.recycler_view) }
+    private fun KClass<out Fragment>.fullHeightList(): ((PreferencesActivity) -> RecyclerView)? =
+        when {
+            isSubclassOf(PreferenceFragmentCompat::class) -> { activity ->
+                (activity.settingsFragment as PreferenceFragmentCompat).listView
+            }
+            isSubclassOf(ReviewerMenuSettingsFragment::class) -> { activity ->
+                activity.settingsFragment!!.requireView().findViewById(R.id.recycler_view)
+            }
             else -> null
         }
 }
