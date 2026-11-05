@@ -5,8 +5,11 @@ package com.ichi2.anki.pages
 import android.content.Intent
 import android.graphics.Color
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
+import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.SingleFragmentScreenshotTest
 import com.ichi2.anki.common.utils.dp
@@ -17,6 +20,8 @@ import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.windowInsetsOf
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Screenshot tests for [DeckOptions]
@@ -33,6 +38,7 @@ class DeckOptionsScreenshotTest : SingleFragmentScreenshotTest() {
             captureScreen("keyboard_closed")
 
             val keyboard = activity.simulateKeyboard()
+            assertTrue(activity.findViewById<View>(R.id.toolbar).isVisible)
             captureScreen("keyboard_open")
 
             (activity.window.decorView as ViewGroup).removeView(keyboard)
@@ -43,15 +49,23 @@ class DeckOptionsScreenshotTest : SingleFragmentScreenshotTest() {
 
     @Test
     fun landscapeKeyboard() {
-        RuntimeEnvironment.setQualifiers("+land")
+        // A phone with a tall landscape keyboard must still leave room to edit the page.
+        RuntimeEnvironment.setQualifiers("+w952dp-h426dp-land")
         withPagePlaceholder { activity ->
-            activity.simulateKeyboard(keyboardHeight = 180.dp, navBarBottom = 0.dp)
+            val keyboard = activity.simulateKeyboard(keyboardHeight = 275.dp, navBarBottom = 0.dp)
             val insets =
                 with(activity) {
-                    windowInsetsOf(navBarRight = 48.dp, cutoutLeft = 32.dp, imeBottom = 180.dp)
+                    windowInsetsOf(navBarRight = 48.dp, cutoutLeft = 32.dp, imeBottom = 275.dp)
                 }
             activity.window.simulateSystemBars(insets)
+            assertFalse(activity.findViewById<View>(R.id.toolbar).isVisible)
             captureScreen("landscape_keyboard")
+
+            (activity.window.decorView as ViewGroup).removeView(keyboard)
+            activity.dispatchInsets(navBarRight = 48.dp, cutoutLeft = 32.dp)
+            advanceRobolectricLooper()
+            assertTrue(activity.findViewById<View>(R.id.toolbar).isVisible)
+            captureScreen("landscape_keyboard_dismissed")
         }
     }
 
