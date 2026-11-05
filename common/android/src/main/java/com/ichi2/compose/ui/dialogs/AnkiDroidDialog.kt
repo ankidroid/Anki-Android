@@ -3,6 +3,7 @@
 package com.ichi2.compose.ui.dialogs
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,7 +36,7 @@ fun AnkiDroidDialog(
         // TODO: Preview the surrounding dialog window, including its scrim, positioning and system UI.
         // Match BasicAlertDialog's content constraints, including caller overrides.
         Box(
-            modifier = modifier.sizeIn(minWidth = 280.dp, maxWidth = 560.dp),
+            modifier = modifier.padding(horizontal = 24.dp, vertical = 16.dp).sizeIn(minWidth = 280.dp, maxWidth = 560.dp),
             propagateMinConstraints = true,
         ) {
             content()
@@ -43,7 +44,7 @@ fun AnkiDroidDialog(
     } else {
         BasicAlertDialog(
             onDismissRequest = onDismissRequest,
-            modifier = modifier,
+            modifier = modifier.padding(horizontal = 24.dp, vertical = 16.dp),
             properties = properties,
         ) {
             val window = (LocalView.current.parent as DialogWindowProvider).window
