@@ -48,6 +48,7 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withStarted
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import anki.notetypes.StockNotetype
@@ -368,8 +369,10 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     fillEmpty = true,
                 )
             val fragment = TemplatePreviewerFragment.newInstance(args)
-            supportFragmentManager.commitNow {
-                replace(R.id.fragment_container, fragment)
+            withStarted {
+                supportFragmentManager.commitNow {
+                    replace(R.id.fragment_container, fragment)
+                }
             }
 
             // Modify the "Show Answer" button height to 80dp to maintain visual consistency with the BottomNavigationView,
