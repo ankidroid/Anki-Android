@@ -26,7 +26,6 @@
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
         <!-- Tab layout -->
-        <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
         <item name="tabActiveIconColor">@color/white</item>
         <!-- Study Screen colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
@@ -59,8 +58,6 @@
         <!-- FAB -->
         <item name="fabNormalColor">@color/theme_plain_accent</item>
         <item name="fabPressedColor">@color/theme_plain_accent</item> <!-- No change in opacity on FAB pressed to avoid Android's material shadow artifact on translucent backgrounds -->
-        <!--Custom Tabs colors-->
-        <item name="customTabNavBarColor">@color/material_grey_500</item>
         <item name="overflowAndPopupMenuIconColor">?attr/colorPrimary</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>

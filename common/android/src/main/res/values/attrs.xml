@@ -4,5 +4,4 @@
 <!-- Theme attributes resolved by shared activity code (e.g. AnkiActivity). -->
 <resources>
     <attr name="appBarColor" format="color"/>
-    <attr name="customTabNavBarColor" format="color"/>
 </resources>
