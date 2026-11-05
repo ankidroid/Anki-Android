@@ -24,6 +24,9 @@
         <attr name="colorOnSurfaceVariant" />
         <attr name="colorOutline" />
         <attr name="colorOutlineVariant" />
+        <attr name="colorSurfaceInverse" />
+        <attr name="colorOnSurfaceInverse" />
+        <attr name="colorPrimaryInverse" />
         <attr name="colorSurfaceContainer" />
         <attr name="colorSurfaceContainerHigh" />
         <attr name="colorSurfaceContainerHighest" />

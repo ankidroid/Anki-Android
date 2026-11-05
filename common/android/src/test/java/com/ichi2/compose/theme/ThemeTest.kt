@@ -92,16 +92,24 @@ class ThemeTest {
     fun `light theme uses lightColorScheme as base for unspecified slots`() {
         val scheme = themed(R.style.Theme_Light).toMaterial3ColorScheme()
         val lightDefaults = lightColorScheme()
-        // inverseSurface is not overridden by Theme_Light, so it should come from the base
-        assertEquals(lightDefaults.inverseSurface.toArgb(), scheme.inverseSurface.toArgb())
+        // surfaceBright is not overridden by Theme_Light, so it should come from the base
+        assertEquals(lightDefaults.surfaceBright.toArgb(), scheme.surfaceBright.toArgb())
     }
 
     @Test
     fun `dark theme uses darkColorScheme as base for unspecified slots`() {
         val scheme = themed(R.style.Theme_Dark).toMaterial3ColorScheme()
         val darkDefaults = darkColorScheme()
-        // inverseSurface is not overridden by Theme_Dark, so it should come from the base
-        assertEquals(darkDefaults.inverseSurface.toArgb(), scheme.inverseSurface.toArgb())
+        // surfaceBright is not overridden by Theme_Dark, so it should come from the base
+        assertEquals(darkDefaults.surfaceBright.toArgb(), scheme.surfaceBright.toArgb())
+    }
+
+    @Test
+    fun `dark theme bridges the inverse colors used by snackbars`() {
+        val scheme = themed(R.style.Theme_Dark).toMaterial3ColorScheme()
+        assertEquals(0xFFCFCFCF.toInt(), scheme.inverseSurface.toArgb())
+        assertEquals(ContextCompat.getColor(appContext, R.color.material_theme_grey), scheme.inverseOnSurface.toArgb())
+        assertEquals(ContextCompat.getColor(appContext, R.color.material_light_blue_900), scheme.inversePrimary.toArgb())
     }
 
     @Test
