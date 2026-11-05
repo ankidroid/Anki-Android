@@ -13,7 +13,6 @@
 
     <attr name="incrementerButtonBackground" format="color" />
 
-    <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
     <!-- Deck list colors and expander -->
     <attr name="selectedRowBackgroundColor" format="color"/> <!-- Selected deck, note type, browser row and settings header -->
     <attr name="dynDeckColor" format="color"/>
@@ -95,9 +94,7 @@
 
     <attr name="clozeColor" format="color" />
 
-    <!-- Background color for Tab layout. It is essentially the color of the toolbar.
-         The latter is set by colorPrimary, but theme overlay can't use it,
-         as it itself overrides colorPrimary, which is used by the view directly. -->
+    <!-- Background of tab layouts and the bottom navigation indicator: appBarColor, except in E-ink -->
     <attr name="tabLayoutBackgroundColor" format="color"/>
     <attr name="tabActiveIconColor" format="color"/>
 
