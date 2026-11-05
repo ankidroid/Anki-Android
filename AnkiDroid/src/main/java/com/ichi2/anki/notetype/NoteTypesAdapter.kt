@@ -91,10 +91,7 @@ internal class NoteTypesAdapter(
             context.usingStyledAttributes(null, intArrayOf(android.R.attr.selectableItemBackground)) {
                 getResourceId(0, 0)
             }
-        private val selectedNoteTypeBackground: Int =
-            context.usingStyledAttributes(null, intArrayOf(CommonR.attr.currentDeckBackground)) {
-                getResourceId(0, 0)
-            }
+        private val selectedNoteTypeBackground: Int = CommonR.drawable.item_background_selected
 
         private var noteTypeItemState: NoteTypeItemState? = null
 

@@ -48,7 +48,6 @@
         <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
         <item name="tabActiveIconColor">@color/white</item>
         <!-- Deck list colors -->
-        <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">#ececec</item>
         <item name="focusedRowBackgroundColor">#ececec</item>
         <item name="dynDeckColor">#2222bb</item>
