@@ -58,12 +58,11 @@
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
         <item name="tabActiveIconColor">@color/material_blue_500</item>
-        <!-- Deck list colors and divider -->
+        <!-- Deck list colors -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
         <item name="focusedRowBackgroundColor">@color/theme_dark_row_current</item>
         <item name="dynDeckColor">@color/material_light_blue_500</item>
-        <item name="deckDivider">@drawable/divider_dark</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
         <!-- Count colors -->
@@ -117,7 +116,6 @@
         <item name="markedColor">@color/material_deep_purple_400</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
-        <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="editTextHighlightColor">@color/material_light_blue_900</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
@@ -169,8 +167,6 @@
         <item name="dialogBackground">#ff303030</item>
         <item name="progressDialogButtonTextColor">@color/material_light_blue_400</item>
 
-        <item name="checkMediaListBackground">@color/material_grey_700</item>
-        <item name="checkMediaListForeground">@color/white</item>
 
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog</item>

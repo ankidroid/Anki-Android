@@ -35,12 +35,11 @@
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_black_primary_dark</item>
         <item name="tabActiveIconColor">@color/material_blue_500</item>
-        <!-- Deck list colors and divider -->
+        <!-- Deck list colors -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
         <item name="focusedRowBackgroundColor">@color/theme_black_row_current</item>
         <item name="dynDeckColor">@color/material_light_blue_500</item>
-        <item name="deckDivider">@drawable/divider_black</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
         <!-- Count colors -->
@@ -82,12 +81,10 @@
         <item name="cardBrowserDivider">@color/white</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#A8A634</item>
-        <item name="selectedColor">#a86634</item>
         <item name="markedColor">#391080</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <!-- Note editor colors -->
-        <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="editTextHighlightColor">@color/material_light_blue_900</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
