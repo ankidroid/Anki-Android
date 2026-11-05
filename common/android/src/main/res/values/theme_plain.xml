@@ -2,7 +2,6 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <color name="theme_plain_primary">#9E9E9E</color>
-    <color name="theme_plain_primary_dark">#616161</color>
     <color name="theme_plain_primary_light">#F5F5F5</color>
     <color name="theme_plain_accent">#607D8B</color>
     <color name="theme_plain_primary_text">#212121</color>
@@ -10,7 +9,6 @@
     <style name="Base.Theme.Light.Plain">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_plain_primary</item>
-        <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
         <item name="colorAccent">@color/theme_plain_accent</item>
         <item name="colorSurfaceContainer">#0F9E9E9E</item>
         <item name="colorSecondaryContainer">#DDDDDD</item>

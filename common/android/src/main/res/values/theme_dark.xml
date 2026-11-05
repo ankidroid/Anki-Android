@@ -2,7 +2,6 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <color name="theme_dark_primary">#3d3d3d</color>
-    <color name="theme_dark_primary_dark">@color/material_grey_900</color>
     <color name="theme_dark_primary_light">@color/material_grey_800</color>
     <color name="theme_dark_primary_text">@color/white</color>
     <color name="theme_dark_secondary_text">#b2ffffff</color>
@@ -14,7 +13,6 @@
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_blue_400</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorSurface">?android:colorBackground</item>
         <item name="colorAccent">@color/material_blue_400</item>
         <item name="colorOnSurface">@color/white</item>
@@ -142,9 +140,8 @@
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Navbar -->
-        <item name="android:navigationBarColor">@color/material_theme_grey</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/material_theme_grey</item>
 
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
              must be *all* present in a theme (or its parent) in order for the snackbar
