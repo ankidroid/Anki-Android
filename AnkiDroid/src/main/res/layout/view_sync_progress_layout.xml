@@ -26,8 +26,8 @@
         android:indeterminate="true"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="2dp"
-        app:indicatorColor="@color/slider_active_track_color"
-        app:trackColor="@color/slider_inactive_track_color"
+        app:indicatorColor="?attr/colorSecondary"
+        app:trackColor="@color/sync_progress_track_color"
         android:visibility="gone"
         tools:visibility="visible"
         />

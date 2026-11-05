@@ -27,8 +27,6 @@
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="preferenceCategoryTitleTextColor">@color/material_light_blue_800</item>
-        <!-- Widget colors -->
-        <item name="widgetColorActivated">?attr/colorPrimary</item>
         <!-- Navigation drawer theme -->
         <item name="navDrawerItemColor">@color/drawer_item_text_light</item>
         <item name="navDrawerItemBackground">@drawable/drawer_item_background_light</item>
