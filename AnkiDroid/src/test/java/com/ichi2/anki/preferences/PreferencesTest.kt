@@ -65,6 +65,12 @@ class PreferencesTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `PreferenceFragmentsProvider lists every preference fragment`() {
+        val expected = PreferenceTestUtils.getAllPreferencesFragments(targetContext).map { it::class }.toSet()
+        assertEquals(expected, PreferenceFragmentsProvider.FRAGMENTS.toSet())
+    }
+
     /** checks if any of the Preferences fragments throws while being created */
     @Test
     fun fragmentsDoNotThrowOnCreation() {
