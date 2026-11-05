@@ -24,6 +24,8 @@
     <color name="material_grey_800">#ff424242</color>
     <color name="material_grey_900">#ff212121</color>
 
+    <color name="material_red_50">#ffffebee</color>
+    <color name="material_red_100">#ffffcdd2</color>
     <color name="material_red_200">#ffef9a9a</color>
     <color name="material_red_300">#ffE57373</color>
     <color name="material_red_400">#ffEF5350</color>

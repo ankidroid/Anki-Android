@@ -30,6 +30,10 @@
         <item name="colorOnSurfaceVariant">#D4D4D4</item>
         <item name="colorOutlineVariant">#5B819B</item>
         <item name="colorOutline">@color/material_grey_500</item>
+        <item name="colorError">@color/material_red_100</item>
+        <item name="colorOnError">@color/black</item>
+        <item name="colorErrorContainer">#5C191B</item>
+        <item name="colorOnErrorContainer">#FFDAD6</item>
         <item name="colorTertiary">#78CAFF</item>
         <item name="colorOnTertiary">#00324D</item>
         <item name="colorOnSecondaryContainer">@color/white</item>

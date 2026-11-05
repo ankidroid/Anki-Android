@@ -16,6 +16,10 @@
         <item name="colorOnSurfaceVariant">#444444</item>
         <item name="colorOutlineVariant">#777777</item>
         <item name="colorOutline">@color/black</item>
+        <item name="colorError">@color/black</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">@color/white</item>
+        <item name="colorOnErrorContainer">@color/black</item>
         <item name="colorTertiary">#444444</item>
         <item name="colorOnTertiary">#FFFFFF</item>
         <item name="colorPrimaryContainer">@color/material_grey_300</item>

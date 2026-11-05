@@ -14,6 +14,7 @@
         <item name="colorSurfaceVariant">#252525</item>
         <item name="colorOnSurfaceVariant">#CCCCCC</item>
         <item name="colorOutlineVariant">#555555</item>
+        <item name="colorErrorContainer">#4E1517</item>
         <item name="colorTertiary">#CCCCCC</item>
         <item name="colorOnTertiary">#000000</item>
         <item name="colorSurfaceContainerHigh">#151515</item>
