@@ -41,11 +41,8 @@
     <attr name="hardButtonRef" format="reference"/>
     <attr name="goodButtonRef" format="reference"/>
     <attr name="easyButtonRef" format="reference"/>
-    <!-- Same thing but with ripples -->
-    <attr name="againButtonRippleRef" format="reference"/>
-    <attr name="hardButtonRippleRef" format="reference"/>
-    <attr name="goodButtonRippleRef" format="reference"/>
-    <attr name="easyButtonRippleRef" format="reference"/>
+    <!-- Same thing but with a ripple, shared by all eases -->
+    <attr name="answerButtonRippleRef" format="reference"/>
     <!-- Study Screen button text colors-->
     <attr name="answerButtonTextColor" format="color"/>
     <attr name="againButtonTextColor" format="color"/>
