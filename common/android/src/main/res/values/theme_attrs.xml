@@ -11,7 +11,7 @@
     <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
     <attr name="actionBarPopupTextColor" format="color"/>
 
-    <attr name="incrementerButtonBackground" format="color|reference" />
+    <attr name="incrementerButtonBackground" format="color" />
 
     <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
     <attr name="widgetColorActivated" format="color"/>
@@ -21,7 +21,7 @@
     <attr name="expandRef" format="reference"/>
     <attr name="collapseRef" format="reference"/>
     <!-- Navigation drawer -->
-    <attr name="navDrawerItemColor" format="reference"/>
+    <attr name="navDrawerItemColor" format="color"/>
     <attr name="navDrawerItemBackgroundColor" format="reference"/>
     <!-- Card count colors -->
     <attr name="newCountColor" format="color"/>
@@ -36,7 +36,7 @@
     <attr name="hardButtonBackground" format="color"/>
     <attr name="goodButtonBackground" format="color"/>
     <attr name="easyButtonBackground" format="color"/>
-    <attr name="showAnswerColor" format="reference"/>
+    <attr name="showAnswerColor" format="color"/>
     <attr name="againButtonRef" format="reference"/>
     <attr name="hardButtonRef" format="reference"/>
     <attr name="goodButtonRef" format="reference"/>
@@ -81,7 +81,7 @@
     <attr name="buttonRippleColor" format="color"/>
     <attr name="buttonForegroundColor" format="color"/>
     <!-- Images -->
-    <attr name="navDrawerImage" format="integer"/>
+    <attr name="navDrawerImage" format="reference"/>
 
     <!-- Introduction -->
     <attr name="introductionLogoTransparent" format="color"/>
@@ -90,7 +90,7 @@
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
     <attr name="fab_pressed" format="color"/>
     <!-- Popup menus' background color -->
-    <attr name="popupBackgroundColor" format="reference"/>
+    <attr name="popupBackgroundColor" format="color"/>
     <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
