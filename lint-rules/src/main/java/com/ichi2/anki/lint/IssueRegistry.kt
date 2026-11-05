@@ -34,6 +34,7 @@ import com.ichi2.anki.lint.rules.PreferenceKeyNamingDetector
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.SavedStateKeyNamingDetector
 import com.ichi2.anki.lint.rules.SentenceCaseConventions
+import com.ichi2.anki.lint.rules.TestNameLengthDetector
 import com.ichi2.anki.lint.rules.TranslationTypo
 import com.ichi2.anki.lint.rules.VariableNamingDetector
 
@@ -69,6 +70,7 @@ class IssueRegistry : IssueRegistry() {
                 PreferenceKeyNamingDetector.ISSUE,
                 SavedStateKeyNamingDetector.ISSUE,
                 SentenceCaseConventions.ISSUE,
+                TestNameLengthDetector.ISSUE,
                 TranslationTypo.ISSUE,
                 VariableNamingDetector.ISSUE,
                 InvalidStringFormatDetector.ISSUE,
