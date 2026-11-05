@@ -97,6 +97,12 @@ object ThrowableFilterService {
             is BackendSyncException -> return true
             is BackendSchedulerUpgradeRequiredException -> return true
             is StorageAccessException -> return true
+            // Termux users are technical and the message is user-actionable, so this is noise
+            // in crash reporting: #22994
+            is IllegalArgumentException ->
+                if (t.message?.contains("TermuxContentProvider requires") == true) {
+                    return true
+                }
         }
         Timber.v("exceptionIsUnwanted - exception was wanted")
         return false
