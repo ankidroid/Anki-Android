@@ -6,11 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentActivity
 import anki.collection.ComputeParamsProgress
 import anki.collection.OpChanges
@@ -25,6 +32,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.setBitFlag
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.updateDeckConfigsRaw
@@ -156,10 +164,30 @@ class DeckOptions : PageFragment() {
     ) {
         pageLoadingIndicator.isVisible = true
         super.onViewCreated(view, savedInstanceState)
+        // Keep the page's preset/Save toolbar on screen when a field requests the keyboard.
+        prepareForImeInsets()
+        ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
+            // SingleFragmentActivity already pads the container for system bars and cutouts.
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            val keyboard = insets.getInsets(ime())
+            root.updatePadding(bottom = (keyboard.bottom - bars.bottom).coerceAtLeast(0))
+            insets
+        }
         launchCatchingTask {
             val deckName = withCol { decks.name(deckId, default = true) }
             view.findViewById<MaterialToolbar>(R.id.toolbar).title = deckName
         }
+    }
+
+    /** Allows WebView to reveal focused fields while we apply IME insets in the layout. */
+    @Suppress("DEPRECATION") // WebView still needs adjustResize on all API levels.
+    private fun prepareForImeInsets() {
+        val window = requireActivity().window
+        val mode =
+            window.attributes.softInputMode
+                .setBitFlag(SOFT_INPUT_MASK_ADJUST, enabled = false)
+                .setBitFlag(SOFT_INPUT_ADJUST_RESIZE, enabled = true)
+        window.setSoftInputMode(mode)
     }
 
     override fun onWebViewCreated() {
