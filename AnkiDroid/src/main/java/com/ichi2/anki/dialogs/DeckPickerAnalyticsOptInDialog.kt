@@ -4,11 +4,12 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
-import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.create
@@ -26,14 +27,22 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
             checkBoxPrompt(CommonString.analytics_title, isCheckedDefault = false) {}
             positiveButton(CommonString.dialog_continue) {
                 AnkiDroidUsageAnalytics.isEnabled = (it as AlertDialog).getCheckBoxPrompt().isChecked
-                activity?.dismissAllDialogFragments()
             }
             cancelable(true)
-            setOnCancelListener { activity?.dismissAllDialogFragments() }
         }
     }
 
     companion object {
-        fun newInstance(): DeckPickerAnalyticsOptInDialog = DeckPickerAnalyticsOptInDialog()
+        private const val TAG = "DeckPickerAnalyticsOptInDialog"
+
+        /** Shows one prompt per activity */
+        @MainThread
+        fun show(activity: FragmentActivity) {
+            val manager = activity.supportFragmentManager
+            if (manager.findFragmentByTag(TAG) != null) return
+
+            // Register immediately so repeated calls cannot enqueue duplicate prompts.
+            DeckPickerAnalyticsOptInDialog().showNow(manager, TAG)
+        }
     }
 }
