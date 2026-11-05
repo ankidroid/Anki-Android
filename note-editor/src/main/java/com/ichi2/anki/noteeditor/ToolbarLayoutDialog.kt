@@ -73,7 +73,7 @@ fun ToolbarLayoutDialog(
 ) {
     AnkiDroidDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth().padding(horizontal = 16.dp),
+        modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
         properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         ToolbarLayoutDialogCard(selected, onSelect, showSelectionBackground)
