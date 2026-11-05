@@ -83,7 +83,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="?attr/fab_normal"
+                android:backgroundTint="?attr/fabNormalColor"
                 app:icon="@drawable/ic_add"
                 app:iconTint="?colorOnPrimary"
                 android:text="@string/menu_add"

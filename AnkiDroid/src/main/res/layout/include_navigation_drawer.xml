@@ -11,5 +11,5 @@
     app:itemIconTint="?attr/navDrawerItemColor"
     app:itemTextColor="?attr/navDrawerItemColor"
     app:itemMaxLines="2"
-    app:itemBackground="?attr/navDrawerItemBackgroundColor"
+    app:itemBackground="?attr/navDrawerItemBackground"
     app:menu="@menu/navigation_drawer" />

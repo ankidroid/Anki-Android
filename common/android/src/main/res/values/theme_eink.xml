@@ -18,8 +18,8 @@
         <item name="colorTertiary">#444444</item>
         <item name="colorOnTertiary">#FFFFFF</item>
         <item name="colorOnPrimaryContainer">@color/white</item>
-        <item name="fab_normal">@color/black</item>
-        <item name="fab_pressed">@color/black</item>
+        <item name="fabNormalColor">@color/black</item>
+        <item name="fabPressedColor">@color/black</item>
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">#E0E0E0</item>
         <item name="colorSurfaceContainer">#F0F0F0</item>
@@ -47,7 +47,7 @@
         <item name="hardButtonBackground">@color/white</item>
         <item name="goodButtonBackground">@color/white</item>
         <item name="easyButtonBackground">@color/white</item>
-        <item name="answerButtonTextColor">@color/black</item>
+        <item name="showAnswerTextColor">@color/black</item>
         <item name="againButtonTextColor">@color/black</item>
         <item name="hardButtonTextColor">@color/black</item>
         <item name="goodButtonTextColor">@color/black</item>

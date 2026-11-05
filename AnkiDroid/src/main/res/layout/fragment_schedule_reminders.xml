@@ -92,7 +92,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         style="?attr/floatingActionButtonPrimaryStyle"
-        app:backgroundTint="?attr/fab_normal"
+        app:backgroundTint="?attr/fabNormalColor"
         android:text="@string/add_reminder"
         app:icon="@drawable/ic_add_bell"
         android:contentDescription="@string/add_reminder" />
