@@ -2003,7 +2003,7 @@ open class DeckPicker :
 
     @VisibleForTesting
     protected open fun displayAnalyticsOptInDialog() {
-        showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance())
+        DeckPickerAnalyticsOptInDialog.show(this)
     }
 
     private fun undo() {
