@@ -15,7 +15,6 @@ import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.annotation.VisibleForTesting
-import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -76,14 +75,6 @@ class FieldEditText :
         // Fixes bug where new instances of this object have wrong colors, probably
         // from some reuse mechanic in Android.
         setDefaultStyle()
-
-        val highlightColor =
-            MaterialColors.getColor(
-                context,
-                CommonR.attr.editTextHighlightColor,
-                "#99CCFF".toColorInt(), // light blue color for fallback just-in-case
-            )
-        setHighlightColor(highlightColor)
     }
 
     fun setPasteListener(pasteListener: PasteListener) {

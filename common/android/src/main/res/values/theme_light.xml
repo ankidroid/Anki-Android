@@ -100,8 +100,7 @@
         <item name="markedColor">#D9B2E9</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
-        <item name="editTextHighlightColor">@color/material_light_blue_200</item>
-        <item name="textInputOutlinedStyle">@style/TextInputSelectionColorFixStyle</item>
+        <item name="android:textColorHighlight">@color/material_light_blue_200</item>
         <item name="toolbarBackgroundColor">#D6D7D7</item>
         <item name="toolbarIconColor">@color/black</item>
         <item name="buttonShadowColor">#FFAAAAAA</item>
