@@ -70,7 +70,7 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
 
-        <item name="snackbarButtonTextColor">#96bdce</item>
+        <item name="colorPrimaryInverse">#96bdce</item>
 
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#99FFFFFF</item>

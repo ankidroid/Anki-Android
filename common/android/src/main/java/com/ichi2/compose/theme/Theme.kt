@@ -100,6 +100,9 @@ internal fun Context.toMaterial3ColorScheme(): ColorScheme {
                 onSurfaceVariant = color(R.styleable.ComposeTheme_colorOnSurfaceVariant, base.onSurfaceVariant),
                 outline = color(R.styleable.ComposeTheme_colorOutline, base.outline),
                 outlineVariant = color(R.styleable.ComposeTheme_colorOutlineVariant, base.outlineVariant),
+                inverseSurface = color(R.styleable.ComposeTheme_colorSurfaceInverse, base.inverseSurface),
+                inverseOnSurface = color(R.styleable.ComposeTheme_colorOnSurfaceInverse, base.inverseOnSurface),
+                inversePrimary = color(R.styleable.ComposeTheme_colorPrimaryInverse, base.inversePrimary),
                 // XML container colors can be overlay tints. Compose uses these as standalone
                 // surfaces (including popup windows), which must not reveal the content behind them.
                 surfaceContainer = color(R.styleable.ComposeTheme_colorSurfaceContainer, base.surfaceContainer).compositeOver(surface),
