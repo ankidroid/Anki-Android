@@ -49,7 +49,7 @@ fun AnkiDroidTheme(content: @Composable () -> Unit) {
 
 /**
  * Reads the [AnkiDroidColors] extras from the active XML theme. The View
- * screens tint their FABs with the fab_normal attr and colorOnPrimary, so
+ * screens tint their FABs with the fabNormalColor attr and colorOnPrimary, so
  * Compose FABs follow the same pair to match them.
  */
 @VisibleForTesting
@@ -58,7 +58,7 @@ internal fun Context.toAnkiDroidColors(scheme: ColorScheme): AnkiDroidColors {
     withStyledAttributes(attrs = R.styleable.ComposeTheme) {
         colors =
             AnkiDroidColors(
-                fabContainer = color(R.styleable.ComposeTheme_fab_normal, scheme.primaryContainer),
+                fabContainer = color(R.styleable.ComposeTheme_fabNormalColor, scheme.primaryContainer),
                 onFab = scheme.onPrimary,
             )
     }

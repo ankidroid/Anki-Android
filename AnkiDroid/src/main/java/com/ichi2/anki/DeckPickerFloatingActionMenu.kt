@@ -40,8 +40,8 @@ class DeckPickerFloatingActionMenu(
     private val studyOptionsFrame: View? = homescreenBinding.studyoptionsFrame
 
     // Colors values obtained from attributes
-    private val fabNormalColor = MaterialColors.getColor(binding.fabMain, CommonR.attr.fab_normal)
-    private val fabPressedColor = MaterialColors.getColor(binding.fabMain, CommonR.attr.fab_pressed)
+    private val fabNormalColor = MaterialColors.getColor(binding.fabMain, CommonR.attr.fabNormalColor)
+    private val fabPressedColor = MaterialColors.getColor(binding.fabMain, CommonR.attr.fabPressedColor)
 
     // Add Note Drawable Icon
     private val addNoteIcon: Int = R.drawable.ic_add_note

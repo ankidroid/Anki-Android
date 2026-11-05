@@ -22,7 +22,7 @@
     <attr name="collapseRef" format="reference"/>
     <!-- Navigation drawer -->
     <attr name="navDrawerItemColor" format="color"/>
-    <attr name="navDrawerItemBackgroundColor" format="reference"/>
+    <attr name="navDrawerItemBackground" format="reference"/>
     <!-- Card count colors -->
     <attr name="newCountColor" format="color"/>
     <attr name="learnCountColor" format="color"/>
@@ -44,7 +44,7 @@
     <!-- Same thing but with a ripple, shared by all eases -->
     <attr name="answerButtonRippleRef" format="reference"/>
     <!-- Study Screen button text colors-->
-    <attr name="answerButtonTextColor" format="color"/>
+    <attr name="showAnswerTextColor" format="color"/>
     <attr name="againButtonTextColor" format="color"/>
     <attr name="hardButtonTextColor" format="color"/>
     <attr name="goodButtonTextColor" format="color"/>
@@ -87,8 +87,8 @@
     <attr name="introductionLogoTransparent" format="color"/>
 
     <!-- FAB -->
-    <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
-    <attr name="fab_pressed" format="color"/>
+    <attr name="fabNormalColor" format="color"/> <!-- Also color of the Study button in StudyOptions -->
+    <attr name="fabPressedColor" format="color"/>
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="color"/>
     <attr name="overflowAndPopupMenuIconColor" format="color"/>

@@ -49,7 +49,7 @@
         <item name="showAnswerColor">@color/theme_black_primary</item>
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
-        <item name="answerButtonTextColor">@color/theme_black_primary_text</item>
+        <item name="showAnswerTextColor">@color/theme_black_primary_text</item>
         <item name="againButtonTextColor">@color/material_red_400</item>
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/material_green_400</item>
@@ -85,8 +85,8 @@
         <item name="buttonRippleColor">#BABABA</item>
         <item name="buttonForegroundColor">#363636</item>
         <!-- FAB -->
-        <item name="fab_normal">#ff303030</item>
-        <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
+        <item name="fabNormalColor">#ff303030</item>
+        <item name="fabPressedColor">#c8303030</item> <!-- 55 less opacity than fabNormalColor -->
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_black_theme</item>
         <!-- Dialog styles -->
