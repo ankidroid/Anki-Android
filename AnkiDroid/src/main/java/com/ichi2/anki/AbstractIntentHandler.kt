@@ -19,7 +19,12 @@ abstract class AbstractIntentHandler : Activity() {
     protected fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
         showedActivityFailedScreen(
             savedInstanceState = savedInstanceState,
-            activitySuperOnCreate = { state -> super.onCreate(state) },
+            activitySuperOnCreate = { state ->
+                // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+                // on Importer
+                Themes.setTheme(this, state)
+                super.onCreate(state)
+            },
         )
 
     override fun attachBaseContext(newBase: Context) {

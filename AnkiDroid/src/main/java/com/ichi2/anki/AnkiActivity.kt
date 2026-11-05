@@ -642,7 +642,10 @@ open class AnkiActivity(
     protected fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
         showedActivityFailedScreen(
             savedInstanceState = savedInstanceState,
-            activitySuperOnCreate = { state -> super.onCreate(state) },
+            activitySuperOnCreate = { state ->
+                Themes.setTheme(this, state)
+                super.onCreate(state)
+            },
         )
 
     /** @see Window.setNavigationBarColor */
