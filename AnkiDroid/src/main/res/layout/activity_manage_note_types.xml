@@ -80,6 +80,7 @@
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add"
         android:contentDescription="@string/cd_manage_notetypes_add"
-        app:backgroundTint="?attr/fabNormalColor"/>
+        app:backgroundTint="?attr/fabNormalColor"
+        app:tint="?attr/colorOnPrimary"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

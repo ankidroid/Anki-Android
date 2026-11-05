@@ -86,6 +86,7 @@
                 android:backgroundTint="?attr/fabNormalColor"
                 app:icon="@drawable/ic_add"
                 app:iconTint="?colorOnPrimary"
+                android:textColor="?colorOnPrimary"
                 android:text="@string/menu_add"
                 android:contentDescription="@string/menu_add"
                 android:focusable="true"

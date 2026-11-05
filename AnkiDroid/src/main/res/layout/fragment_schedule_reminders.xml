@@ -93,6 +93,8 @@
         android:layout_margin="16dp"
         style="?attr/floatingActionButtonPrimaryStyle"
         app:backgroundTint="?attr/fabNormalColor"
+        android:textColor="?attr/colorOnPrimary"
+        app:iconTint="?attr/colorOnPrimary"
         android:text="@string/add_reminder"
         app:icon="@drawable/ic_add_bell"
         android:contentDescription="@string/add_reminder" />

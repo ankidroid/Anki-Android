@@ -11,6 +11,8 @@
         <item name="colorPrimary">@color/theme_plain_primary</item>
         <item name="colorSecondary">@color/theme_plain_accent</item>
         <item name="colorSurfaceContainer">#0F9E9E9E</item>
+        <item name="colorPrimaryContainer">@color/material_grey_300</item>
+        <item name="colorOnPrimaryContainer">@color/material_grey_900</item>
         <item name="colorSecondaryContainer">#DDDDDD</item>
         <item name="colorSurfaceVariant">#EEEEEE</item>
         <item name="colorOnSurfaceVariant">#555555</item>
