@@ -260,7 +260,7 @@ class BrowserMultiColumnAdapter(
             val rowColor =
                 // This only highlights in fragmented mode
                 if (viewModel.paneRow == id) {
-                    ThemeUtils.getThemeAttrColor(context, CommonR.attr.focusedRowBackgroundColor)
+                    ThemeUtils.getThemeAttrColor(context, CommonR.attr.selectedRowBackgroundColor)
                 } else {
                     backendColorToColor(row.color)
                 }

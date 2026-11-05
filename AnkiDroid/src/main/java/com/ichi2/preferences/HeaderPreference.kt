@@ -42,7 +42,7 @@ class HeaderPreference : Preference {
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
         if (isHighlighted) {
-            val color = ThemeUtils.getThemeAttrColor(context, CommonR.attr.currentDeckBackgroundColor)
+            val color = ThemeUtils.getThemeAttrColor(context, CommonR.attr.selectedRowBackgroundColor)
             holder.itemView.setBackgroundColor(color)
         }
     }

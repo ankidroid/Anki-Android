@@ -57,8 +57,7 @@
         <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
         <item name="tabActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors -->
-        <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
-        <item name="focusedRowBackgroundColor">@color/theme_dark_row_current</item>
+        <item name="selectedRowBackgroundColor">@color/theme_dark_row_current</item>
         <item name="dynDeckColor">@color/material_light_blue_500</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
