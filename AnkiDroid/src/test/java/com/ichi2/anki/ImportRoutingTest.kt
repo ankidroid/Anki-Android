@@ -45,7 +45,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
 import org.robolectric.shadows.ShadowDialog
 import java.io.File
@@ -242,7 +241,6 @@ class ImportRoutingTest : RobolectricTest() {
         }
 
     @Test
-    @Config(sdk = [Build.VERSION_CODES.S])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.S)
     fun `dropped package retains its payload until preparation completes`() =
         runTest {
@@ -273,7 +271,6 @@ class ImportRoutingTest : RobolectricTest() {
         }
 
     @Test
-    @Config(sdk = [Build.VERSION_CODES.S])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.S)
     fun `cancelled dropped import releases its payload`() =
         runTest {
