@@ -989,6 +989,46 @@ class TagsDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `long-clicking a tag is ignored in every dialog type except EDIT_TAGS`() {
+        // CUSTOM_STUDY only lists the tags of the notes passed in, so pass a tagged note
+        val noteId =
+            addBasicNote().id.also {
+                col.tags.bulkAdd(
+                    noteIds = listOf(it),
+                    tags = "tag",
+                )
+            }
+        for (type in TagsDialog.DialogType.entries - TagsDialog.DialogType.EDIT_TAGS) {
+            val args =
+                TagsDialog()
+                    .withArguments(
+                        context = targetContext,
+                        type = type,
+                        noteIds = listOf(noteId),
+                    ).requireArguments()
+            runTagsDialogScenario(args = args) { tagsDialog ->
+                val recycler = tagsDialog.binding.tagsList
+                // Force layout so Robolectric creates the tag row.
+                recycler.measure(0, 0)
+                recycler.layout(0, 0, 100, 1000)
+                val row = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+                val dialogBefore = ShadowDialog.getLatestDialog()
+                val consumed = row.itemView.performLongClick()
+                advanceRobolectricLooper()
+                assertFalse(
+                    actual = consumed,
+                    message = "$type: the long click should not be consumed",
+                )
+                assertEquals(
+                    expected = dialogBefore,
+                    actual = ShadowDialog.getLatestDialog(),
+                    message = "$type: no add tag dialog should be shown",
+                )
+            }
+        }
+    }
+
     private fun withAddTagDialog(
         allTags: List<String>,
         block: (AlertDialog) -> Unit,
