@@ -112,7 +112,7 @@ class FilteredDeckOptionsViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `building a filtered deck with no cards fails unless allow empty is checked`() =
+    fun `building an empty filtered deck fails unless allowed`() =
         runTest {
             addDeck(TEST_DECK_NAME, true)
             withViewModel {
@@ -339,7 +339,7 @@ class FilteredDeckOptionsViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `a deck without a second filter gets a new fresh filter state when second filter is enabled`() =
+    fun `enabling second filter creates a fresh filter state`() =
         runTest {
             addDeck("A", true)
             addNoteToDeckA { flagCardForNote(this, Flag.RED) }

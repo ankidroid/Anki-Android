@@ -158,7 +158,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
         }
 
     @Test
-    fun `invalid fragment task skips without reporting or throwing outside Robolectric`() {
+    fun `invalid fragment task skips silently outside Robolectric`() {
         val originalFingerprint = Build.FINGERPRINT
         try {
             ShadowBuild.setFingerprint("production")
@@ -184,7 +184,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
     }
 
     @Test
-    fun `view task is cancelled when the view is destroyed but the fragment remains attached`() {
+    fun `view task is cancelled when view is destroyed`() {
         val controller = Robolectric.buildActivity(FragmentActivity::class.java).setup()
         saveControllerForCleanup(controller)
         val activity = controller.get()
@@ -239,7 +239,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
      * the user should be sent to the main entry point, which handles storage setup.
      */
     @Test
-    fun `launchCatchingTask redirects to main entry point when storage is not configured`() {
+    fun `launchCatchingTask redirects if storage is not configured`() {
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
             val activity = controller.create().get()
 

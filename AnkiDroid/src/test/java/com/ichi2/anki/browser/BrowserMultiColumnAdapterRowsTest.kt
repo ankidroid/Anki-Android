@@ -30,7 +30,7 @@ class BrowserMultiColumnAdapterRowsTest : RobolectricTest() {
         }
 
     @Test
-    fun `clearing search results does not change adapter rows before notification - Issue 17759`() =
+    fun `clearing results keeps adapter rows until notified - Issue 17759`() =
         runCardBrowserViewModelTest(notes = 2) {
             val adapter = createAdapterWithSearchResults()
             val originalRows = cards.toList()

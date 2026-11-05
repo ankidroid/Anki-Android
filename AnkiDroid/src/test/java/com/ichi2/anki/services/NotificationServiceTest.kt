@@ -93,7 +93,7 @@ class NotificationServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun `triggering with less cards than card threshold should not fire notification but schedule next`() =
+    fun `below card threshold does not fire but schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 3)
@@ -115,7 +115,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with happy path for single deck should fire notification and schedule next`() =
+    fun `single deck reminder fires and schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1)
@@ -131,7 +131,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with happy path for global reminder should fire notification and schedule next`() =
+    fun `global reminder fires and schedules next`() =
         runTest {
             addDeck("Deck1").withNotes(count = 2)
             addDeck("Deck2").withNotes(count = 2)
@@ -217,7 +217,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reminder which is not present in database should not fire notification nor schedule next`() =
+    fun `reminder missing from database neither fires nor schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1)
@@ -230,7 +230,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reminder which is disabled should not fire notification nor schedule next`() =
+    fun `disabled reminder neither fires nor schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1, enabled = false)
@@ -244,7 +244,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with scheduled time in the future should not fire notification nor schedule next`() =
+    fun `reminder triggered early neither fires nor schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = 1.minutes)
@@ -260,7 +260,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with scheduled time equal to creation time should not fire notification nor schedule next`() =
+    fun `reminder scheduled at creation time neither fires nor schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = 0.minutes)
@@ -276,7 +276,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with rev cards not counted and only rev cards present should not fire notification`() =
+    fun `does not fire if only uncounted rev cards are present`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2, queueType = QueueType.Rev)
             val reviewReminder = createTestReminder(deckId = did1, countRev = false)
@@ -289,7 +289,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with new cards not counted and only new cards present should not fire notification`() =
+    fun `does not fire if only uncounted new cards are present`() =
         runTest {
             val did1 = addDeck("Deck").withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1, countNew = false)
@@ -302,7 +302,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with lrn cards not counted and only lrn cards present should not fire notification`() =
+    fun `does not fire if only uncounted lrn cards are present`() =
         runTest {
             val did1 = addDeck("Deck").withNotes(count = 2, queueType = QueueType.Lrn)
             val reviewReminder = createTestReminder(deckId = did1, countLrn = false)
@@ -315,7 +315,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with all cards not counted and many cards present should not fire notification`() =
+    fun `does not fire if no card type is counted`() =
         runTest {
             val did1 =
                 addDeck("Deck")
@@ -332,7 +332,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with new cards not counted but other kinds present should fire notification`() =
+    fun `fires if new cards are not counted but other cards are present`() =
         runTest {
             val did1 = addDeck("Deck").withNote(queueType = QueueType.Rev).withNote(queueType = QueueType.Lrn)
             val reviewReminder = createTestReminder(deckId = did1, countNew = false)
@@ -345,7 +345,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with new cards not counted and not enough non new cards to trigger threshold should not fire notification`() =
+    fun `does not fire if counted cards are below threshold`() =
         runTest {
             val did1 = addDeck("Deck").withNote(queueType = QueueType.New).withNote(queueType = QueueType.Lrn)
             val reviewReminder = createTestReminder(deckId = did1, thresholdInt = 2, countNew = false)
@@ -358,7 +358,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reviews today and onlyNotifyIfNoReviews is true should not fire notification`() =
+    fun `does not fire after reviews today if onlyNotifyIfNoReviews`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
@@ -375,7 +375,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reviews today and onlyNotifyIfNoReviews is false should fire notification`() =
+    fun `fires after reviews today if not onlyNotifyIfNoReviews`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = false)
@@ -393,7 +393,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with no reviews ever should fire notification regardless of onlyNotifyIfNoReviews`() =
+    fun `fires with no reviews ever regardless of onlyNotifyIfNoReviews`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
@@ -410,7 +410,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with review yesterday but none today should fire notification regardless of onlyNotifyIfNoReviews`() =
+    fun `fires after review yesterday regardless of onlyNotifyIfNoReviews`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
@@ -431,7 +431,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reviews today in a subdeck and onlyNotifyIfNoReviews is true should not fire notification`() =
+    fun `does not fire after subdeck reviews today if onlyNotifyIfNoReviews`() =
         runTest {
             val parentDid = addDeck("Parent", setAsSelected = true)
             val childDid = addDeck("Parent::Child").withNote()
@@ -449,7 +449,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reviews today in a filtered deck and onlyNotifyIfNoReviews is true should not fire notification`() =
+    fun `does not fire after filtered deck reviews today if onlyNotifyIfNoReviews`() =
         runTest {
             val homeDid = addDeck("Deck").withNotes(count = 2)
             val firstNid = col.findNotes("deck:Deck").first()
@@ -469,7 +469,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with reviews today only in parent deck and onlyNotifyIfNoReviews is true should fire subdeck notification`() =
+    fun `subdeck reminder fires after parent-only reviews if onlyNotifyIfNoReviews`() =
         runTest {
             val parentDid = addDeck("Parent", setAsSelected = true).withNote()
             val childDid = addDeck("Parent::Child").withNote()
@@ -510,7 +510,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with snoozed notification should fire notification but not schedule next regardless of recurring firing time`() =
+    fun `snoozed notification fires but never schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = (-1).minutes)
@@ -531,7 +531,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with snoozed notification not stored in database should not fire notification nor schedule next`() =
+    fun `snoozed reminder missing from database neither fires nor schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = (-1).minutes)
@@ -544,7 +544,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with snoozed notification which is disabled should not fire notification nor schedule next`() =
+    fun `disabled snoozed reminder neither fires nor schedules next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createTestReminder(deckId = did1, enabled = false, scheduledTimeOffsetFromNow = (-1).minutes)
@@ -558,7 +558,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `snooze actions of different notifications and different intervals should be different`() =
+    fun `snooze actions differ per notification and interval`() =
         runTest {
             val did1 = addDeck("Deck1").withNotes(count = 2)
             val did2 = addDeck("Deck2").withNotes(count = 2)

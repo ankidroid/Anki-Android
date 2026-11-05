@@ -25,7 +25,7 @@ class StudyOptionsUndoRefreshErrorRegressionTest : RobolectricTest() {
     fun resetBackend() = BackendFactory.setOverride(null)
 
     @Test
-    fun `phone pane handles an undo menu read failure after emptying a filtered deck`() {
+    fun `phone pane handles undo read failure after Empty`() {
         val armFailure = AtomicBoolean(false)
         val failUndoRead = AtomicBoolean(false)
         val failure = BackendIoException(backendError { message = "Cannot refresh the study options undo menu" })

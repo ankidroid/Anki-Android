@@ -103,7 +103,7 @@ class PermissionsTest {
     }
 
     @Test
-    fun `requestPermissionThroughDialogOrSettings opens settings screen if we can't request the permission`() {
+    fun `request opens settings if permission cannot be requested`() {
         Prefs.notificationsPermissionRequested = true // not first call
         setCanPermissionBeRequested(false)
         triggerPermissionRequest()
@@ -113,7 +113,7 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
-    fun `requestPermissionThroughDialogOrSettings for notif permission opens notif settings screen if we can't request the permission`() {
+    fun `request opens notif settings if notif permission cannot be requested`() {
         Prefs.notificationsPermissionRequested = true // not first call
         setCanPermissionBeRequested(false)
         triggerPermissionRequest(permission = Permissions.notificationsPermission)
@@ -121,7 +121,7 @@ class PermissionsTest {
     }
 
     @Test
-    fun `requestPermissionThroughDialogOrSettings requests permission on subsequent calls if we can request it`() {
+    fun `request asks again on later calls if permission can be requested`() {
         Prefs.notificationsPermissionRequested = true // not first call
         setCanPermissionBeRequested(true)
         triggerPermissionRequest()
@@ -163,7 +163,7 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
-    fun `attemptToEnableNotifications for API at 33+ opens notif settings screen if we can't request the permission`() {
+    fun `enable notifications at API 33+ opens notif settings if not requestable`() {
         Prefs.notificationsPermissionRequested = true // not first call
         setCanPermissionBeRequested(false)
         fragment.attemptToEnableNotifications(permissionRequestLauncher)
@@ -173,7 +173,7 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU - 1])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    fun `attemptToEnableNotifications for API before 33 opens notif settings screen without requesting a permission`() {
+    fun `enable notifications below API 33 opens notif settings without request`() {
         fragment.attemptToEnableNotifications(permissionRequestLauncher)
         // The notifications permission does not exist below API 33, so it should never be requested
         verify(exactly = 0) { permissionRequestLauncher.launch(any()) }
@@ -193,7 +193,7 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
-    fun `showNotificationsPermissionBottomSheetIfNeeded for API at 33+ works on first call and afterward only if system allows it`() {
+    fun `notif bottom sheet at API 33+ shows first then only if requestable`() {
         mockkObject(PermissionsBottomSheet)
 
         setPermissionsGranted(false)
@@ -209,7 +209,7 @@ class PermissionsTest {
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU - 1])
-    fun `showNotificationsPermissionBottomSheetIfNeeded for API before 33 only works on first call if cannot send notifications`() {
+    fun `notif bottom sheet below API 33 shows once if notifs are blocked`() {
         mockkObject(PermissionsBottomSheet)
 
         setPermissionsGranted(false)
@@ -225,13 +225,13 @@ class PermissionsTest {
     }
 
     @Test
-    fun `openAppSettingsScreenForPermission opens the generic app settings screen for a null permission`() {
+    fun `settings for null permission opens app settings`() {
         fragment.openAppSettingsScreenForPermission(null)
         verifyOSSettingsWasOpened()
     }
 
     @Test
-    fun `openAppSettingsScreenForPermission opens the generic app settings screen for an unhandled permission`() {
+    fun `settings for unhandled permission opens app settings`() {
         fragment.openAppSettingsScreenForPermission(DUMMY_PERMISSION_STRING)
         verifyOSSettingsWasOpened()
     }
@@ -239,7 +239,7 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
-    fun `openAppSettingsScreenForPermission for the notifications permission at API 33+ opens the notif settings screen`() {
+    fun `settings for notif permission at API 33+ opens notif settings`() {
         fragment.openAppSettingsScreenForPermission(Permissions.notificationsPermission)
         verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
     }
@@ -247,20 +247,20 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU, Build.VERSION_CODES.TIRAMISU - 1])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    fun `openAppSettingsScreenForPermission for the legacy notifications sentinel opens the notif settings screen`() {
+    fun `settings for legacy notif sentinel opens notif settings`() {
         fragment.openAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS)
         verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
     }
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O - 1])
-    fun `openAppSettingsScreenForPermission for the legacy notifications sentinel before API 26 opens the generic app settings screen`() {
+    fun `settings for legacy notif sentinel below API 26 opens app settings`() {
         fragment.openAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS)
         verifyOSSettingsWasOpened()
     }
 
     @Test
-    fun `legacy_post_notification_permission resource matches the LEGACY_POST_NOTIFICATIONS constant`() {
+    fun `legacy notification permission resource matches constant`() {
         assertThat(
             context.getString(R.string.legacy_post_notification_permission),
             equalTo(LEGACY_POST_NOTIFICATIONS),

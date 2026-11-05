@@ -56,7 +56,7 @@ class WhiteboardViewTest {
     }
 
     @Test
-    fun `onTouchEvent notifies onStylusButtonStateChanged when stylus button is pressed and released`() {
+    fun `onTouchEvent reports stylus button press and release`() {
         val states = mutableListOf<Boolean>()
         whiteboardView.onStylusButtonStateChanged = { states.add(it) }
 

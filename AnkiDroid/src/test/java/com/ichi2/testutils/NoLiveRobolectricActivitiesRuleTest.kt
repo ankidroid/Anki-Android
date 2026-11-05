@@ -107,7 +107,7 @@ class NoLiveRobolectricActivitiesRuleTest {
     }
 
     @Test
-    fun `reports the leak and its destruction failure without leaving an active delegate`() {
+    fun `reports leak and destroy failure without active delegate`() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val controller = Robolectric.buildActivity(ThrowingDestroyActivity::class.java).setup()
         val activity = controller.get()

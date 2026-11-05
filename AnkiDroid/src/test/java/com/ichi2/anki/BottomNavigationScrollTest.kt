@@ -260,7 +260,7 @@ class BottomNavigationScrollTest : RobolectricTest() {
         }
 
     @Test
-    fun `Studied summary stays visible above the system navigation bar when the bar hides`() =
+    fun `Studied summary stays above the hiding system navigation bar`() =
         withBottomNavigation { deckPicker ->
             val summary = deckPicker.deckPickerBinding.reviewSummaryTextView
             val nav = deckPicker.bottomNav

@@ -139,7 +139,7 @@ class CustomStudyMenuNavigationTest : RobolectricTest() {
         }
 
     @Test
-    fun `a queued menu result must not open an input dialog when the activity is finishing`() =
+    fun `queued menu result opens no dialog when finishing`() =
         runTest {
             val (activity, fragment) = openMenu()
             withQueuedChecks(this) { collectionScheduler ->

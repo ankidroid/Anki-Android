@@ -44,7 +44,7 @@ class BrowserColumnSelectionTouchHelperCallbackTest : AndroidTest {
         }
 
     @Test
-    fun `scrolling a dropped row off-screen before it completes does not crash`() =
+    fun `scrolling a dropped row off-screen does not crash`() =
         withColumnSelectionList { list ->
             val changedRows = list.adapter!!.changedPositions()
             list.startDrag(row = 1)

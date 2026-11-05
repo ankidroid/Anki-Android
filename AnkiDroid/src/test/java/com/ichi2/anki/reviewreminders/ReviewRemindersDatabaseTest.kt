@@ -141,7 +141,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `insertReminder and getRemindersForScope should read and write reminders correctly`() =
+    fun `insertReminder and getRemindersForScope round trip`() =
         runTest {
             allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
             val remindersForDeckOne = ReviewRemindersDatabase.getRemindersForScope(scope1)
@@ -215,7 +215,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `retrieveRefreshedReminder with latest notif not delivered should edit and return updated reminder`() =
+    fun `retrieveRefreshedReminder updates undelivered reminder`() =
         runTest {
             TimeManager.resetWith(yesterday)
             val reviewReminder =
@@ -238,7 +238,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `retrieveRefreshedReminder with latest notif delivered should return null and not edit reminder`() =
+    fun `retrieveRefreshedReminder returns null if delivered`() =
         runTest {
             val reviewReminder =
                 ReviewReminder.createReviewReminder(
@@ -256,7 +256,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `retrieveRefreshedReminder with review reminder not found in database should fail gracefully`() =
+    fun `retrieveRefreshedReminder returns null if not found`() =
         runTest {
             val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminderOne.id, reviewReminderOne.scope)
             assertThat(returnedReminder, nullValue())
@@ -293,7 +293,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getRemindersForScope should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() =
+    fun `getRemindersForScope deletes unparseable group JSON`() =
         runTest {
             corruptedRemindersTest(
                 corruptedValue = "corrupted_and_invalid_json_string",
@@ -304,7 +304,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `getRemindersForScope should delete reminders if JSON string is not a StoredReviewReminderGroup`() =
+    fun `getRemindersForScope deletes JSON that is not a group`() =
         runTest {
             corruptedRemindersTest(
                 corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
@@ -315,7 +315,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `getRemindersForScope should delete reminders if JSON string for review reminder is corrupted`() =
+    fun `getRemindersForScope deletes unparseable reminder JSON`() =
         runTest {
             corruptedRemindersTest(
                 corruptedValue =
@@ -332,7 +332,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `getAllReminders should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() =
+    fun `getAllReminders deletes unparseable group JSON`() =
         runTest {
             corruptedRemindersTest(
                 corruptedValue = "corrupted_and_invalid_json_string",
@@ -348,7 +348,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `getAllReminders should delete reminders if JSON string is not a StoredReviewReminderGroup`() =
+    fun `getAllReminders deletes JSON that is not a group`() =
         runTest {
             corruptedRemindersTest(
                 corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
@@ -364,7 +364,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `getAllReminders should delete reminders if JSON string for review reminder is corrupted`() =
+    fun `getAllReminders deletes unparseable reminder JSON`() =
         runTest {
             corruptedRemindersTest(
                 corruptedValue =
@@ -386,7 +386,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `deleteReminder should delete SharedPreferences key if no reminders are returned`() =
+    fun `deleteReminder removes the preference key when empty`() =
         runTest {
             ReviewRemindersDatabase.insertReminder(reviewReminderOne)
             ReviewRemindersDatabase.insertReminder(reviewReminderTwo)

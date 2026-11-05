@@ -38,7 +38,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     }
 
     @Test
-    fun `getCurrentTabIndex returns the correct tab if the first cloze isn't 1 and ord isn't 0`() =
+    fun `getCurrentTabIndex is correct for non-sequential clozes`() =
         runClozeTest(ord = 6, fields = listOf("{{c7::foo}} {{c4::bar}} {{c9::ha}}")) {
             val expectedTab = 1 // 0 will be c4 (ord 3), 1: c7 (ord 6), 2: c9 (ord 8)
             assertThat(getCurrentTabIndex(), equalTo(expectedTab))
@@ -97,7 +97,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `selected tab matches the previewed card if a cloze was removed - Issue 20919`() =
+    fun `selected tab matches previewed card if cloze removed - Issue 20919`() =
         runTest {
             val note = addClozeNote("{{c1::foo}} {{c2::bar}}").update { setItem("Text", "foo {{c2::bar}}") }
             // the template editor previews the first card of cloze note types

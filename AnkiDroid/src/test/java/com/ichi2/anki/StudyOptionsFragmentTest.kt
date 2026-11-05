@@ -505,13 +505,11 @@ class StudyOptionsFragmentTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "xlarge")
-    fun `Rebuild offered for a filtered deck does nothing once the panel shows a regular deck`() =
-        assertFilteredActionIgnoredAfterRedraw(R.id.action_rebuild)
+    fun `stale filtered Rebuild does nothing on a regular deck`() = assertFilteredActionIgnoredAfterRedraw(R.id.action_rebuild)
 
     @Test
     @Config(qualifiers = "xlarge")
-    fun `Empty offered for a filtered deck does nothing once the panel shows a regular deck`() =
-        assertFilteredActionIgnoredAfterRedraw(R.id.action_empty)
+    fun `stale filtered Empty does nothing on a regular deck`() = assertFilteredActionIgnoredAfterRedraw(R.id.action_empty)
 
     private fun assertFilteredActionIgnoredAfterRedraw(itemId: Int) {
         addNoteToDeck(addDeck("Home"))

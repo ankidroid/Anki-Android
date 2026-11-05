@@ -46,7 +46,7 @@ class WhiteboardViewModelTest {
     }
 
     @Test
-    fun `releasing stylus button leaves eraser active if eraser was already active before pressing`() {
+    fun `stylus release keeps eraser if it was already active`() {
         viewModel.enableEraser()
         assertTrue(viewModel.isEraserActive)
         assertIs<WhiteboardTool.Eraser>(viewModel.activeTool.value)
@@ -61,7 +61,7 @@ class WhiteboardViewModelTest {
     }
 
     @Test
-    fun `selecting brush while stylus button is pressed keeps brush after button is released`() {
+    fun `brush picked during stylus press stays after release`() {
         viewModel.setStylusButtonPressed(true)
         assertTrue(viewModel.isEraserActive)
 

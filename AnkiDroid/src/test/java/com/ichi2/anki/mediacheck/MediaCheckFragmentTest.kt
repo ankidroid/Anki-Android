@@ -92,7 +92,7 @@ class MediaCheckFragmentTest : RobolectricTest() {
         }
 
     @Test
-    fun `onRenderProcessGone after fragment view is destroyed cleans up dead webview without recreating`() =
+    fun `onRenderProcessGone after view destroyed only cleans up webview`() =
         runTest {
             val mediaCheck = startMediaCheck()
             advanceUntilIdle()

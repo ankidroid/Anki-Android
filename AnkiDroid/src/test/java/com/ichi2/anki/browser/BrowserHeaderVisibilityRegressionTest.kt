@@ -26,7 +26,7 @@ import com.ichi2.anki.common.android.R as CommonR
 @RunWith(AndroidJUnit4::class)
 class BrowserHeaderVisibilityRegressionTest : RobolectricTest() {
     @Test
-    fun `saved search opened by shortcut reports its count during multi-select`() {
+    fun `shortcut saved search reports count in multi-select`() {
         addBasicNote("cat", "meows")
         addBasicNote("dog", "barks")
         withCardBrowserFragment {

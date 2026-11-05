@@ -67,7 +67,7 @@ class NoteEditorMultimediaControllerTest : RobolectricTest() {
     }
 
     @Test
-    fun `gallery selection opens the image editor for the selected field with read access`() {
+    fun `gallery selection opens image editor with read access`() {
         val noteEditor = openNoteEditor()
         noteEditor.setField(0, "front")
         noteEditor.setField(1, "back")

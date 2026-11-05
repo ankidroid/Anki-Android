@@ -178,7 +178,7 @@ class PreviousAnrReporterTest {
     }
 
     @Test
-    fun `undecodable traces produce a compact diagnostic once without the dump or current stack`() {
+    fun `undecodable traces report a compact diagnostic once`() {
         val invalidTraces =
             listOf(
                 "",

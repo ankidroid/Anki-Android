@@ -36,7 +36,7 @@ class StudyOptionsCorruptionRecoveryRegressionTest : RobolectricTest() {
     }
 
     @Test
-    fun `Options on a load failure opens the recovery options in the Deck Picker`() {
+    fun `Options on load failure opens recovery in the Deck Picker`() {
         val studyOptions = startRegularActivity<StudyOptionsActivity>()
         studyOptions.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
 

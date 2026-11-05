@@ -33,7 +33,7 @@ class ReminderTroubleshootingResolveActionTest : RobolectricTest() {
     fun enableBatteryOptimization() = targetContext.setTroubleshootingChecks(batteryOptimization = CheckResult.Warning)
 
     @Test
-    fun `battery optimization asks for an exemption when the permission is in the manifest`() {
+    fun `battery fix requests exemption if permitted`() {
         withRequestIgnoreBatteryOptimizationsInManifest(true) {
             withTroubleshootingFragment {
                 batteryOptimizationCheck.actionLink.performClick()
@@ -46,7 +46,7 @@ class ReminderTroubleshootingResolveActionTest : RobolectricTest() {
     }
 
     @Test
-    fun `battery optimization opens the settings list when the permission is not in the manifest`() {
+    fun `battery fix opens settings list if not permitted`() {
         withRequestIgnoreBatteryOptimizationsInManifest(false) {
             withTroubleshootingFragment {
                 batteryOptimizationCheck.actionLink.performClick()
@@ -58,7 +58,7 @@ class ReminderTroubleshootingResolveActionTest : RobolectricTest() {
     }
 
     @Test
-    fun `battery optimization falls back to the settings list when exemption fails`() {
+    fun `battery fix falls back to settings list`() {
         throwOnAllSettingsExcept(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
 
         withRequestIgnoreBatteryOptimizationsInManifest(true) {

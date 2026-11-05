@@ -37,7 +37,7 @@ class MultimediaImageFragmentCameraTest : RobolectricTest(loadBackend = false) {
     val composeRule = createEmptyComposeRule()
 
     @Test
-    fun `cancelling a replacement photo after recreation restores the original size`() =
+    fun `cancelling replacement photo after recreation restores size`() =
         withCameraScenario { scenario ->
             val original = scenario.withFragment { completePhotoCapture("original") }
             val replacementRequest =

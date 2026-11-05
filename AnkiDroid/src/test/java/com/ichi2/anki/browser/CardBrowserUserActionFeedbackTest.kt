@@ -180,7 +180,7 @@ class CardBrowserUserActionFeedbackTest : RobolectricTest() {
     }
 
     @Test
-    fun `note editor feedback survives returning to the browser and is shown only once`() =
+    fun `note editor feedback shows once after returning`() =
         runTest {
             val note = addBasicNote("cat", "meows")
             try {

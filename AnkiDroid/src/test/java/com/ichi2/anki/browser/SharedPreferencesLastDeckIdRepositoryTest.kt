@@ -23,7 +23,7 @@ class SharedPreferencesLastDeckIdRepositoryTest {
     }
 
     @Test
-    fun `deck ID persists between repository instances without losing precision`() {
+    fun `deck ID persists across instances without precision loss`() {
         SharedPreferencesLastDeckIdRepository(provider).lastDeckId = Long.MAX_VALUE
 
         assertEquals(Long.MAX_VALUE, SharedPreferencesLastDeckIdRepository(provider).lastDeckId)

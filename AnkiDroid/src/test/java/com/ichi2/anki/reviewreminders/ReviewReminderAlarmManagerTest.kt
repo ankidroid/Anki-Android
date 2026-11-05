@@ -97,7 +97,7 @@ class ReviewReminderAlarmManagerTest : RobolectricTest() {
     }
 
     @Test
-    fun `scheduleReviewReminderNotifications for past time calls AlarmManager setWindow with future time`() {
+    fun `schedule for past time sets alarm for tomorrow`() {
         val pastTimeReviewReminder =
             ReviewReminder.createReviewReminder(time = ReviewReminderTime(3, 0))
         val expectedSchedulingTime = mockTime.calendar().clone() as Calendar
@@ -117,7 +117,7 @@ class ReviewReminderAlarmManagerTest : RobolectricTest() {
     }
 
     @Test
-    fun `scheduleReviewReminderNotifications for current time calls AlarmManager setWindow with future time`() {
+    fun `schedule for current time sets alarm for tomorrow`() {
         val currentTimeReviewReminder =
             ReviewReminder.createReviewReminder(time = ReviewReminderTime(12, 0))
         val expectedSchedulingTime = mockTime.calendar().clone() as Calendar
@@ -141,7 +141,7 @@ class ReviewReminderAlarmManagerTest : RobolectricTest() {
     }
 
     @Test
-    fun `scheduleReviewReminderNotifications attempts immediate notification when flag is true`() {
+    fun `schedule sends immediate notification if flag is true`() {
         ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = true)
 
         val slot = slot<Intent>()
@@ -155,7 +155,7 @@ class ReviewReminderAlarmManagerTest : RobolectricTest() {
     }
 
     @Test
-    fun `scheduleReviewReminderNotifications does not attempt immediate notification when flag is false`() {
+    fun `schedule sends no immediate notification if flag is false`() {
         ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = false)
 
         verify(exactly = 0) {
@@ -182,7 +182,7 @@ class ReviewReminderAlarmManagerTest : RobolectricTest() {
     }
 
     @Test
-    fun `scheduleAllEnabledReviewReminderNotifications schedules and fires reminders for all enabled reminders in database`() =
+    fun `schedule all schedules and fires every enabled reminder`() =
         runTest {
             val did1 = addDeck("Deck1")
             val did2 = addDeck("Deck2")

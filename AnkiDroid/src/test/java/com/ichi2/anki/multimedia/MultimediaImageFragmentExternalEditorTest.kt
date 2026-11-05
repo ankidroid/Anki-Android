@@ -115,7 +115,7 @@ class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = 
 
     @Test
     @GraphicsMode(GraphicsMode.Mode.NATIVE)
-    fun `a picked image with an unrecognized filename extension can be edited`() = assertPickedPngCanBeEdited("image.bin")
+    fun `picked image with unknown extension can be edited`() = assertPickedPngCanBeEdited("image.bin")
 
     private fun assertPickedPngCanBeEdited(displayName: String) {
         targetContext.registerExternalImageEditor()
@@ -313,7 +313,7 @@ class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = 
         }
 
     @Test
-    fun `done is disabled during external editing and import across recreation`() =
+    fun `done is disabled during editing and import`() =
         withBlockedImport { awaitImport, finishImport ->
             val controller = startImageActivity()
             val fragment = controller.get().supportFragmentManager.findFragmentById(R.id.fragment_container) as MultimediaImageFragment
@@ -343,7 +343,7 @@ class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = 
         }
 
     @Test
-    fun `unchanged in-place result preserves the original without offering selection`() =
+    fun `unchanged in-place edit keeps original`() =
         withImageFragment {
             val original = selectImage()
             val edit = launchExternalEditor()
@@ -352,7 +352,7 @@ class MultimediaImageFragmentExternalEditorTest : RobolectricTest(loadBackend = 
         }
 
     @Test
-    fun `unchanged returned working uri preserves the original without offering selection`() =
+    fun `unchanged returned uri keeps original`() =
         withImageFragment {
             val original = selectImage()
             val edit = launchExternalEditor()

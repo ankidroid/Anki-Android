@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 /** Feedback rules tested without Android views or a collection. */
 class BrowserSearchFeedbackTest {
     @Test
-    fun `count-only feedback shows a hidden count regardless of scope or number of results`() {
+    fun `count-only feedback always shows a hidden count`() {
         for (allDecks in listOf(false, true)) {
             for (count in listOf(0, 2)) {
                 assertEquals(
@@ -80,7 +80,7 @@ class BrowserSearchFeedbackTest {
     }
 
     @Test
-    fun `submitted search in all decks shows the count including zero when the header is hidden`() {
+    fun `all decks search with hidden header shows count including zero`() {
         for (count in listOf(0, 2)) {
             assertEquals(
                 COUNT,
@@ -110,7 +110,7 @@ class BrowserSearchFeedbackTest {
     }
 
     @Test
-    fun `submitted search with matches in a deck offers search all decks even with a visible header`() {
+    fun `search with matches in a deck offers search all decks`() {
         for (headerVisible in listOf(false, true)) {
             val feedback =
                 browserSearchFeedback(
@@ -125,7 +125,7 @@ class BrowserSearchFeedbackTest {
     }
 
     @Test
-    fun `submitted search with no matches in a deck explains the scope and offers search all decks`() {
+    fun `search without matches in a deck explains scope and offers all decks`() {
         for (headerVisible in listOf(false, true)) {
             val feedback =
                 browserSearchFeedback(

@@ -74,7 +74,7 @@ class MediaErrorHandlerJvmTest {
     }
 
     @Test
-    fun `onError with file scheme and missing file calls callback and returns CONTINUE_MEDIA`() {
+    fun `onError with missing file calls callback and continues`() {
         val uri = mockk<Uri>()
         val file = mockk<File>()
         val fileName = "test.mp3"

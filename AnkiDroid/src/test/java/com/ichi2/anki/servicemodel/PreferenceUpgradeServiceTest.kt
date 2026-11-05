@@ -164,7 +164,7 @@ class PreferenceUpgradeServiceTest : AndroidTest {
     }
 
     @Test
-    fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
+    fun `Fetch media pref upgrades to 'always' or 'never'`() {
         // enabled -> always
         prefs.edit { putBoolean(RemovedPreferences.PREF_SYNC_FETCHES_MEDIA, true) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
@@ -217,7 +217,7 @@ class PreferenceUpgradeServiceTest : AndroidTest {
     }
 
     @Test
-    fun `Language preference value is set to system default correctly if it hasn't been set`() {
+    fun `Language preference defaults to system if unset`() {
         PreferenceUpgrade.UpgradeAppLocale().performUpgrade(prefs)
 
         assertNotNull(prefs.getString("language", null))

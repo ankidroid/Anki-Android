@@ -112,7 +112,7 @@ class ReadTextTest : RobolectricTest() {
         }
 
     @Test
-    fun `legacy TTS initialization failure with an installed engine shows a toast instead of installation guidance`() =
+    fun `legacy TTS init failure with installed engine shows a toast`() =
         withTtsActivity { activity ->
             shadowOf(activity.packageManager).apply {
                 val engine = ComponentName("test.tts", "TestTtsService")

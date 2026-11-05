@@ -46,7 +46,7 @@ class SyncNetworkConstraintsTest : AndroidTest {
     }
 
     @Test
-    fun `media unmetered preference applies even when collection may use metered networks`() {
+    fun `media unmetered pref applies even if metered sync is allowed`() {
         Prefs.allowSyncOnMeteredConnections = true
         Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ONLY_UNMETERED)
 

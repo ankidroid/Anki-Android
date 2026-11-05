@@ -1164,7 +1164,7 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
-    fun `hasUnsavedChanges - typing then clearing a field before a note type switch that adds fields is not an unsaved change`() =
+    fun `hasUnsavedChanges - reverted typing before note type switch is not a change`() =
         runTest {
             val editor =
                 getNoteEditorAdding(NoteType.BASIC)

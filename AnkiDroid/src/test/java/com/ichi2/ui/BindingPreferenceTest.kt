@@ -49,7 +49,7 @@ class BindingPreferenceTest {
     }
 
     @Test
-    fun `reviewer preference parsing preserves valid bindings and card sides around invalid entries`() {
+    fun `parsing keeps valid bindings and sides around invalid entries`() {
         val bindings = ReviewerBinding.fromPreferenceString("1/r⌨Ctrl+660|r⍝LONG_TAP2|r✅Ä1|r⌨not-a-number2|r⍝SWIPE_UP2")
 
         assertEquals(3, bindings.size)

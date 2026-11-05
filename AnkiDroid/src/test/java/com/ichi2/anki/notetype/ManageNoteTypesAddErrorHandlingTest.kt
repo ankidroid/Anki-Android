@@ -53,7 +53,7 @@ class ManageNoteTypesAddErrorHandlingTest : RobolectricTest() {
     }
 
     @Test
-    fun `collection open failure while adding shows an error without escaping the coroutine`() =
+    fun `collection open failure while adding shows an error`() =
         runTest {
             val (_, dialog) = openAddDialog()
             dialog.newNoteTypeBinding.notetypeNewName.setText("New note type")
@@ -96,7 +96,7 @@ class ManageNoteTypesAddErrorHandlingTest : RobolectricTest() {
         }
 
     @Test
-    fun `cloning an invalid legacy template shows validation without a crash report`() =
+    fun `invalid legacy template clone shows validation without crash report`() =
         runTest {
             val sourceName = "Invalid legacy note type"
             val cloneName = "Invalid template clone"

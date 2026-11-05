@@ -47,7 +47,7 @@ class ReviewerMenuRepositoryTest {
     }
 
     @Test
-    fun `getActionsByMenuDisplayType returns not configured items that have a default display type`() {
+    fun `returns unconfigured items with a default display type`() {
         // assuming that USER_ACTION_1 and USER_ACTION_2 don't have MENU_ONLY as default
         val userActions1and2 = listOf(ViewerAction.USER_ACTION_1, ViewerAction.USER_ACTION_2)
         repository.setDisplayTypeActions(alwaysShowActions = emptyList(), menuOnlyActions = userActions1and2, disabledActions = emptyList())

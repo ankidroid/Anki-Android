@@ -97,7 +97,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `filename collision imports the completed download instead of the older file`() {
+    fun `filename collision imports the completed download`() {
         val download = startDownload()
         download.file.writeText("older deck")
         val completedFile = File(download.file.parentFile, "blank-1.apkg").apply { writeText("new deck") }
@@ -149,7 +149,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `duplicate completion does not replace the completed file or start another import`() {
+    fun `duplicate completion keeps file and starts no second import`() {
         val download = completedDownload()
         val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
         val otherFile = File(download.file.parentFile, "other.apkg").apply { writeText("other deck") }
@@ -240,7 +240,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `removing the download fragment prevents late completion from starting an import`() {
+    fun `late completion after removal starts no import`() {
         val download = startDownload()
         download.file.writeText("deck contents")
         download.activity.supportFragmentManager.commitNow { remove(download.fragment) }
@@ -276,7 +276,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `download manager rejecting the app folder downloads into its own storage instead`() {
+    fun `rejected app folder downloads into download manager storage`() {
         val download = startDownload(rejectsAppStorage = true)
         val deckUri = "content://downloads/all_downloads/1".toUri()
 
@@ -293,7 +293,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `download manager rejecting every destination offers retry instead of crashing`() {
+    fun `rejected destinations offer retry instead of crashing`() {
         val failure = SecurityException("Unsupported path")
         val download = startDownload(enqueueFailure = failure)
 
@@ -310,7 +310,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
     /** 19876: AnkiWeb returns 429 to anonymous users downloading a second deck, asking them to log in */
     @Test
-    fun `rate limited download while logged out prompts login instead of showing a generic error`() {
+    fun `rate limited download when logged out prompts login`() {
         val download = startDownload()
 
         download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
@@ -337,7 +337,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     /** The failure broadcast can arrive while the activity is backgrounded: the login prompt
      * must wait until the user returns, since FragmentManager work would throw there */
     @Test
-    fun `rate limited failure while backgrounded defers the login prompt until resume`() {
+    fun `rate limited failure in background prompts login on resume`() {
         val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
         saveControllerForCleanup(controller)
         controller.start().resume().visible()

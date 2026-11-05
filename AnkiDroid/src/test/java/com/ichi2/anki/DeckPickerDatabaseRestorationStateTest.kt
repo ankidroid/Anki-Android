@@ -37,7 +37,7 @@ class DeckPickerDatabaseRestorationStateTest : RobolectricTest() {
     }
 
     @Test
-    fun `recreation restores the destination and binds the listener to the new activity`() {
+    fun `recreation restores destination and rebinds listener`() {
         val previousOverride = CollectionHelper.ankiDroidDirectoryOverride
         try {
             val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())

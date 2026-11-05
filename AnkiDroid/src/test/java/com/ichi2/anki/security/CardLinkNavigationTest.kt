@@ -48,7 +48,7 @@ class CardLinkNavigationTest(
     }
 
     @Test
-    fun `web links resolve to browsers and browsable native apps without external app permission`() {
+    fun `web links open browsers and native apps without permission`() {
         targetContext.registerWebBrowser()
         val nativeHandler = registerNativeHandler(browsable = true)
         registerNativeHandler(browsable = false)

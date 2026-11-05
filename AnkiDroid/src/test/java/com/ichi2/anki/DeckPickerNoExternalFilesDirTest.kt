@@ -51,7 +51,7 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
 
     @Test
     @Config(application = AnkiDroidAppWithCollectionButUnwritableStorage::class)
-    fun `Fatal error is shown when getExternalFilesDir is null and collection is set but unwritable`() {
+    fun `fatal error if external files dir is null and collection is unwritable`() {
         assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
         // IntroductionActivity should be skipped by our code so we can show the error
         // without user interaction
@@ -62,7 +62,7 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
     }
 
     @Test
-    fun `fatal error is shown after 'Create a new collection' and getExternalFilesDir is null`() =
+    fun `fatal error after create new collection if external files dir is null`() =
         try {
             assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
             AnkiDroidApp.clearFatalError()

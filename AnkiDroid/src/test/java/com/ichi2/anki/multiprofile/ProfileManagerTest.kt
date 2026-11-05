@@ -236,7 +236,7 @@ class ProfileManagerTest {
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
-    fun `Legacy device keeps cookies on first run as the WebView data is already Default's (Pre-API 28)`() {
+    fun `Legacy device keeps cookies on first run as WebView data is Default's (Pre-API 28)`() {
         val cookieManager = mockCookieManager()
         assertNull(prefs.getString(PREF_WEBVIEW_PROFILE_ID, null), "no WebView owner is recorded before the first run")
 
@@ -278,7 +278,7 @@ class ProfileManagerTest {
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
-    fun `Legacy device clears cookies with no recorded owner once another profile exists (Pre-API 28)`() {
+    fun `legacy device clears cookies without owner (Pre-API 28)`() {
         val cookieManager = mockCookieManager()
         val manager = ProfileManager.create(context)
         manager.createNewProfile(ProfileName.fromTrustedSource("Bob"))
@@ -512,7 +512,7 @@ class ProfileManagerTest {
     }
 
     @Test
-    fun `loading a non-default profile keeps deckPath in app storage when Default uses legacy storage`() {
+    fun `non-default profile keeps deckPath in app storage`() {
         ShadowEnvironment.setIsExternalStorageLegacy(true)
         context.sharedPrefs().edit(commit = true) {
             putString(PREF_COLLECTION_PATH, File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath)

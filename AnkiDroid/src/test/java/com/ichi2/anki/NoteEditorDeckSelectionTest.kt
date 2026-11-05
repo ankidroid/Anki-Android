@@ -253,7 +253,7 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
         }
 
     @Test
-    fun `deleted remembered deck does not replace the editor destination on a note-type change`() =
+    fun `deleted remembered deck keeps editor deck on note-type change`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.DECIDE_BY_NOTE_TYPE)
             addDeck("Study", setAsSelected = true)
@@ -275,7 +275,7 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
         }
 
     @Test
-    fun `filtered remembered deck does not replace the editor destination on a note-type change`() =
+    fun `filtered remembered deck keeps editor deck on note-type change`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.DECIDE_BY_NOTE_TYPE)
             val filteredDeck = addDynamicDeck("Filtered")
@@ -298,7 +298,7 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
         }
 
     @Test
-    fun `switching note types in current-deck mode preserves the chosen deck despite remembered history`() =
+    fun `current-deck mode keeps chosen deck on note-type change`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.DECIDE_BY_NOTE_TYPE)
             val studyDeck = addDeck("Study", setAsSelected = true)
@@ -382,7 +382,7 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
         }
 
     @Test
-    fun `saving retains the open editor selections when the study deck has another note type`() =
+    fun `saving keeps editor selections if study deck has another note type`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
             val studyDeck = addDeck("Study", setAsSelected = true)

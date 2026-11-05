@@ -26,7 +26,7 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
     private val prefs get() = PrefsRepository(targetContext)
 
     @Test
-    fun `'allow templates to record audio' switch updates the pref read by the card viewers`() {
+    fun `record audio switch updates the card viewer pref`() {
         grantRecordAudioPermission()
         prefs.allowTemplatesToRecordAudio = false
 
@@ -40,7 +40,7 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `'allow templates to record audio' switch does not request the permission when toggled off`() {
+    fun `record audio switch does not request permission when turned off`() {
         grantRecordAudioPermission()
         prefs.allowTemplatesToRecordAudio = true
 
@@ -66,7 +66,7 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
      * e.g. if the process dies before the user answers the system dialog.
      */
     @Test
-    fun `'allow templates to record audio' switch does not persist the opt-in before the permission is granted`() {
+    fun `record audio switch does not save opt-in before permission is granted`() {
         prefs.allowTemplatesToRecordAudio = false
 
         withAdvancedSettings {
@@ -78,7 +78,7 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `'allow templates to record audio' switch applies the opt-in once the permission is granted`() {
+    fun `record audio switch saves opt-in once permission is granted`() {
         prefs.allowTemplatesToRecordAudio = false
 
         withAdvancedSettings {
@@ -98,7 +98,7 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `'allow templates to record audio' switch is unchecked if the microphone permission is missing`() {
+    fun `record audio switch unchecked without microphone permission`() {
         prefs.allowTemplatesToRecordAudio = true
 
         withAdvancedSettings {

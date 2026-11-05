@@ -46,7 +46,7 @@ internal class SensibleSwipeDismissBehaviorTest {
         assertEquals(Dismiss.ToTheLeft, behavior.shouldDismiss(snackbar, 0f))
     }
 
-    @Test fun `Moving snackbar isn't dismissed if it hasn't traveled far and is moving slowly`() {
+    @Test fun `slow snackbar near start is not dismissed`() {
         assertEquals(Dismiss.DoNotDismiss, behavior.shouldDismiss(snackbar, 100f))
         assertEquals(Dismiss.DoNotDismiss, behavior.shouldDismiss(snackbar, -100f))
 
@@ -55,7 +55,7 @@ internal class SensibleSwipeDismissBehaviorTest {
         assertEquals(Dismiss.DoNotDismiss, behavior.shouldDismiss(snackbar, -100f))
     }
 
-    @Test fun `Moving snackbar isn't dismissed if it has traveled far, but is moving slowly towards initial position`() {
+    @Test fun `far snackbar moving slowly back is not dismissed`() {
         positionSnackbarAtX(+80)
         assertEquals(Dismiss.DoNotDismiss, behavior.shouldDismiss(snackbar, -100f))
 
@@ -63,7 +63,7 @@ internal class SensibleSwipeDismissBehaviorTest {
         assertEquals(Dismiss.DoNotDismiss, behavior.shouldDismiss(snackbar, +100f))
     }
 
-    @Test fun `Moving snackbar is dismissed if it has traveled far and is moving towards the closest edge, even if slowly`() {
+    @Test fun `far snackbar moving to closest edge is dismissed`() {
         positionSnackbarAtX(+80)
         assertEquals(Dismiss.ToTheRight, behavior.shouldDismiss(snackbar, +100f))
 

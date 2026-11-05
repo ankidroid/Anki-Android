@@ -81,7 +81,7 @@ class ImportFileSelectionFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `dialog with only colpkg option shows only colpkg entry (restore backup scenario)`() {
+    fun `only colpkg option shows only colpkg entry (restore backup)`() {
         showDialog(
             ImportOptions(importColpkg = true, importApkg = false, importTextFile = false),
         ) { dialog ->

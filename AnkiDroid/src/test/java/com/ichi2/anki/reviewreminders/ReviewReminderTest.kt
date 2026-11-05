@@ -102,7 +102,7 @@ class ReviewReminderTest : RobolectricTest() {
     }
 
     @Test
-    fun `latest notification not delivered if scheduled firing time is recent and there was no scheduled firing`() {
+    fun `not delivered if recent scheduled time had no firing`() {
         latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 2.minutes.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),
@@ -111,7 +111,7 @@ class ReviewReminderTest : RobolectricTest() {
     }
 
     @Test
-    fun `latest notification delivered if scheduled firing time is recent and there was a scheduled firing`() {
+    fun `delivered if recent scheduled time had a firing`() {
         latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 1.minutes.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = 0,
@@ -129,7 +129,7 @@ class ReviewReminderTest : RobolectricTest() {
     }
 
     @Test
-    fun `latest notification not delivered even if next window is approaching if there was no scheduled firing`() {
+    fun `not delivered near next window if there was no firing`() {
         latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = (-25).hours.inWholeMilliseconds.toInt(),
@@ -147,7 +147,7 @@ class ReviewReminderTest : RobolectricTest() {
     }
 
     @Test
-    fun `latest notification not delivered if scheduled firing is now and latest firing was in the past`() {
+    fun `not delivered if scheduled now and last firing was earlier`() {
         latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 0,
             lastFiringOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),

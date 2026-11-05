@@ -119,7 +119,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `rename and study requests use the resolved selection despite focus search and collapsed parents`() =
+    fun `rename and study use resolved selection despite filter and collapse`() =
         runTest {
             val parent = addDeck("Parent")
             val selected = addDeck("Parent::Selected", setAsSelected = true)

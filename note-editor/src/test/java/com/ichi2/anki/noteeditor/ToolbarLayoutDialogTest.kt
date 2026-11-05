@@ -125,7 +125,7 @@ class ToolbarLayoutDialogTest {
 
     @Test
     @SuppressLint("NewApi") // captureToImage requires API 26; Robolectric is configured for API 36.
-    fun `choices without selection backgrounds show keyboard focus separately from selection`() {
+    fun `choices show keyboard focus separately from selection`() {
         var chosen: ToolbarLayoutMode? = null
         composeRule.setContent {
             CompositionLocalProvider(LocalInspectionMode provides true) {

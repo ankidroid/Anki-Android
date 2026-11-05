@@ -43,7 +43,7 @@ class StudyOptionsViewModelTest : JvmTest() {
     private val viewModel = StudyOptionsViewModel().also { viewModels.put("study", it) }
 
     @Test
-    fun `refreshData suspends without blocking the caller while sync holds the collection queue`() =
+    fun `refreshData suspends without blocking while sync holds the queue`() =
         runTest {
             col
             withBlockedCollectionQueue { releaseQueue ->

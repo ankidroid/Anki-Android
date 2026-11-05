@@ -25,7 +25,7 @@ import kotlin.test.assertTrue
 @RunWith(AndroidJUnit4::class)
 class ManageNoteTypesAddRecreationReviewTest : RobolectricTest() {
     @Test
-    fun `night mode change after stock add preserves the pending list refresh`() = checkRecreation(clone = false)
+    fun `night mode after stock add keeps the pending list refresh`() = checkRecreation(clone = false)
 
     @Test
     fun `night mode change after clone preserves the pending list refresh`() = checkRecreation(clone = true)

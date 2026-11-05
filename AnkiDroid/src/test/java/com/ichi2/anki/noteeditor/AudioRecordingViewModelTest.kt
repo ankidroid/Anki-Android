@@ -277,7 +277,7 @@ class AudioRecordingViewModelTest {
         }
 
     @Test
-    fun `closing the screen deletes a recording that was not inserted and releases the player`() =
+    fun `closing deletes uninserted recording and releases player`() =
         runViewModelTest { viewModel ->
             val recording = viewModel.recordAndPlay()
 

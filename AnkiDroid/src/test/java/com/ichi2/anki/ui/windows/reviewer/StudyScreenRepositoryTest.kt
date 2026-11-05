@@ -32,7 +32,7 @@ class StudyScreenRepositoryTest {
     }
 
     @Test
-    fun `isMarkShownInToolbar and isFlagShownInToolbar are true when toolbar is enabled and action is set to ALWAYS`() {
+    fun `mark and flag show in toolbar if set to always`() {
         menuRepository.setDisplayTypeActions(
             alwaysShowActions =
                 listOf(
@@ -48,7 +48,7 @@ class StudyScreenRepositoryTest {
     }
 
     @Test
-    fun `isMarkShownInToolbar and isFlagShownInToolbar are false when action is NOT in ALWAYS list`() {
+    fun `mark and flag are hidden if not set to always`() {
         menuRepository.setDisplayTypeActions(
             alwaysShowActions = listOf(),
             menuOnlyActions =
@@ -64,7 +64,7 @@ class StudyScreenRepositoryTest {
     }
 
     @Test
-    fun `isMarkShownInToolbar and isFlagShownInToolbar are false when toolbar is completely hidden`() {
+    fun `mark and flag are hidden if toolbar is hidden`() {
         menuRepository.setDisplayTypeActions(
             alwaysShowActions =
                 listOf(
