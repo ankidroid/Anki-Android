@@ -77,16 +77,6 @@
         <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
 
-    <!-- TODO remove this style when a proper 'colorOnPrimaryContainer' is set in themes, without
-           this override the user doesn't see the text selection highlight in TextInputLayouts -->
-    <style name="TextInputSelectionColorFixStyle" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.TextInputSelectionFix</item>
-    </style>
-
-    <style name="ThemeOverlay.TextInputSelectionFix" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
-        <item name="colorOnPrimaryContainer">?attr/editTextHighlightColor</item>
-    </style>
-
     <style name="Widget.AnkiDroid.WhiteboardToolbarCard.Eink" parent="Widget.Material3.CardView.Elevated">
         <item name="strokeWidth">?attr/widgetStrokeWidth</item>
         <item name="strokeColor">?attr/widgetStrokeColor</item>
