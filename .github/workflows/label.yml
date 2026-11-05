@@ -165,7 +165,7 @@ jobs:
               return false;
             }
 
-            const changedFiles = await github.rest.pulls.listFiles({
+            const changedFiles = await github.paginate(github.rest.pulls.listFiles, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
@@ -175,7 +175,7 @@ jobs:
             // set boolean to true and use the boolean in outer loop to add label
             let fileChanged = false;
             const pullRequestData = await getPullRequest();
-            for (let files of changedFiles.data) {
+            for (let files of changedFiles) {
               for (let i18n of I18N_FILES) {
                 if (files.filename.includes(i18n)) {
                   fileChanged = true;
