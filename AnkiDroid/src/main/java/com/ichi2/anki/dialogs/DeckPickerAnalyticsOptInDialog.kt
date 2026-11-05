@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +18,7 @@ import com.ichi2.utils.getCheckBoxPrompt
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
+import timber.log.Timber
 
 class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -24,12 +26,26 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
         return AlertDialog.Builder(requireActivity()).create {
             title(CommonString.analytics_dialog_title)
             message(CommonString.analytics_summ)
-            checkBoxPrompt(CommonString.analytics_title, isCheckedDefault = false) {}
+            checkBoxPrompt(CommonString.analytics_title, isCheckedDefault = false) { isChecked ->
+                Timber.d("Analytics opt-in checkbox changed: %b", isChecked)
+            }
             positiveButton(CommonString.dialog_continue) {
-                AnkiDroidUsageAnalytics.isEnabled = (it as AlertDialog).getCheckBoxPrompt().isChecked
+                val optedIn = (it as AlertDialog).getCheckBoxPrompt().isChecked
+                Timber.i("Analytics opt-in dialog confirmed: %b", optedIn)
+                AnkiDroidUsageAnalytics.isEnabled = optedIn
             }
             cancelable(true)
         }
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        Timber.i("Analytics opt-in dialog cancelled")
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        Timber.i("Analytics opt-in dialog dismissed")
     }
 
     companion object {
