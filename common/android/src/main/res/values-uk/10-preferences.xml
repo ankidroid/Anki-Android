@@ -24,7 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="enabled" comment="Generic label for something that is turned on">Enabled</string>
+    <string name="enabled" comment="Generic label for something that is turned on">Ввімкнено</string>
     <string name="disabled" comment="Generic label for something that is turned off">Вимкнено</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d хв.</item>
@@ -110,7 +110,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Дотик трьома пальцями</string>
     <string name="gestures_four_finger_tap" maxLength="41">Дотик чотирма пальцями</string>
     <string name="gestures_shake" maxLength="41">Потрясти пристроєм</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Меню «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">Включає \'%s\' в загальне контекстне меню</string>
     <string name="double_scrolling_gap" maxLength="41">Подвійне прокручування</string>
     <string name="double_scrolling_gap_summ">Подвоїти розрив прокручування в eReader-і</string>
@@ -147,7 +147,7 @@
     <string name="select_locale_title">Виберіть мову</string>
     <string name="software_render" maxLength="41">Вимкнути апаратний рендеринг карток</string>
     <string name="software_render_summ">Апаратний рендеринг буде швидшим, але матиме проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу карток, спробуйте це налаштування.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Вимкнути режим редагування одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Вирівнювання по центру</string>
@@ -173,12 +173,12 @@
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
     <string name="timeboxing" maxLength="41">Timeboxing</string>
     <string name="use_timebox" maxLength="41">Use timebox</string>
-    <string name="time_limit_label" maxLength="41">Time limit</string>
+    <string name="time_limit_label" maxLength="41">Обмеження за часом</string>
     <plurals name="timebox_minutes_suffix">
-        <item quantity="one">min</item>
-        <item quantity="few">mins</item>
-        <item quantity="many">mins</item>
-        <item quantity="other">mins</item>
+        <item quantity="one">хв</item>
+        <item quantity="few">хв</item>
+        <item quantity="many">хв</item>
+        <item quantity="other">хв</item>
     </plurals>
     <string name="pref_timebox_help_summary">Timeboxing divides your study into shorter sessions to help you stay focused. When the time limit is reached, you\'ll see how many cards you studied and can choose to take a break or continue.</string>
     <string name="day_offset_with_description" maxLength="41">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
@@ -237,9 +237,9 @@
          ################################## Review reminders ###################################
          ####################################################################################### -->
     <!-- Entry points -->
-    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
-    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
-    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
+    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Нагадування про навчання</string>
+    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">У всьому додатку</string>
+    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Лише для колоди</string>
     <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
     <!-- Schedule reminders screen -->
     <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
@@ -248,67 +248,67 @@
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
     <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
-    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
-    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
-    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
+    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Колоду не знайдено</string>
+    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Нагадування недоступні</string>
+    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Виправити</string>
     <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
     <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
     <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Successfully edited review reminder</string>
     <!-- Add / edit reminder dialog -->
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">Додати нагадування про навчання</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">Редагувати нагадування про навчання</string>
-    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
-    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
-    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Час:</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Колода:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Розширені налаштування</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Поріг карток:</string>
     <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
-    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
-    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
-    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">Count these cards toward the threshold:</string>
-    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
-    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
+    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Будь ласка, введіть ціле число для кількості карток</string>
+    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">Поріг має бути як мінімум 0</string>
+    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">Враховувати ці картки до порогу</string>
+    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Видалити це нагадування?</string>
+    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">Цю дію не можна скасувати.</string>
     <!-- Reminder troubleshooting screen -->
-    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Reminders are unavailable.</string>
-    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Reminders may not work correctly.</string>
-    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Your reminders should work as expected.</string>
-    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
+    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Нагадування недоступні.</string>
+    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Нагадування можуть працювати неправильно.</string>
+    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Ваші нагадування повинні працювати належним чином.</string>
+    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Різні пристрої мають різні налаштування обмеження сповіщень. Якщо проблеми повторюються, перевірте системні налаштування або пошукайте інформацію онлайн.</string>
     <!-- Troubleshooting check titles -->
-    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>
-    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Notification channel</string>
-    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
-    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Battery optimization</string>
+    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Дозвіл на сповіщення</string>
+    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Канал для сповіщень</string>
+    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Не турбувати</string>
+    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Оптимізація батареї</string>
     <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Режим енергозбереження</string>
-    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
+    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Будильники &amp; дозволи нагадувань</string>
     <!-- Troubleshooting check statuses -->
-    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>
-    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Denied</string>
-    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">On</string>
-    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Off</string>
-    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Unrestricted</string>
-    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Optimized</string>
-    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Restricted</string>
+    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Дозволено</string>
+    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Заборонено</string>
+    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">Увімкнено</string>
+    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Вимкнено</string>
+    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Без обмежень</string>
+    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Оптимізовано</string>
+    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Обмежено</string>
     <!-- Troubleshooting check explanations -->
-    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">The review reminder notification channel must be enabled</string>
-    <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">Do Not Disturb may mute reminder notifications</string>
-    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">Battery optimization may delay reminders</string>
-    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Background usage is disabled. Reminders may not be delivered</string>
-    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Power saving mode may prevent timely delivery of reminders</string>
+    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">Канал сповіщень для нагадувань про навчання має бути ввімкнений</string>
+    <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">Режим \"Не турбувати\" може приглушити нагадування про навчання</string>
+    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">Оптимізація акумулятора може затримати нагадування</string>
+    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Використання у фоновому режимі вимкнено. Нагадування можуть бути недоставлені</string>
+    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Режим енергозбереження може заважати вчасній доставці нагадувань</string>
     <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">Required to schedule reminders at exact times</string>
     <!-- Troubleshooting check actions -->
-    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">Grant permission</string>
-    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Enable notification channel</string>
-    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Disable battery optimization</string>
-    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
+    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">Надати дозвіл</string>
+    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Увімкнути канал сповіщень</string>
+    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Вимкнути оптимізацію акумулятора</string>
+    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Відкрити налаштування акумулятора</string>
     <!-- Notification content -->
-    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">It\'s time to study your cards</string>
-    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">It\'s time to study \"%s\"</string>
-    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">Snooze %s</string>
+    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">Настав час вчити картки</string>
+    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">Настав час вчити \"%s\"</string>
+    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">Відкласти %s</string>
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
-        <item quantity="one">%d card due</item>
-        <item quantity="few">%d cards due</item>
-        <item quantity="many">%d cards due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d картка до перегляду</item>
+        <item quantity="few">%d картки до перегляду</item>
+        <item quantity="many">%d карток до перегляду</item>
+        <item quantity="other">%d карток до перегляду</item>
     </plurals>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Оберіть теги</string>
@@ -320,7 +320,7 @@
     <string name="analytics_title" maxLength="41">Поділитися інформацією про використання функцій</string>
     <string name="analytics_summ">Ви можете зробити свій внесок до AnkiDroid, допомагаючи команді розробників побачити, які функції використовують люди</string>
     <string name="note_editor_replace_newlines" maxLength="41">Замінити нові рядки на HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">Замінювати у редакторі записів будь-які випадки &lt;br&gt; на нові рядки під час редагування картки.</string>
     <string name="type_in_answer_focus" maxLength="41">Переходити до «Ввести відповідь»</string>
     <string name="type_in_answer_focus_summ">Автоматично переходити до поля «Ввести відповідь» під час навчання</string>
     <!-- About -->
@@ -328,7 +328,7 @@
     <string name="pref_cat_about_title" maxLength="41">Про програму</string>
     <string name="contributors_title">Учасники</string>
     <string name="about_contributors_description"><![CDATA[Це наші дивовижні <a href=\"%1$s\">учасники</a>. Ви теж можете допомогти AnkiDroid шляхом програмування, перекладу, пожертвуванням і <a href=\"%2$s\">іншим</a>!]]></string>
-    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[Це наші дивовижні <a href=\"%1$s\">учасники проєкту</a>. Ви теж можете допомогти AnkiDroid з програмуванням, перекладом та <a href=\"%2$s\">іншими речами</a>!]]></string>
     <string name="license">Ліцензія</string>
     <string name="license_description"><![CDATA[AnkiDroid випущений під <a href=\"%1$s\">GPL-3.0</a> і <a href=\"%2$s\">AGPL-3.0</a> ліцензією, з вихідним кодом доступним <a href=\"%3$s\">на GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid також використовує сторонні бібліотеки та іконки, які ліцензуються під різними <a href=\"%1$s\">ліцензіями</a> з відкритим кодом]]></string>
@@ -369,8 +369,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Експериментальні</string>
     <string name="readtext_deprecation_warn">AnkiDroid створив кращий механізм TTS, який сумісний з іншими клієнтами Anki і містить більше голосів та покращене відтворення мови!\n\nБудь ласка, оновіть програму якомога швидше, оскільки це налаштування буде незабаром видалено.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Оновіться, будь ласка, до нового формату синтезу мовлення</string>
-    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
-    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Дозволити шаблонам записувати аудіо</string>
+    <string name="template_is_trying_to_record_audio">Цей шаблон намагається записати аудіо</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
     <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>
@@ -460,15 +460,15 @@
     <string name="new_study_screen_summ"><![CDATA[Покращений екран навчання, який замінить теперішній. Деякі функції старого екрану були змінені або видалені. Будь ласка, надсилайте нам будь-які <a href="%1$s">відгуки</a> або <a href="%2$s">помилки</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показувати фідбек відповіді</string>
     <string name="screen" maxLength="41">Екран</string>
-    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
-    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
-    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Також призначити для \'%1$s\'?</string>
+    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Пропустити</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Призначити</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Відкрити налаштування</string>
     <string name="related_settings_title" comment="Title of the section for related settings">Пов\'язані налаштування</string>
     <!-- External Directory Selection Preference -->
-    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
-    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
-    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
-    <string name="pref_directory_not_writable">Directory is not writable</string>
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Не налаштовано</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Власний шлях</string>
+    <string name="pref_enter_custom_path" maxLength="41">Введіть власний шлях</string>
+    <string name="pref_directory_not_writable">Директорія не доступна для запису</string>
 </resources>
