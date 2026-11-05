@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <style name="Base.V29.Light" parent="@style/Base.Theme.Light">
-        <item name="colorSurfaceContainer">@color/faded_primary</item>
-    </style>
-
-    <style name="Theme_Light" parent="Base.V29.Light"/>
-</resources>
