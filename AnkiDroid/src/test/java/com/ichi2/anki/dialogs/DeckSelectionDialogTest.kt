@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.deckTreeNode
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
@@ -30,6 +29,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
+import com.ichi2.anki.ankicommon.R as AnkiCommonR
 import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(RobolectricTestRunner::class)
@@ -238,7 +238,7 @@ class DeckSelectionDialogTest : RobolectricTest() {
     )
 
     private fun DeckSelectionDialog.openSearch(): SearchView {
-        val searchItem = binding.toolbar.menu.findItem(R.id.action_filter)
+        val searchItem = binding.toolbar.menu.findItem(AnkiCommonR.id.action_filter)
         searchItem.expandActionView()
         return assertIs<SearchView>(searchItem.actionView)
     }

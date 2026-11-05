@@ -54,6 +54,7 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import com.ichi2.anki.ankicommon.R as AnkiCommonR
 import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
@@ -276,7 +277,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
             advanceRobolectricLooper()
             val picker = assertIs<DeckSelectionDialog>(export.childFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG))
             val menu = picker.binding.toolbar.menu
-            assertTrue(menu.performIdentifierAction(R.id.action_add_deck, 0))
+            assertTrue(menu.performIdentifierAction(AnkiCommonR.id.action_add_deck, 0))
             advanceRobolectricLooper()
 
             val creation = assertIs<AlertDialog>(ShadowDialog.getLatestDialog())
