@@ -158,7 +158,7 @@ class DeckOptionsTest : InstrumentedTest() {
     ) {
         val originalHandler = uiMethods.getValue("updateDeckConfigs")
         var failNextSave = failFirstAttempt
-        uiMethods["updateDeckConfigs"] = { input ->
+        uiMethods["updateDeckConfigs"] = { input, awaitPageShown ->
             val activity = this
             lifecycleScope.async {
                 // explicitly reproduce the reload race
@@ -167,7 +167,7 @@ class DeckOptionsTest : InstrumentedTest() {
                     failNextSave = false
                     error("Optimization failed for test")
                 }
-                originalHandler.invoke(activity, input).await()
+                originalHandler.invoke(activity, input, awaitPageShown).await()
             }
         }
         try {
