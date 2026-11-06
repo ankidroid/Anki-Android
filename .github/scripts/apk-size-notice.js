@@ -9,6 +9,13 @@
 //
 //     ::notice title=play-release-apk-build::<built commit> <first parent> <bytes>
 //
+// Why a notice rather than an artifact: a notice becomes a check-run annotation, which
+// the comparison workflow can read with the REST API and `checks: read`. It needs no
+// upload or download step and no third-party action to fetch artifacts from another
+// run. Every merge_group/push emulator run already posts it, so a later PR can reuse
+// that size instead of rebuilding the base commit. It also shows up on the run's
+// summary page for anyone reading the logs.
+//
 // <built commit> is the commit actions/checkout gave the job. It is not always the run's
 // head_sha: a pull_request run builds GitHub's synthetic merge commit (refs/pull/N/merge),
 // whose first parent is the base-branch tip the PR was merged with for testing. That first
