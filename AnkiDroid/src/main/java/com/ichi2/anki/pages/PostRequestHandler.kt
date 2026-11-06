@@ -175,6 +175,13 @@ val uiMethods =
         "deckOptionsRequireClose" to { bytes -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
 
+/** [uiMethods] which don't affect the UI, so may run while the screen isn't visible */
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+val backgroundSafeUiMethods = setOf("latestProgress", "i18nResources")
+
+/** Whether [methodName] affects the UI, so must wait until the screen is visible */
+fun requiresVisibleScreen(methodName: String) = methodName in uiMethods && methodName !in backgroundSafeUiMethods
+
 sealed class UiPostRequestResponse {
     /** The requested method was not a valid UI POST request */
     data object UnknownMethod : UiPostRequestResponse()
