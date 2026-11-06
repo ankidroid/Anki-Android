@@ -27,10 +27,12 @@ import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.utils.ContentResolverUtil
 import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.joinAll
 import timber.log.Timber
 import java.io.File
 
@@ -45,6 +47,8 @@ internal class NoteEditorMultimediaController(
     private val launcher: ActivityResultLauncher<Intent>,
 ) {
     private var actionJob: Job? = null
+
+    private val mediaImports = mutableListOf<Job>()
 
     private val galleryPicker =
         NoteEditorGalleryPicker(fragment) { fieldIndex, imageUri ->
@@ -255,6 +259,12 @@ internal class NoteEditorMultimediaController(
         }
     }
 
+    suspend fun awaitMediaImports() {
+        val pendingImports = mediaImports.filter { it.isActive }
+        if (pendingImports.isEmpty()) return
+        fragment.withProgress { pendingImports.joinAll() }
+    }
+
     /**
      * Adds a media file to a specific field within the currently edited multimedia note.
      *
@@ -267,35 +277,37 @@ internal class NoteEditorMultimediaController(
         field: IField,
         skipSizeCheck: Boolean,
     ) {
-        fragment.launchCatchingTask {
-            try {
-                // Import field media before setting formattedValue so media paths
-                // reflect the checksum when names collide.
-                withCol {
-                    NoteService.importMediaToDirectory(this, field, skipSizeCheck = skipSizeCheck)
-                }
+        mediaImports.removeAll { it.isCompleted }
+        mediaImports +=
+            fragment.launchCatchingTask {
+                try {
+                    // Import field media before setting formattedValue so media paths
+                    // reflect the checksum when names collide.
+                    withCol {
+                        NoteService.importMediaToDirectory(this, field, skipSizeCheck = skipSizeCheck)
+                    }
 
-                val fieldEditText = fragment.editFieldAt(index) ?: return@launchCatchingTask
-                val formattedValue = field.formattedValue
-                // An empty media result must not replace selected text or mark the note changed.
-                if (field.type != EFieldType.TEXT && formattedValue.isNullOrEmpty()) return@launchCatchingTask
-                if (field.type === EFieldType.TEXT) {
-                    fieldEditText.setText(formattedValue)
-                } else if (fieldEditText.text != null) {
-                    fragment.insertStringInField(fieldEditText, formattedValue)
+                    val fieldEditText = fragment.editFieldAt(index) ?: return@launchCatchingTask
+                    val formattedValue = field.formattedValue
+                    // An empty media result must not replace selected text or mark the note changed.
+                    if (field.type != EFieldType.TEXT && formattedValue.isNullOrEmpty()) return@launchCatchingTask
+                    if (field.type === EFieldType.TEXT) {
+                        fieldEditText.setText(formattedValue)
+                    } else if (fieldEditText.text != null) {
+                        fragment.insertStringInField(fieldEditText, formattedValue)
+                    }
+                    fragment.markMultimediaChanged()
+                } catch (e: MediaSizeLimitExceededException) {
+                    fragment.showLargeMediaFileWarning(
+                        e.fileName,
+                        e.fileSize,
+                        onForceAdd = { performAddMedia(index, field, skipSizeCheck = true) },
+                    )
+                } catch (oomError: OutOfMemoryError) {
+                    // TODO: a 'retry' flow would be possible here
+                    throw Exception(oomError)
                 }
-                fragment.markMultimediaChanged()
-            } catch (e: MediaSizeLimitExceededException) {
-                fragment.showLargeMediaFileWarning(
-                    e.fileName,
-                    e.fileSize,
-                    onForceAdd = { performAddMedia(index, field, skipSizeCheck = true) },
-                )
-            } catch (oomError: OutOfMemoryError) {
-                // TODO: a 'retry' flow would be possible here
-                throw Exception(oomError)
             }
-        }
     }
 
     companion object {
