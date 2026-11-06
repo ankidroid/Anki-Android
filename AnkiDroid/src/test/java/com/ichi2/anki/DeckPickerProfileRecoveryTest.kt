@@ -17,6 +17,7 @@ import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FIL
 import com.ichi2.testutils.neutralButton
 import io.mockk.verify
 import org.junit.After
+import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +27,6 @@ import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import java.io.File
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
@@ -146,7 +146,8 @@ class DeckPickerProfileRecoveryTest : RobolectricTest() {
         assertTrue(diskBefore.contains(work.value))
         assumeTrue("The filesystem must support making directories unwritable", prefsDirectory.setWritable(false, false))
         try {
-            assertFalse(prefsDirectory.canWrite(), "The registry directory must actually be unwritable")
+            // A privileged test runner may still be able to write despite these permissions.
+            assumeFalse("The registry directory must actually be unwritable", prefsDirectory.canWrite())
             val dialog = recovery.requireDialog()
             recovery.neutralButton.performClick()
             advanceRobolectricLooper()
