@@ -89,7 +89,6 @@
     <attr name="popupBackgroundColor" format="color"/>
     <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
-    <attr name="editTextDisabled" format="color"/>
 
     <attr name="dialogBackground" format="color"/>
 
