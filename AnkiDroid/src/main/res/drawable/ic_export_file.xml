@@ -1,3 +1,10 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Copyright 2019 Chamestudio Private Limited
+  SPDX-FileComment: Style: Line; Unicons (file-export).
+  SPDX-FileComment: Source revision predates the 2022 license change.
+  Source: https://raw.githubusercontent.com/Iconscout/unicons/1a93cace582531a853fc417f83e0d108d6da360e/svg/line/file-export.svg
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
