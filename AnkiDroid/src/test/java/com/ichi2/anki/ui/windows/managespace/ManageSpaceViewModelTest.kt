@@ -3,15 +3,18 @@
 package com.ichi2.anki.ui.windows.managespace
 
 import android.app.Application
+import androidx.lifecycle.viewModelScope
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.progress.ViewModelProgress
+import kotlinx.coroutines.job
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class ManageSpaceViewModelTest : RobolectricTest() {
@@ -38,8 +41,20 @@ class ManageSpaceViewModelTest : RobolectricTest() {
     private fun runProgressTest(testBody: suspend ManageSpaceViewModel.() -> Unit) =
         runTest {
             col
-            ManageSpaceViewModel(ApplicationProvider.getApplicationContext<Application>()).testBody()
+            ManageSpaceViewModel(ApplicationProvider.getApplicationContext<Application>()).apply {
+                assertNoWorkRunning()
+                testBody()
+                assertNoWorkRunning()
+            }
         }
+
+    private fun ManageSpaceViewModel.assertNoWorkRunning() {
+        val running =
+            viewModelScope.coroutineContext.job.children
+                .filter { it.isActive }
+                .toList()
+        assertTrue(running.isEmpty(), "ViewModel work outlives the test dispatcher: $running")
+    }
 
     private suspend fun ManageSpaceViewModel.assertProgressAround(
         message: ManageSpaceProgress,

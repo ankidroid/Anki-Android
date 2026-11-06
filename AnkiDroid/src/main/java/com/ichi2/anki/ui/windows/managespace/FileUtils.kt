@@ -11,9 +11,9 @@ import android.os.storage.StorageVolume
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.utils.TranslatableException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -204,9 +204,9 @@ class CanNotWriteToOrCreateFileException(
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
-    if (!withContext(Dispatchers.IO) { collectionDirectory.canWriteToOrCreate() }) {
+    if (!withContext(ioDispatcher) { collectionDirectory.canWriteToOrCreate() }) {
         throw CanNotWriteToOrCreateFileException(collectionDirectory)
     }
 }
 
-suspend fun CollectionDirectoryProvider.collectionDirectoryExists() = withContext(Dispatchers.IO) { collectionDirectory.exists() }
+suspend fun CollectionDirectoryProvider.collectionDirectoryExists() = withContext(ioDispatcher) { collectionDirectory.exists() }
