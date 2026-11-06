@@ -4,6 +4,7 @@
     <style name="Base.Theme.Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_light_blue_500</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
         <item name="android:textColorHint">#716C76</item>
@@ -11,6 +12,7 @@
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
         <item name="colorSecondaryContainer">#C1E7FF</item>
+        <item name="colorOnSecondaryContainer">@color/black</item>
         <item name="colorSurfaceVariant">#D6ECFA</item>
         <item name="colorOnSurfaceVariant">#555555</item>
         <item name="colorOutlineVariant">#9BBDD4</item>
