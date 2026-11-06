@@ -297,7 +297,7 @@ private fun TimeboxDurationCard(
                 ) {
                     Icon(
                         painter = painterResource(CommonR.drawable.ic_remove),
-                        contentDescription = stringResource(CommonString.minus_sign),
+                        contentDescription = stringResource(CommonString.decrease_value),
                     )
                 }
 
@@ -395,7 +395,7 @@ private fun TimeboxDurationCard(
                 ) {
                     Icon(
                         painter = painterResource(CommonR.drawable.ic_add),
-                        contentDescription = stringResource(CommonString.plus_sign),
+                        contentDescription = stringResource(CommonString.increase_value),
                     )
                 }
             }
