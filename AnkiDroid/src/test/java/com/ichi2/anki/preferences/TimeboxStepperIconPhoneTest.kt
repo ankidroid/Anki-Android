@@ -47,7 +47,7 @@ class TimeboxStepperIconPhoneTest : RobolectricTest() {
             }
         }
         composeRule.waitForIdle()
-        for (description in listOf(CommonString.minus_sign, CommonString.plus_sign)) {
+        for (description in listOf(CommonString.decrease_value, CommonString.increase_value)) {
             composeRule
                 .onNodeWithContentDescription(targetContext.getString(description), useUnmergedTree = true)
                 .assertWidthIsEqualTo(expected)
