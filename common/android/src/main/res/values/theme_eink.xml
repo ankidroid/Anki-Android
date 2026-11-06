@@ -71,7 +71,7 @@
         <item name="showAnswerButtonBackground">@color/black</item>
         <item name="showAnswerColor">@color/black</item>
 
-        <item name="alternativeBackgroundColor">@color/white</item>
+        <item name="colorSurfaceDim">@color/white</item>
         <item name="cardBrowserDivider">@color/black</item>
         <item name="editTextHighlightColor">@color/material_grey_300</item>
         <item name="toolbarBackgroundColor">@color/white</item>

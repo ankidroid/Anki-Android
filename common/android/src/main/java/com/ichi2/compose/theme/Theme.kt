@@ -122,6 +122,8 @@ internal fun Context.toMaterial3ColorScheme(): ColorScheme {
                         R.styleable.ComposeTheme_colorSurfaceContainerLowest,
                         base.surfaceContainerLowest,
                     ).compositeOver(surface),
+                surfaceDim = color(R.styleable.ComposeTheme_colorSurfaceDim, base.surfaceDim),
+                surfaceBright = color(R.styleable.ComposeTheme_colorSurfaceBright, base.surfaceBright),
                 background = color(R.styleable.ComposeTheme_android_colorBackground, base.background),
                 onBackground = color(R.styleable.ComposeTheme_colorOnBackground, base.onBackground),
             )

@@ -62,7 +62,6 @@
     <!-- Study Screen other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>
-    <attr name="alternativeBackgroundColor" format="color"/>
     <!-- Browser colors -->
     <attr name="suspendedColor" format="color"/>
     <attr name="buriedColor" format="color"/>

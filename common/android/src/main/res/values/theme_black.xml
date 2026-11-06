@@ -53,7 +53,8 @@
         <item name="goodButtonTextColor">@color/material_green_400</item>
         <item name="easyButtonTextColor">@color/material_blue_700</item>
 
-        <item name="alternativeBackgroundColor">#0C0C0C</item>
+        <item name="colorSurfaceDim">#0C0C0C</item>
+        <item name="colorSurfaceBright">#151515</item>
         <item name="againTextColor">@color/material_red_200</item>
         <item name="hardTextColor">@color/material_orange_200</item>
         <item name="goodTextColor">@color/material_light_green_200</item>

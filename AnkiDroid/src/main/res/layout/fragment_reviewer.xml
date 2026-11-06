@@ -6,7 +6,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/alternativeBackgroundColor"
+    android:background="?attr/colorSurfaceDim"
     android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
     android:defaultFocusHighlightEnabled="false"

@@ -33,7 +33,7 @@
             <LinearLayout
                 android:id="@+id/previewer_frame_layout"
                 android:layout_width="1dp"
-                android:background="?alternativeBackgroundColor"
+                android:background="?attr/colorSurfaceDim"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="1">
