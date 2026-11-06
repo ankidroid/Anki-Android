@@ -14,6 +14,8 @@ SMOKE_TEST = [
     ":baselineprofile:connectedBenchmarkBenchmarkAndroidTest",
     "-Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest",
     "-Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true",
+    "-x",
+    "lintVitalPlayRelease",
     "--daemon",
     "--stacktrace",
 ]
