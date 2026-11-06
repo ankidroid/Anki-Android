@@ -27,7 +27,6 @@ import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
-import androidx.appcompat.widget.ThemeUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.TypedValueCompat
 import androidx.core.view.isVisible
@@ -39,6 +38,7 @@ import com.ichi2.utils.Permissions
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.time.Duration.Companion.milliseconds
+import com.google.android.material.R as MaterialR
 import com.ichi2.anki.common.android.R as CommonR
 
 /**
@@ -67,7 +67,7 @@ class AudioRecordView : ConstraintLayout {
     private var stopTrackingAction = false
     private var chronometerBase: Long = 0
     private val recordEnabledColor = context.getColor(CommonR.color.material_red_600)
-    private val recordDisabledColor = ThemeUtils.getThemeAttrColor(context, CommonR.attr.editTextDisabled)
+    private val recordDisabledColor = context.getColor(MaterialR.color.material_on_surface_disabled)
 
     private var firstX = 0f
     private var firstY = 0f

@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_record"
-        app:tint="?editTextDisabled"
+        app:tint="@color/material_on_surface_disabled"
         android:visibility="visible"
         />
 
