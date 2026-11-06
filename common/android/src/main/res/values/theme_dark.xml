@@ -96,10 +96,7 @@
         <item name="easyIconColor">?easyTextColor</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerColor">@color/material_blue_grey_800</item>
-        <item name="againButtonRef">@drawable/footer_button_again_dark</item>
-        <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
-        <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
-        <item name="easyButtonRef">@drawable/footer_button_easy_dark</item>
+        <item name="answerButtonRef">@drawable/footer_button</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">@color/white</item>

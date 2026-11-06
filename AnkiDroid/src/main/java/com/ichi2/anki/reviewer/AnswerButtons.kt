@@ -69,19 +69,10 @@ enum class AnswerButtons {
 
     companion object {
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
-            if (ctx.animationEnabled()) {
-                // One drawable for every ease: footer_button_ripple takes the color from the button theme
-                val ripple = getResFromAttr(ctx, CommonR.attr.answerButtonRippleRef)
-                return IntArray(entries.size) { ripple }
-            }
-            val backgroundIds =
-                intArrayOf(
-                    CommonR.attr.againButtonRef,
-                    CommonR.attr.hardButtonRef,
-                    CommonR.attr.goodButtonRef,
-                    CommonR.attr.easyButtonRef,
-                )
-            return getResFromAttr(ctx, backgroundIds)
+            // One drawable for every ease: it takes the color from the button theme
+            val attr = if (ctx.animationEnabled()) CommonR.attr.answerButtonRippleRef else CommonR.attr.answerButtonRef
+            val background = getResFromAttr(ctx, attr)
+            return IntArray(entries.size) { background }
         }
 
         fun getTextColors(ctx: Context): IntArray =

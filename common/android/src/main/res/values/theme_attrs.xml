@@ -37,10 +37,7 @@
     <attr name="goodButtonBackground" format="color"/>
     <attr name="easyButtonBackground" format="color"/>
     <attr name="showAnswerColor" format="color"/>
-    <attr name="againButtonRef" format="reference"/>
-    <attr name="hardButtonRef" format="reference"/>
-    <attr name="goodButtonRef" format="reference"/>
-    <attr name="easyButtonRef" format="reference"/>
+    <attr name="answerButtonRef" format="reference"/> <!-- Shared by all eases -->
     <!-- Same thing but with a ripple, shared by all eases -->
     <attr name="answerButtonRippleRef" format="reference"/>
     <!-- Study Screen button text colors-->

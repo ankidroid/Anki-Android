@@ -10,6 +10,7 @@
     <color name="semi_transparent_black">#80000000</color>
 
     <color name="answer_buttons_highlight_color">#66FFFFFF</color>
+    <color name="answer_buttons_focus_color">#33FFFFFF</color>
 
     <!-- The Material Design color palette lives in :common:android (common/android/.../res/values/colors.xml) -->
 
