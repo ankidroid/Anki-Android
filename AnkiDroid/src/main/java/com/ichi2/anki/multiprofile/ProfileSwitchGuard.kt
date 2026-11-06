@@ -27,6 +27,9 @@ class ProfileSwitchGuard(
         data class Blocked(
             val reasons: Set<BlockReason>,
         ) : Result()
+
+        /** The profile couldn't be set up or the switch couldn't be saved, see [ProfileManager.switchActiveProfile]. */
+        data object Failed : Result()
     }
 
     // TODO: COLLECTION_BUSY has no check yet: CollectionManager serialises on a
@@ -62,8 +65,8 @@ class ProfileSwitchGuard(
         }
 
         return if (activeBlockedReasons.isEmpty()) {
-            with(ProfileSwitchContext) { profileManager.switchActiveProfile(newProfileId) }
-            Result.Success
+            val switched = with(ProfileSwitchContext) { profileManager.switchActiveProfile(newProfileId) }
+            if (switched) Result.Success else Result.Failed
         } else {
             Result.Blocked(activeBlockedReasons)
         }

@@ -366,6 +366,7 @@
 
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_in_other_profile" comment="Shown when a home screen shortcut, widget or notification opens a deck from another profile. %1$s is the name of that profile">Switch to the “%1$s” profile to study this deck</string>
 
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>

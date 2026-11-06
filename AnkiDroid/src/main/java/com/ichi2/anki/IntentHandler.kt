@@ -196,6 +196,13 @@ class IntentHandler : AbstractIntentHandler() {
     ) {
         val deckId = intent.getLongExtra(EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
+        val deckProfile = intent.getDeckProfile()
+        if (deckProfile != AnkiDroidApp.activeProfileId(this)) {
+            Timber.w("Not reviewing deck '%d': it belongs to another profile", deckId)
+            showThemedToast(this, otherProfileDeckMessage(deckProfile), false)
+            launchDeckPickerIfNoOtherTasks(reloadIntent)
+            return
+        }
 
         val reviewIntent =
             if (Prefs.isNewStudyScreenEnabled) {
@@ -383,6 +390,7 @@ class IntentHandler : AbstractIntentHandler() {
     companion object {
         private const val ACTION_DO_SYNC = "com.ichi2.anki.DO_SYNC"
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
+        const val EXTRA_PROFILE_ID = "EXTRA_PROFILE_ID"
         private const val ACTION_COPY_DEBUG_INFO = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val EXTRA_CLIPBOARD_DATA = "clip_data"
 
@@ -525,6 +533,6 @@ class IntentHandler : AbstractIntentHandler() {
         fun getReviewDeckIntent(
             context: Context,
             deckId: DeckId,
-        ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
+        ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId).putDeckProfile(context)
     }
 }
