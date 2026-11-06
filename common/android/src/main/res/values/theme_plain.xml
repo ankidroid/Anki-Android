@@ -45,10 +45,7 @@
         <!-- Study Screen button drawables -->
         <item name="showAnswerButtonBackground">@color/theme_plain_primary</item>
         <item name="showAnswerColor">@color/theme_plain_primary</item>
-        <item name="againButtonRef">@drawable/footer_button_all_plain</item>
-        <item name="hardButtonRef">@drawable/footer_button_all_plain</item>
-        <item name="goodButtonRef">@drawable/footer_button_all_plain</item>
-        <item name="easyButtonRef">@drawable/footer_button_all_plain</item>
+        <item name="answerButtonRef">@drawable/footer_button_all_plain</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">#CCCCCC</item>

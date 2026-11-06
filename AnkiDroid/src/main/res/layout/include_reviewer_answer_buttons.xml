@@ -59,7 +59,7 @@
 
             <LinearLayout
                 style="@style/FooterButton"
-                android:background="?attr/againButtonRef"
+                android:background="?attr/answerButtonRef"
                 android:id="@+id/flashcard_layout_ease1"
                 android:nextFocusRight="@id/flashcard_layout_ease2"
                 android:layout_width="0dip"
@@ -82,7 +82,7 @@
 
             <LinearLayout
                 style="@style/FooterButton"
-                android:background="?attr/hardButtonRef"
+                android:background="?attr/answerButtonRef"
                 android:id="@+id/flashcard_layout_ease2"
                 android:nextFocusRight="@id/flashcard_layout_ease3"
                 android:nextFocusLeft="@id/flashcard_layout_ease1"
@@ -106,7 +106,7 @@
 
             <LinearLayout
                 style="@style/FooterButton"
-                android:background="?attr/goodButtonRef"
+                android:background="?attr/answerButtonRef"
                 android:id="@+id/flashcard_layout_ease3"
                 android:nextFocusRight="@id/flashcard_layout_ease4"
                 android:nextFocusLeft="@id/flashcard_layout_ease2"
@@ -130,7 +130,7 @@
 
             <LinearLayout
                 style="@style/FooterButton"
-                android:background="?attr/easyButtonRef"
+                android:background="?attr/answerButtonRef"
                 android:id="@+id/flashcard_layout_ease4"
                 android:nextFocusLeft="@id/flashcard_layout_ease3"
                 android:layout_width="0dip"
@@ -158,7 +158,7 @@
             android:layout_height="?minTouchTargetSize"
             android:orientation="vertical"
             android:focusable="true"
-            android:background="?attr/hardButtonRef"
+            android:background="?attr/answerButtonRef"
             tools:visibility="visible"
             android:theme="@style/HardButton">
 

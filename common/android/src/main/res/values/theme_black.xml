@@ -65,10 +65,7 @@
         <item name="goodBackgroundColor">#0e1310</item>
         <item name="easyBackgroundColor">#0c1317</item>
         <!-- Study Screen button drawables -->
-        <item name="againButtonRef">@drawable/footer_button_all_black</item>
-        <item name="hardButtonRef">@drawable/footer_button_all_black</item>
-        <item name="goodButtonRef">@drawable/footer_button_all_black</item>
-        <item name="easyButtonRef">@drawable/footer_button_all_black</item>
+        <item name="answerButtonRef">@drawable/footer_button_all_black</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_all_black_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">@color/white</item>
