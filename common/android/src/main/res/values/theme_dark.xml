@@ -52,8 +52,8 @@
         <item name="actionBarTextColor">@color/white</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">?attr/appBarColor</item>
-        <!-- Tab layout -->
-        <item name="tabActiveIconColor">@color/material_blue_500</item>
+        <!-- Bottom navigation -->
+        <item name="bottomNavActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors -->
         <item name="selectedRowBackgroundColor">@color/theme_dark_row_current</item>
         <item name="dynDeckColor">@color/material_light_blue_500</item>
