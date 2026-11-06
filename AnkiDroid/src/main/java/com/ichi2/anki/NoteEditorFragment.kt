@@ -1322,6 +1322,7 @@ class NoteEditorFragment :
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
     @KotlinCleanup("fix !! on oldNoteType/newNoteType")
     suspend fun saveNote() {
+        multimediaController.awaitMediaImports()
         if (selectedTags == null) {
             selectedTags = ArrayList(0)
         }
