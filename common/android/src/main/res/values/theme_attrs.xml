@@ -58,8 +58,6 @@
     <attr name="hardIconColor" format="color"/>
     <attr name="goodIconColor" format="color"/>
     <attr name="easyIconColor" format="color"/>
-    <!-- Card Browser Colors -->
-    <attr name="cardBrowserDivider" format="color"/>
     <!-- Study Screen other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>

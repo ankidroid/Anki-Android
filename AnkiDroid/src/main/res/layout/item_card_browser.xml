@@ -33,7 +33,7 @@
     <View
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
-        android:background="?attr/cardBrowserDivider" />
+        android:background="?attr/colorOutlineVariant" />
 
     <com.ichi2.ui.FixedTextView
         android:layout_width="0dip"
