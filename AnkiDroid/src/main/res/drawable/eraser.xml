@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Remix Icon contributors
+  SPDX-FileComment: Style: Line; Remix Icon (eraser-line).
+  Source: https://raw.githubusercontent.com/Remix-Design/RemixIcon/755818100db4687fd907ecaef9f57cc9ea77d0d8/icons/Design/eraser-line.svg
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:tint="?attr/colorControlNormal"
     android:width="24dp"
     android:height="24dp"
