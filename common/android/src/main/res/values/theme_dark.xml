@@ -96,8 +96,6 @@
         <item name="showAnswerColor">@color/material_blue_grey_800</item>
         <item name="answerButtonRef">@drawable/footer_button</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_ripple</item>
-        <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">@color/white</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>
         <item name="buriedColor">#612B09</item>

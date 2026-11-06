@@ -3,5 +3,5 @@
     android:shape="rectangle">
     <!-- 0.5 appears badly aliased on Emulators -->
     <size android:height="0.6dp" android:width="2dp"/>
-    <solid android:color="?attr/cardBrowserDivider" />
+    <solid android:color="?attr/colorOutlineVariant" />
 </shape>

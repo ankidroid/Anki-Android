@@ -67,8 +67,6 @@
         <!-- Study Screen button drawables -->
         <item name="answerButtonRef">@drawable/footer_button_all_black</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_all_black_ripple</item>
-        <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">@color/white</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#A8A634</item>
         <item name="markedColor">#391080</item>

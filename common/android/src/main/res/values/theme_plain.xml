@@ -45,8 +45,6 @@
         <item name="showAnswerColor">@color/theme_plain_primary</item>
         <item name="answerButtonRef">@drawable/footer_button_all_plain</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
-        <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">#CCCCCC</item>
         <!-- Note editor colors -->
         <item name="editTextHighlightColor">@color/material_grey_300</item>
         <item name="toolbarBackgroundColor">#D6D7D7</item>

@@ -10,7 +10,7 @@
     <item android:gravity="bottom">
         <shape android:shape="rectangle">
             <size android:height="1dp" />
-            <solid android:color="?attr/cardBrowserDivider" />
+            <solid android:color="?attr/colorOutlineVariant" />
         </shape>
     </item>
 </ripple>
