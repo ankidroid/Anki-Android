@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.BaseAnkiActivity
 import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
@@ -65,7 +65,7 @@ import timber.log.Timber
  * User Can remove, reorder decks and reconfigure by holding the widget.
  */
 class DeckPickerWidgetConfig :
-    AnkiActivity(R.layout.widget_deck_picker_config),
+    BaseAnkiActivity(R.layout.widget_deck_picker_config),
     BaseSnackbarBuilderProvider {
     private val binding by viewBinding(WidgetDeckPickerConfigBinding::bind)
 

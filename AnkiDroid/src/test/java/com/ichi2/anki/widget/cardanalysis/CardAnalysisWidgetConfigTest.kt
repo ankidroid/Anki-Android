@@ -6,6 +6,11 @@ package com.ichi2.anki.widget.cardanalysis
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabaseCorruptException
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -14,20 +19,36 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.CrashReportData.HelpAction
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.databaseErrorDialogs
+import com.ichi2.anki.dialogs.utils.message
+import com.ichi2.anki.dialogs.utils.performPositiveClick
+import com.ichi2.anki.dialogs.utils.title
+import com.ichi2.anki.setIntroductionSlidesShown
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.widgets.R
+import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetPreferences
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowAppWidgetManager
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -167,6 +188,44 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             // check that the last selected deck is saved in preferences
             assertEquals(testDeck2Id, preferences.getSelectedDeckIdFromPreferences(testWidgetId))
         }
+
+    @Test
+    fun `a corrupt collection shows the load failure in the Deck Picker`() {
+        val activity = startTestActivityWithDeckPicker()
+        databaseErrorDialogs.showLoadFailed(activity, SQLiteDatabaseCorruptException())
+
+        val loadFailed = activity.openedDeckPicker().awaitDialog<DatabaseErrorDialog>()
+        assertEquals(getResourceString(CommonString.open_collection_failed_title), loadFailed.title)
+    }
+
+    @Test
+    fun `Check Database from an error runs in the Deck Picker`() {
+        val activity = startTestActivityWithDeckPicker()
+        assertTrue(HelpAction.OpenCheckDatabase.canExecute(activity))
+        runBlocking { HelpAction.OpenCheckDatabase.execute(activity) }
+
+        activity.openedDeckPicker().awaitDialog<DatabaseErrorDialog>().performPositiveClick()
+        assertEquals(TR.databaseCheckRebuilt(), (ShadowDialog.getLatestDialog() as AlertDialog).message)
+    }
+
+    private fun startTestActivityWithDeckPicker(): CardAnalysisWidgetConfig {
+        ensureCollectionLoadIsSynchronous()
+        setIntroductionSlidesShown(true)
+        BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
+        targetContext.sharedPrefs().edit { putBoolean("backupPromptDisabled", true) }
+        return startTestActivity()
+    }
+
+    private fun FragmentActivity.openedDeckPicker(): DeckPicker {
+        val intent = assertNotNull(shadowOf(this).nextStartedActivity, "the Deck Picker was not opened")
+        assertEquals(DeckPicker::class.java.name, intent.component?.className)
+        return startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, intent)
+    }
+
+    private inline fun <reified T : DialogFragment> FragmentActivity.awaitDialog(): AlertDialog {
+        advanceRobolectricLooperUntil { supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) is T }
+        return (supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as T).requireDialog() as AlertDialog
+    }
 
     private fun startTestActivity(
         widgetId: AppWidgetId = testWidgetId,
