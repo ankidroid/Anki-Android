@@ -7,7 +7,9 @@ package androidx.drawerlayout.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import com.ichi2.anki.common.annotations.CoverageOptIn
 
+@CoverageOptIn
 class ClosableDrawerLayout : DrawerLayout {
     private var animationEnabled = true
 

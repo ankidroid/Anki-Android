@@ -44,6 +44,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import androidx.appcompat.R
 import androidx.core.content.withStyledAttributes
+import com.ichi2.anki.common.annotations.CoverageOptIn
 import com.ichi2.ui.FixedTextView
 
 /**
@@ -51,6 +52,7 @@ import com.ichi2.ui.FixedTextView
  *
  * Renamed from `DialogTitle` to avoid a conflict
  */
+@CoverageOptIn
 class DialogTitleView : FixedTextView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
