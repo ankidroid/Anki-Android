@@ -1,15 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: 2026 Ashish Yadav <mailtoashish693@gmail.com>
 
+// TODO: move out of multiprofile, restarting the app isn't specific to profiles
 package com.ichi2.anki.multiprofile
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.WorkManager
 import androidx.work.await
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.backupLock
 import com.ichi2.anki.common.destinations.LauncherDestination
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
+import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.toIntent
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.anki.worker.mediaSyncLock
@@ -35,8 +39,18 @@ suspend fun safeRestartApp(context: Context) {
         }
         mediaSyncLock.holdUnlessThrows {
             backupLock.holdUnlessThrows {
-                CollectionManager.ensureClosed()
-                ProcessPhoenix.triggerRebirth(context, LauncherDestination.toIntent(context))
+                var unscheduledReminders = emptySet<ReviewReminderId>()
+                try {
+                    CollectionManager.withClosedCollection {
+                        unscheduledReminders = ReviewReminderAlarmManager.unscheduleAllReviewReminderNotifications(context)
+                        NotificationManagerCompat.from(context).cancelAll()
+                        ProcessPhoenix.triggerRebirth(context, LauncherDestination.toIntent(context))
+                        ReviewReminderAlarmManager.unscheduleAllSnoozedNotifications(context)
+                    }
+                } catch (e: Exception) {
+                    ReviewReminderAlarmManager.rescheduleReviewReminderNotifications(context, unscheduledReminders)
+                    throw e
+                }
             }
         }
     }
