@@ -83,6 +83,13 @@ fun Project.registerJacocoCoverageReports(
         module.configureAndroidLibraryCoverage(unitTestReport, fileFilter, includeModule)
         module.configureJvmCoverage(unitTestReport, fileFilter, includeModule)
     }
+
+    // Same tests as the unit-test report, for runs which do not need coverage
+    tasks.register("unitTests") {
+        group = "verification"
+        description = "Runs the unit tests covered by jacocoUnitTestReport, without coverage."
+        dependsOn(unitTestReport.map { it.executionData })
+    }
 }
 
 /**
