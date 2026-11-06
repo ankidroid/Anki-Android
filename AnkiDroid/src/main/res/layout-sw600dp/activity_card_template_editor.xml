@@ -20,7 +20,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:background="?attr/alternativeBackgroundColor">
+            android:background="?attr/colorSurfaceDim">
 
             <include layout="@layout/include_card_template_editor_main"
                 android:id="@+id/template_editor"

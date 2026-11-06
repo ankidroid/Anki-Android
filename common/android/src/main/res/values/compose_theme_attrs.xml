@@ -32,6 +32,8 @@
         <attr name="colorSurfaceContainerHighest" />
         <attr name="colorSurfaceContainerLow" />
         <attr name="colorSurfaceContainerLowest" />
+        <attr name="colorSurfaceDim" />
+        <attr name="colorSurfaceBright" />
         <attr name="android:colorBackground" />
         <attr name="fabNormalColor" />
     </declare-styleable>

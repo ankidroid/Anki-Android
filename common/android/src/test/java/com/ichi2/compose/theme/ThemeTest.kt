@@ -92,16 +92,16 @@ class ThemeTest {
     fun `light theme uses lightColorScheme as base for unspecified slots`() {
         val scheme = themed(R.style.Theme_Light).toMaterial3ColorScheme()
         val lightDefaults = lightColorScheme()
-        // surfaceBright is not overridden by Theme_Light, so it should come from the base
-        assertEquals(lightDefaults.surfaceBright.toArgb(), scheme.surfaceBright.toArgb())
+        // surfaceTint is not overridden by Theme_Light, so it should come from the base
+        assertEquals(lightDefaults.surfaceTint.toArgb(), scheme.surfaceTint.toArgb())
     }
 
     @Test
     fun `dark theme uses darkColorScheme as base for unspecified slots`() {
         val scheme = themed(R.style.Theme_Dark).toMaterial3ColorScheme()
         val darkDefaults = darkColorScheme()
-        // surfaceBright is not overridden by Theme_Dark, so it should come from the base
-        assertEquals(darkDefaults.surfaceBright.toArgb(), scheme.surfaceBright.toArgb())
+        // surfaceTint is not overridden by Theme_Dark, so it should come from the base
+        assertEquals(darkDefaults.surfaceTint.toArgb(), scheme.surfaceTint.toArgb())
     }
 
     @Test
