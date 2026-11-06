@@ -83,6 +83,20 @@ fun Project.registerJacocoCoverageReports(
         module.configureAndroidLibraryCoverage(unitTestReport, fileFilter, includeModule)
         module.configureJvmCoverage(unitTestReport, fileFilter, includeModule)
     }
+
+    // Same tests as the unit-test report, for runs which do not need coverage.
+    // Depend on the report's test tasks only. A provider mapped from the report (or its data)
+    // carries the report as its producer, so it would run the report and its JaCoCo agent too.
+    tasks.register("unitTests") {
+        group = "verification"
+        description = "Runs the unit tests covered by jacocoUnitTestReport, without coverage."
+        dependsOn(
+            provider {
+                val report = unitTestReport.get()
+                report.taskDependencies.getDependencies(report).filterIsInstance<Test>()
+            },
+        )
+    }
 }
 
 /**

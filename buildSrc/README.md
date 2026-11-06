@@ -19,7 +19,7 @@ To disable JaCoCo instrumentation for debug builds across checkouts and worktree
 `enable_coverage=false` to `~/.gradle/gradle.properties`.
 
 Unit tests attach the JaCoCo agent only when the build runs a coverage report, such as
-`./gradlew jacocoUnitTestReport`.
+`./gradlew jacocoUnitTestReport`. `./gradlew unitTests` runs the same tests without coverage.
 
 ## Unit test forks
 
