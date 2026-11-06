@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/material_light_blue_500</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
-        <item name="android:textColorHint">#716C76</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="android:textColorHint">@color/hint_text_color</item>
         <item name="colorSecondary">@color/material_blue_grey_700</item>
         <item name="colorPrimaryContainer">@color/material_light_blue_100</item>
         <item name="colorOnPrimaryContainer">@color/material_light_blue_900</item>

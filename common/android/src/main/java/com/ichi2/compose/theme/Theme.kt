@@ -123,6 +123,7 @@ internal fun Context.toMaterial3ColorScheme(): ColorScheme {
                         base.surfaceContainerLowest,
                     ).compositeOver(surface),
                 background = color(R.styleable.ComposeTheme_android_colorBackground, base.background),
+                onBackground = color(R.styleable.ComposeTheme_colorOnBackground, base.onBackground),
             )
     }
     return scheme
