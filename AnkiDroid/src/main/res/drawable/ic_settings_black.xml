@@ -1,3 +1,9 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled (historical settings geometry).
+  Source: https://raw.githubusercontent.com/google/material-design-icons/40ef0f297970f0e78bf87569f43ea90ec53d571c/action/svg/production/ic_settings_24px.svg
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="24dp"
         android:height="24dp"
