@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updateMargins
-import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.BaseAnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
@@ -56,7 +56,7 @@ import timber.log.Timber
  * @see CardAnalysisWidget
  * @see CardAnalysisWidgetPreferences
  */
-class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_widget_config) {
+class CardAnalysisWidgetConfig : BaseAnkiActivity(R.layout.activity_card_analysis_widget_config) {
     private val binding by viewBinding(ActivityCardAnalysisWidgetConfigBinding::bind)
 
     private var appWidgetId = INVALID_APPWIDGET_ID
