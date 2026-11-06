@@ -5,6 +5,8 @@ import com.ichi2.anki.gradle.VersionCodeTasks
 import com.ichi2.anki.gradle.WriteReleaseMetadata
 import com.ichi2.anki.gradle.isCoverageEnabled
 import java.io.ByteArrayOutputStream
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Locale
 import java.util.Properties
 import java.util.regex.Pattern
@@ -72,15 +74,23 @@ val gitCommitHash =
 /**
  * Epoch millis of the build. Displayed on the 'About' screen.
  *
- * CI passes the real time via -PbuildTime=<epoch> # example: 1776422957
+ * CI passes the real time via -PbuildTime=<epoch> # example: 1776422957000
  *
- * A local build uses a stale value (captured in the configuration cache) so the configuration cache
- * is not invalidated on every build.
+ * This value is captured in the configuration cache, so it can be stale when the cache is reused.
  */
 val buildTimeMillis =
     providers
         .gradleProperty("buildTime")
-        .orElse(providers.provider { System.currentTimeMillis().toString() })
+        .orElse(
+            providers.provider {
+                LocalDate
+                    .now()
+                    .atStartOfDay(ZoneId.systemDefault())
+                    .toInstant()
+                    .toEpochMilli()
+                    .toString()
+            },
+        )
 
 android {
     namespace = "com.ichi2.anki"
