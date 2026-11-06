@@ -79,6 +79,6 @@ class SearchInBrowserTest : RobolectricTest() {
     /** Start a search, leaving its collection access queued until [runCurrent]. */
     private suspend fun TestScope.queueSearch() =
         withCollectionAccessOn(StandardTestDispatcher(testScheduler)) {
-            async(start = CoroutineStart.UNDISPATCHED) { controller.get().searchInBrowser(searchInput) }
+            async(start = CoroutineStart.UNDISPATCHED) { controller.get().searchInBrowser(searchInput, awaitPageShown = {}) }
         }
 }
