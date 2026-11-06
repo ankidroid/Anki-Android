@@ -201,6 +201,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
+import com.ichi2.anki.utils.awaitDismissal
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
@@ -209,6 +210,7 @@ import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -953,6 +955,12 @@ open class DeckPicker :
             fragment?.refreshInterface()
         }
 
+        fun onCreatedDeckSelected(param: Unit) {
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
+
         fun onStartupResponse(response: StartupResponse) {
             Timber.d("onStartupResponse: %s", response)
             when (response) {
@@ -1022,6 +1030,7 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
         viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { showException(it)?.awaitDismissal() }
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().launchCollectionInLifecycleScope(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
@@ -1032,6 +1041,7 @@ open class DeckPicker :
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
+        viewModel.flowOfCreatedDeckSelected.launchCollectionInLifecycleScope(::onCreatedDeckSelected)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
         viewModel.flowOfShowContextMenu.launchCollectionInLifecycleScope(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.launchCollectionInLifecycleScope(::showDeckPickerRightClickContextMenu)
@@ -2419,32 +2429,18 @@ open class DeckPicker :
      * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
      * is often the hidden Default deck.
      */
-    private fun onDeckCreated(deckId: DeckId) =
-        launchCatchingTask {
-            viewModel.selectDeck(deckId).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
-        }
+    private fun onDeckCreated(deckId: DeckId) = viewModel.selectCreatedDeck(deckId)
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
      * @param did ID of the deck to delete
      */
-    fun deleteDeck(did: DeckId) =
-        launchCatchingTask {
-            viewModel.deleteDeck(did).join()
-        }
+    fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() =
-        launchCatchingTask {
-            viewModel.deleteSelectedDeck().join()
-        }
+    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck()
 
     private fun emptyFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.emptyFilteredDeck(did).join()
-        }
+        viewModel.emptyFilteredDeck(did)
     }
 
     override fun onAttachedToWindow() {
