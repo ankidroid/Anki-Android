@@ -37,6 +37,8 @@
         <item name="colorOnErrorContainer">#FFDAD6</item>
         <item name="colorTertiary">#78CAFF</item>
         <item name="colorOnTertiary">#00324D</item>
+        <item name="colorTertiaryContainer">@color/material_blue_900</item>
+        <item name="colorOnTertiaryContainer">@color/material_blue_100</item>
         <item name="colorOnSecondaryContainer">@color/white</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
