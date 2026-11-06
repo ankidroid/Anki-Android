@@ -284,8 +284,6 @@
     <string name="dialog_hint_certificate">Certificate</string>
 
     <!-- IncrementNumberRangePreference -->
-    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
-    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <string name="increase_value" comment="Accessibility description for a button that increases a numeric value by 1">Increase value</string>
     <string name="decrease_value" comment="Accessibility description for a button that decreases a numeric value by 1">Decrease value</string>
     <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
