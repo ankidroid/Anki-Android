@@ -187,7 +187,7 @@ fun PreferenceStepperCard(
             ) {
                 StepperButton(
                     iconRes = CommonR.drawable.ic_remove,
-                    contentDescription = stringResource(CommonString.minus_sign),
+                    contentDescription = stringResource(CommonString.decrease_value),
                     enabled = (textValue.toIntOrNull() ?: value) > validRange.first,
                     colors = buttonColors,
                     border = controlBorder,
@@ -212,7 +212,7 @@ fun PreferenceStepperCard(
 
                 StepperButton(
                     iconRes = CommonR.drawable.ic_add,
-                    contentDescription = stringResource(CommonString.plus_sign),
+                    contentDescription = stringResource(CommonString.increase_value),
                     enabled = (textValue.toIntOrNull() ?: value) < validRange.last,
                     colors = buttonColors,
                     border = controlBorder,
