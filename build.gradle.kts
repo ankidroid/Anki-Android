@@ -282,8 +282,14 @@ private fun gradleDaemonHeapBytes(): Long {
     return size * byteMultiplier
 }
 
+/** `testMaxParallelForks`, from `-P` or `~/.gradle/gradle.properties`, overrides the default. */
+private val requestedTestForks = providers.gradleProperty("testMaxParallelForks").orNull?.let { value ->
+    value.toIntOrNull()?.takeIf { it > 0 }
+        ?: throw GradleException("testMaxParallelForks must be a positive integer, got '$value'")
+}
+
 val gradleTestMaxParallelForks by extra(
-    if (isMacOs) {
+    requestedTestForks ?: if (isMacOs) {
         // macOS reports hardware cores.
         // This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
         val physicalCpus = sysctl("hw.physicalcpu")
