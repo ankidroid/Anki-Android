@@ -18,6 +18,10 @@ import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import com.ichi2.utils.showDialogIfWebViewOutdated
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import timber.log.Timber
 
 /**
@@ -30,6 +34,9 @@ abstract class PageFragment(
     OnWebViewRecreatedListener {
     lateinit var webViewLayout: SafeWebViewLayout
     protected abstract val pagePath: String
+
+    /** Whether this page is shown. Lazy, as a restored fragment only gets its hidden state after it's constructed */
+    private val isPageShownFlow by lazy { MutableStateFlow(!isHidden) }
 
     /**
      * A loading indicator for the page. May be shown before the WebView is loaded to
@@ -134,8 +141,9 @@ abstract class PageFragment(
     ): ByteArray {
         val methodName = uri.backendMethodName ?: throw IllegalArgumentException("unhandled request: $uri")
 
+        val pageScope = lifecycleScope
         val resolvedUiMethod =
-            when (val uiResponse = activity.handleUiPostRequest(methodName, bytes)) {
+            when (val uiResponse = activity.handleUiPostRequest(methodName, bytes) { awaitPageShown(pageScope) }) {
                 is UiPostRequestResponse.Handled -> return uiResponse.data
                 is UiPostRequestResponse.UnknownMethod -> false
                 is UiPostRequestResponse.Ignored -> true
@@ -148,6 +156,23 @@ abstract class PageFragment(
             }
             throw IllegalArgumentException("unhandled method: $methodName")
         }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        isPageShownFlow.value = !hidden
+    }
+
+    /**
+     * Suspends until this page is shown. Bottom navigation hides tabs without stopping them, so a
+     * hidden page is still resumed and could open a screen over the tab the user switched to.
+     *
+     * @param pageScope the [lifecycleScope] from when the request arrived. The wait runs in it, so it
+     * fails if the page is removed. Removal gives the page a new [lifecycleScope] and resets
+     * [isHidden] without calling [onHiddenChanged].
+     */
+    private suspend fun awaitPageShown(pageScope: CoroutineScope) {
+        pageScope.async { isPageShownFlow.first { isShown -> isShown } }.await()
     }
 
     @CallSuper

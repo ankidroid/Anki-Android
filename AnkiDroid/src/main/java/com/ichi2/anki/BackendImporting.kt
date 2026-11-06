@@ -60,9 +60,15 @@ val hideShowButtonCss =
 /**
  * Calls the native [CardBrowser] to display the results of the search query constructed from the
  * input. This method will always return the received input.
+ *
+ * @param awaitPageShown called once the query is built, as the page may be hidden while the collection is busy
  */
-suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
+suspend fun FragmentActivity.searchInBrowser(
+    input: ByteArray,
+    awaitPageShown: suspend () -> Unit,
+): ByteArray {
     val searchString = withCol { buildSearchString(listOf(SearchNode.parseFrom(input))) }
+    awaitPageShown()
     // Collection access can suspend past onStop, so wait until the activity is visible again.
     withStarted {
         navigate(BrowserDestination.Search(query = searchString, allDecks = true))
