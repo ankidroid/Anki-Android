@@ -1955,7 +1955,7 @@ open class DeckPicker :
     ) {
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             Timber.i("Not enough space to do backup")
-            showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance())
+            DeckPickerNoSpaceLeftDialog.show(this)
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
             Timber.i("No space left")
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance())
