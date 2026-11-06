@@ -132,47 +132,51 @@ suspend fun handleCollectionPostRequest(
     bytes: ByteArray,
 ): ByteArray? = collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } }
 
-typealias UIBackendInterface = FragmentActivity.(bytes: ByteArray) -> Deferred<ByteArray>
+/**
+ * A request that runs on the activity. A method that opens another screen calls `awaitPageShown` first,
+ * which suspends until the page that sent the request is shown.
+ */
+typealias UIBackendInterface = FragmentActivity.(bytes: ByteArray, awaitPageShown: suspend () -> Unit) -> Deferred<ByteArray>
 
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 val uiMethods =
     hashMapOf<String, UIBackendInterface>(
-        "searchInBrowser" to { bytes -> lifecycleScope.async { searchInBrowser(bytes) } },
-        "updateDeckConfigs" to { bytes -> lifecycleScope.async { updateDeckConfigsRaw(bytes) } },
-        "latestProgress" to { bytes ->
+        "searchInBrowser" to { bytes, awaitPageShown -> lifecycleScope.async { searchInBrowser(bytes, awaitPageShown) } },
+        "updateDeckConfigs" to { bytes, _ -> lifecycleScope.async { updateDeckConfigsRaw(bytes) } },
+        "latestProgress" to { bytes, _ ->
             lifecycleScope.async {
                 withContext(Dispatchers.IO) {
                     CollectionManager.getBackend().latestProgressRaw(bytes)
                 }
             }
         },
-        "i18nResources" to { bytes ->
+        "i18nResources" to { bytes, _ ->
             lifecycleScope.async {
                 withContext(Dispatchers.IO) {
                     CollectionManager.getBackend().i18nResourcesRaw(bytes)
                 }
             }
         },
-        "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
-        "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
-        "importDialogRequireClose" to { _ ->
+        "importCsv" to { bytes, _ -> lifecycleScope.async { importCsvRaw(bytes) } },
+        "importAnkiPackage" to { bytes, _ -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
+        "importDialogRequireClose" to { _, _ ->
             lifecycleScope.async {
                 finish()
                 byteArrayOf()
             }
         },
-        "addImageOcclusionNote" to { bytes ->
+        "addImageOcclusionNote" to { bytes, _ ->
             lifecycleScope.async {
                 withCol { addImageOcclusionNoteRaw(bytes) }
             }
         },
-        "updateImageOcclusionNote" to { bytes ->
+        "updateImageOcclusionNote" to { bytes, _ ->
             lifecycleScope.async {
                 withCol { updateImageOcclusionNoteRaw(bytes) }
             }
         },
-        "deckOptionsReady" to { bytes -> lifecycleScope.async { deckOptionsReady(bytes) } },
-        "deckOptionsRequireClose" to { bytes -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
+        "deckOptionsReady" to { bytes, _ -> lifecycleScope.async { deckOptionsReady(bytes) } },
+        "deckOptionsRequireClose" to { bytes, _ -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
 
 sealed class UiPostRequestResponse {
@@ -208,6 +212,7 @@ sealed class UiPostRequestResponse {
 suspend fun FragmentActivity?.handleUiPostRequest(
     methodName: String,
     bytes: ByteArray,
+    awaitPageShown: suspend () -> Unit = {},
 ): UiPostRequestResponse {
     // an unknown method may be valid for another request handler
     val uiMethod = uiMethods[methodName] ?: return UiPostRequestResponse.UnknownMethod
@@ -218,7 +223,7 @@ suspend fun FragmentActivity?.handleUiPostRequest(
         return UiPostRequestResponse.Ignored
     }
 
-    val data = uiMethod.invoke(this, bytes).await()
+    val data = uiMethod.invoke(this, bytes, awaitPageShown).await()
     when (methodName) {
         "addImageOcclusionNote" -> {
             undoableOp { OpChanges.parseFrom(data) }
