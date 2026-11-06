@@ -25,8 +25,8 @@
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
-        <!-- Tab layout -->
-        <item name="tabActiveIconColor">@color/white</item>
+        <!-- Bottom navigation -->
+        <item name="bottomNavActiveIconColor">@color/white</item>
         <!-- Study Screen colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
         <item name="againTextColor">@color/material_grey_800</item>

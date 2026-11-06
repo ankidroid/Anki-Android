@@ -31,8 +31,8 @@
         <item name="actionBarTextColor">@color/black</item>
         <item name="actionBarPopupTextColor">?android:attr/textColor</item>
 
-        <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
-        <item name="tabActiveIconColor">@color/white</item>
+        <item name="bottomNavIndicatorColor">@color/black</item>
+        <item name="bottomNavActiveIconColor">@color/white</item>
 
         <item name="navDrawerImage">@drawable/nav_drawer_logo_eink</item>
         <item name="selectedRowBackgroundColor">#E0E0E0</item>
@@ -86,6 +86,7 @@
 
         <item name="clozeColor">@color/black</item>
         <item name="dialogBackground">@color/white</item>
+        <item name="progressDialogButtonTextColor">@color/black</item>
         <item name="navDrawerItemColor">@color/black</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog.Eink</item>
 

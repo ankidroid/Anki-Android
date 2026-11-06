@@ -94,9 +94,9 @@
 
     <attr name="clozeColor" format="color" />
 
-    <!-- Background of tab layouts and the bottom navigation indicator: appBarColor, except in E-ink -->
-    <attr name="tabLayoutBackgroundColor" format="color"/>
-    <attr name="tabActiveIconColor" format="color"/>
+    <!-- Bottom navigation: selected item indicator and its icon -->
+    <attr name="bottomNavIndicatorColor" format="color"/>
+    <attr name="bottomNavActiveIconColor" format="color"/>
 
 
     <attr name="progressDialogButtonTextColor" format="color"/>
