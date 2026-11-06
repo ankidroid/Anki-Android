@@ -18,6 +18,11 @@ outside the `.gradle.kts` build scripts.
 To disable JaCoCo instrumentation for debug builds across checkouts and worktrees, add
 `enable_coverage=false` to `~/.gradle/gradle.properties`.
 
+## Unit test forks
+
+Each test fork is a JVM with a 2 GiB heap. To change how many run at once, pass
+`-PtestMaxParallelForks=<n>` or add `testMaxParallelForks=<n>` to `~/.gradle/gradle.properties`.
+
 ## Backend test libraries
 
 `rsdroid-testing` keeps native libraries in the test JVM's temporary directory for reuse
