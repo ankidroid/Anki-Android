@@ -79,6 +79,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
+import com.ichi2.anki.browser.CardBrowserViewModel.NoteEditorCommand
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
@@ -162,6 +163,7 @@ import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
 import com.ichi2.utils.setPaddedIcon
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
@@ -231,6 +233,9 @@ class CardBrowserFragment :
     // Dev option for Issue 18709
     private val useSearchView: Boolean
         get() = Prefs.devUsingCardBrowserSearchView
+
+    /** Whether this is the bottom navigation's Browse tab, rather than the standalone [CardBrowser] */
+    private fun isHostedInBottomNavigation() = activity !is CardBrowser
 
     /** The standalone CardBrowser activity supplies its own toolbar; embedded hosts do not. */
     private val usesEmbeddedLegacyToolbar: Boolean
@@ -1287,6 +1292,10 @@ class CardBrowserFragment :
             sortChip?.contentDescription = sort?.let(::describeSort) ?: getString(CommonString.card_browser_change_display_order_title)
         }
 
+        fun onLaunchNoteEditor(command: NoteEditorCommand.LaunchActivity) {
+            navigate(command.destination)
+        }
+
         activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -1306,6 +1315,12 @@ class CardBrowserFragment :
         searchViewModel.advancedSearchFlow.launchCollectionInLifecycleScope(::advancedSearchChanged)
         searchViewModel.searchTextFlow.launchCollectionInLifecycleScope(::onSearchViewTextChanged)
         searchViewModel.closeSearchViewFlow.launchCollectionInLifecycleScope(::onSearchViewClosed)
+        // Since the Browse tab is phone-only, we don't accept side-by-side (tablet) requests
+        if (isHostedInBottomNavigation()) {
+            activityViewModel.flowOfNoteEditorCommand
+                .filterIsInstance<NoteEditorCommand.LaunchActivity>()
+                .launchCollectionInLifecycleScope(::onLaunchNoteEditor)
+        }
         searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
         searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
         activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
