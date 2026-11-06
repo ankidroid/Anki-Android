@@ -20,6 +20,9 @@ import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.the
+import org.gradle.kotlin.dsl.withType
+import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 private class JacocoLibraryVariants(
@@ -79,6 +82,13 @@ fun Project.registerJacocoCoverageReports(
         val includeModule = { module in runtimeProjectDependencies("playDebugRuntimeClasspath") }
         module.configureAndroidLibraryCoverage(unitTestReport, fileFilter, includeModule)
         module.configureJvmCoverage(unitTestReport, fileFilter, includeModule)
+    }
+
+    // Same tests as the unit-test report, for runs which do not need coverage
+    tasks.register("unitTests") {
+        group = "verification"
+        description = "Runs the unit tests covered by jacocoUnitTestReport, without coverage."
+        dependsOn(unitTestReport.map { it.executionData })
     }
 }
 
@@ -192,6 +202,32 @@ private fun Project.includeTestExecutionData(
         if (pattern == "**/*.exec") {
             runUnitTestsWithoutCaching(this, coverageProject, taskName)
         }
+    }
+}
+
+/**
+ * Attaches the JaCoCo agent to this project's tests only when the build runs a coverage report.
+ *
+ * The `jacoco` plugin otherwise instruments every test JVM, which slowed a local unit-test run
+ * by about a quarter. Reports are found in the task graph, so abbreviated names (`jUTR`) and
+ * tasks depending on a report also count. AGP's `create*CoverageReport` tasks are included.
+ */
+fun Project.enableJacocoAgentOnlyForReports() {
+    tasks.withType<Test>().configureEach {
+        the<JacocoTaskExtension>().apply {
+            isEnabled = false
+            // Reports only cover this project's classes. Skip the Android, AndroidX and Kotlin
+            // classes which Robolectric loads into every sandbox.
+            includes = mutableListOf("com.ichi2.*", "dev.androidbroadcast.*")
+        }
+    }
+    gradle.taskGraph.whenReady {
+        val runsCoverageReport = allTasks.any { it is JacocoReport || it.name.endsWith("CoverageReport") }
+        if (!runsCoverageReport) return@whenReady
+        allTasks
+            .filterIsInstance<Test>()
+            .filter { it.project == this@enableJacocoAgentOnlyForReports }
+            .forEach { it.the<JacocoTaskExtension>().isEnabled = true }
     }
 }
 

@@ -189,8 +189,10 @@ jobs:
           command: ./gradlew robolectricSdkDownload --daemon
 
         # update workflows/README.md when modifying this step
+        # Coverage is informational and the same on every OS, so one OS collects it for Codecov.
+        # JaCoCo adds about a quarter to test time, so use the fastest runner: Linux.
       - name: Run Unit Tests
-        run: ./gradlew jacocoUnitTestReport --daemon
+        run: ./gradlew ${{ runner.os == 'Linux' && 'jacocoUnitTestReport' || 'unitTests' }} --daemon
 
 
       # Only runs:
@@ -240,6 +242,7 @@ jobs:
         run: ./gradlew --stop
 
       - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        if: runner.os == 'Linux'
         with:
           verbose: true
           fail_ci_if_error: ${{ github.repository == 'ankidroid/Anki-Android' }} # optional (default = false)
