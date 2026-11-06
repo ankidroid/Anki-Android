@@ -21,6 +21,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.LoadingDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.testutils.EmptyAnkiActivity
+import com.ichi2.testutils.idleMainLooper
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +40,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.toJavaDuration
 
 @RunWith(AndroidJUnit4::class)
 class ProgressObserverTest : RobolectricTest() {
@@ -764,8 +764,6 @@ class ProgressObserverTest : RobolectricTest() {
             ?.toString()
 
     private fun EmptyAnkiActivity.touchesBlocked() = window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE != 0
-
-    private fun idleMainLooper(duration: Duration) = shadowOf(Looper.getMainLooper()).idleFor(duration.toJavaDuration())
 
     companion object {
         private val SHOW_DELAY = 600.milliseconds

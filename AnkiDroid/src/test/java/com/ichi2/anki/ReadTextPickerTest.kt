@@ -2,11 +2,11 @@
 
 package com.ichi2.anki
 
-import android.os.Looper
 import android.speech.tts.TextToSpeech
 import androidx.appcompat.app.AlertDialog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.testutils.idleMainLooper
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -19,7 +19,6 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -52,7 +51,7 @@ class ReadTextPickerTest : RobolectricTest() {
                     runCurrent()
                     advanceTimeBy(500.milliseconds)
                     runCurrent()
-                    shadowOf(Looper.getMainLooper()).idleFor(500, TimeUnit.MILLISECONDS)
+                    idleMainLooper(500.milliseconds)
 
                     assertTrue(ShadowDialog.getShownDialogs().none { it.isShowing })
                 }
@@ -81,7 +80,7 @@ class ReadTextPickerTest : RobolectricTest() {
                     runCurrent()
                     advanceTimeBy(500.milliseconds)
                     runCurrent()
-                    shadowOf(Looper.getMainLooper()).idleFor(500, TimeUnit.MILLISECONDS)
+                    idleMainLooper(500.milliseconds)
 
                     val dialog = ShadowDialog.getLatestDialog() as AlertDialog
                     try {
