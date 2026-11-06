@@ -3,6 +3,7 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -29,7 +30,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
-import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -109,13 +109,12 @@ class DeckPickerProfileRecoveryTest : RobolectricTest() {
         withStartupFailure(defaultCollectionError) {
             val controller = startDeckPicker()
             val recovery = assertNotNull(controller.get().profileLoadFailureDialog)
-            assertSame(recovery.dialog, ShadowDialog.getLatestDialog(), "Recovery is initially on top")
+            assertTopDialog(recovery.requireDialog(), "Recovery is initially on top")
 
             controller.leaveAndReturn()
 
-            assertSame(
-                recovery.dialog,
-                ShadowDialog.getLatestDialog(),
+            assertTopDialog(
+                recovery.requireDialog(),
                 "Returning to the app must keep profile recovery reachable above a noncancelable error",
             )
         }
@@ -127,11 +126,11 @@ class DeckPickerProfileRecoveryTest : RobolectricTest() {
         withStartupFailure(defaultCollectionError) {
             val controller = startDeckPicker()
             val recovery = assertNotNull(controller.get().profileLoadFailureDialog)
-            assertSame(recovery.dialog, ShadowDialog.getLatestDialog(), "Recovery is initially on top")
+            assertTopDialog(recovery.requireDialog(), "Recovery is initially on top")
 
             val restored = assertNotNull(controller.recreateDeckPicker().profileLoadFailureDialog)
 
-            assertSame(restored.dialog, ShadowDialog.getLatestDialog(), "Restored recovery must stay above the noncancelable startup error")
+            assertTopDialog(restored.requireDialog(), "Restored recovery must stay above the noncancelable startup error")
         }
     }
 
@@ -159,6 +158,19 @@ class DeckPickerProfileRecoveryTest : RobolectricTest() {
     }
 
     private fun failToOpenWork(): ProfileId = failToOpenProfile().also { app.profileManager = null }
+
+    private fun assertTopDialog(
+        expected: Dialog,
+        message: String,
+    ) {
+        // A deck refresh can briefly show a progress dialog, which getLatestDialog()
+        // still returns after dismissal. Wait for the top dialog that is actually showing.
+        advanceRobolectricLooperUntil(
+            lazyMessage = { "$message; expected $expected, showing dialogs: ${ShadowDialog.getShownDialogs().filter { it.isShowing }}" },
+        ) {
+            ShadowDialog.getShownDialogs().lastOrNull { it.isShowing } === expected
+        }
+    }
 
     private fun startDeckPicker(): ActivityController<DeckPicker> {
         setIntroductionSlidesShown(true)
