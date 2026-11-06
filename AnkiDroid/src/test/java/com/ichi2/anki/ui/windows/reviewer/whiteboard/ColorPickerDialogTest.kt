@@ -5,11 +5,11 @@ package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Looper
 import android.view.MotionEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.idleMainLooper
 import com.ichi2.themes.Themes
 import com.skydoves.colorpickerview.ColorPickerView
 import org.hamcrest.MatcherAssert.assertThat
@@ -20,11 +20,11 @@ import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowChoreographer
 import org.robolectric.shadows.ShadowDialog
 import java.time.Duration
 import kotlin.test.assertNotNull
+import kotlin.time.Duration.Companion.milliseconds
 
 /** Tests for [showColorPickerDialog] */
 @RunWith(AndroidJUnit4::class)
@@ -68,7 +68,7 @@ class ColorPickerDialogTest {
         val dialog = showPicker(initialColor = seed)
 
         dialog.wheel().tapRightEdge()
-        idleMainLooper()
+        idleMainLooper(200.milliseconds)
         dialog.confirm()
 
         val color = assertNotNull(pickedColor, "a color should be returned on OK")
@@ -86,7 +86,7 @@ class ColorPickerDialogTest {
         val dialog = showPicker(initialColor = seed)
 
         dialog.wheel().tapRightEdge() // pure red at full saturation
-        idleMainLooper()
+        idleMainLooper(200.milliseconds)
         dialog.confirm()
 
         val color = assertNotNull(pickedColor, "a color should be returned on OK")
@@ -103,7 +103,7 @@ class ColorPickerDialogTest {
                 ShadowDialog.getLatestDialog() as? AlertDialog,
                 "color picker dialog should be shown",
             )
-        repeat(3) { idleMainLooper() }
+        repeat(3) { idleMainLooper(200.milliseconds) }
         return dialog
     }
 
@@ -111,7 +111,7 @@ class ColorPickerDialogTest {
 
     private fun AlertDialog.confirm() {
         getButton(AlertDialog.BUTTON_POSITIVE).performClick()
-        idleMainLooper()
+        idleMainLooper(200.milliseconds)
     }
 
     private fun ColorPickerView.tapRightEdge() {
@@ -125,10 +125,4 @@ class ColorPickerDialogTest {
         down.recycle()
         up.recycle()
     }
-
-    /**
-     * Bounded, because the dialog re-posts a frame callback forever: this runs the
-     * pending messages plus a few frames, then stops instead of draining endlessly.
-     */
-    private fun idleMainLooper() = shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(200))
 }

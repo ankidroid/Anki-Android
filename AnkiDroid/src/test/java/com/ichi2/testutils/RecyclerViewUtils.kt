@@ -3,14 +3,12 @@
 
 package com.ichi2.testutils
 
-import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
-import org.robolectric.Shadows.shadowOf
-import java.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 object RecyclerViewUtils {
     inline fun <reified VH : RecyclerView.ViewHolder?> viewHolderAt(
@@ -49,7 +47,7 @@ fun RecyclerView.completeDroppedItem() {
     // ItemTouchHelper animates a drop for the item animator's 'move' duration
     val duration = itemAnimator?.moveDuration ?: ItemTouchHelper.Callback.DEFAULT_DRAG_ANIMATION_DURATION.toLong()
     // doubled: the animation starts a frame after the drop, and ends on the frame after its duration
-    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(duration * 2))
+    idleMainLooper((duration * 2).milliseconds)
 }
 
 /** The positions of the items which the adapter reports as changed, from now on */

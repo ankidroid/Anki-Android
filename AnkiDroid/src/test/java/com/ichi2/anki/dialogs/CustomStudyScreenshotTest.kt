@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.dialogs
 
-import android.os.Looper
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.ScreenshotTest.DeviceConfig.TABLET
@@ -13,12 +12,12 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.ext.snackbarText
+import com.ichi2.testutils.idleMainLooper
 import org.junit.After
 import org.junit.Test
-import org.robolectric.Shadows.shadowOf
-import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.time.Duration.Companion.milliseconds
 
 @ScreenshotTest.IncludeDevices(TABLET)
 class CustomStudyScreenshotTest : ScreenshotTest() {
@@ -37,7 +36,7 @@ class CustomStudyScreenshotTest : ScreenshotTest() {
             withDeckPicker(deckCount = 0) { activity ->
                 activity.showDialogFragment(CustomStudyDialog.createInstance(DEFAULT_DECK_ID))
                 // Complete the entrance animation without advancing through the snackbar timeout.
-                shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+                idleMainLooper(300.milliseconds)
                 assertEquals(activity.getString(CommonString.empty_deck), activity.snackbarText)
                 activity.supportFragmentManager.executePendingTransactions()
                 assertNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
