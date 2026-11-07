@@ -1,3 +1,11 @@
+<!--
+  SPDX-License-Identifier: GPL-3.0-or-later
+  SPDX-FileCopyrightText: 2022 oakkitten
+  SPDX-FileComment: Style: Custom; outlined circle for the default card-state filter.
+  SPDX-FileComment: Originally ic_card_state.xml in oakkitten's Browser chips prototype (Issue 12554).
+  SPDX-FileComment: Modified: renamed the drawable and changed its tint to colorControlNormal.
+  Source: https://raw.githubusercontent.com/oakkitten/Anki-Android/7bdf1056eb4908674a3777f38b4878021519cf55/AnkiDroid/src/main/res/drawable/ic_card_state.xml
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
