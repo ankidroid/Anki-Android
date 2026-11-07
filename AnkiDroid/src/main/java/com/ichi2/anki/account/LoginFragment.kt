@@ -10,8 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
@@ -23,47 +21,37 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.account.AccountActivity.Companion.ARG_START_FOR_RESULT
+import com.ichi2.anki.databinding.FragmentMyAccountBinding
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.exception.CollectionLockedException
-import com.ichi2.anki.getEndpoint
-import com.ichi2.anki.showError
-import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.progress.observeProgress
+import com.ichi2.anki.showErrorAndAwaitDismissal
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.isCompactWidth
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.anki.withProgress
-import com.ichi2.ui.TextInputEditField
+import com.ichi2.anki.utils.showAndAwaitDismissal
+import com.ichi2.anki.utils.showSnackbarAndAwaitDismissal
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_my_account) {
     private val viewModel: LoginViewModel by viewModels()
-
-    private lateinit var username: TextInputEditText
-    private lateinit var userNameLayout: TextInputLayout
-    private lateinit var password: TextInputEditField
-    private lateinit var passwordLayout: TextInputLayout
-    private lateinit var loginLogo: ImageView
-    private lateinit var loginButton: Button
+    private val binding by viewBinding(FragmentMyAccountBinding::bind)
 
     override fun onViewCreated(
         view: View,
@@ -72,9 +60,8 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         super.onViewCreated(view, savedInstanceState)
         setupEdgeToEdge(view)
 
-        val toolbar: MaterialToolbar = view.findViewById(R.id.toolbar)
         val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(toolbar)
+        activity.setSupportActionBar(binding.toolbar)
 
         activity.supportActionBar?.apply {
             title = TR.sentenceCase.ankiWebAccount
@@ -82,17 +69,12 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             setDisplayShowHomeEnabled(true)
         }
 
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        passwordLayout = view.findViewById(R.id.password_layout)
-        username = view.findViewById(R.id.username)
-        userNameLayout = view.findViewById(R.id.username_layout)
-        password = view.findViewById(R.id.password)
-        loginLogo = view.findViewById(R.id.login_logo)
-        loginButton = view.findViewById(R.id.login_button)
-        loginButton.text = TR.sentenceCase.logIn
+        binding.loginButton.text = TR.sentenceCase.logIn
+        updateLogoVisibility(resources.configuration)
 
         initListeners()
         initObservers()
@@ -100,8 +82,6 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
     /** Applies edge-to-edge insets for the screen */
     private fun setupEdgeToEdge(view: View) {
-        val toolbarContainer = view.findViewById<View>(R.id.toolbar_container)
-        val content = view.findViewById<View>(R.id.account_content)
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             val bars =
                 insets.getInsets(
@@ -113,11 +93,11 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                         WindowInsetsCompat.Type.displayCutout() or
                         WindowInsetsCompat.Type.ime(),
                 )
-            toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
-            content.updatePadding(
+            binding.toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            binding.accountContent.updatePadding(
                 left = bars.left,
                 right = bars.right,
-                bottom = maxOf(withKeyboard.bottom, insets.bottomCornerClearance(content)),
+                bottom = maxOf(withKeyboard.bottom, insets.bottomCornerClearance(binding.accountContent)),
             )
             insets
         }
@@ -125,9 +105,17 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
     private fun login() {
         hideKeyboard()
-        val username = username.text.toString().trim()
-        val password = password.text.toString()
-        handleNewLogin(username, password)
+        submitCredentials()
+    }
+
+    private fun submitCredentials() {
+        viewModel.login(
+            username =
+                binding.username.text
+                    .toString()
+                    .trim(),
+            password = binding.password.text.toString(),
+        )
     }
 
     private fun initListeners() {
@@ -137,28 +125,28 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
     }
 
     private fun initUsernameListeners() {
-        username.setOnFocusChangeListener { _, hasFocus ->
-            viewModel.onUserNameFocusChange(hasFocus, username.text.toString())
+        binding.username.setOnFocusChangeListener { _, hasFocus ->
+            viewModel.onUserNameFocusChange(hasFocus, binding.username.text.toString())
         }
 
-        username.doOnTextChanged { text, _, _, _ ->
-            onUsernameChanged(text.toString())
+        binding.username.doOnTextChanged { text, _, _, _ ->
+            viewModel.onTextChanged(text.toString(), binding.password.text.toString())
         }
     }
 
     private fun initPasswordListeners() {
-        password.setOnFocusChangeListener { _, hasFocus ->
-            viewModel.onPasswordFocusChange(hasFocus, password.text.toString())
+        binding.password.setOnFocusChangeListener { _, hasFocus ->
+            viewModel.onPasswordFocusChange(hasFocus, binding.password.text.toString())
         }
 
-        password.setOnKeyListener { _, keyCode, event ->
+        binding.password.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     KeyEvent.KEYCODE_DPAD_CENTER,
                     KeyEvent.KEYCODE_ENTER,
                     KeyEvent.KEYCODE_NUMPAD_ENTER,
                     -> {
-                        if (loginButton.isEnabled) login()
+                        if (binding.loginButton.isEnabled) login()
                         return@setOnKeyListener true
                     }
                 }
@@ -166,100 +154,86 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             false
         }
 
-        password.doOnTextChanged { text, _, _, _ ->
-            onPasswordChanged(text.toString())
+        binding.password.doOnTextChanged { text, _, _, _ ->
+            viewModel.onTextChanged(binding.username.text.toString(), text.toString())
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            password.setAutoFillListener {
-                passwordLayout.isEndIconVisible = false
+            binding.password.setAutoFillListener {
+                binding.passwordLayout.isEndIconVisible = false
                 Timber.i("Attempting login from autofill")
-                attemptLogin()
+                submitCredentials()
             }
         }
     }
 
     private fun initButtonListeners() {
-        loginButton.setOnClickListener { login() }
+        binding.loginButton.setOnClickListener { login() }
 
-        requireView()
-            .findViewById<Button>(R.id.reset_password_button)
-            .setOnClickListener { openUrl(resources.getString(R.string.resetpw_url).toUri()) }
+        binding.resetPasswordButton.setOnClickListener { openUrl(resources.getString(R.string.resetpw_url).toUri()) }
 
-        requireView()
-            .findViewById<Button>(R.id.sign_up_button)
-            .setOnClickListener { openUrl(resources.getString(R.string.register_url).toUri()) }
+        binding.signUpButton.setOnClickListener { openUrl(resources.getString(R.string.register_url).toUri()) }
 
-        requireView()
-            .findViewById<Button>(R.id.lost_mail_instructions)
-            .setOnClickListener { openUrl(resources.getString(R.string.link_ankiweb_lost_email_instructions).toUri()) }
+        binding.lostMailInstructions.setOnClickListener {
+            openUrl(resources.getString(R.string.link_ankiweb_lost_email_instructions).toUri())
+        }
 
-        requireView()
-            .findViewById<Button>(R.id.privacy_policy_button)
-            .setOnClickListener {
-                Timber.i("Opening 'Privacy policy'")
-                showDialogFragment(HelpDialog.newPrivacyPolicyInstance())
-            }
-    }
-
-    private fun onUsernameChanged(newUsername: String) {
-        viewModel.onTextChanged(newUsername, password.text.toString())
-    }
-
-    private fun onPasswordChanged(newPassword: String) {
-        viewModel.onTextChanged(username.text.toString(), newPassword)
+        binding.privacyPolicyButton.setOnClickListener {
+            Timber.i("Opening 'Privacy policy'")
+            showDialogFragment(HelpDialog.newPrivacyPolicyInstance())
+        }
     }
 
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loginButtonEnabled.collect { isEnabled ->
-                loginButton.isEnabled = isEnabled
-            }
+        observeProgress(viewModel) { getString(CommonString.sign_in) }
+
+        observeMessages(viewModel.pendingMessages, viewModel::messageShown, ::showMessage)
+
+        viewModel.loginButtonEnabled.launchCollectionInViewLifecycleScope { isEnabled ->
+            binding.loginButton.isEnabled = isEnabled
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.userNameError.collect { error ->
-                userNameLayout.error = error?.toHumanReadableString(requireContext())
-            }
+        viewModel.userNameError.launchCollectionInViewLifecycleScope { error ->
+            binding.usernameLayout.error = error?.toHumanReadableString(requireContext())
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.passwordError.collect { error ->
-                passwordLayout.error = error?.toHumanReadableString(requireContext())
-            }
+        viewModel.passwordError.launchCollectionInViewLifecycleScope { error ->
+            binding.passwordLayout.error = error?.toHumanReadableString(requireContext())
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loginState.collect { state ->
-                when (state) {
-                    is LoginState.Success -> {
-                        Timber.i("Login Successful")
-                        val activity = requireActivity()
-                        val isForResult = arguments?.getBoolean(ARG_START_FOR_RESULT) ?: false
+    /** Returns once the user has dealt with [message], so it is shown again if the screen is recreated first */
+    private suspend fun showMessage(message: LoginMessage) {
+        when (message) {
+            LoginMessage.LoggedIn -> onLoginSuccess()
+            is LoginMessage.Failed -> showLoginError(message.exception)
+        }
+    }
 
-                        // If the user explicitly came from a sync prompt (onboarding/pressing sync)
-                        // then their intent was to sync after login success
-                        if (isForResult) {
-                            activity.setResult(RESULT_OK)
-                            activity.finish()
-                            return@collect
-                        }
-                        showLoginSuccessDialog()
-                    }
-                    is LoginState.Error -> {
-                        when (val exception = state.exception) {
-                            // the locked-collection guidance is too long for a snackbar
-                            is CollectionLockedException ->
-                                requireContext().showError(
-                                    exception.localizedMessage!!,
-                                    exception.toCrashReportData(requireContext(), reportException = false),
-                                )
-                            else -> showSnackbar(text = exception.message.toString())
-                        }
-                    }
-                    is LoginState.Idle -> { /* Not needed */ }
-                }
-            }
+    private suspend fun onLoginSuccess() {
+        Timber.i("Login Successful")
+        val activity = requireActivity()
+        val isForResult = arguments?.getBoolean(ARG_START_FOR_RESULT) ?: false
+
+        // If the user explicitly came from a sync prompt (onboarding/pressing sync)
+        // then their intent was to sync after login success
+        if (isForResult) {
+            activity.setResult(RESULT_OK)
+            activity.finish()
+            return
+        }
+        showLoginSuccessDialog()
+    }
+
+    private suspend fun showLoginError(exception: Exception) {
+        when (exception) {
+            // the locked-collection guidance is too long for a snackbar
+            is CollectionLockedException ->
+                requireContext().showErrorAndAwaitDismissal(
+                    exception.localizedMessage!!,
+                    exception.toCrashReportData(requireContext(), reportException = false),
+                )
+            else -> showSnackbarAndAwaitDismissal(exception.message.toString())
         }
     }
 
@@ -269,7 +243,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
      * * **Positive:** opens the Deck Picker and starts a sync
      * * **Negative:** continues to [LoggedInFragment]
      */
-    private fun showLoginSuccessDialog() {
+    private suspend fun showLoginSuccessDialog() {
         /** @see LoggedInFragment */
         fun showLoggedInView() {
             Timber.i("Showing LoggedIn view")
@@ -297,7 +271,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             requireActivity().finish()
         }
 
-        MaterialAlertDialogBuilder(requireContext()).show {
+        MaterialAlertDialogBuilder(requireContext()).showAndAwaitDismissal {
             Timber.i("Showing dialog: 'Sync now?'")
             setTitle(CommonString.login_successful)
             setIcon(R.drawable.ic_sync)
@@ -308,43 +282,12 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
     }
 
-    private fun attemptLogin() {
-        val username = username.text.toString().trim()
-        val password = password.text.toString()
-        if (username.isEmpty() || password.isEmpty()) {
-            Timber.i("Auto-login cancelled - username/password missing")
-            return
-        }
-        Timber.i("Attempting auto-login")
-        handleNewLogin(username, password)
-    }
-
-    private fun handleNewLogin(
-        username: String,
-        password: String,
-    ) {
-        val endpoint = getEndpoint()
-
-        lifecycleScope.launch {
-            requireActivity().withProgress(
-                extractProgress = {
-                    text = getString(CommonString.sign_in)
-                },
-                onCancel = { backend -> backend.setWantsAbort() },
-            ) {
-                viewModel.handleLogin(
-                    username,
-                    password,
-                    endpoint,
-                )
-
-                viewModel.loginState.first { it is LoginState.Success || it is LoginState.Error }
-            }
-        }
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        loginLogo.isVisible = !(isCompactWidth && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        updateLogoVisibility(newConfig)
+    }
+
+    private fun updateLogoVisibility(configuration: Configuration) {
+        binding.loginLogo.isVisible = !(isCompactWidth && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
     }
 }
