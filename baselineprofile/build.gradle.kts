@@ -42,7 +42,7 @@ configure<TestExtension> {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // AnkiDroid defines three product flavors (play, amazon, full) in the
+        // AnkiDroid defines two product flavors (play, full) in the
         // `appStore` dimension. Rather than duplicate them here we target the
         // `play` flavor via `missingDimensionStrategy`, which keeps this module
         // flavor-free but still able to resolve `:AnkiDroid` variants.
