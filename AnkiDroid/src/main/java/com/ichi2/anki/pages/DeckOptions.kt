@@ -6,31 +6,39 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentActivity
 import anki.collection.ComputeParamsProgress
 import anki.collection.OpChanges
 import anki.deck_config.UpdateDeckConfigsMode
 import anki.deck_config.UpdateDeckConfigsRequest
-import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.ProgressContext
-import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.setBitFlag
+import com.ichi2.anki.databinding.FragmentPageBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.updateDeckConfigsRaw
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.withProgress
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -39,6 +47,7 @@ import java.util.concurrent.atomic.AtomicInteger
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 @NeedsTest("17905: pressing back before the webpage is ready closes the screen")
 class DeckOptions : PageFragment() {
+    private val binding by viewBinding(FragmentPageBinding::bind)
     private val deckId: DeckId by lazy { requireArguments().getLong(ARG_DECK_ID) }
 
     override val pagePath: String by lazy {
@@ -156,10 +165,33 @@ class DeckOptions : PageFragment() {
     ) {
         pageLoadingIndicator.isVisible = true
         super.onViewCreated(view, savedInstanceState)
+        // Keep the page's preset/Save toolbar on screen when a field requests the keyboard.
+        prepareForImeInsets()
+        val toolbar = binding.toolbar
+        ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
+            // SingleFragmentActivity already pads the container for system bars and cutouts.
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            val keyboard = insets.getInsets(ime())
+            root.updatePadding(bottom = (keyboard.bottom - bars.bottom).coerceAtLeast(0))
+            // Leave room for the fields below the page's own preset/Save bar in short windows.
+            toolbar.isVisible = resources.configuration.screenHeightDp >= COMPACT_HEIGHT_DP || keyboard.bottom <= bars.bottom
+            insets
+        }
         launchCatchingTask {
             val deckName = withCol { decks.name(deckId, default = true) }
-            view.findViewById<MaterialToolbar>(R.id.toolbar).title = deckName
+            toolbar.title = deckName
         }
+    }
+
+    /** Allows WebView to reveal focused fields while we apply IME insets in the layout. */
+    @Suppress("DEPRECATION") // WebView still needs adjustResize on all API levels.
+    private fun prepareForImeInsets() {
+        val window = requireActivity().window
+        val mode =
+            window.attributes.softInputMode
+                .setBitFlag(SOFT_INPUT_MASK_ADJUST, enabled = false)
+                .setBitFlag(SOFT_INPUT_ADJUST_RESIZE, enabled = true)
+        window.setSoftInputMode(mode)
     }
 
     override fun onWebViewCreated() {
@@ -434,6 +466,18 @@ class DeckOptions : PageFragment() {
 
     companion object {
         private const val ARG_DECK_ID = "deckId"
+
+        /**
+         * Window-height cutoff in dp for hiding the native toolbar while the keyboard overlaps content.
+         * Compared with [android.content.res.Configuration.screenHeightDp], before our IME padding.
+         *
+         * 480 dp follows Android's [compact-height breakpoint](https://developer.android.com/develop/ui/views/layout/use-window-size-classes).
+         * The need was demonstrated on a Pixel 9 Pro: a ~426 dp landscape window with a ~275 dp
+         * keyboard left only ~24 dp for fields below the native and preset/Save toolbars. Hiding the
+         * 64 dp native toolbar recovers editing space while retaining the page's preset/Save bar.
+         * The standard breakpoint covers short windows across devices, including multi-window mode.
+         */
+        private const val COMPACT_HEIGHT_DP = 480
 
         fun getIntent(
             context: Context,
