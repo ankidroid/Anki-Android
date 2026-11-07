@@ -1657,37 +1657,6 @@ open class DeckPicker :
      * @return whether a sync was performed or not.
      */
     private suspend fun automaticSync(runInBackground: Boolean = false): Boolean {
-        /**
-         * @return whether there are collection changes to sync, or null if the collection is closed.
-         *
-         * It DOES NOT include if there are media to be synced.
-         */
-        suspend fun areThereChangesToSync(): Boolean? {
-            val auth = syncAuth() ?: return false
-            val status =
-                withContext(Dispatchers.IO) {
-                    // The status check may wait for the network. Do not hold the collection queue.
-                    try {
-                        CollectionManager.getBackend().syncStatus(auth)
-                    } catch (_: BackendCollectionNotOpenException) {
-                        null
-                    }
-                } ?: return null
-
-            return when (status.required) {
-                SyncStatusResponse.Required.NO_CHANGES,
-                SyncStatusResponse.Required.UNRECOGNIZED,
-                null,
-                -> false
-                SyncStatusResponse.Required.FULL_SYNC,
-                SyncStatusResponse.Required.NORMAL_SYNC,
-                -> true
-            }
-        }
-
-        fun syncIntervalPassed(): Boolean =
-            (TimeManager.time.intTimeMS() - Prefs.lastSyncTime) > AUTOMATIC_SYNC_MINIMAL_INTERVAL.inWholeMilliseconds
-
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
             MeteredSyncPolicy.shouldBlock() -> Timber.d("autoSync: blocked by metered connection")
@@ -1723,6 +1692,37 @@ open class DeckPicker :
         }
         return false
     }
+
+    /**
+     * @return whether there are collection changes to sync, or null if the collection is closed.
+     *
+     * It DOES NOT include if there are media to be synced.
+     */
+    private suspend fun areThereChangesToSync(): Boolean? {
+        val auth = syncAuth() ?: return false
+        val status =
+            withContext(Dispatchers.IO) {
+                // The status check may wait for the network. Do not hold the collection queue.
+                try {
+                    CollectionManager.getBackend().syncStatus(auth)
+                } catch (_: BackendCollectionNotOpenException) {
+                    null
+                }
+            } ?: return null
+
+        return when (status.required) {
+            SyncStatusResponse.Required.NO_CHANGES,
+            SyncStatusResponse.Required.UNRECOGNIZED,
+            null,
+            -> false
+            SyncStatusResponse.Required.FULL_SYNC,
+            SyncStatusResponse.Required.NORMAL_SYNC,
+            -> true
+        }
+    }
+
+    private fun syncIntervalPassed(): Boolean =
+        (TimeManager.time.intTimeMS() - Prefs.lastSyncTime) > AUTOMATIC_SYNC_MINIMAL_INTERVAL.inWholeMilliseconds
 
     /** Where the current downward drag started: reset whenever the finger moves up */
     private var touchAnchorY = 0f
