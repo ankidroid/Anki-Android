@@ -6,6 +6,7 @@ import androidx.annotation.CheckResult
 import anki.search.SearchNode
 import anki.search.searchNode
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.SearchJoiner
 
 /**
@@ -49,11 +50,7 @@ data class SearchRequest(
                         add(searchNode { parsableText = query.trim() })
                     }
 
-                    add(
-                        filters.decks.toGroupNode { nameAndId ->
-                            searchNode { deck = nameAndId.name }
-                        },
-                    )
+                    add(filters.decks.toGroupNode { it.toSearchNode() })
                     add(filters.flags.toGroupNode { it.toSearchNode() })
                     add(filters.tags.toGroupNode { t -> searchNode { tag = t } })
                     add(
@@ -69,4 +66,20 @@ data class SearchRequest(
     }
 
     companion object
+}
+
+/**
+ * Uses the deck's current name, as it may have been renamed after it was selected.
+ *
+ * The backend escapes wildcards in deck names, except for a deck named exactly `_*`,
+ * which is left as a wildcard matching every deck
+ */
+context(col: Collection)
+private fun DeckNameId.toSearchNode(): SearchNode {
+    val currentName = col.decks.nameIfExists(id) ?: name
+    return if (currentName == "_*") {
+        searchNode { parsableText = """deck:\_\*""" }
+    } else {
+        searchNode { deck = currentName }
+    }
 }
