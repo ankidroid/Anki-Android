@@ -4,6 +4,7 @@
 package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -759,7 +760,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 }
 
-fun AnkiActivity.showDatabaseErrorDialogInDeckPicker(
+fun Activity.showDatabaseErrorDialogInDeckPicker(
     errorDialogType: DatabaseErrorDialogType,
     exceptionData: CustomExceptionData? = null,
 ) {
