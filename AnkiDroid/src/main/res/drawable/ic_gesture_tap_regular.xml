@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
-  ~
-  ~  This program is free software; you can redistribute it and/or modify it under
-  ~  the terms of the GNU General Public License as published by the Free Software
-  ~  Foundation; either version 3 of the License, or (at your option) any later
-  ~  version.
-  ~
-  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
-  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
-  ~
-  ~  You should have received a copy of the GNU General Public License along with
-  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
+  SPDX-License-Identifier: GPL-3.0-or-later
+  SPDX-FileCopyrightText: 2021 Sven Meier <svenmeier@apache.org>
+  SPDX-FileCopyrightText: 2021 David Allison <davidallisongithub@gmail.com>
+  SPDX-FileComment: Style: Custom; thin outlined circle for an unselected tap target.
+  SPDX-FileComment: Derived from Sven Meier's tap-target artwork in PR 8078; redrawn as a separate circle in a 24-unit viewport.
+  Base source: https://raw.githubusercontent.com/ankidroid/Anki-Android/7d3551daabcd5a7ca43a97dce5b46644b228589c/AnkiDroid/src/main/res/drawable/ic_gestures.xml
+  Source: https://raw.githubusercontent.com/ankidroid/Anki-Android/b6431ef39b3fa05c49220d98ae0ce8aa5423549c/AnkiDroid/src/main/res/drawable/ic_gesture_tap_regular.xml
+-->
 
 <vector android:height="24dp"
     android:viewportHeight="24.0" android:viewportWidth="24.0"
