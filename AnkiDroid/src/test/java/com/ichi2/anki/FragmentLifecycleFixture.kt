@@ -23,6 +23,7 @@ import com.ichi2.anki.preferences.SyncSettingsFragment
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
+import com.ichi2.anki.sync.MediaSyncBottomSheet
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceFragment
 
 /** A screen and its required setup for [FragmentCoroutineLifecycleTest]. */
@@ -47,6 +48,7 @@ fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
         FragmentLifecycleFixture("AdvancedSettings") { AdvancedSettingsFragment() },
         FragmentLifecycleFixture("DeveloperOptions") { DeveloperOptionsFragment() },
         FragmentLifecycleFixture("SyncSettings") { SyncSettingsFragment() },
+        FragmentLifecycleFixture("MediaSync") { MediaSyncBottomSheet() },
         FragmentLifecycleFixture("About") { AboutFragment() },
         FragmentLifecycleFixture("ScheduleReminders") { ScheduleRemindersFragment() },
         FragmentLifecycleFixture("FilteredDeckOptions") {
