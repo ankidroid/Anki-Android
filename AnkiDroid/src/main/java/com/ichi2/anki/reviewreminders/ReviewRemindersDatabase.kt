@@ -74,6 +74,16 @@ object ReviewRemindersDatabase {
     const val PREF_APP_WIDE_REMINDERS = "app_wide"
 
     /**
+     * The SharedPreferences key which the [ReviewReminder]s of this scope are stored under.
+     */
+    private val ReviewReminderScope.key: String
+        get() =
+            when (this) {
+                is ReviewReminderScope.DeckSpecific -> PREF_DECK_SPECIFIC_REMINDERS + did
+                is ReviewReminderScope.Global -> PREF_APP_WIDE_REMINDERS
+            }
+
+    /**
      * The form in which [ReviewReminderGroup] are actually written to SharedPreferences.
      * This allows us to check the version of [ReviewReminder] stored before trying to deserialize the JSON string,
      * allowing us to carefully handle schema migration. Otherwise, if an older version of [ReviewReminder] is encoded
@@ -134,7 +144,8 @@ object ReviewRemindersDatabase {
      * Mutex to ensure reads and writes do not cause race conditions.
      * Should gate all public read and write interface functions in this class.
      */
-    private val mutex: Mutex = Mutex()
+    @VisibleForTesting
+    internal val mutex: Mutex = Mutex()
 
     /**
      * Schema update method for migrating old review reminders to new ones.
@@ -282,10 +293,7 @@ object ReviewRemindersDatabase {
      */
     suspend fun getRemindersForScope(scope: ReviewReminderScope): ReviewReminderGroup =
         mutex.withLock {
-            when (scope) {
-                is ReviewReminderScope.DeckSpecific -> getRemindersForKey(PREF_DECK_SPECIFIC_REMINDERS + scope.did)
-                is ReviewReminderScope.Global -> getRemindersForKey(PREF_APP_WIDE_REMINDERS)
-            }
+            getRemindersForKey(scope.key)
         }
 
     /**
@@ -302,29 +310,16 @@ object ReviewRemindersDatabase {
         }
 
     /**
-     * Edit the [ReviewReminder]s for a specific key.
-     * Deletes the [ReviewReminderGroup] for this key if, after the editing operation, no review reminders remain.
-     * If the stored review reminders for any specific scope fail to deserialize and no valid schema migrations exist,
-     * those reminders are deleted and not included in the resulting [ReviewReminderGroup].
-     *
-     * @param key
-     * @param editor A lambda that takes the current [ReviewReminderGroup] and returns the updated [ReviewReminderGroup].
-     *
-     * @see getRemindersForKey
-     * @see ReviewReminderGroupEditor
+     * Stores [reminders] at [key], removing the key if no review reminders remain.
      */
-    private fun editRemindersForKey(
+    private fun SharedPreferences.Editor.putReminders(
         key: String,
-        editor: ReviewReminderGroupEditor,
+        reminders: ReviewReminderGroup,
     ) {
-        val existingReminders = getRemindersForKey(key)
-        val updatedReminders = editor(existingReminders)
-        remindersSharedPrefs.edit {
-            if (updatedReminders.isEmpty()) {
-                remove(key)
-            } else {
-                putString(key, encodeJson(updatedReminders))
-            }
+        if (reminders.isEmpty()) {
+            remove(key)
+        } else {
+            putString(key, encodeJson(reminders))
         }
     }
 
@@ -337,55 +332,55 @@ object ReviewRemindersDatabase {
      * @param scope
      * @param editor A lambda which defines how reminders are retrieved from the [ReviewReminderGroup] they are stored in and how they are modified.
      *
+     * @see getRemindersForKey
      * @see ReviewReminderGroupEditor
      */
     private fun editRemindersForScope(
         scope: ReviewReminderScope,
         editor: ReviewReminderGroupEditor,
     ) {
-        when (scope) {
-            is ReviewReminderScope.DeckSpecific -> editRemindersForKey(PREF_DECK_SPECIFIC_REMINDERS + scope.did, editor)
-            is ReviewReminderScope.Global -> editRemindersForKey(PREF_APP_WIDE_REMINDERS, editor)
+        val existingReminders = getRemindersForKey(scope.key)
+        val updatedReminders = editor(existingReminders)
+        remindersSharedPrefs.edit { putReminders(scope.key, updatedReminders) }
+    }
+
+    /**
+     * Sets whether a [ReviewReminder] is enabled.
+     * Does nothing if the reminder is not in the database.
+     */
+    suspend fun setReminderEnabled(
+        reminder: ReviewReminder,
+        enabled: Boolean,
+    ) = mutex.withLock {
+        editRemindersForScope(reminder.scope) { reminders: ReviewReminderGroup ->
+            reminders.apply { this[reminder.id]?.enabled = enabled }
         }
     }
 
     /**
-     * Toggles whether a [ReviewReminder] is enabled.
+     * Atomically removes [oldReminder] and stores [newReminder]:
+     * - To insert a review reminder, pass `oldReminder = null`.
+     * - To edit a review reminder, specify both arguments.
+     * - To delete a review reminder, pass `newReminder = null`.
      */
-    suspend fun toggleReminder(reminder: ReviewReminder) =
-        mutex.withLock {
-            editRemindersForScope(reminder.scope) { reminders: ReviewReminderGroup ->
-                reminders.apply { toggleEnabled(reminder.id) }
-            }
+    suspend fun upsertOrDeleteReminder(
+        oldReminder: ReviewReminder?,
+        newReminder: ReviewReminder?,
+    ) = mutex.withLock {
+        val updatedGroups = mutableMapOf<String, ReviewReminderGroup>()
+        oldReminder?.let { reminder ->
+            val group = updatedGroups.getOrPut(reminder.scope.key) { getRemindersForKey(reminder.scope.key) }
+            group.remove(reminder.id)
         }
-
-    /**
-     * Inserts the given [ReviewReminder] into the reminder's [ReviewReminderScope].
-     *
-     * Important: Do not use this method for editing review reminders, and in particular
-     * do not use this method for changing the [ReviewReminderScope] of a reminder, as review reminders of
-     * different scopes are stored separately and cannot be cleanly updated in a single operation. The old
-     * review reminder must be deleted first, or else a duplicate [ReviewReminderId] will be introduced.
-     * In general, when you want to edit a [ReviewReminder], use [deleteReminder] first, then [insertReminder].
-     * This method is intended to be lightweight and hence will not go out of its way to validate that an
-     * update has not been performed.
-     */
-    suspend fun insertReminder(reminder: ReviewReminder) =
-        mutex.withLock {
-            editRemindersForScope(reminder.scope) { reminders: ReviewReminderGroup ->
-                reminders.apply { this[reminder.id] = reminder }
-            }
+        newReminder?.let { reminder ->
+            val group = updatedGroups.getOrPut(reminder.scope.key) { getRemindersForKey(reminder.scope.key) }
+            group[reminder.id] = reminder
         }
-
-    /**
-     * Deletes a [ReviewReminder].
-     */
-    suspend fun deleteReminder(reminder: ReviewReminder) =
-        mutex.withLock {
-            editRemindersForScope(reminder.scope) { reminders: ReviewReminderGroup ->
-                reminders.apply { remove(reminder.id) }
-            }
+        if (updatedGroups.isEmpty()) return@withLock
+        remindersSharedPrefs.edit {
+            updatedGroups.forEach { (key, reminders) -> putReminders(key, reminders) }
         }
+    }
 
     /**
      * Given the ID of a [ReviewReminder] which is about to fire a recurring notification, atomically retrieves the latest up-to-date version

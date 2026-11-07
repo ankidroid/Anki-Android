@@ -37,6 +37,7 @@ import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.waitUntil
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
+import com.ichi2.testutils.ext.insertReminder
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
