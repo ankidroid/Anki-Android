@@ -109,6 +109,11 @@ class StandardSearchFragment :
                     requireActivity(),
                     type = TagsDialog.DialogType.FILTER_BY_TAG,
                     checkedTags = ArrayList(viewModel.filtersFlow.value.tags),
+                    scopeSearch =
+                        SearchRequest(
+                            query = viewModel.searchTextFlow.value.trim(),
+                            filters = viewModel.filtersFlow.value,
+                        ).toTagScopeSearch(),
                 )
             }
         }

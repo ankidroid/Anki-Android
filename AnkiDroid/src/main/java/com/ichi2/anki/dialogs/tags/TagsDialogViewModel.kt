@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.tagsOfNotes
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +18,8 @@ import kotlinx.coroutines.flow.StateFlow
  * @param isCustomStudying true if all inputs are to be handled as unchecked tags, false otherwise(
  * this is a temporary parameter until custom study by tags is modified)
  *  They are joined with the tags retrieved from noteIds
+ * @param scopeSearch if non-null, only offer tags used by the notes matching this search
+ * (plus [checkedTags]), rather than every tag in the collection.
  *
  *  @see <a href="https://github.com/ankidroid/Anki-Android/pull/19499#discussion_r2532184695">Extra checked tags</>
  */
@@ -24,6 +27,7 @@ class TagsDialogViewModel(
     noteIds: Collection<NoteId> = emptyList(),
     checkedTags: Collection<String> = emptyList(),
     isCustomStudying: Boolean = false,
+    private val scopeSearch: String? = null,
 ) : ViewModel() {
     val tags: Deferred<TagsList>
 
@@ -33,7 +37,14 @@ class TagsDialogViewModel(
     init {
         tags =
             asyncIO {
-                val allTags = withCol { tags.all() }
+                val allTags =
+                    withCol {
+                        if (scopeSearch == null) {
+                            tags.all()
+                        } else {
+                            tagsOfNotes(findNotes(scopeSearch))
+                        }
+                    }
                 val allCheckedTags = mutableSetOf<String>()
                 val uncheckedTags = mutableSetOf<String>()
                 // For each note, put the checked tag in checked list and unchecked tags in unchecked list.

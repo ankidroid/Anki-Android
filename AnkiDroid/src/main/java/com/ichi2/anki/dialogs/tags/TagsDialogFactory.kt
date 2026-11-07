@@ -37,13 +37,21 @@ class TagsDialogFactory(
         type: DialogType = DialogType.EDIT_TAGS,
         noteIds: List<NoteId> = emptyList(),
         checkedTags: ArrayList<String> = arrayListOf(),
+        scopeSearch: String? = null,
     ) {
         val existingDialog = activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG)
         if (type == DialogType.EDIT_TAGS && existingDialog is TagsDialog && existingDialog.isEditingTags) {
             Timber.d("Ignoring 'edit tags' request: dialog is already open")
             return
         }
-        val dialog = newTagsDialog().withArguments(activity, type, noteIds, checkedTags)
+        val dialog =
+            newTagsDialog().withArguments(
+                context = activity,
+                type = type,
+                noteIds = noteIds,
+                checkedTags = checkedTags,
+                scopeSearch = scopeSearch,
+            )
         activity.showDialogFragment(dialog)
     }
 }
