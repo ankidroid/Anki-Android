@@ -26,6 +26,7 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
+import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -35,6 +36,7 @@ import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.libanki.utils.extend
+import com.ichi2.anki.millisecondsSinceLastSyncAttempt
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.performBackupInBackground
@@ -42,9 +44,11 @@ import com.ichi2.anki.progress.HasProgress
 import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.syncStatus
 import com.ichi2.anki.syncAuth
 import com.ichi2.anki.utils.Destination
+import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -57,8 +61,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
+import kotlin.time.Duration.Companion.minutes
 import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
 /**
@@ -576,6 +582,67 @@ class DeckPickerViewModel :
             flowOfDisableShortcuts.emit(deckTreeDids)
         }
 
+    enum class AutomaticSyncAction {
+        NONE,
+        MEDIA_ONLY,
+        COLLECTION,
+    }
+
+    /**
+     * Checks whether automatic sync should run, querying the server if needed.
+     * Does not start synchronization or change the last sync time.
+     */
+    suspend fun automaticSyncAction(runInBackground: Boolean = false): AutomaticSyncAction {
+        when {
+            !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
+            MeteredSyncPolicy.shouldBlock() -> Timber.d("autoSync: blocked by metered connection")
+            !NetworkUtils.isOnline -> Timber.d("autoSync: offline")
+            !runInBackground && !syncIntervalPassed() -> Timber.d("autoSync: interval not passed")
+            !isLoggedIn() -> Timber.d("autoSync: not logged in")
+            else -> {
+                // Startup may have failed to open the collection. Do not sync on exit in that case.
+                return when (areThereChangesToSync()) {
+                    null -> {
+                        Timber.d("autoSync: collection not open")
+                        AutomaticSyncAction.NONE
+                    }
+                    false -> {
+                        Timber.d("autoSync: no collection changes to sync. Syncing media if set")
+                        AutomaticSyncAction.MEDIA_ONLY
+                    }
+                    true -> AutomaticSyncAction.COLLECTION
+                }
+            }
+        }
+        return AutomaticSyncAction.NONE
+    }
+
+    /** Returns whether there are collection changes to sync, or null if the collection is closed. */
+    private suspend fun areThereChangesToSync(): Boolean? {
+        val auth = syncAuth() ?: return false
+        val status =
+            withContext(Dispatchers.IO) {
+                // The status check may wait for the network. Do not hold the collection queue.
+                try {
+                    CollectionManager.getBackend().syncStatus(auth)
+                } catch (_: BackendCollectionNotOpenException) {
+                    null
+                }
+            } ?: return null
+
+        return when (status.required) {
+            SyncStatusResponse.Required.NO_CHANGES,
+            SyncStatusResponse.Required.UNRECOGNIZED,
+            null,
+            -> false
+            SyncStatusResponse.Required.FULL_SYNC,
+            SyncStatusResponse.Required.NORMAL_SYNC,
+            -> true
+        }
+    }
+
+    private fun syncIntervalPassed(): Boolean = millisecondsSinceLastSyncAttempt() > AUTOMATIC_SYNC_MINIMAL_INTERVAL.inWholeMilliseconds
+
     sealed class StartupResponse {
         data class RequestPermissions(
             val requiredPermissions: StoragePermissionSet,
@@ -774,6 +841,9 @@ class DeckPickerViewModel :
 
     companion object {
         const val PREF_LAST_UPGRADE_VERSION = "lastUpgradeVersion"
+
+        /** Skip foreground automatic sync until this delay has elapsed. */
+        private val AUTOMATIC_SYNC_MINIMAL_INTERVAL = 10.minutes
     }
 }
 
