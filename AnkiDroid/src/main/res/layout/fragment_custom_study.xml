@@ -5,137 +5,177 @@
   ~ //device/apps/common/res/layout/alert_dialog.xml
   -->
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="start"
-    android:orientation="vertical" >
-
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/details_text_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="4dip"
-        android:layout_marginRight="4dip"
-        android:gravity="start"
-        android:text=""
-        android:textSize="16sp" />
-
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/details_text_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginBottom="4dip"
-        android:layout_marginStart="4dip"
-        android:layout_weight="4"
-        android:gravity="start|center"
-        android:lines="2"
-        android:text=""
-        android:textSize="16sp" />
+    android:fadeScrollbars="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="start"
+        android:orientation="vertical" >
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/details_decrement_button"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="12dp"
-            android:contentDescription="@string/minus_sign"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:padding="0dp"
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/details_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:gravity="start"
+            android:text=""
+            android:textSize="16sp" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/details_text_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dip"
+            android:layout_marginStart="4dip"
+            android:layout_weight="4"
+            android:gravity="start|center"
+            android:lines="2"
+            android:text=""
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/details_decrement_button"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/minus_sign"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:visibility="gone"
+                app:backgroundTint="?attr/incrementerButtonBackground"
+                app:icon="@drawable/ic_remove"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="@color/white"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                tools:visibility="visible" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/details_edit_text_2_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:errorEnabled="true"
+                app:suffixTextAppearance="@style/TextAppearance.MaterialComponents.Body1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/details_edit_text_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number|numberSigned"
+                    android:textColorHighlight="?attr/colorControlHighlight"
+                    tools:text="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/details_increment_button"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                android:contentDescription="@string/plus_sign"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:visibility="gone"
+                app:backgroundTint="?attr/incrementerButtonBackground"
+                app:icon="@drawable/ic_add"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="@color/white"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/details_available_cards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="4dip"
+            android:layout_marginEnd="4dip"
+            android:gravity="start"
+            android:textSize="16sp"
             android:visibility="gone"
-            app:backgroundTint="?attr/incrementerButtonBackground"
-            app:icon="@drawable/ic_remove"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconSize="24dp"
-            app:iconTint="@color/white"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:text="Available new cards: 20"
             tools:visibility="visible" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/details_edit_text_2_layout"
-            android:layout_width="0dp"
+            android:id="@+id/cards_state_selector_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:errorEnabled="true"
-            app:suffixTextAppearance="@style/TextAppearance.MaterialComponents.Body1">
+            android:visibility="gone"
+            tools:visibility="visible">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/details_edit_text_2"
+            <!--
+            Material3Fix we shouldn't have to tint the dropdown background(otherwise it's transparent),
+            also the color of the selected entry needs to be updated in the theme
+             -->
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/cards_state_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number|numberSigned"
-                tools:text="1"
+                android:inputType="textFilter|textMultiLine"
+                app:dropDownBackgroundTint="?android:attr/colorBackground"
+                tools:text="New cards only"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/details_increment_button"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="12dp"
-            android:contentDescription="@string/plus_sign"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:padding="0dp"
-            android:visibility="gone"
-            app:backgroundTint="?attr/incrementerButtonBackground"
-            app:icon="@drawable/ic_add"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconSize="24dp"
-            app:iconTint="@color/white"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-            tools:visibility="visible" />
-    </LinearLayout>
-
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/details_available_cards"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="4dip"
-        android:layout_marginEnd="4dip"
-        android:gravity="start"
-        android:textSize="16sp"
-        android:visibility="gone"
-        tools:text="Available new cards: 20"
-        tools:visibility="visible" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cards_state_selector_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <!--
-        Material3Fix we shouldn't have to tint the dropdown background(otherwise it's transparent),
-        also the color of the selected entry needs to be updated in the theme
-         -->
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/cards_state_selector"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textFilter|textMultiLine"
-            app:dropDownBackgroundTint="?android:attr/colorBackground"
-            tools:text="New cards only"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tags_selection_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/card_details_tags">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tags_dummy_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:inputType="none"
+                    android:focusable="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tags_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:chipSpacingVertical="-4dp"
+                app:chipSpacingHorizontal="8dp" />
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>
