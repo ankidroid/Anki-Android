@@ -1767,6 +1767,29 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    fun `tapping a card in the embedded card browser opens the note editor`() =
+        withBottomNavigationEnabled {
+            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            addBasicNote()
+            deckPicker {
+                val browser = openEmbeddedCardBrowser()
+                advanceRobolectricLooperUntil { browser.cardsListView.findViewHolderForAdapterPosition(0) != null }
+                shadowOf(this).clearNextStartedActivities()
+
+                browser.cardsListView
+                    .findViewHolderForAdapterPosition(0)!!
+                    .itemView
+                    .performClick()
+                advanceRobolectricLooperUntil(lazyMessage = { "tapping a card opened nothing" }) {
+                    shadowOf(this).peekNextStartedActivity() != null
+                }
+
+                val intent = assertNotNull(shadowOf(this).nextStartedActivity)
+                assertEquals(NoteEditorActivity::class.java.name, intent.component?.className)
+            }
+        }
+
+    @Test
     fun `embedded card browser accounts for system bar insets`() =
         withBottomNavigationEnabled {
             withBooleanPreference(R.string.dev_card_browser_search_view, false) {
