@@ -114,7 +114,6 @@ import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
-import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.dp
@@ -1741,8 +1740,7 @@ open class DeckPicker :
         }
     }
 
-    private fun syncIntervalPassed(): Boolean =
-        (TimeManager.time.intTimeMS() - Prefs.lastSyncTime) > AUTOMATIC_SYNC_MINIMAL_INTERVAL.inWholeMilliseconds
+    private fun syncIntervalPassed(): Boolean = millisecondsSinceLastSyncAttempt() > AUTOMATIC_SYNC_MINIMAL_INTERVAL.inWholeMilliseconds
 
     /** Where the current downward drag started: reset whenever the finger moves up */
     private var touchAnchorY = 0f
