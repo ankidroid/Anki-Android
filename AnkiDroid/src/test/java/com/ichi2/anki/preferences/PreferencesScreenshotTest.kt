@@ -141,6 +141,55 @@ class PreferencesScreenshotTest : ScreenshotTest() {
             }
         }
 
+    @Test
+    fun learnAheadSettingsFragmentDisabled() =
+        runTest {
+            CollectionPreferences.setLearnAheadLimit(0.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(LearnAheadSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("LearnAheadSettingsFragment_disabled")
+            }
+        }
+
+    @Test
+    fun learnAheadSettingsFragmentEnabled() =
+        runTest {
+            CollectionPreferences.setLearnAheadLimit(20.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(LearnAheadSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("LearnAheadSettingsFragment_enabled")
+            }
+        }
+
+    @Test
+    fun learnAheadSettingsFragmentStandardFontScale200() =
+        runTest {
+            val config = targetContext.resources.configuration
+            config.fontScale = 2.0f
+            @Suppress("DEPRECATION")
+            targetContext.resources.updateConfiguration(config, targetContext.resources.displayMetrics)
+            CollectionPreferences.setLearnAheadLimit(20.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(LearnAheadSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("LearnAheadSettingsFragment_standard_fontScale200")
+            }
+        }
+
+    @Test
+    fun learnAheadSettingsFragmentSmallFontScale200() =
+        runTest {
+            RuntimeEnvironment.setQualifiers("w320dp-h480dp")
+            val config = targetContext.resources.configuration
+            config.fontScale = 2.0f
+            @Suppress("DEPRECATION")
+            targetContext.resources.updateConfiguration(config, targetContext.resources.displayMetrics)
+            CollectionPreferences.setLearnAheadLimit(20.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(LearnAheadSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("LearnAheadSettingsFragment_small_fontScale200")
+            }
+        }
+
     /** One test per fragment: capturing all of them in a single test risks a timeout */
     @Test
     fun capturePreferenceFragment(
