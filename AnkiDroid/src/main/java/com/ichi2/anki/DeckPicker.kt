@@ -69,6 +69,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
@@ -311,6 +312,7 @@ open class DeckPicker :
     private var shortAnimDuration = 0
 
     private lateinit var decksLayoutManager: LinearLayoutManager
+    private var focusedDeckScroll: Runnable? = null
     private lateinit var deckListAdapter: DeckAdapter
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
@@ -935,16 +937,20 @@ open class DeckPicker :
         fun onFocusedDeckChanged(deckId: DeckId?) {
             if (deckId != null) tryShowStudyOptionsPanel()
             val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
+            focusedDeckScroll?.let { deckPickerBinding.decks.removeCallbacks(it) }
 
             // Skip centering if the deck is already on screen.
             // Scrolling during a tap animation causes deck labels to overlap on older devices.
             if (decksLayoutManager.positionIsVisible(position)) {
+                if (focusedDeckScroll != null) decksLayoutManager.scrollToPosition(RecyclerView.NO_POSITION)
+                focusedDeckScroll = null
                 return
             }
             // HACK: a small delay is required before scrolling works
-            deckPickerBinding.decks.postDelayed({
-                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
-            }, 10)
+            focusedDeckScroll =
+                Runnable {
+                    decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
+                }.also { deckPickerBinding.decks.postDelayed(it, 10) }
         }
 
         fun onDecksReloaded(param: Unit) {
@@ -2303,12 +2309,12 @@ open class DeckPicker :
         val study =
             withCol {
                 decks.select(did)
+                viewModel.focusedDeck = did
                 currentDeckStudyState()
             }
         deckListAdapter.updateSelectedDeck(did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
-        viewModel.focusedDeck = did
 
         if (study.availability == StudyAvailability.CardsAvailable) {
             openReviewerOrStudyOptions(selectionType)
