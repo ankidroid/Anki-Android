@@ -529,22 +529,24 @@ class DeckPickerViewModel :
         }
 
     /**
-     * Find the position of a deck in the flattened deck list.
+     * Find the position of a deck in the displayed deck list.
      * If the deck is a child of a collapsed deck, returns the position of the parent deck.
-     * Returns 0 if the deck is not found.
+     * Returns null if the deck is not yet available in the displayed list.
      */
-    fun findDeckPosition(deckId: DeckId): Int {
-        val currentDeckList = flowOfDeckList.value.data
-        currentDeckList.forEachIndexed { index, treeNode ->
+    fun findDeckPosition(
+        deckId: DeckId,
+        displayedDecks: List<DisplayDeckNode>,
+    ): Int? {
+        displayedDecks.forEachIndexed { index, treeNode ->
             if (treeNode.did == deckId) {
                 return index
             }
         }
 
         // If the deck is not in our list, search using the immediate parent
-        val collapsedDeck = dueTree?.find(deckId) ?: return 0
-        val parent = collapsedDeck.parent?.get() ?: return 0
-        return findDeckPosition(parent.did)
+        val collapsedDeck = dueTree?.find(deckId) ?: return null
+        val parent = collapsedDeck.parent?.get() ?: return null
+        return findDeckPosition(parent.did, displayedDecks)
     }
 
     /**

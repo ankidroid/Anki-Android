@@ -312,6 +312,7 @@ open class DeckPicker :
 
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
+    private var pendingFocusedDeck: DeckId? = null
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -924,31 +925,10 @@ open class DeckPicker :
             binding.studyoptionsFrame?.isVisible = !collectionHasNoCards
         }
 
-        fun onDeckListChanged(deckList: FlattenedDeckList) {
-            // Filtering must not recreate the study options fragment: its menu invalidation closes search.
-            deckListAdapter.submit(
-                data = deckList.data,
-                hasSubDecks = deckList.hasSubDecks,
-            )
-        }
-
-        fun onFocusedDeckChanged(deckId: DeckId?) {
-            if (deckId != null) tryShowStudyOptionsPanel()
-            val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
-
-            // Skip centering if the deck is already on screen.
-            // Scrolling during a tap animation causes deck labels to overlap on older devices.
-            if (decksLayoutManager.positionIsVisible(position)) {
-                return
-            }
-            // HACK: a small delay is required before scrolling works
-            deckPickerBinding.decks.postDelayed({
-                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
-            }, 10)
-        }
-
         fun onDecksReloaded(param: Unit) {
             hideProgressBar()
+            // A new child of a collapsed deck may leave the displayed list unchanged.
+            scrollToPendingFocusedDeck()
             // TODO: Refresh deck metadata in the reminder pane
             fragment?.refreshInterface()
         }
@@ -1038,6 +1018,41 @@ open class DeckPicker :
         // navigation should be done on RESUMED
         importViewModel.importAddFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importAdd)
         importViewModel.importReplaceFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importReplace)
+    }
+
+    private fun scrollToPendingFocusedDeck() {
+        val deckId = pendingFocusedDeck ?: return
+        // A newly created deck may not be in the tree or the adapter yet. Keep its focus pending
+        // until the list diff is committed instead of interpreting a missing deck as position zero.
+        val position = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: return
+        pendingFocusedDeck = null
+
+        // Skip centering if the deck is already on screen.
+        // Scrolling during a tap animation causes deck labels to overlap on older devices.
+        if (decksLayoutManager.positionIsVisible(position)) {
+            return
+        }
+        // HACK: a small delay is required before scrolling works
+        deckPickerBinding.decks.postDelayed({
+            if (viewModel.focusedDeck != deckId) return@postDelayed
+            val updatedPosition = viewModel.findDeckPosition(deckId, deckListAdapter.currentList) ?: return@postDelayed
+            decksLayoutManager.scrollToPositionWithOffset(updatedPosition, deckPickerBinding.decks.height / 2)
+        }, 10)
+    }
+
+    private fun onDeckListChanged(deckList: FlattenedDeckList) {
+        // Filtering must not recreate the study options fragment: its menu invalidation closes search.
+        deckListAdapter.submit(
+            data = deckList.data,
+            hasSubDecks = deckList.hasSubDecks,
+            onListCommitted = ::scrollToPendingFocusedDeck,
+        )
+    }
+
+    private fun onFocusedDeckChanged(deckId: DeckId?) {
+        if (deckId != null) tryShowStudyOptionsPanel()
+        pendingFocusedDeck = deckId
+        scrollToPendingFocusedDeck()
     }
 
     private val onReceiveContentListener =

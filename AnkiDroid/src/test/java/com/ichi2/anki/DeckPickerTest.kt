@@ -97,6 +97,7 @@ import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.ext.text
 import com.ichi2.testutils.grantWritePermissions
+import com.ichi2.testutils.idleMainLooper
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.testutils.withBooleanPreference
 import com.ichi2.testutils.withWritePermissions
@@ -142,6 +143,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import com.ichi2.anki.common.android.R as CommonR
 
@@ -1493,15 +1495,15 @@ class DeckPickerTest : RobolectricTest() {
     fun `selecting Add during FAB reopening keeps menu buttons visible`() =
         deckPicker {
             floatingActionMenu.showFloatingActionMenu()
-            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
+            idleMainLooper(200.milliseconds)
             floatingActionMenu.closeFloatingActionMenu(style = CloseAnimation.SHORT)
-            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
+            idleMainLooper(200.milliseconds)
             assertEquals(View.GONE, floatingActionButtonBinding.addDeckButton.visibility)
 
             floatingActionMenu.showFloatingActionMenu()
             // Select Add before the opening animations have finished.
             floatingActionButtonBinding.fabMain.performClick()
-            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
+            idleMainLooper(200.milliseconds)
 
             with(floatingActionButtonBinding) {
                 assertTrue(fabMain.isExtended)
