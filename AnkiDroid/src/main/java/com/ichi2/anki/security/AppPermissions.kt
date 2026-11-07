@@ -31,10 +31,12 @@ enum class DangerousJsApiPermission {
  *
  * @param showSnackbar displays a message to the user, warning that a permission has been denied.
  * e.g. "Security: Unsafe JavaScript call blocked ... this can be unblocked in the advanced settings"
+ * @param showLaunchDeniedDialog called each time a card is blocked from launching an external app.
  */
 class AppPermissions(
     private val context: Context,
     private val showSnackbar: (String) -> Unit = {},
+    private val showLaunchDeniedDialog: () -> Unit = {},
 ) {
     /**
      * Creates a new URL navigation intent, or `null` when permission is denied.
@@ -52,7 +54,7 @@ class AppPermissions(
 
     /**
      * Returns true if cards may launch external apps;
-     * shows a rate-limited snackbar on denial.
+     * shows a dialog on denial, every time the user attempts it.
      */
     fun checkCanLaunchExternalApps(): Boolean {
         // TODO: Consider a permission system based on the provided intent
@@ -61,15 +63,8 @@ class AppPermissions(
             context
                 .sharedPrefs()
                 .getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
-        if (!allowed) notifyLaunchDenied()
+        if (!allowed) showLaunchDeniedDialog()
         return allowed
-    }
-
-    private fun notifyLaunchDenied() {
-        // Avoid decision fatigue by limiting the number of times the warning is shown.
-        // Reset on app restart.
-        if (launchDenialsSinceProcessStart.incrementAndGet() > MAX_SNACKBARS_PER_PROCESS) return
-        showSnackbar(context.getString(CommonString.card_external_launch_denied_snackbar))
     }
 
     /**
@@ -98,12 +93,10 @@ class AppPermissions(
     companion object {
         private const val MAX_SNACKBARS_PER_PROCESS = 2
         private val jaApiDenialsSinceProcessStart = AtomicInteger(0)
-        private val launchDenialsSinceProcessStart = AtomicInteger(0)
 
         @VisibleForTesting
         fun resetDenialCounterForTesting() {
             jaApiDenialsSinceProcessStart.set(0)
-            launchDenialsSinceProcessStart.set(0)
         }
     }
 }
