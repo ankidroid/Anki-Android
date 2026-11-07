@@ -193,6 +193,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
@@ -236,6 +237,7 @@ class NoteEditorFragment :
     private var isTagsEdited = false
     private var isFieldEdited = false
     private var addNoteJob = RunOnlyOnce(scope = lifecycleScope)
+    private var saveNoteJob: Job? = null
 
     /**
      * The field values of a new note immediately after they were last (re)populated -
@@ -1042,7 +1044,7 @@ class NoteEditorFragment :
                 if (event.isCtrlPressed) {
                     // disable it in case of image occlusion
                     if (allowSaveAction()) {
-                        launchCatchingTask { saveNote() }
+                        launchSaveNote()
                         return true
                     }
                 }
@@ -1318,6 +1320,14 @@ class NoteEditorFragment :
         onNoteAdded(changes.count)
     }
 
+    private fun launchSaveNote() {
+        if (saveNoteJob?.isActive == true) {
+            Timber.i("NoteEditor:: ignoring save, a save is already running")
+            return
+        }
+        saveNoteJob = launchCatchingTask { saveNote() }
+    }
+
     @VisibleForTesting
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
     @KotlinCleanup("fix !! on oldNoteType/newNoteType")
@@ -1584,7 +1594,7 @@ class NoteEditorFragment :
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
                 if (allowSaveAction()) {
-                    launchCatchingTask { saveNote() }
+                    launchSaveNote()
                 }
                 return true
             }
