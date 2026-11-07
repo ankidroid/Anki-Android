@@ -117,14 +117,14 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
             val deckId = addDeck("Test Deck")
             commitScheduleRemindersAndCapture(
                 fragmentManager = deckPicker.supportFragmentManager,
-                containerId = R.id.studyoptions_fragment,
+                containerId = R.id.studyoptions_content,
                 host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
                 scope = ReviewReminderScope.DeckSpecific(deckId),
                 prefix = "studyOptionsFragmentHost",
             )
             commitTroubleshootingAndCapture(
                 fragmentManager = deckPicker.supportFragmentManager,
-                containerId = R.id.studyoptions_fragment,
+                containerId = R.id.studyoptions_content,
                 host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
                 prefix = "studyOptionsFragmentHost",
             )
@@ -324,8 +324,8 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
             insertReminders(count = 12, scope = scope)
             val binding =
                 commitScheduleReminders(
-                    fragmentManager = deckPicker.supportFragmentManager,
-                    containerId = R.id.studyoptions_fragment,
+                    fragmentManager = deckPicker.studyOptionsFragmentManager!!,
+                    containerId = R.id.studyoptions_content,
                     host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
                     scope = scope,
                 )
@@ -347,8 +347,8 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         withDeckPicker(deckCount = 1, withCards = true) { deckPicker ->
             val binding =
                 commitTroubleshooting(
-                    fragmentManager = deckPicker.supportFragmentManager,
-                    containerId = R.id.studyoptions_fragment,
+                    fragmentManager = deckPicker.studyOptionsFragmentManager!!,
+                    containerId = R.id.studyoptions_content,
                     host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
                 )
             deckPicker.simulateSystemBars(cutoutLeft = 32.dp)

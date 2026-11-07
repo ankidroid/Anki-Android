@@ -112,7 +112,7 @@ class ScheduleRemindersFragment :
          * @see com.ichi2.anki.DeckPicker.tryShowScheduleRemindersPanel
          */
         STUDY_OPTIONS_FRAGMENT(
-            containerId = R.id.studyoptions_fragment,
+            containerId = R.id.studyoptions_content,
             toolbarType = ToolbarType.INTERNAL_NON_COLLAPSIBLE,
         ),
 
