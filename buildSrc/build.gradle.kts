@@ -37,6 +37,8 @@ tasks.test {
     inputs.files("../AnkiDroid/build.gradle.kts")
     // The screenshot fixture uses the same Android SDK as the main build.
     inputs.file("../gradle/libs.versions.toml")
+    // The coverage fixture uses the app's real include list.
+    inputs.file("../gradle/jacoco-includes.txt")
 }
 
 configure<KtlintExtension> {

@@ -9,6 +9,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.hasItems
 import org.hamcrest.Matchers.not
 import org.jacoco.core.tools.ExecFileLoader
 import org.junit.jupiter.api.BeforeEach
@@ -41,6 +42,7 @@ class JacocoPluginTest {
         localProperties.remove("enable_coverage")
         File(projectDir, "local.properties").outputStream().use { localProperties.store(it, null) }
         writeFile("gradle.properties", "org.gradle.workers.max=2\n")
+        writeFile("gradle/jacoco-includes.txt", File("../gradle/jacoco-includes.txt").readText())
         writeFile("library/src/test/java/ExampleTest.java", "class ExampleTest {}")
         writeFile("nested/core/src/test/kotlin/ExampleTest.kt", "class ExampleTest")
         // Resources alone must not cause a unit-test task to be scheduled.
@@ -82,6 +84,99 @@ class JacocoPluginTest {
 
         File(projectDir, "gradle.properties").appendText("enable_coverage=true\n")
         assertUnitTestCoverage(true)
+    }
+
+    @Test
+    fun `unit agent retains production exceptions without instrumenting dependencies`() {
+        writeFile(
+            "app/src/main/java/com/ichi2/anki/coverage/CoveredApp.java",
+            "package com.ichi2.anki.coverage; public class CoveredApp { public static int value() { return 7; } }",
+        )
+        writeFile(
+            "app/src/main/java/androidx/drawerlayout/widget/ClosableDrawerLayout.java",
+            "package androidx.drawerlayout.widget; " +
+                "public class ClosableDrawerLayout { public static int value() { return 9; } }",
+        )
+        writeFile(
+            "app/src/test/java/org/robolectric/coverage/Dependency.java",
+            "package org.robolectric.coverage; public class Dependency { public static int value() { return 11; } }",
+        )
+        writeFile(
+            "library/src/main/java/androidx/appcompat/widget/DialogTitleView.java",
+            """
+            package androidx.appcompat.widget;
+            public class DialogTitleView {
+                public static int value() { return 19; }
+                public static class Nested { public static int value() { return 23; } }
+            }
+            """.trimIndent(),
+        )
+        writeFile(
+            "library/src/main/kotlin/com/google/android/material/snackbar/SnackbarPackageWorkaround.kt",
+            """
+            package com.google.android.material.snackbar
+            fun workaroundValue() = 37
+            """.trimIndent(),
+        )
+        writeFile(
+            "app/src/test/java/regression/CoverageTest.java",
+            """
+            package regression;
+            public class CoverageTest {
+                @org.junit.Test public void executesAppAndDependencies() {
+                    org.junit.Assert.assertEquals(7, com.ichi2.anki.coverage.CoveredApp.value());
+                    org.junit.Assert.assertEquals(9, androidx.drawerlayout.widget.ClosableDrawerLayout.value());
+                    org.junit.Assert.assertEquals(11, org.robolectric.coverage.Dependency.value());
+                    org.junit.Assert.assertEquals(19, androidx.appcompat.widget.DialogTitleView.value());
+                    org.junit.Assert.assertEquals(23, androidx.appcompat.widget.DialogTitleView.Nested.value());
+                    org.junit.Assert.assertEquals(37, com.google.android.material.snackbar.SnackbarPackageWorkaroundKt.workaroundValue());
+                }
+            }
+            """.trimIndent(),
+        )
+        File(projectDir, "app/build.gradle").appendText(
+            """
+
+            dependencies {
+                testImplementation libs.junit.vintage.engine
+            }
+            tasks.withType(Test).configureEach { useJUnit() }
+            """.trimIndent(),
+        )
+
+        val result =
+            GradleRunner
+                .create()
+                .withProjectDir(projectDir)
+                .withTestKitDir(File("build/test-kit").absoluteFile)
+                .withPluginClasspath()
+                .withArguments(":app:testPlayDebugUnitTest", "--configuration-cache", "--stacktrace")
+                .build()
+        assertThat(result.task(":app:testPlayDebugUnitTest")?.outcome, equalTo(TaskOutcome.SUCCESS))
+
+        val coverage = ExecFileLoader().apply { load(File(projectDir, "app/build/jacoco/testPlayDebugUnitTest.exec")) }
+        val coveredNames =
+            coverage.executionDataStore.contents
+                .filter { it.probes.any { covered -> covered } }
+                .map { it.name }
+        assertThat(
+            coveredNames,
+            hasItems("com/ichi2/anki/coverage/CoveredApp", "androidx/drawerlayout/widget/ClosableDrawerLayout"),
+        )
+        val preserved =
+            listOf(
+                "androidx/drawerlayout/widget/ClosableDrawerLayout",
+                "androidx/appcompat/widget/DialogTitleView",
+                "androidx/appcompat/widget/DialogTitleView\$Nested",
+                "com/google/android/material/snackbar/SnackbarPackageWorkaroundKt",
+            )
+        for (name in preserved) assertThat(coveredNames, hasItems(name))
+        assertThat(coveredNames.any { it.startsWith("org/robolectric/") }, equalTo(false))
+
+        val reportResult = runCoverage("-x", ":library:testDebugUnitTest", "-x", ":nested:core:test")
+        assertThat(reportResult.task(":app:jacocoUnitTestReport")?.outcome, equalTo(TaskOutcome.SUCCESS))
+        val cached = runCoverage("-x", ":library:testDebugUnitTest", "-x", ":nested:core:test")
+        assertThat(cached.output, containsString("Reusing configuration cache."))
     }
 
     @Test
