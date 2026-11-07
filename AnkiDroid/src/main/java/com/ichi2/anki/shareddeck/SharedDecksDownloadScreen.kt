@@ -491,6 +491,8 @@ private fun Actions(
     onOpenInBrowserClick: () -> Unit,
 ) {
     val dimensions = MaterialTheme.dimensions
+    val border = MaterialTheme.widgetBorder
+    val colors = MaterialTheme.colorScheme
     FlowRow(
         modifier =
             Modifier
@@ -504,10 +506,11 @@ private fun Actions(
             DownloadPhase.Downloading, DownloadPhase.LoginRequired ->
                 FilledTonalButton(
                     onClick = onCancelClick,
+                    border = border,
                     colors =
                         ButtonDefaults.filledTonalButtonColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer,
-                            contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                            containerColor = if (border != null) colors.surface else colors.errorContainer,
+                            contentColor = if (border != null) colors.onSurface else colors.onErrorContainer,
                         ),
                 ) {
                     Text(stringResource(CommonString.cancel_download))
@@ -517,7 +520,10 @@ private fun Actions(
                     Text(stringResource(CommonString.import_deck))
                 }
             DownloadPhase.Failed -> {
-                FilledTonalButton(onClick = onTryAgainClick) {
+                FilledTonalButton(
+                    onClick = onTryAgainClick,
+                    border = border,
+                ) {
                     Text(stringResource(CommonString.try_again))
                 }
                 TextButton(onClick = onOpenInBrowserClick) {
