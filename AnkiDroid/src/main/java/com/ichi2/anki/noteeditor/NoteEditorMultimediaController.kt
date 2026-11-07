@@ -14,7 +14,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.core.view.OnReceiveContentListener
-import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.FieldEditText
@@ -44,7 +44,6 @@ import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
@@ -243,16 +242,10 @@ internal class NoteEditorMultimediaController(
     }
 
     fun registerPasteListener(field: FieldEditText) {
-        fragment.lifecycleScope.launch {
-            val pasteAsPng = shouldPasteAsPng()
-            field.setPasteListener { editText, uri, description ->
-                onPaste(editText, uri!!, description!!, pasteAsPng)
-            }
+        field.setPasteListener { editText, uri, description ->
+            onPaste(editText, uri!!, description!!, getColUnsafe().config.pasteImagesAsPng)
         }
     }
-
-    /** Determines whether pasted images should be handled as PNG format. **/
-    private suspend fun shouldPasteAsPng() = withCol { config.pasteImagesAsPng }
 
     /**
      * Listener for handling content received via drag and drop or copy and paste.
@@ -274,14 +267,11 @@ internal class NoteEditorMultimediaController(
             }
 
             for (uri in clip.items().map { it.uri }) {
-                fragment.lifecycleScope.launch {
-                    try {
-                        val pasteAsPng = shouldPasteAsPng()
-                        onPaste(view as EditText, uri, description, pasteAsPng)
-                    } catch (e: Exception) {
-                        Timber.w(e)
-                        CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
-                    }
+                try {
+                    onPaste(view as EditText, uri, description, getColUnsafe().config.pasteImagesAsPng)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
                 }
             }
 
