@@ -298,8 +298,8 @@ class PreviewerFragment :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN || !::bindingMap.isInitialized) return false
-        return bindingMap.onKeyDown(event)
+        if (!::bindingMap.isInitialized) return false
+        return bindingMap.dispatchKeyEvent(event)
     }
 
     /** Distinguishes selection failures from I/O failures during ViewModel construction. */
