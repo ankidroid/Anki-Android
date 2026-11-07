@@ -3,10 +3,10 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.graphics.Path
-import android.webkit.WebView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -14,13 +14,11 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardRepository
-import com.ichi2.testutils.mockWebResourceRequest
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.Shadows.shadowOf
 import kotlin.reflect.jvm.jvmName
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -80,11 +78,10 @@ class ReviewerWhiteboardGestureTest : RobolectricTest() {
             }
         }
 
-    private fun ReviewerFragment.sendMultiFingerTap(fingerCount: Int) {
-        val webView = assertIs<WebView>(binding.webViewLayout.getChildAt(0))
-        // Robolectric does not execute the touch-detection JavaScript: enter through its URL callback.
-        val request = mockWebResourceRequest("gesture://multiFingerTap/?touchCount=$fingerCount")
-        assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request))
+    private suspend fun ReviewerFragment.sendMultiFingerTap(fingerCount: Int) {
+        // Robolectric does not execute the touch-detection JavaScript: send its request directly.
+        val data = """{"touchCount": $fingerCount}"""
+        viewModel.handlePostRequest(PostRequestUri("/ankidroid/multiFingerTap"), data.toByteArray())
     }
 
     private fun configureBindings(bindClear: Boolean) {
