@@ -1657,6 +1657,38 @@ open class DeckPicker :
      * @return whether a sync was performed or not.
      */
     private suspend fun automaticSync(runInBackground: Boolean = false): Boolean {
+        when (automaticSyncAction(runInBackground)) {
+            AutomaticSyncAction.NONE -> return false
+            AutomaticSyncAction.MEDIA_ONLY -> {
+                if (shouldFetchMedia()) {
+                    val auth = syncAuth() ?: return false
+                    SyncMediaWorker.start(this, auth)
+                }
+                setLastSyncTimeToNow()
+            }
+            AutomaticSyncAction.COLLECTION -> {
+                if (runInBackground) {
+                    Timber.i("autoSync: starting background")
+                    val auth = syncAuth() ?: return false
+                    SyncWorker.start(this, auth, shouldFetchMedia())
+                } else {
+                    Timber.i("autoSync: starting foreground")
+                    sync()
+                }
+                return true
+            }
+        }
+        return false
+    }
+
+    private enum class AutomaticSyncAction {
+        NONE,
+        MEDIA_ONLY,
+        COLLECTION,
+    }
+
+    /** Decides whether automatic sync should run, without starting any work or changing the last sync time. */
+    private suspend fun automaticSyncAction(runInBackground: Boolean = false): AutomaticSyncAction {
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
             MeteredSyncPolicy.shouldBlock() -> Timber.d("autoSync: blocked by metered connection")
@@ -1665,32 +1697,20 @@ open class DeckPicker :
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
             else -> {
                 // Startup may have failed to open the collection. Do not sync on exit in that case.
-                val hasChanges = areThereChangesToSync()
-                if (hasChanges == null) {
-                    Timber.d("autoSync: collection not open")
-                    return false
-                }
-                if (!hasChanges) {
-                    Timber.d("autoSync: no collection changes to sync. Syncing media if set")
-                    if (shouldFetchMedia()) {
-                        val auth = syncAuth() ?: return false
-                        SyncMediaWorker.start(this, auth)
+                return when (areThereChangesToSync()) {
+                    null -> {
+                        Timber.d("autoSync: collection not open")
+                        AutomaticSyncAction.NONE
                     }
-                    setLastSyncTimeToNow()
-                } else {
-                    if (runInBackground) {
-                        Timber.i("autoSync: starting background")
-                        val auth = syncAuth() ?: return false
-                        SyncWorker.start(this, auth, shouldFetchMedia())
-                    } else {
-                        Timber.i("autoSync: starting foreground")
-                        sync()
+                    false -> {
+                        Timber.d("autoSync: no collection changes to sync. Syncing media if set")
+                        AutomaticSyncAction.MEDIA_ONLY
                     }
-                    return true
+                    true -> AutomaticSyncAction.COLLECTION
                 }
             }
         }
-        return false
+        return AutomaticSyncAction.NONE
     }
 
     /**
