@@ -427,6 +427,8 @@ class NoteEditorFragment :
             },
         )
 
+    private var pasteAsPng = false
+
     /**
      * Listener for handling content received via drag and drop or copy and paste.
      * This listener processes URIs contained in the payload and attempts to paste the content into the target EditText view.
@@ -447,14 +449,11 @@ class NoteEditorFragment :
             }
 
             for (uri in clip.items().map { it.uri }) {
-                lifecycleScope.launch {
-                    try {
-                        val pasteAsPng = shouldPasteAsPng()
-                        multimediaController.onPaste(view as EditText, uri, description, pasteAsPng)
-                    } catch (e: Exception) {
-                        Timber.w(e)
-                        CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
-                    }
+                try {
+                    multimediaController.onPaste(view as EditText, uri, description, pasteAsPng)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
                 }
             }
 
@@ -650,6 +649,8 @@ class NoteEditorFragment :
         col: Collection,
         savedInstanceState: Bundle?,
     ) {
+        // Load before registering paste listeners so inserting media stays synchronous.
+        pasteAsPng = col.config.pasteImagesAsPng
         val intent = requireActivity().intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %s", caller)
         requireAnkiActivity().registerReceiver()
@@ -1878,9 +1879,6 @@ class NoteEditorFragment :
         changed = true
     }
 
-    /** Determines whether pasted images should be handled as PNG format. **/
-    private suspend fun shouldPasteAsPng() = withCol { config.pasteImagesAsPng }
-
     val currentFields: Fields
         get() = editorNote!!.notetype.fields
 
@@ -1924,16 +1922,13 @@ class NoteEditorFragment :
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
             val newEditText = editLineView.binding.editText
-            lifecycleScope.launch {
-                val pasteAsPng = shouldPasteAsPng()
-                newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
-                    multimediaController.onPaste(
-                        editText!!,
-                        uri!!,
-                        description!!,
-                        pasteAsPng,
-                    )
-                }
+            newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
+                multimediaController.onPaste(
+                    editText!!,
+                    uri!!,
+                    description!!,
+                    pasteAsPng,
+                )
             }
             editLineView.configureView(
                 requireActivity(),
