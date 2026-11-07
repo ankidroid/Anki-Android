@@ -76,6 +76,7 @@ import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptE
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
@@ -742,6 +743,7 @@ data class CrashReportData(
 
     fun shouldReportException(): Boolean {
         if (!reportableException) return false
+        if (exception is BackendNotFoundException) return false
         if (exception.isInvalidFsrsParametersException()) return false
         if (exception.isDeckNotFoundInLimitsMapException()) return false
         if (exception is BackendInvalidInputException && exception.message == "missing template") return false
@@ -837,6 +839,7 @@ data class CrashReportData(
                 if (e is CollectionLockedException) return OpenAdvancedSettings
                 if (e.isInvalidFsrsParametersException()) return OpenDeckOptions
                 if (e.isDeckNotFoundInLimitsMapException()) return OpenCheckDatabase
+                if (e is BackendNotFoundException) return OpenCheckDatabase
 
                 return null
             }
