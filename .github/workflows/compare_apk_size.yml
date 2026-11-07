@@ -1,22 +1,44 @@
+# Posts the play-release APK size change of a pull request as a PR comment.
+#
+# How the two sizes are obtained:
+#
+# 1. PR size. On pull_request, tests_emulator.yml checks out GitHub's synthetic merge
+#    commit (refs/pull/N/merge = base-branch tip + this PR) and builds the play-release
+#    APK. It then posts one notice:
+#        play-release-apk-build: <built commit> <first parent> <bytes>
+#    The first parent of that merge commit is the base-branch commit the PR was merged
+#    with. This workflow reads the notice from the run that triggered it.
+#
+# 2. Baseline size. The baseline is that first parent, not `git merge-base`: the PR APK
+#    already contains every base-branch commit up to the first parent, so comparing with
+#    an older merge base would count other people's changes as this PR's.
+#    The first parent normally landed through the merge queue, so its merge_group (or
+#    push) emulator run already posted the same notice with <built commit> equal to the
+#    run's head_sha. That size is reused. pull_request runs are never reused: they build
+#    a merge commit, not their head_sha. If no reusable notice exists, the baseline APK
+#    is assembled here with the same TEST_RELEASE_BUILD and fallback signing.
+#
+# Trust: workflow_run runs with a write token, but the pull_request run used the PR's
+# own copy of tests_emulator.yml, so its notice is untrusted input. Its size is only ever
+# printed. Its first parent is only used after checking that it is a commit on the base
+# branch, so this workflow never checks out or builds PR code. The PR number comes from
+# the GitHub API, not from the run, and only this workflow's bot comment is updated.
+
 name: APK Size Comparison
 
 on:
-  workflow_dispatch:
-    inputs:
-      prNumber:
-        description: "You want to measure the impact of PR number:"
-        required: true
-        type: number
+  workflow_run:
+    workflows:
+      - Emulator Tests
+      - 🛠️ Emulator Tests
+    types:
+      - completed
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.inputs.prNumber }}
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}
   cancel-in-progress: true
 
-
-permissions:
-  contents: read
-  pull-requests: write
-
+permissions: {}
 
 env:
   JAVA_TOOL_OPTIONS: -Dkotlin.daemon.options=autoshutdownIdleSeconds=10
@@ -24,45 +46,193 @@ env:
 jobs:
   sizeCheck:
     name: APK Size Check
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
     timeout-minutes: 30
     runs-on: ubuntu-latest
     env:
-      KEYSTORENAME: keystore
-      KEYSTOREPWD: testpass
-      KEYPWD: testpass
-      KEYALIAS: nrkeystorealias
+      TEST_RELEASE_BUILD: true
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      pull-requests: write
     steps:
+      - name: Resolve pull request
+        id: pull-request
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          HEAD_REPOSITORY: ${{ github.event.workflow_run.head_repository.full_name }}
+        with:
+          script: |
+            const headBranch = process.env.HEAD_BRANCH;
+            const headSha = process.env.HEAD_SHA;
+            const headRepository = process.env.HEAD_REPOSITORY || `${context.repo.owner}/${context.repo.repo}`;
+            if (!headBranch || !headSha || headRepository.split('/').length !== 2) {
+              throw new Error('Workflow run did not include valid PR identity metadata');
+            }
+
+            const headOwner = headRepository.split('/')[0];
+            const pullRequests = await github.paginate(github.rest.pulls.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              head: `${headOwner}:${headBranch}`,
+              per_page: 100,
+            });
+            const matches = pullRequests.filter(pullRequest =>
+              pullRequest.head.repo?.full_name === headRepository &&
+              pullRequest.head.ref === headBranch &&
+              pullRequest.head.sha === headSha &&
+              pullRequest.base.repo?.full_name === `${context.repo.owner}/${context.repo.repo}`
+            );
+            if (matches.length !== 1) {
+              throw new Error(`Expected one PR for ${headRepository}:${headBranch} at ${headSha}; found ${matches.length}`);
+            }
+
+            core.setOutput('number', String(matches[0].number));
+            core.setOutput('base_ref', matches[0].base.ref);
+
+      - name: Checkout repository history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Read APK size notices
+        id: sizes
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          TRIGGER_RUN_ID: ${{ github.event.workflow_run.id }}
+          BASE_REF: ${{ steps.pull-request.outputs.base_ref }}
+        with:
+          script: |
+            const path = require('path');
+            const { execFileSync } = require('child_process');
+            const {
+              orderBaselineRuns,
+              parsePlayReleaseApkBuild,
+              selectPlayReleaseSizeJob,
+            } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/scripts/apk-size-notice.js'));
+
+            const triggerRunId = Number(process.env.TRIGGER_RUN_ID);
+            const baseRef = process.env.BASE_REF;
+            if (!Number.isInteger(triggerRunId) || !baseRef) {
+              throw new Error('APK size lookup requires the triggering run id and base branch');
+            }
+
+            async function annotationsForRun(runId) {
+              const jobs = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId,
+                filter: 'latest',
+                per_page: 100,
+              });
+              const job = selectPlayReleaseSizeJob(jobs);
+              if (!job || !job.check_run_url) {
+                core.info(`Run ${runId} has no play-release size check run.`);
+                return [];
+              }
+              const checkRunId = Number(String(job.check_run_url).split('/').pop());
+              if (!Number.isInteger(checkRunId)) {
+                throw new Error(`Could not parse a check run id from ${job.check_run_url}`);
+              }
+              return github.paginate(github.rest.checks.listAnnotations, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                check_run_id: checkRunId,
+                per_page: 100,
+              });
+            }
+
+            const pullRequestNotice = parsePlayReleaseApkBuild(await annotationsForRun(triggerRunId));
+            if (!pullRequestNotice.ok) {
+              throw new Error(`play-release-apk-build notice is unusable (${pullRequestNotice.reason})`);
+            }
+            core.setOutput('pr_bytes', String(pullRequestNotice.bytes));
+
+            // The PR run built a merge commit; its first parent is the base-branch commit
+            // the PR was tested on. The notice came from PR-controlled workflow code, so
+            // only accept a first parent that is already on the base branch: nothing in
+            // this workflow may check out or build PR code.
+            const baseSha = pullRequestNotice.baseSha;
+            const git = (...args) => execFileSync('git', args, { stdio: 'inherit' });
+            git('fetch', '--no-tags', 'origin', `+refs/heads/${baseRef}:refs/remotes/origin/${baseRef}`);
+            try {
+              git('merge-base', '--is-ancestor', baseSha, `refs/remotes/origin/${baseRef}`);
+            } catch {
+              throw new Error(`PR run's first parent ${baseSha} is not a commit on ${baseRef}`);
+            }
+            core.info(`PR run built ${pullRequestNotice.commitSha}; baseline is its first parent ${baseSha}.`);
+            core.setOutput('base_sha', baseSha);
+
+            const runs = await github.paginate(github.rest.actions.listWorkflowRuns, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'tests_emulator.yml',
+              head_sha: baseSha,
+              per_page: 100,
+            });
+            let selected = null;
+            let baselineNotice = null;
+            for (const candidate of orderBaselineRuns(runs, baseSha)) {
+              const notice = parsePlayReleaseApkBuild(await annotationsForRun(candidate.id));
+              if (!notice.ok) {
+                core.info(`Baseline run ${candidate.id} (${candidate.event}) has no usable size notice (${notice.reason}).`);
+                continue;
+              }
+              // Only reuse a size measured on exactly baseSha, not on a commit built on top of it.
+              if (notice.commitSha !== candidate.head_sha) {
+                core.info(`Baseline run ${candidate.id} built ${notice.commitSha}, not ${candidate.head_sha}.`);
+                continue;
+              }
+              selected = candidate;
+              baselineNotice = notice;
+              break;
+            }
+            if (!selected) {
+              core.info(`No successful merge_group or push emulator run for ${baseSha} has a size notice; assembling that APK.`);
+              core.setOutput('baseline_source', 'assembled');
+              return;
+            }
+            if (!selected.html_url || !selected.event) {
+              throw new Error(`Baseline run ${selected.id} did not include an event name and run URL`);
+            }
+
+            core.info(`Using ${selected.event} run ${selected.id} for the baseline APK size.`);
+            core.setOutput('baseline_source', selected.event);
+            core.setOutput('baseline_bytes', String(baselineNotice.bytes));
+            core.setOutput('baseline_run_url', selected.html_url);
+
+      - name: Checkout baseline
+        if: steps.sizes.outputs.baseline_source == 'assembled'
+        env:
+          BASE_SHA: ${{ steps.sizes.outputs.base_sha }}
+        run: git checkout --detach "$BASE_SHA"
+
       - name: Configure JDK
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        if: steps.sizes.outputs.baseline_source == 'assembled'
+        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
         with:
           distribution: "jetbrains"
           java-version: "21"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Test Credential Prep
-        run: |
-          export KEYSTOREPATH=$HOME/$KEYSTORENAME
-          echo "KEYSTOREPATH=$KEYSTOREPATH" >> $GITHUB_ENV
-          echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPWD -keystore $KEYSTOREPATH -storepass $KEYSTOREPWD -keyalg RSA -validity 20000
-        shell: bash
-
-      - name: Checkout PR
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
-
       - name: Setup Gradle
+        if: steps.sizes.outputs.baseline_source == 'assembled'
         uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
         timeout-minutes: 5
         with:
-          # Use open source provider: https://github.com/gradle/actions/blob/main/docs/setup-gradle.md#basic-caching
           cache-provider: basic
           cache-read-only: true
 
-      - name: Assemble PR APK
-        # This makes sure we fetch gradle network resources with a retry
+      - name: Assemble baseline APK
+        if: steps.sizes.outputs.baseline_source == 'assembled'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
@@ -70,49 +240,105 @@ jobs:
           max_attempts: 3
           command: ./gradlew :AnkiDroid:assemblePlayRelease --daemon
 
-      - name: Get PR APK size
-        run: echo NEWSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
+      - name: Compare APK sizes
+        id: compare
+        shell: bash
+        env:
+          BASE_SHA: ${{ steps.sizes.outputs.base_sha }}
+          PR_BYTES: ${{ steps.sizes.outputs.pr_bytes }}
+          BASELINE_SOURCE: ${{ steps.sizes.outputs.baseline_source }}
+          BASELINE_BYTES: ${{ steps.sizes.outputs.baseline_bytes }}
+          BASELINE_RUN_URL: ${{ steps.sizes.outputs.baseline_run_url }}
+        run: |
+          if [[ "$BASELINE_SOURCE" == "assembled" ]]; then
+            old_size=$(stat -c '%s' "AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk")
+          else
+            old_size="$BASELINE_BYTES"
+          fi
+          new_size="$PR_BYTES"
+          if [[ ! "$old_size" =~ ^[0-9]+$ || ! "$new_size" =~ ^[0-9]+$ || "$old_size" -eq 0 || "$new_size" -eq 0 ]]; then
+            echo "Baseline or PR APK size was not a positive integer."
+            exit 1
+          fi
+          difference=$((new_size - old_size))
+          percent=$(awk -v difference="$difference" -v old_size="$old_size" 'BEGIN { printf "%.2f", difference * 100 / old_size }')
 
-      - name: Checkout Baseline for PR
-        # we want to checkout the base for this PR on main, not just main - as main moves over time
-        # and we want to know the isolated affect of this PR regardless of when the workflow executes
-        run: git checkout `git merge-base origin/main HEAD`
+          {
+            echo "old_size=$old_size"
+            echo "new_size=$new_size"
+            echo "difference=$difference"
+            echo "percent=$percent"
+            echo "base_sha=$BASE_SHA"
+            echo "baseline_source=$BASELINE_SOURCE"
+            echo "baseline_run_url=$BASELINE_RUN_URL"
+          } >> "$GITHUB_OUTPUT"
 
-      - name: Assemble Baseline APK
-        # This makes sure we fetch gradle network resources with a retry
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        with:
-          timeout_minutes: 10
-          retry_wait_seconds: 60
-          max_attempts: 3
-          command: ./gradlew :AnkiDroid:assemblePlayRelease --daemon
-
-      - name: Get Baseline APK size
-        run: echo OLDSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
-
-      - name: Post comment
+      - name: Comment APK size comparison
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          PR_NUMBER: ${{ steps.pull-request.outputs.number }}
+          OLD_SIZE: ${{ steps.compare.outputs.old_size }}
+          NEW_SIZE: ${{ steps.compare.outputs.new_size }}
+          DIFFERENCE: ${{ steps.compare.outputs.difference }}
+          PERCENT: ${{ steps.compare.outputs.percent }}
+          BASE_SHA: ${{ steps.compare.outputs.base_sha }}
+          BASELINE_SOURCE: ${{ steps.compare.outputs.baseline_source }}
+          BASELINE_RUN_URL: ${{ steps.compare.outputs.baseline_run_url }}
         with:
           script: |
-            var inputs = ${{ toJSON(inputs) }}
-            let prNumber = inputs['prNumber'];
-
-            async function getPullRequest() {
-                return await github.rest.pulls.get({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    pull_number: prNumber,
-                });
+            const prNumber = Number(process.env.PR_NUMBER);
+            const oldSize = Number(process.env.OLD_SIZE);
+            const newSize = Number(process.env.NEW_SIZE);
+            const difference = Number(process.env.DIFFERENCE);
+            const percent = process.env.PERCENT;
+            const baseSha = process.env.BASE_SHA;
+            const baselineSource = process.env.BASELINE_SOURCE;
+            const baselineRunUrl = process.env.BASELINE_RUN_URL || '';
+            if (!Number.isSafeInteger(prNumber) || !Number.isSafeInteger(oldSize) || !Number.isSafeInteger(newSize) || !Number.isSafeInteger(difference)) {
+              throw new Error('APK size comment is missing numeric comparison outputs');
             }
-            const pullRequestData = await getPullRequest();
+            if (!baseSha || !/^-?\d+\.\d{2}$/.test(percent || '')) {
+              throw new Error('APK size comment is missing the baseline SHA or percent');
+            }
+            const sourceText = baselineSource === 'assembled'
+              ? 'assembled'
+              : `${baselineSource} ${baselineRunUrl}`.trim();
+            if (!sourceText || (baselineSource !== 'assembled' && !baselineRunUrl)) {
+              throw new Error('APK size comment is missing the baseline source');
+            }
 
-            async function addComment(prNumber, oldSize, newSize) {
-              return await github.rest.issues.createComment({
+            const path = require('path');
+            const { selectComparisonComment } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/scripts/apk-size-notice.js'));
+            const marker = '<!-- apk-size-comparison -->';
+            const body = [
+              marker,
+              '**APK size comparison**',
+              '',
+              `Baseline (${baseSha.slice(0, 7)}, the base-branch commit this PR was tested against): ${oldSize.toLocaleString()} bytes`,
+              `Baseline source: ${sourceText}`,
+              `PR: ${newSize.toLocaleString()} bytes`,
+              `Difference: ${difference.toLocaleString()} bytes (${percent}%)`,
+            ].join('\n');
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            // Anyone can paste the marker; only update this workflow's own comment.
+            const existing = selectComparisonComment(comments, marker);
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
-                body: `${oldSize.toLocaleString()}: Old APK size
-                      ${newSize.toLocaleString()}: New APK size`
-              })
+                body,
+              });
             }
-            await addComment(prNumber, process.env.OLDSIZE, process.env.NEWSIZE);
