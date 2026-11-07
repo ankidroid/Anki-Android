@@ -7,7 +7,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
@@ -38,6 +42,14 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right)
+            // content scrolls beneath the navigation: only the last item is kept above it
+            binding.moreScrollView.updatePadding(bottom = bottomNavigationInset(insets, bars.bottom))
+            insets
+        }
 
         val marketIntent = AnkiDroidApp.getMarketIntent(requireContext())
 
