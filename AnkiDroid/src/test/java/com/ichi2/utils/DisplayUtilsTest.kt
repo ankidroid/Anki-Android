@@ -16,6 +16,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import org.junit.Test
@@ -24,6 +25,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
@@ -42,7 +44,7 @@ class DisplayUtilsTest {
                 val expectedAdjustment = if (Build.VERSION.SDK_INT >= 30) SOFT_INPUT_ADJUST_NOTHING else SOFT_INPUT_ADJUST_RESIZE
                 assertEquals(expectedAdjustment, window.attributes.softInputMode and SOFT_INPUT_MASK_ADJUST)
                 if (Build.VERSION.SDK_INT >= 30) {
-                    assertEquals(WindowInsets.Type.ime(), window.attributes.fitInsetsTypes and WindowInsets.Type.ime())
+                    assertTrue(window.attributes.fitInsetsTypes.hasBitFlag(WindowInsets.Type.ime()))
                 }
                 dialog.show()
             }
