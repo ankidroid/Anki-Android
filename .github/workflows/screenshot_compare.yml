@@ -34,7 +34,7 @@ jobs:
   compare-screenshot-test:
     name: compare
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     permissions:
       contents: read # for clone
@@ -80,14 +80,19 @@ jobs:
           max_attempts: 3
           command: ./gradlew robolectricSdkDownload compileScreenshotTests -Pscreenshot --daemon
 
+      - name: Wait for matching base screenshots
+        id: baseline
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const waitForBaseline = require('./.github/wait_for_screenshot_baseline.js');
+            return await waitForBaseline({ github, context, core });
+
       - name: Download base branch screenshots
         uses: dawidd6/action-download-artifact@eab87c9830c39eff17e5a6eadb20bfb4bc880477 # v27
-        continue-on-error: true
         with:
           name: screenshot
-          workflow: screenshot_store.yml
-          branch: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || github.event.repository.default_branch }}
-          event: push
+          run_id: ${{ steps.baseline.outputs.result }}
 
       - name: Compare screenshots
         id: compare-screenshot-test
