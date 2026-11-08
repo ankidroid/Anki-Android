@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
@@ -21,6 +22,7 @@ import com.ichi2.anki.reviewreminders.ReminderTroubleshootingFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.ext.menu
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -131,6 +133,51 @@ class DeckPickerPaneHistoryTest : RobolectricTest() {
         assertFalse(controller.get().isFinishing)
         assertNotNull(controller.get().fragment)
         assertFalse(fragments(controller.get().supportFragmentManager).any { it is ScheduleRemindersFragment })
+    }
+
+    @Test
+    fun `tablet toolbar actions follow the visible pane in order`() {
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        val activity = controller.get()
+        settle(activity)
+        val studyOptionsActions =
+            listOf(
+                R.id.action_sync,
+                R.id.action_deck_rename,
+                R.id.action_deck_delete,
+                R.id.action_schedule_reminders,
+                R.id.action_custom_study,
+                R.id.action_deck_or_study_options,
+            )
+        val remindersActions = listOf(R.id.action_sync, R.id.action_deck_rename, R.id.action_deck_delete)
+        assertToolbarActions(activity, studyOptionsActions)
+
+        activity.supportFragmentManager.setDeckPickerContextMenuResult(DeckPickerContextMenuResult(1L, SCHEDULE_REMINDERS))
+        advanceRobolectricLooper()
+        assertToolbarActions(activity, remindersActions)
+
+        val reminders = fragments(activity.supportFragmentManager).filterIsInstance<ScheduleRemindersFragment>().single()
+        val toolbar = reminders.requireView().findViewById<Toolbar>(R.id.non_collapsible_toolbar)
+        toolbar.menu.performIdentifierAction(R.id.action_troubleshoot, 0)
+        advanceRobolectricLooper()
+        assertTrue(fragments(activity.supportFragmentManager).any { it is ReminderTroubleshootingFragment })
+        assertToolbarActions(activity, remindersActions)
+
+        repeat(2) {
+            activity.onBackPressedDispatcher.onBackPressed()
+            advanceRobolectricLooper()
+        }
+        assertNotNull(activity.fragment)
+        assertToolbarActions(activity, studyOptionsActions)
+    }
+
+    private fun assertToolbarActions(
+        activity: DeckPicker,
+        expected: List<Int>,
+    ) {
+        val menu = activity.menu() as MenuBuilder
+        assertEquals(expected, menu.actionItems.map { it.itemId })
+        assertTrue(menu.nonActionItems.isNotEmpty(), "More must remain after the action buttons")
     }
 
     private fun launchWithReminders(): ActivityController<DeckPicker> {

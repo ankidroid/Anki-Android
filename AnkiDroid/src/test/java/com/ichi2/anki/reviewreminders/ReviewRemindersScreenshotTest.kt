@@ -116,14 +116,14 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         withDeckPicker(deckCount = 1, withCards = true) { deckPicker ->
             val deckId = addDeck("Test Deck")
             commitScheduleRemindersAndCapture(
-                fragmentManager = deckPicker.supportFragmentManager,
+                fragmentManager = deckPicker.studyOptionsFragmentManager!!,
                 containerId = R.id.studyoptions_content,
                 host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
                 scope = ReviewReminderScope.DeckSpecific(deckId),
                 prefix = "studyOptionsFragmentHost",
             )
             commitTroubleshootingAndCapture(
-                fragmentManager = deckPicker.supportFragmentManager,
+                fragmentManager = deckPicker.studyOptionsFragmentManager!!,
                 containerId = R.id.studyoptions_content,
                 host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
                 prefix = "studyOptionsFragmentHost",
