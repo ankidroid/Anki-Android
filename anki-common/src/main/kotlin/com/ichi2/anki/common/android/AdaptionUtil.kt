@@ -16,6 +16,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.anki.compat.MATCH_DEFAULT_ONLY_L
@@ -111,7 +112,7 @@ object AdaptionUtil {
             try {
                 val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) ?: return false
                 val appInfo = info.applicationInfo ?: return false
-                appInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+                appInfo.flags.hasBitFlag(ApplicationInfo.FLAG_SYSTEM)
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
                 false

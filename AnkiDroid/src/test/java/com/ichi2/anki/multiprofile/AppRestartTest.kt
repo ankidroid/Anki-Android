@@ -22,6 +22,7 @@ import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.backupLock
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
@@ -80,7 +81,7 @@ class AppRestartTest : RobolectricTest() {
             val intent = assertNotNull(relaunchIntent(), "ProcessPhoenix must be handed the relaunch")
             assertEquals(IntentHandler::class.java.name, intent.component?.className)
             assertTrue(intent.categories.contains(Intent.CATEGORY_LAUNCHER))
-            assertTrue(intent.flags and Intent.FLAG_ACTIVITY_CLEAR_TASK != 0, "the old profile's activities must not survive")
+            assertTrue(intent.flags.hasBitFlag(Intent.FLAG_ACTIVITY_CLEAR_TASK), "the old profile's activities must not survive")
         }
 
     @Test

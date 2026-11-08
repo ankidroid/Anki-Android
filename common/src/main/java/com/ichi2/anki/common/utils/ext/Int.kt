@@ -12,3 +12,6 @@ fun Int.setBitFlag(
     flag: Int,
     enabled: Boolean,
 ): Int = if (enabled) this or flag else this and flag.inv()
+
+/** Returns whether all bits in [flag] are set. A zero mask always matches. */
+fun Int.hasBitFlag(flag: Int): Boolean = this and flag == flag
