@@ -3,6 +3,8 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.os.Looper
+import android.view.View.MeasureSpec
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +16,13 @@ import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.After
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import kotlin.test.assertEquals
 import kotlin.test.assertNotSame
@@ -128,9 +132,97 @@ class DeckPickerScrollStateTest : RobolectricTest() {
         advanceRobolectricLooperUntil { selection.isCompleted }
         settle(activity)
 
+        assertDeckVisible(activity, target)
+    }
+
+    @Test
+    fun `pending selection scroll survives immediate recreation`() {
+        // The tablet panel refresh adds a separate layout interaction; isolate this race on phones.
+        assumeTrue("This reproduction uses the phone layout", qualifiers.startsWith("sw400"))
+        val controller = launch()
+        val original = controller.get()
+        scrollAwayFromSelection(original)
+        val target = col.decks.id("Test Deck 03")
+        val selection = original.viewModel.selectDeck(target)
+
+        // Deliver due callbacks without advancing the clock to the 10 ms scroll task.
+        repeat(1000) {
+            if (!selection.isCompleted) {
+                shadowOf(Looper.getMainLooper()).idle()
+                Thread.sleep(1)
+            }
+        }
+        assertTrue(selection.isCompleted)
+        shadowOf(Looper.getMainLooper()).idle()
+        assertEquals(target, original.viewModel.focusedDeck)
+        assertEquals(30 to -17, visiblePosition(original))
+
+        controller.recreate()
+        settle(controller.get())
+
+        assertDeckVisible(controller.get(), target)
+    }
+
+    @Test
+    fun `selection before the first list overrides the saved scroll position`() {
+        val controller = launch()
+        scrollAwayFromSelection(controller.get())
+        val target = col.decks.id("Test Deck 03")
+        val viewModel = controller.get().viewModel
+        val decks = viewModel.flowOfDeckList.value
+        val delayedList = MutableStateFlow(FlattenedDeckList.empty)
+        val delayedFocus = MutableStateFlow<Long?>(null)
+        controller.pause().stop()
+        mockkObject(viewModel)
+        every { viewModel.flowOfDeckList } returns delayedList
+        every { viewModel.flowOfFocusedDeck } returns delayedFocus
+        try {
+            controller
+                .recreate()
+                .start()
+                .resume()
+                .visible()
+            viewModel.awaitStartup()
+            advanceRobolectricLooper()
+            assertEquals(0, list(controller.get()).adapter!!.itemCount)
+
+            col.decks.select(target)
+            delayedFocus.value = target
+            advanceRobolectricLooper()
+
+            // Render an empty-list frame before data arrives, as can happen on a slow load.
+            val recycler = list(controller.get())
+            assertTrue(recycler.width > 0 && recycler.height > 0)
+            recycler.requestLayout()
+            recycler.measure(
+                MeasureSpec.makeMeasureSpec(recycler.width, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(recycler.height, MeasureSpec.EXACTLY),
+            )
+            recycler.layout(recycler.left, recycler.top, recycler.right, recycler.bottom)
+            advanceRobolectricLooper()
+
+            delayedList.value = decks.copy(data = decks.data.map { it.withUpdatedDeckId(target) })
+            settle(controller.get())
+
+            assertDeckVisible(controller.get(), target)
+        } finally {
+            unmockkObject(viewModel)
+        }
+    }
+
+    private fun assertDeckVisible(
+        activity: DeckPicker,
+        target: Long,
+    ) {
         val manager = list(activity).layoutManager as LinearLayoutManager
         val position = activity.viewModel.findDeckPosition(target)
-        assertTrue(position in manager.findFirstVisibleItemPosition()..manager.findLastVisibleItemPosition())
+        advanceRobolectricLooperUntil {
+            position in manager.findFirstVisibleItemPosition()..manager.findLastVisibleItemPosition()
+        }
+        assertTrue(
+            position in manager.findFirstVisibleItemPosition()..manager.findLastVisibleItemPosition(),
+            "Selected position $position is outside ${manager.findFirstVisibleItemPosition()}..${manager.findLastVisibleItemPosition()}",
+        )
     }
 
     private fun launch(): ActivityController<DeckPicker> =
