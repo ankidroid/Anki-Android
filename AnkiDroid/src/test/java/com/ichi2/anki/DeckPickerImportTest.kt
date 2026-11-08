@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.app.NotificationManager
 import android.content.ContentProvider
 import android.content.Intent
 import android.database.MatrixCursor
@@ -10,6 +11,7 @@ import android.os.Looper
 import android.provider.OpenableColumns
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -123,6 +125,50 @@ class DeckPickerImportTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertNull(shadowOf(activity).nextStartedActivity)
         }
+
+    @Test
+    fun `stopped picker retains Add confirmation for the next picker`() {
+        assertRetainedConfirmation(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, "/cache/deck%20name.apkg")
+    }
+
+    @Test
+    fun `stopped picker retains Replace confirmation for the next picker`() {
+        assertRetainedConfirmation(ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM, "/cache/collection%20name.colpkg")
+    }
+
+    private fun assertRetainedConfirmation(
+        type: ImportDialog.Type,
+        path: String,
+    ) {
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        val activity = controller.get()
+        controller.pause().stop()
+
+        activity.showImportDialog(type, path)
+        advanceRobolectricLooper()
+        assertNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+        val notifications = shadowOf(activity.getSystemService<NotificationManager>()!!)
+        val notification = notifications.allNotifications.single()
+        assertEquals(DeckPicker::class.java.name, shadowOf(notification.contentIntent).savedIntent.component?.className)
+        controller.destroy()
+
+        val restoredController = startActivityControllerNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+        val restored = restoredController.get()
+        restored.assertSingleImportConfirmation(type, path)
+        assertTrue(notifications.allNotifications.isEmpty())
+
+        (restored.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as ImportDialog).dismiss()
+        advanceRobolectricLooper()
+        restoredController
+            .pause()
+            .stop()
+            .start()
+            .resume()
+            .visible()
+        advanceRobolectricLooper()
+        assertEquals(1, restored.importConfirmations.size, "Resuming again must not replay the confirmation")
+        assertNull(restored.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+    }
 
     @Test
     fun `finishing picker before text preparation completes suppresses navigation`() =

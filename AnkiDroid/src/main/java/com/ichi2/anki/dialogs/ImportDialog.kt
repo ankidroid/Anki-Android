@@ -12,6 +12,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import timber.log.Timber
@@ -20,6 +21,19 @@ import java.net.URLDecoder
 @NeedsTest("integration test: ImportDialog => DeckPicker")
 class ImportDialog : AsyncDialogFragment() {
     private val importViewModel: ImportViewModel by activityViewModels()
+
+    override val dialogHandlerMessage: DialogHandlerMessage
+        get() =
+            when (dialogType) {
+                DIALOG_IMPORT_ADD_CONFIRM ->
+                    ImportUtils.CollectionImportAdd(
+                        packagePath,
+                    )
+                DIALOG_IMPORT_REPLACE_CONFIRM ->
+                    ImportUtils.CollectionImportReplace(
+                        packagePath,
+                    )
+            }
 
     private val dialogType: Type
         get() = Type.fromCode(requireArguments().getInt(ARG_DIALOG_TYPE))
