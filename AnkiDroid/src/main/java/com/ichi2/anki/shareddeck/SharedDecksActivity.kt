@@ -30,6 +30,8 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.common.analytics.reportPotentiallyDeadCode
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -270,6 +272,14 @@ class SharedDecksActivity :
             // If the activity/fragment lifecycle has already begun teardown process,
             // avoid handling the download, as FragmentManager.commit will throw
             if (!supportFragmentManager.isStateSaved) {
+                if (supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT) != null) {
+                    reportPotentiallyDeadCode("SharedDecksActivity.OverlappingDownload")
+                    CrashReportService.sendExceptionReport(
+                        IllegalStateException("Shared-deck download screen already open"),
+                        "SharedDecksActivity::onDownloadStart",
+                        onlyIfSilent = true,
+                    )
+                }
                 val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
                 sharedDecksDownloadFragment.arguments =
                     Bundle().apply {
