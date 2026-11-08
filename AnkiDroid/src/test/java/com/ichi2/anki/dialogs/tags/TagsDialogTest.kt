@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
@@ -92,9 +93,7 @@ class TagsDialogTest : RobolectricTest() {
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onFragment { fragment ->
                 advanceRobolectricLooperUntil { fragment.binding.tagsList.adapter != null }
-                val recycler = fragment.binding.tagsList
-                recycler.measure(0, 0)
-                recycler.layout(0, 0, 100, 1000)
+                val recycler = fragment.forceLayout()
                 val parent = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
                 repeat(parentClicks) { parent.checkBoxView.performClick() }
                 (fragment.requireDialog() as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE).performClick()
@@ -169,10 +168,7 @@ class TagsDialogTest : RobolectricTest() {
             val tag = "zzzz"
             f.addTag(tag)
 
-            // workaround robolectric recyclerView issue
-            // update recycler
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            f.forceLayout()
             val lastItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
             val newTagItemItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
             Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
@@ -200,10 +196,7 @@ class TagsDialogTest : RobolectricTest() {
             val tag = "e"
             f.addTag(tag)
 
-            // workaround robolectric recyclerView issue
-            // update recycler
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            f.forceLayout()
             val lastItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
             val newTagItemItem = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
             Assert.assertEquals(4, recycler.adapter!!.itemCount.toLong())
@@ -250,9 +243,7 @@ class TagsDialogTest : RobolectricTest() {
                 .requireArguments()
 
         runTagsDialogScenario(args) { fragment ->
-            val recycler = fragment.binding.tagsList
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            val recycler = fragment.forceLayout()
             val expected = listOf("B", "B::B", "C", "C::child", "C::child::leaf", "aaa")
             assertEquals(expected.size, recycler.adapter!!.itemCount)
             expected.forEachIndexed { index, tag ->
@@ -351,9 +342,7 @@ class TagsDialogTest : RobolectricTest() {
                 .withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, listOf(first.id, second.id))
                 .requireArguments()
         runTagsDialogScenario(args) { fragment ->
-            val recycler = fragment.binding.tagsList
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            val recycler = fragment.forceLayout()
             val holders =
                 (0 until recycler.adapter!!.itemCount)
                     .map { RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, it) }
@@ -377,12 +366,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val recycler = f.binding.tagsList
-
-            // workaround robolectric recyclerView issue
-            // update recycler
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            val recycler = f.forceLayout()
             val itemCount = recycler.adapter!!.itemCount
             val foundAllTags: MutableList<String> = ArrayList()
             val foundCheckedTags: MutableList<String> = ArrayList()
@@ -393,9 +377,9 @@ class TagsDialogTest : RobolectricTest() {
                 val tag = vh.text
                 foundAllTags.add(tag)
                 when (vh.checkboxState) {
-                    CheckBoxTriStates.State.INDETERMINATE -> foundIndeterminate.add(tag)
-                    CheckBoxTriStates.State.UNCHECKED -> foundUncheckedTags.add(tag)
-                    CheckBoxTriStates.State.CHECKED -> foundCheckedTags.add(tag)
+                    INDETERMINATE -> foundIndeterminate.add(tag)
+                    UNCHECKED -> foundUncheckedTags.add(tag)
+                    CHECKED -> foundCheckedTags.add(tag)
                 }
             }
             ListUtil.assertListEquals(expectedAllTags, foundAllTags)
@@ -433,10 +417,7 @@ class TagsDialogTest : RobolectricTest() {
 
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
-            fun updateLayout() {
-                recycler.measure(0, 0)
-                recycler.layout(0, 0, 100, 2000)
-            }
+            fun updateLayout() = f.forceLayout(height = 2000)
             updateLayout()
 
             // v fruit         [-]
@@ -482,8 +463,7 @@ class TagsDialogTest : RobolectricTest() {
             //     v football  [-]
             //       > small   [x]
             //     - tennis    [x]
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            f.forceLayout()
             Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
@@ -499,11 +479,11 @@ class TagsDialogTest : RobolectricTest() {
             Assert.assertEquals("common::sport::football", item4.text)
             Assert.assertEquals("common::sport::football::small", item5.text)
             Assert.assertEquals("common::sport::tennis", item6.text)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.checkBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.checkBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.checkBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.checkBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.checkBoxView.state)
+            Assert.assertEquals(INDETERMINATE, item0.checkBoxView.state)
+            Assert.assertEquals(INDETERMINATE, item1.checkBoxView.state)
+            Assert.assertEquals(CHECKED, item2.checkBoxView.state)
+            Assert.assertEquals(INDETERMINATE, item3.checkBoxView.state)
+            Assert.assertEquals(INDETERMINATE, item4.checkBoxView.state)
             Assert.assertTrue(item5.checkBoxView.isChecked)
             Assert.assertTrue(item6.checkBoxView.isChecked)
         }
@@ -528,8 +508,7 @@ class TagsDialogTest : RobolectricTest() {
             // v common        [x]
             //   > blank       [-]
             //     - careless  [x]
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            f.forceLayout()
             Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
@@ -538,7 +517,7 @@ class TagsDialogTest : RobolectricTest() {
             Assert.assertEquals("common::blank", item1.text)
             Assert.assertEquals("common::blank::careless", item2.text)
             Assert.assertTrue(item0.checkBoxView.isChecked)
-            Assert.assertTrue(item1.checkBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
+            Assert.assertTrue(item1.checkBoxView.state == INDETERMINATE)
             Assert.assertTrue(item2.checkBoxView.isChecked)
         }
     }
@@ -576,8 +555,7 @@ class TagsDialogTest : RobolectricTest() {
             //     - tennis    [x]
             //   v sport       [-]
             //     - tennis    [x]
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            f.forceLayout()
             Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
@@ -606,10 +584,7 @@ class TagsDialogTest : RobolectricTest() {
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val recycler = f.binding.tagsList
 
-            fun updateLayout() {
-                recycler.measure(0, 0)
-                recycler.layout(0, 0, 100, 2000)
-            }
+            fun updateLayout() = f.forceLayout(height = 2000)
 
             val adapter = recycler.adapter!! as TagsArrayAdapter
             adapter.filter.filter("sport")
@@ -652,10 +627,7 @@ class TagsDialogTest : RobolectricTest() {
 
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
-            fun updateLayout() {
-                recycler.measure(0, 0)
-                recycler.layout(0, 0, 100, 2000)
-            }
+            fun updateLayout() = f.forceLayout(height = 2000)
             updateLayout()
             getItem(0).itemView.performClick()
             updateLayout()
@@ -685,13 +657,13 @@ class TagsDialogTest : RobolectricTest() {
             //     v football  [-]
             //       - small   [x]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(0).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(1).checkboxState)
+            Assert.assertEquals(CHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(3).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(4).checkboxState)
+            Assert.assertEquals(CHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(6).checkboxState)
 
             getItem(2).checkBoxView.performClick()
             updateLayout()
@@ -704,13 +676,13 @@ class TagsDialogTest : RobolectricTest() {
             //     v football  [ ]
             //       - small   [ ]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(0).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(1).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(3).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(4).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(6).checkboxState)
 
             getItem(5).checkBoxView.performClick()
             updateLayout()
@@ -721,13 +693,13 @@ class TagsDialogTest : RobolectricTest() {
             //     v football  [-]
             //       - small   [x]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(0).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(1).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(3).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(4).checkboxState)
+            Assert.assertEquals(CHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(6).checkboxState)
 
             getItem(3).checkBoxView.performClick()
             updateLayout()
@@ -740,13 +712,13 @@ class TagsDialogTest : RobolectricTest() {
             //     v football  [ ]
             //       - small   [ ]
             //     - tennis    [ ]
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(3).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
-            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+            Assert.assertEquals(INDETERMINATE, getItem(0).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(1).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(CHECKED, getItem(3).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(4).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(UNCHECKED, getItem(6).checkboxState)
         }
     }
 
@@ -893,9 +865,7 @@ class TagsDialogTest : RobolectricTest() {
             val toolbar = fragment.binding.toolbar.root
             toolbar.menu.performIdentifierAction(R.id.tags_dialog_action_select_all, 0)
 
-            val recycler = fragment.binding.tagsList
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            val recycler = fragment.forceLayout()
             val parent = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0).checkBoxView
             val child = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1).checkBoxView
             block(parent, child)
@@ -977,10 +947,7 @@ class TagsDialogTest : RobolectricTest() {
     fun `long-clicking a tag opens the add tag dialog prefilled with the tag as a prefix`() {
         val tag = "parent"
         runTagsDialogScenario(args = editTagsArguments(listOf(tag))) { tagsDialog ->
-            val recycler = tagsDialog.binding.tagsList
-            // Force layout so Robolectric creates the tag row.
-            recycler.measure(0, 0)
-            recycler.layout(0, 0, 100, 1000)
+            val recycler = tagsDialog.forceLayout()
             val row = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             row.itemView.performLongClick()
             advanceRobolectricLooper()
@@ -1008,10 +975,7 @@ class TagsDialogTest : RobolectricTest() {
                         noteIds = listOf(noteId),
                     ).requireArguments()
             runTagsDialogScenario(args = args) { tagsDialog ->
-                val recycler = tagsDialog.binding.tagsList
-                // Force layout so Robolectric creates the tag row.
-                recycler.measure(0, 0)
-                recycler.layout(0, 0, 100, 1000)
+                val recycler = tagsDialog.forceLayout()
                 val row = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
                 val dialogBefore = ShadowDialog.getLatestDialog()
                 val consumed = row.itemView.performLongClick()
@@ -1055,6 +1019,16 @@ class TagsDialogTest : RobolectricTest() {
         }
     }
 }
+
+/**
+ * Forces layout so Robolectric creates the tag row.
+ * Workaround for the robolectric recyclerView issue.
+ */
+private fun TagsDialog.forceLayout(height: Int = 1000): RecyclerView =
+    binding.tagsList.also {
+        it.measure(0, 0)
+        it.layout(0, 0, 100, height)
+    }
 
 val TagsArrayAdapter.ViewHolder.checkBoxView: CheckBoxTriStates
     get() = this.binding.checkBoxView
