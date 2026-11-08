@@ -251,9 +251,15 @@ class IntentHandler : AbstractIntentHandler() {
             return
         }
         importScope.launch {
+            val session = ImportSession.acquire(this@IntentHandler)
+            if (session == null) {
+                finish()
+                return@launch
+            }
             val result =
                 prepareAndOpenImport(
                     exitActivityOnFailure = true,
+                    existingSession = session,
                     onPrepared = { deleteDownloadedDeckIfShared(intent) },
                 ) {
                     withContext(ioDispatcher) { prepareImport(this@IntentHandler, intent) }

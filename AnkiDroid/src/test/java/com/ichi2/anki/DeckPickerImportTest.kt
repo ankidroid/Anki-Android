@@ -20,6 +20,7 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.dialogs.ImportRequest
 import com.ichi2.anki.dialogs.ImportViewModel
 import com.ichi2.anki.testutils.SingleViewModelFactory
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
@@ -49,6 +50,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowContentResolver
+import org.robolectric.shadows.ShadowToast
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -106,19 +108,95 @@ class DeckPickerImportTest : RobolectricTest() {
         }
 
     @Test
-    fun `confirmed import waits for resume without launching twice`() =
+    fun `second selection cannot overwrite a file awaiting confirmation and cancellation permits retry`() =
+        runTest {
+            val activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+            val uri = "content://import/document/123".toUri()
+            val provider = mock<ContentProvider>()
+            whenever(provider.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)).thenAnswer {
+                MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME)).apply { addRow(arrayOf("blank.apkg")) }
+            }
+            ShadowContentResolver.registerProviderInternal("import", provider)
+            var copies = 0
+            shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) { "copy ${++copies}".byteInputStream() }
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            val cached = File(activity.cacheDir, "blank.apkg")
+            try {
+                activity.onSelectedFileToImport(intent)
+                advanceRobolectricLooper()
+                val confirmation = activity.importConfirmations.single().second
+
+                activity.onSelectedFileToImport(intent)
+                advanceRobolectricLooper()
+
+                assertEquals(1, copies)
+                assertEquals("copy 1", cached.readText())
+                assertEquals(1, activity.importConfirmations.size)
+                assertEquals("Finish or cancel the current import first.", ShadowToast.getTextOfLatestToast())
+
+                (confirmation.requireDialog() as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE).performClick()
+                advanceRobolectricLooper()
+                activity.onSelectedFileToImport(intent)
+                advanceRobolectricLooper()
+
+                assertEquals(2, copies)
+                assertEquals("copy 2", cached.readText())
+                assertEquals(2, activity.importConfirmations.size)
+            } finally {
+                cached.delete()
+            }
+        }
+
+    @Test
+    fun `confirmation transfers ownership to the package importer`() =
+        runTest {
+            val activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+            val session = assertNotNull(ImportSession.acquire(activity))
+            activity.openImport(
+                ImportResult.Success(
+                    ImportResolution.DeckPackage(ImportResolution.Source("content://import/deck.apkg".toUri(), "deck.apkg")),
+                    "/cache/deck.apkg",
+                ),
+                session.id,
+            )
+            advanceRobolectricLooper()
+            val confirmation =
+                activity.importConfirmations
+                    .single()
+                    .second
+                    .requireDialog() as AlertDialog
+
+            confirmation.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+            advanceRobolectricLooper()
+
+            assertNull(ImportSession.acquire(activity), "Ownership must survive dismissal and the pending activity launch")
+            val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
+            assertEquals(session.id.value, intent.getStringExtra(ImportSession.EXTRA_SESSION_ID))
+            Robolectric.buildActivity(SingleFragmentActivity::class.java, intent).use { controller ->
+                controller.setup().visible()
+                advanceRobolectricLooper()
+                assertFalse(controller.get().isFinishing)
+                assertNull(ImportSession.acquire(activity))
+            }
+            assertNotNull(ImportSession.acquire(activity)).finish()
+        }
+
+    @Test
+    fun `confirmed import waits for resume without losing ownership or launching twice`() =
         runTest {
             val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
             val activity = controller.get()
+            val session = assertNotNull(ImportSession.acquire(activity))
             controller.pause().stop()
-            ViewModelProvider(activity)[ImportViewModel::class.java].triggerImportAdd("/cache/deck.apkg")
+            ViewModelProvider(activity)[ImportViewModel::class.java].triggerImportAdd(ImportRequest("/cache/deck.apkg", session.id))
             advanceRobolectricLooper()
             assertNull(shadowOf(activity).nextStartedActivity)
+            assertNull(ImportSession.acquire(activity))
 
             controller.start().resume().visible()
             advanceRobolectricLooper()
             val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
-            assertEquals(SingleFragmentActivity::class.java.name, intent.component?.className)
+            assertEquals(session.id.value, intent.getStringExtra(ImportSession.EXTRA_SESSION_ID))
             controller
                 .pause()
                 .stop()
@@ -127,6 +205,20 @@ class DeckPickerImportTest : RobolectricTest() {
                 .visible()
             advanceRobolectricLooper()
             assertNull(shadowOf(activity).nextStartedActivity)
+            ImportSession.finish(session.id)
+        }
+
+    @Test
+    fun `failed collection replacement releases ownership`() =
+        runTest {
+            throwOnShowError = false
+            val activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+            val session = assertNotNull(ImportSession.acquire(activity))
+
+            activity.importReplace("/missing.colpkg", session.id)
+            advanceRobolectricLooper()
+
+            assertNotNull(ImportSession.acquire(activity)).finish()
         }
 
     @Test

@@ -17,7 +17,7 @@ import com.ichi2.anki.hideShowButtonCss
 /**
  * Anki page used to import text/csv files
  */
-class CsvImporter : PageFragment() {
+class CsvImporter : ImportPageFragment() {
     override val pagePath: String by lazy {
         val filePath = requireArguments().getString(ARG_FILE_PATH)
         "import-csv$filePath"

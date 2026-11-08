@@ -30,6 +30,7 @@ import anki.import_export.exportAnkiPackageOptions
 import anki.import_export.exportLimit
 import anki.import_export.importAnkiPackageRequest
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
@@ -403,6 +404,41 @@ class ImportRoutingTest : RobolectricTest() {
         }
 
     @Test
+    fun `CSV host that cannot start releases the import for a retry`() =
+        runTest {
+            // Preparation has already reserved the import when Android launches its host.
+            // If storage becomes unavailable before the fragment is created, the user must
+            // be able to select the file again once storage is back.
+            val source = tempFolder.newFile("notes.csv").apply { writeText("front\tback") }
+            val entry = launchTextImport(source)
+            val importerIntent = assertNotNull(shadowOf(entry).nextStartedActivity)
+            // Consume the DeckPicker underneath the CSV screen so it cannot appear as
+            // the next activity after the retry.
+            assertEquals(DeckPicker::class.java.name, shadowOf(entry).nextStartedActivity?.component?.className)
+            val importer = Robolectric.buildActivity(SingleFragmentActivity::class.java, importerIntent)
+            saveControllerForCleanup(importer)
+
+            CollectionHelper.storageDecisionTestOverride = StorageDecision.Undecided
+            try {
+                // A startup redirect finishes onCreate before an importer fragment exists
+                // to accept the handoff and later release ownership.
+                importer.create()
+                assertTrue(importer.get().isFinishing)
+                assertNull(importer.get().fragment)
+                assertNotNull(shadowOf(importer.get()).nextStartedActivity, "Consume the storage redirect")
+                importer.destroy()
+            } finally {
+                CollectionHelper.storageDecisionTestOverride = null
+            }
+
+            val retry = launchTextImport(source)
+            // The buggy host leaves the reservation active, so the retry shows a busy
+            // toast and exits without launching another CSV importer.
+            val retryIntent = assertNotNull(shadowOf(retry).nextStartedActivity)
+            assertEquals(CsvImporter::class.java.name, retryIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+        }
+
+    @Test
     fun `provider text MIME opens CSV without a trailing deck picker launch`() =
         runTest {
             val source = tempFolder.newFile("notes").apply { writeText("front\tback") }
@@ -471,7 +507,10 @@ class ImportRoutingTest : RobolectricTest() {
     private fun packageConfirmation(): Message {
         val controller = Robolectric.buildActivity(DeckPicker::class.java)
         saveControllerForCleanup(controller)
-        return assertNotNull(DialogHandler(controller.get()).popMessage(), "Expected package confirmation")
+        return assertNotNull(DialogHandler(controller.get()).popMessage(), "Expected package confirmation").also {
+            // These routing tests consume the confirmation without opening its UI.
+            ImportSession.finish(it.data.getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId))
+        }
     }
 
     private fun activity(): Activity {

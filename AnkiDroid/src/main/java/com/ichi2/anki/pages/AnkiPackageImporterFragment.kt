@@ -13,7 +13,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
 
-class AnkiPackageImporterFragment : PageFragment() {
+class AnkiPackageImporterFragment : ImportPageFragment() {
     override val pagePath: String by lazy {
         val filePath = requireArguments().getString(ARG_FILE_PATH)
         "import-anki-package$filePath"

@@ -23,7 +23,7 @@ suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
     // The page decodes the cached path from ImportUtils; restore its encoded filename.
     val path = ImportUtils.encodeFileName(File(request.packagePath))
     return withContext(Dispatchers.Main) {
-        val output = withCol { importAnkiPackage(path, request.options) }
+        val output = ImportSession.withOperation { withCol { importAnkiPackage(path, request.options) } }
         undoableOp { output.changes }
         output.toByteArray()
     }
@@ -31,7 +31,7 @@ suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
 
 suspend fun importCsvRaw(input: ByteArray): ByteArray =
     withContext(Dispatchers.Main) {
-        val output = withCol { importCsvRaw(input) }
+        val output = ImportSession.withOperation { withCol { importCsvRaw(input) } }
         val changes = OpChangesOnly.parseFrom(output)
         undoableOp { changes }
         output

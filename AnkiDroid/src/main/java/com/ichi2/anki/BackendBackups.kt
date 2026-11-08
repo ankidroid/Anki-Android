@@ -31,19 +31,27 @@ suspend fun performBackupInBackground(force: Boolean = false): Boolean {
     return createBackup(force = force)
 }
 
-fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiActivity, Activity : ImportColpkgListener {
+fun <Activity> Activity.importColpkg(
+    colpkgPath: String,
+    sessionId: ImportSessionId? = null,
+) where Activity : AnkiActivity, Activity : ImportColpkgListener {
     launchCatchingTask {
-        withProgress(
-            extractProgress = {
-                if (progress.hasImporting()) {
-                    text = progress.importing
-                }
-            },
-        ) {
-            CollectionManager.importColpkg(colpkgPath)
-        }
+        val session = ImportSession.acquire(this@importColpkg, sessionId) ?: return@launchCatchingTask
+        try {
+            withProgress(
+                extractProgress = {
+                    if (progress.hasImporting()) {
+                        text = progress.importing
+                    }
+                },
+            ) {
+                CollectionManager.importColpkg(colpkgPath)
+            }
 
-        onImportColpkg(colpkgPath)
+            onImportColpkg(colpkgPath)
+        } finally {
+            session.finish()
+        }
     }
 }
 

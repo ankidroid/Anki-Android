@@ -68,7 +68,7 @@ class ImportSession private constructor(
                     }
                 }
             if (session == null) {
-                // TODO: Reconsider queuing concurrent imports instead of rejecting them.
+                // TODO: Queue additional import requests and start the next one when the active import finishes or is cancelled.
                 showThemedToast(context, CommonString.import_already_in_progress, false)
             }
             return session
