@@ -1036,8 +1036,12 @@ open class DeckPicker :
         viewModel.flowOfShowContextMenu.collectInLifecycle(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.collectInLifecycle(::showDeckPickerRightClickContextMenu)
         // navigation should be done on RESUMED
-        importViewModel.importAddFlow.collectInLifecycle(Lifecycle.State.RESUMED, ::importAdd)
-        importViewModel.importReplaceFlow.collectInLifecycle(Lifecycle.State.RESUMED, ::importReplace)
+        importViewModel.importAddFlow.filterNotNull().collectInLifecycle(Lifecycle.State.RESUMED) {
+            importViewModel.takeImportAdd()?.let(::importAdd)
+        }
+        importViewModel.importReplaceFlow.filterNotNull().collectInLifecycle(Lifecycle.State.RESUMED) {
+            importViewModel.takeImportReplace()?.let(::importReplace)
+        }
     }
 
     private val onReceiveContentListener =
