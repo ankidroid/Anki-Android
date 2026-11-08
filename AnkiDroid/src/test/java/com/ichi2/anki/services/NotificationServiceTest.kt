@@ -7,6 +7,10 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.os.BadParcelableException
+import android.os.Bundle
+import android.os.Parcelable
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -28,6 +32,8 @@ import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.settings.Prefs
 import io.mockk.CapturingSlot
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -600,6 +606,33 @@ class NotificationServiceTest : RobolectricTest() {
 
             verifyNotifSent(reviewReminder)
             assertThat(col.decks.selected(), equalTo(studiedDeck))
+        }
+
+    /**
+     * #23084: Alarms survive app updates, so their parceled extras may reference classes
+     * which a newer version of the app has renamed, making them unreadable.
+     */
+    @SuppressLint("NewApi") // Bundle.getParcelable(String, Class) requires API 33: Robolectric runs at API 36
+    @Test
+    fun `receiving intent with corrupt extras should reschedule all reminders`() =
+        runTest {
+            coEvery { ReviewReminderAlarmManager.scheduleAllEnabledReviewReminderNotifications(any()) } returns Unit
+            val corruptExtras =
+                mockk<Bundle> {
+                    every { getParcelable(any(), any<Class<Parcelable>>()) } throws BadParcelableException("corrupt")
+                }
+            val intent =
+                mockk<Intent> {
+                    every { action } returns NotificationService.NotificationServiceAction.ScheduleRecurringNotifications.actionString
+                    every { extras } returns corruptExtras
+                }
+            val receiver = spyk(NotificationService())
+            every { receiver.goAsync() } returns mockk(relaxed = true)
+
+            receiver.onReceive(context, intent)
+
+            verifyNoNotifsSent()
+            coVerify(exactly = 1) { ReviewReminderAlarmManager.scheduleAllEnabledReviewReminderNotifications(any()) }
         }
 
     private suspend fun attemptNotif(

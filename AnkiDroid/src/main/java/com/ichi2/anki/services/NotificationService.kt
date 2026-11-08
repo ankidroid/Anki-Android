@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.BadParcelableException
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
@@ -502,10 +503,15 @@ class NotificationService : AnkiBroadcastReceiver() {
             Timber.i("${reminderLogPrefix()} NotificationService.onReceiveBroadcast")
             val action = intent.action ?: return
             val extras = intent.extras ?: return
+
             val reviewReminderId =
-                extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID) ?: return
+                rescheduleIfCorrupt(context) {
+                    extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID)
+                } ?: return
             val reviewReminderScope =
-                extras.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE) ?: return
+                rescheduleIfCorrupt(context, idForLogging = reviewReminderId) {
+                    extras.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE)
+                } ?: return
             Timber.d("onReceiveBroadcast: reminder: $reviewReminderId, scope: $reviewReminderScope, action: $action")
 
             runGloballyWithTimeout(SEND_REVIEW_REMINDER_TIMEOUT) {
@@ -520,4 +526,33 @@ class NotificationService : AnkiBroadcastReceiver() {
             triggerNotificationFor(context)
         }
     }
+
+    /**
+     * Runs [read], which reads a value from the extras of a received intent. If the extras are corrupt,
+     * logs the failure, re-schedules all review reminders, and returns null.
+     *
+     * #23084: The parceled extras of an alarm scheduled by a previous version of the app can
+     * reference class names which no longer exist or are no longer Parcelable (ex. R8 renamed them).
+     * Re-scheduling all review reminders replaces the corrupted intents.
+     *
+     * @param idForLogging The ID of the review reminder, if already known, to include in the log.
+     */
+    private inline fun <T : Any> rescheduleIfCorrupt(
+        context: Context,
+        idForLogging: ReviewReminderId? = null,
+        read: () -> T?,
+    ): T? =
+        try {
+            read()
+        } catch (e: BadParcelableException) {
+            Timber.w(
+                e,
+                "${reminderLogPrefix(idForLogging)} Failed to get review reminder ID or scope from intent extras, " +
+                    "triggering full re-schedule",
+            )
+            runGloballyWithTimeout(SEND_REVIEW_REMINDER_TIMEOUT) {
+                ReviewReminderAlarmManager.scheduleAllEnabledReviewReminderNotifications(context)
+            }
+            null
+        }
 }
