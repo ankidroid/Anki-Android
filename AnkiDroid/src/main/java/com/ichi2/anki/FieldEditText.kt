@@ -18,6 +18,7 @@ import androidx.annotation.VisibleForTesting
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.FixedEditText
@@ -189,7 +190,7 @@ class FieldEditText :
     }
 
     val isCapitalized: Boolean
-        get() = this.inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+        get() = inputType.hasBitFlag(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
 
     @Parcelize
     internal class SavedState(
