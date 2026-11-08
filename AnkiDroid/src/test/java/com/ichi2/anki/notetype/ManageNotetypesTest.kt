@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.dialogs.LoadingDialogFragment
 import com.ichi2.anki.progress.ViewModelProgress
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -138,7 +139,7 @@ class ManageNotetypesTest : RobolectricTest() {
         }
     }
 
-    private fun ManageNotetypes.touchesBlocked() = window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE != 0
+    private fun ManageNotetypes.touchesBlocked() = window.attributes.flags.hasBitFlag(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     companion object {
         private const val TEST_NOTE_TYPE_NAME = "BasicTestNoteType1"

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.common.utils.ext.requireAutoMirroredDrawable
 import com.ichi2.anki.databinding.ItemDeckBinding
 import com.ichi2.anki.deckpicker.DisplayDeckNode
@@ -186,7 +187,7 @@ class DeckAdapter(
         // Right click listener for right click context menus
         holder.binding.deckLayout.setOnGenericMotionListener { _, motionEvent ->
             if (motionEvent.action == android.view.MotionEvent.ACTION_BUTTON_PRESS &&
-                motionEvent.buttonState and android.view.MotionEvent.BUTTON_SECONDARY != 0
+                motionEvent.buttonState.hasBitFlag(android.view.MotionEvent.BUTTON_SECONDARY)
             ) {
                 onDeckRightClick(node.did, motionEvent.x, motionEvent.y)
                 true

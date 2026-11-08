@@ -88,6 +88,7 @@ import com.ichi2.anki.common.utils.android.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.common.utils.ext.showRemainingDueCounts
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -1940,7 +1941,9 @@ open class Reviewer :
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     private fun isImmersiveSystemUiVisible(
         activity: AnkiActivity,
-    ): Boolean = activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
+    ): Boolean =
+        !activity.window.decorView.systemUiVisibility
+            .hasBitFlag(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
 
     fun setFullscreenMode(mode: FullScreenMode): Boolean =
         try {
