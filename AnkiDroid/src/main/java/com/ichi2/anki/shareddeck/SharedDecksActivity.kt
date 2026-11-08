@@ -272,6 +272,8 @@ class SharedDecksActivity :
             // If the activity/fragment lifecycle has already begun teardown process,
             // avoid handling the download, as FragmentManager.commit will throw
             if (!supportFragmentManager.isStateSaved) {
+                // A previous callback may have queued a fragment addition or removal.
+                supportFragmentManager.executePendingTransactions()
                 if (supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT) != null) {
                     reportPotentiallyDeadCode("SharedDecksActivity.OverlappingDownload")
                     CrashReportService.sendExceptionReport(
@@ -279,6 +281,7 @@ class SharedDecksActivity :
                         "SharedDecksActivity::onDownloadStart",
                         onlyIfSilent = true,
                     )
+                    return@setDownloadListener
                 }
                 val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
                 sharedDecksDownloadFragment.arguments =

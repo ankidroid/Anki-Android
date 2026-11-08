@@ -4,11 +4,16 @@
 package com.ichi2.anki.shareddeck
 
 import android.annotation.SuppressLint
+import android.database.MatrixCursor
 import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
@@ -20,10 +25,16 @@ import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.testutils.webView
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.fakes.RoboMenuItem
@@ -33,11 +44,86 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /** Tests for [SharedDecksActivity] */
 @RunWith(AndroidJUnit4::class)
 class SharedDecksActivityTest : RobolectricTest() {
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
+
+    /** Issue 23089: callbacks can arrive before the first fragment transaction is executed. */
+    @Test
+    fun `rapid download callbacks start only one download`() {
+        val activity = startSharedDeckDownload()
+
+        activity.receiveDownload()
+        activity.receiveDownload("https://ankiweb.net/svc/shared/download-deck/5678?t=key")
+        activity.supportFragmentManager.executePendingTransactions()
+
+        assertEquals(1, activity.supportFragmentManager.fragments.size)
+        assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
+        verify(activity.downloadManager).enqueue(any())
+    }
+
+    @Test
+    fun `download callback keeps the existing download screen`() {
+        val activity = startSharedDeckDownload()
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+        val fragment = activity.supportFragmentManager.fragments.single()
+
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+
+        assertSame(fragment, activity.supportFragmentManager.fragments.single())
+        assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
+        verify(activity.downloadManager).enqueue(any())
+    }
+
+    @Test
+    fun `download can start while closing the previous download screen is pending`() {
+        val activity = startSharedDeckDownload()
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+        val fragment = activity.supportFragmentManager.fragments.single()
+
+        activity.supportFragmentManager.popBackStack()
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+
+        assertNotSame(fragment, activity.supportFragmentManager.fragments.single())
+        assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
+        verify(activity.downloadManager, times(2)).enqueue(any())
+    }
+
+    @Test
+    fun `cancelling a download removes it before starting the next download`() {
+        val activity = startSharedDeckDownload()
+        whenever(activity.downloadManager.enqueue(any())).thenReturn(1L, 2L)
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+        val fragment = activity.supportFragmentManager.fragments.single()
+
+        composeRule
+            .onNodeWithText(getResourceString(CommonString.cancel_download))
+            .performSemanticsAction(SemanticsActions.OnClick)
+        clickAlertDialogButton { positiveButton }
+
+        verify(activity.downloadManager).remove(1L)
+        verify(activity.downloadManager).enqueue(any())
+        assertTrue(activity.supportFragmentManager.fragments.isEmpty())
+        assertEquals(0, activity.supportFragmentManager.backStackEntryCount)
+
+        activity.receiveDownload("https://ankiweb.net/svc/shared/download-deck/5678?t=key")
+        activity.supportFragmentManager.executePendingTransactions()
+
+        assertNotSame(fragment, activity.supportFragmentManager.fragments.single())
+        assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
+        verify(activity.downloadManager, times(2)).enqueue(any())
+    }
+
     @Test
     fun `rate limit while logged out asks to log in or sign up`() {
         val activity = startSharedDecks()
@@ -299,6 +385,25 @@ class SharedDecksActivityTest : RobolectricTest() {
                 .visible()
         saveControllerForCleanup(controller)
         return controller.get()
+    }
+
+    private fun startSharedDeckDownload(): SharedDecksActivity =
+        startSharedDecks().apply {
+            downloadManager =
+                mock {
+                    on { enqueue(any()) } doReturn 1L
+                    on { query(any()) } doAnswer { MatrixCursor(emptyArray<String>()) }
+                }
+        }
+
+    private fun SharedDecksActivity.receiveDownload(url: String = DECK_DOWNLOAD) {
+        shadowOf(webView).downloadListener.onDownloadStart(
+            url,
+            "AnkiDroid",
+            "attachment; filename=\"blank.apkg\"",
+            "application/octet-stream",
+            0L,
+        )
     }
 
     private fun captureInfoLogs(block: () -> Unit): List<String> {
