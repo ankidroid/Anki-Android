@@ -163,6 +163,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.dialogs.registerMeteredSyncHandler
 import com.ichi2.anki.dialogs.registerProfileLoadFailureClosedHandler
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResultListener
 import com.ichi2.anki.export.ExportDialogFragment
@@ -665,10 +666,10 @@ open class DeckPicker :
                 onBackPressedDispatcher.onBackPressed()
             }
         }
-        setFragmentResultListener(MeteredSyncDialog.REQUEST_METERED_SYNC) { _, result ->
+        registerMeteredSyncHandler { syncMedia ->
             handleNewSync(
                 conflict = null,
-                syncMedia = result.getBoolean(MeteredSyncDialog.RESULT_SYNC_MEDIA),
+                syncMedia = syncMedia,
                 meteredSyncPermission = MeteredSyncPermission.ALLOW_METERED_SYNC_THIS_TIME,
             )
         }

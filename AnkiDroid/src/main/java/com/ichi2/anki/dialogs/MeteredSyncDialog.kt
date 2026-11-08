@@ -5,8 +5,10 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.sync.MeteredSyncPolicy
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.create
 import com.ichi2.utils.getCheckBoxPrompt
@@ -14,7 +16,7 @@ import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
-/** Retains the sync request, not a continuation belonging to the destroyed activity. */
+/** Asks permission to sync on a metered network, preserving the request and checkbox across recreation. */
 class MeteredSyncDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog =
         AlertDialog.Builder(requireContext()).create {
@@ -49,5 +51,11 @@ class MeteredSyncDialog : DialogFragment() {
             MeteredSyncDialog().apply {
                 arguments = Bundle().apply { putBoolean(ARG_SYNC_MEDIA, syncMedia) }
             }
+    }
+}
+
+fun FragmentActivity.registerMeteredSyncHandler(action: (syncMedia: Boolean) -> Unit) {
+    setFragmentResultListener(MeteredSyncDialog.REQUEST_METERED_SYNC) { _, result ->
+        action(result.getBoolean(MeteredSyncDialog.RESULT_SYNC_MEDIA))
     }
 }
