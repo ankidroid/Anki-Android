@@ -5,9 +5,9 @@ package com.ichi2.anki.browser
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardState
 import com.ichi2.anki.browser.search.SearchFilters
@@ -17,24 +17,30 @@ import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.JvmPreferencesRule
+import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.getString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 /**
  * Tests for [SearchHistory]
  */
-@RunWith(AndroidJUnit4::class)
-class SearchHistoryTest : RobolectricTest() {
-    private val history =
-        SearchHistory(maxEntries = 5).apply {
-            this.clear()
-        }
+class SearchHistoryTest : JvmTest() {
+    @get:Rule
+    val preferences = JvmPreferencesRule()
+
+    private val history by lazy { SearchHistory(maxEntries = 5) }
 
     @Test
     fun `entries is empty if no key is set`() {
@@ -100,12 +106,6 @@ class SearchHistoryTest : RobolectricTest() {
         addNumberedEntries(6)
         assertTrue(history.removeEntry(SearchHistoryEntry("5")))
         assertEntriesEquals("6", "4", "3", "2")
-    }
-
-    @Test
-    fun `pref key is unchanged`() {
-        // this is checked in CrashReportService to ensure user data isn't sent to our servers.
-        assertThat(getString(R.string.pref_browser_search_history), equalTo("browser_search_history"))
     }
 
     @Test
@@ -255,6 +255,17 @@ class SearchHistoryTest : RobolectricTest() {
     fun assertEntriesEquals(vararg entries: String) {
         val listOfEntities = entries.map(::SearchHistoryEntry)
         assertThat(history.entries, equalTo(listOfEntities))
+    }
+}
+
+@RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class SearchHistoryPreferenceKeyTest : AndroidTest {
+    @Test
+    fun `pref key is unchanged`() {
+        // this is checked in CrashReportService to ensure user data isn't sent to our servers.
+        assertThat(getString(R.string.pref_browser_search_history), equalTo("browser_search_history"))
     }
 }
 
