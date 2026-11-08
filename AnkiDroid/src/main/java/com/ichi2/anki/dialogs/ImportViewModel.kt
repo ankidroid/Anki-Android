@@ -4,25 +4,26 @@
 package com.ichi2.anki.dialogs
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.getAndUpdate
 
 class ImportViewModel : ViewModel() {
-    val importAddFlow: SharedFlow<String>
-        field = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val importAddFlow: StateFlow<String?>
+        field = MutableStateFlow<String?>(null)
 
-    val importReplaceFlow: SharedFlow<String>
-        field = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val importReplaceFlow: StateFlow<String?>
+        field = MutableStateFlow<String?>(null)
 
-    fun triggerImportAdd(path: String) =
-        viewModelScope.launch {
-            importAddFlow.emit(path)
-        }
+    fun triggerImportAdd(path: String) {
+        importAddFlow.value = path
+    }
 
-    fun triggerImportReplace(path: String) =
-        viewModelScope.launch {
-            importReplaceFlow.emit(path)
-        }
+    fun triggerImportReplace(path: String) {
+        importReplaceFlow.value = path
+    }
+
+    fun takeImportAdd(): String? = importAddFlow.getAndUpdate { null }
+
+    fun takeImportReplace(): String? = importReplaceFlow.getAndUpdate { null }
 }
