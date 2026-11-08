@@ -57,6 +57,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
@@ -929,11 +930,42 @@ open class DeckPicker :
             binding.studyoptionsFrame?.isVisible = !collectionHasNoCards
         }
 
+        fun scrollToFocusedDeck() {
+            val deckId = viewModel.flowOfFocusedDeck.value ?: return
+            // A new collector replays the selection after recreation. Let RecyclerView restore
+            // its scroll position unless the selected deck actually changed.
+            if (deckId == lastFocusedDeck) return
+            if (deckListAdapter.currentList.isEmpty() || deckListAdapter.currentList != viewModel.flowOfDeckList.value.data) return
+            val position = viewModel.findDeckPosition(deckId)
+
+            // Skip centering if the deck is already on screen.
+            // Scrolling during a tap animation causes deck labels to overlap on older devices.
+            if (decksLayoutManager.positionIsVisible(position)) {
+                lastFocusedDeck = deckId
+                return
+            }
+            // Keep the scroll outside layout and the tap animation on older devices.
+            deckPickerBinding.decks.postDelayed({
+                if (viewModel.flowOfFocusedDeck.value != deckId || lastFocusedDeck == deckId) return@postDelayed
+                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
+                deckPickerBinding.decks.doOnNextLayout {
+                    if (viewModel.flowOfFocusedDeck.value == deckId && decksLayoutManager.positionIsVisible(position)) {
+                        lastFocusedDeck = deckId
+                    }
+                }
+            }, 10)
+        }
+
         fun onDeckListChanged(deckList: FlattenedDeckList) {
             // Filtering must not recreate the study options fragment: its menu invalidation closes search.
             deckListAdapter.submit(
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
+                onListCommitted = {
+                    // Restore the saved viewport before allowing a new selection to override it.
+                    deckPickerBinding.decks.doOnNextLayout { scrollToFocusedDeck() }
+                    deckPickerBinding.decks.requestLayout()
+                },
             )
         }
 
@@ -941,21 +973,7 @@ open class DeckPicker :
             // A fresh ViewModel has no focused deck until the collection is loaded.
             if (deckId == null) return
             tryShowStudyOptionsPanel()
-            // A new collector replays the selection after recreation. Let RecyclerView restore
-            // its scroll position unless the selected deck actually changed.
-            if (deckId == lastFocusedDeck) return
-            lastFocusedDeck = deckId
-            val position = viewModel.findDeckPosition(deckId)
-
-            // Skip centering if the deck is already on screen.
-            // Scrolling during a tap animation causes deck labels to overlap on older devices.
-            if (decksLayoutManager.positionIsVisible(position)) {
-                return
-            }
-            // HACK: a small delay is required before scrolling works
-            deckPickerBinding.decks.postDelayed({
-                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
-            }, 10)
+            scrollToFocusedDeck()
         }
 
         fun onDecksReloaded(param: Unit) {
