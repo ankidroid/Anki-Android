@@ -158,6 +158,7 @@ import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.RtlCompliantActionProvider
+import com.ichi2.utils.PlainTextInputFilter
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
@@ -462,6 +463,7 @@ class CardBrowserFragment :
 
         searchView =
             view.findViewById<SearchView>(R.id.search_view)?.apply {
+                editText.filters += PlainTextInputFilter
                 editText.doAfterTextChanged { searchViewModel.onSearchTextChanged(it.toString()) }
                 addTransitionListener { _, _, state ->
                     if (state == SearchView.TransitionState.SHOWING) {
