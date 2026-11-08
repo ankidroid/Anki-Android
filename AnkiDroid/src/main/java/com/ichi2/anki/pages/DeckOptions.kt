@@ -32,6 +32,8 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.withProgress
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicInteger
@@ -47,6 +49,7 @@ class DeckOptions : PageFragment() {
     }
     private var webViewIsReady = false
     private val saveAndOptimizeReload = SaveAndOptimizeReload()
+    private val saveAndCloseMutex = Mutex()
 
     /**
      * Callback enabled when the manual is opened in the deck options.
@@ -93,6 +96,8 @@ class DeckOptions : PageFragment() {
      * Close the view, discarding change if needed.
      */
     fun actuallyClose() {
+        // A preceding normal save may already have closed the activity.
+        if (activity?.isFinishing == true) return
         onBackFromDeckOptions.isEnabled = false
         Timber.v("webView: navigating back")
         launchCatchingTask {
@@ -161,6 +166,17 @@ class DeckOptions : PageFragment() {
             view.findViewById<MaterialToolbar>(R.id.toolbar).title = deckName
         }
     }
+
+    override suspend fun handlePostRequest(
+        uri: PostRequestUri,
+        bytes: ByteArray,
+    ): ByteArray =
+        when (uri.backendMethodName) {
+            // A save can suspend while waiting for the collection; a later close must not overtake it.
+            // Other requests, including progress polling, must remain able to run during a save.
+            "updateDeckConfigs", "deckOptionsRequireClose" -> saveAndCloseMutex.withLock { super.handlePostRequest(uri, bytes) }
+            else -> super.handlePostRequest(uri, bytes)
+        }
 
     override fun onWebViewCreated() {
         // addJavascriptInterface needs to happen before loadUrl
