@@ -6,10 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:windowSoftInputMode="adjustNothing">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/browser_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -50,11 +50,12 @@
     </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/browser_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
-        app:statusBarForeground="?attr/appBarColor"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:statusBarForeground="?attr/colorSurface">
         <com.google.android.material.search.SearchBar
             android:id="@+id/search_bar"
             android:layout_width="match_parent"

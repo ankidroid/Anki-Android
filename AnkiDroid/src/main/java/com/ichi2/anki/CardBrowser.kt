@@ -86,6 +86,7 @@ import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
 import com.ichi2.anki.utils.showSearchError
+import com.ichi2.themes.Themes
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
@@ -185,7 +186,14 @@ open class CardBrowser :
             return
         }
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
+        enableEdgeToEdge(
+            statusBarStyle =
+                if (useSearchView) {
+                    SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { Themes.isNightTheme }
+                } else {
+                    SystemBarStyle.dark(Color.TRANSPARENT)
+                },
+        )
         val contentBinding =
             if (useSearchView) {
                 ActivityCardBrowserSearchviewBinding.inflate(layoutInflater)
