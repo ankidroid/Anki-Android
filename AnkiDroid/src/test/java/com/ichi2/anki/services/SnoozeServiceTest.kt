@@ -3,9 +3,14 @@
 
 package com.ichi2.anki.services
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.os.BadParcelableException
+import android.os.Bundle
+import android.os.Parcelable
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -147,6 +152,25 @@ class SnoozeServiceTest : RobolectricTest() {
 
             assertThat(pendingIntents.size, equalTo(4))
         }
+
+    /**
+     * #23084: Notifications survive app updates, so the parceled extras of their snooze intents may
+     * reference classes which a newer version of the app has renamed, making them unreadable.
+     */
+    @SuppressLint("NewApi") // Bundle.getParcelable(String, Class) requires API 33: Robolectric runs at API 36
+    @Test
+    fun `receiving intent with corrupt extras should ignore snooze request`() {
+        val corruptExtras =
+            mockk<Bundle> {
+                every { getParcelable(any(), any<Class<Parcelable>>()) } throws BadParcelableException("corrupt")
+            }
+        val intent = mockk<Intent> { every { extras } returns corruptExtras }
+
+        SnoozeService().onReceive(context, intent)
+
+        verifyNoNotifSnoozed()
+        verify(exactly = 0) { notificationManager.cancel(any(), any()) }
+    }
 
     private suspend fun attemptSnooze(
         reviewReminder: ReviewReminder,

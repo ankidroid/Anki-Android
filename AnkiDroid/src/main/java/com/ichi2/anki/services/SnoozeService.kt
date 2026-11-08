@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.BadParcelableException
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
@@ -96,7 +97,8 @@ class SnoozeService : AnkiBroadcastReceiver() {
         /**
          * Helper method for getting an intent to snooze a review reminder.
          */
-        private fun getIntent(
+        @VisibleForTesting
+        internal fun getIntent(
             context: Context,
             reviewReminderId: ReviewReminderId,
             reviewReminderScope: ReviewReminderScope,
@@ -159,9 +161,13 @@ class SnoozeService : AnkiBroadcastReceiver() {
         Timber.i("${reminderLogPrefix()} SnoozeService.onReceiveBroadcast")
         val extras = intent.extras ?: return
         val reviewReminderId =
-            extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID) ?: return
+            ignoreIfCorrupt {
+                extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID)
+            } ?: return
         val reviewReminderScope =
-            extras.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE) ?: return
+            ignoreIfCorrupt(idForLogging = reviewReminderId) {
+                extras.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE)
+            } ?: return
 
         // The following returns 0 if the key is not found, meaning the snooze interval is 0 minutes,
         // which is an acceptable error fallback case.
@@ -177,4 +183,33 @@ class SnoozeService : AnkiBroadcastReceiver() {
             )
         }
     }
+
+    /**
+     * Runs [read], which reads a value from the extras of a received intent. If the extras are corrupt,
+     * logs the failure and returns null.
+     *
+     * #23084: A notification posted by a previous version of the app can hold a snooze intent whose
+     * parcelled extras reference class names that no longer exist or are no longer Parcelable
+     * (ex. R8 renamed them). The snooze request cannot be recovered, so we drop it.
+     *
+     * TODO: Maybe have a way to recover from a failed snooze
+     * Similar to how latestNotifTime persists into about sent recurring notifications.
+     * Arguably overkill, though, as snoozed notifications aren't super important and persisting more flags
+     * for them to guarantee delivery feels like more effort than it's worth.
+     *
+     * @param idForLogging The ID of the review reminder, if already known, to include in the log.
+     */
+    private inline fun <T : Any> ignoreIfCorrupt(
+        idForLogging: ReviewReminderId? = null,
+        read: () -> T?,
+    ): T? =
+        try {
+            read()
+        } catch (e: BadParcelableException) {
+            Timber.w(
+                e,
+                "${reminderLogPrefix(idForLogging)} Failed to get review reminder ID or scope from intent extras, ignoring snooze request",
+            )
+            null
+        }
 }
