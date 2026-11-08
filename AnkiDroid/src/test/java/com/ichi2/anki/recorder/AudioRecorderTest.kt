@@ -3,13 +3,9 @@
 
 package com.ichi2.anki.recorder
 
+import android.content.Context
 import android.media.MediaRecorder
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.compat.CompatHelper
-import com.ichi2.testutils.AndroidTest
-import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.targetContext
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -20,25 +16,29 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
-import org.junit.experimental.categories.Category
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
+import org.junit.rules.TemporaryFolder
 import java.io.File
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
-@Category(EmptyApplicationCategory::class)
-class AudioRecorderTest : AndroidTest {
+class AudioRecorderTest {
+    @get:Rule
+    val tempFolder = TemporaryFolder()
+
+    private val context =
+        mockk<Context> {
+            every { cacheDir } answers { tempFolder.root }
+        }
+
     private val mockMediaRecorder = mockk<MediaRecorder>(relaxed = true)
 
     private fun createRecorder(): AudioRecorder {
         mockkObject(CompatHelper)
         every { CompatHelper.compat.getMediaRecorder(any()) } returns mockMediaRecorder
-        return AudioRecorder(targetContext)
+        return AudioRecorder(context)
     }
 
     @After
@@ -126,7 +126,7 @@ class AudioRecorderTest : AndroidTest {
 
     @Test
     fun `start should use provided file instead of temp file`() {
-        val customFile = File(targetContext.cacheDir, "custom_audio.3gp")
+        val customFile = File(tempFolder.root, "custom_audio.3gp")
 
         val audioRecorder = createRecorder()
         audioRecorder.start(customFile)

@@ -3,16 +3,13 @@
 
 package com.ichi2.anki.recorder
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.EmptyApplicationCategory
+import android.content.Context
 import com.ichi2.anki.recorder.RecorderState.Idle
 import com.ichi2.anki.recorder.RecorderState.Paused
 import com.ichi2.anki.recorder.RecorderState.Recorded
 import com.ichi2.anki.recorder.RecorderState.Recording
-import com.ichi2.testutils.AndroidTest
-import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.targetContext
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
 import kotlinx.coroutines.flow.toList
@@ -37,22 +34,17 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 import java.io.File
 import kotlin.test.assertNotNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
-@Category(EmptyApplicationCategory::class)
-class VoiceRecorderTest : AndroidTest {
+class VoiceRecorderTest {
     @get:Rule
     val tempFolder = TemporaryFolder()
 
+    private val context = mockk<Context>()
     private val mediaRecorderStub = MediaRecorderStub()
     private val mediaRecorder get() = mediaRecorderStub.mediaRecorder
     private val recordingsDirectory by lazy { File(tempFolder.root, "recordings") }
@@ -340,7 +332,7 @@ class VoiceRecorderTest : AndroidTest {
         }
 
     private fun TestScope.createRecorder(directory: File = recordingsDirectory) =
-        VoiceRecorder(AudioRecorder(targetContext), directory, backgroundScope, testScheduler.timeSource)
+        VoiceRecorder(AudioRecorder(context), directory, backgroundScope, testScheduler.timeSource)
 
     private fun TestScope.advanceBy(duration: Duration) {
         advanceTimeBy(duration)
