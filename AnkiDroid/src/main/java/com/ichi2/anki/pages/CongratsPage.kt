@@ -73,7 +73,6 @@ class CongratsPage : PageFragment() {
         viewModel.unburyState
             .onEach { state ->
                 when (state) {
-                    UnburyState.OpenStudy -> openStudyOptionsAndFinish()
                     UnburyState.SelectMode -> {
                         val unburyOptions =
                             mutableListOf(
@@ -243,7 +242,7 @@ class CongratsViewModel :
         undoableOp(handler = this) {
             sched.unburyDeck(decks.getCurrentId(), mode)
         }
-        unburyState.emit(UnburyState.OpenStudy)
+        openStudyOptions()
     }
 
     fun onDeckOptions() {
@@ -300,8 +299,6 @@ class CongratsViewModel :
 }
 
 sealed class UnburyState {
-    data object OpenStudy : UnburyState()
-
     data object SelectMode : UnburyState()
 }
 

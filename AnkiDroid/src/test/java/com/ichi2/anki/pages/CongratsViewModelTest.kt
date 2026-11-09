@@ -88,6 +88,19 @@ class CongratsViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `unbury requests study options once`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            withCol { sched.buryCards(listOf(card.id), manual = true) }
+
+            viewModel.studyOptionsDestination.test {
+                viewModel.onUnbury()
+                assertEquals(StudyOptionsDestination, awaitItem())
+                expectNoEvents()
+            }
+        }
+
+    @Test
     fun `clearing the ViewModel unsubscribes from collection changes`() {
         val subscribers = ChangeManager.subscriberCount
         val store = ViewModelStore()
