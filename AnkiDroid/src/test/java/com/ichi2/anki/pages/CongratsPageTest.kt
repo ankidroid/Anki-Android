@@ -4,8 +4,11 @@ package com.ichi2.anki.pages
 import android.app.Activity
 import android.os.Bundle
 import android.os.Looper
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -44,6 +47,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -96,6 +100,44 @@ class CongratsPageTest : RobolectricTest() {
                 scenario.onFragment { fragment ->
                     val next = shadowOf(fragment.requireActivity()).nextStartedActivity
                     assertEquals(StudyOptionsActivity::class.java.name, next?.component?.className)
+                }
+            }
+        }
+
+    @Test
+    fun `unbury completing during recreation opens study options once`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            withCol { sched.buryCards(listOf(card.id), manual = true) }
+
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                advanceUntilIdle()
+                val originalModel = scenario.withFragment { ViewModelProvider(this)[CongratsViewModel::class.java] }
+                ioDispatcher = StandardTestDispatcher(testScheduler)
+                scenario.onFragment { page ->
+                    page.parentFragmentManager.registerFragmentLifecycleCallbacks(
+                        object : FragmentManager.FragmentLifecycleCallbacks() {
+                            override fun onFragmentDestroyed(
+                                fm: FragmentManager,
+                                fragment: Fragment,
+                            ) {
+                                if (fragment === page) {
+                                    // Let the in-flight operation finish between the old and new views.
+                                    testScheduler.runCurrent()
+                                }
+                            }
+                        },
+                        false,
+                    )
+                    page.bridgeCommands.getValue("unbury").invoke()
+                }
+
+                scenario.recreate()
+                advanceUntilIdle()
+
+                scenario.onFragment { page ->
+                    assertSame(originalModel, ViewModelProvider(page)[CongratsViewModel::class.java])
+                    assertOpenedStudyOptionsAndFinished(page.requireActivity())
                 }
             }
         }
