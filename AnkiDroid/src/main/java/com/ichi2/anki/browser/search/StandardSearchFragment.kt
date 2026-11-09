@@ -30,7 +30,7 @@ import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
 import com.ichi2.anki.dialogs.ManageSavedSearchAction
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
-import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.registerChildDeckSelectedHandler
 import com.ichi2.anki.dialogs.registerSaveSearchHandler
 import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
 import com.ichi2.anki.dialogs.startDeckSelection
@@ -88,7 +88,7 @@ class StandardSearchFragment :
 
         binding.toggleAdvancedSearch.setOnClickListener { viewModel.toggleAdvancedSearch() }
 
-        registerDeckSelectedHandler(action = ::onDeckSelected)
+        registerChildDeckSelectedHandler(action = ::onDeckSelected)
 
         setupChips()
         setupSearchHistory()
