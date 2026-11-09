@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.tests
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import com.ichi2.anki.backend.createDatabaseUsingRustBackend
@@ -150,12 +149,10 @@ object Shared {
         try {
             Timber.d("Creating new file... = %s", destination)
             f.createNewFile()
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
             val startTimeMillis =
                 System.currentTimeMillis()
             val sizeBytes = CompatHelper.compat.copyFile(source, destination)
 
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
             val endTimeMillis =
                 System.currentTimeMillis()
             Timber.d("Finished writeToFile!")

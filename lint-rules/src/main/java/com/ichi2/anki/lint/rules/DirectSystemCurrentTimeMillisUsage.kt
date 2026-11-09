@@ -51,6 +51,7 @@ class DirectSystemCurrentTimeMillisUsage :
         method: PsiMethod,
     ) {
         super.visitMethodCall(context, node, method)
+        if (context.isTestSource) return
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "SystemTime") && evaluator.isMemberInClass(method, "java.lang.System")) {

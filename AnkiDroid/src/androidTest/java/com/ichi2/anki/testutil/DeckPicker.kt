@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.testutil
 
-import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -46,7 +45,6 @@ fun discardPreliminaryViews() {
  * Create a deck with a unique name (based on the timestamp) return the name.
  * Must be called from a clean deck picker.
  */
-@SuppressLint("DirectSystemCurrentTimeMillisUsage")
 fun createDeckWithUniqueName(): String {
     val testString = System.currentTimeMillis().toString()
     val deckName = "TestDeck$testString"

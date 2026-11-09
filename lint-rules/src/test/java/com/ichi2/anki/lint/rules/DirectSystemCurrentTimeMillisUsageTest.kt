@@ -74,4 +74,17 @@ public class SystemTime {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(
+                create(stubSystem),
+                create(javaFileToBeTested).to("TestJavaClass.java").within("test"),
+            ).issues(DirectSystemCurrentTimeMillisUsage.ISSUE)
+            .run()
+            .expectClean()
+    }
 }
