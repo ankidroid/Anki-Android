@@ -44,11 +44,13 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicBoolean
 
 class CongratsPage : PageFragment() {
     override val pagePath: String = "congrats"
@@ -182,7 +184,11 @@ class CongratsViewModel :
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
 
     // Keep the request until the fragment has performed navigation.
-    val studyOptionsDestination = MutableSharedFlow<StudyOptionsDestination>(replay = 1)
+    val studyOptionsDestination: SharedFlow<StudyOptionsDestination>
+        field = MutableSharedFlow<StudyOptionsDestination>(replay = 1)
+
+    // Navigation finishes this page, so ensure it only occur once.
+    private val studyOptionsRequested = AtomicBoolean(false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun onStudyOptionsOpened() {
@@ -209,7 +215,9 @@ class CongratsViewModel :
     }
 
     private suspend fun openStudyOptions() {
-        studyOptionsDestination.emit(StudyOptionsDestination)
+        if (studyOptionsRequested.compareAndSet(false, true)) {
+            studyOptionsDestination.emit(StudyOptionsDestination)
+        }
     }
 
     fun onUnbury() {

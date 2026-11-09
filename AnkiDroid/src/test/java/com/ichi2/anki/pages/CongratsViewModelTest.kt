@@ -69,6 +69,25 @@ class CongratsViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `refresh does not repeat pending or completed navigation`() =
+        runTest {
+            addBasicNote()
+
+            viewModel.studyOptionsDestination.test {
+                viewModel.refreshIfNeeded()
+                assertEquals(StudyOptionsDestination, awaitItem())
+
+                viewModel.refreshIfNeeded()
+                expectNoEvents()
+
+                viewModel.onStudyOptionsOpened()
+                viewModel.refreshIfNeeded()
+                viewModel.refreshIfNeeded()
+                expectNoEvents()
+            }
+        }
+
+    @Test
     fun `clearing the ViewModel unsubscribes from collection changes`() {
         val subscribers = ChangeManager.subscriberCount
         val store = ViewModelStore()
