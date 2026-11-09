@@ -14,8 +14,11 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SearchFilters
+import com.ichi2.anki.browser.search.StandardSearchFragment
+import com.ichi2.anki.browser.search.requireChildFragment
 import com.ichi2.anki.getVisibleRows
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
@@ -108,6 +111,71 @@ class CardBrowserFragmentTest : RobolectricTest() {
         }
 
     @Test
+    fun `switching search modes preserves draft text and selection`() =
+        withCardBrowserFragment(useSearchView = true) {
+            val search = searchView!!
+            search.show()
+            advanceRobolectricLooper()
+            assertSearchMode(advancedSearch = false)
+            val basicSearch = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+
+            val queries = listOf("  basic draft  ", "tag:example draft", "")
+            for (query in queries) {
+                val selections = listOf(0 to 0, 5 to 5, 3 to 8, query.length to query.length)
+                for ((start, end) in selections) {
+                    search.editText.setText(query)
+                    val selectionStart = start.coerceAtMost(query.length)
+                    val selectionEnd = end.coerceAtMost(query.length)
+                    search.editText.setSelection(selectionStart, selectionEnd)
+                    advanceRobolectricLooper()
+
+                    for (advancedSearch in listOf(true, false)) {
+                        if (advancedSearch) {
+                            basicSearch.binding.toggleAdvancedSearch.performClick()
+                        } else {
+                            searchViewModel.toggleAdvancedSearch()
+                        }
+                        advanceRobolectricLooper()
+                        assertSearchMode(advancedSearch)
+
+                        assertThat(search.editText.text.toString(), equalTo(query))
+                        assertThat(search.editText.selectionStart, equalTo(selectionStart))
+                        assertThat(search.editText.selectionEnd, equalTo(selectionEnd))
+                    }
+                }
+            }
+        }
+
+    @Test
+    fun `edits in Search tools replace the Basic draft`() =
+        withCardBrowserFragment(useSearchView = true) {
+            val search = searchView!!
+            search.show()
+            advanceRobolectricLooper()
+            assertSearchMode(advancedSearch = false)
+            val basicSearch = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+
+            for (query in listOf("  tag:edited draft  ", "")) {
+                search.editText.setText("basic draft")
+                basicSearch.binding.toggleAdvancedSearch.performClick()
+                advanceRobolectricLooper()
+                assertSearchMode(advancedSearch = true)
+
+                search.editText.setText(query)
+                search.editText.setSelection(query.length)
+                advanceRobolectricLooper()
+
+                searchViewModel.toggleAdvancedSearch()
+                advanceRobolectricLooper()
+                assertSearchMode(advancedSearch = false)
+
+                assertThat(search.editText.text.toString(), equalTo(query))
+                assertThat(search.editText.selectionStart, equalTo(query.length))
+                assertThat(search.editText.selectionEnd, equalTo(query.length))
+            }
+        }
+
+    @Test
     fun `shortcut labels use Sentence case`() =
         withCardBrowserFragment {
             val offenders = shortcuts.shortcuts.map { it.label }.filterNot { it.isSentenceCase }
@@ -136,6 +204,14 @@ class CardBrowserFragmentTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertThat(sortChipDescription, equalTo("No sorting"))
         }
+
+    private fun CardBrowserFragment.assertSearchMode(advancedSearch: Boolean) {
+        assertThat("active search mode", searchViewModel.advancedSearchFlow.value, equalTo(advancedSearch))
+        val basic = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+        val tools = requireChildFragment<AdvancedSearchFragment>(AdvancedSearchFragment.TAG)
+        assertThat("Basic search visibility", basic.isVisible, equalTo(!advancedSearch))
+        assertThat("Search tools visibility", tools.isVisible, equalTo(advancedSearch))
+    }
 
     private suspend fun withStartedBrowser(block: suspend ActivityScenario<CardBrowser>.(CardBrowser) -> Unit) {
         ActivityScenario.launch<CardBrowser>(Intent(targetContext, CardBrowser::class.java)).use { scenario ->
