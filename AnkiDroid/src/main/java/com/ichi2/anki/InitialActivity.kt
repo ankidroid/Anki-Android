@@ -29,6 +29,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
+import com.ichi2.anki.startup.FatalInitializationError
 import com.ichi2.anki.startup.StoragePolicy
 import com.ichi2.anki.startup.folderToPersist
 import com.ichi2.anki.startup.maybeSetDefaultCollectionPath

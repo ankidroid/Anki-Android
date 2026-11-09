@@ -13,7 +13,6 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.system.Os
@@ -73,12 +72,12 @@ import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.startup.FatalInitializationError
 import com.ichi2.anki.startup.configureBackendTemporaryDirectory
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.anki.widget.RECURRING_WIDGETS
-import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
@@ -859,32 +858,4 @@ open class AnkiDroidApp :
         val fatalError: FatalInitializationError?
             get() = instance.fatalInitializationError
     }
-}
-
-/**
- * Types of unrecoverable errors which we want to inform the user of
- */
-sealed class FatalInitializationError {
-    data class WebViewError(
-        val error: Throwable,
-    ) : FatalInitializationError()
-
-    data class StorageError(
-        val error: SystemStorageException,
-    ) : FatalInitializationError()
-
-    /** Advanced/developer-facing string representing the error */
-    val errorDetail: String
-        get() =
-            when (this) {
-                is WebViewError -> ExceptionUtil.getExceptionMessage(error)
-                is StorageError -> error.message
-            }
-
-    val infoLink: Uri?
-        get() =
-            when (this) {
-                is WebViewError -> null
-                is StorageError -> error.infoUri?.toUri()
-            }
 }
