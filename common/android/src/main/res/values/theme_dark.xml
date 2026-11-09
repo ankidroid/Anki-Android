@@ -55,6 +55,7 @@
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">?attr/appBarColor</item>
         <!-- Bottom navigation -->
+        <item name="bottomNavIndicatorColor">?attr/appBarColor</item>
         <item name="bottomNavActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors -->
         <item name="selectedRowBackgroundColor">@color/theme_dark_row_current</item>
