@@ -50,7 +50,7 @@ jobs:
     # On PRs, this verifies the workflow runs on `main`, it's not a store
     name: ${{ github.event_name == 'push' && 'store' || 'test' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     permissions:
       contents: read # for clone
@@ -102,7 +102,7 @@ jobs:
         id: record-test
         run: |
           # Use --rerun-tasks to disable cache for test task
-          ./gradlew recordScreenshots -Pscreenshot --stacktrace --rerun-tasks
+          ./gradlew recordScreenshots -Pscreenshot -Ptheme=light,dark --stacktrace --rerun-tasks
 
       - name: Upload screenshot baseline
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
