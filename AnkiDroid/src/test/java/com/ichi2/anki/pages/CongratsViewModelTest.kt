@@ -65,4 +65,23 @@ class CongratsViewModelTest : JvmTest() {
             }
             viewModel.studyOptionsDestination.test { expectNoEvents() }
         }
+
+    @Test
+    fun `refresh does not repeat pending or completed navigation`() =
+        runTest {
+            addBasicNote()
+
+            viewModel.studyOptionsDestination.test {
+                viewModel.refreshIfNeeded()
+                assertEquals(StudyOptionsDestination, awaitItem())
+
+                viewModel.refreshIfNeeded()
+                expectNoEvents()
+
+                viewModel.onStudyOptionsOpened()
+                viewModel.refreshIfNeeded()
+                viewModel.refreshIfNeeded()
+                expectNoEvents()
+            }
+        }
 }
