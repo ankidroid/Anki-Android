@@ -76,4 +76,17 @@ public class ToastKt {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(
+                create(stubToast),
+                create(javaFileToBeTested).to("TestJavaClass.java").within("test"),
+            ).issues(DirectToastMakeTextUsage.ISSUE)
+            .run()
+            .expectClean()
+    }
 }
