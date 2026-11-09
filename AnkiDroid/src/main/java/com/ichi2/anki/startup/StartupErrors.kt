@@ -2,8 +2,20 @@
 
 package com.ichi2.anki.startup
 
+import androidx.annotation.VisibleForTesting
+
 /** Errors recorded during startup, owned by a single application instance. */
 internal class StartupErrors {
     /** Set if an unrecoverable error occurs during application startup. */
     var fatalError: FatalInitializationError? = null
+        private set
+
+    fun recordFatalError(error: FatalInitializationError) {
+        fatalError = error
+    }
+
+    @VisibleForTesting
+    fun clear() {
+        fatalError = null
+    }
 }
