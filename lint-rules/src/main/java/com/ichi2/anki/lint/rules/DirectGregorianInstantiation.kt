@@ -54,6 +54,7 @@ class DirectGregorianInstantiation :
         method: PsiMethod,
     ) {
         super.visitMethodCall(context, node, method)
+        if (context.isTestSource) return
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time") && evaluator.isMemberInClass(method, "java.util.GregorianCalendar")) {
@@ -71,6 +72,7 @@ class DirectGregorianInstantiation :
         constructor: PsiMethod,
     ) {
         super.visitConstructor(context, node, constructor)
+        if (context.isTestSource) return
         val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time")) {
             context.report(

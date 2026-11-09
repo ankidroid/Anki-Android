@@ -127,4 +127,22 @@ public class Time {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(
+                JavaTestFile.create(stubZoned),
+                JavaTestFile.create(stubGregorian),
+                JavaTestFile
+                    .create(javaFileWithConstructorInvocation)
+                    .to("TestJavaClass.java")
+                    .within("test"),
+            ).issues(DirectGregorianInstantiation.ISSUE)
+            .run()
+            .expectClean()
+    }
 }
