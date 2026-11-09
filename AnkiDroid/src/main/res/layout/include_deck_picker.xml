@@ -8,6 +8,7 @@
     <ImageView
         android:id="@+id/background"
         android:scaleType="centerCrop"
+        android:importantForAccessibility="no"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <LinearLayout
@@ -62,36 +63,45 @@
 
                 </RelativeLayout>
 
-                <LinearLayout
+                <androidx.core.widget.NestedScrollView
                     android:id="@+id/no_decks_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:fillViewport="true"
+                    android:clipToPadding="false"
+                    android:paddingBottom="88dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
-                        android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/anki_box" />
-
-                    <com.ichi2.ui.FixedTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center"
-                        android:text="@string/no_cards_placeholder_title"
-                        style="@style/TextAppearance.AppCompat.Medium" />
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
 
-                    <com.ichi2.ui.FixedTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:text="@string/no_cards_placeholder_description"
-                        style="@style/TextAppearance.AppCompat.Body1" />
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
+                            android:layout_gravity="center_horizontal"
+                            android:importantForAccessibility="no"
+                            app:srcCompat="@drawable/anki_box" />
+
+                        <com.ichi2.ui.FixedTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:text="@string/no_cards_placeholder_title"
+                            style="@style/TextAppearance.AppCompat.Medium" />
+
+                        <com.ichi2.ui.FixedTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:text="@string/no_cards_placeholder_description"
+                            style="@style/TextAppearance.AppCompat.Body1" />
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
 
             </FrameLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
