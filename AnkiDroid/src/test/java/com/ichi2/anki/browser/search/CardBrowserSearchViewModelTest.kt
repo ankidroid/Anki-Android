@@ -232,6 +232,19 @@ class CardBrowserSearchViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `saving a history entry requests a name for its query`() {
+        val entry = SearchHistoryEntry("bonjour")
+        SearchHistory().addRecent(entry)
+
+        withViewModel(cardCount = 0) {
+            saveSearchNamePromptFlow.test {
+                saveSearchHistoryEntry(entry)
+                assertEquals("bonjour", expectMostRecentItem())
+            }
+        }
+    }
+
+    @Test
     fun `add saved search - success modifies saved searches`() =
         withViewModel {
             savedSearchesFlow.test {

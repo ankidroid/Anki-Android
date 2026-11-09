@@ -85,6 +85,8 @@ class CardBrowserSearchViewModel(
 
     val savedSearchesFlow = MutableStateFlow<List<SavedSearch>>(emptyList())
 
+    val saveSearchNamePromptFlow = MutableSharedFlow<String>()
+
     val canManageSavedSearchesFlow = savedSearchesFlow.map { it.isNotEmpty() }
 
     val userMessageFlow = MutableSharedFlow<UserMessage?>()
@@ -247,6 +249,12 @@ class CardBrowserSearchViewModel(
                     },
                 )
             submitCurrentSearch()
+        }
+
+    fun saveSearchHistoryEntry(entry: SearchHistoryEntry) =
+        viewModelScope.launch {
+            Timber.i("saving search history entry")
+            saveSearchNamePromptFlow.emit(entry.query)
         }
 
     fun addSavedSearch(savedSearch: SavedSearch) =
