@@ -40,6 +40,8 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -102,25 +104,28 @@ class CongratsPage : PageFragment() {
                 navigate(destination)
             }.launchIn(lifecycleScope)
 
-        // a rebuild triggered elsewhere (eg. deck options) while this screen wasn't visible may
-        // have been missed, so recheck on every STARTED entry instead of trusting only the
-        // opExecuted callback. Launched from inside repeatOnLifecycle so the collector is
-        // guaranteed active before it emits (congratsRefreshState has no replay cache, so
-        // emitting with no active collector silently drops the event).
-        // viewLifecycleOwner (not the fragment's own lifecycle) is required by lint - see
-        // UnsafeRepeatOnLifecycleDetector.
+        // Subscribe before refreshing on STARTED so reload requests reach an active collector.
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.refreshIfNeeded() }
-                viewModel.congratsRefreshState.collect { state ->
-                    when (state) {
-                        CongratsRefreshState.ReloadPage -> {
-                            Timber.d("congrats: reloading page after rebuild")
-                            webViewLayout.post { webViewLayout.reload() }
-                        }
-                        CongratsRefreshState.DeckHasCardsToStudy -> openStudyOptionsAndFinish()
+                launch(start = CoroutineStart.UNDISPATCHED) {
+                    viewModel.studyOptionsDestination.collect { destination ->
+                        Timber.i("opening study options")
+                        navigate(destination)
+                        requireActivity().finish()
+                        viewModel.onStudyOptionsOpened()
                     }
                 }
+                launch(start = CoroutineStart.UNDISPATCHED) {
+                    viewModel.congratsRefreshState.collect { state ->
+                        when (state) {
+                            CongratsRefreshState.ReloadPage -> {
+                                Timber.d("congrats: reloading page after rebuild")
+                                webViewLayout.post { webViewLayout.reload() }
+                            }
+                        }
+                    }
+                }
+                viewModel.refreshIfNeeded()
             }
         }
 
@@ -176,6 +181,14 @@ class CongratsViewModel :
     val unburyState = MutableSharedFlow<UnburyState>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
 
+    // Keep the request until the fragment has performed navigation.
+    val studyOptionsDestination = MutableSharedFlow<StudyOptionsDestination>(replay = 1)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun onStudyOptionsOpened() {
+        studyOptionsDestination.resetReplayCache()
+    }
+
     init {
         ChangeManager.subscribe(this)
     }
@@ -193,6 +206,10 @@ class CongratsViewModel :
             Timber.i("study queues updated")
             onStudyQueuesChanged()
         }
+    }
+
+    private suspend fun openStudyOptions() {
+        studyOptionsDestination.emit(StudyOptionsDestination)
     }
 
     fun onUnbury() {
@@ -237,7 +254,7 @@ class CongratsViewModel :
 
     fun onStudyQueuesChanged() {
         launchCatchingIO {
-            if (congratsRefreshState.subscriptionCount.value == 0) {
+            if (congratsRefreshState.subscriptionCount.value == 0 && studyOptionsDestination.subscriptionCount.value == 0) {
                 missedRefresh = true
                 return@launchCatchingIO
             }
@@ -263,9 +280,11 @@ class CongratsViewModel :
     }
 
     private suspend fun emitRefreshState(stillFinished: Boolean) {
-        congratsRefreshState.emit(
-            if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
-        )
+        if (stillFinished) {
+            congratsRefreshState.emit(CongratsRefreshState.ReloadPage)
+        } else {
+            openStudyOptions()
+        }
     }
 
     private suspend fun isDeckFinished(): Boolean = withCol { currentDeckStudyState().availability == StudyAvailability.NoCardsAvailable }
@@ -279,6 +298,4 @@ sealed class UnburyState {
 
 sealed class CongratsRefreshState {
     data object ReloadPage : CongratsRefreshState()
-
-    data object DeckHasCardsToStudy : CongratsRefreshState()
 }
