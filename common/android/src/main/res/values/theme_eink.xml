@@ -43,8 +43,8 @@
         <item name="colorSurfaceContainerLowest">@color/white</item>
         <item name="colorSurfaceContainerLow">@color/white</item>
         <item name="colorSurfaceContainer">#F0F0F0</item>
-        <item name="colorSurfaceContainerHigh">#E0E0E0</item>
-        <item name="colorSurfaceContainerHighest">#E0E0E0</item>
+        <item name="colorSurfaceContainerHigh">@color/white</item>
+        <item name="colorSurfaceContainerHighest">@color/white</item>
         <item name="colorOutline">@color/black</item>
         <item name="colorOutlineVariant">#777777</item>
         <item name="colorControlNormal">@color/black</item>
@@ -127,7 +127,7 @@
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Eink" parent="ThemeOverlay.AnkiDroid.AlertDialog">
-        <item name="android:windowBackground">@drawable/bg_dialog_eink</item>
+        <item name="android:windowFrame">@drawable/frame_dialog_eink</item>
         <item name="android:windowElevation">0dp</item>
         <item name="android:elevation">0dp</item>
         <item name="elevation">0dp</item>
