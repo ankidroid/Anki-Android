@@ -34,7 +34,7 @@ jobs:
   compare-screenshot-test:
     name: compare
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     permissions:
       contents: read # for clone
@@ -92,7 +92,7 @@ jobs:
       - name: Compare screenshots
         id: compare-screenshot-test
         run: |
-          ./gradlew compareScreenshots -Pscreenshot --stacktrace
+          ./gradlew compareScreenshots -Pscreenshot -Ptheme=light,dark --stacktrace
 
       - name: Stage screenshot diffs
         if: ${{ always() }}
