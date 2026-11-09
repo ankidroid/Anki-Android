@@ -219,7 +219,7 @@ class StandardSearchFragment :
         binding.searchHistory.apply {
             adapter = searchHistoryAdapter
             setOnItemClickListener { _, _, position, _ ->
-                viewModel.selectSearchHistoryEntry(getItemAtPosition(position) as SearchHistoryEntry)
+                viewModel.selectSearchHistoryEntry(searchHistoryAdapter.getItem(position)!!.entry)
             }
         }
 

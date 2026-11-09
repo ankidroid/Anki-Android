@@ -248,6 +248,24 @@ class StandardSearchFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `activating a history item submits its query and filters`() {
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", flags = listOf(Flag.RED)))
+
+        withCardBrowserFragment(useSearchView = true) {
+            requireNotNull(searchView).show()
+            advanceRobolectricLooper()
+
+            val fragment = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+            val history = fragment.binding.searchHistory
+            assertTrue(history.performItemClick(history.getChildAt(0), 0, history.adapter.getItemId(0)))
+            advanceRobolectricLooper()
+
+            val submittedSearches = fragment.viewModel.submittedSearchFlow.replayCache
+            assertEquals(SearchRequest("bonjour", SearchFilters.partial(flags = listOf(Flag.RED))), submittedSearches.last())
+        }
+    }
+
+    @Test
     fun `history entries are truncated`() {
         val expectedMaxEntries = 5
         assertEquals(expectedMaxEntries, CardBrowserSearchViewModel.MAX_SEARCH_HISTORY_ENTRIES)
