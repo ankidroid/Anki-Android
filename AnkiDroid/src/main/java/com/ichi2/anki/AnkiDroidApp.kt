@@ -821,11 +821,6 @@ open class AnkiDroidApp :
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
 
-        @VisibleForTesting
-        fun clearFatalError() {
-            this.instance.startupErrors.clear()
-        }
-
         /**
          * Get the url for the properly translated feedback page
          * @return
@@ -854,8 +849,8 @@ open class AnkiDroidApp :
                     else -> appResources.getString(R.string.link_manual)
                 }
 
-        /** (optional) set if an unrecoverable error occurs during Application startup */
-        val fatalError: FatalInitializationError?
-            get() = instance.startupErrors.fatalError
+        /** Errors recorded during application startup. */
+        internal val startupErrors: StartupErrors
+            get() = instance.startupErrors
     }
 }
