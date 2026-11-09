@@ -117,4 +117,18 @@ public class CollectionHelper {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(
+                create(stubTime),
+                create(stubSystemTime),
+                create(javaFileToBeTested).to("TestJavaClass.java").within("test"),
+            ).issues(DirectSystemTimeInstantiation.ISSUE)
+            .run()
+            .expectClean()
+    }
 }
