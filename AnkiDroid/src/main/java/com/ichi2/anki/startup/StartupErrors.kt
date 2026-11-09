@@ -10,6 +10,9 @@ internal class StartupErrors {
     var fatalError: FatalInitializationError? = null
         private set
 
+    /** Returns whether at least one fatal startup error is currently recorded. */
+    fun hasFatalError(): Boolean = fatalError != null
+
     fun recordFatalError(error: FatalInitializationError) {
         fatalError = error
     }
