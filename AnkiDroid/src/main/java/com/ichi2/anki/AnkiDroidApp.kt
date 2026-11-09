@@ -440,7 +440,7 @@ open class AnkiDroidApp :
                     }
                     CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 } catch (e: SystemStorageException) {
-                    startupErrors.fatalError = FatalInitializationError.StorageError(e)
+                    startupErrors.recordFatalError(FatalInitializationError.StorageError(e))
                     return@setup
                 }
 
@@ -463,7 +463,7 @@ open class AnkiDroidApp :
                     // The user can't write to the AnkiDroid directory (=> cant write to the collection)
                     // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
                     // => show the 'fatal storage error' screen
-                    startupErrors.fatalError = FatalInitializationError.StorageError(e)
+                    startupErrors.recordFatalError(FatalInitializationError.StorageError(e))
                 }
             }
         }
@@ -675,7 +675,7 @@ open class AnkiDroidApp :
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            startupErrors.fatalError = FatalInitializationError.WebViewError(e)
+            startupErrors.recordFatalError(FatalInitializationError.WebViewError(e))
             sendExceptionReport(e, "checkWebViewAvailable")
             Timber.e(e, "checkWebViewAvailable")
             false
@@ -823,7 +823,7 @@ open class AnkiDroidApp :
 
         @VisibleForTesting
         fun clearFatalError() {
-            this.instance.startupErrors.fatalError = null
+            this.instance.startupErrors.clear()
         }
 
         /**
