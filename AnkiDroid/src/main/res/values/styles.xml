@@ -229,5 +229,7 @@
         <item name="iconGravity">textEnd</item>
         <item name="iconTint">@color/sort_pill_content_color</item>
         <item name="backgroundTint">@color/sort_pill_background_color</item>
+        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="strokeColor">?attr/widgetStrokeColor</item>
     </style>
 </resources>
