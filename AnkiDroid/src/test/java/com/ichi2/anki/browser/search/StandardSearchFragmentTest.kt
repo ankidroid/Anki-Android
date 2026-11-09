@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.browser.search
 
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -9,6 +10,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.withCardBrowserFragment
+import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,6 +36,32 @@ class StandardSearchFragmentTest : RobolectricTest() {
 
         withFragment {
             assertEquals(1, binding.searchHistory.count)
+        }
+    }
+
+    @Test
+    fun `favoriting a history entry opens a dialog and saves the search`() {
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour"))
+
+        withCardBrowserFragment(useSearchView = true) {
+            requireNotNull(searchView).show()
+            advanceRobolectricLooper()
+
+            val fragment = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+            val history = fragment.binding.searchHistory
+            val row = ViewSearchHistoryItemBinding.bind(history.adapter.getView(0, null, history))
+            row.favorite.performClick()
+            fragment.childFragmentManager.executePendingTransactions()
+
+            val dialogFragment =
+                fragment.childFragmentManager.fragments
+                    .filterIsInstance<SaveBrowserSearchDialogFragment>()
+                    .single()
+            val dialog = dialogFragment.requireDialog() as AlertDialog
+            dialog.input = "French search"
+            dialog.performPositiveClick()
+
+            assertEquals(listOf(SavedSearch("French search", "bonjour")), SavedSearches.loadFromConfig())
         }
     }
 
