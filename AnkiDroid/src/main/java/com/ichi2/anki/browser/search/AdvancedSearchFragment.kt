@@ -159,7 +159,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                 "Card properties",
                 listOf(
                     OptionData("Interval", "prop:ivl>=10"),
-                    OptionData("Due", "prop:ivl>=10"),
+                    OptionData("Due", "prop:due>=1"),
                     OptionData("Overdue cards", "prop:due<=1"),
                     OptionData("Due tomorrow", "prop:due=1"),
                     OptionData("Number of answers", "prop:reps<10"),
