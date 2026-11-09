@@ -255,14 +255,15 @@ class CongratsViewModel :
         val stillFinished = isDeckFinished()
         if (!missedRefresh && stillFinished) return
         missedRefresh = false
-        congratsRefreshState.emit(
-            if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
-        )
+        emitRefreshState(stillFinished)
     }
 
     private suspend fun emitRefreshState() {
         missedRefresh = false
-        val stillFinished = isDeckFinished()
+        emitRefreshState(isDeckFinished())
+    }
+
+    private suspend fun emitRefreshState(stillFinished: Boolean) {
         congratsRefreshState.emit(
             if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
         )
