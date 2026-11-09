@@ -3,7 +3,6 @@
 package com.ichi2.anki.snackbar
 
 import android.accessibilityservice.AccessibilityServiceInfo
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Looper
 import android.view.ContextThemeWrapper
@@ -42,7 +41,6 @@ class SnackbarsTest {
     }
 
     @Test
-    @SuppressLint("DirectSnackbarMakeUsage") // Verify Material's queue without AnkiDroid's wrapper.
     fun `Material only queues the latest pending snackbar`() {
         // Material 1.14.0 has one current slot and one pending slot, so retaining only
         // the latest pending snackbar is sufficient. Exercise Material directly here.
