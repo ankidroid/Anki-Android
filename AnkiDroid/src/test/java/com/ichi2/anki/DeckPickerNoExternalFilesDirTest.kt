@@ -65,7 +65,7 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
     fun `fatal error is shown after 'Create a new collection' and getExternalFilesDir is null`() =
         try {
             assertThat(targetContext.getExternalFilesDir(null), equalTo(null))
-            AnkiDroidApp.clearFatalError()
+            AnkiDroidApp.startupErrors.clear()
             withNoWritePermission {
                 CollectionHelper.ankiDroidDirectoryOverride = tempFolder.newFolder()
 

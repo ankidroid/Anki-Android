@@ -76,7 +76,7 @@ object InitialActivity {
         preferences: SharedPreferences,
         initializeAnkiDroidDirectory: () -> Boolean,
     ): StartupFailure? {
-        AnkiDroidApp.fatalError?.let {
+        AnkiDroidApp.startupErrors.fatalError?.let {
             return StartupFailure.InitializationError(it)
         }
 
