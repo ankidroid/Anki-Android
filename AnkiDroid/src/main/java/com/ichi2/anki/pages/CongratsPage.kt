@@ -45,29 +45,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class CongratsPage :
-    PageFragment(),
-    ChangeManager.Subscriber {
+class CongratsPage : PageFragment() {
     override val pagePath: String = "congrats"
 
     private val viewModel by viewModels<CongratsViewModel>()
-
-    init {
-        ChangeManager.subscribe(this)
-    }
-
-    // TODO: move this to the ViewModel
-    override fun opExecuted(
-        changes: OpChanges,
-        handler: Any?,
-    ) {
-        // typically due to 'day rollover'. handler !== viewModel excludes changes this
-        // screen caused itself (eg. unburying), which are already handled directly
-        if (changes.studyQueues && handler !== viewModel) {
-            Timber.i("study queues updated")
-            viewModel.onStudyQueuesChanged()
-        }
-    }
 
     override fun onViewCreated(
         view: View,
@@ -190,10 +171,30 @@ class CongratsPage :
 
 class CongratsViewModel :
     ViewModel(),
-    OnErrorListener {
+    OnErrorListener,
+    ChangeManager.Subscriber {
     override val onError = MutableSharedFlow<String>()
     val unburyState = MutableSharedFlow<UnburyState>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
+
+    init {
+        ChangeManager.subscribe(this)
+    }
+
+    override fun onCleared() {
+        ChangeManager.unsubscribe(this)
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        // Changes this ViewModel causes are already handled by the operation's completion.
+        if (changes.studyQueues && handler !== this) {
+            Timber.i("study queues updated")
+            onStudyQueuesChanged()
+        }
+    }
 
     fun onUnbury() {
         launchCatchingIO {
