@@ -121,16 +121,39 @@ class CardBrowserSearchViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `text can be updated when a different screen is selected`() =
+    fun `appended search text is shared between modes`() =
         withViewModel {
             searchTextFlow.test {
                 expectMostRecentItem()
 
                 appendAdvancedSearch("advanced, while in standard")
+                assertEquals("advanced, while in standard ", expectMostRecentItem())
 
                 toggleAdvancedSearch()
+                expectNoEvents()
+            }
+        }
 
-                assertEquals("advanced, while in standard ", expectMostRecentItem())
+    @Test
+    fun `switching modes preserves the latest search text`() =
+        withViewModel {
+            searchTextFlow.test {
+                expectMostRecentItem()
+
+                onSearchTextChanged(" basic draft ")
+                assertEquals(" basic draft ", expectMostRecentItem())
+                toggleAdvancedSearch()
+                expectNoEvents()
+
+                onSearchTextChanged("tag:updated draft")
+                assertEquals("tag:updated draft", expectMostRecentItem())
+                toggleAdvancedSearch()
+                expectNoEvents()
+
+                onSearchTextChanged("")
+                assertEquals("", expectMostRecentItem())
+                toggleAdvancedSearch()
+                expectNoEvents()
             }
         }
 
