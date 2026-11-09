@@ -3,6 +3,7 @@ package com.ichi2.anki.pages
 
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
 import org.junit.Test
@@ -19,9 +20,9 @@ class CongratsViewModelTest : JvmTest() {
             val deckId = addDynamicDeck("Filtered", "")
             withCol { sched.emptyFilteredDeck(deckId) }
 
-            viewModel.congratsRefreshState.test {
+            viewModel.studyOptionsDestination.test {
                 undoableOp { sched.rebuildFilteredDeck(deckId) }
-                assertEquals(CongratsRefreshState.DeckHasCardsToStudy, awaitItem())
+                assertEquals(StudyOptionsDestination, awaitItem())
             }
         }
 
@@ -46,9 +47,22 @@ class CongratsViewModelTest : JvmTest() {
             val deckId = addDynamicDeck("Filtered", "")
             withCol { sched.emptyFilteredDeck(deckId) }
 
-            viewModel.congratsRefreshState.test {
+            viewModel.studyOptionsDestination.test {
                 undoableOp(handler = viewModel) { sched.rebuildFilteredDeck(deckId) }
                 expectNoEvents()
             }
+        }
+
+    @Test
+    fun `navigation waits for a collector and is cleared after opening`() =
+        runTest {
+            addBasicNote()
+            viewModel.refreshIfNeeded()
+
+            viewModel.studyOptionsDestination.test {
+                assertEquals(StudyOptionsDestination, awaitItem())
+                viewModel.onStudyOptionsOpened()
+            }
+            viewModel.studyOptionsDestination.test { expectNoEvents() }
         }
 }
