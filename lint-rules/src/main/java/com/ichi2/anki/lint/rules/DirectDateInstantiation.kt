@@ -55,6 +55,7 @@ class DirectDateInstantiation :
         constructor: PsiMethod,
     ) {
         super.visitConstructor(context, node, constructor)
+        if (context.isTestSource) return
         val foundClasses = context.uastFile!!.classes
         // this checks for usage of new Date(ms) which we allow
         val argTypes = node.valueArguments
