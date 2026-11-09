@@ -145,7 +145,7 @@ class CongratsPage : PageFragment() {
             when (CustomStudyAction.fromBundle(bundle)) {
                 CustomStudyAction.CUSTOM_STUDY_SESSION,
                 CustomStudyAction.EXTEND_STUDY_LIMITS,
-                -> openStudyOptionsAndFinish()
+                -> viewModel.onCustomStudyCompleted()
             }
         }
     }
@@ -155,12 +155,6 @@ class CongratsPage : PageFragment() {
             "unbury" to { viewModel.onUnbury() },
             "customStudy" to { onStudyMore() },
         )
-
-    private fun openStudyOptionsAndFinish() {
-        Timber.i("opening study options")
-        navigate(StudyOptionsDestination)
-        requireActivity().finish()
-    }
 
     private fun onStudyMore() {
         launchCatchingTask {
@@ -212,6 +206,8 @@ class CongratsViewModel :
             onStudyQueuesChanged()
         }
     }
+
+    fun onCustomStudyCompleted() = launchCatchingIO { openStudyOptions() }
 
     private suspend fun openStudyOptions() {
         if (studyOptionsRequested.compareAndSet(false, true)) {

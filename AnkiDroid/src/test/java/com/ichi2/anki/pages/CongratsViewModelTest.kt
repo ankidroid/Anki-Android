@@ -56,8 +56,7 @@ class CongratsViewModelTest : JvmTest() {
     @Test
     fun `navigation waits for a collector and is cleared after opening`() =
         runTest {
-            addBasicNote()
-            viewModel.refreshIfNeeded()
+            viewModel.onCustomStudyCompleted().join()
 
             viewModel.studyOptionsDestination.test {
                 assertEquals(StudyOptionsDestination, awaitItem())
@@ -72,7 +71,7 @@ class CongratsViewModelTest : JvmTest() {
             addBasicNote()
 
             viewModel.studyOptionsDestination.test {
-                viewModel.refreshIfNeeded()
+                viewModel.onCustomStudyCompleted().join()
                 assertEquals(StudyOptionsDestination, awaitItem())
 
                 viewModel.refreshIfNeeded()
@@ -80,7 +79,7 @@ class CongratsViewModelTest : JvmTest() {
 
                 viewModel.onStudyOptionsOpened()
                 viewModel.refreshIfNeeded()
-                viewModel.refreshIfNeeded()
+                viewModel.onCustomStudyCompleted().join()
                 expectNoEvents()
             }
         }
