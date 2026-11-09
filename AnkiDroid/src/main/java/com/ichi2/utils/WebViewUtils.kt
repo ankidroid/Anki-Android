@@ -2,6 +2,7 @@
 
 package com.ichi2.utils
 
+import android.app.Application
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -14,6 +15,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewOutcomeReceiver
+import androidx.webkit.WebViewStartUpConfig
+import androidx.webkit.WebViewStartUpResult
+import androidx.webkit.WebViewStartupException
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -22,6 +27,8 @@ import com.ichi2.anki.utils.openUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.util.concurrent.Executors
+import kotlin.time.TimeSource
 
 @JvmInline
 value class WebViewVersion(
@@ -234,3 +241,52 @@ fun setWebContentsDebuggingEnabled(enabled: Boolean) =
         // android.util.AndroidRuntimeException: android.webkit.WebViewFactory$MissingWebViewPackageException: Failed to load WebView provider: No WebView installed
         Timber.w(e, "setWebContentsDebuggingEnabled")
     }
+
+/**
+ * Starts the WebView on a background thread, so later WebView usage is faster.
+ *
+ * Exactly one of [onSuccess] or [onFailure] is called, on the main thread, once startup completes.
+ *
+ * Background work runs on a dedicated thread, released once startup completes.
+ *
+ * @see WebViewCompat.startUpWebView
+ */
+context(context: Application)
+fun startUpWebView(
+    onSuccess: () -> Unit,
+    onFailure: (Throwable) -> Unit,
+) {
+    Timber.d("startUpWebView: starting")
+    val mark = TimeSource.Monotonic.markNow()
+
+    fun elapsed(): String = "${mark.elapsedNow().inWholeMilliseconds}ms"
+
+    val executor = Executors.newSingleThreadExecutor()
+    val config = WebViewStartUpConfig.Builder(executor).build()
+    val callback =
+        object : WebViewOutcomeReceiver<WebViewStartUpResult, WebViewStartupException> {
+            override fun onResult(result: WebViewStartUpResult?) {
+                Timber.d(
+                    "startUpWebView: success in %s (uiThreadTimeMs=%s)",
+                    elapsed(),
+                    result?.totalTimeInUiThreadMillis,
+                )
+                executor.shutdown()
+                onSuccess()
+            }
+
+            override fun onError(e: WebViewStartupException) {
+                Timber.w(e, "startUpWebView: failed in %s", elapsed())
+                executor.shutdown()
+                onFailure(e)
+            }
+        }
+
+    try {
+        WebViewCompat.startUpWebView(context, config, callback)
+    } catch (e: Exception) {
+        Timber.w(e, "startUpWebView: failed in %s", elapsed())
+        executor.shutdown()
+        onFailure(e)
+    }
+}

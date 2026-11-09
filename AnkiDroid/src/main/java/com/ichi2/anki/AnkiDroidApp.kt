@@ -82,6 +82,7 @@ import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
+import com.ichi2.utils.startUpWebView
 import com.ichi2.widget.AnkiDroidWidgetSmall
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetNotificationScheduler
@@ -538,11 +539,25 @@ open class AnkiDroidApp :
             ChangeManager.subscribe(this)
         }
 
-    /** Configures WebView and records a fatal initialization error if it is unavailable. */
+    /**
+     * Configures WebView and records a fatal initialization error if it is unavailable.
+     *
+     * @return `true` if [checkWebViewAvailable] succeeds; async failures of [startUpWebView]
+     * do not cause this method to return `false`.
+     */
     private fun setupWebView(): Boolean =
         setup("setupWebView") {
-            setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
-            checkWebViewAvailable()
+            if (!checkWebViewAvailable()) {
+                return@setup false
+            }
+            // TODO: This only handles a subset of WebView init, and will not produce a performance
+            //  improvement until this pattern is used for all WebView init.
+            val debugEnabled = Prefs.isWebDebugEnabled
+            startUpWebView(
+                onSuccess = { setWebContentsDebuggingEnabled(debugEnabled) },
+                onFailure = { },
+            )
+            true
         }
 
     private fun setupCardBrowser() {
