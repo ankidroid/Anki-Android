@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Flag
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
@@ -62,6 +63,24 @@ class StandardSearchFragmentTest : RobolectricTest() {
             dialog.performPositiveClick()
 
             assertEquals(listOf(SavedSearch("French search", "bonjour")), SavedSearches.loadFromConfig())
+        }
+    }
+
+    @Test
+    fun `activating a history item submits its query and filters`() {
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", flags = listOf(Flag.RED)))
+
+        withCardBrowserFragment(useSearchView = true) {
+            requireNotNull(searchView).show()
+            advanceRobolectricLooper()
+
+            val fragment = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+            val history = fragment.binding.searchHistory
+            assertTrue(history.performItemClick(history.getChildAt(0), 0, history.adapter.getItemId(0)))
+            advanceRobolectricLooper()
+
+            val submittedSearches = fragment.viewModel.submittedSearchFlow.replayCache
+            assertEquals(SearchRequest("bonjour", SearchFilters.partial(flags = listOf(Flag.RED))), submittedSearches.last())
         }
     }
 
