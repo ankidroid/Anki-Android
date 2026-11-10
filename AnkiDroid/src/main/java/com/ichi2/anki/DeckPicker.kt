@@ -61,6 +61,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -139,6 +140,7 @@ import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
@@ -238,8 +240,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
@@ -468,6 +473,7 @@ open class DeckPicker :
 
     init {
         ChangeManager.subscribe(this)
+        trackDatabaseErrorDialogs()
     }
 
     // ----------------------------------------------------------------------------
@@ -502,6 +508,43 @@ open class DeckPicker :
             x = request.x,
             y = request.y,
         )
+    }
+
+    private fun trackDatabaseErrorDialogs() {
+        val open = mutableSetOf<DatabaseErrorDialog>()
+
+        fun onChanged() {
+            if (!isChangingConfigurations) viewModel.onDatabaseErrorDialogsChanged(open.map { it.requireDialogType() })
+        }
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentAttached(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    context: Context,
+                ) {
+                    if (f is DatabaseErrorDialog && open.add(f)) onChanged()
+                }
+
+                override fun onFragmentDestroyed(
+                    fm: FragmentManager,
+                    f: Fragment,
+                ) {
+                    if (f is DatabaseErrorDialog && open.remove(f)) onChanged()
+                }
+            },
+            false,
+        )
+    }
+
+    private fun canShowError() = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && viewModel.databaseErrorDialogs.value.isEmpty()
+
+    private suspend fun <T> whenNoDatabaseErrorDialog(block: () -> T): T {
+        while (!canShowError()) {
+            merge(lifecycle.currentStateFlow, viewModel.databaseErrorDialogs).first { canShowError() }
+            yield()
+        }
+        return block()
     }
 
     // ----------------------------------------------------------------------------
@@ -1064,7 +1107,9 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.collectInLifecycle(::createIcon)
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
         viewModel.onError.receiveAsFlow().collectInLifecycle { showException(it) }
-        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { showException(it)?.awaitDismissal() }
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
+            whenNoDatabaseErrorDialog { showException(error) }?.awaitDismissal()
+        }
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.collectInLifecycle(::onStudiedTodayChanged)
