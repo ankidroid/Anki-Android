@@ -28,21 +28,20 @@ class SearchHistory(
     private val prefs: PrefsRepository = Prefs,
     private val maxEntries: Int = MAX_ENTRIES,
 ) {
+    private var entriesJson by prefs.stringPref(R.string.pref_browser_search_history, "[]")
+
     /**
      * The user's past searches in the Card Browser.
      * Displayed in most recently used order.
      */
     var entries: List<SearchHistoryEntry>
-        get() {
-            val jsonString = prefs.getString(R.string.pref_browser_search_history, "[]") ?: "[]"
-            return runCatching {
-                Json.decodeFromString<List<SearchHistoryEntry>>(jsonString)
+        get() =
+            runCatching {
+                Json.decodeFromString<List<SearchHistoryEntry>>(entriesJson)
             }.getOrElse { emptyList() }
-        }
         private set(value) {
             Timber.i("updating history entries: %d values", value.size)
-            val json = Json.encodeToString(value)
-            prefs.putString(R.string.pref_browser_search_history, json)
+            entriesJson = Json.encodeToString(value)
         }
 
     /**
