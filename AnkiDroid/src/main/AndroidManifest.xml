@@ -137,65 +137,65 @@
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.apkg"
+                    android:pathPattern="/.*\\.apkg"
                     android:scheme="content"
                     />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.apkg"
+                    android:pathPattern="/.*\\.apkg"
                     android:scheme="file"
                     />
                 <!-- .colpkg files -->
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.colpkg"
+                    android:pathPattern="/.*\\.colpkg"
                     android:scheme="content"
                     />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.colpkg"
+                    android:pathPattern="/.*\\.colpkg"
                     android:scheme="file"
                     />
                 <!-- tsv files -->
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.tsv"
+                    android:pathPattern="/.*\\.tsv"
                     android:scheme="content"
                     />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.tsv"
+                    android:pathPattern="/.*\\.tsv"
                     android:scheme="file"
                     />
                 <!-- csv files -->
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.csv"
+                    android:pathPattern="/.*\\.csv"
                     android:scheme="content"
                     />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.csv"
+                    android:pathPattern="/.*\\.csv"
                     android:scheme="file"
                     />
                 <!-- text files -->
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.txt"
+                    android:pathPattern="/.*\\.txt"
                     android:scheme="content"
                     />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.txt"
+                    android:pathPattern="/.*\\.txt"
                     android:scheme="file"
                     />
             </intent-filter>
