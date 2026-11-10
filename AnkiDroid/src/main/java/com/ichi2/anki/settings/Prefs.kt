@@ -56,42 +56,36 @@ open class PrefsRepository protected constructor(
         @StringRes resId: Int,
     ): String = resources.getString(resId)
 
-    @VisibleForTesting
-    fun getBoolean(
+    private fun getBoolean(
         @StringRes keyResId: Int,
         defValue: Boolean,
     ): Boolean = sharedPrefs.getBoolean(key(keyResId), defValue)
 
-    @VisibleForTesting
-    fun putBoolean(
+    private fun putBoolean(
         @StringRes keyResId: Int,
         value: Boolean,
     ) {
         sharedPrefs.edit { putBoolean(key(keyResId), value) }
     }
 
-    @VisibleForTesting
-    fun getString(
+    private fun getString(
         @StringRes keyResId: Int,
         defValue: String?,
     ): String? = sharedPrefs.getString(key(keyResId), defValue)
 
-    @VisibleForTesting
-    fun putString(
+    private fun putString(
         @StringRes keyResId: Int,
         value: String?,
     ) {
         sharedPrefs.edit { putString(key(keyResId), value) }
     }
 
-    @VisibleForTesting
-    fun getInt(
+    private fun getInt(
         @StringRes keyResId: Int,
         defValue: Int,
     ): Int = sharedPrefs.getInt(key(keyResId), defValue)
 
-    @VisibleForTesting
-    fun putInt(
+    private fun putInt(
         @StringRes keyResId: Int,
         value: Int,
     ) = sharedPrefs.edit { putInt(key(keyResId), value) }
@@ -106,8 +100,7 @@ open class PrefsRepository protected constructor(
         value: Long,
     ) = sharedPrefs.edit { putLong(key(keyResId), value) }
 
-    @VisibleForTesting
-    fun <E> getEnum(
+    private fun <E> getEnum(
         @StringRes keyResId: Int,
         defaultValue: E,
     ): E where E : Enum<E>, E : PrefEnum {
@@ -119,7 +112,7 @@ open class PrefsRepository protected constructor(
         } ?: defaultValue
     }
 
-    fun <E> putEnum(
+    private fun <E> putEnum(
         @StringRes keyResId: Int,
         value: E,
     ) where E : Enum<E>, E : PrefEnum {
@@ -129,7 +122,6 @@ open class PrefsRepository protected constructor(
 
     // **************************************** Delegates *************************************** //
 
-    @VisibleForTesting
     fun booleanPref(
         key: String,
         defaultValue: Boolean,
@@ -149,13 +141,11 @@ open class PrefsRepository protected constructor(
             }
         }
 
-    @VisibleForTesting
     fun booleanPref(
         @StringRes keyResId: Int,
         defaultValue: Boolean,
     ): ReadWriteProperty<Any?, Boolean> = booleanPref(key(keyResId), defaultValue)
 
-    @VisibleForTesting
     fun stringPref(
         @StringRes keyResId: Int,
         defaultValue: String? = null,
@@ -175,7 +165,6 @@ open class PrefsRepository protected constructor(
             }
         }
 
-    @VisibleForTesting
     @JvmName("nonNullStringPref")
     fun stringPref(
         @StringRes keyResId: Int,
@@ -196,7 +185,6 @@ open class PrefsRepository protected constructor(
             }
         }
 
-    @VisibleForTesting
     fun intPref(
         @StringRes keyResId: Int,
         defaultValue: Int,
@@ -216,7 +204,6 @@ open class PrefsRepository protected constructor(
             }
         }
 
-    @VisibleForTesting
     fun longPref(
         @StringRes keyResId: Int,
         defaultValue: Long,
@@ -236,7 +223,6 @@ open class PrefsRepository protected constructor(
             }
         }
 
-    @VisibleForTesting
     fun <E> enumPref(
         @StringRes keyResId: Int,
         defaultValue: E,
