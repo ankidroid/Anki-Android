@@ -777,7 +777,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             assertThat("3 rows are selected", selectedRows.size, equalTo(3))
             assertThat("selection is not marked", queryAllSelectedNotes().all { !it.isMarked() })
 
-            toggleMark()
+            onEvent(BrowserEvent.ToggleMarkRequested)
 
             assertThat("3 rows are still selected", selectedRows.size, equalTo(3))
             assertThat("selection is now marked", queryAllSelectedNotes().all { it.isMarked() })
@@ -856,7 +856,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
         runViewModelTest(notes = 2) {
             selectRowsWithPositions(0)
 
-            ensureOpWithHandler(this) { toggleMark() }
+            ensureOpWithHandler(this) { onEvent(BrowserEvent.ToggleMarkRequested) }
         }
 
     @Test
@@ -880,7 +880,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
         runViewModelTest(notes = 2) {
             selectRowsWithPositions(0)
 
-            assertProgressAround { toggleMark() }
+            assertProgressAround { onEvent(BrowserEvent.ToggleMarkRequested) }
         }
 
     @Test

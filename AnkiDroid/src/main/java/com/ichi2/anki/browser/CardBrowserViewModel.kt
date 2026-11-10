@@ -812,12 +812,19 @@ class CardBrowserViewModel(
     /** Whether any rows are selected */
     fun hasSelectedAnyRows(): Boolean = selectedRows.isNotEmpty()
 
+    /** Coordinates browser events; callers retain their existing coroutine error handling. */
+    suspend fun onEvent(event: BrowserEvent) {
+        when (event) {
+            BrowserEvent.ToggleMarkRequested -> toggleMark()
+        }
+    }
+
     /**
      * All the notes of the selected cards will be marked
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked
      */
-    suspend fun toggleMark() {
+    private suspend fun toggleMark() {
         progressManager.withProgress {
             val cardIds = queryAllSelectedCardIds()
             if (cardIds.isEmpty()) {
