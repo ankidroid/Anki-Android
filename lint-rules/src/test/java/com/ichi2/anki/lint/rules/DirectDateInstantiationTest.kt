@@ -105,4 +105,17 @@ public class TestJavaClass {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .configureOptions { it.isCheckTestSources = true }
+            .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileToBeTested).within("test"))
+            .issues(DirectDateInstantiation.ISSUE)
+            .run()
+            .expectClean()
+    }
 }

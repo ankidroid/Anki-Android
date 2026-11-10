@@ -80,4 +80,17 @@ public class SnackbarsKt {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .configureOptions { it.isCheckTestSources = true }
+            .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileToBeTested).within("test"))
+            .issues(DirectSnackbarMakeUsage.ISSUE)
+            .run()
+            .expectClean()
+    }
 }

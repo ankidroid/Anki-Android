@@ -53,6 +53,7 @@ class DirectGregorianInstantiation :
         node: UCallExpression,
         method: PsiMethod,
     ) {
+        if (context.isTestSource) return
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
@@ -70,6 +71,7 @@ class DirectGregorianInstantiation :
         node: UCallExpression,
         constructor: PsiMethod,
     ) {
+        if (context.isTestSource) return
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time")) {

@@ -78,4 +78,17 @@ public abstract class Time {
             .run()
             .expectClean()
     }
+
+    @Test
+    fun allowsUsageInTestSources() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .configureOptions { it.isCheckTestSources = true }
+            .files(JavaTestFile.create(stubCalendar), JavaTestFile.create(javaFileToBeTested).within("test"))
+            .issues(DirectCalendarInstanceUsage.ISSUE)
+            .run()
+            .expectClean()
+    }
 }
