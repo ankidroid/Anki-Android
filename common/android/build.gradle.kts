@@ -34,6 +34,8 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.junit)
 
+    testFixturesApi(libs.androidx.espresso.core)
+
     testFixturesImplementation(libs.androidx.appcompat)
     testFixturesImplementation(libs.androidx.test.core)
     testFixturesImplementation(libs.jakewharton.timber)
