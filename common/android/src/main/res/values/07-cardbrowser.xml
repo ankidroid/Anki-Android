@@ -98,6 +98,8 @@
     <string name="card_browser_order_subtitle_numeric_descending" comment="Sort direction subtitle for numeric columns when descending (largest value first)">High to low</string>
     <string name="card_browser_order_subtitle_date_ascending" comment="Sort direction subtitle for date columns when ascending (oldest entry first)">Oldest first</string>
     <string name="card_browser_order_subtitle_date_descending" comment="Sort direction subtitle for date columns when descending (newest entry first)">Newest first</string>
+    <string name="card_browser_order_subtitle_due_ascending" comment="Sort direction subtitle for the Due column when ascending (earliest due date first)">Earliest first</string>
+    <string name="card_browser_order_subtitle_due_descending" comment="Sort direction subtitle for the Due column when descending (latest due date first, not the most recently added)">Latest first</string>
 
     <!-- SortPill labels: a single character on each half hinting at the direction.
          Translators: pick the first/last character of your locale's sort order. -->
