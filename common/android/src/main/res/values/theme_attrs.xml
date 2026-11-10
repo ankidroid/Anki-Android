@@ -69,7 +69,6 @@
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
     <attr name="toolbarBackgroundColor" format="color"/>
-    <attr name="toolbarIconColor" format="color"/>
     <attr name="buttonShadowColor" format="color"/>
     <attr name="buttonRippleColor" format="color"/>
     <attr name="buttonForegroundColor" format="color"/>
