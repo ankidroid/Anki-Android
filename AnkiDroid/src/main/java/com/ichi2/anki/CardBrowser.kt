@@ -625,21 +625,10 @@ open class CardBrowser :
         )
     }
 
-    private fun forceRefreshSearch(
-        useSearchTextValue: Boolean = false,
-        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
-    ) {
-        if (useSearchTextValue && searchView != null) {
-            viewModel.setQuery(searchView!!.query.toString(), feedbackMode = feedbackMode)
-        } else {
-            viewModel.launchSearchForCards(feedbackMode = feedbackMode)
-        }
-    }
-
     private fun refreshBrowserUI(feedbackMode: BrowserSearchFeedbackMode) {
         hideProgressBar()
         // reload whole view
-        forceRefreshSearch(feedbackMode = feedbackMode)
+        viewModel.launchSearchForCards(feedbackMode = feedbackMode)
         viewModel.endMultiSelectMode(SingleSelectCause.Other)
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
