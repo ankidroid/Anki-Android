@@ -10,7 +10,6 @@ import android.text.format.DateFormat
 import androidx.annotation.AttrRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -51,6 +50,7 @@ import com.ichi2.utils.Permissions
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
+import com.ichi2.utils.outlineWindow
 import com.ichi2.utils.positiveButton
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -346,19 +346,11 @@ class AddEditReminderDialog : DialogFragment() {
         dialog.show(parentFragmentManager, TIME_PICKER_TAG)
     }
 
-    /**
-     * Outlines the picker's window in E-ink (the stroke is 0dp in other themes).
-     *
-     * The theme's `android:windowFrame` can't do it: a window ignores it when its background is set in
-     * code, as [MaterialTimePicker] does. So the frame is set on the window once the dialog exists.
-     */
+    /** Outlines the picker's window in E-ink once its dialog exists. See [outlineWindow]. */
     private fun MaterialTimePicker.outlineWindow() {
         lifecycle.addObserver(
             object : DefaultLifecycleObserver {
-                override fun onStart(owner: LifecycleOwner) {
-                    val dialog = requireDialog()
-                    dialog.window?.decorView?.foreground = AppCompatResources.getDrawable(dialog.context, R.drawable.time_picker_frame)
-                }
+                override fun onStart(owner: LifecycleOwner) = requireDialog().outlineWindow()
             },
         )
     }

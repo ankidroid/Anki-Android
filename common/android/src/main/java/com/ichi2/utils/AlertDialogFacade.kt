@@ -160,7 +160,7 @@ inline fun <T : AlertDialog.Builder> T.show(
     block: T.() -> Unit,
 ): AlertDialog {
     this.apply { block() }
-    val dialog = this.show()
+    val dialog = this.show().apply { outlineWindow() }
     return if (enableEnterKeyHandler) {
         dialog.setupEnterKeyHandler()
     } else {
@@ -200,7 +200,7 @@ fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDial
  */
 fun <T : AlertDialog.Builder> T.create(block: T.() -> Unit): AlertDialog {
     block()
-    return create()
+    return create().apply { outlineWindow() }
 }
 
 /**
