@@ -87,6 +87,7 @@ import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -1644,6 +1645,29 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             searchJob?.join()
             assertThat("deleted row is no longer displayed", toDelete !in cards, equalTo(true))
             assertThat("pane falls back to the first remaining row", paneRow, equalTo(cards.first()))
+        }
+
+    @Test
+    fun `control refreshes survive a stopped browser and are consumed once`() =
+        runViewModelTest {
+            // The STARTED collector is cancelled while the note editor activity is on top.
+            uiEffects.receiveAsFlow().test {
+                expectNoEvents()
+            }
+            repeat(2) {
+                refreshBrowser(BrowserSearchFeedbackMode.COUNT_ONLY)
+            }
+
+            uiEffects.receiveAsFlow().test {
+                repeat(2) {
+                    assertEquals(BrowserUiEffect.RefreshControls, awaitItem())
+                }
+                expectNoEvents()
+            }
+            // Another stop/start without an edit must not repeat the refresh.
+            uiEffects.receiveAsFlow().test {
+                expectNoEvents()
+            }
         }
 
     @Test
