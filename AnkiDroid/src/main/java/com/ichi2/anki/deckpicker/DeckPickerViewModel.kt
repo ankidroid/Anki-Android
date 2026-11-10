@@ -4,6 +4,7 @@ package com.ichi2.anki.deckpicker
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
@@ -64,6 +65,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
@@ -156,6 +158,7 @@ class DeckPickerViewModel :
     override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
     private val errorQueue = MessageQueue<Exception>()
     val pendingErrors = errorQueue.messages
+    var inCorruptionRecovery = false
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
@@ -253,6 +256,8 @@ class DeckPickerViewModel :
         }
 
     fun errorShown(id: MessageId) = errorQueue.acknowledge(id)
+
+    fun dropCorruptionErrors() = errorQueue.discard { it.isDatabaseCorruption }
 
     private fun launchCatchingTask(
         context: CoroutineContext = EmptyCoroutineContext,
@@ -944,3 +949,6 @@ data class OptionsMenuState(
     val undoAvailable: Boolean,
     val showDeckActions: Boolean,
 )
+
+internal val Exception.isDatabaseCorruption
+    get() = this is BackendDbCorruptException || this is SQLiteDatabaseCorruptException

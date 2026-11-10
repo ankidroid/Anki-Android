@@ -34,6 +34,11 @@ class MessageQueue<T> {
         messages.update { messages -> messages.filterNot { it.id == id } }
     }
 
+    @MainThread
+    fun discard(predicate: (T) -> Boolean) {
+        messages.update { messages -> messages.filterNot { predicate(it.message) } }
+    }
+
     /** [id] distinguishes messages with identical contents within this queue. */
     data class Message<T>(
         val id: MessageId,

@@ -135,6 +135,7 @@ import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.OptionsMenuState
 import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.deckpicker.SyncIconState
+import com.ichi2.anki.deckpicker.isDatabaseCorruption
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
@@ -496,25 +497,39 @@ open class DeckPicker :
     }
 
     private fun findDatabaseRecovery() =
-        supportFragmentManager.fragments.firstOrNull {
-            it is DatabaseErrorDialog && it.lifecycle.currentState != Lifecycle.State.DESTROYED
+        supportFragmentManager.fragments.filterIsInstance<DatabaseErrorDialog>().firstOrNull {
+            it.lifecycle.currentState != Lifecycle.State.DESTROYED
         }
 
-    private suspend fun awaitDatabaseRecovery() {
+    override fun showDatabaseErrorDialog(
+        errorDialogType: DatabaseErrorDialogType,
+        exceptionData: CustomExceptionData?,
+    ) {
+        val continuesRecovery = viewModel.inCorruptionRecovery && findDatabaseRecovery() != null
+        viewModel.inCorruptionRecovery = errorDialogType == DatabaseErrorDialogType.DIALOG_LOAD_FAILED || continuesRecovery
+        super.showDatabaseErrorDialog(errorDialogType, exceptionData)
+    }
+
+    private suspend fun awaitDatabaseRecovery(): Boolean {
+        var corruptionPromptClosed = false
         while (true) {
-            val recovery = findDatabaseRecovery() ?: return
+            val recovery = findDatabaseRecovery() ?: break
+            if (viewModel.inCorruptionRecovery) corruptionPromptClosed = true
             recovery.lifecycle.currentStateFlow.first { it == Lifecycle.State.DESTROYED }
             yield()
         }
+        if (corruptionPromptClosed) viewModel.dropCorruptionErrors()
+        return corruptionPromptClosed
     }
 
-    private suspend fun withStartedAfterRecovery(block: () -> Unit) {
+    private suspend fun withStartedAfterRecovery(block: (afterCorruptionPrompt: Boolean) -> Unit) {
+        var afterCorruptionPrompt = false
         do {
-            awaitDatabaseRecovery()
+            if (awaitDatabaseRecovery()) afterCorruptionPrompt = true
             val recoveryOpened =
                 withStarted {
                     val opened = findDatabaseRecovery() != null
-                    if (!opened) block()
+                    if (!opened) block(afterCorruptionPrompt)
                     opened
                 }
         } while (recoveryOpened)
@@ -1055,7 +1070,9 @@ open class DeckPicker :
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
         observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
             var dialog: AlertDialog? = null
-            withStartedAfterRecovery { dialog = showException(error) }
+            withStartedAfterRecovery { afterCorruptionPrompt ->
+                if (!afterCorruptionPrompt || !error.isDatabaseCorruption) dialog = showException(error)
+            }
             dialog?.awaitDismissal()
         }
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
