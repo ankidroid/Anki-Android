@@ -490,15 +490,4 @@ open class PrefsRepository protected constructor(
      * TODO: This should differentiate cards & notes mode
      */
     var cardBrowserNoSorting by booleanPref(R.string.pref_browser_no_sorting, false)
-
-    // **************************************** UI Config *************************************** //
-
-    /**
-     * Get the SharedPreferences used for UI configuration such as Resizable layouts
-     */
-    fun getUiConfig(context: Context): SharedPreferences = context.getSharedPreferences(UI_CONFIG_PREFERENCES_NAME, Context.MODE_PRIVATE)
-
-    companion object {
-        private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
-    }
 }

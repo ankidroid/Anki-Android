@@ -27,8 +27,8 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.uiConfigPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.startup.ensureStorageIsReady
@@ -191,7 +191,7 @@ class NoteEditorActivity :
                 divider = divider,
                 startPane = noteEditorPane,
                 endPane = previewerPane,
-                sharedPrefs = Prefs.getUiConfig(this),
+                sharedPrefs = uiConfigPrefs(),
                 startPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
                 endPaneWeightKey = PREF_PREVIEWER_PANE_WEIGHT,
             )
@@ -217,10 +217,10 @@ class NoteEditorActivity :
         }
     }
 
-    private fun loadPreviewerVisibilityPreference(): Boolean = Prefs.getUiConfig(this).getBoolean(PREF_SHOW_PREVIEWER, true)
+    private fun loadPreviewerVisibilityPreference(): Boolean = uiConfigPrefs().getBoolean(PREF_SHOW_PREVIEWER, true)
 
     private fun savePreviewerVisibilityPreference(visible: Boolean) {
-        Prefs.getUiConfig(this).edit { putBoolean(PREF_SHOW_PREVIEWER, visible) }
+        uiConfigPrefs().edit { putBoolean(PREF_SHOW_PREVIEWER, visible) }
     }
 
     private fun applyPreviewerVisibility() {

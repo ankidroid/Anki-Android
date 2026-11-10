@@ -103,7 +103,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
-import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.uiConfigPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.ResizablePaneManager
@@ -246,7 +246,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 divider = requireNotNull(binding.cardTemplateEditorResizingDivider) { "cardTemplateEditorResizingDivider" },
                 startPane = requireNotNull(binding.templateEditor.root) { "templateEditor.root" },
                 endPane = requireNotNull(binding.fragmentContainer) { "fragmentContainer" },
-                sharedPrefs = Prefs.getUiConfig(this),
+                sharedPrefs = uiConfigPrefs(),
                 startPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
                 endPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
             )
