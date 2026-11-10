@@ -153,12 +153,14 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.FatalErrorDialog
+import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportViewModel
 import com.ichi2.anki.dialogs.MeteredSyncDialog
 import com.ichi2.anki.dialogs.ProfileLoadFailureDialog
 import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
+import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -470,7 +472,7 @@ open class DeckPicker :
 
     init {
         ChangeManager.subscribe(this)
-        trackDatabaseErrorDialogs()
+        trackRecoveryDialogs()
     }
 
     // ----------------------------------------------------------------------------
@@ -507,11 +509,21 @@ open class DeckPicker :
         )
     }
 
-    private fun trackDatabaseErrorDialogs() {
-        val open = mutableSetOf<DatabaseErrorDialog>()
+    private fun trackRecoveryDialogs() {
+        val open = mutableSetOf<Fragment>()
+
+        fun Fragment.holdsErrors() =
+            this is DatabaseErrorDialog || this is DeckPickerMaintenanceDialog || this is ImportDialog || this is SimpleMessageDialog
 
         fun onChanged() {
-            if (!isChangingConfigurations) viewModel.onDatabaseErrorDialogsChanged(open.map { it.requireDialogType() })
+            viewModel.onRecoveryDialogsChanged(
+                open = open.isNotEmpty(),
+                loadFailedOpen =
+                    open.any {
+                        it is DatabaseErrorDialog &&
+                            it.requireDialogType() == DatabaseErrorDialogType.DIALOG_LOAD_FAILED
+                    },
+            )
         }
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
@@ -520,25 +532,35 @@ open class DeckPicker :
                     f: Fragment,
                     context: Context,
                 ) {
-                    if (f is DatabaseErrorDialog && open.add(f)) onChanged()
+                    if (f.holdsErrors() && open.add(f)) onChanged()
                 }
 
                 override fun onFragmentDestroyed(
                     fm: FragmentManager,
                     f: Fragment,
                 ) {
-                    if (f is DatabaseErrorDialog && open.remove(f)) onChanged()
+                    if (isChangingConfigurations && !f.isRemoving) return
+                    if (open.remove(f)) onChanged()
                 }
             },
             false,
         )
     }
 
-    private fun canShowError() = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && viewModel.databaseErrorDialogs.value.isEmpty()
+    private fun canShowError() =
+        lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) &&
+            !viewModel.recoveryDialogsOpen.value &&
+            !viewModel.recoveringCollection.value &&
+            viewModel.replacedCollection.value == null
 
-    private suspend fun <T> whenNoDatabaseErrorDialog(block: () -> T): T {
+    private suspend fun <T> whenNoDatabaseRecovery(block: () -> T): T {
         while (!canShowError()) {
-            merge(lifecycle.currentStateFlow, viewModel.databaseErrorDialogs).first { canShowError() }
+            merge(
+                lifecycle.currentStateFlow,
+                viewModel.recoveryDialogsOpen,
+                viewModel.recoveringCollection,
+                viewModel.replacedCollection,
+            ).first { canShowError() }
             yield()
         }
         return block()
@@ -1077,7 +1099,7 @@ open class DeckPicker :
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
         viewModel.onError.receiveAsFlow().collectInLifecycle { showException(it) }
         observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
-            whenNoDatabaseErrorDialog { showException(error) }?.awaitDismissal()
+            whenNoDatabaseRecovery { showException(error) }?.awaitDismissal()
         }
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
@@ -1090,6 +1112,7 @@ open class DeckPicker :
         viewModel.flowOfResizingDividerVisible.collectInLifecycle(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.collectInLifecycle(::onDecksReloaded)
         viewModel.flowOfCreatedDeckSelected.collectInLifecycle(::onCreatedDeckSelected)
+        viewModel.replacedCollection.filterNotNull().collectInLifecycle(::onImportColpkg)
         viewModel.flowOfStartupResponse.filterNotNull().collectInLifecycle(::onStartupResponse)
         viewModel.flowOfShowContextMenu.collectInLifecycle(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.collectInLifecycle(::showDeckPickerRightClickContextMenu)
@@ -2148,7 +2171,22 @@ open class DeckPicker :
     }
 
     fun restoreFromBackup(path: String) {
-        importColpkg(path)
+        replaceCollection(path)
+    }
+
+    private fun replaceCollection(colpkgPath: String) {
+        val replaced = viewModel.replaceCollection(colpkgPath)
+        launchCatchingTask {
+            withProgress(
+                extractProgress = {
+                    if (progress.hasImporting()) {
+                        text = progress.importing
+                    }
+                },
+            ) {
+                replaced.await()
+            }
+        }
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -2233,7 +2271,7 @@ open class DeckPicker :
     // Callback to import a file -- replacing the existing collection
     fun importReplace(importPath: String) {
         Timber.d("importReplace() for file %s", importPath)
-        importColpkg(importPath)
+        replaceCollection(importPath)
     }
 
     /**
@@ -2653,13 +2691,14 @@ open class DeckPicker :
     }
 
     override fun onImportColpkg(colpkgPath: String?) {
+        importColpkgListener?.onImportColpkg(colpkgPath)
+        viewModel.onReplacedCollectionShown()
         launchCatchingTask {
             // as the current collection is closed before importing a new collection, make sure the
             // new collection is open before the code to update the DeckPicker ui runs
             withCol { }
             invalidateOptionsMenu()
             updateDeckList()
-            importColpkgListener?.onImportColpkg(colpkgPath)
         }
     }
 

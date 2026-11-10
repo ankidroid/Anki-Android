@@ -27,11 +27,11 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
-import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -54,9 +54,15 @@ import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import com.ichi2.utils.NetworkUtils
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -72,6 +78,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.Duration.Companion.minutes
 import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
@@ -162,8 +169,16 @@ class DeckPickerViewModel :
     private val errorQueue = MessageQueue<Exception>()
     val pendingErrors = errorQueue.messages
     private var reloadAfterError: Exception? = null
-    val databaseErrorDialogs: StateFlow<List<DatabaseErrorDialogType>>
-        field = MutableStateFlow(emptyList())
+    val recoveryDialogsOpen: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+    private var recoveringFromCorruption = false
+    private var recoveryStartedFromDialogs = false
+    val recoveringCollection: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+    private var errorHolds = 0
+    private val recoveries = AtomicInteger()
+    val replacedCollection: StateFlow<String?>
+        field = MutableStateFlow(null)
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
@@ -268,8 +283,68 @@ class DeckPickerViewModel :
         reloadDeckCounts(retryAfterError = false)
     }
 
-    fun onDatabaseErrorDialogsChanged(open: List<DatabaseErrorDialogType>) {
-        databaseErrorDialogs.value = open
+    fun onRecoveryDialogsChanged(
+        open: Boolean,
+        loadFailedOpen: Boolean,
+    ) {
+        if (!open && recoveringFromCorruption && !recoveryStartedFromDialogs) dropCorruptionErrors()
+        recoveringFromCorruption = open && (recoveringFromCorruption || loadFailedOpen)
+        recoveryStartedFromDialogs = open && recoveryStartedFromDialogs
+        recoveryDialogsOpen.value = open
+    }
+
+    private fun dropCorruptionErrors() = errorQueue.discard { it.isDatabaseCorruption }
+
+    fun checkDatabase(): Deferred<List<String>?> =
+        recoverCollection {
+            withCol { fixIntegrity().also { recoveries.incrementAndGet() } }.also { reloadDeckCounts() }
+        }
+
+    fun replaceCollection(colpkgPath: String): Deferred<Unit?> =
+        recoverCollection {
+            CollectionManager.importColpkg(colpkgPath, onImported = { recoveries.incrementAndGet() })
+            replacedCollection.value = colpkgPath
+        }
+
+    fun onReplacedCollectionShown() {
+        replacedCollection.value = null
+    }
+
+    private fun <T> recoverCollection(work: suspend () -> T): Deferred<T?> =
+        viewModelScope.async {
+            recoveryStartedFromDialogs = recoveryDialogsOpen.value
+            holdErrorsDuring {
+                try {
+                    work().also { dropCorruptionErrors() }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Timber.w(e, "collection recovery failed")
+                    errorQueue.enqueueFirst(e)
+                    null
+                }
+            }
+        }
+
+    suspend fun downloadCollection(download: suspend () -> Unit) {
+        recoveryStartedFromDialogs = recoveryDialogsOpen.value
+        holdErrorsDuring {
+            download()
+            dropCorruptionErrors()
+        }
+    }
+
+    fun reportDownloadFailure(e: Exception) = errorQueue.enqueueFirst(e)
+
+    suspend fun <T> holdErrorsDuring(block: suspend () -> T): T {
+        errorHolds++
+        recoveringCollection.value = true
+        try {
+            return block()
+        } finally {
+            errorHolds--
+            recoveringCollection.value = errorHolds > 0
+        }
     }
 
     private suspend fun reportError(e: Exception) {
@@ -279,9 +354,14 @@ class DeckPickerViewModel :
     private suspend fun reportRefreshError(
         e: Exception,
         retryAfterError: Boolean,
-    ) = withContext(Dispatchers.Main.immediate) {
-        if (retryAfterError && !e.isDatabaseCorruption) reloadAfterError = e
-        errorQueue.enqueue(e)
+        readAfterRecoveries: Int,
+    ) {
+        if (!e.isDatabaseCorruption) currentCoroutineContext().ensureActive()
+        withContext(NonCancellable + Dispatchers.Main.immediate) {
+            if (e.isDatabaseCorruption && readAfterRecoveries != recoveries.get()) return@withContext
+            if (retryAfterError && !e.isDatabaseCorruption) reloadAfterError = e
+            errorQueue.enqueue(e)
+        }
     }
 
     /**
@@ -510,23 +590,38 @@ class DeckPickerViewModel :
 
     private fun reloadDeckCounts(retryAfterError: Boolean): Job {
         loadDeckCounts?.cancel()
+        var readAfterRecoveries = recoveries.get()
+
+        suspend fun <T> read(block: Collection.() -> T): T {
+            var opened = false
+            try {
+                return withCol {
+                    opened = true
+                    readAfterRecoveries = recoveries.get()
+                    block()
+                }
+            } catch (e: Exception) {
+                if (!opened) readAfterRecoveries = recoveries.get()
+                throw e
+            }
+        }
         val loadDeckCounts =
-            viewModelScope.launchCatching(Dispatchers.IO, onError = { reportRefreshError(it, retryAfterError) }) {
+            viewModelScope.launchCatching(Dispatchers.IO, onError = { reportRefreshError(it, retryAfterError, readAfterRecoveries) }) {
                 Timber.d("Refreshing deck list")
-                withCol {
+                read {
                     dueTree = sched.deckDueTree()
                     flowOfCollectionHasNoCards.value = isEmpty
                 }
 
                 // TODO: This is in the wrong place
                 // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\n", " ") }
+                flowOfStudiedTodayStats.value = read { sched.studiedToday().replace("\n", " ") }
 
                 /**
                  * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
                  * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
                  */
-                val currentSchedulerVersion = withCol { config.schedulerVersion }
+                val currentSchedulerVersion = read { config.schedulerVersion }
 
                 if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
                     schedulerUpgradeDialogShownForVersion = 1L
@@ -537,8 +632,8 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // current deck may have changed
-                focusedDeck = withCol { decks.current().id }
-                refreshUndoMenuState()
+                focusedDeck = read { decks.current().id }
+                refreshUndoMenuState(onRead = { readAfterRecoveries = recoveries.get() })
 
                 // Reopening can leave the counts and selection unchanged after a skipped display refresh.
                 flowOfRefreshDeckList.emit(Unit)
@@ -844,8 +939,9 @@ class DeckPickerViewModel :
      *
      * @see refreshMenuState
      */
-    private suspend fun refreshUndoMenuState() {
+    private suspend fun refreshUndoMenuState(onRead: () -> Unit) {
         withOpenColOrNull {
+            onRead()
             val newUndoLabel = undoLabel()
             val newUndoAvailable = undoAvailable()
             flowOfOptionsMenuState.update { current ->

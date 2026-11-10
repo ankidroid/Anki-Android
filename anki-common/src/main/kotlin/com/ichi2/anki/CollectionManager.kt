@@ -560,7 +560,10 @@ object CollectionManager {
      * TODO: to be fixed in https://github.com/ankitects/anki/issues/5732
      * @throws BackendImportException if the archive contains an invalid collection database.
      */
-    suspend fun importColpkg(colpkgPath: String) {
+    suspend fun importColpkg(
+        colpkgPath: String,
+        onImported: () -> Unit = {},
+    ) {
         withQueue {
             ensureClosedInner()
             ensureBackendInner()
@@ -574,6 +577,7 @@ object CollectionManager {
                 }
                 throw importError
             }
+            onImported()
         }
     }
 
