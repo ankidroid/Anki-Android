@@ -414,8 +414,9 @@ open class PrefsRepository protected constructor(
         defaultValue = TimeboxTimeLimit.DEFAULT_TIMEBOX_MINUTES,
     )
 
+    private val swipeSensitivityPercent by intPref(R.string.pref_swipe_sensitivity_key, 100)
     val swipeSensitivity: Float
-        get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
+        get() = swipeSensitivityPercent / 100F
 
     var frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
     val hideSystemBars: HideSystemBars by enumPref(R.string.hide_system_bars_key, HideSystemBars.NONE)
@@ -432,9 +433,10 @@ open class PrefsRepository protected constructor(
     // **************************************** Controls **************************************** //
     //region Controls
 
+    private val isCornerTouchEnabled by booleanPref(R.string.gestures_corner_touch_preference, false)
     val tapGestureMode: TapGestureMode
         get() =
-            when (getBoolean(R.string.gestures_corner_touch_preference, false)) {
+            when (isCornerTouchEnabled) {
                 true -> TapGestureMode.NINE_POINT
                 false -> TapGestureMode.FOUR_POINT
             }
@@ -461,9 +463,12 @@ open class PrefsRepository protected constructor(
      *
      * @see com.ichi2.anki.preferences.DeveloperOptionsFragment
      */
+    private var isDeveloperOptionsEnabledByUser by booleanPref(R.string.developer_options_enabled_by_user_key, false)
     var isDeveloperOptionsEnabled: Boolean
-        get() = getBoolean(R.string.developer_options_enabled_by_user_key, false) || BuildConfig.DEBUG
-        set(value) = putBoolean(R.string.developer_options_enabled_by_user_key, value)
+        get() = isDeveloperOptionsEnabledByUser || BuildConfig.DEBUG
+        set(value) {
+            isDeveloperOptionsEnabledByUser = value
+        }
 
     var isNewStudyScreenEnabled by booleanPref(R.string.new_reviewer_options_key, false)
 
@@ -476,8 +481,9 @@ open class PrefsRepository protected constructor(
     @set:VisibleForTesting
     var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
+    private val isWebDebugEnabledByUser by booleanPref(R.string.html_javascript_debugging_key, false)
     val isWebDebugEnabled: Boolean
-        get() = (getBoolean(R.string.html_javascript_debugging_key, false) || BuildConfig.DEBUG) && !isRunningAsUnitTest
+        get() = (isWebDebugEnabledByUser || BuildConfig.DEBUG) && !isRunningAsUnitTest
 
     // ************************************* Switch Profile option ********************************** //
 
