@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <corners android:radius="@dimen/m3_alert_dialog_corner_size" />
-    <stroke android:width="?attr/widgetStrokeWidth" android:color="?attr/widgetStrokeColor" />
-</shape>
