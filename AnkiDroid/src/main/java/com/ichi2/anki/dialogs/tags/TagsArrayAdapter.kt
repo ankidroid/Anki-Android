@@ -16,13 +16,13 @@ import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ItemTagBinding
-import com.ichi2.anki.dialogs.tags.TagTree.TagTreeNode
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
 import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.TypedFilter
+import java.util.IdentityHashMap
 import com.ichi2.anki.common.android.R as CommonR
 
 /**
@@ -36,19 +36,22 @@ class TagsArrayAdapter(
     class ViewHolder(
         val binding: ItemTagBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        internal lateinit var node: TagTreeNode
+        internal lateinit var node: TagTree.Node
             private set
 
-        internal fun bindNode(node: TagTreeNode) {
-            clearNodeBinding()
+        internal fun bindNode(
+            node: TagTree.Node,
+            holders: MutableMap<TagTree.Node, ViewHolder>,
+        ) {
+            clearNodeBinding(holders)
             this.node = node
-            node.vh = this
+            holders[node] = this
         }
 
-        internal fun clearNodeBinding() {
+        internal fun clearNodeBinding(holders: MutableMap<TagTree.Node, ViewHolder>) {
             // If a note already has a replacement holder, preserve its binding.
-            if (::node.isInitialized && node.vh === this) {
-                node.vh = null
+            if (::node.isInitialized && holders[node] === this) {
+                holders.remove(node)
             }
         }
 
@@ -65,7 +68,8 @@ class TagsArrayAdapter(
             get() = binding.checkBoxView.state
     }
 
-    private val tree: TagTree
+    private val tree = TagTree(tags)
+    private val boundHolders = IdentityHashMap<TagTree.Node, ViewHolder>()
 
     /**
      * Context and Long click listener for each tag item. Used to add a subtag for the clicked tag.
@@ -74,12 +78,13 @@ class TagsArrayAdapter(
     var tagContextAndLongClickListener: OnContextAndLongClickListener? = null
 
     fun sortData() {
-        tree.sortData()
+        tags.sort()
     }
 
     /** Refresh the tag tree and checkbox states after bulk selection changes. */
     fun notifyCheckedStatusesChanged() {
-        tree.rebuildTagTree()
+        boundHolders.clear()
+        tree.refreshSelection()
         notifyDataSetChanged()
     }
 
@@ -91,20 +96,13 @@ class TagsArrayAdapter(
         val vh = ViewHolder(binding)
         // clicking the checkbox toggles the tag's check state
         binding.checkBoxView.setOnClickListener {
-            val checkBox = binding.checkBoxView
-            when (checkBox.state) {
-                CHECKED -> tags.check(vh.node.tag, false)
-                UNCHECKED -> tags.uncheck(vh.node.tag)
-                INDETERMINATE -> tags.setIndeterminate(vh.node.tag)
-            }
-            vh.node.onCheckStateChanged(tags)
+            tree.toggleChecked(vh.node).forEach { node -> boundHolders[node]?.let(::bindCheckBox) }
             onSelectionUpdate()
         }
         // clicking other parts toggles the expansion state, or the checkbox (for leaf)
         vh.itemView.setOnClickListener {
             if (vh.node.isNotLeaf()) {
-                vh.node.toggleIsExpanded()
-                tree.tagToIsExpanded[vh.node.tag] = !tree.tagToIsExpanded[vh.node.tag]!!
+                tree.toggleExpanded(vh.node)
                 updateExpanderBackgroundImage(binding.expandButton, vh.node)
                 // content of RecyclerView may change due to the expansion / collapse
                 val deltaSize = vh.node.subtreeSize - 1
@@ -129,7 +127,7 @@ class TagsArrayAdapter(
         position: Int,
     ) {
         val binding = holder.binding
-        holder.bindNode(tree.getVisibleTagTreeNode(position)!!)
+        holder.bindNode(tree[position]!!, boundHolders)
         holder.itemView.tag = holder.node.tag
 
         if (tree.hasVisibleNestedTag) {
@@ -148,30 +146,40 @@ class TagsArrayAdapter(
 
         binding.textView.text = TagsUtil.getTagParts(holder.node.tag).last()
 
-        if (tags.isIndeterminate(holder.node.tag)) {
-            binding.checkBoxView.state = INDETERMINATE
-        } else {
-            binding.checkBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
+        bindCheckBox(holder)
+    }
+
+    private fun bindCheckBox(holder: ViewHolder) {
+        holder.binding.checkBoxView.apply {
+            state =
+                when (tree.state(holder.node)) {
+                    TagTree.State.INDETERMINATE -> INDETERMINATE
+                    TagTree.State.CHECKED -> CHECKED
+                    TagTree.State.UNCHECKED -> UNCHECKED
+                }
+            val hasSelectedDescendants = tree.hasSelectedDescendants(holder.node)
+            cycleIndeterminateToChecked = hasSelectedDescendants
+            cycleCheckedToIndeterminate = hasSelectedDescendants
+            refreshDrawableState()
         }
-        holder.node.updateCheckBoxCycleStyle(tags)
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
-        holder.clearNodeBinding()
+        holder.clearNodeBinding(boundHolders)
         super.onViewRecycled(holder)
     }
 
-    override fun getItemCount(): Int = tree.getItemCount()
+    override fun getItemCount(): Int = tree.size
 
     /**
-     * Set the background resource of the [ImageButton] according to information of the given [TagTreeNode].
+     * Set the background resource of the [ImageButton] according to information of the given [TagTree.Node].
      *
      * @param button The [ImageButton] to update.
-     * @param node The corresponding [TagTreeNode].
+     * @param node The corresponding [TagTree.Node].
      */
     private fun updateExpanderBackgroundImage(
         button: ImageButton,
-        node: TagTreeNode,
+        node: TagTree.Node,
     ) {
         // More custom display related to the node can be added here.
         // For example, display some icon if the node is a leaf? (assets required)
@@ -202,6 +210,7 @@ class TagsArrayAdapter(
             constraint: CharSequence?,
             results: List<String>,
         ) {
+            boundHolders.clear()
             tree.publishResults(results, expandTarget)
             expandTarget = String()
             notifyDataSetChanged()
@@ -214,10 +223,6 @@ class TagsArrayAdapter(
         fun setExpandTarget(tag: String) {
             expandTarget = tag
         }
-    }
-
-    init {
-        tree = TagTree(tags)
     }
 
     companion object {

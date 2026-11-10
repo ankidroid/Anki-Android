@@ -2,11 +2,11 @@
 // SPDX-FileCopyrightText: Copyright (c) 2026 capthunder19 <anirudhpatwal19@gmail.com>
 package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.anki.dialogs.tags.TagTree.TagTreeNode
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import com.ichi2.anki.dialogs.tags.TagTree.Node as TagTreeNode
 
 class TagsArrayAdapterTest {
     private fun leaf(
@@ -20,7 +20,6 @@ class TagsArrayAdapterTest {
             level = parent.level + 1,
             subtreeSize = 1,
             isExpanded = true,
-            vh = null,
         )
 
     private fun root(): TagTreeNode =
@@ -31,7 +30,6 @@ class TagsArrayAdapterTest {
             level = -1,
             subtreeSize = 0,
             isExpanded = true,
-            vh = null,
         )
 
     @Test
