@@ -1465,12 +1465,14 @@ class CardBrowserViewModel(
 
         context(_: Collection)
         fun SearchRequest.asSearchString(): SearchString? = this.toSearchString().getOrNull()
-        if (!forceRefresh && withCol { searchRequestFlow.value.asSearchString() == searchRequest.asSearchString() }) {
+        val isDuplicateSearch = !forceRefresh && withCol { searchRequestFlow.value.asSearchString() == searchRequest.asSearchString() }
+        // Equivalent queries can still change the text and chip filters shown to the user.
+        searchRequestFlow.value = searchRequest
+        if (isDuplicateSearch) {
             Timber.d("skipping duplicate search: forceRefresh is false")
             return@launch
         }
 
-        searchRequestFlow.value = searchRequest
         launchSearchForCards(feedbackMode = feedbackMode)
     }
 

@@ -290,6 +290,8 @@ class CardBrowserSearchViewModel(
      */
     fun submitSavedSearch(search: SavedSearch) {
         Timber.i("selected saved search")
+        // TODO: Populate chips from the saved query (requires backend work).
+        updateFilterState { SearchFilters.EMPTY }
         onSearchTextChanged(search.query)
         submitCurrentSearch()
     }
