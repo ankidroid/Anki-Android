@@ -438,13 +438,21 @@ class DeckPickerViewModel :
         }
     }
 
+    private suspend fun reportErrorAndReload(
+        e: Exception,
+        readAfterRecoveries: Int,
+    ) {
+        reportError(e, readAfterRecoveries)
+        if (!e.isDatabaseCorruption) reloadDeckCounts()
+    }
+
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
      * @param did ID of the deck to delete
      */
     fun deleteDeck(did: DeckId) =
-        launchReportingErrors {
+        launchReportingErrors(onError = ::reportErrorAndReload) {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
                 val changes =
@@ -503,7 +511,7 @@ class DeckPickerViewModel :
     }
 
     fun emptyFilteredDeck(deckId: DeckId): Job =
-        launchReportingErrors {
+        launchReportingErrors(onError = ::reportErrorAndReload) {
             progressManager.withProgress {
                 Timber.i("empty filtered deck %s", deckId)
                 withCol { decks.select(deckId) }
@@ -516,7 +524,7 @@ class DeckPickerViewModel :
      * Rebuilds a filtered deck with its current filter settings
      */
     fun rebuildFilteredDeck(deckId: DeckId): Job =
-        launchReportingErrors {
+        launchReportingErrors(onError = ::reportErrorAndReload) {
             progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
                 Timber.i("rebuilding filtered deck %s", deckId)
                 withCol {
@@ -535,7 +543,7 @@ class DeckPickerViewModel :
     val flowOfCreatedDeckSelected = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     fun selectCreatedDeck(deckId: DeckId) =
-        launchReportingErrors {
+        launchReportingErrors(onError = ::reportErrorAndReload) {
             markDeckSelected(deckId)
             flowOfCreatedDeckSelected.emit(Unit)
         }
