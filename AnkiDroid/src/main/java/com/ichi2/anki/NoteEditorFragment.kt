@@ -204,6 +204,7 @@ import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import com.google.android.material.R as MaterialR
 import com.ichi2.anki.common.android.R as CommonR
 import com.ichi2.anki.noteeditor.R as NoteEditorR
 
@@ -588,7 +589,7 @@ class NoteEditorFragment :
                     0,
                 ),
             )
-            setIconColor(MaterialColors.getColor(requireContext(), CommonR.attr.toolbarIconColor, 0))
+            setIconColor(MaterialColors.getColor(requireContext(), MaterialR.attr.colorOnSurface, 0))
         }
         toolbarLayoutDialog.bind(binding.toolbarLayoutDialog, toolbarPreferences, savedInstanceState, ::updateToolbar)
         setupEdgeToEdge()
@@ -2290,7 +2291,7 @@ class NoteEditorFragment :
     ) {
         val drawable =
             ResourcesCompat.getDrawable(resources, drawableRes, null)!!.apply {
-                setTint(MaterialColors.getColor(requireContext(), CommonR.attr.toolbarIconColor, 0))
+                setTint(MaterialColors.getColor(requireContext(), MaterialR.attr.colorOnSurface, 0))
             }
         val button =
             toolbar.insertItem(0, drawable) { insertCloze(type) }.apply {
@@ -2389,7 +2390,7 @@ class NoteEditorFragment :
         // Let the user add more buttons (always at the end).
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, NoteEditorR.drawable.ic_add_toolbar_icon, null)
-        drawable!!.setTint(MaterialColors.getColor(requireContext(), CommonR.attr.toolbarIconColor, 0))
+        drawable!!.setTint(MaterialColors.getColor(requireContext(), MaterialR.attr.colorOnSurface, 0))
         val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(CommonString.add_toolbar_item)
         addButton.setTooltipTextCompat(resources.getString(CommonString.add_toolbar_item))

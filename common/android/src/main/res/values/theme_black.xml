@@ -78,7 +78,6 @@
         <!-- Note editor colors -->
         <item name="android:textColorHighlight">@color/material_light_blue_900</item>
         <item name="toolbarBackgroundColor">#616161</item>
-        <item name="toolbarIconColor">@color/white</item>
         <item name="buttonShadowColor">#726B6B</item>
         <item name="buttonRippleColor">#BABABA</item>
         <item name="buttonForegroundColor">#363636</item>
