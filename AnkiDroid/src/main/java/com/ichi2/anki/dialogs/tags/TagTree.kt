@@ -3,50 +3,29 @@
 
 package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.anki.dialogs.tags.TagsArrayAdapter.ViewHolder
-import com.ichi2.ui.CheckBoxTriStates
-import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
-import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.TagsUtil
 import java.util.Locale
 import java.util.Stack
 import java.util.TreeSet
 
+/** Tag hierarchy, visible rows and selection policy used by the tag dialog. */
 internal class TagTree(
     private val tags: TagsList,
 ) {
+    enum class State { INDETERMINATE, UNCHECKED, CHECKED }
+
     /**
-     * The node class of the tag tree.
-     * @param tag The full tag that the node represents.
-     * @param parent The parent of the node (null for the root).
-     * @param children The children of the node.
-     * @param level The level of the tag in the tree (-1 for the root).
-     * @param subtreeSize The size of the subtree if the node is expanded. This exists because
-     * we want to save the [isExpanded] state of child tags, even if the parent is not expanded.
-     * When we expand a tag, we do not want to walk the tree to determine how many nodes were added or removed.
-     * @param isExpanded whether the node is expanded or not
-     * @param vh The reference to currently bound [ViewHolder]. A node bound with some [ViewHolder] must have [vh] nonnull.
-     * @see TagsArrayAdapter.onBindViewHolder for the binding
+     * A row in the hierarchy. [subtreeSize] includes this row and its visible descendants,
+     * retaining that count while collapsed so expanding it need not walk the subtree.
      */
-    data class TagTreeNode(
+    data class Node(
         val tag: String,
-        val parent: TagTreeNode?,
-        val children: ArrayList<TagTreeNode>,
+        val parent: Node?,
+        val children: ArrayList<Node>,
         val level: Int,
         var subtreeSize: Int,
         var isExpanded: Boolean,
-        var vh: ViewHolder?,
     ) {
-        /**
-         * Get or set the checkbox state of the currently bound ViewHolder.
-         * [vh] must be nonnull.
-         */
-        private var checkBoxState: CheckBoxTriStates.State?
-            get() = vh?.binding?.checkBoxView?.state
-            set(state) {
-                state?.let { vh?.binding?.checkBoxView?.state = it }
-            }
-
         /**
          * Return the number of visible nodes in the subtree.
          * If [isExpanded] is set to false, the subtree is collapsed, only the node itself is visible.
@@ -76,59 +55,14 @@ internal class TagTree(
             }
         }
 
-        /**
-         * Set the cycle style of the node's [vh]'s checkbox.
-         * For nodes without selected descendants: CHECKED -> UNCHECKED -> CHECKED -> ...
-         * For nodes with checked or indeterminate descendants: CHECKED -> INDETERMINATE -> CHECKED -> ...
-         *
-         * @param tags The [TagsList] that manages tags.
-         */
-        fun updateCheckBoxCycleStyle(tags: TagsList) {
-            val hasSelectedDescendants = tags.hasSelectedDescendants(tag)
-            vh?.binding?.checkBoxView?.cycleIndeterminateToChecked = hasSelectedDescendants
-            vh?.binding?.checkBoxView?.cycleCheckedToIndeterminate = hasSelectedDescendants
-        }
-
-        /**
-         * Update ancestor states from the complete selection, independently of which nodes are visible.
-         * Preserve tags present on some notes even when their last selected descendant is cleared.
-         *
-         * @param tags The [TagsList] that manages tags.
-         */
-        fun onCheckStateChanged(tags: TagsList) {
-            fun update(node: TagTreeNode) {
-                val hasSelectedDescendants = tags.hasSelectedDescendants(node.tag)
-                if (!tags.isChecked(node.tag) && hasSelectedDescendants) {
-                    tags.setIndeterminate(node.tag)
-                    node.checkBoxState = INDETERMINATE
-                }
-                if (tags.isIndeterminate(node.tag) && !tags.isPartiallySelected(node.tag) && !hasSelectedDescendants) {
-                    tags.uncheck(node.tag)
-                    node.checkBoxState = UNCHECKED
-                }
-                node.updateCheckBoxCycleStyle(tags)
-                node.vh
-                    ?.binding
-                    ?.checkBoxView
-                    ?.refreshDrawableState()
-            }
-            update(this)
-            for (ancestor in iterateAncestorsOf(this)) {
-                // do not perform update on the virtual root
-                if (ancestor.parent != null) {
-                    update(ancestor)
-                }
-            }
-        }
-
         companion object {
-            fun iterateAncestorsOf(start: TagTreeNode) =
-                object : Iterator<TagTreeNode> {
+            fun iterateAncestorsOf(start: Node) =
+                object : Iterator<Node> {
                     var current = start
 
                     override fun hasNext(): Boolean = current.parent != null
 
-                    override fun next(): TagTreeNode {
+                    override fun next(): Node {
                         current = current.parent!!
                         return current
                     }
@@ -136,48 +70,73 @@ internal class TagTree(
         }
     }
 
-    /**
-     * A subset of all tags in [tags] satisfying the user's search.
-     * @see getFilter
-     */
     private val filteredList: ArrayList<String>
+    private lateinit var treeRoot: Node
+    private val tagToIsExpanded = HashMap<String, Boolean>()
 
-    /**
-     * The root node of the tag tree.
-     */
-    private lateinit var treeRoot: TagTreeNode
-
-    /**
-     * A mapping from tag strings to corresponding nodes.
-     */
-    private val tagToNode: HashMap<String, TagTreeNode>
-
-    /**
-     * Whether there exists visible nested tag.
-     * Recalculated everytime [rebuildTagTree] is called.
-     */
-    var hasVisibleNestedTag: Boolean
+    var hasVisibleNestedTag = false
         private set
 
-    /**
-     * A mapping from tag strings to its expand state.
-     * Used to restore expand states between filtering results.
-     * Must be updated every time a node's [TagTreeNode.isExpanded] changed.
-     */
-    val tagToIsExpanded: HashMap<String, Boolean>
+    val size: Int get() = treeRoot.subtreeSize
 
-    fun sortData() {
+    init {
         tags.sort()
+        filteredList = ArrayList(tags.toList())
+        tags.forEach { tagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it) }
+        rebuildTagTree()
     }
 
-    /**
-     * Find the [TagTreeNode] of the [index]-th visible tag.
-     * Implemented by walking the tree using [TagTreeNode.subtreeSize].
-     *
-     * @param index The index of the node to find.
-     * @return The corresponding [TagTreeNode]. Null if out-of-bound.
-     */
-    fun getVisibleTagTreeNode(index: Int): TagTreeNode? {
+    fun state(node: Node): State =
+        when {
+            tags.isIndeterminate(node.tag) -> State.INDETERMINATE
+            tags.isChecked(node.tag) -> State.CHECKED
+            else -> State.UNCHECKED
+        }
+
+    fun hasSelectedDescendants(node: Node): Boolean = tags.hasSelectedDescendants(node.tag)
+
+    /** Toggle the tag and update all ancestors, including those hidden by a filter. */
+    fun toggleChecked(node: Node): List<Node> {
+        when (state(node)) {
+            State.UNCHECKED -> tags.check(node.tag, false)
+            State.INDETERMINATE -> if (hasSelectedDescendants(node)) tags.check(node.tag, false) else tags.uncheck(node.tag)
+            State.CHECKED -> if (hasSelectedDescendants(node)) tags.setIndeterminate(node.tag) else tags.uncheck(node.tag)
+        }
+        val changed =
+            listOf(node) +
+                Node
+                    .iterateAncestorsOf(node)
+                    .asSequence()
+                    .filter { it.parent != null }
+                    .toList()
+        for (current in changed) {
+            val hasSelectedDescendants = hasSelectedDescendants(current)
+            if (!tags.isChecked(current.tag) && hasSelectedDescendants) tags.setIndeterminate(current.tag)
+            if (tags.isIndeterminate(current.tag) && !tags.isPartiallySelected(current.tag) && !hasSelectedDescendants) {
+                tags.uncheck(current.tag)
+            }
+        }
+        return changed
+    }
+
+    fun toggleExpanded(node: Node) {
+        node.toggleIsExpanded()
+        tagToIsExpanded[node.tag] = node.isExpanded
+    }
+
+    fun refreshSelection() = rebuildTagTree()
+
+    fun publishResults(
+        results: List<String>,
+        expandTarget: String = "",
+    ) {
+        filteredList.clear()
+        filteredList.addAll(results)
+        tags.sort()
+        rebuildTagTree(expandTarget)
+    }
+
+    operator fun get(index: Int): Node? {
         var remain = index
         var node = treeRoot
         while (remain < node.subtreeSize) {
@@ -198,21 +157,7 @@ internal class TagTree(
         return null
     }
 
-    /**
-     * @return The number of visible tags.
-     */
-    fun getItemCount(): Int = treeRoot.subtreeSize
-
-    /**
-     * Rebuild the tag tree. The tags have been sorted using the hierarchical comparator
-     * [TagsUtil.compareTag], which leads to a DFN order. Use a stack to build the tree without
-     * recursion.
-     * The initial expand states are inherited through [tagToIsExpanded].
-     * A special tag can be set so that the path to it is expanded.
-     *
-     * @param expandTarget The target tag to expand. Do nothing if it is empty or not found.
-     */
-    fun rebuildTagTree(expandTarget: String = "") {
+    private fun rebuildTagTree(expandTarget: String = "") {
         // init mapping for newly added tags
         filteredList.forEach {
             if (!tagToIsExpanded.containsKey(it)) {
@@ -225,10 +170,9 @@ internal class TagTree(
             }
         }
         hasVisibleNestedTag = false
-        val stack = Stack<TagTreeNode>()
-        treeRoot = TagTreeNode("", null, ArrayList(), -1, 0, true, null)
+        val stack = Stack<Node>()
+        treeRoot = Node("", null, ArrayList(), -1, 0, true)
         stack.add(treeRoot)
-        tagToNode.clear()
 
         fun stackPopAndPushUp() {
             val popped = stack.pop()
@@ -245,9 +189,8 @@ internal class TagTree(
             }
             val parent = stack.peek()
             val node =
-                TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!, null)
+                Node(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!)
             parent.children.add(node)
-            tagToNode[tag] = node
             stack.add(node)
             if (stack.size > 2) {
                 hasVisibleNestedTag = true
@@ -278,26 +221,5 @@ internal class TagTree(
         // mark shown tags as expanded, so that they will be expanded next time the tree is built
         res.forEach { tagToIsExpanded[it] = true }
         return res
-    }
-
-    fun publishResults(
-        results: List<String>,
-        expandTarget: String,
-    ) {
-        filteredList.clear()
-        filteredList.addAll(results)
-        sortData()
-        rebuildTagTree(expandTarget)
-    }
-
-    init {
-        sortData()
-        filteredList = ArrayList(tags.toList())
-        tagToNode = HashMap()
-        tagToIsExpanded = HashMap()
-        // set the initial expand state according to its checked state
-        tags.forEach { tagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it) }
-        hasVisibleNestedTag = false
-        rebuildTagTree()
     }
 }

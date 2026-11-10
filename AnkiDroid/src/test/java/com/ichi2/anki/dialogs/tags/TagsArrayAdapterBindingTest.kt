@@ -14,7 +14,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import kotlin.test.assertNull
 import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
@@ -56,7 +55,6 @@ class TagsArrayAdapterBindingTest : RobolectricTest() {
         withTags(TagsList(listOf("B::child", "Z"), listOf("B::child", "Z"))) {
             val parent = holder("B")
             adapter.onViewRecycled(parent)
-            assertNull(parent.node.vh)
             adapter.onBindViewHolder(parent, 2)
             assertEquals("Z", parent.text)
             assertEquals(CHECKED, parent.checkboxState)
