@@ -4,6 +4,7 @@ package com.ichi2.anki.browser.search
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.Companion.MAX_SEARCH_HISTORY_ENTRIES
@@ -307,6 +308,46 @@ class CardBrowserSearchViewModelTest : JvmTest() {
                 submitSavedSearch(savedSearches.single())
                 assertEquals("sample query", expectMostRecentItem()?.toSearchString())
             }
+        }
+
+    @Test
+    fun `submitting a saved search excludes previous chip filters`() =
+        withViewModel(cardCount = 0) {
+            isScreenOpenFlow.value = true
+            setFlagsFilter(listOf(Flag.BLUE))
+
+            submittedSearchFlow.test {
+                expectNoEvents()
+                submitSavedSearch(SavedSearch("Red cards", "bonjour flag:1"))
+                assertEquals("bonjour flag:1", expectMostRecentItem()?.toSearchString())
+            }
+        }
+
+    @Test
+    fun `submit saved search - clears all filter types in advanced mode`() =
+        withViewModel(cardCount = 0) {
+            resetSearchState(
+                SearchRequest(
+                    "previous search",
+                    SearchFilters(
+                        decks = col.decks.allNamesAndIds(),
+                        flags = listOf(Flag.BLUE),
+                        tags = listOf("previous"),
+                        noteTypes = col.notetypes.allNamesAndIds().toList(),
+                        cardStates = listOf(CardState.Suspended),
+                    ),
+                ),
+            ).join()
+            isScreenOpenFlow.value = true
+            toggleAdvancedSearch()
+
+            submittedSearchFlow.test {
+                expectNoEvents()
+                submitSavedSearch(SavedSearch("Red cards", "bonjour flag:1"))
+                assertEquals(SearchRequest("bonjour flag:1"), expectMostRecentItem())
+            }
+            assertEquals(SearchFilters.EMPTY, filtersFlow.value)
+            assertEquals(listOf(SearchHistoryEntry("bonjour flag:1")), searchHistory)
         }
 
     @Test

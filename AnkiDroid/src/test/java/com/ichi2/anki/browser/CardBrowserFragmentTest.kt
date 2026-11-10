@@ -11,9 +11,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.google.android.material.chip.Chip
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.getVisibleRows
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.runBlocking
@@ -23,6 +27,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 
 /** Test of [CardBrowserFragment] */
 @RunWith(AndroidJUnit4::class)
@@ -73,6 +78,33 @@ class CardBrowserFragmentTest : RobolectricTest() {
                 searchView!!.editText.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
                 expectMostRecentItem()
             }
+        }
+
+    @Test
+    fun `selecting a saved search keeps its query when current chips already match`() =
+        withCardBrowserFragment(useSearchView = true) {
+            activityViewModel.setSelectedDeck(SelectableDeck.AllDecks)
+            activityViewModel.searchJob?.join()
+            advanceRobolectricLooper()
+            searchViewModel.setFlagsFilter(listOf(Flag.BLUE))
+            activityViewModel.searchJob?.join()
+            advanceRobolectricLooper()
+            assertThat(activityViewModel.searchRequestFlow.value.query, equalTo(""))
+            assertThat(activityViewModel.searchRequestFlow.value.filters.flags, equalTo(listOf(Flag.BLUE)))
+            val completedSearch = assertNotNull(activityViewModel.searchJob)
+
+            assertNotNull(searchView).show()
+            advanceRobolectricLooper()
+            searchViewModel.submitSavedSearch(SavedSearch("Blue cards", "flag:4"))
+            activityViewModel.searchJob?.join()
+            advanceRobolectricLooper()
+
+            assertThat(activityViewModel.searchRequestFlow.value.query, equalTo("flag:4"))
+            assertThat(activityViewModel.searchRequestFlow.value.filters, equalTo(SearchFilters.EMPTY))
+            assertThat("equivalent searches reuse the results", activityViewModel.searchJob, sameInstance(completedSearch))
+            assertNotNull(searchView).show()
+            advanceRobolectricLooper()
+            assertThat(assertNotNull(searchView).editText.text.toString(), equalTo("flag:4"))
         }
 
     @Test
