@@ -3,6 +3,7 @@
 package com.ichi2.anki.noteeditor
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -58,6 +59,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.noteeditor.presentation.ToolbarLayoutMode
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.Theme
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.dialogs.AnkiDroidDialog
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.AnkiDroidThemeProvider
@@ -71,12 +73,14 @@ fun ToolbarLayoutDialog(
     onDismiss: () -> Unit,
     showSelectionBackground: Boolean = true,
 ) {
+    // Read outside the dialog: its window replaces LocalContext, which the border is read from
+    val border = MaterialTheme.widgetBorder
     AnkiDroidDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth(),
         properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
-        ToolbarLayoutDialogCard(selected, onSelect, showSelectionBackground)
+        ToolbarLayoutDialogCard(selected, onSelect, showSelectionBackground, border)
     }
 }
 
@@ -86,12 +90,14 @@ private fun ToolbarLayoutDialogCard(
     selected: ToolbarLayoutMode,
     onSelect: (ToolbarLayoutMode) -> Unit,
     showSelectionBackground: Boolean,
+    border: BorderStroke?,
 ) {
     Surface(
         shape = AlertDialogDefaults.shape,
         color = AlertDialogDefaults.containerColor,
         contentColor = AlertDialogDefaults.textContentColor,
         tonalElevation = AlertDialogDefaults.TonalElevation,
+        border = border,
     ) {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(24.dp)) {
             Text(
