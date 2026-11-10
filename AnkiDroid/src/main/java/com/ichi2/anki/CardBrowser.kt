@@ -78,6 +78,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.uiConfigPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.ResizablePaneManager
@@ -232,7 +233,7 @@ open class CardBrowser :
                 divider = requireNotNull(binding?.cardBrowserResizingDivider) { "cardBrowserResizingDivider" },
                 startPane = requireNotNull(binding?.cardBrowserFrame) { "cardBrowserFrame" },
                 endPane = requireNotNull(binding?.noteEditorFrame) { "noteEditorFrame" },
-                sharedPrefs = Prefs.getUiConfig(this),
+                sharedPrefs = uiConfigPrefs(),
                 startPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
                 endPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
             )
