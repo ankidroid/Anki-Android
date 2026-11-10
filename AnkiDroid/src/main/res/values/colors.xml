@@ -5,12 +5,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
 
-    <color name="wb_fg_color">#B00000FF</color>
-    <color name="wb_fg_color_inv">#0099FF</color>
     <color name="whiteboard_eraser">#80808080</color>
-
-    <color name="note_editor_selected_item_background">#D1D0CE</color>
-    <color name="note_editor_selected_item_text">#000000</color>
 
     <!-- For Card background in Card Browser -->
     <color name="flag_red">#FF4747</color>
@@ -26,8 +21,6 @@
     <color name="flag_reviewer_pink">#FF82EE</color>
     <color name="flag_reviewer_turquoise">#00D1B5</color>
     <color name="flag_reviewer_purple">#9649DD</color>
-
-    <color name="fab_background">#ff757575</color>
 
     <!-- Audio Recorder Colors -->
     <color name="audio_recorder_red">#FF4747</color>
