@@ -14,6 +14,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSurface">?android:colorBackground</item>
         <item name="colorSecondary">@color/material_blue_400</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOnBackground">@color/white</item>
         <item name="android:textColorHint">@color/hint_text_color</item>
@@ -45,6 +46,19 @@
         <item name="colorSurfaceContainerHigh">#424C54</item>
         <item name="colorSurfaceContainer">#31373C</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
+        <item name="colorSurfaceContainerLowest">?android:attr/colorBackground</item>
+        <item name="colorPrimaryFixed">@color/material_light_blue_100</item>
+        <item name="colorPrimaryFixedDim">@color/material_light_blue_300</item>
+        <item name="colorOnPrimaryFixed">@color/material_light_blue_900</item>
+        <item name="colorOnPrimaryFixedVariant">@color/material_light_blue_700</item>
+        <item name="colorSecondaryFixed">#C1E7FF</item>
+        <item name="colorSecondaryFixedDim">#9BBDD4</item>
+        <item name="colorOnSecondaryFixed">@color/black</item>
+        <item name="colorOnSecondaryFixedVariant">#3C5A6E</item>
+        <item name="colorTertiaryFixed">@color/material_blue_100</item>
+        <item name="colorTertiaryFixedDim">#78CAFF</item>
+        <item name="colorOnTertiaryFixed">@color/material_blue_900</item>
+        <item name="colorOnTertiaryFixedVariant">#006DA8</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
