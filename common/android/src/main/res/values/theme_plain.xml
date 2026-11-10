@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <color name="theme_plain_primary">#9E9E9E</color>
-    <color name="theme_plain_primary_light">#F5F5F5</color>
-    <color name="theme_plain_accent">#607D8B</color>
-    <color name="theme_plain_primary_text">#212121</color>
-
     <style name="Base.Theme.Light.Plain">
         <!-- Android colors -->
-        <item name="colorPrimary">@color/theme_plain_primary</item>
-        <item name="colorSecondary">@color/theme_plain_accent</item>
+        <item name="colorPrimary">@color/material_grey_500</item>
+        <item name="colorSecondary">@color/material_blue_grey_500</item>
         <item name="colorSurfaceContainer">#F9F9F9</item>
         <item name="colorPrimaryContainer">@color/material_grey_300</item>
         <item name="colorOnPrimaryContainer">@color/material_grey_900</item>
@@ -24,11 +19,11 @@
         <item name="colorSurfaceContainerHigh">#F4F4F4</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
         <!-- Action bar styles -->
-        <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
+        <item name="actionBarPopupTextColor">@color/material_grey_900</item>
         <!-- Bottom navigation -->
         <item name="bottomNavActiveIconColor">@color/white</item>
         <!-- Study Screen colors -->
-        <item name="topBarColor">@color/theme_plain_primary_light</item>
+        <item name="topBarColor">#F5F5F5</item>
         <item name="againTextColor">@color/material_grey_800</item>
         <item name="hardTextColor">@color/material_grey_800</item>
         <item name="goodTextColor">@color/material_grey_800</item>
@@ -42,8 +37,8 @@
         <item name="goodIconColor">@color/material_green_900</item>
         <item name="easyIconColor">@color/material_light_blue_900</item>
         <!-- Study Screen button drawables -->
-        <item name="showAnswerButtonBackground">@color/theme_plain_primary</item>
-        <item name="showAnswerColor">@color/theme_plain_primary</item>
+        <item name="showAnswerButtonBackground">@color/material_grey_500</item>
+        <item name="showAnswerColor">@color/material_grey_500</item>
         <item name="answerButtonRef">@drawable/footer_button_all_plain</item>
         <item name="answerButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
         <!-- Card Browser Colors -->
@@ -56,8 +51,8 @@
         <item name="buttonRippleColor">#595959</item>
         <item name="buttonForegroundColor">#D6D7D7</item>
         <!-- FAB -->
-        <item name="fabNormalColor">@color/theme_plain_accent</item>
-        <item name="fabPressedColor">@color/theme_plain_accent</item> <!-- No change in opacity on FAB pressed to avoid Android's material shadow artifact on translucent backgrounds -->
+        <item name="fabNormalColor">@color/material_blue_grey_500</item>
+        <item name="fabPressedColor">@color/material_blue_grey_500</item> <!-- No change in opacity on FAB pressed to avoid Android's material shadow artifact on translucent backgrounds -->
         <item name="overflowAndPopupMenuIconColor">?attr/colorPrimary</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>
@@ -74,9 +69,9 @@
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>
-        <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
+        <item name="progressDialogButtonTextColor">@color/material_grey_500</item>
 
-        <item name="incrementerButtonBackground">@color/theme_plain_primary</item>
+        <item name="incrementerButtonBackground">@color/material_grey_500</item>
     </style>
 
     <style name="Theme_Light.Plain" parent="Base.Theme.Light.Plain"/>
