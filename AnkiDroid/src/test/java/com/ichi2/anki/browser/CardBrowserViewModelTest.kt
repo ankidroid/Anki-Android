@@ -67,7 +67,6 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.model.cardBrowserNoSorting
 import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.anki.observability.ensureNoOpsExecuted
 import com.ichi2.anki.observability.ensureOpWithHandler
