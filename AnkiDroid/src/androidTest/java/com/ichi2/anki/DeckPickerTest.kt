@@ -3,7 +3,6 @@
 
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.view.View
 import androidx.core.content.edit
 import androidx.test.espresso.Espresso.onView
@@ -29,7 +28,6 @@ import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
 
-@SuppressLint("DirectSystemCurrentTimeMillisUsage")
 class DeckPickerTest : InstrumentedTest() {
     @get:Rule
     val activityRule = ActivityScenarioRule(DeckPicker::class.java)

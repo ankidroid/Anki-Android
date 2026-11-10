@@ -2,7 +2,6 @@
 
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
@@ -831,7 +830,6 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
-    @SuppressLint("DirectCalendarInstanceUsage")
     fun resetDataTest() =
         runTest {
             TimeManager.reset()
