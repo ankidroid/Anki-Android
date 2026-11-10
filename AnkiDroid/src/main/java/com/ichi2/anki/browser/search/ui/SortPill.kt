@@ -236,7 +236,7 @@ class SortPill
                         context.getString(CommonString.sort_pill_label_numeric_descending),
                     )
                 }
-                ColumnType.DATE, ColumnType.UNSPECIFIED -> {
+                ColumnType.DATE, ColumnType.DUE, ColumnType.UNSPECIFIED -> {
                     setIconAndLabel(standardButton, R.drawable.outline_arrow_downward_alt_24, label = null)
                     setIconAndLabel(reverseButton, R.drawable.outline_arrow_upward_alt_24, label = null)
                 }
