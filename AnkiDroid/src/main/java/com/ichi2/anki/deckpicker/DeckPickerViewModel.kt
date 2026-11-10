@@ -27,6 +27,7 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingIO
@@ -59,6 +60,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -160,6 +162,8 @@ class DeckPickerViewModel :
     private val errorQueue = MessageQueue<Exception>()
     val pendingErrors = errorQueue.messages
     private var reloadAfterError: Exception? = null
+    val databaseErrorDialogs: StateFlow<List<DatabaseErrorDialogType>>
+        field = MutableStateFlow(emptyList())
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
@@ -262,6 +266,10 @@ class DeckPickerViewModel :
         if (shown == null || shown !== reloadAfterError) return
         reloadAfterError = null
         reloadDeckCounts(retryAfterError = false)
+    }
+
+    fun onDatabaseErrorDialogsChanged(open: List<DatabaseErrorDialogType>) {
+        databaseErrorDialogs.value = open
     }
 
     private suspend fun reportError(e: Exception) {
