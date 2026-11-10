@@ -3,6 +3,7 @@
 package com.ichi2.anki.browser
 
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.EmptyApplicationCategory
@@ -269,10 +270,10 @@ class SearchHistoryPreferenceKeyTest : AndroidTest {
     }
 }
 
-fun writeSearchHistoryRaw(value: String?) = Prefs.putString(R.string.pref_browser_search_history, value)
+fun writeSearchHistoryRaw(value: String?) = Prefs.sharedPrefs.edit { putString(Prefs.key(R.string.pref_browser_search_history), value) }
 
 @CheckResult
-fun readSearchHistoryRaw() = Prefs.getString(R.string.pref_browser_search_history, null)!!
+fun readSearchHistoryRaw() = Prefs.sharedPrefs.getString(Prefs.key(R.string.pref_browser_search_history), null)!!
 
 suspend fun SearchHistoryEntry.toSearchString(): String? {
     val filters = SearchFilters.from(this@toSearchString) ?: return null
