@@ -11,7 +11,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.launchActivity
-import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.denyPermissions
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -22,27 +22,24 @@ import org.robolectric.Shadows.shadowOf
 
 @RunWith(AndroidJUnit4::class)
 class AdvancedSettingsFragmentTest : RobolectricTest() {
-    // not `Prefs` - the singleton is not cleared
-    private val prefs get() = PrefsRepository(targetContext)
-
     @Test
     fun `'allow templates to record audio' switch updates the pref read by the card viewers`() {
         grantRecordAudioPermission()
-        prefs.allowTemplatesToRecordAudio = false
+        Prefs.allowTemplatesToRecordAudio = false
 
         withAdvancedSettings {
             allowTemplatesToRecordAudioSwitch.performClick()
-            assertThat("enabled after checking the switch", prefs.allowTemplatesToRecordAudio, equalTo(true))
+            assertThat("enabled after checking the switch", Prefs.allowTemplatesToRecordAudio, equalTo(true))
 
             allowTemplatesToRecordAudioSwitch.performClick()
-            assertThat("disabled after unchecking the switch", prefs.allowTemplatesToRecordAudio, equalTo(false))
+            assertThat("disabled after unchecking the switch", Prefs.allowTemplatesToRecordAudio, equalTo(false))
         }
     }
 
     @Test
     fun `'allow templates to record audio' switch does not request the permission when toggled off`() {
         grantRecordAudioPermission()
-        prefs.allowTemplatesToRecordAudio = true
+        Prefs.allowTemplatesToRecordAudio = true
 
         withAdvancedSettings {
             // the switch is forced off when the screen opens without the permission,
@@ -51,7 +48,7 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
 
             allowTemplatesToRecordAudioSwitch.performClick()
 
-            assertThat("opt-out is persisted", prefs.allowTemplatesToRecordAudio, equalTo(false))
+            assertThat("opt-out is persisted", Prefs.allowTemplatesToRecordAudio, equalTo(false))
             assertThat(
                 "no permission request is launched",
                 shadowOf(requireActivity()).lastRequestedPermission,
@@ -67,19 +64,19 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
      */
     @Test
     fun `'allow templates to record audio' switch does not persist the opt-in before the permission is granted`() {
-        prefs.allowTemplatesToRecordAudio = false
+        Prefs.allowTemplatesToRecordAudio = false
 
         withAdvancedSettings {
             allowTemplatesToRecordAudioSwitch.performClick()
 
             assertThat("switch stays unchecked", allowTemplatesToRecordAudioSwitch.isChecked, equalTo(false))
-            assertThat("no opt-in is persisted", prefs.allowTemplatesToRecordAudio, equalTo(false))
+            assertThat("no opt-in is persisted", Prefs.allowTemplatesToRecordAudio, equalTo(false))
         }
     }
 
     @Test
     fun `'allow templates to record audio' switch applies the opt-in once the permission is granted`() {
-        prefs.allowTemplatesToRecordAudio = false
+        Prefs.allowTemplatesToRecordAudio = false
 
         withAdvancedSettings {
             allowTemplatesToRecordAudioSwitch.performClick()
@@ -93,13 +90,13 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
             )
 
             assertThat("switch is checked once the permission is granted", allowTemplatesToRecordAudioSwitch.isChecked, equalTo(true))
-            assertThat("the opt-in is persisted", prefs.allowTemplatesToRecordAudio, equalTo(true))
+            assertThat("the opt-in is persisted", Prefs.allowTemplatesToRecordAudio, equalTo(true))
         }
     }
 
     @Test
     fun `'allow templates to record audio' switch is unchecked if the microphone permission is missing`() {
-        prefs.allowTemplatesToRecordAudio = true
+        Prefs.allowTemplatesToRecordAudio = true
 
         withAdvancedSettings {
             assertThat("switch is unchecked", allowTemplatesToRecordAudioSwitch.isChecked, equalTo(false))
