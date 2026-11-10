@@ -160,6 +160,20 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
     }
 
     @Test
+    fun answerShowsAfterZoomWhenActivityDensityDiffersFromWebView() {
+        addTallClozeCard("answer")
+
+        withReviewer { fragment ->
+            waitForCloze("[...]")
+            zoomIn()
+            fragment.withDensityScaledBy(0.75f) {
+                clickShowAnswer()
+                waitForCloze("answer")
+            }
+        }
+    }
+
+    @Test
     fun answerAnchorTakesPrecedenceOverScrollPosition() {
         addNoteUsingBasicNoteType("${SPACER}question", "answer$SPACER").firstCard(col).update { did = testDeckId }
 
@@ -249,6 +263,21 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
                 fragment = activity.fragment as ReviewerFragment
             }
             fragment.binding.webViewLayout.block(fragment)
+        }
+    }
+
+    private fun ReviewerFragment.withDensityScaledBy(
+        factor: Float,
+        block: () -> Unit,
+    ) {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val metrics = resources.displayMetrics
+        val density = metrics.density
+        instrumentation.runOnMainSync { metrics.density = density * factor }
+        try {
+            block()
+        } finally {
+            instrumentation.runOnMainSync { metrics.density = density }
         }
     }
 
