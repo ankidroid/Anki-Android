@@ -30,6 +30,16 @@ class SearchStringTest : JvmTest() {
     }
 
     @Test
+    fun `a non-breaking space before OR is read as a space`() {
+        val noteIds = listOf("t1", "t2", "t3").map { tag -> addBasicNote().update { tags = mutableListOf(tag) }.id }
+
+        val search = fromUserInput("(tag:t3 OR tag:t2\u00a0OR tag:t1)").getOrThrow()
+
+        assertEquals("tag:t3 OR tag:t2 OR tag:t1", search.value)
+        assertEquals(noteIds.toSet(), col.findNotes(search).toSet())
+    }
+
+    @Test
     fun `a searchNode list is transformed to a valid string`() {
         val deckSearchNode = searchNode { deck = "Default" }
         val querySearchNode = searchNode { parsableText = "hi" }
