@@ -7,6 +7,7 @@ import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.collection.OpChanges
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
@@ -1655,7 +1656,12 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
                 expectNoEvents()
             }
             repeat(2) {
-                refreshBrowser(BrowserSearchFeedbackMode.COUNT_ONLY)
+                onEvent(
+                    BrowserEvent.CollectionChanged(
+                        OpChanges.newBuilder().setNoteText(true).build(),
+                        BrowserEvent.CollectionChanged.Origin.NOTE_EDITOR,
+                    ),
+                )
             }
 
             uiEffects.receiveAsFlow().test {

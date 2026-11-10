@@ -822,10 +822,21 @@ class CardBrowserViewModel(
     suspend fun onEvent(event: BrowserEvent) {
         when (event) {
             BrowserEvent.ToggleMarkRequested -> toggleMark()
+            is BrowserEvent.CollectionChanged -> handleCollectionChanged(event)
         }
     }
 
-    suspend fun refreshBrowser(feedbackMode: BrowserSearchFeedbackMode) {
+    private suspend fun handleCollectionChanged(event: BrowserEvent.CollectionChanged) {
+        if (event.origin == BrowserEvent.CollectionChanged.Origin.BROWSER) return
+        val changes = event.changes
+        if (!changes.browserSidebar && !changes.browserTable && !changes.noteText && !changes.card) return
+
+        val feedbackMode =
+            if (event.origin == BrowserEvent.CollectionChanged.Origin.NOTE_EDITOR) {
+                BrowserSearchFeedbackMode.COUNT_ONLY
+            } else {
+                BrowserSearchFeedbackMode.NONE
+            }
         launchSearchForCards(feedbackMode = feedbackMode)
         endMultiSelectMode(SingleSelectCause.Other)
         uiEffects.send(BrowserUiEffect.RefreshControls)

@@ -33,8 +33,8 @@ import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.browser.BrowserEvent
 import com.ichi2.anki.browser.BrowserRowCollection
-import com.ichi2.anki.browser.BrowserSearchFeedbackMode
 import com.ichi2.anki.browser.BrowserUiEffect
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
@@ -664,20 +664,14 @@ open class CardBrowser :
         changes: OpChanges,
         handler: Any?,
     ) {
-        if (handler === this || handler === viewModel) {
-            return
-        }
-
-        if (changes.browserSidebar ||
-            changes.browserTable ||
-            changes.noteText ||
-            changes.card
-        ) {
-            val feedbackMode =
-                if (handler is NoteEditorFragment) BrowserSearchFeedbackMode.COUNT_ONLY else BrowserSearchFeedbackMode.NONE
-            launchCatchingTask {
-                viewModel.refreshBrowser(feedbackMode)
+        val origin =
+            when {
+                handler === this || handler === viewModel -> BrowserEvent.CollectionChanged.Origin.BROWSER
+                handler is NoteEditorFragment -> BrowserEvent.CollectionChanged.Origin.NOTE_EDITOR
+                else -> BrowserEvent.CollectionChanged.Origin.EXTERNAL
             }
+        launchCatchingTask {
+            viewModel.onEvent(BrowserEvent.CollectionChanged(changes, origin))
         }
     }
 
