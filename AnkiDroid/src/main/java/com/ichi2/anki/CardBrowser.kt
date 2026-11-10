@@ -546,6 +546,11 @@ open class CardBrowser :
         viewModel.flowOfNoteEditorCommand.collectInLifecycle(::onNoteEditorCommand)
     }
 
+    private fun refreshControls() {
+        hideProgressBar()
+        invalidateOptionsMenu()
+    }
+
     private fun hideKeyboard() {
         Timber.d("hideKeyboard()")
         searchView?.let { view ->
@@ -626,11 +631,10 @@ open class CardBrowser :
     }
 
     private fun refreshBrowserUI(feedbackMode: BrowserSearchFeedbackMode) {
-        hideProgressBar()
         // reload whole view
         viewModel.launchSearchForCards(feedbackMode = feedbackMode)
         viewModel.endMultiSelectMode(SingleSelectCause.Other)
-        invalidateOptionsMenu() // maybe the availability of undo changed
+        refreshControls()
     }
 
     /**
