@@ -42,7 +42,7 @@ class IntentSyncTest : RobolectricTest() {
         deckPicker {
             Prefs.hkey = "test"
             Prefs.lastSyncTime = 0
-            Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+            Prefs.shouldFetchMedia = ShouldFetchMedia.ALWAYS
 
             IntentHandler.Companion.DoSync().handleAsyncMessage(this)
 
@@ -55,7 +55,7 @@ class IntentSyncTest : RobolectricTest() {
         deckPicker {
             Prefs.hkey = "test"
             Prefs.lastSyncTime = 0
-            Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.NEVER)
+            Prefs.shouldFetchMedia = ShouldFetchMedia.NEVER
 
             IntentHandler.Companion.DoSync().handleAsyncMessage(this)
 

@@ -56,7 +56,7 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
         Prefs.hkey = "test"
         Prefs.lastSyncTime = 0
         Prefs.allowSyncOnMeteredConnections = false
-        Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+        Prefs.shouldFetchMedia = ShouldFetchMedia.ALWAYS
         mockkObject(NetworkUtils)
         every { NetworkUtils.isActiveNetworkMetered() } answers { metered }
         runBlocking { CollectionManager.discardBackend() }
@@ -124,7 +124,7 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
     fun `media-only restriction survives a network change during collection sync`() =
         deckPicker {
             Prefs.allowSyncOnMeteredConnections = true
-            Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ONLY_UNMETERED)
+            Prefs.shouldFetchMedia = ShouldFetchMedia.ONLY_UNMETERED
 
             val request = syncAndGetMediaWork()
 

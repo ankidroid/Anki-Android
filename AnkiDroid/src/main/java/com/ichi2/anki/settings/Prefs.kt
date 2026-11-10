@@ -274,7 +274,8 @@ open class PrefsRepository protected constructor(
 
     // ****************************************** Sync ****************************************** //
 
-    val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
+    @set:VisibleForTesting
+    var isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
     val displaySyncStatus by booleanPref(R.string.sync_status_badge_key, defaultValue = true)
     var allowSyncOnMeteredConnections by booleanPref(R.string.metered_sync_key, defaultValue = false)
 
@@ -291,8 +292,8 @@ open class PrefsRepository protected constructor(
      */
     var lastSyncTime by longPref(R.string.last_sync_time_key, defaultValue = 0L)
 
-    val shouldFetchMedia: ShouldFetchMedia
-        get() = getEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+    @set:VisibleForTesting
+    var shouldFetchMedia: ShouldFetchMedia by enumPref(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
 
     var networkTimeoutSecs by intPref(R.string.sync_io_timeout_secs_key, defaultValue = 60)
 
@@ -407,7 +408,8 @@ open class PrefsRepository protected constructor(
     val keepScreenOn by booleanPref(R.string.keep_screen_on_preference, defaultValue = false)
     val hideHardAndEasyButtons by booleanPref(R.string.hide_hard_and_easy_key, defaultValue = false)
 
-    val doubleTapInterval by intPref(R.string.double_tap_timeout_pref_key, defaultValue = 200)
+    @set:VisibleForTesting
+    var doubleTapInterval by intPref(R.string.double_tap_timeout_pref_key, defaultValue = 200)
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
     var customTimeboxLimit by intPref(
         R.string.custom_timebox_limit_key,
@@ -472,11 +474,11 @@ open class PrefsRepository protected constructor(
 
     var isNewStudyScreenEnabled by booleanPref(R.string.new_reviewer_options_key, false)
 
-    val devIsCardBrowserFragmented: Boolean
-        get() = getBoolean(R.string.dev_card_browser_fragmented, false)
+    @set:VisibleForTesting
+    var devIsCardBrowserFragmented: Boolean by booleanPref(R.string.dev_card_browser_fragmented, false)
 
-    val devBottomNavEnabled: Boolean
-        get() = getBoolean(R.string.dev_bottom_nav_key, false)
+    @set:VisibleForTesting
+    var devBottomNavEnabled: Boolean by booleanPref(R.string.dev_bottom_nav_key, false)
 
     @set:VisibleForTesting
     var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)

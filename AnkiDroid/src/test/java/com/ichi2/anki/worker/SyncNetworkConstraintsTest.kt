@@ -7,7 +7,6 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import anki.sync.syncAuth
-import com.ichi2.anki.R
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.sync.SyncAuth
@@ -38,7 +37,7 @@ class SyncNetworkConstraintsTest : AndroidTest {
     @Test
     fun `background media also respects the collection metered restriction`() {
         Prefs.allowSyncOnMeteredConnections = false
-        Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+        Prefs.shouldFetchMedia = ShouldFetchMedia.ALWAYS
 
         val request = SyncMediaWorker.getWorkRequest(auth)
 
@@ -48,7 +47,7 @@ class SyncNetworkConstraintsTest : AndroidTest {
     @Test
     fun `media unmetered preference applies even when collection may use metered networks`() {
         Prefs.allowSyncOnMeteredConnections = true
-        Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ONLY_UNMETERED)
+        Prefs.shouldFetchMedia = ShouldFetchMedia.ONLY_UNMETERED
 
         val request = SyncMediaWorker.getWorkRequest(auth)
 
@@ -58,7 +57,7 @@ class SyncNetworkConstraintsTest : AndroidTest {
     @Test
     fun `metered networks remain usable when both preferences allow them`() {
         Prefs.allowSyncOnMeteredConnections = true
-        Prefs.putEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+        Prefs.shouldFetchMedia = ShouldFetchMedia.ALWAYS
 
         val collection = captureCollectionRequest()
         val media = SyncMediaWorker.getWorkRequest(auth)
