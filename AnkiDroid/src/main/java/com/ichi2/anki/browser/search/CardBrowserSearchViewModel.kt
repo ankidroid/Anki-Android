@@ -11,6 +11,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
 import com.ichi2.anki.settings.Prefs
@@ -26,8 +27,10 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -88,13 +91,33 @@ class CardBrowserSearchViewModel(
 
     val savedSearchesFlow = MutableStateFlow<List<SavedSearch>>(emptyList())
 
-    val saveSearchNamePromptFlow = MutableSharedFlow<String>()
-
     val canManageSavedSearchesFlow = savedSearchesFlow.map { it.isNotEmpty() }
 
     val userMessageFlow = MutableSharedFlow<UserMessage?>()
 
     val isScreenOpenFlow = MutableStateFlow(false)
+
+    // An open search panel can belong to a hidden Browser tab.
+    val isBrowserVisibleFlow = MutableStateFlow(false)
+
+    // Keep IDs until the view can show the dialog, so deferred requests use current names.
+    private val pendingSaveSearchNamePromptFlow = MutableStateFlow<SearchHistoryEntry?>(null)
+    val saveSearchNamePromptFlow =
+        combine(pendingSaveSearchNamePromptFlow, isBrowserVisibleFlow) { entry, browserVisible ->
+            if (browserVisible) entry else null
+        }.transformLatest { entry ->
+            if (entry == null) return@transformLatest
+
+            val query = withCol { entry.toSearchString() }
+            if (query == null) {
+                pendingSaveSearchNamePromptFlow.compareAndSet(entry, null)
+            } else {
+                emit(entry to query)
+            }
+        }.mapNotNull { (entry, query) ->
+            // The request may have been cleared while the resolved query was queued for delivery.
+            query.takeIf { isBrowserVisibleFlow.value && pendingSaveSearchNamePromptFlow.value == entry }
+        }
 
     private val filterStateUpdateFlow = MutableStateFlow<FilterUpdate>(FilterUpdate.System(SearchFilters.EMPTY))
     val filtersFlow =
@@ -235,12 +258,14 @@ class CardBrowserSearchViewModel(
         }
 
     fun submitCurrentSearch() {
+        pendingSaveSearchNamePromptFlow.value = null
         isScreenOpenFlow.value = false
     }
 
     fun selectSearchHistoryEntry(entry: SearchHistoryEntry) =
         viewModelScope.launch {
             Timber.i("selected search history entry")
+            pendingSaveSearchNamePromptFlow.value = null
             onSearchTextChanged(entry.query)
             filterStateUpdateFlow.value =
                 FilterUpdate.User(
@@ -251,11 +276,14 @@ class CardBrowserSearchViewModel(
             submitCurrentSearch()
         }
 
-    fun saveSearchHistoryEntry(entry: SearchHistoryEntry) =
-        viewModelScope.launch {
-            Timber.i("saving search history entry")
-            saveSearchNamePromptFlow.emit(entry.query)
-        }
+    fun requestSaveSearch(entry: SearchHistoryEntry) {
+        Timber.i("requesting saved search name")
+        pendingSaveSearchNamePromptFlow.value = entry
+    }
+
+    fun onSaveSearchNamePromptShown() {
+        pendingSaveSearchNamePromptFlow.value = null
+    }
 
     fun addSavedSearch(savedSearch: SavedSearch) =
         viewModelScope.launch {
@@ -309,6 +337,7 @@ class CardBrowserSearchViewModel(
     fun resetSearchState(submittedSearch: SearchRequest) =
         viewModelScope.launch {
             Timber.i("clearing temp search state")
+            pendingSaveSearchNamePromptFlow.value = null
             advancedSearchFlow.value = false
             searchTextFlow.value = submittedSearch.query
             filterStateUpdateFlow.value = FilterUpdate.System(submittedSearch.filters)
@@ -386,19 +415,27 @@ private fun SearchRequest.toHistoryEntry() =
         cardStates = this.filters.cardStates,
     )
 
-@VisibleForTesting
-suspend fun SearchFilters.Companion.from(entry: SearchHistoryEntry): SearchFilters? {
-    val deckNameMap: List<DeckNameId> = if (entry.deckIds.any()) withCol { decks.allNamesAndIds() } else emptyList()
-    val ntidMap: List<NoteTypeNameID> =
-        if (entry.noteTypes.any()) {
-            withCol { notetypes.allNamesAndIds() }
-                .toList()
-        } else {
-            emptyList()
-        }
-
-    return from(entry, deckNameMap, ntidMap)
+context(col: Collection)
+private fun SearchHistoryEntry.toSearchString(): SearchString? {
+    val filters = SearchFilters.fromCollection(this) ?: return null
+    return SearchRequest(query, filters).toSearchString().getOrNull()
 }
+
+@VisibleForTesting
+suspend fun SearchFilters.Companion.from(entry: SearchHistoryEntry): SearchFilters? =
+    if (entry.deckIds.isEmpty() && entry.noteTypes.isEmpty()) {
+        SearchFilters.from(entry = entry, deckNameMap = emptyList(), ntidMap = emptyList())
+    } else {
+        withCol { fromCollection(entry) }
+    }
+
+context(col: Collection)
+private fun SearchFilters.Companion.fromCollection(entry: SearchHistoryEntry): SearchFilters? =
+    from(
+        entry,
+        deckNameMap = if (entry.deckIds.isEmpty()) emptyList() else col.decks.allNamesAndIds(),
+        ntidMap = if (entry.noteTypes.isEmpty()) emptyList() else col.notetypes.allNamesAndIds().toList(),
+    )
 
 @CheckResult
 fun SearchFilters.Companion.from(
