@@ -174,6 +174,18 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
     }
 
     @Test
+    fun answerShowsWhenZoomResetNeverCompletes() {
+        addTallClozeCard("answer")
+
+        withReviewer {
+            waitForCloze("[...]")
+            evaluateScript("ankidroid.waitForZoomReset(3);")
+            clickShowAnswer()
+            waitForCloze("answer")
+        }
+    }
+
+    @Test
     fun answerAnchorTakesPrecedenceOverScrollPosition() {
         addNoteUsingBasicNoteType("${SPACER}question", "answer$SPACER").firstCard(col).update { did = testDeckId }
 

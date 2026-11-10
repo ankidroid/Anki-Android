@@ -7,10 +7,14 @@ globalThis.ankidroid.waitForZoomReset = function (scale) {
         () =>
             new Promise(resolve => {
                 const viewport = window.visualViewport;
-                function onResize() {
-                    if (Math.abs(viewport.scale - scale) >= 0.001) return;
+                const timeout = setTimeout(done, 1000);
+                function done() {
+                    clearTimeout(timeout);
                     viewport.removeEventListener("resize", onResize);
                     resolve();
+                }
+                function onResize() {
+                    if (Math.abs(viewport.scale - scale) < 0.001) done();
                 }
                 viewport.addEventListener("resize", onResize);
                 // The reset may have completed before this queued action runs.
