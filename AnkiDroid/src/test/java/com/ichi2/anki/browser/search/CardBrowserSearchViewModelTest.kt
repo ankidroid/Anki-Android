@@ -4,6 +4,7 @@ package com.ichi2.anki.browser.search
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
@@ -232,14 +233,38 @@ class CardBrowserSearchViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `saving a history entry requests a name for its query`() {
-        val entry = SearchHistoryEntry("bonjour")
+    fun `save prompt uses the history entry independently of current search`() =
+        withViewModel(cardCount = 0) {
+            val entry = SearchHistoryEntry("bonjour", flags = listOf(Flag.RED))
+            val queryToSave = withCol { SearchString.fromUserInput("bonjour flag:1").getOrThrow() }
+            isScreenOpenFlow.value = true
+            onSearchTextChanged("au revoir")
+            setFlagsFilter(listOf(Flag.BLUE))
+
+            saveSearchNamePromptFlow.test {
+                expectNoEvents()
+                requestSaveSearch(entry)
+                assertEquals(queryToSave, expectMostRecentItem())
+            }
+
+            assertEquals("au revoir", searchTextFlow.value)
+            assertEquals(listOf(Flag.BLUE), filtersFlow.value.flags)
+        }
+
+    @Test
+    fun `save prompt rejects a history entry whose deck was deleted after loading`() {
+        val deckId = addDeck("Deleted")
+        val entry = SearchHistoryEntry("bonjour", deckIds = listOf(deckId))
         SearchHistory().addRecent(entry)
 
         withViewModel(cardCount = 0) {
+            val renderedHistory = searchHistoryFlow.value.entryToSearchString
+            assertEquals("bonjour deck:Deleted", renderedHistory.single().second?.value)
+            col.decks.remove(listOf(deckId))
+
             saveSearchNamePromptFlow.test {
-                saveSearchHistoryEntry(entry)
-                assertEquals("bonjour", expectMostRecentItem())
+                requestSaveSearch(entry)
+                expectNoEvents()
             }
         }
     }
@@ -524,7 +549,10 @@ class CardBrowserSearchViewModelTest : JvmTest() {
     ) = runTest {
         Prefs.devUsingCardBrowserSearchTools = useSearchTools
         addNotes(count = cardCount)
-        withViewModel(CardBrowserSearchViewModel(SavedStateHandle()), block)
+        withViewModel(CardBrowserSearchViewModel(SavedStateHandle())) {
+            isBrowserVisibleFlow.value = true
+            block()
+        }
     }
 }
 

@@ -51,6 +51,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -985,8 +986,19 @@ class CardBrowserFragment :
 
     override fun onStart() {
         super.onStart()
+        searchViewModel.isBrowserVisibleFlow.value = !isHidden
         // Search update flows can be missed while the note editor is open.
         cardsAdapter.refreshRows()
+    }
+
+    override fun onStop() {
+        searchViewModel.isBrowserVisibleFlow.value = false
+        super.onStop()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        searchViewModel.isBrowserVisibleFlow.value = !hidden && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
     override fun onDestroyView() {
