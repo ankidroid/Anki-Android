@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.browser.search
 
+import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -262,6 +263,66 @@ class StandardSearchFragmentTest : RobolectricTest() {
 
             val submittedSearches = fragment.viewModel.submittedSearchFlow.replayCache
             assertEquals(SearchRequest("bonjour", SearchFilters.partial(flags = listOf(Flag.RED))), submittedSearches.last())
+        }
+    }
+
+    @Test
+    fun `history entries with missing decks cannot be favorited`() {
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(Long.MAX_VALUE)))
+
+        withFragment {
+            val history = binding.searchHistory
+            val row = ViewSearchHistoryItemBinding.bind(history.adapter.getView(0, null, history))
+            assertFalse(row.favorite.isEnabled)
+        }
+    }
+
+    @Test
+    fun `undoing deck deletion makes its history entry available to favorite`() {
+        val deckId = addDeck("Restored")
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(deckId)))
+        col.decks.remove(listOf(deckId))
+
+        withCardBrowserFragment(useSearchView = true) {
+            requireNotNull(searchView).show()
+            advanceRobolectricLooper()
+
+            onUndo().join()
+            assertEquals(deckId, col.decks.idForName("Restored"))
+            advanceRobolectricLooper()
+
+            val fragment = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+            val history = fragment.binding.searchHistory
+            val row = ViewSearchHistoryItemBinding.bind(history.adapter.getView(0, null, history))
+            assertTrue(row.favorite.isEnabled, "A restored deck's history entry must be available to save")
+        }
+    }
+
+    @Test
+    fun `keyboard activation of history with missing decks submits the search`() {
+        for (keyCode in listOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER)) {
+            SearchHistory().clear()
+            SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(Long.MAX_VALUE)))
+
+            withCardBrowserFragment(useSearchView = true) {
+                requireNotNull(searchView).show()
+                advanceRobolectricLooper()
+
+                val fragment = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+                val history = fragment.binding.searchHistory
+                assertTrue(history.requestFocus())
+                history.setSelection(0)
+                advanceRobolectricLooper()
+                assertEquals(0, history.selectedItemPosition)
+                assertEquals(1, history.childCount)
+
+                history.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
+                history.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
+                advanceRobolectricLooper()
+
+                val submittedSearches = fragment.viewModel.submittedSearchFlow.replayCache
+                assertEquals(SearchRequest("bonjour"), submittedSearches.last())
+            }
         }
     }
 
