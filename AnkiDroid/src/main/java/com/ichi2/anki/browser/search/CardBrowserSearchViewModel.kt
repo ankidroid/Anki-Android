@@ -6,6 +6,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
@@ -14,6 +15,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ViewModelSavedStateHandle
 import kotlinx.coroutines.Job
@@ -23,9 +25,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
@@ -47,7 +52,8 @@ import timber.log.Timber
 // EditText, but should not be coupled directly to the parent SearchView.
 class CardBrowserSearchViewModel(
     savedStateHandle: ViewModelSavedStateHandle,
-) : ViewModel() {
+) : ViewModel(),
+    ChangeManager.Subscriber {
     private val searchHistoryManager = SearchHistory()
 
     private var searchHistoryLoad: Job? = null
@@ -156,11 +162,19 @@ class CardBrowserSearchViewModel(
     }
 
     init {
+        ChangeManager.subscribe(this)
         refreshSearchHistory()
 
         viewModelScope.launch {
             savedSearchesFlow.value = SavedSearches.loadFromConfig()
         }
+
+        combine(isScreenOpenFlow, isBrowserVisibleFlow) { screenOpen, browserVisible ->
+            screenOpen && browserVisible
+        }.distinctUntilChanged()
+            .onEach { searchVisible ->
+                if (searchVisible) refreshSearchHistory()
+            }.launchIn(viewModelScope)
     }
 
     private fun refreshSearchHistory() {
@@ -168,7 +182,6 @@ class CardBrowserSearchViewModel(
         searchHistoryLoad =
             viewModelScope.launch {
                 val entries = searchHistoryManager.entries
-                searchHistoryFlow.value = SearchHistoryItems.Loading(entries)
                 searchHistoryFlow.value =
                     withCol {
                         val deckNameMap = decks.allNamesAndIds()
@@ -180,6 +193,18 @@ class CardBrowserSearchViewModel(
                         )
                     }
             }
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        if (!changes.deck && !changes.notetype) return
+
+        viewModelScope.launch {
+            // Changes made while search is hidden are picked up when it becomes visible.
+            if (isScreenOpenFlow.value && isBrowserVisibleFlow.value) refreshSearchHistory()
+        }
     }
 
     /**
