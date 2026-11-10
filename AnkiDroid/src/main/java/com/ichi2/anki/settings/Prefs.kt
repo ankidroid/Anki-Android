@@ -176,6 +176,27 @@ open class PrefsRepository protected constructor(
         }
 
     @VisibleForTesting
+    @JvmName("nonNullStringPref")
+    fun stringPref(
+        @StringRes keyResId: Int,
+        defaultValue: String,
+    ): ReadWriteProperty<Any?, String> =
+        object : ReadWriteProperty<Any?, String> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): String = getString(keyResId, defaultValue) ?: defaultValue
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: String,
+            ) {
+                putString(keyResId, value)
+            }
+        }
+
+    @VisibleForTesting
     fun intPref(
         @StringRes keyResId: Int,
         defaultValue: Int,
@@ -303,7 +324,7 @@ open class PrefsRepository protected constructor(
     private val minimumCardsDueForNotification by stringPref(CommonPreferenceKey.pref_notifications_minimum_cards_due_key, "1000000")
 
     override val legacyNotificationsEnabled: Boolean
-        get() = minimumCardsDueForNotification!!.toInt() < 1000000
+        get() = minimumCardsDueForNotification.toInt() < 1000000
 
     /**
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.
