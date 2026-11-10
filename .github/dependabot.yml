@@ -6,6 +6,10 @@ updates:
     interval: "daily"
   open-pull-requests-limit: 10
   target-branch: dependency-updates
+  groups:
+    codeql:
+      patterns:
+        - "github/codeql-action/*"
   labels:
   - "dependencies"
   cooldown:
