@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
-        android:textColor="@color/material_blue_500"
+        android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         android:text="@string/heading_required_permissions" />
 
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
-        android:textColor="@color/material_blue_500"
+        android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         android:text="@string/heading_optional_permissions" />
 
