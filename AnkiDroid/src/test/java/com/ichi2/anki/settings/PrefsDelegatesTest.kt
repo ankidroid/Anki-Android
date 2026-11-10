@@ -2,27 +2,14 @@
 
 package com.ichi2.anki.settings
 
-import android.content.res.Resources
-import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.settings.enums.PrefEnum
-import io.mockk.every
-import io.mockk.mockk
+import com.ichi2.testutils.inMemoryPrefs
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 
 class PrefsDelegatesTest {
-    val prefs: PrefsRepository
-
-    init {
-        val sharedPrefs = SPMockBuilder().createSharedPreferences()
-        val mockResources = mockk<Resources>()
-        every { mockResources.getString(any()) } answers {
-            val resId = invocation.args[0] as Int
-            resId.toString()
-        }
-        prefs = PrefsRepository(sharedPrefs, mockResources)
-    }
+    val prefs = inMemoryPrefs()
 
     @Test
     fun `booleanPref getter and setter work`() {

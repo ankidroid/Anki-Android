@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.settings
 
-import android.content.res.Resources
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.EmptyApplicationCategory
@@ -15,8 +14,7 @@ import com.ichi2.anki.preferences.PreferenceTestUtils.resValue
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.settings.enums.PrefEnum
 import com.ichi2.testutils.EmptyApplication
-import io.mockk.every
-import io.mockk.mockk
+import com.ichi2.testutils.inMemoryPrefs
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -93,9 +91,7 @@ class PrefsRobolectricTest : RobolectricTest() {
 
     private fun getPropertyNamesAndKeys(): MutableMap<String, String> {
         val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())
-        val mockResources = mockk<Resources>()
-        every { mockResources.getString(any()) } answers { invocation.args[0].toString() }
-        val prefs = PrefsRepository(sharedPrefsSpy, mockResources)
+        val prefs = inMemoryPrefs(sharedPrefsSpy)
         val keys = mutableListOf<String>()
 
         doAnswer { invocation ->

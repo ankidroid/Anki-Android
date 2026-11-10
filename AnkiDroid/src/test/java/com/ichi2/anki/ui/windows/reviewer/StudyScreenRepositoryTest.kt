@@ -3,15 +3,12 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.core.content.edit
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuRepository
 import com.ichi2.anki.preferences.reviewer.ViewerAction
-import com.ichi2.anki.settings.PrefsRepository
-import io.mockk.every
-import io.mockk.mockk
+import com.ichi2.testutils.inMemoryPrefs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertFalse
@@ -23,13 +20,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class StudyScreenRepositoryTest {
     private val sharedPrefs: SharedPreferences = SPMockBuilder().createSharedPreferences()
     private val menuRepository = ReviewerMenuRepository(sharedPrefs)
-    private val prefs: PrefsRepository
-
-    init {
-        val mockResources = mockk<Resources>()
-        every { mockResources.getString(any()) } answers { invocation.args[0].toString() }
-        prefs = PrefsRepository(sharedPrefs, mockResources)
-    }
+    private val prefs = inMemoryPrefs(sharedPrefs)
 
     @Test
     fun `isMarkShownInToolbar and isFlagShownInToolbar are true when toolbar is enabled and action is set to ALWAYS`() {
