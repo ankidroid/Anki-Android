@@ -15,6 +15,7 @@ import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ViewModelSavedStateHandle
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,6 +49,8 @@ class CardBrowserSearchViewModel(
     private val savedStateHandle: ViewModelSavedStateHandle,
 ) : ViewModel() {
     private val searchHistoryManager = SearchHistory()
+
+    private var searchHistoryLoad: Job? = null
 
     val advancedSearchFlow =
         savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_ENABLED, false).apply {
@@ -149,6 +152,8 @@ class CardBrowserSearchViewModel(
     }
 
     init {
+        refreshSearchHistory()
+
         viewModelScope.launch {
             savedSearchesFlow.value = SavedSearches.loadFromConfig()
         }
@@ -157,30 +162,25 @@ class CardBrowserSearchViewModel(
             .onEach {
                 submitCurrentSearch(it)
             }.launchIn(viewModelScope)
+    }
 
-        searchHistoryFlow
-            .onEach { history ->
-                when (history) {
-                    is SearchHistoryItems.Loaded -> return@onEach
-                    is SearchHistoryItems.Loading -> {
-                        Timber.d("rendering search history query")
-                        val deckNameMap: List<DeckNameId> = withCol { decks.allNamesAndIds() }
-                        val ntidMap: List<NoteTypeNameID> =
-                            withCol { notetypes.allNamesAndIds().toList() }
-
-                        val searchStrings =
-                            history.input.map {
-                                it to (withCol { SearchRequest.from(it, deckNameMap, ntidMap)?.toSearchString() }?.getOrNull())
-                            }
-
-                        searchHistoryFlow.emit(
-                            SearchHistoryItems.Loaded(
-                                searchStrings,
-                            ),
+    private fun refreshSearchHistory() {
+        searchHistoryLoad?.cancel()
+        searchHistoryLoad =
+            viewModelScope.launch {
+                val entries = searchHistoryManager.entries
+                searchHistoryFlow.value = SearchHistoryItems.Loading(entries)
+                searchHistoryFlow.value =
+                    withCol {
+                        val deckNameMap = decks.allNamesAndIds()
+                        val ntidMap = notetypes.allNamesAndIds().toList()
+                        SearchHistoryItems.Loaded(
+                            entries.map { entry ->
+                                entry to SearchRequest.from(entry, deckNameMap, ntidMap)?.toSearchString()?.getOrNull()
+                            },
                         )
                     }
-                }
-            }.launchIn(viewModelScope)
+            }
     }
 
     /**
@@ -228,8 +228,8 @@ class CardBrowserSearchViewModel(
     fun submitCurrentSearch(searchToSubmit: SearchRequest) =
         viewModelScope.launch {
             Timber.i("submitting search")
-            val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
-            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
+            searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
+            refreshSearchHistory()
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
         }
