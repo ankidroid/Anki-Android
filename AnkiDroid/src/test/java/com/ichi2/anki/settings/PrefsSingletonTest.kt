@@ -9,7 +9,7 @@ import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.SharedPreferencesTestHook
 import com.ichi2.testutils.JvmPreferencesRule
-import com.ichi2.testutils.withBooleanPreference
+import com.ichi2.testutils.withPref
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Rule
@@ -35,7 +35,7 @@ class PrefsSingletonTest {
 
     @Test
     fun `reads and writes follow the current application preferences`() =
-        withBooleanPreference(CommonPreferenceKey.pref_new_review_reminders, true) {
+        withPref(Prefs::newReviewRemindersEnabled, true) {
             val notifications: NotificationPreferences = Prefs
             assertTrue(notifications.newReviewRemindersEnabled)
             val original = Prefs.sharedPrefs

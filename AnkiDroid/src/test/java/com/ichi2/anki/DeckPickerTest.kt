@@ -98,7 +98,7 @@ import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.ext.text
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
-import com.ichi2.testutils.withBooleanPreference
+import com.ichi2.testutils.withPref
 import com.ichi2.testutils.withWritePermissions
 import com.ichi2.ui.AccessibleSearchView
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -616,7 +616,7 @@ class DeckPickerTest : RobolectricTest() {
         assertEquals(expectedTitle, actualTitle)
     }
 
-    private fun withBottomNavigationEnabled(action: () -> Unit) = withBooleanPreference(R.string.dev_bottom_nav_key, true, action)
+    private fun withBottomNavigationEnabled(action: () -> Unit) = withPref(Prefs::devBottomNavEnabled, true, action)
 
     private fun DeckPicker.openEmbeddedCardBrowser(): CardBrowserFragment {
         findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId =
@@ -1754,7 +1754,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `bottom navigation supports the public card browser`() =
         withBottomNavigationEnabled {
-            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+            withPref(Prefs::devUsingCardBrowserSearchView, false) {
                 assumeTrue("Not running on tablet", qualifiers != "xlarge")
                 deckPicker {
                     val browser = openEmbeddedCardBrowser()
@@ -1769,7 +1769,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `embedded card browser accounts for system bar insets`() =
         withBottomNavigationEnabled {
-            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+            withPref(Prefs::devUsingCardBrowserSearchView, false) {
                 assumeTrue("Not running on tablet", qualifiers != "xlarge")
                 deckPicker {
                     val browserView = openEmbeddedCardBrowser().requireView()
@@ -1792,7 +1792,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `embedded card browser updates selected row count after deselection`() =
         withBottomNavigationEnabled {
-            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+            withPref(Prefs::devUsingCardBrowserSearchView, false) {
                 assumeTrue("Not running on tablet", qualifiers != "xlarge")
                 deckPicker {
                     addBasicNoteWithOp(fields = listOf("first", "one"))
@@ -1819,7 +1819,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `embedded card browser can select all decks`() =
         withBottomNavigationEnabled {
-            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+            withPref(Prefs::devUsingCardBrowserSearchView, false) {
                 assumeTrue("Not running on tablet", qualifiers != "xlarge")
                 deckPicker {
                     val browser = openEmbeddedCardBrowser()
