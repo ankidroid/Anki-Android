@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <color name="theme_dark_primary">#3d3d3d</color>
-    <color name="theme_dark_primary_light">@color/material_grey_800</color>
-    <color name="theme_dark_primary_text">@color/white</color>
-    <color name="theme_dark_row_current">#393939</color>
-    <color name="theme_dark_drawer_row_current">#33999999</color>
-    <color name="theme_dark_drawer_item">#DEFFFFFF</color>
-
     <style name="Base.Theme.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_blue_400</item>
@@ -68,18 +61,18 @@
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- Action bar styles -->
-        <item name="appBarColor">@color/theme_dark_primary</item>
+        <item name="appBarColor">#3d3d3d</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
+        <item name="actionBarPopupTextColor">@color/white</item>
         <item name="actionModeBackground">?attr/appBarColor</item>
         <!-- Bottom navigation -->
         <item name="bottomNavIndicatorColor">?attr/appBarColor</item>
         <item name="bottomNavActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors -->
-        <item name="selectedRowBackgroundColor">@color/theme_dark_row_current</item>
+        <item name="selectedRowBackgroundColor">#393939</item>
         <item name="dynDeckColor">@color/material_light_blue_500</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
@@ -95,7 +88,7 @@
         <item name="hardButtonBackground">@color/material_blue_grey_800</item>
         <item name="goodButtonBackground">@color/material_green_800</item>
         <item name="easyButtonBackground">@color/material_light_blue_800</item>
-        <item name="topBarColor">@color/theme_dark_primary_light</item>
+        <item name="topBarColor">@color/material_grey_800</item>
         <item name="maxTimerColor">@color/material_red_300</item>
         <item name="showAnswerTextColor">@color/white</item>
         <item name="againButtonTextColor">@color/white</item>
@@ -145,7 +138,7 @@
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
         <item name="textAllCaps">false</item>
         <item name="clozeColor">#1976D2</item>
-        <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
+        <item name="popupBackgroundColor">#434343</item>
         <item name="overflowAndPopupMenuIconColor">#9effffff</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">?attr/appBarColor</item>
