@@ -21,8 +21,9 @@ import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.databinding.PageStatisticsBinding
 import com.ichi2.anki.pages.scrolledUpToBottom
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.dispatchInsets
-import com.ichi2.testutils.withBooleanPreference
+import com.ichi2.testutils.withPref
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThanOrEqualTo
@@ -316,7 +317,7 @@ class BottomNavigationScrollTest : RobolectricTest() {
         }
 
     private fun withBottomNavigation(test: (DeckPicker) -> Unit) =
-        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+        withPref(Prefs::devBottomNavEnabled, true) {
             setIntroductionSlidesShown(true)
             test(startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).get())
         }

@@ -7,7 +7,8 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.common.analytics.Analytics
-import com.ichi2.testutils.withBooleanPreference
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.withPref
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockkObject
@@ -77,7 +78,7 @@ class BottomNavigationAnalyticsTest : RobolectricTest() {
         }
 
     private fun withBottomNavigation(test: ActivityController<DeckPicker>.() -> Unit) =
-        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+        withPref(Prefs::devBottomNavEnabled, true) {
             setIntroductionSlidesShown(true)
             startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).test()
         }

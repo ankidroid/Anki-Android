@@ -11,7 +11,8 @@ import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
-import com.ichi2.testutils.withBooleanPreference
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.withPref
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -66,7 +67,7 @@ class BottomNavigationRestoreTest : RobolectricTest() {
         withBottomNavigation {
             val controller = launchOn(NavigationItem.BROWSER)
 
-            withBooleanPreference(R.string.dev_bottom_nav_key, false) {
+            withPref(Prefs::devBottomNavEnabled, false) {
                 val deckPicker = restoreAfterProcessDeath(controller)
 
                 assertThat(deckPicker.bottomNav.isVisible, equalTo(false))
@@ -75,7 +76,7 @@ class BottomNavigationRestoreTest : RobolectricTest() {
         }
 
     private fun withBottomNavigation(test: () -> Unit) =
-        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+        withPref(Prefs::devBottomNavEnabled, true) {
             setIntroductionSlidesShown(true)
             test()
         }

@@ -2,24 +2,25 @@
 
 package com.ichi2.testutils
 
-import androidx.annotation.StringRes
-import androidx.core.content.edit
-import com.ichi2.anki.settings.Prefs
+import kotlin.reflect.KMutableProperty0
 
-fun withBooleanPreference(
-    @StringRes keyResource: Int,
-    value: Boolean,
+/**
+ * Sets [pref] to [value] while [action] runs, then restores the previous value.
+ *
+ * ```kotlin
+ * withPref(Prefs::devBottomNavEnabled, true) { ... }
+ * ```
+ */
+fun <T> withPref(
+    pref: KMutableProperty0<T>,
+    value: T,
     action: () -> Unit,
 ) {
-    val preferences = Prefs.sharedPrefs
-    val key = Prefs.key(keyResource)
-    val previousValue = if (preferences.contains(key)) preferences.getBoolean(key, false) else null
-    preferences.edit { putBoolean(key, value) }
+    val previousValue = pref.get()
+    pref.set(value)
     try {
         action()
     } finally {
-        preferences.edit {
-            if (previousValue == null) remove(key) else putBoolean(key, previousValue)
-        }
+        pref.set(previousValue)
     }
 }
