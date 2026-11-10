@@ -503,10 +503,19 @@ class CardBrowserFragment :
     private fun applyContentInsets(root: View) {
         val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
         val toolbarContainer = root.findViewById<View?>(R.id.toolbar_container)
+        val appBar = root.findViewById<View?>(R.id.browser_app_bar)
+        val browserContent = root.findViewById<View?>(R.id.browser_content)
+        val searchContent = root.findViewById<View?>(R.id.search_view_content_container)
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
-            v.updatePadding(left = bars.left, right = bars.right)
-            toolbarContainer?.updatePadding(top = bars.top)
+            if (useSearchView) {
+                // Keep the full-screen SearchView edge to edge: Material insets its own toolbar.
+                appBar?.updatePadding(left = bars.left, right = bars.right)
+                browserContent?.updatePadding(left = bars.left, right = bars.right)
+            } else {
+                v.updatePadding(left = bars.left, right = bars.right)
+                toolbarContainer?.updatePadding(top = bars.top)
+            }
             // The bottom of the safe area is above the navigation bar, rounded display corners and keyboard.
             // When scrolled to the bottom of the scrollbar should be aligned with the last row.
             // Embedded content already ends above the bottom navigation, including its system-bar inset.
@@ -514,6 +523,7 @@ class CardBrowserFragment :
                 if (activity is CardBrowser) maxOf(bars.bottom, insets.bottomCornerClearance(v)) else 0
             // Due to clipToPadding=false, only the last row is affected
             cardsListView.updatePadding(bottom = safeAreaBottom)
+            searchContent?.updatePadding(left = bars.left, right = bars.right, bottom = safeAreaBottom)
             // The scrollbar track stays full-height (edge to edge); only the handle is kept above
             // the safe-area boundary so it remains touchable and aligns with the last row.
             browserScroller.handleBottomInset = safeAreaBottom

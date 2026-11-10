@@ -189,10 +189,17 @@
 
     <style name="TimePickerStyle" parent="ThemeOverlay.Material3.MaterialTimePicker">
         <item name="elevationOverlayEnabled">false</item>
-        <item name="colorTertiaryContainer">?colorPrimary</item>
-        <item name="colorOnTertiaryContainer">?colorOnPrimary</item>
-        <item name="colorPrimaryContainer">?colorPrimary</item>
-        <item name="colorOnPrimaryContainer">?colorOnPrimary</item>
+        <item name="chipStyle">@style/TimePickerStyle.Display</item>
+        <item name="materialClockStyle">@style/TimePickerStyle.Clock</item>
+    </style>
+
+    <style name="TimePickerStyle.Display" parent="Widget.Material3.MaterialTimePicker.Display">
+        <item name="chipStrokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="chipStrokeColor">?attr/widgetStrokeColor</item>
+    </style>
+
+    <style name="TimePickerStyle.Clock" parent="Widget.Material3.MaterialTimePicker.Clock">
+        <item name="android:foreground">@drawable/time_picker_clock_outline</item>
     </style>
 
     <!-- Applied to a TextInputLayout which should show the error outline, but not an error message. -->
@@ -222,5 +229,7 @@
         <item name="iconGravity">textEnd</item>
         <item name="iconTint">@color/sort_pill_content_color</item>
         <item name="backgroundTint">@color/sort_pill_background_color</item>
+        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="strokeColor">?attr/widgetStrokeColor</item>
     </style>
 </resources>

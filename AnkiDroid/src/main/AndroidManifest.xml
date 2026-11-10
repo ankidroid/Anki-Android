@@ -127,24 +127,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
-            <!-- *.apkg matcher. NOTE: when pathPattern is used, host and scheme must also be specified -->
+            <!-- Match local imports by extension.
+                 NOTE: when pathPattern is used, host and scheme must also be specified. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- .apkg files -->
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.apkg"
-                    android:scheme="http"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.apkg"
-                    android:scheme="https"
-                    />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
@@ -162,18 +151,6 @@
                     android:host="*"
                     android:mimeType="*/*"
                     android:pathPattern=".*\\.colpkg"
-                    android:scheme="http"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.colpkg"
-                    android:scheme="https"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.colpkg"
                     android:scheme="content"
                     />
                 <data
@@ -183,18 +160,6 @@
                     android:scheme="file"
                     />
                 <!-- tsv files -->
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.tsv"
-                    android:scheme="http"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.tsv"
-                    android:scheme="https"
-                    />
                 <data
                     android:host="*"
                     android:mimeType="*/*"
@@ -212,18 +177,6 @@
                     android:host="*"
                     android:mimeType="*/*"
                     android:pathPattern=".*\\.csv"
-                    android:scheme="http"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.csv"
-                    android:scheme="https"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.csv"
                     android:scheme="content"
                     />
                 <data
@@ -233,18 +186,6 @@
                     android:scheme="file"
                     />
                 <!-- text files -->
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.txt"
-                    android:scheme="http"
-                    />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*\\.txt"
-                    android:scheme="https"
-                    />
                 <data
                     android:host="*"
                     android:mimeType="*/*"

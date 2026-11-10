@@ -24,14 +24,18 @@
         <item name="colorOnErrorContainer">@color/material_red_800</item>
         <item name="colorTertiary">#006DA8</item>
         <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">@color/material_blue_100</item>
+        <item name="colorOnTertiaryContainer">@color/material_blue_900</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">#E4F5FD</item>
         <item name="colorSurfaceContainer">#0F03A9F4</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 
-        <item name="android:textColor">@color/text_color_light</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <item name="android:textColorTertiary">@color/text_color_secondary</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="preferenceCategoryTitleTextColor">@color/material_light_blue_800</item>

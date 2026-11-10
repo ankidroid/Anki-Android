@@ -2,20 +2,22 @@
 
 package com.ichi2.anki.preferences
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
+import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-@RunWith(AndroidJUnit4::class)
 class TimeboxSettingsViewModelTest : JvmTest() {
+    @get:Rule
+    val preferences = JvmPreferencesRule()
+
     @Test
     fun `TimeboxUiState defaults to loading`() {
         val defaultState = TimeboxUiState()

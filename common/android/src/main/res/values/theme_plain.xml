@@ -19,9 +19,9 @@
         <item name="colorOutlineVariant">#BBBBBB</item>
         <item name="colorTertiary">#555555</item>
         <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">@color/material_grey_300</item>
+        <item name="colorOnTertiaryContainer">@color/material_grey_900</item>
         <item name="colorSurfaceContainerHigh">#F4F4F4</item>
-        <item name="android:textColor">@color/text_color_light</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>

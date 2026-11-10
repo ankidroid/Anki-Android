@@ -4,7 +4,6 @@
     <color name="theme_dark_primary">#3d3d3d</color>
     <color name="theme_dark_primary_light">@color/material_grey_800</color>
     <color name="theme_dark_primary_text">@color/white</color>
-    <color name="theme_dark_secondary_text">#b2ffffff</color>
     <color name="theme_dark_row_current">#393939</color>
     <color name="theme_dark_drawer_row_current">#33999999</color>
     <color name="theme_dark_drawer_item">#DEFFFFFF</color>
@@ -21,8 +20,10 @@
         <item name="colorPrimaryContainer">@color/material_light_blue_900</item>
         <item name="colorOnPrimaryContainer">@color/material_light_blue_100</item>
 
-        <item name="android:textColor">@color/text_color_dark</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <item name="android:textColorTertiary">@color/text_color_secondary</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
         <item name="colorSecondaryContainer">#3C5A6E</item>
@@ -36,6 +37,8 @@
         <item name="colorOnErrorContainer">#FFDAD6</item>
         <item name="colorTertiary">#78CAFF</item>
         <item name="colorOnTertiary">#00324D</item>
+        <item name="colorTertiaryContainer">@color/material_blue_900</item>
+        <item name="colorOnTertiaryContainer">@color/material_blue_100</item>
         <item name="colorOnSecondaryContainer">@color/white</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
@@ -59,6 +62,7 @@
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">?attr/appBarColor</item>
         <!-- Bottom navigation -->
+        <item name="bottomNavIndicatorColor">?attr/appBarColor</item>
         <item name="bottomNavActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors -->
         <item name="selectedRowBackgroundColor">@color/theme_dark_row_current</item>

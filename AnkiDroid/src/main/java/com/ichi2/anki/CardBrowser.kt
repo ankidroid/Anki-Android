@@ -18,7 +18,6 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -62,6 +61,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.getLongExtra
 import com.ichi2.anki.common.utils.ext.onPermanentDismissal
 import com.ichi2.anki.databinding.ActivityCardBrowserBinding
+import com.ichi2.anki.databinding.ActivityCardBrowserSearchviewBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
@@ -86,6 +86,7 @@ import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
 import com.ichi2.anki.utils.showSearchError
+import com.ichi2.themes.Themes
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
@@ -111,7 +112,7 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    private lateinit var binding: ActivityCardBrowserBinding
+    private var binding: ActivityCardBrowserBinding? = null
 
     lateinit var cardBrowserFragment: CardBrowserFragment
 
@@ -124,7 +125,6 @@ open class CardBrowser :
     private val mySearchesItem: MenuItem? get() = cardBrowserFragment.mySearchesItem
 
     // Dev option for Issue 18709
-    // TODO: Broken currently; needs R.layout.activity_card_browser_searchview
     val useSearchView: Boolean
         get() = Prefs.devUsingCardBrowserSearchView
 
@@ -137,11 +137,6 @@ open class CardBrowser :
             } else {
                 null
             }
-
-    @Suppress("unused")
-    @get:LayoutRes
-    private val layout: Int
-        get() = if (useSearchView) R.layout.activity_card_browser_searchview else R.layout.activity_card_browser
 
     init {
         ChangeManager.subscribe(this)
@@ -191,8 +186,20 @@ open class CardBrowser :
             return
         }
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
-        binding = ActivityCardBrowserBinding.inflate(layoutInflater)
+        enableEdgeToEdge(
+            statusBarStyle =
+                if (useSearchView) {
+                    SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { Themes.isNightTheme }
+                } else {
+                    SystemBarStyle.dark(Color.TRANSPARENT)
+                },
+        )
+        val contentBinding =
+            if (useSearchView) {
+                ActivityCardBrowserSearchviewBinding.inflate(layoutInflater)
+            } else {
+                ActivityCardBrowserBinding.inflate(layoutInflater).also { binding = it }
+            }
         if (!ensureStorageIsReady()) {
             return
         }
@@ -203,7 +210,7 @@ open class CardBrowser :
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
 
-        setViewBinding(binding)
+        setViewBinding(contentBinding)
         initNavigationDrawer(findViewById(android.R.id.content))
         applyToolbarInsets()
 
@@ -216,22 +223,22 @@ open class CardBrowser :
         val fragmented =
             Prefs.devIsCardBrowserFragmented &&
                 !useSearchView &&
-                binding.noteEditorFrame?.visibility == View.VISIBLE
+                binding?.noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
 
         if (fragmented) {
             ResizablePaneManager(
-                parentLayout = requireNotNull(binding.cardBrowserXlView) { "cardBrowserXlView" },
-                divider = requireNotNull(binding.cardBrowserResizingDivider) { "cardBrowserResizingDivider" },
-                startPane = requireNotNull(binding.cardBrowserFrame) { "cardBrowserFrame" },
-                endPane = requireNotNull(binding.noteEditorFrame) { "noteEditorFrame" },
+                parentLayout = requireNotNull(binding?.cardBrowserXlView) { "cardBrowserXlView" },
+                divider = requireNotNull(binding?.cardBrowserResizingDivider) { "cardBrowserResizingDivider" },
+                startPane = requireNotNull(binding?.cardBrowserFrame) { "cardBrowserFrame" },
+                endPane = requireNotNull(binding?.noteEditorFrame) { "noteEditorFrame" },
                 sharedPrefs = Prefs.getUiConfig(this),
                 startPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
                 endPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
             )
         } else {
-            binding.noteEditorFrame?.isVisible = false
-            binding.cardBrowserResizingDivider?.isVisible = false
+            binding?.noteEditorFrame?.isVisible = false
+            binding?.cardBrowserResizingDivider?.isVisible = false
         }
 
         // must be called once we have an accessible collection
@@ -256,7 +263,6 @@ open class CardBrowser :
         startLoadingCollection()
 
         setupFlows()
-        setupNewSearchView()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
         registerSaveSearchHandler()
         registerDeckSelectedHandler(action = ::onDeckSelected)
@@ -355,11 +361,6 @@ open class CardBrowser :
                 menu[R.id.action_preview_many]?.isVisible = false
             }
         }
-    }
-
-    private fun setupNewSearchView() {
-        if (!useSearchView) return
-        supportActionBar?.hide()
     }
 
     override fun setupBackPressedCallbacks() {
@@ -504,7 +505,7 @@ open class CardBrowser :
             launchCatchingTask {
                 when (command) {
                     is NoteEditorCommand.LoadInPane -> {
-                        binding.noteEditorFrame?.isVisible = true
+                        binding?.noteEditorFrame?.isVisible = true
                         val editor = fragment
                         when {
                             // Issue 19737: the pane already displays this selection. Refresh it in
@@ -523,7 +524,7 @@ open class CardBrowser :
                         navigate(command.destination)
                     }
                     NoteEditorCommand.HidePane -> {
-                        binding.noteEditorFrame?.isVisible = false
+                        binding?.noteEditorFrame?.isVisible = false
                         invalidateOptionsMenu()
                     }
                 }
