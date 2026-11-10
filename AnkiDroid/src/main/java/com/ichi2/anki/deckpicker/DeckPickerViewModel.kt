@@ -261,6 +261,7 @@ class DeckPickerViewModel :
 
     private fun launchCatchingTask(
         context: CoroutineContext = EmptyCoroutineContext,
+        reloadOnFailure: Boolean = false,
         block: suspend CoroutineScope.() -> Unit,
     ): Job =
         viewModelScope.launch(context) {
@@ -270,6 +271,7 @@ class DeckPickerViewModel :
                 throw e
             } catch (e: Exception) {
                 reportError(e)
+                if (reloadOnFailure && !e.isDatabaseCorruption) reloadDeckCounts()
             }
         }
 
@@ -281,7 +283,7 @@ class DeckPickerViewModel :
      * @param did ID of the deck to delete
      */
     fun deleteDeck(did: DeckId) =
-        launchCatchingTask {
+        launchCatchingTask(reloadOnFailure = true) {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
                 val changes =
@@ -340,7 +342,7 @@ class DeckPickerViewModel :
     }
 
     fun emptyFilteredDeck(deckId: DeckId): Job =
-        launchCatchingTask {
+        launchCatchingTask(reloadOnFailure = true) {
             progressManager.withProgress {
                 Timber.i("empty filtered deck %s", deckId)
                 withCol { decks.select(deckId) }
@@ -353,7 +355,7 @@ class DeckPickerViewModel :
      * Rebuilds a filtered deck with its current filter settings
      */
     fun rebuildFilteredDeck(deckId: DeckId): Job =
-        launchCatchingTask {
+        launchCatchingTask(reloadOnFailure = true) {
             progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
                 Timber.i("rebuilding filtered deck %s", deckId)
                 withCol {
@@ -372,7 +374,7 @@ class DeckPickerViewModel :
     val flowOfCreatedDeckSelected = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     fun selectCreatedDeck(deckId: DeckId) =
-        launchCatchingTask {
+        launchCatchingTask(reloadOnFailure = true) {
             markDeckSelected(deckId)
             flowOfCreatedDeckSelected.emit(Unit)
         }
