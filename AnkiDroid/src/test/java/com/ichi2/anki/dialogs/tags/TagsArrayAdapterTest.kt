@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: Copyright (c) 2026 capthunder19 <anirudhpatwal19@gmail.com>
 package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.anki.dialogs.tags.TagsArrayAdapter.TagTreeNode
+import com.ichi2.anki.dialogs.tags.TagTree.TagTreeNode
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
