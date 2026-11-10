@@ -280,7 +280,11 @@ open class CardBrowser :
                     launchCatchingTask {
                         val search = viewModel.savedSearches().find { it.name == searchName } ?: return@launchCatchingTask
                         Timber.d("OnSelection using search terms: %s", search.query)
-                        searchForQuery(search.query)
+                        if (useSearchView) {
+                            cardBrowserFragment.searchViewModel.submitSavedSearch(search)
+                        } else {
+                            searchForQuery(search.query)
+                        }
                     }
                 }
                 SavedBrowserSearchesDialogFragment.TYPE_SEARCH_REMOVED -> {
