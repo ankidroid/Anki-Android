@@ -1,6 +1,7 @@
-// Keep the existing AGP variant/task APIs until the separate AGP DSL migration.
+// Keep the existing AGP DSL/task APIs until the separate AGP DSL migration.
 @file:Suppress("DEPRECATION")
 
+import com.android.build.api.variant.FilterConfiguration.FilterType
 import com.ichi2.anki.gradle.VersionCodeTasks
 import com.ichi2.anki.gradle.WriteReleaseMetadata
 import com.ichi2.anki.gradle.isCoverageEnabled
@@ -307,35 +308,6 @@ android {
             }
         }
     }
-    // applicationVariants are e.g. debug, release
-    applicationVariants.configureEach {
-        val variant = this
-        // We want the same version stream for all ABIs in debug but for release we can split them
-        if (variant.buildType.name == "release") {
-            variant.outputs.configureEach {
-                val output = this as com.android.build.gradle.internal.api.ApkVariantOutputImpl
-
-                // For each separate APK per architecture, set a unique version code as described here:
-                // https://developer.android.com/studio/build/configure-apk-splits.html
-                val versionCodes = mapOf("armeabi-v7a" to 1, "x86" to 2, "arm64-v8a" to 3, "x86_64" to 4)
-                val outputFile = output.outputFile
-                if (outputFile != null && outputFile.name.endsWith(".apk")) {
-                    val abi = output.getFilter("ABI")
-                    if (abi != null) { // null for the universal-debug, universal-release variants
-                        //  From: https://developer.android.com/studio/publish/versioning#appversioning
-                        //  "Warning: The greatest value Google Play allows for versionCode is 2100000000"
-                        //  AnkiDroid versionCodes have a budget 8 digits (through AnkiDroid 9)
-                        //  This style does ABI version code ranges with the 9th digit as 0-4.
-                        //  This consumes ~20% of the version range space, w/50 years of versioning at our major-version pace
-                        output.versionCodeOverride =
-                            // ex:  321200106 = 3 * 100000000 + 21200106
-                            versionCodes.getValue(abi) * 100000000 + defaultConfig.versionCode!!
-                    }
-                }
-            }
-        }
-    }
-
     testOptions {
         animationsDisabled = true
         unitTests {
@@ -396,6 +368,27 @@ android {
     packagingOptions {
         resources {
             excludes += listOf("META-INF/DEPENDENCIES")
+        }
+    }
+}
+
+androidComponents.onVariants(androidComponents.selector().withBuildType("release")) { variant ->
+    // We want the same version stream for all ABIs in debug but for release we can split them
+    val versionCodes = mapOf("armeabi-v7a" to 1, "x86" to 2, "arm64-v8a" to 3, "x86_64" to 4)
+    variant.outputs.forEach { output ->
+        val abi = output.filters.find { it.filterType == FilterType.ABI }?.identifier
+        if (abi != null) { // null for universal APKs
+            // For each separate APK per architecture, set a unique version code as described here:
+            // https://developer.android.com/studio/build/configure-apk-splits.html
+            //  From: https://developer.android.com/studio/publish/versioning#appversioning
+            //  "Warning: The greatest value Google Play allows for versionCode is 2100000000"
+            //  AnkiDroid versionCodes have a budget 8 digits (through AnkiDroid 9)
+            //  This style does ABI version code ranges with the 9th digit as 0-4.
+            //  This consumes ~20% of the version range space, w/50 years of versioning at our major-version pace
+            output.versionCode.set(
+                // ex:  321200106 = 3 * 100000000 + 21200106
+                versionCodes.getValue(abi) * 100000000 + output.versionCode.get(),
+            )
         }
     }
 }
