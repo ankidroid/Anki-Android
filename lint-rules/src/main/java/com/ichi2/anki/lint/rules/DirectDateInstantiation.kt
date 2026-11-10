@@ -54,6 +54,7 @@ class DirectDateInstantiation :
         node: UCallExpression,
         constructor: PsiMethod,
     ) {
+        if (context.isTestSource) return
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes
         // this checks for usage of new Date(ms) which we allow

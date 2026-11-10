@@ -58,6 +58,7 @@ class DirectSystemTimeInstantiation :
         node: UCallExpression,
         constructor: PsiMethod,
     ) {
+        if (context.isTestSource) return
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes
         if (!isAnAllowedClass(foundClasses, "Storage", "CollectionHelper")) {

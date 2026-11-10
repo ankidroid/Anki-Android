@@ -53,6 +53,7 @@ class DirectSnackbarMakeUsage :
         node: UCallExpression,
         method: PsiMethod,
     ) {
+        if (context.isTestSource) return
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
