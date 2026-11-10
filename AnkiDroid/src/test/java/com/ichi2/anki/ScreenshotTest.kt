@@ -12,7 +12,6 @@ import androidx.core.view.drawToBitmap
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
-import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.RoborazziATFAccessibilityCheckOptions
 import com.github.takahirom.roborazzi.RoborazziATFAccessibilityChecker
 import com.github.takahirom.roborazzi.RoborazziOptions
@@ -54,9 +53,29 @@ abstract class ScreenshotTest : RobolectricTest() {
 
     var fileNamePrefix = ""
 
-    enum class ThemeConfig { LIGHT, PLAIN, DARK, BLACK, EINK }
+    enum class ThemeConfig {
+        LIGHT,
+        PLAIN,
+        DARK,
+        BLACK,
+        EINK,
+        ;
 
-    enum class DeviceConfig { PHONE, TABLET, FOLDABLE, DESKTOP }
+        val isNight get() = this == DARK || this == BLACK
+    }
+
+    enum class DeviceConfig(
+        private val screen: String,
+        private val density: String,
+    ) {
+        PHONE("w411dp-h914dp-normal-long-notround-any", "420dpi"),
+        TABLET("w1280dp-h800dp-xlarge-notlong-notround-any", "xhdpi"),
+        FOLDABLE("w852dp-h883dp-large-notlong-notround-any", "390dpi"),
+        DESKTOP("w1920dp-h1080dp-xlarge-long-notround-any", "xhdpi"),
+        ;
+
+        fun qualifiers(night: Boolean) = listOfNotNull(screen, "night".takeIf { night }, density, "keyshidden-nonav").joinToString("-")
+    }
 
     /**
      * Devices always covered by the annotated class, in addition to the `-Pdevice` selection.
@@ -95,34 +114,19 @@ abstract class ScreenshotTest : RobolectricTest() {
     }
 
     protected open fun applyDeviceConfig() {
-        when (device) {
-            DeviceConfig.PHONE -> setPhoneQualifiers()
-            DeviceConfig.TABLET -> {
-                setTabletQualifiers()
-                fileNamePrefix += "tablet_"
-            }
-            DeviceConfig.FOLDABLE -> {
-                setFoldableQualifiers()
-                fileNamePrefix += "foldable_"
-            }
-            DeviceConfig.DESKTOP -> {
-                setDesktopQualifiers()
-                fileNamePrefix += "desktop_"
-            }
+        setDeviceQualifiers(device)
+        if (device != DeviceConfig.PHONE) {
+            fileNamePrefix += "${device.name.lowercase()}_"
         }
     }
 
     // ./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot -Ptheme=black,plain
     protected open fun applyThemeConfig() {
-        val isNightMode = theme == ThemeConfig.DARK || theme == ThemeConfig.BLACK
-        if (isNightMode) {
-            RuntimeEnvironment.setQualifiers("+night")
-        }
         if (theme != ThemeConfig.LIGHT) {
             fileNamePrefix += "${theme.name.lowercase()}_"
         }
         val prefs = PrefsRepository(targetContext)
-        prefs.appTheme = if (isNightMode) AppTheme.NIGHT else AppTheme.DAY
+        prefs.appTheme = if (theme.isNight) AppTheme.NIGHT else AppTheme.DAY
         when (theme) {
             ThemeConfig.LIGHT -> prefs.dayTheme = DayTheme.LIGHT
             ThemeConfig.PLAIN -> prefs.dayTheme = DayTheme.PLAIN
@@ -139,13 +143,11 @@ abstract class ScreenshotTest : RobolectricTest() {
     }
 
     /** Pixel-class phone in portrait */
-    protected fun setPhoneQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumPhone)
+    protected fun setPhoneQualifiers() = setDeviceQualifiers(DeviceConfig.PHONE)
 
-    protected fun setTabletQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
+    protected fun setTabletQualifiers() = setDeviceQualifiers(DeviceConfig.TABLET)
 
-    protected fun setFoldableQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.Pixel9ProFold)
-
-    protected fun setDesktopQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumDesktop)
+    private fun setDeviceQualifiers(device: DeviceConfig) = RuntimeEnvironment.setQualifiers(device.qualifiers(night = theme.isNight))
 
     /**
      * Captures a screenshot to `build/outputs/roborazzi/<TestClass>/<name>.png`.
