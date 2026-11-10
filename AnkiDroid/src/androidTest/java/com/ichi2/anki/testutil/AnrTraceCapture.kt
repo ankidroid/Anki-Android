@@ -3,7 +3,6 @@
 package com.ichi2.anki.testutil
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.ApplicationExitInfo
 import android.app.Instrumentation
@@ -79,7 +78,6 @@ private fun <T> Instrumentation.withAnrActivity(block: (pid: Int, startedAt: Lon
         }
 
     // Android timestamps these exits using the real wall clock.
-    @SuppressLint("DirectSystemCurrentTimeMillisUsage")
     val startedAt = System.currentTimeMillis()
     context.startActivity(
         Intent()

@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.tests
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.core.content.edit
@@ -44,7 +43,6 @@ import org.junit.runner.RunWith
 import timber.log.Timber
 
 @RunWith(AndroidJUnit4::class)
-@SuppressLint("DirectSystemCurrentTimeMillisUsage")
 class ACRATest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule = GrantStoragePermission.instance

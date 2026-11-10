@@ -3,7 +3,6 @@
 
 package com.ichi2.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import com.ichi2.anki.compat.CompatHelper
 import org.junit.Assert.assertTrue
@@ -87,14 +86,9 @@ object ResourceLoader {
         try {
             Timber.d("Creating new file... = %s", destination)
             f.createNewFile()
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-            val startTimeMillis =
-                System.currentTimeMillis()
+            val startTimeMillis = System.currentTimeMillis()
             val sizeBytes = CompatHelper.compat.copyFile(source, destination)
-
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-            val endTimeMillis =
-                System.currentTimeMillis()
+            val endTimeMillis = System.currentTimeMillis()
             Timber.d("Finished writeToFile!")
             val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
             val sizeKb = sizeBytes / 1024
