@@ -29,7 +29,7 @@
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">#E4F5FD</item>
-        <item name="colorSurfaceContainer">#0F03A9F4</item>
+        <item name="colorSurfaceContainer">#F0FAFE</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 
         <item name="android:textColor">@color/text_color_primary</item>
