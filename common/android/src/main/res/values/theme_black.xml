@@ -20,6 +20,7 @@
         <item name="colorTertiaryContainer">@color/material_blue_900</item>
         <item name="colorOnTertiaryContainer">@color/material_blue_100</item>
         <item name="colorSurfaceContainerHigh">#151515</item>
+        <item name="colorSurfaceContainer">#040A0E</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
