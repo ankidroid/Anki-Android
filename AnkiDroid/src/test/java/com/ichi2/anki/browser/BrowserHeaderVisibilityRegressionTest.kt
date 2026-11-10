@@ -2,12 +2,13 @@
 
 package com.ichi2.anki.browser
 
-import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_S
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.search.SavedSearch
@@ -15,6 +16,7 @@ import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.testutils.ext.snackbarAction
 import com.ichi2.testutils.ext.snackbarText
+import com.ichi2.testutils.pressKey
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -38,16 +40,7 @@ class BrowserHeaderVisibilityRegressionTest : RobolectricTest() {
             assertTrue(activityViewModel.isInMultiSelectMode)
             assertFalse(requireActivity().findViewById<TextView>(R.id.subtitle).isShown)
 
-            val shortcut =
-                KeyEvent(
-                    0,
-                    0,
-                    KeyEvent.ACTION_UP,
-                    KeyEvent.KEYCODE_S,
-                    0,
-                    KeyEvent.META_CTRL_ON or KeyEvent.META_ALT_ON,
-                )
-            assertTrue((requireActivity() as CardBrowser).onKeyUp(KeyEvent.KEYCODE_S, shortcut))
+            onView(isRoot()).pressKey(KEYCODE_S, ctrl = true, alt = true)
             advanceRobolectricLooper()
             val dialog = parentFragmentManager.fragments.filterIsInstance<SavedBrowserSearchesDialogFragment>().single()
             val list = assertNotNull(dialog.requireDialog().findViewById<RecyclerView>(CommonR.id.dialog_recycler_view))
