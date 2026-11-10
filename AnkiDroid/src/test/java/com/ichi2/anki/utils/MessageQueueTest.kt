@@ -58,6 +58,26 @@ class MessageQueueTest {
     }
 
     @Test
+    fun `discard removes only matching messages`() {
+        queue.enqueue("drop")
+        queue.enqueue("keep")
+        queue.enqueue("drop")
+
+        queue.discard { it == "drop" }
+
+        assertThat(queue.messages.value.map { it.message }, contains("keep"))
+    }
+
+    @Test
+    fun `enqueueFirst puts a message ahead of the pending ones`() {
+        queue.enqueue("second")
+        queue.enqueueFirst("first")
+        queue.enqueue("third")
+
+        assertThat(queue.messages.value.map { it.message }, contains("first", "second", "third"))
+    }
+
+    @Test
     fun `messages queue in enqueue order without a collector`() {
         queue.enqueue("first")
         queue.enqueue("second")

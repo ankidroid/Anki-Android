@@ -15,6 +15,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
+import com.ichi2.anki.libanki.fileState
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
@@ -101,15 +102,24 @@ fun DeckPicker.handleNewSync(
     val mediaNetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true, permission = meteredSyncPermission)
     val deckPicker = this
     launchCatchingTask {
+        var downloading = conflict == ConflictResolution.FULL_DOWNLOAD
         try {
             try {
                 when (conflict) {
                     ConflictResolution.FULL_DOWNLOAD ->
-                        handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
+                        viewModel.downloadCollection { onReplaced ->
+                            handleDownload(
+                                deckPicker,
+                                auth,
+                                deckPicker.mediaUsnOnConflict,
+                                deckPicker.mediaNetworkTypeOnConflict,
+                                onReplaced,
+                            )
+                        }
                     ConflictResolution.FULL_UPLOAD ->
                         handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
                     null -> {
-                        handleNormalSync(deckPicker, auth, syncMedia, mediaNetworkType)
+                        handleNormalSync(deckPicker, auth, syncMedia, mediaNetworkType, onDownload = { downloading = true })
                     }
                 }
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
@@ -138,6 +148,9 @@ fun DeckPicker.handleNewSync(
             withCol { notetypes.clearCache() }
             notifySubscribersAllValuesChanged(deckPicker)
             refreshState()
+        } catch (e: Exception) {
+            if (!downloading || e is CancellationException) throw e
+            viewModel.reportDownloadFailure(e)
         } finally {
             setLastSyncTimeToNow()
         }
@@ -176,6 +189,7 @@ private suspend fun handleNormalSync(
     auth: SyncAuth,
     syncMedia: Boolean,
     mediaNetworkType: NetworkType,
+    onDownload: () -> Unit,
 ) {
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
@@ -224,7 +238,10 @@ private suspend fun handleNormalSync(
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth2, mediaUsn, mediaNetworkType)
+            onDownload()
+            deckPicker.viewModel.downloadCollection { onReplaced ->
+                handleDownload(deckPicker, auth2, mediaUsn, mediaNetworkType, onReplaced)
+            }
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
@@ -261,6 +278,7 @@ private suspend fun handleDownload(
     auth: SyncAuth,
     mediaUsn: Int?,
     mediaNetworkType: NetworkType,
+    onReplaced: () -> Unit,
 ) {
     Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
@@ -284,12 +302,19 @@ private suspend fun handleDownload(
                     Timber.i("Sync: Backup skipped before full download: collection unchanged")
                 }
                 close(downgrade = false, forFullSync = true)
-                // Media starts through SyncMediaWorker so WorkManager can enforce network constraints.
-                fullUploadOrDownload(
-                    auth,
-                    upload = false,
-                    mediaSync = MediaSync.Skip,
-                )
+                val original = colDb.fileState()
+                try {
+                    // Media starts through SyncMediaWorker so WorkManager can enforce network constraints.
+                    fullUploadOrDownload(
+                        auth,
+                        upload = false,
+                        mediaSync = MediaSync.Skip,
+                    )
+                } catch (e: Exception) {
+                    if (colDb.fileState() != original) onReplaced()
+                    throw e
+                }
+                onReplaced()
             } finally {
                 reopen(afterFullSync = true)
             }

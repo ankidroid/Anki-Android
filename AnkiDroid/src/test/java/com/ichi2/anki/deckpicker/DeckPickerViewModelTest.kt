@@ -469,7 +469,12 @@ class DeckPickerViewModelTest : JvmTest() {
             viewModel.updateDeckFilter("First")
             runCurrent()
 
-            assertSame(readError, viewModel.onError.tryReceive().getOrNull())
+            assertSame(
+                readError,
+                viewModel.pendingErrors.value
+                    .single()
+                    .message.exception,
+            )
             assertEquals(initialList, viewModel.flowOfDeckList.value)
 
             viewModel.updateDeckFilter("Second")

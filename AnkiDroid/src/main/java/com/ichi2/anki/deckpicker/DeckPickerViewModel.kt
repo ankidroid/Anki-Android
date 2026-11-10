@@ -20,6 +20,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.InitialActivity
+import com.ichi2.anki.OnCollectionQueued
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.destinations.BrowserDestination
@@ -27,7 +28,6 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
-import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingIO
@@ -54,9 +54,16 @@ import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import com.ichi2.utils.NetworkUtils
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -74,6 +81,10 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration.Companion.minutes
 import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
@@ -142,11 +153,14 @@ class DeckPickerViewModel :
 
             // TODO: use flowOfFocusedDeck once it's set on all instances
             // This flow can outlive the visible screen. Do not reopen the collection just to redraw it.
+            var readAfterRecoveries = recoveries.get()
             val currentDeckId =
                 try {
-                    withOpenColOrNull { decks.current().id }
+                    withContext(OnCollectionQueued { readAfterRecoveries = recoveries.get() }) {
+                        withOpenColOrNull { decks.current().id }
+                    }
                 } catch (e: BackendException) {
-                    onError.send(e)
+                    reportError(e, readAfterRecoveries)
                     // Keep the previous deck list and retry on the next update.
                     return@combineTransform
                 }
@@ -175,11 +189,19 @@ class DeckPickerViewModel :
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
-    private val errorQueue = MessageQueue<Exception>()
+    private val errorQueue = MessageQueue<PendingError>()
     val pendingErrors = errorQueue.messages
     private var reloadAfterError: Exception? = null
-    val databaseErrorDialogs: StateFlow<List<DatabaseErrorDialogType>>
-        field = MutableStateFlow(emptyList())
+    val recoveryDialogsOpen: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+    private var recoveringFromCorruption = false
+    private var recoveryStartedFromDialogs = false
+    val recoveringCollection: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+    private var errorHolds = 0
+    private val recoveries = AtomicInteger()
+    val replacedCollection: StateFlow<String?>
+        field = MutableStateFlow(null)
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
@@ -277,27 +299,143 @@ class DeckPickerViewModel :
         }
 
     fun errorShown(id: MessageId) {
-        val shown = pendingErrors.value.find { it.id == id }?.message
+        val shown =
+            pendingErrors.value
+                .find { it.id == id }
+                ?.message
+                ?.exception
         errorQueue.acknowledge(id)
         if (shown == null || shown !== reloadAfterError) return
         reloadAfterError = null
         reloadDeckCounts(retryAfterError = false)
     }
 
-    fun onDatabaseErrorDialogsChanged(open: List<DatabaseErrorDialogType>) {
-        databaseErrorDialogs.value = open
+    fun onRecoveryDialogsChanged(
+        open: Boolean,
+        loadFailedOpen: Boolean,
+    ) {
+        if (!open && recoveringFromCorruption && !recoveryStartedFromDialogs) dropCorruptionErrors()
+        recoveringFromCorruption = open && (recoveringFromCorruption || loadFailedOpen)
+        recoveryStartedFromDialogs = open && recoveryStartedFromDialogs
+        recoveryDialogsOpen.value = open
     }
 
-    private suspend fun reportError(e: Exception) {
-        withContext(Dispatchers.Main.immediate) { errorQueue.enqueue(e) }
+    private fun dropCorruptionErrors() = errorQueue.discard { it.exception.isDatabaseCorruption }
+
+    private fun dropStaleCorruptionErrors() =
+        errorQueue.discard { it.exception.isDatabaseCorruption && it.readAfterRecoveries != recoveries.get() }
+
+    fun checkDatabase(): Deferred<List<String>?> =
+        recoverCollection {
+            withCol { fixIntegrity().also { recoveries.incrementAndGet() } }.also { reloadDeckCounts() }
+        }
+
+    fun replaceCollection(
+        colpkgPath: String,
+        onReplaced: () -> Unit = {},
+    ): Deferred<Unit?> =
+        recoverCollection {
+            CollectionManager.importColpkg(
+                colpkgPath,
+                onImported = {
+                    recoveries.incrementAndGet()
+                    onReplaced()
+                },
+            )
+            replacedCollection.value = colpkgPath
+        }
+
+    fun onReplacedCollectionShown() {
+        replacedCollection.value = null
     }
 
-    private suspend fun reportRefreshError(
+    private fun <T> recoverCollection(work: suspend () -> T): Deferred<T?> =
+        viewModelScope.async {
+            recoveryStartedFromDialogs = recoveryDialogsOpen.value
+            val startRecoveries = recoveries.get()
+            holdErrorsDuring {
+                try {
+                    work().also { dropCorruptionErrors() }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Timber.w(e, "collection recovery failed")
+                    if (recoveries.get() != startRecoveries) {
+                        dropStaleCorruptionErrors()
+                        reloadDeckCounts()
+                    }
+                    errorQueue.enqueueFirst(PendingError(e))
+                    null
+                }
+            }
+        }
+
+    suspend fun downloadCollection(download: suspend (onReplaced: () -> Unit) -> Unit) {
+        recoveryStartedFromDialogs = recoveryDialogsOpen.value
+        val replaced = AtomicBoolean(false)
+        holdErrorsDuring {
+            try {
+                download {
+                    recoveries.incrementAndGet()
+                    replaced.set(true)
+                }
+            } catch (e: Exception) {
+                if (replaced.get() && e !is CancellationException) reloadDeckCounts()
+                throw e
+            } finally {
+                if (replaced.get()) dropStaleCorruptionErrors()
+            }
+        }
+    }
+
+    fun reportDownloadFailure(e: Exception) = errorQueue.enqueueFirst(PendingError(e))
+
+    suspend fun <T> holdErrorsDuring(block: suspend () -> T): T {
+        errorHolds++
+        recoveringCollection.value = true
+        try {
+            return block()
+        } finally {
+            errorHolds--
+            recoveringCollection.value = errorHolds > 0
+        }
+    }
+
+    private fun launchReportingErrors(
+        context: CoroutineContext = EmptyCoroutineContext,
+        onError: suspend (Exception, readAfterRecoveries: Int) -> Unit = { e, read -> reportError(e, read) },
+        block: suspend CoroutineScope.() -> Unit,
+    ): Job {
+        var readAfterRecoveries = recoveries.get()
+        return viewModelScope.launchCatching(
+            context + OnCollectionQueued { readAfterRecoveries = recoveries.get() },
+            onError = { onError(it, readAfterRecoveries) },
+            block = block,
+        )
+    }
+
+    suspend fun runReportingErrors(block: suspend () -> Unit) {
+        var readAfterRecoveries = recoveries.get()
+        try {
+            withContext(OnCollectionQueued { readAfterRecoveries = recoveries.get() }) { block() }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            reportError(e, readAfterRecoveries)
+        }
+    }
+
+    private suspend fun reportError(
         e: Exception,
-        retryAfterError: Boolean,
-    ) = withContext(Dispatchers.Main.immediate) {
-        if (retryAfterError && !e.isDatabaseCorruption) reloadAfterError = e
-        errorQueue.enqueue(e)
+        readAfterRecoveries: Int,
+        retryAfterError: Boolean = false,
+    ) {
+        if (!e.isDatabaseCorruption) currentCoroutineContext().ensureActive()
+        withContext(NonCancellable + Dispatchers.Main.immediate) {
+            if (e.isDatabaseCorruption && readAfterRecoveries != recoveries.get()) return@withContext
+            if (retryAfterError && !e.isDatabaseCorruption) reloadAfterError = e
+            errorQueue.enqueue(PendingError(e, readAfterRecoveries))
+        }
     }
 
     /**
@@ -306,7 +444,7 @@ class DeckPickerViewModel :
      * @param did ID of the deck to delete
      */
     fun deleteDeck(did: DeckId) =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
                 val changes =
@@ -329,7 +467,7 @@ class DeckPickerViewModel :
      * Deletes the currently selected deck
      */
     fun deleteSelectedDeck() =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val targetDeckId = withCol { decks.selected() }
                 deleteDeck(targetDeckId).join()
@@ -346,7 +484,7 @@ class DeckPickerViewModel :
     fun deleteEmptyCards(
         report: EmptyCardsReport,
         preserveNotes: Boolean,
-    ) = viewModelScope.launchCatching(onError = ::reportError) {
+    ) = launchReportingErrors {
         progressManager.withProgress(message = DeckPickerProgress.DELETING_EMPTY_CARDS) {
             // https://github.com/ankitects/anki/blob/39e293b27d36318e00131fd10144755eec8d1922/qt/aqt/emptycards.py#L98-L109
             val toDelete = mutableListOf<CardId>()
@@ -365,7 +503,7 @@ class DeckPickerViewModel :
     }
 
     fun emptyFilteredDeck(deckId: DeckId): Job =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             progressManager.withProgress {
                 Timber.i("empty filtered deck %s", deckId)
                 withCol { decks.select(deckId) }
@@ -378,7 +516,7 @@ class DeckPickerViewModel :
      * Rebuilds a filtered deck with its current filter settings
      */
     fun rebuildFilteredDeck(deckId: DeckId): Job =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
                 Timber.i("rebuilding filtered deck %s", deckId)
                 withCol {
@@ -392,12 +530,12 @@ class DeckPickerViewModel :
     /**
      * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
      */
-    fun selectDeck(deckId: DeckId) = viewModelScope.launchCatching(onError = ::reportError) { markDeckSelected(deckId) }
+    fun selectDeck(deckId: DeckId) = launchReportingErrors { markDeckSelected(deckId) }
 
     val flowOfCreatedDeckSelected = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     fun selectCreatedDeck(deckId: DeckId) =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             markDeckSelected(deckId)
             flowOfCreatedDeckSelected.emit(Unit)
         }
@@ -436,7 +574,7 @@ class DeckPickerViewModel :
     val flowOfShowRightClickContextMenu = MutableSharedFlow<RightClickMenuRequest>(extraBufferCapacity = 1)
 
     fun requestContextMenu(deckId: DeckId) =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             markDeckSelected(deckId)
             flowOfShowContextMenu.emit(deckId)
         }
@@ -445,7 +583,7 @@ class DeckPickerViewModel :
         deckId: DeckId,
         x: Float,
         y: Float,
-    ) = viewModelScope.launchCatching(onError = ::reportError) {
+    ) = launchReportingErrors {
         markDeckSelected(deckId)
         flowOfShowRightClickContextMenu.emit(RightClickMenuRequest(deckId, x, y))
     }
@@ -527,7 +665,7 @@ class DeckPickerViewModel :
     private fun reloadDeckCounts(retryAfterError: Boolean): Job {
         loadDeckCounts?.cancel()
         val loadDeckCounts =
-            viewModelScope.launchCatching(Dispatchers.IO, onError = { reportRefreshError(it, retryAfterError) }) {
+            launchReportingErrors(Dispatchers.IO, onError = { e, read -> reportError(e, read, retryAfterError) }) {
                 Timber.d("Refreshing deck list")
                 withCol {
                     dueTree = sched.deckDueTree()
@@ -574,7 +712,7 @@ class DeckPickerViewModel :
     }
 
     fun toggleDeckExpand(deckId: DeckId) =
-        viewModelScope.launchCatching(onError = ::reportError) {
+        launchReportingErrors {
             withCol {
                 // update stored state
                 dueTree?.find(deckId)?.run {
@@ -839,21 +977,22 @@ class DeckPickerViewModel :
     /**
      * Recomputes the full options menu state from the current collection.
      */
-    suspend fun refreshMenuState() {
-        flowOfOptionsMenuState.value =
-            withOpenColOrNull {
-                val searchIcon = decks.count() >= 10
-                val undoLabel = undoLabel()
-                val undoAvailable = undoAvailable()
-                // besides checking for cards being available also consider if we have empty decks
-                val isColEmpty = isEmpty && decks.count() == 1
-                val showDeckActions = !isColEmpty
-                // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
-                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, showDeckActions)
-            }?.let { state ->
-                state.copy(syncIcon = fetchSyncIconState())
-            }
-    }
+    suspend fun refreshMenuState() =
+        runReportingErrors {
+            flowOfOptionsMenuState.value =
+                withOpenColOrNull {
+                    val searchIcon = decks.count() >= 10
+                    val undoLabel = undoLabel()
+                    val undoAvailable = undoAvailable()
+                    // besides checking for cards being available also consider if we have empty decks
+                    val isColEmpty = isEmpty && decks.count() == 1
+                    val showDeckActions = !isColEmpty
+                    // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
+                    OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, showDeckActions)
+                }?.let { state ->
+                    state.copy(syncIcon = fetchSyncIconState())
+                }
+        }
 
     /**
      * Refreshes only the undo-related fields of the menu state, leaving the rest untouched.
@@ -979,3 +1118,8 @@ data class OptionsMenuState(
 
 internal val Exception.isDatabaseCorruption
     get() = this is BackendDbCorruptException || this is SQLiteDatabaseCorruptException
+
+class PendingError(
+    val exception: Exception,
+    val readAfterRecoveries: Int? = null,
+)

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
  *
  * e.g. Rotating the screen can remove a snackbar immediately after it's displayed.
  *
- * A UI should display [messages] in enqueue order, then call [acknowledge] after each message is handled.
+ * A UI should display [messages] in order, then call [acknowledge] after each message is handled.
  *
  * @see [Android UI event guidance](https://developer.android.com/topic/architecture/ui-layer/events#consuming-events)
  */
@@ -28,10 +28,21 @@ class MessageQueue<T> {
         messages.update { it + pending }
     }
 
+    @MainThread
+    fun enqueueFirst(message: T) {
+        val pending = Message(id = nextMessageId++, message = message)
+        messages.update { listOf(pending) + it }
+    }
+
     /** Removes only the acknowledged message. Repeated or stale acknowledgements are harmless. */
     @MainThread
     fun acknowledge(id: MessageId) {
         messages.update { messages -> messages.filterNot { it.id == id } }
+    }
+
+    @MainThread
+    fun discard(predicate: (T) -> Boolean) {
+        messages.update { messages -> messages.filterNot { predicate(it.message) } }
     }
 
     /** [id] distinguishes messages with identical contents within this queue. */

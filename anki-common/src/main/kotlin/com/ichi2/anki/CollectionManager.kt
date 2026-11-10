@@ -34,6 +34,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
 import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.libanki.Storage.collection
+import com.ichi2.anki.libanki.fileState
 import com.ichi2.anki.libanki.importCollectionPackage
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +53,8 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
+import kotlin.coroutines.AbstractCoroutineContextElement
+import kotlin.coroutines.CoroutineContext
 
 object CollectionManager {
     /**
@@ -129,16 +132,19 @@ object CollectionManager {
     private suspend fun <T> withQueue(
         @WorkerThread block: CollectionManager.() -> T,
     ): T {
+        val onQueued = currentCoroutineContext()[OnCollectionQueued]?.onQueued
         if (isRobolectric && useTestMutex) {
             // #16253 Robolectric Windows: `withContext(queue)` is insufficient for serial execution
             val context = currentCoroutineContext()
             return testMutex.withLock {
                 // ReentrantLock does not check cancellation, which may happen while waiting for it.
                 context.ensureActive()
+                onQueued?.invoke()
                 this@CollectionManager.block()
             }
         }
         return withContext(queue) {
+            onQueued?.invoke()
             this@CollectionManager.block()
         }
     }
@@ -551,7 +557,8 @@ object CollectionManager {
     /**
      * Replace the collection with the provided colpkg file if it is valid.
      * On success, leave the replacement collection closed; callers must reopen it, for example with [withCol].
-     * On failure, try to reopen the original collection before rethrowing the import error.
+     * On failure, try to reopen the collection before rethrowing the import error.
+     * [onImported] runs once the replacement is installed, even if the import then fails.
      * If reopening also fails, attach that failure as a suppressed exception to the import error.
      *
      * @throws BackendIoException if the colpkg file is missing or an I/O error occurs.
@@ -560,13 +567,20 @@ object CollectionManager {
      * TODO: to be fixed in https://github.com/ankitects/anki/issues/5732
      * @throws BackendImportException if the archive contains an invalid collection database.
      */
-    suspend fun importColpkg(colpkgPath: String) {
+    suspend fun importColpkg(
+        colpkgPath: String,
+        onImported: () -> Unit = {},
+    ) {
         withQueue {
             ensureClosedInner()
             ensureBackendInner()
+            val files = collectionFilesTestOverride ?: collectionPathInValidFolder()
+            val colDb = (files as? CollectionFiles.FolderBasedCollection)?.colDb
+            val original = colDb?.fileState()
             try {
-                importCollectionPackage(backend!!, collectionFilesTestOverride ?: collectionPathInValidFolder(), colpkgPath)
+                importCollectionPackage(backend!!, files, colpkgPath)
             } catch (importError: Exception) {
+                if (colDb?.fileState() != original) onImported()
                 try {
                     ensureOpenInner()
                 } catch (reopenError: Exception) {
@@ -574,6 +588,7 @@ object CollectionManager {
                 }
                 throw importError
             }
+            onImported()
         }
     }
 
@@ -646,3 +661,9 @@ object CollectionManager {
 
 fun Collection.reopen(afterFullSync: Boolean = false) =
     this.reopen(afterFullSync = afterFullSync) { backend -> createDatabaseUsingRustBackend(backend) }
+
+class OnCollectionQueued(
+    val onQueued: () -> Unit,
+) : AbstractCoroutineContextElement(OnCollectionQueued) {
+    companion object Key : CoroutineContext.Key<OnCollectionQueued>
+}

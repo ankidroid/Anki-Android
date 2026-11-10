@@ -6,6 +6,9 @@ package com.ichi2.anki.libanki
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import java.io.File
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.attribute.BasicFileAttributes
 
 /**
  * Accessors for `collection.anki2`, `collection.media` and `collection.media.db`
@@ -61,3 +64,11 @@ sealed class CollectionFiles {
 
     abstract val mediaFolder: File?
 }
+
+fun File.fileState(): List<Any?>? =
+    try {
+        val attributes = Files.readAttributes(toPath(), BasicFileAttributes::class.java)
+        listOf(attributes.fileKey(), attributes.size(), attributes.lastModifiedTime())
+    } catch (_: IOException) {
+        null
+    }
