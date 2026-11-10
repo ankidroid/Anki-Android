@@ -35,6 +35,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.BrowserSearchFeedbackMode
+import com.ichi2.anki.browser.BrowserUiEffect
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -92,6 +93,7 @@ import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.receiveAsFlow
 import timber.log.Timber
 
 @Suppress("LeakingThis")
@@ -544,6 +546,11 @@ open class CardBrowser :
         viewModel.flowOfSearchState.collectInLifecycle(::searchStateChanged)
         viewModel.flowOfLastCompletedSearch.filterNotNull().collectInLifecycle(::onLastCompletedSearchChanged)
         viewModel.flowOfNoteEditorCommand.collectInLifecycle(::onNoteEditorCommand)
+        viewModel.uiEffects.receiveAsFlow().collectInLifecycle { effect ->
+            when (effect) {
+                BrowserUiEffect.RefreshControls -> refreshControls()
+            }
+        }
     }
 
     private fun refreshControls() {
@@ -630,13 +637,6 @@ open class CardBrowser :
         )
     }
 
-    private fun refreshBrowserUI(feedbackMode: BrowserSearchFeedbackMode) {
-        // reload whole view
-        viewModel.launchSearchForCards(feedbackMode = feedbackMode)
-        viewModel.endMultiSelectMode(SingleSelectCause.Other)
-        refreshControls()
-    }
-
     /**
      * Implementation of `by viewModels()` for use in [onCreate]
      *
@@ -673,10 +673,11 @@ open class CardBrowser :
             changes.noteText ||
             changes.card
         ) {
-            // We refresh the Browser's own UI
             val feedbackMode =
                 if (handler is NoteEditorFragment) BrowserSearchFeedbackMode.COUNT_ONLY else BrowserSearchFeedbackMode.NONE
-            refreshBrowserUI(feedbackMode)
+            launchCatchingTask {
+                viewModel.refreshBrowser(feedbackMode)
+            }
         }
     }
 

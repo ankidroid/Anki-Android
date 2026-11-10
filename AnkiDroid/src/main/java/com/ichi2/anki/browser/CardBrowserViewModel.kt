@@ -70,6 +70,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -324,6 +326,10 @@ class CardBrowserViewModel(
      * If cards are marked or flagged
      */
     val flowOfCardStateChanged = MutableSharedFlow<Unit>()
+
+    // Queue effects while the browser's STARTED collector is stopped.
+    val uiEffects: ReceiveChannel<BrowserUiEffect>
+        field = Channel<BrowserUiEffect>(Channel.BUFFERED)
 
     val flowOfChangeNoteType = MutableSharedFlow<ChangeNoteTypeResponse>()
 
@@ -817,6 +823,12 @@ class CardBrowserViewModel(
         when (event) {
             BrowserEvent.ToggleMarkRequested -> toggleMark()
         }
+    }
+
+    suspend fun refreshBrowser(feedbackMode: BrowserSearchFeedbackMode) {
+        launchSearchForCards(feedbackMode = feedbackMode)
+        endMultiSelectMode(SingleSelectCause.Other)
+        uiEffects.send(BrowserUiEffect.RefreshControls)
     }
 
     /**
