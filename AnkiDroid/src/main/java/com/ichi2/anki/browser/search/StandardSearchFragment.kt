@@ -204,6 +204,9 @@ class StandardSearchFragment :
 
                 binding.title.text = item.toSpannable()
                 binding.root.setOnClickListener { viewModel.selectSearchHistoryEntry(item.entry) }
+                // TODO: we may want to hide invalid entries (e.g. deleted deck).
+                //  `null` can currently either mean loading, or invalid.
+                binding.favorite.isEnabled = item.searchString != null
                 binding.favorite.setOnClickListener {
                     viewModel.requestSaveSearch(item.entry)
                 }
