@@ -6,7 +6,6 @@ import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.deck_config.UpdateDeckConfigsMode
 import anki.deck_config.UpdateDeckConfigsRequest
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.settings.Prefs
@@ -46,7 +45,7 @@ class DeckOptionsTest : RobolectricTest() {
 
     @Test
     fun `double tap interval is sent to the page when it is ready`() {
-        Prefs.putInt(R.string.double_tap_timeout_pref_key, 800)
+        Prefs.doubleTapInterval = 800
 
         withDeckOptions {
             onWebViewReady()

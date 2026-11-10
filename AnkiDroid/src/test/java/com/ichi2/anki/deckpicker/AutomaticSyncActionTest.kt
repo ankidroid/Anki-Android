@@ -5,7 +5,6 @@ package com.ichi2.anki.deckpicker
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import anki.sync.syncStatusResponse
-import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AutomaticSyncAction
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
@@ -32,7 +31,7 @@ class AutomaticSyncActionTest : JvmTest() {
 
     @Before
     fun enableAutomaticSync() {
-        Prefs.putBoolean(R.string.automatic_sync_choice_key, true)
+        Prefs.isAutoSyncEnabled = true
         Prefs.hkey = "test"
         Prefs.lastSyncTime = 0
         Prefs.allowSyncOnMeteredConnections = true
@@ -51,7 +50,7 @@ class AutomaticSyncActionTest : JvmTest() {
     @Test
     fun `disabled automatic sync does not contact the server`() =
         runTest {
-            Prefs.putBoolean(R.string.automatic_sync_choice_key, false)
+            Prefs.isAutoSyncEnabled = false
 
             assertEquals(AutomaticSyncAction.NONE, viewModel.automaticSyncAction())
             verify(exactly = 0) { backend.syncStatus(any<SyncAuth>()) }

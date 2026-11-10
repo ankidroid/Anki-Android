@@ -2271,9 +2271,13 @@ class CardBrowserTest : RobolectricTest() {
     }
 }
 
-fun setCardBrowserFragmented(value: Boolean) = Prefs.putBoolean(R.string.dev_card_browser_fragmented, value)
+fun setCardBrowserFragmented(value: Boolean) {
+    Prefs.devIsCardBrowserFragmented = value
+}
 
-fun setUsingSearchView(value: Boolean) = Prefs.putBoolean(R.string.dev_card_browser_search_view, value)
+fun setUsingSearchView(value: Boolean) {
+    Prefs.devUsingCardBrowserSearchView = value
+}
 
 private fun View.dragBy(dx: Float) {
     val downTime = SystemClock.uptimeMillis()

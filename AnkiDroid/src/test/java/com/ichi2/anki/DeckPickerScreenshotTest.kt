@@ -47,7 +47,7 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
     override fun tearDown() {
         super.tearDown()
         BackupManagerTestUtilities.reset()
-        Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), false) }
+        Prefs.devBottomNavEnabled = false
     }
 
     @Test
@@ -241,7 +241,7 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
         get() = locationInWindow().y + paddingTop + (height - paddingTop - paddingBottom) / 2
 
     private fun enableBottomNavigation() {
-        Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), true) }
+        Prefs.devBottomNavEnabled = true
     }
 
     private suspend fun startDeckPicker(): DeckPicker =
