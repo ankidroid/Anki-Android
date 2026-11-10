@@ -494,6 +494,17 @@ open class PrefsRepository protected constructor(
      */
     val switchProfileEnabled by booleanPref(R.string.pref_enable_switch_profile_key, false)
 
+    // ************************************** Card Browser ************************************** //
+
+    /**
+     * Whether the Card Browser should use an efficient 'no sorting' mode when displaying results
+     *
+     * **AnkiDroid Only**
+     *
+     * TODO: This should differentiate cards & notes mode
+     */
+    var cardBrowserNoSorting by booleanPref(R.string.pref_browser_no_sorting, false)
+
     // **************************************** UI Config *************************************** //
 
     /**

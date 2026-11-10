@@ -2,14 +2,11 @@
 
 package com.ichi2.anki.browser
 
-import androidx.core.content.edit
-import com.ichi2.anki.R
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.SortType.CollectionOrdering
 import com.ichi2.anki.model.SortType.NoOrdering
-import com.ichi2.anki.model.cardBrowserNoSorting
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
@@ -27,7 +24,7 @@ class SortTypeTest : JvmTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        Prefs.sharedPrefs.edit { remove(Prefs.key(R.string.pref_browser_no_sorting)) }
+        Prefs.cardBrowserNoSorting = false
     }
 
     @Test

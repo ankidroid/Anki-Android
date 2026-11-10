@@ -3,11 +3,9 @@
 package com.ichi2.anki.model
 
 import android.os.Parcelable
-import androidx.annotation.VisibleForTesting
 import anki.search.BrowserColumns.Column
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnKey
 import com.ichi2.anki.common.utils.ext.browserSortCardsBackwards
 import com.ichi2.anki.common.utils.ext.browserSortCardsColumn
@@ -17,7 +15,6 @@ import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.settings.PrefsRepository
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
@@ -97,20 +94,6 @@ sealed class SortType : Parcelable {
             }
     }
 }
-
-/**
- * Whether the Card Browser should use an efficient 'no sorting' mode when displaying results
- *
- * **AnkiDroid Only**
- *
- * TODO: This should differentiate cards & notes mode
- */
-@VisibleForTesting
-var PrefsRepository.cardBrowserNoSorting: Boolean
-    get() = getBoolean(R.string.pref_browser_no_sorting, false)
-    set(value) {
-        putBoolean(R.string.pref_browser_no_sorting, value)
-    }
 
 private suspend fun getBrowserColumnKey(cardsOrNotes: CardsOrNotes): String =
     withCol {

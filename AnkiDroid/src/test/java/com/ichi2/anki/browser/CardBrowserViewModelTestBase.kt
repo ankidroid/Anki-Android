@@ -43,7 +43,7 @@ abstract class CardBrowserViewModelTestBase : JvmTest() {
 
     override fun setUp() {
         super.setUp()
-        Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
+        Prefs.cardBrowserNoSorting = false
         preventDayRolloverAlarmFromUnburyingCards()
     }
 
