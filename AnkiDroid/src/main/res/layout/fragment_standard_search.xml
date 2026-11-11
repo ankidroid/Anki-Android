@@ -180,4 +180,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/advanced_search_content"
+        android:name="com.ichi2.anki.browser.search.AdvancedSearchFragment"
+        android:tag="ADVANCED"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/chip_group"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
