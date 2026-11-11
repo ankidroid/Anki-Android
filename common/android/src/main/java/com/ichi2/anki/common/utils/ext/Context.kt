@@ -2,8 +2,10 @@
 
 package com.ichi2.anki.common.utils.ext
 
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.ContextWrapper
 import androidx.core.content.ContextCompat
 import timber.log.Timber
 
@@ -36,3 +38,8 @@ inline fun <reified T : Any> Context.requireSystemService(): T =
     requireNotNull(ContextCompat.getSystemService(this, T::class.java)) {
         "system service unavailable: ${T::class.java.simpleName}"
     }
+
+inline fun <reified T : Activity> Context.findActivity(): T? =
+    generateSequence(this) { (it as? ContextWrapper)?.baseContext }
+        .filterIsInstance<T>()
+        .firstOrNull()

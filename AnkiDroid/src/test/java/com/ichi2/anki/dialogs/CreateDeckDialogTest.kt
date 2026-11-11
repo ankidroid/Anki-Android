@@ -5,10 +5,12 @@ package com.ichi2.anki.dialogs
 
 import android.content.ContextWrapper
 import android.os.Looper
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
@@ -19,8 +21,11 @@ import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.testutils.ext.snackbarText
+import com.ichi2.utils.getInputField
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import okhttp3.internal.closeQuietly
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
@@ -37,6 +42,8 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @RunWith(RobolectricTestRunner::class)
@@ -603,6 +610,76 @@ class CreateDeckDialogTest : RobolectricTest() {
                 ShadowToast.getTextOfLatestToast(),
                 equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
+        }
+    }
+
+    @Test
+    fun `create is disabled while the name check is pending`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.DECK, null).apply { onNewDeckCreated = {} }.showDialog()
+            withPendingNameChecks {
+                dialog.input = "New"
+                assertFalse(dialog.positiveButton.isEnabled, "Create is enabled before the name is checked")
+            }
+            assertTrue(dialog.positiveButton.isEnabled, "Create is enabled once the name is checked")
+        }
+    }
+
+    @Test
+    fun `renaming before the name check finishes does not rename onto an existing deck`() {
+        addDeck("Existing")
+        val did = addDeck("Old")
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(activity, "Rename deck", DeckDialogType.RENAME_DECK, null, did)
+                    .apply {
+                        deckName = "Old"
+                        onNewDeckCreated = {}
+                    }.showDialog()
+            withPendingNameChecks { scheduler ->
+                dialog.input = "Existing"
+                dialog.getInputField().onEditorAction(EditorInfo.IME_ACTION_DONE)
+                scheduler.advanceUntilIdle()
+            }
+        }
+        assertEquals("Old", col.decks.name(did))
+    }
+
+    @Test
+    fun `a name check finishing after the name is cleared does not enable create`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.DECK, null).apply { onNewDeckCreated = {} }.showDialog()
+            withPendingNameChecks { scheduler ->
+                dialog.input = "New"
+                dialog.input = ""
+                scheduler.advanceUntilIdle()
+                assertFalse(dialog.positiveButton.isEnabled, "Create is enabled for an empty name")
+            }
+        }
+    }
+
+    @Test
+    fun `a name check finishing after the name is cleared shows no error`() {
+        addDeck("Existing")
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.DECK, null).apply { onNewDeckCreated = {} }.showDialog()
+            withPendingNameChecks { scheduler ->
+                dialog.input = "Existing"
+                dialog.input = ""
+                scheduler.advanceUntilIdle()
+                assertNull(dialog.getInputTextLayout().error, "an error is shown for an empty name")
+            }
+        }
+    }
+
+    private fun withPendingNameChecks(block: (TestCoroutineScheduler) -> Unit) {
+        val queue = StandardTestDispatcher()
+        val previousQueue = CollectionManager.setTestDispatcher(queue, useReentrantLock = false)
+        try {
+            block(queue.scheduler)
+        } finally {
+            queue.scheduler.advanceUntilIdle()
+            CollectionManager.setTestDispatcher(previousQueue)
         }
     }
 

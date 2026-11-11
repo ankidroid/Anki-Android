@@ -4,7 +4,7 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
+import com.ichi2.anki.common.utils.ext.findActivity
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialogs
@@ -24,10 +24,10 @@ internal object AnkiDroidDatabaseErrorDialogs : DatabaseErrorDialogs {
         }
     }
 
-    override fun canConfirmDatabaseCheck(context: Context): Boolean = context.findActivity() != null
+    override fun canConfirmDatabaseCheck(context: Context): Boolean = context.findActivity<Activity>() != null
 
     override fun confirmDatabaseCheck(context: Context) {
-        context.findActivity()!!.showDatabaseErrorDialogInDeckPicker(
+        context.findActivity<Activity>()!!.showDatabaseErrorDialogInDeckPicker(
             errorDialogType = DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK,
         )
     }
@@ -38,12 +38,5 @@ fun initializeDatabaseErrorDialogs() {
     DatabaseErrorDialogs.register(AnkiDroidDatabaseErrorDialogs)
 }
 
-internal fun Context.findAnkiActivity(): AnkiActivity? = findActivity() as? AnkiActivity
-
 /** The dialog's [Context] is wrapped (e.g. ContextThemeWrapper); walk the chain to find the activity. */
-private tailrec fun Context.findActivity(): Activity? =
-    when (this) {
-        is Activity -> this
-        is ContextWrapper -> baseContext.findActivity()
-        else -> null
-    }
+internal fun Context.findAnkiActivity(): AnkiActivity? = findActivity<AnkiActivity>()
