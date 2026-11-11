@@ -21,19 +21,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ImportFileSelectionFragmentTest : RobolectricTest() {
     @Test
-    fun `APKG picker intent disallows multiple files`() {
-        val intent = buildImportFilePickerIntent()
-        assertThat(intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, true), equalTo(false))
-    }
-
-    @Test
-    fun `COLPKG picker intent disallows multiple files`() {
-        val intent = buildImportFilePickerIntent()
-        assertThat(intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, true), equalTo(false))
-    }
-
-    @Test
-    fun `restore backup picker intent disallows multiple files`() {
+    fun `picker intent disallows multiple files by default`() {
         val intent = buildImportFilePickerIntent()
         assertThat(intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, true), equalTo(false))
     }
