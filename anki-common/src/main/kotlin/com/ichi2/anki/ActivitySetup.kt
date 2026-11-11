@@ -12,6 +12,8 @@ var activitySetup: ActivitySetup? = null
 interface ActivitySetup {
     fun wrapForActiveProfile(base: Context): Context
 
+    fun applyNightMode(context: Context)
+
     fun setTheme(
         activity: Activity,
         savedInstanceState: Bundle?,
