@@ -30,7 +30,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
@@ -47,7 +46,6 @@ import com.ichi2.anki.databinding.FragmentSetDueDateSingleBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.Scheduler
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -155,7 +153,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
         // For now, only recreate the activity if this dialog is open
         if (getScreenRotation() != initialRotation) {
             Timber.d("recreating activity: orientation changed with 'Set due date' open")
-            requireAnkiActivity().recreate()
+            requireActivity().recreate()
         }
     }
 
@@ -262,7 +260,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
 
     private fun getScreenRotation() = ContextCompat.getDisplayOrDefault(requireContext()).rotation
 
-    private fun launchUpdateDueDate(showError: Boolean = true) = requireAnkiActivity().updateDueDate(viewModel, showError)
+    private fun launchUpdateDueDate(showError: Boolean = true) = requireActivity().updateDueDate(viewModel, showError)
 
     companion object {
         const val ARG_IDS_FILE = "ARGS_IDS_FILE"
@@ -450,7 +448,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
 }
 
 // this can outlive the lifetime of the fragment
-private fun AnkiActivity.updateDueDate(
+private fun FragmentActivity.updateDueDate(
     viewModel: SetDueDateViewModel,
     showError: Boolean,
 ): Deferred<Int?> =
