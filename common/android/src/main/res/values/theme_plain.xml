@@ -70,7 +70,6 @@
         <item name="dialogBackground">@color/white</item>
         <item name="progressDialogButtonTextColor">@color/material_grey_500</item>
 
-        <item name="incrementerButtonBackground">@color/material_grey_500</item>
     </style>
 
     <style name="Theme_Light.Plain" parent="Base.Theme.Light.Plain"/>

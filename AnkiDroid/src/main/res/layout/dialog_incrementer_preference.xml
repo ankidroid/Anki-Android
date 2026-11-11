@@ -12,7 +12,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/decrement_button"
-        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
@@ -20,12 +19,10 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:padding="0dp"
-        app:backgroundTint="?attr/incrementerButtonBackground"
         app:icon="@drawable/ic_remove"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:iconSize="24dp"
-        app:iconTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_input_layout"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
@@ -63,7 +60,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/increment_button"
-        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
@@ -71,12 +67,10 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:padding="0dp"
-        app:backgroundTint="?attr/incrementerButtonBackground"
         app:icon="@drawable/ic_add"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:iconSize="24dp"
-        app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_input_layout"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />

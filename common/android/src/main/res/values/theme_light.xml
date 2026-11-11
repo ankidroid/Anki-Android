@@ -170,7 +170,6 @@
 
         <item name="clozeColor">#0277BD</item>
 
-        <item name="incrementerButtonBackground">@color/material_light_blue_500</item>
 
         <!-- Reminder troubleshooting - check contrast before changing -->
         <item name="reminderTroubleshootingOk">@color/google_green_700</item>

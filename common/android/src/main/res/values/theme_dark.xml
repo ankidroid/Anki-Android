@@ -171,7 +171,6 @@
 
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
-        <item name="incrementerButtonBackground">@color/material_theme_grey</item>
 
         <!-- Reminder troubleshooting -->
         <item name="reminderTroubleshootingOk">@color/google_green_300</item>

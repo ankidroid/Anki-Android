@@ -105,7 +105,6 @@
         <item name="progressDialogButtonTextColor">@color/material_light_blue_400</item>
 
 
-        <item name="incrementerButtonBackground">@color/material_blue_grey_900</item>
     </style>
 
     <style name="BlackCardBackground" parent="CardView">
