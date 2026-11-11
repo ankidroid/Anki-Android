@@ -466,28 +466,6 @@
             android:name="com.ichi2.anki.receiver.ExportSharedReceiver"
             android:exported="false" />
 
-        <!-- Configuration view for the DeckPickerWidget.
-             It is opened when adding a new deck picker widget and
-             by configuration button which appears when the widget is hold or resized.-->
-        <activity
-            android:name="com.ichi2.widget.deckpicker.DeckPickerWidgetConfig"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
-        <!-- Configuration view for the CardAnalysisWidget.
-             It is opened when adding a new widget and
-             by configuration button which appears when the widget is hold or resized.-->
-        <activity
-            android:name="com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
         <receiver
             android:name="com.ichi2.anki.receiver.SdCardReceiver"
             android:enabled="true"

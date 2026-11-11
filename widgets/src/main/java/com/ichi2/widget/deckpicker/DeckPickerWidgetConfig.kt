@@ -79,7 +79,7 @@ class DeckPickerWidgetConfig :
 
     /** Tracks coroutine running [initializeUIComponents]: must be run on a non-empty collection */
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    internal lateinit var initTask: Job
+    lateinit var initTask: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
