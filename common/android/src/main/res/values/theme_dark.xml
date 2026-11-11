@@ -136,7 +136,7 @@
         <item name="textAllCaps">false</item>
         <item name="clozeColor">#1976D2</item>
         <item name="popupBackgroundColor">#434343</item>
-        <item name="overflowAndPopupMenuIconColor">#9effffff</item>
+        <item name="overflowAndPopupMenuIconColor">@color/overflow_menu_icon_color</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">?attr/appBarColor</item>
         <item name="android:windowLightStatusBar">false</item>
