@@ -238,31 +238,6 @@ open class AnkiActivity(
         setContentView(binding.root)
     }
 
-    /**
-     * Sets the title (and possibly subtitle) of the toolbar (support action bar) for the activity.
-     *
-     * @param title The new title to be set for the toolbar.
-     * @param subtitle The new subtitle to be set for the toolbar. If `null`, the subtitle is removed.
-     */
-    open fun setToolbarText(
-        title: String,
-        subtitle: String? = null,
-    ) {
-        supportActionBar?.title = title
-        supportActionBar?.subtitle = subtitle
-    }
-
-    /**
-     * Sets the title (and possibly subtitle) of the toolbar (support action bar) for the activity.
-     *
-     * @param titleRes The new title to be set for the toolbar.
-     * @param subtitleRes The new subtitle to be set for the toolbar. If `null`, the subtitle is removed.
-     */
-    open fun setToolbarText(
-        @StringRes titleRes: Int,
-        @StringRes subtitleRes: Int? = null,
-    ) = setToolbarText(getString(titleRes), subtitleRes?.let { getString(it) })
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             Timber.i("Home button pressed")

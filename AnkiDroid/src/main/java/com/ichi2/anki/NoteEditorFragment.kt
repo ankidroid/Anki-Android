@@ -168,6 +168,7 @@ import com.ichi2.anki.utils.bottomCornerSideClearance
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.requireLong
+import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.insetsOf
@@ -823,7 +824,7 @@ class NoteEditorFragment :
         )
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            requireAnkiActivity().setToolbarText(titleRes = CommonString.menu_add)
+            setSupportActionBarText(getString(CommonString.menu_add))
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)

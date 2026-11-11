@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnWindowFocusChangeListener
 import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -25,6 +26,19 @@ val Fragment.packageManager: PackageManager
  * @see showDialogFragmentImpl
  */
 fun Fragment.showDialogFragment(newFragment: DialogFragment) = requireActivity().showDialogFragment(newFragment)
+
+/**
+ * Sets the title and subtitle of the host activity's support action bar.
+ * A `null` [subtitle] removes it.
+ */
+fun Fragment.setSupportActionBarText(
+    title: String,
+    subtitle: String? = null,
+) {
+    val actionBar = (requireActivity() as AppCompatActivity).supportActionBar ?: return
+    actionBar.title = title
+    actionBar.subtitle = subtitle
+}
 
 /** @see FragmentActivity.getWindow */
 val Fragment.window: Window
