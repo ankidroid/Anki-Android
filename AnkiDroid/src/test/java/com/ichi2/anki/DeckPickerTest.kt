@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Layout
 import android.view.KeyEvent
 import android.view.Menu
@@ -56,7 +57,6 @@ import app.cash.turbine.test
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckPickerFloatingActionMenu.CloseAnimation
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -605,6 +605,7 @@ class DeckPickerTest : RobolectricTest() {
             dismissAllDialogFragments()
 
             selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY, didA)
+            advanceRobolectricLooper()
             assertDialogTitleEquals("Custom study")
             dismissAllDialogFragments()
 
