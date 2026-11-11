@@ -467,6 +467,9 @@ open class PrefsRepository protected constructor(
     var devBottomNavEnabled: Boolean by booleanPref(R.string.dev_bottom_nav_key, false)
 
     @set:VisibleForTesting
+    var devMaterialYouEnabled: Boolean by booleanPref(R.string.dev_material_you_key, false)
+
+    @set:VisibleForTesting
     var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
     @set:VisibleForTesting

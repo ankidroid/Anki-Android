@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
+import com.google.android.material.color.DynamicColors
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
@@ -197,6 +198,9 @@ class HeaderFragment : SettingsFragment() {
                 }
                 if (!activity.resources.getBoolean(R.bool.bottom_navigation_available)) {
                     searchConfiguration.ignorePreference(activity.getString(R.string.dev_bottom_nav_key))
+                }
+                if (!DynamicColors.isDynamicColorAvailable()) {
+                    searchConfiguration.ignorePreference(activity.getString(R.string.dev_material_you_key))
                 }
             }
 

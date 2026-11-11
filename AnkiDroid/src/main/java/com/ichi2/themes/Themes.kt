@@ -15,6 +15,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.color.DynamicColors
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
@@ -39,6 +40,9 @@ object Themes {
     fun setTheme(context: Context) {
         updateCurrentTheme(context)
         context.setTheme(currentTheme.styleResId)
+        if (context is Activity && currentTheme != DayTheme.EINK && PrefsRepository(context).devMaterialYouEnabled) {
+            DynamicColors.applyToActivityIfAvailable(context)
+        }
     }
 
     /**
