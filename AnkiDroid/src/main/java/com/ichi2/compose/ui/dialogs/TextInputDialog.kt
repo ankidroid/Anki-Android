@@ -51,7 +51,7 @@ import androidx.appcompat.R as AppCompatR
 import com.google.android.material.R as MaterialR
 
 /**
- * Dialog asking the user for a single line of text. Compose counterpart of
+ * Dialog asking the user for text. Compose counterpart of
  * the View based `AlertDialog.input(...)` helper.
  *
  * @param onConfirm called with the text, but only while it is valid
@@ -63,6 +63,7 @@ import com.google.android.material.R as MaterialR
  * @param transformInput applied to text edits, not cursor-only changes
  * @param validateOnInput when false, validate on confirmation instead of while editing
  * @param enabled whether confirmation is allowed from the button or keyboard
+ * @param singleLine whether the field is restricted to one line; multiline input uses the Enter key for newlines
  */
 @Composable
 fun TextInputDialog(
@@ -83,6 +84,8 @@ fun TextInputDialog(
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
     validateOnInput: Boolean = true,
     enabled: Boolean = true,
+    singleLine: Boolean = true,
+    properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
@@ -113,7 +116,7 @@ fun TextInputDialog(
     AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
         modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()),
-        properties = DialogProperties(usePlatformDefaultWidth = false),
+        properties = properties,
     ) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
@@ -169,8 +172,14 @@ fun TextInputDialog(
                                     }
                                 }
                             },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
+                        singleLine = singleLine,
+                        minLines = if (singleLine) 1 else 4,
+                        maxLines = if (singleLine) 1 else 8,
+                        keyboardOptions =
+                            KeyboardOptions(
+                                capitalization = capitalization,
+                                imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
+                            ),
                         keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
                     )
                 }
