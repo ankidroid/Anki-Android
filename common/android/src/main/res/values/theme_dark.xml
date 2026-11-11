@@ -128,8 +128,8 @@
         <item name="buttonRippleColor">#BABABA</item>
         <item name="buttonForegroundColor">#757575</item>
         <!-- FAB -->
-        <item name="fabNormalColor">@color/material_light_blue_700</item>
-        <item name="fabPressedColor">@color/material_light_blue_900</item>
+        <item name="fabNormalColor">?attr/colorPrimary</item>
+        <item name="fabPressedColor">?attr/colorPrimary</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <!-- Dialog styles -->

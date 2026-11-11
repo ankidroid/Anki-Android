@@ -116,7 +116,7 @@ class ThemeTest {
     fun `light theme bridges fabNormalColor to the fab container color`() {
         val context = themed(R.style.Theme_Light)
         val colors = context.toAnkiDroidColors(context.toMaterial3ColorScheme())
-        val expected = ContextCompat.getColor(appContext, R.color.material_light_blue_700)
+        val expected = ContextCompat.getColor(appContext, R.color.material_light_blue_500)
         assertEquals(expected, colors.fabContainer.toArgb())
     }
 
