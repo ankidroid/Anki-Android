@@ -55,7 +55,6 @@
 
         <item name="appBarColor">@color/white</item>
         <item name="actionBarTextColor">@color/black</item>
-        <item name="actionBarPopupTextColor">?android:attr/textColor</item>
 
         <item name="bottomNavIndicatorColor">@color/black</item>
         <item name="bottomNavActiveIconColor">@color/white</item>
