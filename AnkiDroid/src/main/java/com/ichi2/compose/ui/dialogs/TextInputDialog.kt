@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -49,6 +50,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.res.use
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
@@ -125,7 +127,11 @@ fun TextInputDialog(
         onDismissRequest()
     }
 
-    AnkiDroidDialog(onDismissRequest = dismiss) {
+    AnkiDroidDialog(
+        onDismissRequest = dismiss,
+        modifier = Modifier.width(alertDialogWidth()),
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
             shape = AlertDialogDefaults.shape,
