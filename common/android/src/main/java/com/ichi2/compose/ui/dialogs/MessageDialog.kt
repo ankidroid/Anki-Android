@@ -3,6 +3,7 @@
 package com.ichi2.compose.ui.dialogs
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -24,6 +25,7 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
  * A Material 3 [AlertDialog] with a text message and two actions.
  *
  * Changes to the standard M3 dialog:
+ * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * 16dp vertical padding.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
@@ -39,11 +41,16 @@ fun MessageDialog(
     onDismissRequest: () -> Unit,
     dismissText: String = stringResource(R.string.dialog_cancel),
     enabled: Boolean = true,
-    properties: DialogProperties = DialogProperties(),
+    properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+        // Keep the View dialog's device width for long messages (verified on API 34/36).
+        // Robolectric does not match reality here.
+        modifier =
+            Modifier
+                .width(alertDialogWidth())
+                .padding(horizontal = 24.dp, vertical = 16.dp),
         properties = properties,
         title = {
             // Read the window from inside AlertDialog's composition.
