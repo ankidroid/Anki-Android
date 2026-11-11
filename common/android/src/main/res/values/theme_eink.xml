@@ -109,7 +109,6 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
         <item name="clozeColor">@color/black</item>
-        <item name="dialogBackground">@color/white</item>
         <item name="navDrawerItemColor">@color/black</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog.Eink</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.AnkiDroid.MaterialAlertDialog.Eink</item>

@@ -161,7 +161,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.AnkiDroid</item>
 
         <!-- ProgressDialog-->
-        <item name="dialogBackground">#ff303030</item>
+        <item name="dialogBackground">?attr/colorSurface</item>
 
 
         <!-- AlertDialogTheme-->
