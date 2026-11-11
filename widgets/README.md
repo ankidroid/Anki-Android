@@ -15,11 +15,10 @@ extracted from `:AnkiDroid` so widgets can be built and tested independently of 
 
 ## Plans
 
-This module is created first, holding only files that already had zero `:AnkiDroid`
-dependencies. The remaining widget code under `AnkiDroid/src/main/java/com/ichi2/widget`
-still depends on `:AnkiDroid` (e.g. `CollectionManager`, `R`, `AnkiActivity`, snackbars),
-so it is moved incrementally:
+The widget providers, their configuration screens and their manifest declarations all live here.
+What is left in `:AnkiDroid`:
 
-1. Push shared dependencies down to lower modules (tracked under #20737).
-2. Relocate each widget file here once its dependencies are reachable.
-3. Move the widget declarations from `:AnkiDroid`'s `AndroidManifest.xml` into this module.
+- `MetaDbWidgetRepository`, the app's `WidgetRepository` implementation.
+- Most widget tests, which need `RobolectricTest` or other test helpers from the app.
+
+Remaining work is tracked under #20737.

@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":common:android"))
     implementation(project(":compat"))
     implementation(project(":libanki"))
+    implementation(project(":vbpd"))
 
     addAnkiBackendDependencies(project)
 
