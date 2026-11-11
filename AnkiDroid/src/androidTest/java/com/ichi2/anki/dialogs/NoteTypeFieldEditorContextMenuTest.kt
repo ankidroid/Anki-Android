@@ -27,7 +27,7 @@ class NoteTypeFieldEditorContextMenuTest : InstrumentedTest() {
     fun showsAllOptions() {
         launchFragment(
             fragmentArgs = Bundle().apply { putString(NoteTypeFieldEditorContextMenu.ARG_LABEL, testDialogTitle) },
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ) { NoteTypeFieldEditorContextMenu() }
         onView(withText(testDialogTitle))
             .inRoot(isDialog())

@@ -107,7 +107,7 @@
         android:preserveLegacyExternalStorage="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme_Light"
+        android:theme="@style/Theme.AnkiDroid"
         android:enableOnBackInvokedCallback="true"
         android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >

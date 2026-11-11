@@ -81,7 +81,7 @@ class InsertFieldDialogTest : RobolectricTest() {
         val requestKey = "insert_field"
         launchFragment<InsertFieldDialog>(
             fragmentArgs = InsertFieldDialog.newInstance(listOf("Front", "Back"), metadata, requestKey).requireArguments(),
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ).use { scenario ->
             scenario.onFragment { dialog ->
                 val results = mutableListOf<String>()

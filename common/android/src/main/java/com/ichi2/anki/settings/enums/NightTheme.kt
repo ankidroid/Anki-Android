@@ -10,5 +10,5 @@ enum class NightTheme(
     override val styleResId: Int,
 ) : Theme {
     BLACK(R.string.theme_black_value, R.style.Theme_Dark_Black),
-    DARK(R.string.theme_dark_value, R.style.Theme_Dark),
+    DARK(R.string.theme_dark_value, R.style.Theme_AnkiDroid),
 }

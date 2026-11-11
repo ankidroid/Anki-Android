@@ -155,7 +155,7 @@ class SetDueDateDialogTest : RobolectricTest() {
         runTest {
             val cardIds = List(2) { addBasicNote().firstCard().id }
             launchFragment<SetDueDateDialog>(
-                themeResId = CommonR.style.Base_Theme_Light,
+                themeResId = CommonR.style.Theme_AnkiDroid,
                 fragmentArgs = setDueDateArgs(cardIds),
             ).use { scenario ->
                 advanceRobolectricLooper()
@@ -175,7 +175,7 @@ class SetDueDateDialogTest : RobolectricTest() {
             val idsFile = args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE)
 
             launchFragment<SetDueDateDialog>(
-                themeResId = CommonR.style.Base_Theme_Light,
+                themeResId = CommonR.style.Theme_AnkiDroid,
                 fragmentArgs = args,
             ).use { scenario ->
                 advanceRobolectricLooper()
@@ -213,7 +213,7 @@ class SetDueDateDialogTest : RobolectricTest() {
             args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE).writeBytes(ByteArray(0))
 
             launchFragment<SetDueDateDialog>(
-                themeResId = CommonR.style.Base_Theme_Light,
+                themeResId = CommonR.style.Theme_AnkiDroid,
                 fragmentArgs = args,
             ).use {
                 advanceRobolectricLooper()
@@ -331,7 +331,7 @@ class SetDueDateDialogTest : RobolectricTest() {
     private fun withActivity(block: suspend TestScope.(FragmentActivity) -> Unit) =
         runTest {
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(CommonR.style.Base_Theme_Light)
+                controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
                 block(controller.setup().get())
             }
         }
@@ -365,7 +365,7 @@ class SetDueDateDialogTest : RobolectricTest() {
         val cardIds = List(cardCount) { addBasicNote().firstCard().id }
         val dialog = SetDueDateDialog.newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
         launchFragment(
-            themeResId = CommonR.style.Base_Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
             fragmentArgs = dialog.arguments,
         ) {
             return@launchFragment dialog

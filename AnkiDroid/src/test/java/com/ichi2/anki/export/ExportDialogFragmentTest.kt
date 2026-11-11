@@ -72,7 +72,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
                 // APKG, notes as text, and cards as text all need the original selection.
                 for (exportFormat in 1..3) {
                     val args = ExportDialogFragment.newInstance(targetContext.cacheDir, type, listOf(1L)).requireArguments()
-                    launchFragment<ExportDialogFragment>(fragmentArgs = args, themeResId = CommonR.style.Theme_Light).use { scenario ->
+                    launchFragment<ExportDialogFragment>(fragmentArgs = args, themeResId = CommonR.style.Theme_AnkiDroid).use { scenario ->
                         advanceRobolectricLooper()
                         scenario.onFragment { fragment ->
                             fragment.binding.exportTypeSelector.setSelection(exportFormat)
@@ -347,7 +347,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         repeat(3500) { addDeck("$parent::Topic ${it.toString().padStart(4, '0')}") }
 
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup().get()
             val export = ExportDialogFragment.newInstance(DEFAULT_DECK_ID)
             export.show(activity.supportFragmentManager, "export")
@@ -369,7 +369,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         val deckId = addDeck("Original name")
         val savedState =
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(CommonR.style.Theme_Light)
+                controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
                 val activity = controller.setup().get()
                 ExportDialogFragment.newInstance(deckId).show(activity.supportFragmentManager, "export")
                 advanceRobolectricLooper()
@@ -380,7 +380,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         col.decks.rename(deckId, "Renamed deck")
 
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup(savedState).get()
             advanceRobolectricLooper()
             val export = assertIs<ExportDialogFragment>(activity.supportFragmentManager.findFragmentByTag("export"))
@@ -402,7 +402,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
         launchFragment<ExportDialogFragment>(
             fragmentArgs = fragment.arguments,
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ).use { scenario ->
             scenario.recreate()
             assertTrue(idsFile.exists(), "ids file must survive a configuration change")
@@ -412,14 +412,14 @@ class ExportDialogFragmentTest : RobolectricTest() {
     /** Launches [ExportDialogFragment] and executes [action] on the fragment. */
     private fun onExportDialog(action: ExportDialogFragment.() -> Unit) =
         launchFragment<ExportDialogFragment>(
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ).use { scenario -> scenario.onFragment { action(it) } }
 
     private fun onDeckExportDialog(action: (FragmentScenario<ExportDialogFragment>) -> Unit) {
         ensureCollectionLoadIsSynchronous()
         launchFragment<ExportDialogFragment>(
             fragmentArgs = ExportDialogFragment.newInstance(DEFAULT_DECK_ID).arguments,
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ).use { scenario ->
             advanceRobolectricLooper()
             action(scenario)
