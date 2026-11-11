@@ -9,7 +9,7 @@ import androidx.preference.PreferenceManager
 
 /** shorthand method to get the default [SharedPreferences] instance */
 fun Context.sharedPrefs(): SharedPreferences =
-    SharedPreferencesTestHook.override?.invoke(this)
+    SharedPreferencesTestHook.override
         ?: PreferenceManager.getDefaultSharedPreferences(this)
 
 /**
@@ -19,6 +19,6 @@ fun Context.sharedPrefs(): SharedPreferences =
  * preference file. Tests set [override] and clear it in `@After`.
  */
 object SharedPreferencesTestHook {
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var override: ((Context) -> SharedPreferences)? = null
+    @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    var override: SharedPreferences? = null
 }

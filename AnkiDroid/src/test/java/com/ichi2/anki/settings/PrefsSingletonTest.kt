@@ -7,6 +7,7 @@ import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.common.preferences.NotificationPreferences
+import com.ichi2.anki.common.preferences.SharedPreferencesTestHook
 import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.withBooleanPreference
 import io.mockk.every
@@ -38,13 +39,13 @@ class PrefsSingletonTest {
             val notifications: NotificationPreferences = Prefs
             assertTrue(notifications.newReviewRemindersEnabled)
             val original = Prefs.sharedPrefs
-            val originalOverride = AnkiDroidApp.sharedPreferencesTestingOverride
+            val originalOverride = SharedPreferencesTestHook.override
             val replacement = SPMockBuilder().createSharedPreferences()
             val key = Prefs.key(CommonPreferenceKey.pref_new_review_reminders)
 
             // Replace SharedPreferences to simulate starting another Robolectric test.
             // Verify that Prefs uses the provider instead of keeping the previous instance.
-            AnkiDroidApp.sharedPreferencesTestingOverride = replacement
+            SharedPreferencesTestHook.override = replacement
             try {
                 assertFalse(notifications.newReviewRemindersEnabled)
                 Prefs.newReviewRemindersEnabled = true
@@ -53,7 +54,7 @@ class PrefsSingletonTest {
                 assertFalse(replacement.getBoolean(key, true))
                 assertTrue(original.getBoolean(key, false))
             } finally {
-                AnkiDroidApp.sharedPreferencesTestingOverride = originalOverride
+                SharedPreferencesTestHook.override = originalOverride
             }
 
             assertTrue(notifications.newReviewRemindersEnabled)
