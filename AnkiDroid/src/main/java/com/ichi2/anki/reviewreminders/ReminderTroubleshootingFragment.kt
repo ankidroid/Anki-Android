@@ -39,12 +39,12 @@ import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
+import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.attemptToEnableNotifications
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
@@ -143,10 +143,8 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
 
     private fun setupExternalActivityToolbar() {
         binding.troubleshootingToolbar.isVisible = false
-        requireAnkiActivity().apply {
-            setToolbarText(title = TR.errorsTroubleshootingButton())
-            invalidateMenu()
-        }
+        setSupportActionBarText(title = TR.errorsTroubleshootingButton())
+        requireActivity().invalidateMenu()
     }
 
     private fun setupInternalFragmentToolbar() {

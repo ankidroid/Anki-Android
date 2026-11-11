@@ -33,9 +33,9 @@ import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.bottomCornerClearance
+import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -111,7 +111,7 @@ abstract class MultimediaFragment(
         super.onViewCreated(view, savedInstanceState)
         setupEdgeToEdge(view)
 
-        requireAnkiActivity().setToolbarText(title = title)
+        setSupportActionBarText(title = title)
 
         val backCallback =
             object : OnBackPressedCallback(

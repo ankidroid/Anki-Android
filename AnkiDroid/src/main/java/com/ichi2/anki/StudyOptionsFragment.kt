@@ -55,6 +55,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
+import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CollectionMediaImageGetter
 import org.intellij.lang.annotations.Language
@@ -144,7 +145,7 @@ class StudyOptionsFragment :
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         if (!fragmented) {
-            requireAnkiActivity().setToolbarText(title = "")
+            setSupportActionBarText(title = "")
         }
         setupContentInsets(view)
         viewModel.flowOfState.launchCollectionInViewLifecycleScope(::rebuildUi)

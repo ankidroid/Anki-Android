@@ -39,7 +39,6 @@ import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.launchCatchingViewTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -48,6 +47,7 @@ import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
@@ -284,14 +284,14 @@ class ScheduleRemindersFragment :
 
     private fun setupExternalActivityToolbar() {
         binding.appbar.isVisible = false
-        requireAnkiActivity().apply {
+        requireActivity().apply {
             addMenuProvider(
                 menuProvider,
                 viewLifecycleOwner,
                 Lifecycle.State.RESUMED,
             )
             retrieveSubtitle { subtitle ->
-                setToolbarText(title = getString(CommonString.review_reminders_title), subtitle = subtitle)
+                setSupportActionBarText(title = getString(CommonString.review_reminders_title), subtitle = subtitle)
             }
             invalidateMenu()
         }
