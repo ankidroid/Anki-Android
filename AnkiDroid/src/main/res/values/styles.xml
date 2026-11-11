@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
 
-    <style name="Theme_Dark.Launcher" parent="Theme.AnkiDroid">
+    <style name="Theme.AnkiDroid.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:statusBarColor">#3d3d3d</item>
