@@ -2,11 +2,11 @@
 
 package com.ichi2.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.webkit.MimeTypeMap
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
@@ -56,7 +56,7 @@ object IntentUtil {
         }
 
     fun tryOpenIntent(
-        activity: AnkiActivity,
+        activity: Activity,
         intent: Intent,
     ) {
         try {
