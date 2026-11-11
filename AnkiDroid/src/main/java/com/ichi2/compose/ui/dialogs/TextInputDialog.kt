@@ -6,6 +6,7 @@ package com.ichi2.compose.ui.dialogs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +35,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -41,9 +43,12 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
+import androidx.appcompat.R as AppCompatR
+import com.google.android.material.R as MaterialR
 
 /**
  * Dialog asking the user for a single line of text. Compose counterpart of
@@ -89,21 +94,36 @@ fun TextInputDialog(
     val supportingMessage = displayedError ?: helperText
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
+    val dialogPadding =
+        PaddingValues(
+            start = 24.dp,
+            top = dimensionResource(AppCompatR.dimen.abc_dialog_padding_top_material),
+            end = 24.dp,
+            bottom = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_bottom_padding),
+        )
+    val actionTopPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
+    val buttonSpacing = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_spacing)
+    val buttonMinWidth = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_min_width)
 
     fun confirmIfValid() {
         if (!enabled) return
         submissionAttempted = true
         if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
-    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
+    AnkiDroidDialog(
+        onDismissRequest = onDismissRequest,
+        modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()),
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
         ) {
-            Layout(modifier = Modifier.padding(24.dp), content = {
-                Column(Modifier.verticalScroll(rememberScrollState())) {
+            Layout(modifier = Modifier.padding(dialogPadding), content = {
+                // Match the custom input panel in dialog_versatile_text_preference.xml.
+                Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = 8.dp)) {
                     Text(
                         title,
                         style = MaterialTheme.typography.headlineSmall,
@@ -155,13 +175,17 @@ fun TextInputDialog(
                     )
                 }
                 FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(top = if (hasSupportingText) 8.dp else 24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                    modifier = Modifier.fillMaxWidth().padding(top = actionTopPadding),
+                    horizontalArrangement = Arrangement.spacedBy(buttonSpacing, Alignment.End),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    TextButton(onClick = onDismissRequest) { Text(dismissText) }
+                    TextButton(
+                        onClick = onDismissRequest,
+                        modifier = Modifier.widthIn(min = buttonMinWidth),
+                    ) { Text(dismissText) }
                     TextButton(
                         onClick = ::confirmIfValid,
+                        modifier = Modifier.widthIn(min = buttonMinWidth),
                         enabled = enabled && (!validateOnInput || errorMessage == null),
                     ) { Text(confirmText) }
                 }
