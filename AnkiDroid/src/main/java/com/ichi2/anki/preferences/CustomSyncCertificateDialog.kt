@@ -23,6 +23,7 @@ fun CustomSyncCertificateDialog(
     TextInputDialog(
         title = stringResource(CommonString.custom_sync_certificate_title),
         label = stringResource(CommonString.dialog_hint_certificate),
+        helperText = stringResource(CommonString.custom_sync_certificate_summary, stringResource(CommonString.app_name)),
         // TODO: Disable Save when the input is empty.
         confirmText = stringResource(CommonString.save),
         initialText = initialText,
