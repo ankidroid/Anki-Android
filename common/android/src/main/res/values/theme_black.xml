@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <style name="Base.Theme.Dark.Black" parent="Theme.AnkiDroid">
+    <style name="Base.Theme.AnkiDroid.Black" parent="Theme.AnkiDroid">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_blue_400</item>
         <item name="colorSecondary">@color/material_blue_500</item>
@@ -117,5 +117,5 @@
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
-    <style name="Theme_Dark.Black" parent="Base.Theme.Dark.Black"/>
+    <style name="Theme.AnkiDroid.Black" parent="Base.Theme.AnkiDroid.Black"/>
 </resources>
