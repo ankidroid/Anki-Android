@@ -52,7 +52,7 @@
         <item name="colorTertiaryFixedDim">#78CAFF</item>
         <item name="colorOnTertiaryFixed">@color/material_blue_900</item>
         <item name="colorOnTertiaryFixedVariant">#006DA8</item>
-        <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorPrimary</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
         <item name="navDrawerItemBackground">@drawable/drawer_item_background_dark</item>
