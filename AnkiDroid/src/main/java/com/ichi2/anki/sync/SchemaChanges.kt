@@ -3,6 +3,7 @@
 package com.ichi2.anki.sync
 
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -25,7 +26,7 @@ import kotlin.coroutines.suspendCoroutine
  * @param block calls a backend method which unconditionally performs a schema change,
  *  such as [Collection.changeNotetypeRaw]
  */
-fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
+fun FragmentActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
     launchCatchingTask {
         if (withCol { !schemaChanged() }) {
             // .also is used to ensure the activity is used as context

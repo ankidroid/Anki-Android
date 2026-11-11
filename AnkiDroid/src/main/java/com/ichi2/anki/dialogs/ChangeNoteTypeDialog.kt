@@ -33,6 +33,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -42,7 +43,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textview.MaterialTextView
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
@@ -62,7 +62,6 @@ import com.ichi2.anki.dialogs.ConversionType.REGULAR_TO_REGULAR
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NoteTypeId
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySync
@@ -118,7 +117,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         binding.toolbar.title = TR.sentenceCase.changeNoteType
         binding.toolbar.setNavigationOnClickListener { dismiss() }
         binding.btnSave.setOnClickListener {
-            requireAnkiActivity().changeNoteType(viewModel)
+            requireActivity().changeNoteType(viewModel)
             // dismiss() is handled via closeDialogFlow
         }
 
@@ -698,7 +697,7 @@ private fun createMappingRow(
 /**
  * Changes note type of multiple notes, displaying a message on success
  */
-private fun AnkiActivity.changeNoteType(viewModel: ChangeNoteTypeViewModel) =
+private fun FragmentActivity.changeNoteType(viewModel: ChangeNoteTypeViewModel) =
     this.launchCatchingRequiringOneWaySync {
         try {
             val notesUpdated =
