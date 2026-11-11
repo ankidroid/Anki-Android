@@ -109,7 +109,7 @@ class ChangeNoteTypeDialogTest : RobolectricTest() {
     ) {
         launchFragment<ChangeNoteTypeDialog>(
             fragmentArgs = Bundle().apply { putLongArray(ARG_NOTE_IDS, longArrayOf(noteId)) },
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ).use { scenario -> scenario.onFragment { action(it) } }
     }
 }

@@ -89,7 +89,7 @@ class NoteTypeFieldEditorTest(
         fieldNameInput: EditText,
         fieldOperationType: FieldOperationType,
     ): AlertDialog =
-        AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_Light)).show {
+        AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_AnkiDroid)).show {
             positiveButton(text = "") {
                 try {
                     val noteTypeName = "Basic"

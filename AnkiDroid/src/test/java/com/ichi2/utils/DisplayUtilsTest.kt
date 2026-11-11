@@ -69,7 +69,7 @@ class DisplayUtilsTest {
     private fun withDialog(block: (AlertDialog) -> Unit) {
         Robolectric.buildActivity(Activity::class.java).use { controller ->
             val activity = controller.get()
-            activity.setTheme(CommonR.style.Theme_Light)
+            activity.setTheme(CommonR.style.Theme_AnkiDroid)
             controller.setup()
             val dialog = AlertDialog.Builder(activity).setView(EditText(activity)).create()
             try {

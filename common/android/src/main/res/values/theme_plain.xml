@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <style name="Base.Theme.Light.Plain">
+    <style name="Base.Theme.Light.Plain" parent="Theme.AnkiDroid">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_grey_500</item>
         <item name="colorSecondary">@color/material_blue_grey_500</item>

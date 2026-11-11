@@ -18,7 +18,7 @@ class ExportDialogFragmentKeyboardTest : RobolectricTest(loadBackend = false) {
     @Test
     @Config(sdk = [24, 25, 36])
     fun `deck selector can receive keyboard focus`() {
-        val context = ContextThemeWrapper(targetContext, CommonR.style.Theme_Light)
+        val context = ContextThemeWrapper(targetContext, CommonR.style.Theme_AnkiDroid)
         val selector = DialogExportOptionsBinding.inflate(LayoutInflater.from(context)).deckSelector
         selector.setOnClickListener { }
 
