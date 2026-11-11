@@ -82,7 +82,7 @@ import com.ichi2.anki.common.android.R
 
 See [docs/development/theming-modularization.md](../../docs/development/theming-modularization.md).
 
-This module will define base themes: `Base.Theme.Light.Plain` etc... to be extended in `:AnkiDroid` 
+This module will define base themes: `Base.Theme.AnkiDroid.Plain` etc... to be extended in `:AnkiDroid` 
 with feature-level theme overlays.
 
 `:common:android` should only contain the following for theming:

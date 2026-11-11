@@ -29,6 +29,6 @@ enum class DayTheme(
     override val styleResId: Int,
 ) : Theme {
     LIGHT(R.string.theme_light_value, R.style.Theme_AnkiDroid),
-    PLAIN(R.string.theme_plain_value, R.style.Theme_Light_Plain),
-    EINK(R.string.theme_eink_scheme_value, R.style.Theme_Light_Eink),
+    PLAIN(R.string.theme_plain_value, R.style.Theme_AnkiDroid_Plain),
+    EINK(R.string.theme_eink_scheme_value, R.style.Theme_AnkiDroid_Eink),
 }
