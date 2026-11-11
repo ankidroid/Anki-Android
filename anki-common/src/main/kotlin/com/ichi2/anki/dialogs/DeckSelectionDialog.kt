@@ -3,7 +3,6 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.res.getDrawableOrThrow
-import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -36,6 +33,7 @@ import com.ichi2.anki.ankicommon.databinding.DialogDeckPickerBinding
 import com.ichi2.anki.ankicommon.databinding.ItemDeckPickerDialogBinding
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.requireAutoMirroredDrawable
 import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.REQUEST_SELECT_DECK
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.RESULT_SELECTED_DECK
@@ -227,14 +225,8 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         deckIds: LongArray,
     ) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(),
         Filterable {
-        private lateinit var expandImage: Drawable
-        private lateinit var collapseImage: Drawable
-
-        val attrs =
-            intArrayOf(
-                CommonR.attr.expandRef,
-                CommonR.attr.collapseRef,
-            )
+        private val expandImage = requireContext().requireAutoMirroredDrawable(CommonR.drawable.ic_chevron_right)
+        private val collapseImage = requireContext().requireAutoMirroredDrawable(CommonR.drawable.ic_expand_more)
 
         inner class ViewHolder(
             private val binding: ItemDeckPickerDialogBinding,
@@ -397,13 +389,6 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
 
         init {
-            requireContext().obtainStyledAttributes(attrs).use { typedArray ->
-                expandImage = typedArray.getDrawableOrThrow(0)
-                expandImage.isAutoMirrored = true
-                collapseImage = typedArray.getDrawableOrThrow(1)
-                collapseImage.isAutoMirrored = true
-            }
-
             launchCatchingTask {
                 decksRoot = withCol { Pair(sched.deckDueTree(), isEmpty) }.first
                 val allDecksSet =
