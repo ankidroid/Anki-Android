@@ -318,16 +318,12 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     private fun withIsolatedGesturePreferences(block: () -> Unit) {
-        val previousOverride = AnkiDroidApp.sharedPreferencesTestingOverride
         val previousHook = SharedPreferencesTestHook.override
-        val isolated = cloneDefaultSharedPreferences()
-        AnkiDroidApp.sharedPreferencesTestingOverride = isolated
-        SharedPreferencesTestHook.override = { sharedPrefs() }
+        SharedPreferencesTestHook.override = cloneDefaultSharedPreferences()
         try {
             block()
         } finally {
             SharedPreferencesTestHook.override = previousHook
-            AnkiDroidApp.sharedPreferencesTestingOverride = previousOverride
         }
     }
 

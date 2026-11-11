@@ -24,7 +24,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
-import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.initializeAnalytics
 import com.ichi2.anki.analytics.launchPreviousAnrReporting
 import com.ichi2.anki.browser.IdsFile
@@ -40,6 +39,7 @@ import com.ichi2.anki.common.appName
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
+import com.ichi2.anki.common.preferences.SharedPreferencesTestHook
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
@@ -720,7 +720,7 @@ open class AnkiDroidApp :
         /**
          * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests
          *
-         * @see sharedPreferencesTestingOverride
+         * @see SharedPreferencesTestHook
          */
         val sharedPreferencesProvider get() = SharedPreferencesProvider { sharedPrefs() }
 
@@ -735,16 +735,7 @@ open class AnkiDroidApp :
         lateinit var instance: AnkiDroidApp
             private set
 
-        /**
-         * An override for Shared Preferences to use for unit tests
-         *
-         * This does not depend on an instance of AnkiDroidApp and therefore has no Android
-         * implementations
-         */
-        @VisibleForTesting
-        var sharedPreferencesTestingOverride: SharedPreferences? = null
-
-        /** Resource counterpart to [sharedPreferencesTestingOverride], scoped by JVM test rules. */
+        /** Resource counterpart to [SharedPreferencesTestHook], scoped by JVM test rules. */
         @VisibleForTesting
         var resourcesTestingOverride: Resources? = null
 
@@ -754,14 +745,14 @@ open class AnkiDroidApp :
          * In tests, this can avoid an instance of `AnkiDroidApp`, which is slow
          * This was added to avoid code churn
          */
-        fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
+        fun sharedPrefs() = SharedPreferencesTestHook.override ?: instance.sharedPrefs()
 
         /**
          * [sharedPrefs], or `null` if unavailable: [instance] is not initialized when running
          * under a test-only [Application] (e.g. `EmptyApplication`) or in pure JVM tests
          */
         fun sharedPrefsOrNull(): SharedPreferences? =
-            sharedPreferencesTestingOverride ?: if (isInitialized) instance.sharedPrefs() else null
+            SharedPreferencesTestHook.override ?: if (isInitialized) instance.sharedPrefs() else null
 
         fun wrapForActiveProfile(base: Context): Context = (base.applicationContext as? AnkiDroidApp)?.profileManager?.wrap(base) ?: base
 
