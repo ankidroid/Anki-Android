@@ -9,11 +9,14 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.findActivity
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.snackbar.showSnackbar
@@ -23,6 +26,7 @@ import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
@@ -59,8 +63,11 @@ class CreateDeckDialog(
         RENAME_DECK,
     }
 
-    private val getColUnsafe
-        get() = CollectionManager.getColUnsafe()
+    private val activity: FragmentActivity
+        get() = requireNotNull(context.findActivity<FragmentActivity>())
+
+    /** The job running [validateDeckName] for the latest input */
+    private var validation: Job? = null
 
     /** Used for rename  */
     var deckName: String
@@ -117,33 +124,43 @@ class CreateDeckDialog(
                             false
                         }
                     }
-                    // we need the fully-qualified name for subdecks
-                    val maybeDeckName = fullyQualifyDeckName(dialogText = text)
-                    // if the name is empty, it seems distracting to show an error
-                    if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
-                        dialog.positiveButton.isEnabled = false
-                        return@input
-                    }
-                    val existingDeckId = getColUnsafe.decks.idForName(maybeDeckName)
-                    if (existingDeckId != null && existingDeckId != renamedDeckId) {
-                        dialog.getInputTextLayout().error = context.getString(CommonString.error_name_exists)
-                        dialog.positiveButton.isEnabled = false
-                        return@input
-                    }
-                    dialog.getInputTextLayout().error = null
-                    dialog.positiveButton.isEnabled = true
-
-                    // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
-                    // To fix: they need [01, 02, 10]. Show a hint to help them
-                    dialog.getInputTextLayout().helperText =
-                        if (text.containsNumberLargerThanNine()) {
-                            context.getString(CommonString.create_deck_numeric_hint)
-                        } else {
-                            null
-                        }
+                    validation?.cancel()
+                    dialog.positiveButton.isEnabled = false
+                    validation = activity.launchCatchingTask { validateDeckName(dialog, text) }
                 }
         shownDialog = dialog
         return dialog
+    }
+
+    private suspend fun validateDeckName(
+        dialog: AlertDialog,
+        text: CharSequence,
+    ) {
+        // we need the fully-qualified name for subdecks
+        val maybeDeckName = fullyQualifyDeckName(dialogText = text)
+        // if the name is empty, it seems distracting to show an error
+        if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
+            dialog.positiveButton.isEnabled = false
+            return
+        }
+        val existingDeckId = withCol { decks.idForName(maybeDeckName) }
+        if (!dialog.getInputField().text.contentEquals(text)) return
+        if (existingDeckId != null && existingDeckId != renamedDeckId) {
+            dialog.getInputTextLayout().error = context.getString(CommonString.error_name_exists)
+            dialog.positiveButton.isEnabled = false
+            return
+        }
+        dialog.getInputTextLayout().error = null
+        dialog.positiveButton.isEnabled = true
+
+        // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
+        // To fix: they need [01, 02, 10]. Show a hint to help them
+        dialog.getInputTextLayout().helperText =
+            if (text.containsNumberLargerThanNine()) {
+                context.getString(CommonString.create_deck_numeric_hint)
+            } else {
+                null
+            }
     }
 
     /**
@@ -151,31 +168,35 @@ class CreateDeckDialog(
      * @param dialogText The user supplied text in the dialog
      * @return [dialogText], or the deck name containing `::` in case of [DeckDialogType.SUB_DECK]
      */
-    private fun fullyQualifyDeckName(dialogText: CharSequence) =
+    private suspend fun fullyQualifyDeckName(dialogText: CharSequence) =
         when (deckDialogType) {
             DeckDialogType.DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
-            DeckDialogType.SUB_DECK -> getColUnsafe.decks.getSubdeckName(parentId!!, dialogText.toString())
+            DeckDialogType.SUB_DECK -> withCol { decks.getSubdeckName(parentId!!, dialogText.toString()) }
         }
 
     fun createSubDeck(
         did: DeckId,
         deckName: String?,
     ) {
-        val deckNameWithParentName = getColUnsafe.decks.getSubdeckName(did, deckName)
-        if (deckNameWithParentName == null) {
-            Timber.d("CreateDeckDialog::createSubDeck - Not creating invalid subdeck name '%s'", deckName)
-            displayFeedback(context.getString(CommonString.invalid_deck_name), Snackbar.LENGTH_LONG)
-            shownDialog?.dismiss()
-            return
+        shownDialog?.dismiss()
+        activity.launchCatchingTask {
+            val deckNameWithParentName = withCol { decks.getSubdeckName(did, deckName) }
+            if (deckNameWithParentName == null) {
+                Timber.d("CreateDeckDialog::createSubDeck - Not creating invalid subdeck name '%s'", deckName)
+                displayFeedback(context.getString(CommonString.invalid_deck_name), Snackbar.LENGTH_LONG)
+                return@launchCatchingTask
+            }
+            createDeck(deckNameWithParentName)
         }
-        createDeck(deckNameWithParentName)
     }
 
     fun createDeck(deckName: String) {
         if (Decks.isValidDeckName(deckName)) {
-            if (createNewDeck(deckName)) {
-                // 11668: Display feedback if a deck is created
-                displayFeedback(context.getString(CommonString.deck_created))
+            activity.launchCatchingTask {
+                if (createNewDeck(deckName)) {
+                    // 11668: Display feedback if a deck is created
+                    displayFeedback(context.getString(CommonString.deck_created))
+                }
             }
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
@@ -185,11 +206,11 @@ class CreateDeckDialog(
         shownDialog?.dismiss()
     }
 
-    private fun createNewDeck(deckName: String): Boolean {
+    private suspend fun createNewDeck(deckName: String): Boolean {
         try {
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
-            val newDeckId = getColUnsafe.decks.id(deckName)
+            val newDeckId = withCol { decks.id(deckName) }
             Timber.d("Created deck '%s'; id: %d", deckName, newDeckId)
             onNewDeckCreated(newDeckId)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
@@ -225,19 +246,21 @@ class CreateDeckDialog(
             displayFeedback(context.getString(CommonString.invalid_deck_name), Snackbar.LENGTH_LONG)
         } else {
             val deckId = renamedDeckId!!
-            try {
-                // the backend reports no change if the new name normalises to the old one
-                if (getColUnsafe.decks.rename(deckId, newDeckName).deck) {
-                    onNewDeckCreated(deckId)
-                    // 11668: Display feedback if a deck is renamed
-                    displayFeedback(context.getString(CommonString.deck_renamed))
+            activity.launchCatchingTask {
+                try {
+                    // the backend reports no change if the new name normalises to the old one
+                    if (withCol { decks.rename(deckId, newDeckName) }.deck) {
+                        onNewDeckCreated(deckId)
+                        // 11668: Display feedback if a deck is renamed
+                        displayFeedback(context.getString(CommonString.deck_renamed))
+                    }
+                } catch (e: BackendDeckIsFilteredException) {
+                    Timber.w(e)
+                    // We get a localized string from libanki to explain the error
+                    displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
+                } catch (e: BackendNotFoundException) {
+                    Timber.w(e, "not renaming deck %d", deckId)
                 }
-            } catch (e: BackendDeckIsFilteredException) {
-                Timber.w(e)
-                // We get a localized string from libanki to explain the error
-                displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
-            } catch (e: BackendNotFoundException) {
-                Timber.w(e, "not renaming deck %d", deckId)
             }
         }
         // AlertDialog should be dismissed after the Keyboard 'Done' or Deck 'Ok' button is pressed
