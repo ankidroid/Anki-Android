@@ -149,7 +149,7 @@ class ProfileContextWrapper private constructor(
         }
 
         fun File.mkdirsOrFail() {
-            if (mkdirs() || exists()) return
+            if (mkdirs() || isDirectory) return
             throw IOException("Failed to create directory: $absolutePath")
         }
 
