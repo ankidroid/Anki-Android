@@ -54,7 +54,7 @@
         <item name="colorOnTertiaryFixedVariant">#006DA8</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorSecondary</item>
         <!-- Navigation drawer -->
-        <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
+        <item name="navDrawerItemColor">@color/drawer_item_text</item>
         <item name="navDrawerItemBackground">@drawable/drawer_item_background_dark</item>
         <!-- Menu -->
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
