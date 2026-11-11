@@ -316,10 +316,10 @@ class NoteEditorFragment :
 
     private var delegate: NoteEditorFragmentDelegate? = null
     private val inNoteEditorActivity: Boolean
-        get() = requireAnkiActivity() is NoteEditorActivity
+        get() = requireActivity() is NoteEditorActivity
 
     private val noteEditorActivity
-        get() = requireAnkiActivity() as? NoteEditorActivity
+        get() = requireActivity() as? NoteEditorActivity
 
     // List of affected cards (siblings) when editing notes.
     private val cardIdsFromArguments: LongArray?
@@ -881,7 +881,7 @@ class NoteEditorFragment :
                 reloadRequired = true
                 closeNoteEditorAfterSave()
             }
-            requireAnkiActivity().setTitle(CommonString.cardeditor_title_edit_card)
+            requireActivity().setTitle(CommonString.cardeditor_title_edit_card)
         }
         requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
             Timber.i("NoteEditor:: Tags button pressed... opening tags editor")
@@ -1956,7 +1956,7 @@ class NoteEditorFragment :
                 }
             }
             previous = editLineView
-            editLineView.enableAnimation = requireAnkiActivity().animationEnabled()
+            editLineView.enableAnimation = requireActivity().animationEnabled()
 
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
             editLineView.setActionModeCallbacks(getActionModeCallback(newEditText, View.generateViewId()))
