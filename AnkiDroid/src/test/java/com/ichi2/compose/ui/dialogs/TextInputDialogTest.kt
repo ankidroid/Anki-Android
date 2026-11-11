@@ -5,6 +5,7 @@ package com.ichi2.compose.ui.dialogs
 
 import android.view.animation.AnimationUtils
 import android.view.animation.Transformation
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
@@ -22,10 +23,13 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
+import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextInputSelection
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.unit.dp
@@ -48,6 +52,32 @@ import kotlin.test.assertTrue
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    fun `multiline Enter inserts a newline without submitting`() {
+        var submitted: String? = null
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Certificate",
+                    label = "PEM",
+                    confirmText = "Save",
+                    singleLine = false,
+                    onConfirm = { submitted = it },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextInput("first")
+        field.performKeyInput { pressKey(Key.Enter) }
+        field.performTextInput("second")
+
+        assertNull(submitted)
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("first\nsecond")))
+        compose.onNodeWithText("Save").performClick()
+        assertEquals("first\nsecond", submitted)
+    }
 
     @Test
     fun `field semantics retain the label and editable value`() {
