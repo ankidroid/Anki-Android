@@ -116,5 +116,10 @@
             android:summary="Replaces the navigation drawer with a bottom nav bar"
             android:key="@string/dev_bottom_nav_key"
             android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="Material You"
+            android:summary="Not applied to E-Ink"
+            android:key="@string/dev_material_you_key"
+            android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>

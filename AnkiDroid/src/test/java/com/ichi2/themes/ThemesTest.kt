@@ -12,10 +12,12 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.AppTheme
+import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -82,6 +84,30 @@ class ThemesTest : RobolectricTest() {
             controller.create(Bundle())
         }
     }
+
+    @Test
+    fun `Material You developer option applies the dynamic colors`() {
+        PrefsRepository(targetContext).devMaterialYouEnabled = true
+        assertThat(primaryColorResourceName(), containsString("dynamic"))
+    }
+
+    @Test
+    fun `Material You developer option is not applied to E-Ink`() {
+        PrefsRepository(targetContext).apply {
+            devMaterialYouEnabled = true
+            appTheme = AppTheme.DAY
+            dayTheme = DayTheme.EINK
+        }
+        assertThat(primaryColorResourceName(), not(containsString("dynamic")))
+    }
+
+    private fun primaryColorResourceName(): String =
+        Robolectric.buildActivity(AnkiActivity::class.java).use { controller ->
+            val activity = controller.create().get()
+            val tv = TypedValue()
+            activity.theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, tv, false)
+            activity.resources.getResourceEntryName(tv.data)
+        }
 
     /** simulates e.g. an [androidx.activity.enableEdgeToEdge] call before `super.onCreate` */
     class EarlyDecorViewInitActivity : AnkiActivity() {
