@@ -159,7 +159,9 @@ open class AnkiActivity(
         }
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(AnkiDroidApp.wrapForActiveProfile(newBase))
+        val base = AnkiDroidApp.wrapForActiveProfile(newBase)
+        Themes.updateCurrentTheme(base)
+        super.attachBaseContext(base)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
