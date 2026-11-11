@@ -67,7 +67,7 @@ class TagsDialogFactoryTest : RobolectricTest() {
         runTest {
             ensureCollectionLoadIsSynchronous()
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(CommonR.style.Base_Theme_Light)
+                controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
                 val activity = controller.setup().get()
                 val factory = TagsDialogFactory(mock()).attachToActivity<TagsDialogFactory>(activity)
                 block(activity, factory)

@@ -30,7 +30,7 @@ import com.ichi2.anki.common.android.R as CommonR
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
 class SnackbarsTest {
-    private val context = ContextThemeWrapper(ApplicationProvider.getApplicationContext<Context>(), CommonR.style.Theme_Light)
+    private val context = ContextThemeWrapper(ApplicationProvider.getApplicationContext<Context>(), CommonR.style.Theme_AnkiDroid)
     private val host = CoordinatorLayout(context)
     private val looper = shadowOf(Looper.getMainLooper())
 

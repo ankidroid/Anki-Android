@@ -50,7 +50,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
                     arguments = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) }
                 }
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(CommonR.style.Theme_Light)
+                controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
                 val activity = controller.setup().get()
                 activity.setContentView(CoordinatorLayout(activity).apply { id = R.id.root_layout })
                 fragment.show(activity.supportFragmentManager, "find-replace")
@@ -110,7 +110,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
                 .launch(
                     fragmentClass = FindAndReplaceDialogFragment::class.java,
                     fragmentArgs = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) },
-                    themeResId = CommonR.style.Theme_Light,
+                    themeResId = CommonR.style.Theme_AnkiDroid,
                 ).use { scenario ->
                     scenario.onFragment { fragment ->
                         advanceUntilIdle()
@@ -150,7 +150,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
             .launch(
                 fragmentClass = FindAndReplaceDialogFragment::class.java,
                 fragmentArgs = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) },
-                themeResId = CommonR.style.Theme_Light,
+                themeResId = CommonR.style.Theme_AnkiDroid,
             ).use { scenario -> scenario.onFragment { fragment -> fragment.action() } }
     }
 

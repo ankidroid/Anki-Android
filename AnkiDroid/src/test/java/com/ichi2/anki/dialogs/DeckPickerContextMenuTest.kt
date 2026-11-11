@@ -168,7 +168,7 @@ class DeckPickerContextMenuTest {
     }
 
     private fun launch(arguments: Bundle) =
-        launch(DeckPickerContextMenu::class.java, arguments, CommonR.style.Theme_Light).also {
+        launch(DeckPickerContextMenu::class.java, arguments, CommonR.style.Theme_AnkiDroid).also {
             scenariosForCleanup.add(it)
         }
 

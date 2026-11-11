@@ -213,7 +213,7 @@ class HelpDialogTest {
     private fun withHelpDialog(block: (FragmentScenario<HelpDialog>) -> Unit) {
         launchFragment<HelpDialog>(
             fragmentArgs = HelpDialog.newHelpInstance().arguments,
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
         ).use(block)
     }
 }

@@ -39,7 +39,7 @@ class TagsArrayAdapterBindingTest : RobolectricTest() {
         block: TagSelection.() -> Unit,
     ) {
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup().get()
             val recycler = RecyclerView(activity)
             recycler.layoutManager = LinearLayoutManager(activity)

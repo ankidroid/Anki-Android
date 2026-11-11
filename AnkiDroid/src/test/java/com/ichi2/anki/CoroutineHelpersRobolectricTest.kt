@@ -265,7 +265,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
             throwOnShowError = false
             val controller = Robolectric.buildActivity(FragmentActivity::class.java).also(::saveControllerForCleanup)
             val activity = controller.create().get()
-            activity.setTheme(CommonR.style.Theme_Light)
+            activity.setTheme(CommonR.style.Theme_AnkiDroid)
 
             activity.launchCatchingTask { withCol { } }
             advanceRobolectricLooper()
@@ -296,7 +296,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
             throwOnShowError = false
             val controller = Robolectric.buildActivity(FragmentActivity::class.java).also(::saveControllerForCleanup)
             val activity = controller.create().get()
-            activity.setTheme(CommonR.style.Theme_Light)
+            activity.setTheme(CommonR.style.Theme_AnkiDroid)
 
             activity.launchCatchingTask { withCol { } }
             advanceRobolectricLooper()

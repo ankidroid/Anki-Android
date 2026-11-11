@@ -234,7 +234,7 @@ class DeckSelectionDialogTest : RobolectricTest() {
         allowMultipleSelection: Boolean = false,
     ) = launchFragment<DeckSelectionDialog>(
         fragmentArgs = DeckSelectionDialog.newInstance(decks = decks, allowMultipleSelection = allowMultipleSelection).arguments,
-        themeResId = CommonR.style.Theme_Light,
+        themeResId = CommonR.style.Theme_AnkiDroid,
     )
 
     private fun DeckSelectionDialog.openSearch(): SearchView {

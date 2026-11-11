@@ -66,7 +66,7 @@ class DeckPickerAnalyticsOptInDialogTest {
     @Test
     fun `cancelling does not change the opt-in state`() {
         launchFragment<DeckPickerAnalyticsOptInDialog>(
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
             initialState = Lifecycle.State.RESUMED,
         ).onFragment { fragment ->
             (fragment.dialog as AlertDialog).cancel()
@@ -92,7 +92,7 @@ class DeckPickerAnalyticsOptInDialogTest {
     @Test
     fun `show reuses a restored prompt while another dialog is open`() {
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup().get()
             DeckPickerAnalyticsOptInDialog.show(activity)
             assertIs<AlertDialog>(activity.analyticsFragment().requireDialog()).getCheckBoxPrompt().isChecked = true
@@ -151,14 +151,14 @@ class DeckPickerAnalyticsOptInDialogTest {
 
     private fun withActivity(block: (FragmentActivity) -> Unit) {
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             block(controller.setup().get())
         }
     }
 
     private fun showDialog(optIn: Boolean) {
         launchFragment<DeckPickerAnalyticsOptInDialog>(
-            themeResId = CommonR.style.Theme_Light,
+            themeResId = CommonR.style.Theme_AnkiDroid,
             initialState = Lifecycle.State.RESUMED,
         )
         // the checkbox starts unticked, so only opting in needs a click
