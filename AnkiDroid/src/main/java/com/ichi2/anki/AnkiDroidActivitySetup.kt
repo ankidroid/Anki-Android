@@ -10,6 +10,8 @@ import com.ichi2.themes.Themes
 internal object AnkiDroidActivitySetup : ActivitySetup {
     override fun wrapForActiveProfile(base: Context) = AnkiDroidApp.wrapForActiveProfile(base)
 
+    override fun applyNightMode(context: Context) = Themes.updateCurrentTheme(context)
+
     override fun setTheme(
         activity: Activity,
         savedInstanceState: Bundle?,
