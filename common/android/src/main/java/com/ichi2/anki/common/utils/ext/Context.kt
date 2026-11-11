@@ -6,6 +6,9 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.drawable.Drawable
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import timber.log.Timber
 
@@ -38,6 +41,11 @@ inline fun <reified T : Any> Context.requireSystemService(): T =
     requireNotNull(ContextCompat.getSystemService(this, T::class.java)) {
         "system service unavailable: ${T::class.java.simpleName}"
     }
+
+/** Loads a drawable using this context's theme and enables automatic mirroring in RTL layouts. */
+fun Context.requireAutoMirroredDrawable(
+    @DrawableRes id: Int,
+): Drawable = requireNotNull(AppCompatResources.getDrawable(this, id)).apply { isAutoMirrored = true }
 
 inline fun <reified T : Activity> Context.findActivity(): T? =
     generateSequence(this) { (it as? ContextWrapper)?.baseContext }

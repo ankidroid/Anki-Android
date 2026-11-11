@@ -73,8 +73,6 @@
         <!-- Deck list colors -->
         <item name="selectedRowBackgroundColor">#ececec</item>
         <item name="dynDeckColor">#2222bb</item>
-        <item name="expandRef">@drawable/ic_chevron_right_black</item>
-        <item name="collapseRef">@drawable/ic_expand_more_black</item>
         <!-- Count colors -->
         <item name="newCountColor">@color/material_indigo_700</item>
         <item name="learnCountColor">@color/material_red_700</item>

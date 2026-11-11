@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
@@ -21,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.utils.ext.requireAutoMirroredDrawable
 import com.ichi2.anki.databinding.ItemDeckBinding
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.libanki.DeckId
@@ -240,8 +240,6 @@ class DeckAdapter(
                 CommonR.attr.reviewCountColor,
                 android.R.attr.textColor,
                 CommonR.attr.dynDeckColor,
-                CommonR.attr.expandRef,
-                CommonR.attr.collapseRef,
             )
         val ta = context.obtainStyledAttributes(attrs)
         zeroCountColor = ta.getColor(0, context.getColor(CommonR.color.black))
@@ -250,10 +248,8 @@ class DeckAdapter(
         reviewCountColor = ta.getColor(3, context.getColor(CommonR.color.black))
         deckNameDefaultColor = ta.getColor(4, context.getColor(CommonR.color.black))
         deckNameDynColor = ta.getColor(5, context.getColor(CommonR.color.material_blue_A700))
-        expandImage = ta.getDrawableOrThrow(6)
-        expandImage.isAutoMirrored = true
-        collapseImage = ta.getDrawableOrThrow(7)
-        collapseImage.isAutoMirrored = true
+        expandImage = context.requireAutoMirroredDrawable(CommonR.drawable.ic_chevron_right)
+        collapseImage = context.requireAutoMirroredDrawable(CommonR.drawable.ic_expand_more)
         ta.recycle()
         context.withStyledAttributes(attrs = intArrayOf(android.R.attr.selectableItemBackground)) {
             selectableItemBackground = ta.getResourceId(0, 0)

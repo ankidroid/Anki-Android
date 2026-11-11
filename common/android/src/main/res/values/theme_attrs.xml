@@ -15,8 +15,6 @@
     <!-- Deck list colors and expander -->
     <attr name="selectedRowBackgroundColor" format="color"/> <!-- Selected deck, note type, browser row and settings header -->
     <attr name="dynDeckColor" format="color"/>
-    <attr name="expandRef" format="reference"/>
-    <attr name="collapseRef" format="reference"/>
     <!-- Navigation drawer -->
     <attr name="navDrawerItemColor" format="color"/>
     <attr name="navDrawerItemBackground" format="reference"/>
