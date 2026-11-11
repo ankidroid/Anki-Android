@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.RobolectricTest
@@ -25,6 +26,7 @@ import com.ichi2.anki.throwOnShowError
 import io.mockk.every
 import io.mockk.mockkConstructor
 import io.mockk.verify
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -36,6 +38,9 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
 import java.io.File
 import java.io.IOException
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class NoteEditorMultimediaControllerTest : RobolectricTest() {
@@ -238,6 +243,32 @@ class NoteEditorMultimediaControllerTest : RobolectricTest() {
         val args = MultimediaArgsStorage.create(targetContext).read(argsFile)
         assertThat(args.index, equalTo(fieldIndex))
         assertThat(args.imageUri, equalTo(imageUri.toString()))
+    }
+
+    @Test
+    fun `attachment choice waits for the busy collection`() {
+        val noteEditor = openNoteEditor()
+        val executor = Executors.newSingleThreadExecutor()
+        val dispatcher = executor.asCoroutineDispatcher()
+        val gate = CountDownLatch(1)
+        // Hold the collection queue so loading the note waits until after the choice is made.
+        val blocker = executor.submit { check(gate.await(20, TimeUnit.SECONDS)) }
+        val previous = CollectionManager.setTestDispatcher(dispatcher, useReentrantLock = false)
+        try {
+            assertThat("the collection queue is blocked", blocker.isDone, equalTo(false))
+            noteEditor.multimediaController.handleActions(0)
+            noteEditor.multimediaViewModel.setMultimediaAction(MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING)
+            gate.countDown()
+            executor.submit { }.get(10, TimeUnit.SECONDS)
+            advanceRobolectricLooper()
+
+            val started = shadowOf(noteEditor.requireActivity()).nextStartedActivity
+            assertThat("the selected recorder opens", started?.component?.className, equalTo(MultimediaActivity::class.java.name))
+        } finally {
+            gate.countDown()
+            CollectionManager.setTestDispatcher(previous)
+            dispatcher.close()
+        }
     }
 
     private fun openNoteEditor(): NoteEditorFragment {

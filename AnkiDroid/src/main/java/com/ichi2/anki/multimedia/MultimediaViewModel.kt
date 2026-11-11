@@ -13,7 +13,10 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class MultimediaViewModel : ViewModel() {
-    /** Errors or Warnings related to the edit fields that might occur when trying to save note */
+    /**
+     * The option chosen in [MultimediaBottomSheet]. It has no replay, so a choice is dropped
+     * unless something is already collecting.
+     */
     val multimediaAction = MutableSharedFlow<MultimediaBottomSheet.MultimediaAction>()
 
     private var prevMultimediaPath: File? = null
