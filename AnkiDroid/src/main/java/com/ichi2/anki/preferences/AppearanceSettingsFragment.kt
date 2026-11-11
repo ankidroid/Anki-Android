@@ -140,11 +140,11 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
         appThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != appThemePref.value) {
-                val previousThemeId = Themes.currentTheme.styleResId
+                val previousTheme = Themes.currentTheme
                 appThemePref.value = newValue
                 updateCurrentTheme(requireContext())
 
-                if (previousThemeId != Themes.currentTheme.styleResId) {
+                if (previousTheme != Themes.currentTheme) {
                     ActivityCompat.recreate(requireActivity())
                 } else {
                     dayThemePref.isEnabled = newValue != getString(AppTheme.NIGHT.entryResId)
