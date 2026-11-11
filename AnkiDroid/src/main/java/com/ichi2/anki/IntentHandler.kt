@@ -13,6 +13,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.FileProvider
 import androidx.work.WorkManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.analytics.reportPotentiallyDeadCode
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
@@ -205,15 +206,17 @@ class IntentHandler : AbstractIntentHandler() {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
             }
-        CollectionManager.getColUnsafe().decks.select(deckId)
-        // Clean the stack out under the reviewer to avoid any incorrect activities / dialogs /
-        // data state from prior app usage showing after reviewer exits if going to reviewer directly
-        TaskStackBuilder
-            .create(applicationContext)
-            .addNextIntent(reloadIntent)
-            .addNextIntent(reviewIntent)
-            .startActivities()
-        finish()
+        launchCatchingTask {
+            withCol { decks.select(deckId) }
+            // Clean the stack out under the reviewer to avoid any incorrect activities / dialogs /
+            // data state from prior app usage showing after reviewer exits if going to reviewer directly
+            TaskStackBuilder
+                .create(applicationContext)
+                .addNextIntent(reloadIntent)
+                .addNextIntent(reviewIntent)
+                .startActivities()
+            finish()
+        }
     }
 
     private fun handleSyncIntent(
