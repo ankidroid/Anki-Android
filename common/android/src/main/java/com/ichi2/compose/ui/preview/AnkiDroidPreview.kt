@@ -2,7 +2,6 @@
 
 package com.ichi2.compose.ui.preview
 
-import android.view.ContextThemeWrapper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -11,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.Theme
+import com.ichi2.anki.settings.enums.themedContext
 import com.ichi2.compose.theme.AnkiDroidTheme
 
 /**
@@ -25,7 +25,7 @@ fun AnkiDroidPreview(
 ) {
     // AnkiDroidTheme reads XML attributes, so changing only the preview's UI mode is insufficient.
     val context = LocalContext.current
-    val themedContext = remember(context, theme) { ContextThemeWrapper(context, theme.styleResId) }
+    val themedContext = remember(context, theme) { theme.themedContext(context) }
     CompositionLocalProvider(LocalContext provides themedContext) {
         AnkiDroidTheme(content = content)
     }
