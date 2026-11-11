@@ -26,6 +26,7 @@ import org.mockito.kotlin.verify
 import org.robolectric.RobolectricTestRunner
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertFailsWith
 
 @RunWith(RobolectricTestRunner::class)
 class ProfileContextWrapperTest {
@@ -230,6 +231,17 @@ class ProfileContextWrapperTest {
         }
 
         ProfileContextWrapper.create(baseContext, profileId, profileBaseDir)
+    }
+
+    @Test
+    fun `create factory throws IOException if a file is where a profile folder belongs`() {
+        for (folder in listOf("files", "cache", "code_cache", "no_backup")) {
+            profileBaseDir.deleteRecursively()
+            profileBaseDir.mkdirs()
+            File(profileBaseDir, folder).writeText("not a folder")
+
+            assertFailsWith<IOException>(folder) { ProfileContextWrapper.create(baseContext, profileId, profileBaseDir) }
+        }
     }
 
     @Test
