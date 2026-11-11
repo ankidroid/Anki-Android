@@ -4,11 +4,11 @@ package com.ichi2.anki.common.android.themes
 
 import android.content.Context
 import android.util.TypedValue
-import android.view.ContextThemeWrapper
 import androidx.test.core.app.ApplicationProvider
 import com.ichi2.anki.common.android.R
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
+import com.ichi2.anki.settings.enums.themedContext
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -35,7 +35,7 @@ class ThemeAttributesTest {
 
         val unresolved =
             (DayTheme.entries + NightTheme.entries).flatMap { theme ->
-                val themed = ContextThemeWrapper(appContext, theme.styleResId).theme
+                val themed = theme.themedContext(appContext).theme
                 attributes
                     .filter { attribute ->
                         val value = TypedValue()
@@ -55,7 +55,7 @@ class ThemeAttributesTest {
     fun `every app theme sets every Material color role`() {
         val issues =
             (DayTheme.entries + NightTheme.entries).flatMap { theme ->
-                val themed = ContextThemeWrapper(appContext, theme.styleResId)
+                val themed = theme.themedContext(appContext)
                 materialColorRoles.mapNotNull { (name, attribute) ->
                     val value = TypedValue()
                     if (!themed.theme.resolveAttribute(attribute, value, true)) return@mapNotNull "${theme.name}: $name is unset"

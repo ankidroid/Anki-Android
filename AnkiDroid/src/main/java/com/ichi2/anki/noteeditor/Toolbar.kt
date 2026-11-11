@@ -15,7 +15,6 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
-import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -43,6 +42,8 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.noteeditor.data.ToolbarPreferences
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.themedContext
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -51,7 +52,6 @@ import com.ichi2.utils.title
 import timber.log.Timber
 import java.util.Objects
 import kotlin.math.ceil
-import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Handles the toolbar inside [com.ichi2.anki.NoteEditorFragment]
@@ -190,7 +190,7 @@ class Toolbar : FrameLayout {
     ): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
-        val themeContext: Context = ContextThemeWrapper(context, CommonR.style.Theme_Light)
+        val themeContext: Context = DayTheme.LIGHT.themedContext(context)
         val d = VectorDrawableCompat.create(context.resources, drawable, themeContext.theme)
         return insertItem(id, d, block)
     }
