@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -13,13 +14,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.DialogFragment
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
 import com.ichi2.anki.common.analytics.LinkAction
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.utils.title
@@ -38,7 +37,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 val entry = entries[position]
                 Analytics.send(LinkClicked(entry.analyticsId))
                 openImportFilePicker(
-                    activity = requireAnkiActivity(),
+                    activity = requireActivity(),
                     fileType = entry.type,
                     multiple = entry.multiple,
                     mimeType = entry.mimeType,
@@ -149,7 +148,7 @@ class ImportFileSelectionFragment : DialogFragment() {
          * Calls through the system with an [Intent] to pick a file to be imported.
          */
         fun openImportFilePicker(
-            activity: AnkiActivity,
+            activity: Activity,
             fileType: ImportFileType,
             multiple: Boolean = false,
             mimeType: String = "*/*",
