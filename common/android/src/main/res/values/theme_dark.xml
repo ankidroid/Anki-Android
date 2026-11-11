@@ -66,7 +66,6 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarPopupTextColor">@color/white</item>
         <item name="actionModeBackground">?attr/appBarColor</item>
         <!-- Bottom navigation -->
         <item name="bottomNavIndicatorColor">?attr/appBarColor</item>
