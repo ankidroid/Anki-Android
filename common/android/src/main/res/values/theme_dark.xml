@@ -78,7 +78,7 @@
         <item name="learnCountColor">@color/material_red_200</item>
         <item name="reviewCountColor">@color/material_green_200</item>
         <item name="buryCountColor">@color/disabled_gray_dark</item>
-        <item name="zeroCountColor">#404040</item>
+        <item name="zeroCountColor">@color/zero_count_color</item>
         <!-- Study Screen colors -->
         <item name="showAnswerButtonBackground">#22333f</item>
         <item name="againButtonBackground">@color/material_red_800</item>
