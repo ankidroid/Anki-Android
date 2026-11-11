@@ -95,6 +95,8 @@ class LayoutValidationTest : InstrumentedTest() {
                     com.ichi2.anki.R.layout.fragment_preferences,
                     com.ichi2.anki.R.layout.fragment_drawing,
                     com.ichi2.anki.R.layout.fragment_card_browser_searchview,
+                    // Declares AdvancedSearchFragment, which cannot be inflated with the application context.
+                    com.ichi2.anki.R.layout.fragment_standard_search,
                 ) +
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                         listOf(com.ichi2.anki.widgets.R.layout.widget_small_unthemed)

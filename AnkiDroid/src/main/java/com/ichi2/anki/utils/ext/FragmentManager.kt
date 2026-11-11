@@ -5,6 +5,13 @@ package com.ichi2.anki.utils.ext
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
+
+/** Removes the fragment with [tag], if present. */
+fun FragmentManager.removeFragmentByTag(tag: String) {
+    val fragment = findFragmentByTag(tag) ?: return
+    commit { remove(fragment) }
+}
 
 /**
  * Removes the [android.app.Fragment] attached to a view
