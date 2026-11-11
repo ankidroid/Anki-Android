@@ -15,6 +15,7 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
+import com.ichi2.anki.dialogs.DialogHandlerMessage.WhichDialogHandler
 import com.ichi2.anki.showError
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -51,9 +52,18 @@ class DialogHandler(
      * Read and handle Message which was stored via [storeMessage]
      */
     fun executeMessage() {
-        if (sStoredMessage == null) return
+        val message = sStoredMessage ?: return
+        when (WhichDialogHandler.fromInt(message.what)) {
+            WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
+            WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
+            -> {
+                // Only DeckPicker collects the ImportViewModel flows after confirmation.
+                if (activity.get() !is DeckPicker) return
+            }
+            else -> Unit
+        }
         Timber.d("Reading persistent message")
-        sendStoredMessage(sStoredMessage!!)
+        sendStoredMessage(message)
         sStoredMessage = null
     }
 
