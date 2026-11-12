@@ -76,6 +76,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 import com.ichi2.compose.utils.toAnnotatedString
@@ -166,6 +167,7 @@ fun TextInputDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             shadowElevation = ankiDroidDialogElevation(),
+            border = MaterialTheme.widgetBorder,
         ) {
             Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
                 // Match the custom input panel in dialog_versatile_text_preference.xml.
