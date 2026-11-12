@@ -37,6 +37,7 @@ import androidx.appcompat.R as AppCompatR
  * A Material 3 message dialog with two actions.
  *
  * Changes to the standard M3 dialog:
+ * * Primary body text, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * 16dp vertical padding.
  * * fade-only animations allow an IME to open when the dialog opens.
@@ -79,7 +80,7 @@ fun MessageDialog(
                     Text(
                         message,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = AlertDialogDefaults.textContentColor,
+                        color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.verticalScroll(rememberScrollState()),
                     )
                 }
