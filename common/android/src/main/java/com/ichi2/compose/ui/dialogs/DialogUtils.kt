@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.util.TypedValue
 import androidx.annotation.AttrRes
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
@@ -43,6 +44,18 @@ fun alertDialogWidth(): Dp {
                 }
             // DecorView truncates to whole pixels before measuring the dialog.
             with(density) { pixels.toInt().toDp() }
+        }
+    }
+}
+
+/** The View dialog's shadow elevation, including the zero-elevation e-ink theme. */
+@Composable
+fun ankiDroidDialogElevation(): Dp {
+    val context = LocalContext.current
+    val density = LocalDensity.current
+    return remember(context, density) {
+        AlertDialog.Builder(context).context.obtainStyledAttributes(intArrayOf(android.R.attr.windowElevation)).use {
+            with(density) { it.getDimension(0, 0f).toDp() }
         }
     }
 }

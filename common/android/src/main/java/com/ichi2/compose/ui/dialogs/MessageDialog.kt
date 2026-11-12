@@ -56,6 +56,7 @@ fun MessageDialog(
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
+            shadowElevation = ankiDroidDialogElevation(),
         ) {
             Column(Modifier.padding(ankiDroidDialogContentPadding())) {
                 Text(
