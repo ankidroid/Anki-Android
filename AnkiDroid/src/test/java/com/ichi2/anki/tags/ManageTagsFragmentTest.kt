@@ -2,10 +2,14 @@
 
 package com.ichi2.anki.tags
 
+import android.view.KeyEvent
 import androidx.activity.ComponentDialog
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.click
@@ -19,9 +23,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
+import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.pressKey
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonPlurals
@@ -32,6 +38,7 @@ import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.dispatchInsets
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import org.junit.After
 import org.junit.Ignore
 import org.junit.Rule
@@ -99,6 +106,125 @@ class ManageTagsFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `rename and delete shortcuts act on the focused tag after filtering and renaming`() {
+        val first = addTags("first::leaf")
+        val second = addTags("second::leaf")
+        screen.open()
+        screen.search("leaf")
+
+        tagShortcut("first::leaf", Key.R)
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertTextContains("first::leaf")
+        assertEquals(listOf("first::leaf"), col.getNote(first.id).tags)
+        screen.enterText("first::renamed")
+        screen.confirm(TagAction.RENAME).performClick()
+        compose.waitForIdle()
+        assertEquals(listOf("first::renamed"), col.getNote(first.id).tags)
+
+        tagShortcut("second::leaf", Key.Delete)
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "second::leaf")).assertIsDisplayed()
+        assertEquals(listOf("second::leaf"), col.getNote(second.id).tags)
+        screen.cancel()
+        tagShortcut("second::leaf", Key.Backspace)
+        screen.confirm(TagAction.DELETE).performClick()
+        compose.waitForIdle()
+        assertEquals(emptyList(), col.getNote(second.id).tags)
+        assertEquals(listOf("first::renamed"), col.getNote(first.id).tags)
+
+        val shortcuts =
+            screen.fragment.shortcuts.shortcuts
+                .map { it.toShortcutInfo() }
+        assertTrue(shortcuts.any { it.keycode == KeyEvent.KEYCODE_R && it.modifiers == 0 })
+        assertTrue(shortcuts.any { it.keycode == KeyEvent.KEYCODE_FORWARD_DEL && it.modifiers == 0 })
+        assertTrue(shortcuts.any { it.keycode == KeyEvent.KEYCODE_DEL && it.modifiers == 0 })
+    }
+
+    @Test
+    fun `unused tag rename shortcut warns in a snackbar without opening a dialog`() {
+        addTags("unused").update { removeTag("unused") }
+        val history = col.undoStatus()
+        screen.open()
+        tagShortcut("unused", Key.R)
+        compose.onNodeWithTag("tag_snackbar").assertIsDisplayed()
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_rename_no_notes)).assertIsDisplayed()
+        compose.onNodeWithTag("selected_tag_name").assertDoesNotExist()
+        compose.onNode(isDialog()).assertDoesNotExist()
+        assertEquals(history, col.undoStatus())
+    }
+
+    @Test
+    fun `shortcuts work as soon as the actions sheet opens`() {
+        addTags("source")
+        screen.open()
+
+        fun pressSheetShortcut(keyCode: Int) {
+            compose.onNodeWithText(targetContext.getString(CommonString.rename)).assertIsEnabled()
+            val window = requireNotNull(ShadowDialog.getLatestDialog().window)
+            val down = KeyEvent(KeyEvent.ACTION_DOWN, keyCode)
+            compose.runOnUiThread {
+                window.decorView.dispatchKeyEvent(down)
+                window.decorView.dispatchKeyEvent(KeyEvent.changeAction(down, KeyEvent.ACTION_UP))
+            }
+            compose.waitForIdle()
+        }
+
+        screen.showActions("source")
+        pressSheetShortcut(KeyEvent.KEYCODE_R)
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertTextContains("source")
+        screen.cancel()
+        tagShortcut("source", Key.Enter)
+        pressSheetShortcut(KeyEvent.KEYCODE_FORWARD_DEL)
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "source")).assertIsDisplayed()
+    }
+
+    @Test
+    fun `unused tag actions disable rename shortcuts and still confirm deletion`() {
+        addTags("unused").update { removeTag("unused") }
+        val history = col.undoStatus()
+        screen.open()
+        screen.showActions("unused")
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_rename_no_notes)).assertIsDisplayed()
+        compose.onNodeWithText(targetContext.getString(CommonString.rename)).assertIsNotEnabled()
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertDoesNotExist()
+        assertEquals(history, col.undoStatus())
+
+        val delete = compose.onNodeWithText(targetContext.getString(CommonString.dialog_positive_delete))
+        delete.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        delete.performKeyInput { pressKey(Key.R) }
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_rename_no_notes)).assertIsDisplayed()
+        delete.performKeyInput { pressKey(Key.Delete) }
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "unused")).assertIsDisplayed()
+        assertEquals(history, col.undoStatus())
+        screen.cancel()
+    }
+
+    @Test
+    fun `tag shortcuts do not trigger while editing search or a rename`() {
+        val note = addTags("source")
+        screen.open()
+        screen.search("source")
+        val search = compose.onNode(hasSetTextAction() and !hasAnyAncestor(isDialog()))
+        search.assertIsFocused().performKeyInput {
+            pressKey(Key.R)
+            pressKey(Key.Delete)
+            pressKey(Key.Backspace)
+        }
+        compose.onNode(isDialog()).assertDoesNotExist()
+        assertEquals(listOf("source"), col.getNote(note.id).tags)
+
+        screen.search("")
+        tagShortcut("source", Key.R)
+        val input = compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog()))
+        input.assertIsFocused().performKeyInput {
+            pressKey(Key.R)
+            pressKey(Key.Delete)
+            pressKey(Key.Backspace)
+        }
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_title)).assertDoesNotExist()
+        assertEquals(listOf("source"), col.getNote(note.id).tags)
+        screen.cancel()
+    }
+
+    @Test
     fun `a branch collapsed in search results stays collapsed after process death`() {
         addTags("source::branch::leaf")
         screen.open()
@@ -132,6 +258,17 @@ class ManageTagsFragmentTest : RobolectricTest() {
         compose.onNode(hasSetTextAction() and !hasAnyAncestor(isDialog())).assertTextContains("bio")
         compose.onNodeWithTag("tag:biology").assertIsDisplayed()
         compose.onNodeWithTag("tag:chemistry").assertDoesNotExist()
+    }
+
+    private fun tagShortcut(
+        tag: String,
+        key: Key,
+    ) {
+        compose.onNodeWithTag("tag_list").performScrollToNode(hasTestTag("tag:$tag"))
+        val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, tag))
+        target.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        target.assertIsFocused().performKeyInput { pressKey(key) }
+        compose.waitForIdle()
     }
 
     @Test
@@ -622,6 +759,177 @@ class ManageTagsFragmentTest : RobolectricTest() {
             warning.assertDoesNotExist()
             rename.assertIsEnabled()
         }
+
+    @Test
+    fun `cancelling a rename shortcut keeps the tag focused for another shortcut`() =
+        runTest {
+            addTags("source")
+            screen.open()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "source"))
+            prepareRenameShortcut(target)
+            compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertIsFocused()
+            screen.cancel()
+            compose.waitForIdle()
+            target.assertIsFocused().performKeyInput { pressKey(Key.Delete) }
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "source")).assertIsDisplayed()
+            screen.cancel()
+        }
+
+    @Test
+    fun `cancelling a rename shortcut restores focus to an expandable tag row`() =
+        runTest {
+            addTags("parent::child")
+            screen.open()
+            val target = compose.onNodeWithTag("tag:parent")
+            prepareRenameShortcut(target)
+            screen.cancel()
+            target.assertIsFocused().performKeyInput { pressKey(Key.R) }
+            compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertTextContains("parent")
+            screen.cancel()
+        }
+
+    @Test
+    fun `an unused tag retains shortcut focus after the rename usage check`() =
+        runTest {
+            addTags("unused").update { removeTag("unused") }
+            screen.open()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "unused"))
+            prepareRenameShortcut(target)
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_rename_no_notes)).assertIsDisplayed()
+            compose.onNode(isDialog()).assertDoesNotExist()
+            target.assertIsFocused().performKeyInput { pressKey(Key.Delete) }
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "unused")).assertIsDisplayed()
+            screen.cancel()
+        }
+
+    @Test
+    fun `cancelling a rename keeps focus moved to search during the usage check`() =
+        runTest {
+            addTags("source")
+            screen.open()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "source"))
+            val search = compose.onNode(hasSetTextAction() and !hasAnyAncestor(isDialog()))
+            prepareRenameShortcut(target) {
+                search.performClick()
+                screen.search("source")
+                search.assertIsFocused()
+            }
+            screen.cancel()
+            search.assertIsFocused()
+        }
+
+    @Test
+    fun `undoing with the shortcut keeps the tag focused for another shortcut`() =
+        runTest {
+            val deleted = addTags("source")
+            addTags("other")
+            screen.open()
+            screen.action(TagAction.DELETE, "source")
+            screen.confirm(TagAction.DELETE).performClick()
+            compose.waitForIdle()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "other"))
+            performHistoryShortcut(target, Key.Z)
+            assertEquals(listOf("source"), col.getNote(deleted.id).tags)
+            target.assertIsFocused().performKeyInput { pressKey(Key.Delete) }
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "other")).assertIsDisplayed()
+            screen.cancel()
+        }
+
+    @Test
+    fun `both redo shortcuts keep the tag focused for another shortcut`() =
+        runTest {
+            val deleted = addTags("source")
+            addTags("other")
+            screen.open()
+            screen.action(TagAction.DELETE, "source")
+            screen.confirm(TagAction.DELETE).performClick()
+            compose.waitForIdle()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "other"))
+            for (shift in listOf(false, true)) {
+                screen.viewModel.undo().join()
+                performHistoryShortcut(target, if (shift) Key.Z else Key.Y, shift)
+                assertEquals(emptyList(), col.getNote(deleted.id).tags)
+                target.assertIsFocused().performKeyInput { pressKey(Key.Delete) }
+                compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "other")).assertIsDisplayed()
+                screen.cancel()
+            }
+        }
+
+    @Test
+    fun `undo shortcut restores focus to an expandable tag row`() =
+        runTest {
+            addTags("source", "parent::child")
+            screen.open()
+            screen.action(TagAction.DELETE, "source")
+            screen.confirm(TagAction.DELETE).performClick()
+            val target = compose.onNodeWithTag("tag:parent")
+            performHistoryShortcut(target, Key.Z)
+            target.assertIsFocused().performKeyInput { pressKey(Key.R) }
+            compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertTextContains("parent")
+            screen.cancel()
+        }
+
+    @Test
+    fun `undo shortcut keeps focus moved to search during the operation`() =
+        runTest {
+            val deleted = addTags("source")
+            addTags("other")
+            screen.open()
+            screen.action(TagAction.DELETE, "source")
+            screen.confirm(TagAction.DELETE).performClick()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "other"))
+            val search = compose.onNode(hasSetTextAction() and !hasAnyAncestor(isDialog()))
+            performHistoryShortcut(target, Key.Z) {
+                search.performClick()
+                search.assertIsFocused()
+            }
+            assertEquals(listOf("source"), col.getNote(deleted.id).tags)
+            search.assertIsFocused()
+        }
+
+    private fun TestScope.performHistoryShortcut(
+        target: SemanticsNodeInteraction,
+        key: Key,
+        shift: Boolean = false,
+        whileWorking: () -> Unit = {},
+    ) {
+        target.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+        try {
+            target.assertIsFocused().performKeyInput {
+                keyDown(Key.CtrlLeft)
+                if (shift) keyDown(Key.ShiftLeft)
+                pressKey(key)
+                if (shift) keyUp(Key.ShiftLeft)
+                keyUp(Key.CtrlLeft)
+            }
+            // Render the disabled actions while undo or redo waits for the collection.
+            compose.waitForIdle()
+            whileWorking()
+            testScheduler.advanceUntilIdle()
+        } finally {
+            CollectionManager.setTestDispatcher(previous)
+        }
+        compose.waitForIdle()
+    }
+
+    private fun TestScope.prepareRenameShortcut(
+        target: SemanticsNodeInteraction,
+        whileChecking: () -> Unit = {},
+    ) {
+        target.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+        try {
+            target.assertIsFocused().performKeyInput { pressKey(Key.R) }
+            // Render the disabled actions while the usage check waits for the collection.
+            compose.waitForIdle()
+            whileChecking()
+            testScheduler.advanceUntilIdle()
+        } finally {
+            CollectionManager.setTestDispatcher(previous)
+        }
+        compose.waitForIdle()
+    }
 
     @Test
     fun `rename waits for the usage check while delete stays available`() =

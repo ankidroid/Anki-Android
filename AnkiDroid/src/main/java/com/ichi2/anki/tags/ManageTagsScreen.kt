@@ -18,11 +18,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.isAltPressed
@@ -38,6 +40,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.ichi2.compose.ui.components.SwipeableSnackbarHost
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.ThemePreviews
+import kotlinx.coroutines.launch
 
 /**
  * Displays tag search, the hierarchy and action dialogs, including loading and error states.
@@ -58,6 +61,7 @@ internal fun ManageTagsScreen(
     onToggleCollapsed: (TagName) -> Unit,
     tagExists: (TagName) -> Boolean,
     canRenameTag: suspend (TagName) -> Boolean?,
+    prepareRename: suspend (TagName) -> Boolean?,
     onAction: (TagAction, TagName?, String) -> Boolean,
     onUndo: () -> Unit,
     onRedo: () -> Unit,
@@ -69,10 +73,23 @@ internal fun ManageTagsScreen(
 ) {
     var selectedTag by rememberSaveable { mutableStateOf<String?>(null) }
     var dialogAction by rememberSaveable { mutableStateOf<TagAction?>(null) }
+    val scope = rememberCoroutineScope()
     val content = state as? ManageTagsState.Content
     val actionsEnabled = content != null && !content.isWorking
     val focusRequester = remember { FocusRequester() }
+    var hasFocusedChild by remember { mutableStateOf(false) }
+    var focusedTag by remember { mutableStateOf<Pair<TagName, FocusRequester>?>(null) }
+    var shortcutFocus by remember { mutableStateOf<Pair<TagName, FocusRequester>?>(null) }
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
+    LaunchedEffect(shortcutFocus, actionsEnabled, selectedTag, dialogAction) {
+        val (tag, requester) = shortcutFocus ?: return@LaunchedEffect
+        if (actionsEnabled && selectedTag == null && dialogAction == null) {
+            // Wait until the disabled controls return and any rename dialog closes.
+            // Keep a new focus choice, such as moving to search during the usage check.
+            if (!hasFocusedChild && content.visibleNodes.any { it.fullTag == tag }) requester.requestFocus()
+            shortcutFocus = null
+        }
+    }
     val error =
         when (state) {
             is ManageTagsState.Content -> state.error
@@ -87,12 +104,19 @@ internal fun ManageTagsScreen(
                 .consumeWindowInsets(WindowInsets.systemBars.union(WindowInsets.displayCutout))
                 .imePadding()
                 .focusRequester(focusRequester)
+                .onFocusChanged { hasFocusedChild = it.hasFocus && !it.isFocused }
                 .manageTagsUndoShortcuts(
                     enabled = { actionsEnabled && selectedTag == null && dialogAction == null },
                     undoAvailable = content?.undoLabel != null,
                     redoAvailable = content?.redoLabel != null,
-                    onUndo = onUndo,
-                    onRedo = onRedo,
+                    onUndo = {
+                        shortcutFocus = focusedTag
+                        onUndo()
+                    },
+                    onRedo = {
+                        shortcutFocus = focusedTag
+                        onRedo()
+                    },
                 ).focusable(),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
@@ -115,6 +139,31 @@ internal fun ManageTagsScreen(
             onSearch = onSearch,
             onToggleCollapsed = onToggleCollapsed,
             onSelectTag = { selectedTag = it.value },
+            onTagFocusChanged = { tag, requester ->
+                if (requester != null) {
+                    focusedTag = tag to requester
+                } else if (focusedTag?.first == tag) {
+                    focusedTag = null
+                }
+            },
+            onTagShortcut = shortcut@{ action, tag, requester ->
+                if (!actionsEnabled || selectedTag != null || dialogAction != null || error != null) return@shortcut false
+                if (action == TagAction.RENAME) {
+                    scope.launch {
+                        val canRename = prepareRename(tag)
+                        shortcutFocus = tag to requester
+                        if (canRename != true) return@launch
+                        if (selectedTag != null || dialogAction != null) return@launch
+                        // Select only after the check, so no actions sheet opens while waiting.
+                        dialogAction = TagAction.RENAME
+                        selectedTag = tag.value
+                    }
+                } else {
+                    selectedTag = tag.value
+                    dialogAction = action
+                }
+                true
+            },
             modifier = Modifier.fillMaxSize().padding(padding),
         )
     }
@@ -205,6 +254,7 @@ private fun ManageTagsScreenPreview(
             onToggleCollapsed = {},
             tagExists = { false },
             canRenameTag = { true },
+            prepareRename = { true },
             onAction = { _, _, _ -> true },
             onUndo = {},
             onRedo = {},

@@ -3,6 +3,7 @@
 package com.ichi2.anki.tags
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,8 +22,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -55,10 +61,20 @@ internal fun TagActionsBottomSheet(
         }
         return
     }
+    val focusRequester = remember { FocusRequester() }
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
+        modifier =
+            Modifier
+                .onKeyEvent { event ->
+                    val action = event.tagActionShortcut() ?: return@onKeyEvent false
+                    if (enabled && (action != TagAction.RENAME || canRename == true)) onAction(action)
+                    true
+                }.focusRequester(focusRequester)
+                .focusable(),
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     ) {
+        LaunchedEffect(Unit) { focusRequester.requestFocus() }
         TagActions(tag, enabled, canRename, onAction)
     }
 }
@@ -71,7 +87,12 @@ private fun TagActions(
     canRename: Boolean?,
     onAction: (TagAction) -> Unit,
 ) {
-    Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom = 8.dp)) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 8.dp),
+    ) {
         Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 16.dp)) {
             Text(
                 text = stringResource(CommonString.manage_tags_actions_title),
