@@ -23,6 +23,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -71,7 +72,17 @@ private fun TagActions(
     canRename: Boolean?,
     onAction: (TagAction) -> Unit,
 ) {
-    Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom = 8.dp)) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 8.dp)
+            .onKeyEvent { event ->
+                val action = event.tagActionShortcut() ?: return@onKeyEvent false
+                if (enabled && (action != TagAction.RENAME || canRename == true)) onAction(action)
+                true
+            },
+    ) {
         Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 16.dp)) {
             Text(
                 text = stringResource(CommonString.manage_tags_actions_title),

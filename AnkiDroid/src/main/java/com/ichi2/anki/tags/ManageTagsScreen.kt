@@ -40,6 +40,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -83,6 +84,7 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 import com.ichi2.compose.ui.preview.ThemePreviews
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import androidx.appcompat.R as AppCompatR
 import com.ichi2.anki.common.android.R as CommonR
 
@@ -104,6 +106,7 @@ internal fun ManageTagsScreen(
     onToggleCollapsed: (TagName) -> Unit,
     tagExists: (TagName) -> Boolean,
     canRenameTag: suspend (TagName) -> Boolean?,
+    prepareRename: suspend (TagName) -> Boolean?,
     onAction: (TagAction, TagName?, String) -> Unit,
     onUndo: () -> Unit,
     onRedo: () -> Unit,
@@ -114,6 +117,8 @@ internal fun ManageTagsScreen(
 ) {
     var selectedTag by rememberSaveable { mutableStateOf<String?>(null) }
     var dialogAction by rememberSaveable { mutableStateOf<TagAction?>(null) }
+
+    val scope = rememberCoroutineScope()
     val listState = rememberLazyListState()
     var expandedTag by remember { mutableStateOf<TagName?>(null) }
     var previousQuery by remember { mutableStateOf(searchQuery) }
@@ -127,7 +132,9 @@ internal fun ManageTagsScreen(
     val content = state as? ManageTagsState.Content
     var renameAvailable by remember(selectedTag, content?.tagRevision) { mutableStateOf<Boolean?>(null) }
     LaunchedEffect(selectedTag, content?.tagRevision) {
-        selectedTag?.let(TagName::build)?.let { renameAvailable = canRenameTag(it) }
+        selectedTag?.let(TagName::build)?.let {
+            renameAvailable = canRenameTag(it)
+        }
     }
     val actionsEnabled = content != null && !content.isWorking
     val focusRequester = remember { FocusRequester() }
@@ -275,7 +282,26 @@ internal fun ManageTagsScreen(
                                         onToggleCollapsed(item.fullTag)
                                     },
                                     onOverflowClick = { selectedTag = item.fullTag.value },
-                                    modifier = if (animateRows) Modifier.animateItem() else Modifier,
+                                    modifier =
+                                        (if (animateRows) Modifier.animateItem() else Modifier).onKeyEvent { event ->
+                                            val action = event.tagActionShortcut() ?: return@onKeyEvent false
+                                            if (!actionsEnabled || selectedTag != null || dialogAction != null || error != null) {
+                                                return@onKeyEvent false
+                                            }
+                                            if (action == TagAction.RENAME) {
+                                                scope.launch {
+                                                    if (prepareRename(item.fullTag) != true) return@launch
+                                                    if (selectedTag != null || dialogAction != null) return@launch
+                                                    // Select only after the check, so no actions sheet opens while waiting.
+                                                    dialogAction = TagAction.RENAME
+                                                    selectedTag = item.fullTag.value
+                                                }
+                                            } else {
+                                                selectedTag = item.fullTag.value
+                                                dialogAction = action
+                                            }
+                                            true
+                                        },
                                 )
                             }
                         }
@@ -426,6 +452,7 @@ private fun ManageTagsScreenPreview(
             onToggleCollapsed = {},
             tagExists = { false },
             canRenameTag = { true },
+            prepareRename = { true },
             onAction = { _, _, _ -> },
             onUndo = {},
             onRedo = {},

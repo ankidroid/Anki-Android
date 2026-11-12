@@ -10,17 +10,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
@@ -29,6 +33,7 @@ import androidx.compose.ui.test.swipeRight
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.compose.theme.AnkiDroidTheme
+import kotlinx.coroutines.CompletableDeferred
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -107,6 +112,60 @@ class ManageTagsScreenTest : RobolectricTest() {
     }
 
     @Test
+    fun `tag action shortcuts require a focused row without modifiers and stay inactive while busy`() {
+        val state = mutableStateOf(content)
+        compose.setContent { Screen(state.value) }
+        compose.onRoot().performKeyInput {
+            pressKey(Key.R)
+            pressKey(Key.Delete)
+        }
+        compose.onNode(isDialog()).assertDoesNotExist()
+
+        val row = compose.onNodeWithTag("tag:parent")
+        row.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        row.performKeyInput {
+            for (modifier in listOf(Key.CtrlLeft, Key.AltLeft, Key.ShiftLeft, Key.MetaLeft)) {
+                keyDown(modifier)
+                pressKey(Key.R)
+                pressKey(Key.Delete)
+                keyUp(modifier)
+            }
+        }
+        compose.onNode(isDialog()).assertDoesNotExist()
+        compose.runOnIdle { state.value = content.copy(isWorking = true) }
+        row.performKeyInput {
+            pressKey(Key.R)
+            pressKey(Key.Delete)
+        }
+        compose.onNode(isDialog()).assertDoesNotExist()
+    }
+
+    @Test
+    fun `rename shortcut shows no sheet or dialog until eligibility is known`() {
+        val eligibility = CompletableDeferred<Boolean?>()
+        compose.setContent { Screen(prepareRename = { eligibility.await() }) }
+        val row = compose.onNodeWithTag("tag:parent")
+        row.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        row.performKeyInput { pressKey(Key.R) }
+        compose.onNodeWithTag("selected_tag_name").assertDoesNotExist()
+        compose.onNode(isDialog()).assertDoesNotExist()
+
+        compose.runOnIdle { eligibility.complete(true) }
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertIsDisplayed()
+        compose.onNodeWithTag("selected_tag_name").assertDoesNotExist()
+    }
+
+    @Test
+    fun `rename shortcut opens no sheet or dialog when the check fails`() {
+        compose.setContent { Screen(prepareRename = { null }) }
+        val row = compose.onNodeWithTag("tag:parent")
+        row.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        row.performKeyInput { pressKey(Key.R) }
+        compose.onNodeWithTag("selected_tag_name").assertDoesNotExist()
+        compose.onNode(isDialog()).assertDoesNotExist()
+    }
+
+    @Test
     fun `progress appears only for slow operations without moving the list`() {
         val state = mutableStateOf(content)
         compose.setContent { Screen(state.value) }
@@ -175,6 +234,7 @@ class ManageTagsScreenTest : RobolectricTest() {
         onRedo: () -> Unit = {},
         searchQuery: String = "",
         onSearch: (String) -> Unit = {},
+        prepareRename: suspend (TagName) -> Boolean? = { true },
     ) {
         AnkiDroidTheme {
             ManageTagsScreen(
@@ -184,6 +244,7 @@ class ManageTagsScreenTest : RobolectricTest() {
                 onToggleCollapsed = {},
                 tagExists = { false },
                 canRenameTag = { true },
+                prepareRename = prepareRename,
                 onAction = { _, _, _ -> },
                 onUndo = onUndo,
                 onRedo = onRedo,
