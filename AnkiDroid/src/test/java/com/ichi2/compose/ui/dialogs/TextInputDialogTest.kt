@@ -5,6 +5,9 @@ package com.ichi2.compose.ui.dialogs
 
 import android.view.animation.AnimationUtils
 import android.view.animation.Transformation
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
@@ -33,6 +36,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.profiles.RenameProfileDialog
 import com.ichi2.compose.theme.AnkiDroidTheme
+import kotlinx.coroutines.CompletableDeferred
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,6 +52,258 @@ import kotlin.test.assertTrue
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    fun `async validation ignores older text and rechecks before keyboard submission`() {
+        val slowResult = CompletableDeferred<CharSequence?>()
+        val submitted = mutableListOf<String>()
+        var taken = false
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    onConfirm = { submitted.add(it) },
+                    onDismissRequest = {},
+                    asyncErrorMessageFor = { text ->
+                        if (text == "slow") {
+                            slowResult.await()
+                        } else if (taken) {
+                            "Already exists"
+                        } else {
+                            null
+                        }
+                    },
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextReplacement("slow")
+        compose.onNodeWithText("Confirm").assertIsNotEnabled()
+        field.performTextReplacement("current")
+        compose.onNodeWithText("Confirm").assertIsEnabled()
+        compose.runOnIdle { slowResult.complete("Old error") }
+        compose.onNodeWithText("Old error").assertDoesNotExist()
+        compose.runOnIdle { taken = true }
+        field.performImeAction()
+        compose.onNodeWithText("Already exists").assertIsDisplayed()
+        assertTrue(submitted.isEmpty())
+    }
+
+    @Test
+    fun `editing while async submission is pending does not submit the new text`() {
+        val confirmation = CompletableDeferred<CharSequence?>()
+        var validateSubmission = false
+        val submitted = mutableListOf<String>()
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    onConfirm = { submitted.add(it) },
+                    onDismissRequest = {},
+                    asyncErrorMessageFor = { text -> if (validateSubmission && text == "first") confirmation.await() else null },
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextReplacement("first")
+        compose.runOnIdle { validateSubmission = true }
+        field.performImeAction()
+        compose.onNodeWithText("Confirm").assertIsNotEnabled()
+        field.performTextReplacement("second")
+        compose.runOnIdle { confirmation.complete(null) }
+        compose.onNodeWithText("Confirm").assertIsEnabled()
+        assertTrue(submitted.isEmpty())
+        field.performImeAction()
+        assertEquals(listOf("second"), submitted)
+    }
+
+    @Test
+    fun `cancelling during the confirmation check does not confirm`() {
+        var shown by mutableStateOf(true)
+        val check = CompletableDeferred<CharSequence?>()
+        var checkSubmission = false
+        val submitted = mutableListOf<String>()
+        compose.setContent {
+            AnkiDroidTheme {
+                if (shown) {
+                    TextInputDialog(
+                        title = "Rename",
+                        label = "Name",
+                        confirmText = "Confirm",
+                        asyncErrorMessageFor = { if (checkSubmission) check.await() else null },
+                        onConfirm = { submitted.add(it) },
+                        onDismissRequest = {
+                            shown = false
+                            // The check finishes before the next frame removes the dialog.
+                            check.complete(null)
+                        },
+                    )
+                }
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextReplacement("new")
+        compose.runOnIdle { checkSubmission = true }
+        field.performImeAction()
+        compose.onNodeWithText("Confirm").assertIsNotEnabled()
+        assertTrue(submitted.isEmpty())
+
+        compose.onNodeWithText("Cancel").performClick()
+        compose.waitForIdle()
+        assertEquals(emptyList(), submitted)
+    }
+
+    @Test
+    fun `an ignored dismissal does not stop later confirmations`() {
+        var shown by mutableStateOf(true)
+        var busy = true
+        val submitted = mutableListOf<String>()
+        compose.setContent {
+            AnkiDroidTheme {
+                if (shown) {
+                    TextInputDialog(
+                        title = "Rename",
+                        label = "Name",
+                        confirmText = "Confirm",
+                        asyncErrorMessageFor = { null },
+                        onConfirm = { submitted.add(it) },
+                        onDismissRequest = { if (!busy) shown = false },
+                    )
+                }
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextReplacement("new")
+        compose.onNodeWithText("Cancel").performClick()
+        compose.runOnIdle { busy = false }
+
+        compose.onNodeWithText("Confirm").assertIsEnabled().performClick()
+        compose.waitForIdle()
+        assertEquals(listOf("new"), submitted)
+    }
+
+    @Test
+    fun `a new validation key discards a pending confirmation check`() {
+        var key by mutableStateOf(0)
+        val held = CompletableDeferred<CharSequence?>()
+        var holdNext = false
+        var taken = false
+        val submitted = mutableListOf<String>()
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    validationKey = key,
+                    asyncErrorMessageFor = {
+                        if (holdNext) {
+                            holdNext = false
+                            held.await()
+                        } else if (taken) {
+                            "Exists"
+                        } else {
+                            null
+                        }
+                    },
+                    onConfirm = { submitted.add(it) },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextReplacement("new")
+        compose.runOnIdle { holdNext = true }
+        field.performImeAction()
+
+        compose.runOnIdle {
+            taken = true
+            key = 1
+        }
+        compose.onNodeWithText("Exists").assertIsDisplayed()
+        compose.runOnIdle { held.complete(null) }
+        compose.waitForIdle()
+        assertEquals(emptyList(), submitted)
+        compose.onNodeWithText("Exists").assertIsDisplayed()
+    }
+
+    @Test
+    fun `deferred validation waits for confirmation before showing async errors`() {
+        val checked = mutableListOf<String>()
+        val submitted = mutableListOf<String>()
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    validateOnInput = false,
+                    errorMessageFor = { if (it.isBlank()) "Required" else null },
+                    asyncErrorMessageFor = { text ->
+                        checked.add(text)
+                        if (text == "dup") "Exists" else null
+                    },
+                    onConfirm = { submitted.add(it) },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        compose.onNodeWithText("Confirm").assertIsEnabled()
+        field.performTextReplacement("dup")
+        compose.onNodeWithText("Exists").assertDoesNotExist()
+        field.performTextReplacement(" ")
+        assertTrue(checked.isEmpty())
+        field.performImeAction()
+        compose.onNodeWithText("Required").assertIsDisplayed()
+        assertTrue(checked.isEmpty())
+
+        field.performTextReplacement("dup")
+        compose.onNodeWithText("Required").assertDoesNotExist()
+        compose.onNodeWithText("Confirm").performClick()
+        compose.onNodeWithText("Exists").assertIsDisplayed()
+        assertEquals(listOf("dup"), checked)
+        assertTrue(submitted.isEmpty())
+
+        field.performTextReplacement("available")
+        compose.onNodeWithText("Exists").assertDoesNotExist()
+        assertEquals(listOf("dup"), checked)
+        field.performImeAction()
+        assertEquals(listOf("dup", "available"), checked)
+        assertEquals(listOf("available"), submitted)
+    }
+
+    @Test
+    fun `removing the async validator clears its error`() {
+        var validator by mutableStateOf<(suspend (String) -> CharSequence?)?>({ if (it == "dup") "Exists" else null })
+        val submitted = mutableListOf<String>()
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    asyncErrorMessageFor = validator,
+                    onConfirm = { submitted.add(it) },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextReplacement("dup")
+        compose.onNodeWithText("Exists").assertIsDisplayed()
+
+        compose.runOnIdle { validator = null }
+        compose.onNodeWithText("Exists").assertDoesNotExist()
+        compose.onNodeWithText("Confirm").assertIsEnabled().performClick()
+        assertEquals(listOf("dup"), submitted)
+        field.performImeAction()
+        assertEquals(listOf("dup", "dup"), submitted)
+    }
 
     @Test
     fun `field semantics retain the label and editable value`() {
@@ -131,6 +387,30 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
 
         field.performTextInputSelection(TextRange(1, 3))
         assertEquals(1, transformations)
+    }
+
+    @Test
+    fun `a deferred async error survives state restoration`() {
+        val restoration = StateRestorationTester(compose)
+        restoration.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename",
+                    label = "Name",
+                    confirmText = "Confirm",
+                    validateOnInput = false,
+                    asyncErrorMessageFor = { if (it == "dup") "Exists" else null },
+                    onConfirm = {},
+                    onDismissRequest = {},
+                )
+            }
+        }
+        compose.onNode(hasSetTextAction()).performTextReplacement("dup")
+        compose.onNodeWithText("Confirm").performClick()
+        compose.onNodeWithText("Exists").assertIsDisplayed()
+
+        restoration.emulateSavedInstanceStateRestore()
+        compose.onNodeWithText("Exists").assertIsDisplayed()
     }
 
     @Test
