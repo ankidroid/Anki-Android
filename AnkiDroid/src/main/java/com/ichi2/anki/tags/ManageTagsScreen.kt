@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.tags
 
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Box
@@ -44,7 +45,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isAltPressed
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.isShiftPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -93,6 +105,8 @@ internal fun ManageTagsScreen(
     tagExists: (TagName) -> Boolean,
     canRenameTag: suspend (TagName) -> Boolean?,
     onAction: (TagAction, TagName?, String) -> Unit,
+    onUndo: () -> Unit,
+    onRedo: () -> Unit,
     onNavigateUp: () -> Unit,
     onRetry: () -> Unit,
     onDismissError: (Throwable) -> Unit,
@@ -116,6 +130,8 @@ internal fun ManageTagsScreen(
         selectedTag?.let(TagName::build)?.let { renameAvailable = canRenameTag(it) }
     }
     val actionsEnabled = content != null && !content.isWorking
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) { focusRequester.requestFocus() }
     val animateRows = !LocalInspectionMode.current && Animations.areAnimationsEnabled(LocalContext.current)
     LaunchedEffect(expandedTag, content?.visibleNodes) {
         val tag = expandedTag ?: return@LaunchedEffect
@@ -144,8 +160,32 @@ internal fun ManageTagsScreen(
         }
 
     Scaffold(
-        // The activity pads system bars and cutouts. Consume those before applying the IME inset.
-        modifier = Modifier.consumeWindowInsets(WindowInsets.systemBars.union(WindowInsets.displayCutout)).imePadding(),
+        modifier =
+            Modifier
+                // The activity pads system bars and cutouts; consume them before applying the IME inset.
+                .consumeWindowInsets(WindowInsets.systemBars.union(WindowInsets.displayCutout))
+                .imePadding()
+                .focusRequester(focusRequester)
+                .onKeyEvent { event ->
+                    // Text fields handle their own undo first; dialogs keep their own keyboard focus.
+                    if (!actionsEnabled || selectedTag != null || dialogAction != null ||
+                        event.type != KeyEventType.KeyDown || !event.isCtrlPressed || event.isAltPressed || event.isMetaPressed
+                    ) {
+                        return@onKeyEvent false
+                    }
+                    when {
+                        event.key == Key.Z && !event.isShiftPressed && content.undoLabel != null -> {
+                            onUndo()
+                            true
+                        }
+                        ((event.key == Key.Z && event.isShiftPressed) || (event.key == Key.Y && !event.isShiftPressed)) &&
+                            content.redoLabel != null -> {
+                            onRedo()
+                            true
+                        }
+                        else -> false
+                    }
+                }.focusable(),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBar(
@@ -169,6 +209,26 @@ internal fun ManageTagsScreen(
                     }
                 },
                 actions = {
+                    IconButton(
+                        onClick = onUndo,
+                        enabled = actionsEnabled && content.undoLabel != null,
+                        modifier = Modifier.testTag("tag_undo"),
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_undo_white),
+                            contentDescription = content?.undoLabel ?: stringResource(CommonString.undo),
+                        )
+                    }
+                    IconButton(
+                        onClick = onRedo,
+                        enabled = actionsEnabled && content.redoLabel != null,
+                        modifier = Modifier.testTag("tag_redo"),
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_redo),
+                            contentDescription = content?.redoLabel ?: stringResource(CommonString.redo),
+                        )
+                    }
                     if (content != null && content.totalTagCount > 0) {
                         IconButton(
                             enabled = actionsEnabled,
@@ -367,6 +427,8 @@ private fun ManageTagsScreenPreview(
             tagExists = { false },
             canRenameTag = { true },
             onAction = { _, _, _ -> },
+            onUndo = {},
+            onRedo = {},
             onNavigateUp = {},
             onRetry = {},
             onDismissError = {},

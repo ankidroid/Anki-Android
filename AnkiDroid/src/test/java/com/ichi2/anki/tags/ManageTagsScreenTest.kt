@@ -9,15 +9,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -39,6 +45,66 @@ class ManageTagsScreenTest : RobolectricTest() {
             visibleNodes = listOf(tagListItem("parent", "parent", 0, hasChildren = true, collapsed = true)),
             totalTagCount = 2,
         )
+
+    @Test
+    fun `undo shortcut in the search field does not undo collection changes`() {
+        val query = mutableStateOf("")
+        var undos = 0
+        compose.setContent {
+            Screen(
+                content.copy(undoLabel = "Undo remove tag"),
+                onUndo = { undos++ },
+                searchQuery = query.value,
+                onSearch = { query.value = it },
+            )
+        }
+        val search = compose.onNode(hasSetTextAction())
+        search.performTextInput("parent")
+        assertEquals("parent", query.value)
+        search.performKeyInput {
+            keyDown(Key.CtrlLeft)
+            pressKey(Key.Z)
+            keyUp(Key.CtrlLeft)
+        }
+        assertEquals(0, undos)
+    }
+
+    @Test
+    fun `undo and redo shortcuts respect availability and busy state`() {
+        val state = mutableStateOf(content.copy(undoLabel = "Undo remove tag", redoLabel = "Redo remove tag"))
+        var undos = 0
+        var redos = 0
+        compose.setContent { Screen(state.value, onUndo = { undos++ }, onRedo = { redos++ }) }
+
+        fun shortcuts() {
+            compose.onRoot().performKeyInput {
+                pressKey(Key.Z)
+                keyDown(Key.CtrlLeft)
+                pressKey(Key.Z)
+                keyDown(Key.ShiftLeft)
+                pressKey(Key.Z)
+                keyUp(Key.ShiftLeft)
+                pressKey(Key.Y)
+                keyUp(Key.CtrlLeft)
+            }
+        }
+
+        shortcuts()
+        assertEquals(1, undos)
+        assertEquals(2, redos)
+
+        compose.runOnIdle { state.value = state.value.copy(isWorking = true) }
+        compose.onNodeWithTag("tag_undo").assertIsNotEnabled()
+        compose.onNodeWithTag("tag_redo").assertIsNotEnabled()
+        shortcuts()
+        assertEquals(1, undos)
+        assertEquals(2, redos)
+
+        compose.runOnIdle { state.value = content }
+        shortcuts()
+        assertEquals(1, undos)
+        assertEquals(2, redos)
+    }
 
     @Test
     fun `progress appears only for slow operations without moving the list`() {
@@ -105,16 +171,22 @@ class ManageTagsScreenTest : RobolectricTest() {
     private fun Screen(
         state: ManageTagsState = content,
         snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+        onUndo: () -> Unit = {},
+        onRedo: () -> Unit = {},
+        searchQuery: String = "",
+        onSearch: (String) -> Unit = {},
     ) {
         AnkiDroidTheme {
             ManageTagsScreen(
                 state = state,
-                searchQuery = "",
-                onSearch = {},
+                searchQuery = searchQuery,
+                onSearch = onSearch,
                 onToggleCollapsed = {},
                 tagExists = { false },
                 canRenameTag = { true },
                 onAction = { _, _, _ -> },
+                onUndo = onUndo,
+                onRedo = onRedo,
                 onNavigateUp = {},
                 onRetry = {},
                 onDismissError = {},

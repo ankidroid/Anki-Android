@@ -6,9 +6,16 @@ import android.icu.lang.UCharacter
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import anki.collection.OpChanges
+import anki.collection.OpChangesAfterUndo
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.isAscii
 import com.ichi2.anki.libanki.Tags
+import com.ichi2.anki.libanki.redoAvailable
+import com.ichi2.anki.libanki.redoLabel
+import com.ichi2.anki.libanki.undoAvailable
+import com.ichi2.anki.libanki.undoLabel
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
@@ -43,7 +50,9 @@ import anki.tags.TagTreeNode as BackendTagTreeNode
  * @see ManageTagsState for UI state.
  * @see pendingMessages for messages awaiting display.
  */
-class ManageTagsViewModel : ViewModel() {
+class ManageTagsViewModel :
+    ViewModel(),
+    ChangeManager.Subscriber {
     val state: StateFlow<ManageTagsState>
         field = MutableStateFlow<ManageTagsState>(ManageTagsState.Loading)
 
@@ -67,7 +76,16 @@ class ManageTagsViewModel : ViewModel() {
     private var tagRevision = 0L
 
     init {
+        ChangeManager.subscribe(this)
+        addCloseable { ChangeManager.unsubscribe(this) }
         refreshTags()
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        if (handler !== this) refreshTags()
     }
 
     /** Reloads the tag tree from the backend. Preserves the current search query if any */
@@ -166,7 +184,15 @@ class ManageTagsViewModel : ViewModel() {
                     // Queue every tap before a reopened screen can load the tree. These small
                     // preference writes must finish even when closing clears this ViewModel.
                     withContext(NonCancellable) {
-                        withCol { tags.setCollapsed(node.fullTag, newCollapsed) }
+                        val undoLabels =
+                            withCol {
+                                tags.setCollapsed(node.fullTag, newCollapsed)
+                                // Saving expansion clears backend redo despite adding no undo entry.
+                                undoLabel() to redoLabel()
+                            }
+                        updateState {
+                            it.copy(undoLabel = undoLabels.first, redoLabel = undoLabels.second)
+                        }
                     }
                 } catch (e: CancellationException) {
                     throw e
@@ -186,7 +212,7 @@ class ManageTagsViewModel : ViewModel() {
      */
     fun removeTag(tag: TagName) =
         launchTagOpAndRefresh {
-            val result = undoableOp { tags.remove(tag) }
+            val result = undoableOp(handler = this@ManageTagsViewModel) { tags.remove(tag) }
             messageQueue.enqueue(TagRemoved(result.count))
         }
 
@@ -198,7 +224,7 @@ class ManageTagsViewModel : ViewModel() {
         oldName: TagName,
         newName: TagName,
     ) = launchTagOpAndRefresh {
-        val result = undoableOp { renameTagTree(oldName, newName) }
+        val result = undoableOp(handler = this@ManageTagsViewModel) { renameTagTree(oldName, newName) }
         messageQueue.enqueue(TagRenamed(result.count))
     }
 
@@ -208,7 +234,7 @@ class ManageTagsViewModel : ViewModel() {
      */
     fun clearUnusedTags() =
         launchTagOpAndRefresh {
-            val result = undoableOp { tags.clearUnusedTags() }
+            val result = undoableOp(handler = this@ManageTagsViewModel) { tags.clearUnusedTags() }
             Timber.i("Deleted %d unused tags", result.count)
             messageQueue.enqueue(ClearedUnusedTags(result.count))
         }
@@ -223,7 +249,7 @@ class ManageTagsViewModel : ViewModel() {
         newParent: TagName?,
     ) = launchTagOpAndRefresh {
         Timber.i("Moving tag")
-        val result = undoableOp { moveTagTree(tag, newParent) }
+        val result = undoableOp(handler = this@ManageTagsViewModel) { moveTagTree(tag, newParent) }
         val currentParent = TagName.build(tag.value.substringBeforeLast("::", ""))
         messageQueue.enqueue(
             if (result.count == 0 && currentParent != newParent) {
@@ -234,13 +260,48 @@ class ManageTagsViewModel : ViewModel() {
         )
     }
 
+    /** Uses the collection's shared undo history. */
+    fun undo() =
+        launchTagOpAndRefresh {
+            val result =
+                undoableOp(handler = this@ManageTagsViewModel) {
+                    if (undoAvailable()) {
+                        undo()
+                    } else {
+                        OpChangesAfterUndo.getDefaultInstance()
+                    }
+                }
+            pendingMessages.value.forEach { messageShown(it.id) }
+            messageQueue.enqueue(UserMessage.Undone(result.operation))
+        }
+
+    fun redo() =
+        launchTagOpAndRefresh {
+            val result =
+                undoableOp(handler = this@ManageTagsViewModel) {
+                    if (redoAvailable()) {
+                        redo()
+                    } else {
+                        OpChangesAfterUndo.getDefaultInstance()
+                    }
+                }
+            pendingMessages.value.forEach { messageShown(it.id) }
+            messageQueue.enqueue(UserMessage.Redone(result.operation))
+        }
+
     private suspend fun loadTags() {
         Timber.i("Loading tags from collection")
-        tagList = flattenTree(withCol { tags.tree() })
+        val (tree, undoLabels) =
+            withCol {
+                tags.tree() to (undoLabel() to redoLabel())
+            }
+        tagList = flattenTree(tree)
         state.value =
             ManageTagsState.Content(
                 visibleNodes = computeVisibleNodes(searchQuery.value),
                 totalTagCount = tagList.size,
+                undoLabel = undoLabels.first,
+                redoLabel = undoLabels.second,
                 tagRevision = ++tagRevision,
             )
     }
@@ -467,6 +528,9 @@ sealed class ManageTagsState {
         /** Most recent operation failure, cleared on dismissal or when the next operation starts. */
         val error: Throwable? = null,
         val totalTagCount: Int = 0,
+        /** Localized shared-history labels; null when the corresponding action is unavailable. */
+        val undoLabel: String? = null,
+        val redoLabel: String? = null,
         /** Invalidates selected-tag checks even when a note update leaves the tag tree unchanged. */
         val tagRevision: Long = 0,
     ) : ManageTagsState()
@@ -477,6 +541,15 @@ sealed class ManageTagsState {
 }
 
 sealed interface UserMessage {
+    /** Empty [operation] means nothing could be undone. */
+    data class Undone(
+        val operation: String,
+    ) : UserMessage
+
+    data class Redone(
+        val operation: String,
+    ) : UserMessage
+
     /** @param notesAffected number of notes the tag was removed from */
     data class TagRemoved(
         val notesAffected: Int,
