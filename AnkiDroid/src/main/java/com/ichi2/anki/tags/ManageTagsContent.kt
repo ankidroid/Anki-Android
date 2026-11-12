@@ -23,6 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
@@ -41,6 +45,8 @@ internal fun ManageTagsContent(
     onSearch: (String) -> Unit,
     onToggleCollapsed: (TagName) -> Unit,
     onSelectTag: (TagName) -> Unit,
+    onTagFocusChanged: (TagName, FocusRequester?) -> Unit,
+    onTagShortcut: (TagAction, TagName, FocusRequester) -> Boolean,
     modifier: Modifier = Modifier,
 ) {
     val content = state as? ManageTagsState.Content
@@ -92,6 +98,7 @@ internal fun ManageTagsContent(
                     // Retain the list when empty so the final removed rows can finish fading out.
                     LazyColumn(Modifier.fillMaxSize().testTag("tag_list"), state = listState) {
                         items(content.visibleNodes, key = { it.fullTag.value }) { item ->
+                            val focusRequester = remember { FocusRequester() }
                             TagRow(
                                 item = item,
                                 actionsEnabled = actionsEnabled,
@@ -100,7 +107,15 @@ internal fun ManageTagsContent(
                                     onToggleCollapsed(item.fullTag)
                                 },
                                 onOverflowClick = { onSelectTag(item.fullTag) },
-                                modifier = if (animateRows) Modifier.animateItem() else Modifier,
+                                modifier =
+                                    (if (animateRows) Modifier.animateItem() else Modifier)
+                                        .focusRequester(focusRequester)
+                                        .onFocusChanged { focusState ->
+                                            onTagFocusChanged(item.fullTag, focusRequester.takeIf { focusState.hasFocus })
+                                        }.onKeyEvent { event ->
+                                            val action = event.tagActionShortcut() ?: return@onKeyEvent false
+                                            onTagShortcut(action, item.fullTag, focusRequester)
+                                        },
                             )
                         }
                     }

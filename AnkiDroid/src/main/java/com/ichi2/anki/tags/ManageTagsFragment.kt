@@ -53,6 +53,9 @@ class ManageTagsFragment :
         get() =
             ShortcutGroup(
                 listOf(
+                    Shortcut("R", getString(CommonString.rename)),
+                    Shortcut("FORWARD_DEL", getString(CommonString.dialog_positive_delete)),
+                    Shortcut("DEL", getString(CommonString.dialog_positive_delete)),
                     Shortcut("Ctrl+Shift+Z", getString(CommonString.redo)),
                     Shortcut("Ctrl+Y", getString(CommonString.redo)),
                 ),
@@ -113,6 +116,7 @@ private fun ManageTagsScreen(
         onToggleCollapsed = { viewModel.toggleCollapsed(it) },
         tagExists = viewModel::tagExists,
         canRenameTag = viewModel::canRenameTag,
+        prepareRename = viewModel::prepareRename,
         onAction = { action, tag, input ->
             when (action) {
                 TagAction.RENAME -> viewModel.renameTag(requireNotNull(tag), requireNotNull(TagName.build(input)))
