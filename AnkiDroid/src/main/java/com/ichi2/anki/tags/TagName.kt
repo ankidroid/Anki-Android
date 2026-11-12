@@ -93,12 +93,15 @@ class TagName private constructor(
         // and leave mutation validation (e.g. forbidden separators) to the backend.
         private fun normalize(spelling: String): String =
             spelling.split("::").joinToString("::") { component ->
-                Normalizer
-                    .normalize(component, Normalizer.Form.NFC)
-                    .filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }
-                    .trim(RustCompat::isWhitespace)
-                    .ifEmpty { "blank" }
+                normalizeComponent(component).ifEmpty { "blank" }
             }
+
+        /** Component normalization before the fallback to "blank", also used to validate input. */
+        internal fun normalizeComponent(component: String): String =
+            Normalizer
+                .normalize(component, Normalizer.Form.NFC)
+                .filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }
+                .trim(RustCompat::isWhitespace)
     }
 }
 

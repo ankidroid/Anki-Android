@@ -13,7 +13,7 @@ internal fun validateTagRename(
 ): TagInputValidation {
     val candidate = TagName.build(text.trim()) ?: return TagInputValidation.EMPTY
     return when {
-        candidate.value.split("::").any { it.isBlank() } -> TagInputValidation.EMPTY_COMPONENT
+        candidate.value.split("::").any { TagName.normalizeComponent(it).isEmpty() } -> TagInputValidation.EMPTY_COMPONENT
         candidate.value == source.value -> TagInputValidation.UNCHANGED
         candidate != source && tagExists(candidate) -> TagInputValidation.ALREADY_EXISTS
         else -> TagInputValidation.VALID

@@ -164,7 +164,16 @@ class ManageTagDialogTest : RobolectricTest() {
         input.performTextReplacement("Merge")
         input.performTextInput(" ")
         input.assertTextContains("Merge::")
-        for (name in listOf("Merge::", "::Merge", "Merge::::Child", "Merge::\t::Child", "::")) {
+        for (name in listOf(
+            "Merge::",
+            "::Merge",
+            "Merge::::Child",
+            "Merge::\t::Child",
+            "Merge::\u007f",
+            "Merge::\u0000::Child",
+            "Merge::\u0085",
+            "::",
+        )) {
             input.performTextReplacement(name)
             compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_rename_empty_component, "::")).assertIsDisplayed()
             compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_rename_invalid)).assertDoesNotExist()
