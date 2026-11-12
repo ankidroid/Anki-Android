@@ -1002,6 +1002,8 @@ class ManageTagsViewModelTest : JvmTest() {
                         assertFalse(operation.accepted)
                         assertThat(operation.job, sameInstance(refresh))
                     }
+                    assertThat(undo(), sameInstance(refresh))
+                    assertThat(redo(), sameInstance(refresh))
                     assertThat(toggleCollapsed("science"), sameInstance(refresh))
                     assertThat(moveTag("history", "science"), sameInstance(refresh))
                     assertThat(refreshTags(), sameInstance(refresh))

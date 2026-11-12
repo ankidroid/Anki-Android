@@ -135,6 +135,48 @@ class ManageTagsFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `undo remains available after deleting the last tag and recreating the screen`() {
+        val note = addTags("source")
+        screen.open()
+        val undo = compose.onNodeWithTag("tag_undo")
+        undo.assertIsDisplayed().assertIsNotEnabled()
+
+        screen.action(TagAction.DELETE, "source")
+        screen.confirm(TagAction.DELETE).performClick()
+        compose.waitForIdle()
+        assertEquals(emptyList(), col.getNote(note.id).tags)
+        undo.assertIsEnabled()
+
+        screen.recreate()
+        undo.assertIsEnabled().performClick()
+        compose.onNodeWithTag("tag:source").assertIsDisplayed()
+        assertEquals(listOf("source"), col.getNote(note.id).tags)
+        undo.assertIsNotEnabled()
+        compose.onNodeWithTag("tag_redo").assertIsEnabled().performClick()
+        compose.waitForIdle()
+        assertEquals(emptyList(), col.getNote(note.id).tags)
+        undo.assertIsEnabled()
+        compose.onNodeWithTag("tag_redo").assertIsNotEnabled()
+    }
+
+    @Test
+    fun `expanding a tag disables redo when the backend clears its history`() {
+        addTags("source", "parent::child")
+        screen.open()
+        screen.action(TagAction.DELETE, "source")
+        screen.confirm(TagAction.DELETE).performClick()
+        compose.onNodeWithTag("tag_undo").assertIsEnabled().performClick()
+        compose.onNodeWithTag("tag_redo").assertIsEnabled()
+
+        compose.onNodeWithTag("tag:parent").performClick()
+
+        compose.onNodeWithTag("tag:parent::child").assertIsDisplayed()
+        assertNull(col.undoStatus().redo)
+        compose.onNodeWithTag("tag_redo").assertIsNotEnabled()
+        compose.onNodeWithTag("tag_undo").assertIsNotEnabled()
+    }
+
+    @Test
     @Config(qualifiers = "en")
     fun `tag actions expose only rename and delete`() {
         addTags("source")
@@ -507,6 +549,12 @@ class ManageTagsFragmentTest : RobolectricTest() {
             screen.clearUnused()
             screen.confirm(TagAction.CLEAR_UNUSED).performClick()
             compose.waitForIdle()
+            assertEquals(listOf("used"), col.tags.all())
+            compose.onNodeWithTag("tag_undo").performClick()
+            compose.onNodeWithText(CollectionManager.TR.undoActionUndone("Clear unused tags")).assertIsDisplayed()
+            assertEquals(setOf("used", "unused"), col.tags.all().toSet())
+            compose.onNodeWithTag("tag_redo").performClick()
+            compose.onNodeWithText(CollectionManager.TR.undoActionRedone("Clear unused tags")).assertIsDisplayed()
             assertEquals(listOf("used"), col.tags.all())
         }
 

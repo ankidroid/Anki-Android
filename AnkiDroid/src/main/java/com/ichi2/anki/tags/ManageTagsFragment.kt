@@ -27,6 +27,9 @@ import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.android.input.Shortcut
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
@@ -41,8 +44,20 @@ import kotlinx.coroutines.flow.map
 import com.ichi2.anki.ankicommon.R as AnkiCommonR
 
 /** Hosts tag management in the existing fragment navigation. */
-class ManageTagsFragment : Fragment() {
+class ManageTagsFragment :
+    Fragment(),
+    ShortcutGroupProvider {
     private val viewModel: ManageTagsViewModel by viewModels()
+
+    override val shortcuts: ShortcutGroup
+        get() =
+            ShortcutGroup(
+                listOf(
+                    Shortcut("Ctrl+Shift+Z", getString(CommonString.redo)),
+                    Shortcut("Ctrl+Y", getString(CommonString.redo)),
+                ),
+                CommonString.manage_tags,
+            )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,6 +127,8 @@ private fun ManageTagsScreen(
             }.accepted
         },
         onNavigateUp = onNavigateUp,
+        onUndo = { viewModel.undo() },
+        onRedo = { viewModel.redo() },
         onRetry = { viewModel.refreshTags() },
         onDismissError = { error -> if (state is ManageTagsState.Content) viewModel.errorDismissed(error) else onNavigateUp() },
         snackbarHostState = snackbarHost,
