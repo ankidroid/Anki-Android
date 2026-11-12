@@ -9,7 +9,6 @@ import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.SizeF
 import android.util.TypedValue
@@ -17,7 +16,6 @@ import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.RemoteViews
 import android.widget.TextView
-import androidx.core.os.BundleCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -40,6 +38,7 @@ import com.ichi2.widget.cancelRecurringAlarm
 import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
+import com.ichi2.widget.sizedRemoteViews
 import com.ichi2.widget.updateAppWidget
 import timber.log.Timber
 import kotlin.math.roundToInt
@@ -97,40 +96,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 }
 
                 val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
-                appWidgetManager.updateAppWidget(appWidgetId, createSizedDeckViews(context, deckData, options))
+                appWidgetManager.updateAppWidget(appWidgetId, sizedRemoteViews(options) { createDeckViews(context, deckData, it) })
             }
-        }
-
-        private suspend fun createSizedDeckViews(
-            context: Context,
-            deckData: List<DeckWidgetData>,
-            options: Bundle,
-        ): RemoteViews {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val sizes = BundleCompat.getParcelableArrayList(options, AppWidgetManager.OPTION_APPWIDGET_SIZES, SizeF::class.java)
-                if (!sizes.isNullOrEmpty()) {
-                    return RemoteViews(sizes.associateWith { createDeckViews(context, deckData, it) })
-                }
-            }
-            // Older launchers report a size range: landscape is shorter, portrait is taller.
-            return RemoteViews(
-                createDeckViews(
-                    context,
-                    deckData,
-                    SizeF(
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat(),
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT).toFloat(),
-                    ),
-                ),
-                createDeckViews(
-                    context,
-                    deckData,
-                    SizeF(
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH).toFloat(),
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).toFloat(),
-                    ),
-                ),
-            )
         }
 
         private suspend fun createDeckViews(
