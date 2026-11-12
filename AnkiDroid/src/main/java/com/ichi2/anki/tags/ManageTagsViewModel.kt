@@ -97,6 +97,20 @@ class ManageTagsViewModel : ViewModel() {
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
 
+    /** Checks only the selected subtree, rather than searching notes for every row in the tree. */
+    suspend fun canRenameTag(tag: TagName): Boolean? =
+        try {
+            withCol { canRenameTagTree(tag) }.also {
+                updateState { it.copy(error = null) }
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Checking whether a tag can be renamed failed")
+            updateState { it.copy(error = e) }
+            null
+        }
+
     /** Finds a tag using its displayed expansion state when visible. */
     private fun findTagNode(tag: TagName): TagListItemState? {
         val loaded = state.value as? ManageTagsState.Content
