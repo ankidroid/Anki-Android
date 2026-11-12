@@ -9,19 +9,16 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollTo
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.ComposeScreenshotTest
-import com.ichi2.anki.settings.enums.Theme
 import org.junit.Test
 import org.robolectric.annotation.Config
 
 class CustomSyncCertificateDialogScreenshotTest : ComposeScreenshotTest() {
     @Test
     fun editor(
-        @TestParameter(valuesProvider = ThemeProvider::class) theme: Theme,
         @TestParameter populated: Boolean,
     ) {
         capture(
             name = if (populated) "populated" else "empty",
-            theme = theme,
             node = isDialog(),
             beforeCapture = ::assertActionsVisible,
         ) {
