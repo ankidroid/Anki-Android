@@ -65,6 +65,21 @@ class ManageTagsFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `an ideographic space in a new name creates a hierarchy separator`() {
+        val note = addTags("source")
+        screen.open()
+        screen.action(TagAction.RENAME, "source")
+        screen.enterText("日本\u3000語")
+        screen.confirm(TagAction.RENAME).performClick()
+        compose.waitForIdle()
+        compose.onNodeWithText(targetContext.getString(CommonString.vague_error)).assertDoesNotExist()
+        assertEquals(listOf("日本::語"), col.getNote(note.id).tags)
+
+        screen.search("日本\u3000語")
+        compose.onNodeWithTag("tag:日本::語").assertIsDisplayed()
+    }
+
+    @Test
     fun `rename and delete shortcuts act on the focused tag after filtering and renaming`() {
         val first = addTags("first::leaf")
         val second = addTags("second::leaf")

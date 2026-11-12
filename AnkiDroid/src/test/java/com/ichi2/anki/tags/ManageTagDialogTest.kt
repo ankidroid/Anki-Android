@@ -124,15 +124,17 @@ class ManageTagDialogTest : RobolectricTest() {
             }
         }
         val input = compose.onNode(hasSetTextAction())
-        for (prefix in listOf("parent", "parent:", "parent::")) {
-            input.performTextReplacement(prefix)
-            input.performTextInput(" ")
-            input.assertTextContains("parent::")
-            input.performTextInput("child")
-            input.assertTextContains("parent::child")
+        for (space in listOf(" ", "\u3000")) {
+            for (prefix in listOf("parent", "parent:", "parent::")) {
+                input.performTextReplacement(prefix)
+                input.performTextInput(space)
+                input.assertTextContains("parent::")
+                input.performTextInput("child")
+                input.assertTextContains("parent::child")
+            }
+            input.performTextReplacement("parent${space}child${space}leaf")
+            input.assertTextContains("parent::child::leaf")
         }
-        input.performTextReplacement("parent child leaf")
-        input.assertTextContains("parent::child::leaf")
         // Replacing a selection must leave subsequent typing after the inserted separator.
         input.performTextInputSelection(TextRange(8, 13))
         input.performTextInput("new ")

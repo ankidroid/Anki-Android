@@ -10,7 +10,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 
 /**
  * The filter that constrains the inputted tag.
- * Space is not allowed in a tag. For UX of hierarchical tag, inputting a space will instead
+ * ASCII and ideographic (Japanese keyboard) spaces are not allowed in a tag. Inputting either will instead
  * insert "::" at the cursor. If there are already some colons in front of the cursor,
  * complete to 2 colons. For example:
  *   "tag"   -- input a space --> "tag::"
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.TextFieldValue
  */
 internal val tagNameInputFilter =
     InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-        if (!source.subSequence(start, end).contains(' ')) {
+        if (source.subSequence(start, end).none { it == ' ' || it == '\u3000' }) {
             return@InputFilter null
         }
         var previousColonsCnt = 0
@@ -33,7 +33,7 @@ internal val tagNameInputFilter =
         }
         val sb = StringBuilder()
         for (char in source.subSequence(start, end)) {
-            if (char == ' ') {
+            if (char == ' ' || char == '\u3000') {
                 if (previousColonsCnt == 0) {
                     sb.append("::")
                 } else if (previousColonsCnt == 1) {
