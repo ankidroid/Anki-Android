@@ -2,10 +2,13 @@
 
 package com.ichi2.anki.tags
 
+import androidx.lifecycle.ViewModelStore
 import androidx.test.filters.MediumTest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.exception.CollectionLockedException
+import com.ichi2.anki.observability.ChangeCounter
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
@@ -13,7 +16,9 @@ import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
@@ -352,6 +357,38 @@ class ManageTagsViewModelTest : JvmTest() {
                     refresh.join()
                     assertThat(loadedState, equalTo(previous))
                 }
+            }
+        }
+
+    @Test
+    fun `closing after a tag deletion commits still notifies collection observers`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val model = ManageTagsViewModel()
+            val store = ViewModelStore().apply { put("tags", model) }
+            val observer = ChangeCounter()
+            ChangeManager.subscribe(observer)
+            val backendScheduler = TestCoroutineScheduler()
+            val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(backendScheduler), useReentrantLock = false)
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            try {
+                val deletion = model.removeTag("source")
+                runCurrent()
+                backendScheduler.runCurrent()
+                assertEquals(emptyList(), collection.getNote(note.id).tags)
+                assertEquals(0, observer.changeCount)
+
+                store.clear()
+                runCurrent()
+
+                assertTrue(deletion.isCancelled)
+                assertEquals(1, observer.changeCount, "The browser must be notified about the committed deletion after navigation")
+            } finally {
+                store.clear()
+                CollectionManager.setTestDispatcher(previousQueue)
+                Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                ChangeManager.unsubscribe(observer)
             }
         }
 
