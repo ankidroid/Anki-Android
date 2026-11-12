@@ -114,15 +114,28 @@ fun AnkiDroidDialogButtons(
     confirmEnabled: Boolean = true,
 ) {
     val topPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
-    val spacing = 8.dp
+    val spacing = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_spacing)
+    val minWidth = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_min_width)
+    val inset = dimensionResource(MaterialR.dimen.m3_btn_inset)
+    val buttonPadding =
+        PaddingValues(
+            start = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_left),
+            top = dimensionResource(MaterialR.dimen.m3_btn_padding_top) + inset,
+            end = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_right),
+            bottom = dimensionResource(MaterialR.dimen.m3_btn_padding_bottom) + inset,
+        )
     Layout(
         modifier = Modifier.fillMaxWidth().padding(top = topPadding),
         content = {
             TextButton(
                 onClick = onDismissRequest,
+                modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
+                contentPadding = buttonPadding,
             ) { Text(dismissText) }
             TextButton(
                 onClick = onConfirm,
+                modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
+                contentPadding = buttonPadding,
                 enabled = confirmEnabled,
             ) { Text(confirmText) }
         },
@@ -131,7 +144,8 @@ fun AnkiDroidDialogButtons(
         val dismiss = children[0].measure(buttonConstraints)
         val confirm = children[1].measure(buttonConstraints)
         val gap = spacing.roundToPx()
-        val stacked = dismiss.width + gap + confirm.width > constraints.maxWidth
+        // Both View actions have a start margin, including the first action.
+        val stacked = dismiss.width + confirm.width + 2 * gap > constraints.maxWidth
         val height = if (stacked) confirm.height + dismiss.height else maxOf(confirm.height, dismiss.height)
         layout(constraints.maxWidth, height) {
             if (stacked) {
