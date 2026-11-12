@@ -7,7 +7,6 @@ import androidx.test.filters.MediumTest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.exception.CollectionLockedException
-import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.observability.ChangeCounter
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.ensureOpsExecuted
@@ -125,16 +124,15 @@ class ManageTagsViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `undo and redo use shared history including actions before opening this screen`() =
+    fun `undo stops before changes made before opening this screen`() =
         runTest {
             val note = addTags("source::child", "earlier")
             col.tags.remove("earlier")
+            val historyBefore = col.undoStatus()
             withViewModel {
-                assertNotNull(loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
                 undo().join()
-                assertEquals(setOf("source::child", "earlier"), col.getNote(note.id).tags.toSet())
-                redo().join()
-                assertEquals(listOf("source::child"), col.getNote(note.id).tags)
+                assertEquals(historyBefore, col.undoStatus())
 
                 renameTag("source", "renamed").join()
                 removeTag("renamed").join()
@@ -148,11 +146,19 @@ class ManageTagsViewModelTest : JvmTest() {
 
                 undo().join()
                 assertEquals(listOf("source::child"), col.getNote(note.id).tags)
-                assertNotNull(loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
+                val restored = col.undoStatus()
                 undo().join()
-                assertEquals(setOf("source::child", "earlier"), col.getNote(note.id).tags.toSet())
-                redo().join()
+                assertEquals(restored, col.undoStatus())
+                assertEquals(historyBefore.undo, restored.undo)
                 assertEquals(listOf("source::child"), col.getNote(note.id).tags)
+                assertNotNull(loadedState.redoLabel)
+
+                redo().join()
+                assertEquals(listOf("renamed::child"), col.getNote(note.id).tags)
+                redo().join()
+                assertEquals(emptyList(), col.getNote(note.id).tags)
+                assertNull(loadedState.redoLabel)
             }
         }
 
@@ -166,25 +172,25 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertNotNull(loadedState.undoLabel)
                 undo().join()
                 assertTrue(tagExists(TagName.asValid("unused::child")))
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
 
                 clearUnusedTags().join()
                 assertEquals(0, loadedState.totalTagCount)
                 assertNotNull(loadedState.undoLabel)
                 undo().join()
                 assertTrue(tagExists(TagName.asValid("unused::child")))
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
             }
         }
 
     @Test
-    fun `no-op actions do not consume an undo`() =
+    fun `no-op actions do not expose earlier history or consume a local undo`() =
         runTest {
             val note = addTags("used")
             addUnusedTags("unused")
             withViewModel {
                 renameTag("unused", "unused::child").join()
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
                 removeTag("used").join()
                 renameTag("unused", "unused::child").join()
                 removeTag("missing").join()
@@ -192,7 +198,33 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertNotNull(loadedState.undoLabel)
                 undo().join()
                 assertEquals(listOf("used"), col.getNote(note.id).tags)
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
+            }
+        }
+
+    @Test
+    fun `existing undo and redo stay disabled through navigation and failed actions`() =
+        runTest {
+            addTags("parent::child")
+            col.tags.remove("parent")
+            col.undo()
+            val historyBefore = col.undoStatus()
+            assertNotNull(historyBefore.undo)
+            assertNotNull(historyBefore.redo)
+            withViewModel {
+                assertNull(loadedState.undoLabel)
+                assertNull(loadedState.redoLabel)
+                undo().join()
+                redo().join()
+                assertEquals(historyBefore, col.undoStatus())
+
+                toggleCollapsed("parent").join()
+                filter("child")
+                withLockedCollection { removeTag("parent").join() }
+                assertIs<CollectionLockedException>(loadedState.error)
+                refreshTags().join()
+                assertNull(loadedState.undoLabel)
+                assertNull(loadedState.redoLabel)
             }
         }
 
@@ -209,12 +241,12 @@ class ManageTagsViewModelTest : JvmTest() {
                 undo().join()
                 assertEquals(listOf("source::child"), col.getNote(note.id).tags)
                 assertEquals("child", searchQuery.value)
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
             }
         }
 
     @Test
-    fun `expanding and collapsing update redo availability`() =
+    fun `expanding and collapsing update redo availability without exposing earlier undo`() =
         runTest {
             val note = addTags("source", "parent::child")
             withViewModel {
@@ -230,16 +262,17 @@ class ManageTagsViewModelTest : JvmTest() {
                     assertNull(col.undoStatus().redo)
                     assertNull(loadedState.redoLabel)
                     assertNotNull(col.undoStatus().undo)
-                    assertNotNull(loadedState.undoLabel)
+                    assertNull(loadedState.undoLabel)
                     assertEquals(listOf("parent::child", "source"), col.getNote(note.id).tags)
                 }
             }
         }
 
     @Test
-    fun `undo and redo include another caller's actions`() =
+    fun `another caller changing history permits shared undo and redo including earlier actions`() =
         runTest {
-            val note = addTags("first", "second", "third")
+            val note = addTags("first", "second", "third", "earlier")
+            col.tags.remove("earlier")
             withViewModel {
                 removeTag("first").join()
                 col.tags.remove("second")
@@ -253,39 +286,93 @@ class ManageTagsViewModelTest : JvmTest() {
                 undo().join()
                 undo().join()
                 assertEquals(listOf("first", "second", "third"), col.getNote(note.id).tags)
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                undo().join()
+                assertEquals(setOf("first", "second", "third", "earlier"), col.getNote(note.id).tags.toSet())
             }
         }
 
     @Test
-    fun `external change notifications refresh undo and redo availability`() =
+    fun `external change notifications keep mixed actions undoable`() =
         runTest {
-            addTags("first", "second", "third")
+            val note = addTags("first", "second")
             withViewModel {
-                undoableOp { tags.remove("third") }
-                assertNotNull(loadedState.undoLabel)
-                assertEquals(2, loadedState.totalTagCount)
-
                 removeTag("first").join()
                 undoableOp { tags.remove("second") }
                 assertNotNull(loadedState.undoLabel)
                 assertEquals(0, loadedState.totalTagCount)
-                undoableOp { undo() }
-                assertNotNull(loadedState.redoLabel)
-                assertEquals(1, loadedState.totalTagCount)
+                undo().join()
+                assertEquals(listOf("second"), col.getNote(note.id).tags)
+                undo().join()
+                assertEquals(listOf("first", "second"), col.getNote(note.id).tags)
             }
         }
 
     @Test
-    fun `reopening exposes collection history`() =
+    fun `batched API note updates can be undone alongside tag actions`() =
+        runTest {
+            val note = addTags("source")
+            val otherNote = addBasicNote()
+            val originalText = col.getNote(note.id).fields[0]
+            val otherOriginalText = col.getNote(otherNote.id).fields[0]
+            withViewModel {
+                assertNull(loadedState.undoLabel)
+                // The content provider can make several backend changes before publishing one notification.
+                col.getNote(note.id).also {
+                    it.setField(0, "First API update")
+                    assertTrue(col.updateNote(it).note)
+                }
+                col.getNote(otherNote.id).also {
+                    it.setField(0, "Second API update")
+                    assertTrue(col.updateNote(it).note)
+                }
+                ChangeManager.notifySubscribersAllValuesChanged()
+                assertNotNull(loadedState.undoLabel)
+
+                removeTag("source").join()
+                undo().join()
+                assertEquals(listOf("source"), col.getNote(note.id).tags)
+                undo().join()
+                assertEquals("First API update", col.getNote(note.id).fields[0])
+                assertEquals(otherOriginalText, col.getNote(otherNote.id).fields[0])
+                undo().join()
+                assertEquals(originalText, col.getNote(note.id).fields[0])
+                redo().join()
+                redo().join()
+                assertEquals("First API update", col.getNote(note.id).fields[0])
+                assertEquals("Second API update", col.getNote(otherNote.id).fields[0])
+                redo().join()
+                assertEquals(emptyList(), col.getNote(note.id).tags)
+                assertNull(loadedState.redoLabel)
+            }
+        }
+
+    @Test
+    fun `a notification without a history change keeps the screen boundary`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                removeTag("source").join()
+                ChangeManager.notifySubscribersAllValuesChanged()
+                undo().join()
+                assertEquals(listOf("source"), col.getNote(note.id).tags)
+                assertNull(loadedState.undoLabel)
+                val history = col.undoStatus()
+                undo().join()
+                assertEquals(history, col.undoStatus())
+            }
+        }
+
+    @Test
+    fun `reopening starts a new undo scope`() =
         runTest {
             val note = addTags("source")
             withViewModel { removeTag("source").join() }
+            val before = col.undoStatus()
             withViewModel {
-                assertNotNull(loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
                 undo().join()
-                assertEquals(listOf("source"), col.getNote(note.id).tags)
-                assertNotNull(loadedState.redoLabel)
+                assertEquals(before, col.undoStatus())
+                assertEquals(emptyList(), col.getNote(note.id).tags)
             }
         }
 
@@ -299,7 +386,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertIs<CollectionLockedException>(loadedState.error)
                 undo().join()
                 assertNull(loadedState.error)
-                assertEquals(col.undoLabel(), loadedState.undoLabel)
+                assertNull(loadedState.undoLabel)
                 assertEquals(listOf("source"), col.getNote(note.id).tags)
             }
         }

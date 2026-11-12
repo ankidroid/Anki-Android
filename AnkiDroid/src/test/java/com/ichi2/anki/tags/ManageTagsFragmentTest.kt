@@ -53,7 +53,7 @@ class ManageTagsFragmentTest : RobolectricTest() {
         val note = addTags("source")
         screen.open()
         val undo = compose.onNodeWithTag("tag_undo")
-        undo.assertIsDisplayed().assertIsEnabled()
+        undo.assertIsDisplayed().assertIsNotEnabled()
 
         screen.action(TagAction.DELETE, "source")
         screen.confirm(TagAction.DELETE).performClick()
@@ -65,7 +65,7 @@ class ManageTagsFragmentTest : RobolectricTest() {
         undo.assertIsEnabled().performClick()
         compose.onNodeWithTag("tag:source").assertIsDisplayed()
         assertEquals(listOf("source"), col.getNote(note.id).tags)
-        undo.assertIsEnabled()
+        undo.assertIsNotEnabled()
         compose.onNodeWithTag("tag_redo").assertIsEnabled().performClick()
         compose.waitForIdle()
         assertEquals(emptyList(), col.getNote(note.id).tags)
@@ -87,7 +87,7 @@ class ManageTagsFragmentTest : RobolectricTest() {
         compose.onNodeWithTag("tag:parent::child").assertIsDisplayed()
         assertNull(col.undoStatus().redo)
         compose.onNodeWithTag("tag_redo").assertIsNotEnabled()
-        compose.onNodeWithTag("tag_undo").assertIsEnabled()
+        compose.onNodeWithTag("tag_undo").assertIsNotEnabled()
     }
 
     @Test
