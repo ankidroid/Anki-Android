@@ -5,7 +5,6 @@ package com.ichi2.anki
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.isVisible
@@ -43,9 +42,9 @@ fun setupBottomNavigation() {
     }
     if (!deckPicker.bottomNavigationEnabled) return
 
-    val bottomNav = deckPicker.findViewById<BottomNavigationView>(R.id.bottom_navigation)
-    val fragmentContainer = deckPicker.findViewById<View>(R.id.bottom_nav_fragment_container)
-    val contentWrapper = deckPicker.findViewById<View>(R.id.deck_picker_content_wrapper)
+    val binding = deckPicker.binding
+    val bottomNav = checkNotNull(binding.bottomNavigation)
+    val fragmentContainer = checkNotNull(binding.bottomNavFragmentContainer)
     val studiedSummary = deckPicker.deckPickerBinding.reviewSummaryTextView
     // Once raised above the bar, the summary overlaps the deck list: a solid background stops deck names showing through.
     studiedSummary.setBackgroundColor(MaterialColors.getColor(bottomNav, MaterialR.attr.colorSurface))
@@ -111,14 +110,7 @@ fun setupBottomNavigation() {
 
     NavigationItem.populateMenu(bottomNav, deckPicker)
 
-    // Return to Home tab on back press when on a non-Home tab
-    val bottomNavBackCallback =
-        object : OnBackPressedCallback(enabled = false) {
-            override fun handleOnBackPressed() {
-                bottomNav.selectedItemId = NavigationItem.HOME.id
-            }
-        }
-    deckPicker.onBackPressedDispatcher.addCallback(deckPicker, bottomNavBackCallback)
+    deckPicker.onBackPressedDispatcher.addCallback(deckPicker, deckPicker.bottomNavBackCallback)
 
     // Handle system navigation bar insets for the bottom nav
     ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, insets ->
@@ -133,7 +125,16 @@ fun setupBottomNavigation() {
             Analytics.sendAnalyticsScreenView(navItem.analyticsScreenName)
             scrollBehavior.slideIn(bottomNav)
         }
-        handleNavigationItemSelected(navItem, contentWrapper, fragmentContainer, bottomNavBackCallback)
+        showTab(navItem)
+        true
+    }
+
+    // A second tap on Browse opens search in the current browser.
+    bottomNav.setOnItemReselectedListener { item ->
+        if (item.itemId == NavigationItem.BROWSER.id) {
+            val browser = deckPicker.supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) as? CardBrowserFragment
+            browser?.openSearch()
+        }
     }
 
     bottomNav.addOnLayoutChangeListener { _, _, top, _, bottom, _, oldTop, _, oldBottom ->
@@ -145,11 +146,16 @@ fun setupBottomNavigation() {
     }
 }
 
+internal fun BottomNavigationView.selectTab(item: NavigationItem) {
+    if (selectedItemId != item.id) {
+        selectedItemId = item.id
+    }
+}
+
 context(deckPicker: DeckPicker)
 fun showRestoredBottomNavTab() {
-    if (!deckPicker.bottomNavigationEnabled) return
-    val bottomNav = deckPicker.binding.bottomNavigation ?: return
-    bottomNav.selectedItemId = bottomNav.selectedItemId
+    val item = selectedBottomNavItem() ?: return
+    showTab(item)
 }
 
 context(deckPicker: DeckPicker)
@@ -160,29 +166,23 @@ fun selectedBottomNavItem(): NavigationItem? {
 }
 
 context(deckPicker: DeckPicker)
-private fun handleNavigationItemSelected(
-    item: NavigationItem,
-    contentWrapper: View,
-    fragmentContainer: View,
-    backCallback: OnBackPressedCallback,
-): Boolean =
+private fun showTab(item: NavigationItem) {
+    val binding = deckPicker.binding
+    val contentWrapper = checkNotNull(binding.deckPickerContentWrapper)
+    val fragmentContainer = checkNotNull(binding.bottomNavFragmentContainer)
+    deckPicker.bottomNavBackCallback.isEnabled = item != NavigationItem.HOME
     when (item) {
         NavigationItem.HOME -> {
             fragmentContainer.isVisible = false
             deckPicker.supportFragmentManager.commit { hideBottomNavFragments() }
             contentWrapper.isVisible = true
             deckPicker.floatingActionMenu.showFloatingActionButton()
-            backCallback.isEnabled = false
-            true
         }
         NavigationItem.BROWSER -> {
-            backCallback.isEnabled = true
             ensureBrowserViewModel()
             showBottomNavFragment(::CardBrowserFragment, item.tag, contentWrapper, fragmentContainer)
-            true
         }
         NavigationItem.STATS -> {
-            backCallback.isEnabled = true
             showBottomNavFragment(
                 {
                     Statistics().apply {
@@ -193,14 +193,12 @@ private fun handleNavigationItemSelected(
                 contentWrapper,
                 fragmentContainer,
             )
-            true
         }
         NavigationItem.MORE -> {
-            backCallback.isEnabled = true
             showBottomNavFragment(::MoreFragment, item.tag, contentWrapper, fragmentContainer)
-            true
         }
     }
+}
 
 /** Create CardBrowserViewModel before the fragment accesses it via activityViewModels() */
 context(deckPicker: DeckPicker)

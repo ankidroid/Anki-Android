@@ -5,12 +5,14 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
+import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.withPref
 import org.hamcrest.MatcherAssert.assertThat
@@ -30,6 +32,30 @@ class BottomNavigationRestoreTest : RobolectricTest() {
             advanceRobolectricLooper()
 
             assertShowsTab(controller.get(), tab)
+        }
+
+    @Test
+    fun `reselecting the restored Browse tab opens search`() =
+        withBottomNavigation {
+            withPref(Prefs::devUsingCardBrowserSearchView, false) {
+                val controller = launchOn(NavigationItem.BROWSER)
+                controller.recreate()
+                advanceRobolectricLooper()
+
+                val deckPicker = controller.get()
+                assertShowsTab(deckPicker, NavigationItem.BROWSER)
+                val browser =
+                    deckPicker.supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) as CardBrowserFragment
+                val searchItem = requireNotNull(browser.searchItem)
+                assertThat(searchItem.isActionViewExpanded, equalTo(false))
+
+                val shortcut = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_2, 0, KeyEvent.META_ALT_ON)
+                assertThat(deckPicker.dispatchKeyEvent(shortcut), equalTo(true))
+                assertThat(searchItem.isActionViewExpanded, equalTo(false))
+
+                deckPicker.bottomNav.findViewById<View>(NavigationItem.BROWSER.id).performClick()
+                assertThat(searchItem.isActionViewExpanded, equalTo(true))
+            }
         }
 
     @Test

@@ -265,6 +265,15 @@ class CardBrowserFragment :
     private var flagsChip: Chip? = null
     private var sortChip: Chip? = null
 
+    internal fun openSearch() {
+        if (!isVisible) return
+        if (useSearchView) {
+            searchView?.show()
+        } else {
+            searchItem?.expandActionView()
+        }
+    }
+
     // region legacy menu handling
     var mySearchesItem: MenuItem? = null
     var searchItem: MenuItem? = null
