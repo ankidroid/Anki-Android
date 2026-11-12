@@ -11,18 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <View
-        android:id="@+id/fab_main"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="44dp" />
-
-    <View
+    <FrameLayout
         android:id="@+id/fabLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_gravity="bottom|end"
+        android:padding="12dp">
+
+        <View
+            android:id="@+id/fab_main"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp" />
+
+    </FrameLayout>
 
 </FrameLayout>
