@@ -39,6 +39,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.PlatformTextStyle
@@ -57,6 +58,7 @@ import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 import com.ichi2.compose.utils.toAnnotatedString
+import com.google.android.material.R as MaterialR
 
 /**
  * Dialog asking the user for text. Compose counterpart of
@@ -110,6 +112,7 @@ fun TextInputDialog(
     val supportingMessage = (displayedError ?: helperText)?.toAnnotatedString()
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
+    val actionTopPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
     val context = LocalContext.current
     val density = LocalDensity.current
     val titleFontSize = MaterialTheme.typography.headlineSmall.fontSize
@@ -220,7 +223,7 @@ fun TextInputDialog(
                     )
                 }
                 FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(top = if (hasSupportingText) 8.dp else 24.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = actionTopPadding),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
