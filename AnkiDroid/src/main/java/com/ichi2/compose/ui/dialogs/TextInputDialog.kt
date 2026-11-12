@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 
@@ -105,6 +106,7 @@ fun TextInputDialog(
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
+            border = MaterialTheme.widgetBorder,
         ) {
             Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
                 // Match the custom input panel in dialog_versatile_text_preference.xml.
