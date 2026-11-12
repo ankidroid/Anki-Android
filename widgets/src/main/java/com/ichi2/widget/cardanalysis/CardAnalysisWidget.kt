@@ -9,8 +9,13 @@ import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.util.SizeF
+import android.util.TypedValue
 import android.view.View
+import android.view.View.MeasureSpec
 import android.widget.RemoteViews
+import android.widget.TextView
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -24,6 +29,7 @@ import com.ichi2.anki.launchCatching
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.anki.widgets.R
+import com.ichi2.anki.widgets.databinding.WidgetCardAnalysisBinding
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetId
@@ -37,8 +43,11 @@ import com.ichi2.widget.deckpicker.getDeckNameAndStats
 import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
+import com.ichi2.widget.sizedRemoteViews
 import com.ichi2.widget.updateAppWidget
 import timber.log.Timber
+import java.text.BreakIterator
+import kotlin.math.roundToInt
 
 /**
  * This widget displays a deck with the respective new, learning, and review card counts.
@@ -52,6 +61,8 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
          * Key used for passing the selected deck ID in the intent extras.
          */
         const val EXTRA_SELECTED_DECK_ID = "card_analysis_widget_selected_deck_id"
+
+        private const val CORNER_RADIUS_DP = 28
 
         /**
          * Updates the widget with the deck data.
@@ -95,7 +106,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
                     return@launchCatching
                 }
-                showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
+                showDeck(context, appWidgetManager, appWidgetId, deckData)
             }
         }
 
@@ -160,9 +171,18 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews,
             deckData: DeckWidgetData,
         ) {
+            val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
+            appWidgetManager.updateAppWidget(appWidgetId, sizedRemoteViews(options) { createDeckViews(context, deckData, it) })
+        }
+
+        private suspend fun createDeckViews(
+            context: Context,
+            deckData: DeckWidgetData,
+            size: SizeF,
+        ): RemoteViews {
+            val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
             remoteViews.setTextViewText(R.id.deckNameCardAnalysis, deckData.name)
             remoteViews.setTextViewText(R.id.deckNew_card_analysis_widget, deckData.newCount.toString())
             remoteViews.setTextViewText(R.id.deckDue_card_analysis_widget, deckData.reviewCount.toString())
@@ -190,7 +210,78 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 )
             remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
 
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+            val cornersTooRound = size.height > 0 && size.height < CORNER_RADIUS_DP * 3
+            if (cornersTooRound) {
+                remoteViews.setInt(
+                    R.id.widget_deck_picker,
+                    "setBackgroundResource",
+                    R.drawable.widget_card_analysis_rounded_background_small,
+                )
+                remoteViews.setInt(
+                    R.id.cardAnalysisDataHolder,
+                    "setBackgroundResource",
+                    R.drawable.widget_card_analysis_rounded_inner_background_small,
+                )
+            }
+            remoteViews.fitTo(context, size)
+            return remoteViews
+        }
+
+        /** Shrinks the text and padding evenly until the counts and deck name fit in [size] without splitting a word. */
+        private fun RemoteViews.fitTo(
+            context: Context,
+            size: SizeF,
+        ) {
+            val density = context.resources.displayMetrics.density
+            val widthSpec =
+                MeasureSpec.makeMeasureSpec(
+                    (size.width * density).roundToInt(),
+                    if (size.width > 0) MeasureSpec.EXACTLY else MeasureSpec.UNSPECIFIED,
+                )
+            val availableHeight = if (size.height > 0) size.height * density else Float.POSITIVE_INFINITY
+            val root = apply(context, null)
+            val binding = WidgetCardAnalysisBinding.bind(root)
+            val counts = listOf(binding.deckNewCardAnalysisWidget, binding.deckLearnCardAnalysisWidget, binding.deckDueCardAnalysisWidget)
+            val name = binding.deckNameCardAnalysis
+            val textViews = counts + name
+            val textSizes = textViews.map { it.textSize }
+            val paddedViews = listOf(binding.cardAnalysisDataHolder, name)
+            val paddings = paddedViews.map { listOf(it.paddingLeft, it.paddingTop, it.paddingRight, it.paddingBottom) }
+
+            fun fitsAtScale(scale: Float): Boolean {
+                textViews.zip(textSizes).forEach { (view, textSize) ->
+                    view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * scale)
+                }
+                paddedViews.zip(paddings).forEach { (view, padding) ->
+                    val (left, top, right, bottom) = padding.map { (it * scale).roundToInt() }
+                    view.setPadding(left, top, right, bottom)
+                }
+                root.measure(widthSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
+                return root.measuredHeight <= availableHeight && counts.all { it.lineCount == 1 } && name.breaksOnlyBetweenWords()
+            }
+
+            if (fitsAtScale(1f)) return
+
+            var minScale = 0f
+            var maxScale = 1f
+            while ((maxScale - minScale) * textSizes.max() > 1f) {
+                val scale = (minScale + maxScale) / 2
+                if (fitsAtScale(scale)) minScale = scale else maxScale = scale
+            }
+            fitsAtScale(minScale)
+            for (view in textViews) {
+                setTextViewTextSize(view.id, TypedValue.COMPLEX_UNIT_PX, view.textSize)
+            }
+            for (view in paddedViews) {
+                setViewPadding(view.id, view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
+            }
+        }
+
+        private fun TextView.breaksOnlyBetweenWords(): Boolean {
+            val layout = layout ?: return true
+            val lineBreaks = BreakIterator.getLineInstance()
+            lineBreaks.setText(text.toString())
+            return (0 until layout.lineCount - 1).all { lineBreaks.isBoundary(layout.getLineEnd(it)) }
         }
 
         /**
@@ -211,6 +302,16 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 updateWidget(context, appWidgetManager, appWidgetId)
             }
         }
+    }
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle,
+    ) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+        onUpdate(context, appWidgetManager, intArrayOf(appWidgetId))
     }
 
     override fun onEnabled(context: Context) {
