@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
@@ -37,6 +40,8 @@ fun AnkiDroidDialog(
     properties: DialogProperties = DialogProperties(),
     content: @Composable () -> Unit,
 ) {
+    val typography = dialogTypography()
+    // Preserve TextView's legacy line-height path instead of inheriting Compose's default.
     if (LocalInspectionMode.current) {
         // TODO: Preview the surrounding dialog window, including its scrim, positioning and system UI.
         // Match BasicAlertDialog's content constraints, including caller overrides.
@@ -44,7 +49,9 @@ fun AnkiDroidDialog(
             modifier = modifier.padding(horizontal = 24.dp, vertical = 16.dp).sizeIn(minWidth = 280.dp, maxWidth = 560.dp),
             propagateMinConstraints = true,
         ) {
-            content()
+            MaterialTheme(typography = typography) {
+                CompositionLocalProvider(LocalTextStyle provides typography.bodyLarge.copy(lineHeightStyle = null), content = content)
+            }
         }
     } else {
         BasicAlertDialog(
@@ -59,7 +66,9 @@ fun AnkiDroidDialog(
                     window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
                 }
             }
-            content()
+            MaterialTheme(typography = typography) {
+                CompositionLocalProvider(LocalTextStyle provides typography.bodyLarge.copy(lineHeightStyle = null), content = content)
+            }
         }
     }
 }
