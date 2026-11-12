@@ -7,6 +7,7 @@ import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
@@ -75,7 +77,8 @@ fun MessageDialog(
                         color = AlertDialogDefaults.titleContentColor,
                         modifier = Modifier.padding(bottom = titleBottomPadding),
                     )
-                    Box {
+                    // The View dialog's message panel also has a 48dp minimum height.
+                    Box(Modifier.heightIn(min = 48.dp)) {
                         Text(
                             message,
                             style = MaterialTheme.typography.bodyMedium,
