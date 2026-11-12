@@ -140,6 +140,7 @@ fun TextInputDialog(
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
+            shadowElevation = ankiDroidDialogElevation(),
         ) {
             Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
