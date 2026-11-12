@@ -5,16 +5,18 @@ package com.ichi2.compose.ui.dialogs
 import android.content.res.Configuration
 import android.util.TypedValue
 import androidx.annotation.AttrRes
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
@@ -34,7 +36,7 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import androidx.appcompat.R as AppCompatR
 
 /**
- * A Material 3 [AlertDialog] with a text message and two actions.
+ * A Material 3 message dialog with two actions.
  *
  * Changes to the standard M3 dialog:
  * * Primary body text and the theme's widget outline, matching AnkiDroid's View dialogs.
@@ -45,6 +47,7 @@ import androidx.appcompat.R as AppCompatR
  *
  * @param enabled whether the confirm action is enabled; dismissal remains available
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageDialog(
     title: String,
@@ -56,38 +59,50 @@ fun MessageDialog(
     enabled: Boolean = true,
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
-    val border = MaterialTheme.widgetBorder
-    val shape = AlertDialogDefaults.shape
-    AlertDialog(
+    val titleBottomPadding = 16.dp
+    BasicAlertDialog(
         onDismissRequest = onDismissRequest,
-        modifier =
-            Modifier
-                .fillMaxWidth(alertDialogWidthFraction())
-                .padding(horizontal = 24.dp, vertical = 16.dp)
-                .then(if (border != null) Modifier.border(border, shape) else Modifier),
-        shape = shape,
-        textContentColor = MaterialTheme.colorScheme.onSurface,
+        modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()).padding(horizontal = 24.dp, vertical = 16.dp),
         properties = properties,
-        title = {
-            // Read the window from inside AlertDialog's composition.
-            val window = (LocalView.current.parent as? DialogWindowProvider)?.window
-            SideEffect {
-                if (window != null && window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
-                    window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
+    ) {
+        Surface(
+            shape = AlertDialogDefaults.shape,
+            color = AlertDialogDefaults.containerColor,
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            border = MaterialTheme.widgetBorder,
+        ) {
+            Column(Modifier.padding(24.dp)) {
+                // Read the window from inside the dialog's composition.
+                val window = (LocalView.current.parent as? DialogWindowProvider)?.window
+                SideEffect {
+                    if (window != null && window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
+                        window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
+                    }
                 }
+                Text(
+                    title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = AlertDialogDefaults.titleContentColor,
+                    modifier = Modifier.padding(bottom = titleBottomPadding),
+                )
+                Box(Modifier.weight(1f, fill = false)) {
+                    Text(
+                        message,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.verticalScroll(rememberScrollState()),
+                    )
+                }
+                AnkiDroidDialogButtons(
+                    confirmText = confirmText,
+                    dismissText = dismissText,
+                    onConfirm = onConfirm,
+                    onDismissRequest = onDismissRequest,
+                    confirmEnabled = enabled,
+                )
             }
-            Text(title)
-        },
-        text = {
-            Text(message, modifier = Modifier.verticalScroll(rememberScrollState()))
-        },
-        confirmButton = {
-            TextButton(onClick = onConfirm, enabled = enabled) { Text(confirmText) }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) { Text(dismissText) }
-        },
-    )
+        }
+    }
 }
 
 /** Matches the width of dialogs using Material 3 in XML views. */
