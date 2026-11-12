@@ -2,6 +2,7 @@
 
 package com.ichi2.compose.ui.dialogs
 
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,13 +17,18 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
 
 /**
@@ -76,6 +82,18 @@ fun AnkiDroidDialog(
 /** Insets inside the card. */
 @Composable
 fun ankiDroidDialogContentPadding(): PaddingValues = PaddingValues(24.dp)
+
+/** The View dialog's shadow elevation, including the zero-elevation e-ink theme. */
+@Composable
+fun ankiDroidDialogElevation(): Dp {
+    val context = LocalContext.current
+    val density = LocalDensity.current
+    return remember(context, density) {
+        AlertDialog.Builder(context).context.obtainStyledAttributes(intArrayOf(android.R.attr.windowElevation)).use {
+            with(density) { it.getDimension(0, 0f).toDp() }
+        }
+    }
+}
 
 /** View dialog actions: end aligned, with confirmation above dismissal when stacked. */
 @Composable
