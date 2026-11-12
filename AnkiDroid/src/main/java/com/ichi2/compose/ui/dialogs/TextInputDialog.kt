@@ -53,6 +53,7 @@ import androidx.core.content.res.use
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
+import com.ichi2.compose.utils.toAnnotatedString
 
 /**
  * Dialog asking the user for a single line of text. Compose counterpart of
@@ -61,7 +62,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param onConfirm called with the text, but only while it is valid
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
- * @param errorMessageFor error to show for the current input, null when valid
+ * @param errorMessageFor plain or annotated error to show for the current input, null when valid
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
@@ -81,7 +82,7 @@ fun TextInputDialog(
     maxLengthCounter: Int? = null,
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
-    errorMessageFor: (String) -> String? = { null },
+    errorMessageFor: (String) -> CharSequence? = { null },
     helperText: String? = null,
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
@@ -95,7 +96,7 @@ fun TextInputDialog(
     var submissionAttempted by rememberSaveable { mutableStateOf(false) }
     val errorMessage = if (validateOnInput || submissionAttempted) errorMessageFor(input.text) else null
     val displayedError = errorMessage?.takeIf { hasUserEdited || submissionAttempted }
-    val supportingMessage = displayedError ?: helperText
+    val supportingMessage = (displayedError ?: helperText)?.toAnnotatedString()
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
     val context = LocalContext.current
@@ -175,7 +176,7 @@ fun TextInputDialog(
                                 {
                                     Row(Modifier.fillMaxWidth()) {
                                         if (supportingMessage != null || !validateOnInput) {
-                                            Text(supportingMessage.orEmpty(), Modifier.weight(1f))
+                                            Text(supportingMessage ?: AnnotatedString(""), Modifier.weight(1f))
                                         } else {
                                             Spacer(Modifier.weight(1f))
                                         }
