@@ -12,23 +12,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.BasicAlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
 import com.ichi2.compose.theme.widgetBorder
@@ -47,7 +42,6 @@ import androidx.appcompat.R as AppCompatR
  *
  * @param enabled whether the confirm action is enabled; dismissal remains available
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageDialog(
     title: String,
@@ -60,9 +54,9 @@ fun MessageDialog(
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     val titleBottomPadding = 16.dp
-    BasicAlertDialog(
+    AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()).padding(horizontal = 24.dp, vertical = 16.dp),
+        modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()),
         properties = properties,
     ) {
         Surface(
@@ -71,14 +65,7 @@ fun MessageDialog(
             tonalElevation = AlertDialogDefaults.TonalElevation,
             border = MaterialTheme.widgetBorder,
         ) {
-            Column(Modifier.padding(24.dp)) {
-                // Read the window from inside the dialog's composition.
-                val window = (LocalView.current.parent as? DialogWindowProvider)?.window
-                SideEffect {
-                    if (window != null && window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
-                        window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
-                    }
-                }
+            Column(Modifier.padding(ankiDroidDialogContentPadding())) {
                 Text(
                     title,
                     style = MaterialTheme.typography.headlineSmall,
