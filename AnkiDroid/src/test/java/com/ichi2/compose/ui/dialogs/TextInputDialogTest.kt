@@ -54,6 +54,34 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     val compose = createComposeRule()
 
     @Test
+    @Config(qualifiers = "w320dp-h640dp-port")
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `long action labels stack confirmation above dismissal`() {
+        var confirmed = false
+        var dismissed = false
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename item",
+                    label = "Name",
+                    initialText = "Existing",
+                    confirmText = "Rename permanently",
+                    dismissText = "Keep this name",
+                    onConfirm = { confirmed = true },
+                    onDismissRequest = { dismissed = true },
+                )
+            }
+        }
+        val confirm = compose.onNodeWithText("Rename permanently").assertIsDisplayed()
+        val dismiss = compose.onNodeWithText("Keep this name").assertIsDisplayed()
+        assertTrue(confirm.fetchSemanticsNode().boundsInRoot.bottom <= dismiss.fetchSemanticsNode().boundsInRoot.top)
+        confirm.performTouchInput { click() }
+        dismiss.performTouchInput { click() }
+        assertTrue(confirmed)
+        assertTrue(dismissed)
+    }
+
+    @Test
     fun `multiline Enter inserts a newline without submitting`() {
         var submitted: String? = null
         compose.setContent {

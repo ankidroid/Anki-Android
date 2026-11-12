@@ -3,15 +3,11 @@
 
 package com.ichi2.compose.ui.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -23,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,13 +26,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -49,7 +42,6 @@ import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
-import com.google.android.material.R as MaterialR
 
 /**
  * Dialog asking the user for text. Compose counterpart of
@@ -98,17 +90,6 @@ fun TextInputDialog(
     val supportingMessage = displayedError ?: helperText
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
-    val actionTopPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
-    val buttonSpacing = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_spacing)
-    val buttonMinWidth = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_min_width)
-    val inset = dimensionResource(MaterialR.dimen.m3_btn_inset)
-    val buttonPadding =
-        PaddingValues(
-            start = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_left),
-            top = dimensionResource(MaterialR.dimen.m3_btn_padding_top) + inset,
-            end = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_right),
-            bottom = dimensionResource(MaterialR.dimen.m3_btn_padding_bottom) + inset,
-        )
 
     fun confirmIfValid() {
         if (!enabled) return
@@ -185,23 +166,13 @@ fun TextInputDialog(
                         keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
                     )
                 }
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(top = actionTopPadding),
-                    horizontalArrangement = Arrangement.spacedBy(buttonSpacing, Alignment.End),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    TextButton(
-                        onClick = onDismissRequest,
-                        modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
-                        contentPadding = buttonPadding,
-                    ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-                    TextButton(
-                        onClick = ::confirmIfValid,
-                        modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
-                        contentPadding = buttonPadding,
-                        enabled = enabled && (!validateOnInput || errorMessage == null),
-                    ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-                }
+                AnkiDroidDialogButtons(
+                    confirmText = confirmText,
+                    dismissText = dismissText,
+                    onConfirm = ::confirmIfValid,
+                    onDismissRequest = onDismissRequest,
+                    confirmEnabled = enabled && (!validateOnInput || errorMessage == null),
+                )
             }) { children, constraints ->
                 val actions = children[1].measure(constraints.copy(minHeight = 0))
                 val body =
