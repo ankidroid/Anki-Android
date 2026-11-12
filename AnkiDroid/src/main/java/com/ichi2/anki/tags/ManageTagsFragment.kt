@@ -150,6 +150,7 @@ private fun UserMessage.text(context: Context): String =
             } else {
                 context.resources.getQuantityString(CommonPlurals.manage_tags_renamed_on_notes, notesAffected, notesAffected)
             }
+        UserMessage.NoNotesToRename -> context.getString(CommonString.manage_tags_rename_no_notes)
         is ClearedUnusedTags -> context.resources.getQuantityString(CommonPlurals.manage_tags_unused_cleared, count, count)
         is UnusedTagMoved, UnusedTagNotMoved, UnexpectedError -> context.getString(CommonString.something_wrong)
     }

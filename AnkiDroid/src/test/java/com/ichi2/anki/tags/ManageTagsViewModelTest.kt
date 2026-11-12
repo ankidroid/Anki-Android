@@ -14,7 +14,9 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -93,6 +95,46 @@ class ManageTagsViewModelTest : JvmTest() {
                     assertEquals(expected, canRenameTag(tag), name)
                     assertNull(loadedState.error, name)
                 }
+            }
+        }
+
+    @Test
+    fun `preparing rename blocks overlapping requests and mutations until eligibility is known`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val tag = TagName.asValid("source")
+                    val request = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    assertFalse(request.isCompleted)
+                    assertTrue(loadedState.isWorking)
+                    val repeatedRequest = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    val deletion = removeTag(tag)
+
+                    assertEquals(true, request.await())
+                    assertNull(repeatedRequest.await())
+                    deletion.join()
+                    assertFalse(loadedState.isWorking)
+                }
+                assertEquals(listOf("source"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
+    fun `preparing rename distinguishes unused tags from failed checks`() =
+        runTest {
+            addUnusedTags("unused")
+            withViewModel {
+                val tag = TagName.asValid("unused")
+                assertEquals(false, prepareRename(tag))
+                assertNull(loadedState.error)
+                val warning = pendingMessages.value.single()
+                assertEquals(UserMessage.NoNotesToRename, warning.message)
+                messageShown(warning.id)
+                withLockedCollection { assertNull(prepareRename(tag)) }
+                assertIs<CollectionLockedException>(loadedState.error)
+                assertFalse(loadedState.isWorking)
+                assertTrue(pendingMessages.value.isEmpty())
             }
         }
 

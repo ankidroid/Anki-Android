@@ -138,6 +138,17 @@ class ManageTagsViewModel :
             null
         }
 
+    /** Checks a direct rename request while keeping other tag actions disabled. */
+    suspend fun prepareRename(tag: TagName): Boolean? {
+        var canRename: Boolean? = null
+        launchTagOperation {
+            canRename = canRenameTag(tag)
+            if (canRename == false) messageQueue.enqueue(UserMessage.NoNotesToRename)
+        }.join()
+        // A failed check or an already-running operation must not open a dialog.
+        return canRename
+    }
+
     /** Finds a tag using its displayed expansion state when visible. */
     private fun findTagNode(tag: TagName): TagListItemState? {
         val loaded = state.value as? ManageTagsState.Content
@@ -558,6 +569,9 @@ sealed interface UserMessage {
     data class TagRenamed(
         val notesAffected: Int,
     ) : UserMessage
+
+    /** The selected tag subtree has no notes, so rename is unavailable. */
+    data object NoNotesToRename : UserMessage
 
     /**
      * Retained for move-operation tests; the Manage Tags UI does not offer moving tags.
