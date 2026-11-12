@@ -6,6 +6,7 @@ import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.core.view.allViews
 import androidx.core.view.drawToBitmap
@@ -21,6 +22,8 @@ import com.github.takahirom.roborazzi.checkRoboAccessibility
 import com.github.takahirom.roborazzi.provideRoborazziContext
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
@@ -102,8 +105,13 @@ abstract class ScreenshotTest : RobolectricTest() {
     @Before
     open fun applyGlobalConfig() {
         stabilizeVersionName()
+        hideAnalyticsOptIn()
         applyDeviceConfig()
         applyThemeConfig()
+    }
+
+    private fun hideAnalyticsOptIn() {
+        targetContext.sharedPrefs().edit { putBoolean(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN, false) }
     }
 
     /** Reports [STABLE_VERSION_NAME] as the `versionName` shown on-screen */

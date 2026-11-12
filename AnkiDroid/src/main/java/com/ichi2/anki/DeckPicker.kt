@@ -1912,6 +1912,9 @@ open class DeckPicker :
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance())
             preferences.edit { remove("noSpaceLeft") }
         } else if (InitialActivity.performSetupFromFreshInstallOrClearedPreferences(preferences)) {
+            if (!preferences.contains(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN)) {
+                displayAnalyticsOptInDialog()
+            }
             onFinishedStartup()
         } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
             Timber.i("AnkiDroid is being updated and a collection already exists.")

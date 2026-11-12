@@ -503,10 +503,33 @@ class DeckPickerTest : RobolectricTest() {
         try {
             grantWritePermissions()
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
-            // We don't show it if the user is new.
             targetContext
                 .sharedPrefs()
                 .edit { putString("lastVersion", "0.1") }
+            val d =
+                super.startActivityNormallyOpenCollectionWithIntent(
+                    DeckPickerEx::class.java,
+                    Intent(),
+                )
+            assertThat(
+                "Analytics opt-in should be displayed",
+                d.displayedAnalyticsOptIn,
+                equalTo(true),
+            )
+        } finally {
+            revokeWritePermissions()
+            BackupManagerTestUtilities.reset()
+        }
+    }
+
+    @Test
+    fun `new installs are asked about analytics`() {
+        try {
+            grantWritePermissions()
+            BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
+            targetContext
+                .sharedPrefs()
+                .edit { remove("lastVersion") }
             val d =
                 super.startActivityNormallyOpenCollectionWithIntent(
                     DeckPickerEx::class.java,
