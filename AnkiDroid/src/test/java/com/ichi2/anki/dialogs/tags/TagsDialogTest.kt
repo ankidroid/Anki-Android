@@ -20,6 +20,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.utils.ext.requireParcelable
@@ -843,7 +844,11 @@ class TagsDialogTest : RobolectricTest() {
 
     @get:SuppressLint("NewApi") // These dialog tests run on the target SDK (API 30+).
     private val TagsDialog.fitsKeyboardInsets: Boolean
-        get() = requireDialog().window!!.attributes.fitInsetsTypes and WindowInsets.Type.ime() != 0
+        get() =
+            requireDialog()
+                .window!!
+                .attributes.fitInsetsTypes
+                .hasBitFlag(WindowInsets.Type.ime())
 
     private val TagsDialog.softInputAdjustment: Int
         get() = requireDialog().window!!.attributes.softInputMode and WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST

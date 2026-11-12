@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.dialogs.LoadingDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.testutils.EmptyAnkiActivity
@@ -763,7 +764,7 @@ class ProgressObserverTest : RobolectricTest() {
             ?.text
             ?.toString()
 
-    private fun EmptyAnkiActivity.touchesBlocked() = window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE != 0
+    private fun EmptyAnkiActivity.touchesBlocked() = window.attributes.flags.hasBitFlag(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     private fun idleMainLooper(duration: Duration) = shadowOf(Looper.getMainLooper()).idleFor(duration.toJavaDuration())
 

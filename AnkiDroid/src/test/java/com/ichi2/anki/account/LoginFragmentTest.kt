@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.throwOnShowError
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.ui.TextInputEditField
@@ -55,7 +56,7 @@ class LoginFragmentTest : RobolectricTest() {
 
     private fun AccountActivity.waitForLoginToFinish() {
         val start = TimeSource.Monotonic.markNow()
-        while (window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE != 0) {
+        while (window.attributes.flags.hasBitFlag(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)) {
             check(start.elapsedNow() < 10.seconds) { "login did not finish" }
             Thread.sleep(10)
             shadowOf(Looper.getMainLooper()).idle()
