@@ -39,7 +39,7 @@ import com.google.android.material.R as MaterialR
  * Changes to the standard M3 dialog:
  * * Primary body text and the theme's widget outline, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
- * * 16dp vertical padding.
+ * * The View dialog title, body and action panel spacing.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
  *

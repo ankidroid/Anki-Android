@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -190,11 +191,11 @@ fun TextInputDialog(
                 ) {
                     TextButton(
                         onClick = onDismissRequest,
-                        modifier = Modifier.widthIn(min = buttonMinWidth),
+                        modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
                     ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                     TextButton(
                         onClick = ::confirmIfValid,
-                        modifier = Modifier.widthIn(min = buttonMinWidth),
+                        modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
                         enabled = enabled && (!validateOnInput || errorMessage == null),
                     ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 }

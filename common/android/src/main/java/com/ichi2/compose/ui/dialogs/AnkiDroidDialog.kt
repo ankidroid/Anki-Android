@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -96,11 +95,11 @@ fun AnkiDroidDialogButtons(
         content = {
             TextButton(
                 onClick = onDismissRequest,
-                modifier = Modifier.widthIn(min = minWidth),
+                modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
             ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
             TextButton(
                 onClick = onConfirm,
-                modifier = Modifier.widthIn(min = minWidth),
+                modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
                 enabled = confirmEnabled,
             ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         },
