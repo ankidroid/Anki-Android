@@ -410,6 +410,15 @@ object ImportUtils {
                     Timber.w("Could not open import source")
                     CacheFileResult.Error(e)
                 }
+            } catch (e: IllegalArgumentException) {
+                // "TermuxContentProvider requires `allow-external-apps` property to be set to `true` in `~/.termux/termux.properties` file."
+                if (e.message?.contains("TermuxContentProvider") == true && e.message?.contains("allow-external-apps") == true) {
+                    Timber.w(e, "Import source file access was refused by Termux")
+                    CacheFileResult.SourceFileUnavailable(e)
+                } else {
+                    Timber.w("Could not open import source")
+                    CacheFileResult.Error(e)
+                }
             } catch (e: Exception) {
                 Timber.w("Could not open import source")
                 CacheFileResult.Error(e)
