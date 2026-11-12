@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import androidx.appcompat.R as AppCompatR
 import com.google.android.material.R as MaterialR
@@ -40,7 +41,7 @@ import com.google.android.material.R as MaterialR
  * A Material 3 message dialog with two actions.
  *
  * Changes to the standard M3 dialog:
- * * Primary body text, matching AnkiDroid's View dialogs.
+ * * Primary body text and the theme's widget outline, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * The View dialog title, body and action panel spacing.
  * * fade-only animations allow an IME to open when the dialog opens.
@@ -72,6 +73,7 @@ fun MessageDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             shadowElevation = ankiDroidDialogElevation(),
+            border = MaterialTheme.widgetBorder,
         ) {
             Layout(
                 modifier = Modifier.padding(ankiDroidDialogContentPadding()),
