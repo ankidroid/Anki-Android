@@ -191,12 +191,12 @@ fun TextInputDialog(
                     TextButton(
                         onClick = onDismissRequest,
                         modifier = Modifier.widthIn(min = buttonMinWidth),
-                    ) { Text(dismissText) }
+                    ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                     TextButton(
                         onClick = ::confirmIfValid,
                         modifier = Modifier.widthIn(min = buttonMinWidth),
                         enabled = enabled && (!validateOnInput || errorMessage == null),
-                    ) { Text(confirmText) }
+                    ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 }
             }) { children, constraints ->
                 val actions = children[1].measure(constraints.copy(minHeight = 0))
