@@ -7,12 +7,23 @@ import android.print.PrintAttributes
 import android.print.PrintJob
 import android.print.PrintManager
 import android.view.View
+import android.view.accessibility.AccessibilityManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updatePadding
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import com.google.android.material.appbar.AppBarLayout
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.bottomNavigationInset
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.databinding.PageStatisticsBinding
@@ -45,6 +56,80 @@ class Statistics : PageFragment(R.layout.page_statistics) {
             binding.toolbar.navigationIcon = null
         }
 
+        // In the bottom navigation, the page draws beneath the bar: pad it so its end can scroll above,
+        // and so content scrolled into view (such as a focused control) stops above the bar.
+        // Padding the WebView instead would resize it, which relayouts the page.
+        if (activity is DeckPicker) {
+            // Unlike SingleFragmentActivity, DeckPicker does not pad the tab for the status bar and cutout
+            binding.appBar.fitsSystemWindows = true
+            ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+                val bars = insets.getInsets(systemBars() or displayCutout())
+                // As in the deck list, the app bar's background continues beneath a display cutout
+                binding.toolbar.updatePadding(left = bars.left, right = bars.right)
+                webViewLayout.updatePadding(left = bars.left, right = bars.right)
+                insets
+            }
+
+            val accessibility = requireContext().getSystemService(AccessibilityManager::class.java)
+            val toolbarParams = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
+            val toolbarScrollFlags = toolbarParams.scrollFlags
+
+            fun padPage(insets: WindowInsetsCompat) {
+                // An expanded toolbar pushes the end of the page below the screen, by its scroll range
+                val belowScreen = (binding.appBar.totalScrollRange + binding.appBar.top).coerceAtLeast(0)
+                val navigation = bottomNavigationInset(insets, insets.getInsets(systemBars()).bottom)
+                // TalkBack moves through the page without its scroll padding, and keeps the bar shown:
+                // the page ends above the bar instead, which never resizes it as the bar never hides
+                val exploringByTouch = accessibility?.isTouchExplorationEnabled == true
+                webViewLayout.updatePadding(bottom = if (exploringByTouch) navigation else 0)
+                val bottom = ((if (exploringByTouch) 0 else navigation) + belowScreen) / resources.displayMetrics.density
+                // Zooming magnifies the padding: divide it by the zoom, so it stays the size of what it clears
+                webViewLayout.evaluateJavascript(
+                    """
+                    window.bottomInset = $bottom;
+                    if (!window.padBottomInset) {
+                        window.padBottomInset = () => {
+                            const inset = window.bottomInset / visualViewport.scale + 'px';
+                            document.body.style.paddingBottom = inset;
+                            document.scrollingElement.style.scrollPaddingBottom = inset;
+                        };
+                        visualViewport.addEventListener('resize', window.padBottomInset);
+                    }
+                    window.padBottomInset();
+                    """.trimIndent(),
+                )
+            }
+            ViewCompat.setOnApplyWindowInsetsListener(webViewLayout) { _, insets ->
+                padPage(insets)
+                insets
+            }
+            // Only once the toolbar is fully expanded or collapsed: padding on every frame relayouts the page
+            binding.appBar.addOnOffsetChangedListener { appBar, offset ->
+                if (offset == 0 || offset == -appBar.totalScrollRange) {
+                    ViewCompat.getRootWindowInsets(webViewLayout)?.let(::padPage)
+                }
+            }
+
+            // With TalkBack, a toolbar which scrolls away would push the end of the page beneath the bar
+            fun followTouchExploration() {
+                val exploringByTouch = accessibility?.isTouchExplorationEnabled == true
+                toolbarParams.scrollFlags = if (exploringByTouch) 0 else toolbarScrollFlags
+                binding.toolbar.layoutParams = toolbarParams
+                if (exploringByTouch) binding.appBar.setExpanded(true, false)
+                ViewCompat.requestApplyInsets(webViewLayout)
+            }
+            followTouchExploration()
+            val touchExplorationListener = AccessibilityManager.TouchExplorationStateChangeListener { followTouchExploration() }
+            accessibility?.addTouchExplorationStateChangeListener(touchExplorationListener)
+            viewLifecycleOwner.lifecycle.addObserver(
+                object : DefaultLifecycleObserver {
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        accessibility?.removeTouchExplorationStateChangeListener(touchExplorationListener)
+                    }
+                },
+            )
+        }
+
         binding.deckName.setOnClickListener {
             startDeckSelection(allowAll = false, allowFiltered = false, skipEmptyDefault = true)
         }
@@ -67,6 +152,12 @@ class Statistics : PageFragment(R.layout.page_statistics) {
             }
         }
     }
+
+    // the page has no body to pad until it loads
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?) =
+        super.onCreateWebViewClient(savedInstanceState).apply {
+            onPageFinishedCallbacks.add { ViewCompat.requestApplyInsets(webViewLayout) }
+        }
 
     override fun onWebViewCreated() {
         // Also called when the WebView is recreated after a renderer crash, so the listener is re-attached.
