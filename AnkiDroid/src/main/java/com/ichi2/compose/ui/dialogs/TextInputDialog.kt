@@ -35,6 +35,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -46,6 +47,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
+import com.google.android.material.R as MaterialR
 
 /**
  * Dialog asking the user for text. Compose counterpart of
@@ -94,6 +96,7 @@ fun TextInputDialog(
     val supportingMessage = displayedError ?: helperText
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
+    val actionTopPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
 
     fun confirmIfValid() {
         if (!enabled) return
@@ -171,7 +174,7 @@ fun TextInputDialog(
                     )
                 }
                 FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(top = if (hasSupportingText) 8.dp else 24.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = actionTopPadding),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {

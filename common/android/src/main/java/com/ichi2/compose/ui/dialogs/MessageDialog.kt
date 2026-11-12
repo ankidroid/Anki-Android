@@ -23,15 +23,16 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import androidx.appcompat.R as AppCompatR
+import com.google.android.material.R as MaterialR
 
 /**
  * A Material 3 message dialog with two actions.
@@ -39,7 +40,7 @@ import androidx.appcompat.R as AppCompatR
  * Changes to the standard M3 dialog:
  * * Primary body text, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
- * * 16dp vertical padding.
+ * * The View dialog title, body and action panel spacing.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
  *
@@ -56,7 +57,7 @@ fun MessageDialog(
     enabled: Boolean = true,
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
-    val titleBottomPadding = 16.dp
+    val titleBottomPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_title_bottom_margin)
     AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
         // Keep the View dialog's device width for long messages (verified on API 34/36).

@@ -32,6 +32,7 @@ import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
 import androidx.appcompat.R as AppCompatR
+import com.google.android.material.R as MaterialR
 
 /**
  * A [BasicAlertDialog] whose content renders inline in Compose previews.
@@ -81,14 +82,14 @@ fun AnkiDroidDialog(
     }
 }
 
-/** Insets inside the card. */
+/** Insets inside the card, matching the View dialog title and action panels. */
 @Composable
 fun ankiDroidDialogContentPadding(): PaddingValues =
     PaddingValues(
         start = 24.dp,
         top = dimensionResource(AppCompatR.dimen.abc_dialog_padding_top_material),
         end = 24.dp,
-        bottom = 24.dp,
+        bottom = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_bottom_padding),
     )
 
 /** The View dialog's shadow elevation, including the zero-elevation e-ink theme. */
@@ -112,7 +113,7 @@ fun AnkiDroidDialogButtons(
     onDismissRequest: () -> Unit,
     confirmEnabled: Boolean = true,
 ) {
-    val topPadding = 24.dp
+    val topPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
     val spacing = 8.dp
     Layout(
         modifier = Modifier.fillMaxWidth().padding(top = topPadding),
