@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
@@ -131,13 +132,13 @@ fun AnkiDroidDialogButtons(
                 onClick = onDismissRequest,
                 modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
                 contentPadding = buttonPadding,
-            ) { Text(dismissText) }
+            ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
             TextButton(
                 onClick = onConfirm,
                 modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
                 contentPadding = buttonPadding,
                 enabled = confirmEnabled,
-            ) { Text(confirmText) }
+            ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         },
     ) { children, constraints ->
         val buttonConstraints = constraints.copy(minWidth = 0, minHeight = 0)
