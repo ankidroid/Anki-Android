@@ -18,6 +18,9 @@ import java.text.Normalizer
  * and the case-folding bug in Anki's pinned unicase version. [value] retains the name's spelling
  * for display and case-only renames; compare it explicitly when checking whether the spelling changed.
  *
+ * Spaces and Japanese ideographic spaces are converted to `::` with [tagNameInputFilter].
+ * The backend uses these spaces to separate tags.
+ *
  * Tag names should not be logged using `Timber.i` or above to avoid leaking PII to crash reports.
  */
 class TagName private constructor(
@@ -51,10 +54,12 @@ class TagName private constructor(
     override fun toString(): String = value
 
     companion object {
+        /**
+         * Builds a name, replacing ASCII spaces with underscores. Ideographic spaces remain in [value].
+         */
         fun build(tagName: String): TagName? {
             if (tagName.isBlank()) return null
-            // in upstream, a space is converted to "::" in the UI
-            // But "_" is converted to " " in some visual displays
+            // Some views display underscores as spaces.
             return TagName(tagName.replace(" ", "_"))
         }
 
