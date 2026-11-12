@@ -231,13 +231,13 @@ fun TextInputDialog(
                         onClick = dismiss,
                         modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
                         contentPadding = buttonPadding,
-                    ) { Text(dismissText) }
+                    ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                     TextButton(
                         onClick = validationState.onConfirm,
                         modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
                         contentPadding = buttonPadding,
                         enabled = validationState.canConfirm,
-                    ) { Text(confirmText) }
+                    ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 }
             }) { children, constraints ->
                 val actions = children[1].measure(constraints.copy(minHeight = 0))
