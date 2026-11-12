@@ -29,10 +29,9 @@ import com.google.android.material.R as MaterialR
  * A Material 3 message dialog with two actions.
  *
  * Changes to the standard M3 dialog:
- * * Primary body text, matching AnkiDroid's View dialogs.
+ * * Primary body text and the theme's widget outline, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * The View dialog title, body and action panel spacing.
- * * The theme's widget outline distinguishes e-ink surfaces.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
  *
@@ -50,7 +49,9 @@ fun MessageDialog(
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     val titleBottomPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_title_bottom_margin)
+    // The dialog window has its own LocalContext, which can differ from the themed preview context.
     val border = MaterialTheme.widgetBorder
+    val elevation = ankiDroidDialogElevation()
     AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
         // Keep the View dialog's device width for long messages (verified on API 34/36).
@@ -62,7 +63,7 @@ fun MessageDialog(
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
-            shadowElevation = ankiDroidDialogElevation(),
+            shadowElevation = elevation,
             border = border,
         ) {
             Layout(

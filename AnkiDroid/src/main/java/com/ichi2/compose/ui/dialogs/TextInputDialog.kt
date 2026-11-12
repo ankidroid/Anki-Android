@@ -160,6 +160,7 @@ fun TextInputDialog(
     }
 
     val border = MaterialTheme.widgetBorder
+    val elevation = ankiDroidDialogElevation()
     AnkiDroidDialog(
         onDismissRequest = dismiss,
         modifier = Modifier.width(alertDialogWidth()),
@@ -170,7 +171,7 @@ fun TextInputDialog(
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
-            shadowElevation = ankiDroidDialogElevation(),
+            shadowElevation = elevation,
             border = border,
         ) {
             Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
