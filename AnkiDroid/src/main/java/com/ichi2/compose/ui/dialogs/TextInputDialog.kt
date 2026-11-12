@@ -6,10 +6,12 @@ package com.ichi2.compose.ui.dialogs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -113,6 +115,16 @@ fun TextInputDialog(
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
     val actionTopPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
+    val buttonSpacing = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_spacing)
+    val buttonMinWidth = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_min_width)
+    val inset = dimensionResource(MaterialR.dimen.m3_btn_inset)
+    val buttonPadding =
+        PaddingValues(
+            start = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_left),
+            top = dimensionResource(MaterialR.dimen.m3_btn_padding_top) + inset,
+            end = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_right),
+            bottom = dimensionResource(MaterialR.dimen.m3_btn_padding_bottom) + inset,
+        )
     val context = LocalContext.current
     val density = LocalDensity.current
     val titleFontSize = MaterialTheme.typography.headlineSmall.fontSize
@@ -224,12 +236,18 @@ fun TextInputDialog(
                 }
                 FlowRow(
                     modifier = Modifier.fillMaxWidth().padding(top = actionTopPadding),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                    horizontalArrangement = Arrangement.spacedBy(buttonSpacing, Alignment.End),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    TextButton(onClick = dismiss) { Text(dismissText) }
+                    TextButton(
+                        onClick = dismiss,
+                        modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
+                        contentPadding = buttonPadding,
+                    ) { Text(dismissText) }
                     TextButton(
                         onClick = validationState.onConfirm,
+                        modifier = Modifier.sizeIn(minWidth = buttonMinWidth, minHeight = 48.dp),
+                        contentPadding = buttonPadding,
                         enabled = validationState.canConfirm,
                     ) { Text(confirmText) }
                 }

@@ -3,6 +3,7 @@
 package com.ichi2.compose.ui.dialogs
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +44,7 @@ class MessageDialogTest {
 
     @Test
     @Config(qualifiers = "w411dp-h891dp-mdpi")
-    fun `title and message positions match the View dialog`() {
+    fun `message panel spacing matches the View dialog`() {
         val title = "Delete item"
         val message = "Delete this item and its children? This action cannot be undone."
         lateinit var context: Context
@@ -61,6 +62,7 @@ class MessageDialogTest {
         }
         val titleBounds = compose.onNodeWithText(title).fetchSemanticsNode().boundsInRoot
         val messageBounds = compose.onNodeWithText(message).fetchSemanticsNode().boundsInRoot
+        val confirmBounds = compose.onNodeWithText("Delete").fetchSemanticsNode().boundsInRoot
 
         lateinit var viewDialog: AlertDialog
         compose.runOnIdle {
@@ -82,9 +84,12 @@ class MessageDialogTest {
                 }
                 val viewTitle = viewDialog.findViewById<View>(androidx.appcompat.R.id.alertTitle)!!
                 val viewMessage = viewDialog.findViewById<View>(android.R.id.message)!!
+                val viewConfirm = viewDialog.getButton(DialogInterface.BUTTON_POSITIVE)
                 // Text metrics can round differently between Compose and TextView.
                 assertEquals(top(viewTitle), titleBounds.top, absoluteTolerance = 1f)
                 assertEquals(top(viewMessage), messageBounds.top, absoluteTolerance = 1f)
+                assertEquals(top(viewConfirm), confirmBounds.top, absoluteTolerance = 1f)
+                assertEquals(viewConfirm.height.toFloat(), confirmBounds.height, absoluteTolerance = 1f)
             }
         } finally {
             compose.runOnIdle { viewDialog.dismiss() }
