@@ -980,6 +980,17 @@ class CardBrowserFragment :
         cardsAdapter.refreshRows()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden || view == null) return
+
+        if (useSearchView) {
+            searchView?.hide()
+        } else {
+            searchItem?.takeIf { it.isActionViewExpanded }?.collapseActionView()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         if (::cardsListView.isInitialized) {

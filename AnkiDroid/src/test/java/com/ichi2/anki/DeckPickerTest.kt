@@ -1752,6 +1752,38 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    fun `switching away from Browse closes search`() =
+        withBottomNavigationEnabled {
+            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            for (useFullScreenSearch in listOf(false, true)) {
+                withPref(Prefs::devUsingCardBrowserSearchView, useFullScreenSearch) {
+                    deckPicker {
+                        val browser = openEmbeddedCardBrowser()
+                        if (useFullScreenSearch) {
+                            val search = requireNotNull(browser.searchView)
+                            search.show()
+                            advanceRobolectricLooper()
+                            assertTrue(search.isShowing)
+                        } else {
+                            assertTrue(requireNotNull(browser.searchItem).expandActionView())
+                        }
+
+                        binding.bottomNavigation!!.selectedItemId = R.id.nav_home
+                        supportFragmentManager.executePendingTransactions()
+                        advanceRobolectricLooper()
+                        openEmbeddedCardBrowser()
+
+                        if (useFullScreenSearch) {
+                            assertTrue(!requireNotNull(browser.searchView).isShowing)
+                        } else {
+                            assertTrue(requireNotNull(browser.legacySearchView).isIconified)
+                        }
+                    }
+                }
+            }
+        }
+
+    @Test
     fun `bottom navigation supports the public card browser`() =
         withBottomNavigationEnabled {
             withPref(Prefs::devUsingCardBrowserSearchView, false) {
