@@ -3,13 +3,18 @@
 package com.ichi2.compose.ui.dialogs
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
@@ -55,6 +60,51 @@ fun AnkiDroidDialog(
                 }
             }
             content()
+        }
+    }
+}
+
+/** Insets inside the card. */
+@Composable
+fun ankiDroidDialogContentPadding(): PaddingValues = PaddingValues(24.dp)
+
+/** View dialog actions: end aligned, with confirmation above dismissal when stacked. */
+@Composable
+fun AnkiDroidDialogButtons(
+    confirmText: String,
+    dismissText: String,
+    onConfirm: () -> Unit,
+    onDismissRequest: () -> Unit,
+    confirmEnabled: Boolean = true,
+) {
+    val topPadding = 24.dp
+    val spacing = 8.dp
+    Layout(
+        modifier = Modifier.fillMaxWidth().padding(top = topPadding),
+        content = {
+            TextButton(
+                onClick = onDismissRequest,
+            ) { Text(dismissText) }
+            TextButton(
+                onClick = onConfirm,
+                enabled = confirmEnabled,
+            ) { Text(confirmText) }
+        },
+    ) { children, constraints ->
+        val buttonConstraints = constraints.copy(minWidth = 0, minHeight = 0)
+        val dismiss = children[0].measure(buttonConstraints)
+        val confirm = children[1].measure(buttonConstraints)
+        val gap = spacing.roundToPx()
+        val stacked = dismiss.width + gap + confirm.width > constraints.maxWidth
+        val height = if (stacked) confirm.height + dismiss.height else maxOf(confirm.height, dismiss.height)
+        layout(constraints.maxWidth, height) {
+            if (stacked) {
+                confirm.placeRelative(constraints.maxWidth - confirm.width, 0)
+                dismiss.placeRelative(constraints.maxWidth - dismiss.width, confirm.height)
+            } else {
+                dismiss.placeRelative(constraints.maxWidth - confirm.width - gap - dismiss.width, (height - dismiss.height) / 2)
+                confirm.placeRelative(constraints.maxWidth - confirm.width, (height - confirm.height) / 2)
+            }
         }
     }
 }
