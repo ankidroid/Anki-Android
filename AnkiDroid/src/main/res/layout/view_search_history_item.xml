@@ -29,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_round_favorite_outline"
+        android:contentDescription="@string/card_browser_list_my_searches_save"
         android:background="?attr/selectableItemBackground"
         android:padding="8dp"
         android:paddingEnd="16dp"/>
