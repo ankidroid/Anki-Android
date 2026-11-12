@@ -48,6 +48,12 @@ class CardAnalysisWidgetScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun size2x2TwoWords() =
+        runTest {
+            captureDeck("size_2x2_two_words", widthDp = 175, heightDp = 220, deckName = "Spanish Verbs")
+        }
+
+    @Test
     fun size2x1() =
         runTest {
             captureDeck("size_2x1", widthDp = 175, heightDp = 102)
@@ -88,9 +94,10 @@ class CardAnalysisWidgetScreenshotTest : ScreenshotTest() {
         widthDp: Int,
         heightDp: Int,
         fontScale: Float = 1f,
+        deckName: String = "Pharmacology",
     ) {
         val deckId =
-            addDeck("Pharmacology")
+            addDeck(deckName)
                 .withNotes(count = 12)
                 .withNotes(count = 3, queueType = QueueType.Lrn)
         addNotes(25).forEach { note ->
