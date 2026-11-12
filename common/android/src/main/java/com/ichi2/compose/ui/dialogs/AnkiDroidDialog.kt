@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -87,15 +88,18 @@ fun AnkiDroidDialogButtons(
     confirmEnabled: Boolean = true,
 ) {
     val topPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
-    val spacing = 8.dp
+    val spacing = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_spacing)
+    val minWidth = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_min_width)
     Layout(
         modifier = Modifier.fillMaxWidth().padding(top = topPadding),
         content = {
             TextButton(
                 onClick = onDismissRequest,
+                modifier = Modifier.widthIn(min = minWidth),
             ) { Text(dismissText) }
             TextButton(
                 onClick = onConfirm,
+                modifier = Modifier.widthIn(min = minWidth),
                 enabled = confirmEnabled,
             ) { Text(confirmText) }
         },
