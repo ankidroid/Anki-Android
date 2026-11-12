@@ -35,6 +35,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -52,7 +53,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param onConfirm called with the text, but only while it is valid
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
- * @param errorMessageFor error to show for the current input, null when valid
+ * @param errorMessageFor plain or annotated error to show for the current input, null when valid
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
@@ -72,7 +73,7 @@ fun TextInputDialog(
     maxLengthCounter: Int? = null,
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
-    errorMessageFor: (String) -> String? = { null },
+    errorMessageFor: (String) -> CharSequence? = { null },
     helperText: String? = null,
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
@@ -86,7 +87,8 @@ fun TextInputDialog(
     var submissionAttempted by rememberSaveable { mutableStateOf(false) }
     val errorMessage = if (validateOnInput || submissionAttempted) errorMessageFor(input.text) else null
     val displayedError = errorMessage?.takeIf { hasUserEdited || submissionAttempted }
-    val supportingMessage = displayedError ?: helperText
+    val supportingMessage =
+        (displayedError ?: helperText)?.let { it as? AnnotatedString ?: AnnotatedString(it.toString()) }
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
 
@@ -141,7 +143,7 @@ fun TextInputDialog(
                                 {
                                     Row(Modifier.fillMaxWidth()) {
                                         if (supportingMessage != null || !validateOnInput) {
-                                            Text(supportingMessage.orEmpty(), Modifier.weight(1f))
+                                            Text(supportingMessage ?: AnnotatedString(""), Modifier.weight(1f))
                                         } else {
                                             Spacer(Modifier.weight(1f))
                                         }
