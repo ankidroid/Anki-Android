@@ -9,20 +9,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.BasicAlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
 import com.ichi2.anki.common.android.R
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 
@@ -37,7 +32,6 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
  *
  * @param enabled whether the confirm action is enabled; dismissal remains available
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageDialog(
     title: String,
@@ -50,19 +44,13 @@ fun MessageDialog(
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     val titleBottomPadding = 16.dp
-    BasicAlertDialog(
+    AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
         // Keep the View dialog's device width for long messages (verified on API 34/36).
         // Robolectric does not match reality here.
-        modifier = Modifier.width(alertDialogWidth()).padding(horizontal = 24.dp, vertical = 16.dp),
+        modifier = Modifier.width(alertDialogWidth()),
         properties = properties,
     ) {
-        val window = (LocalView.current.parent as? DialogWindowProvider)?.window
-        SideEffect {
-            if (window != null && window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
-                window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
-            }
-        }
         Surface(
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
