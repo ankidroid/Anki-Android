@@ -131,6 +131,34 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     @Test
+    fun `termux refusing access shows the error without a crash report`() {
+        val uri = "content://com.termux.files/file/termux.apkg".toUri()
+        val message =
+            "TermuxContentProvider requires `allow-external-apps` property to be set to `true` in `~/.termux/termux.properties` file."
+        val exception = IllegalArgumentException(message)
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { throw exception }
+
+        val result = importerWithFileName("termux.apkg").prepareImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        val failure = assertIs<ImportResult.Failure>(result)
+        assertEquals(exception, failure.exception)
+        assertThat(failure.humanReadableMessage, containsString(message))
+        verifyNoInteractions(crashReporter)
+    }
+
+    @Test
+    fun `other illegal argument errors are still reported`() {
+        val uri = "content://import/illegal-argument.apkg".toUri()
+        val exception = IllegalArgumentException("Provider failed")
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { throw exception }
+
+        val result = importerWithFileName("illegal-argument.apkg").prepareImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
+        verify(crashReporter).sendExceptionReport(exception, "ImportUtils", null, false)
+    }
+
+    @Test
     fun `storage provider refused by media store imports through media store`() {
         val result = importRefusedStorageDocument { "package contents".byteInputStream() }
 
