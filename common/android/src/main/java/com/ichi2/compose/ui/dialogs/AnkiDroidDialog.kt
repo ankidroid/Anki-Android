@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.ichi2.anki.common.android.R
+import androidx.appcompat.R as AppCompatR
 
 /**
  * A [BasicAlertDialog] whose content renders inline in Compose previews.
@@ -66,7 +68,13 @@ fun AnkiDroidDialog(
 
 /** Insets inside the card. */
 @Composable
-fun ankiDroidDialogContentPadding(): PaddingValues = PaddingValues(24.dp)
+fun ankiDroidDialogContentPadding(): PaddingValues =
+    PaddingValues(
+        start = 24.dp,
+        top = dimensionResource(AppCompatR.dimen.abc_dialog_padding_top_material),
+        end = 24.dp,
+        bottom = 24.dp,
+    )
 
 /** View dialog actions: end aligned, with confirmation above dismissal when stacked. */
 @Composable
