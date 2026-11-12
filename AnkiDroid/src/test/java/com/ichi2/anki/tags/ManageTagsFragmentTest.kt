@@ -56,6 +56,15 @@ class ManageTagsFragmentTest : RobolectricTest() {
     private val screen = ManageTagsTestHelper(this, compose)
 
     @Test
+    fun `a search with a space between tag levels finds the child tag`() {
+        addTags("science::biology", "history")
+        screen.open()
+        screen.search("science biology")
+        compose.onNodeWithTag("tag:science::biology").assertIsDisplayed()
+        compose.onNodeWithTag("tag:history").assertDoesNotExist()
+    }
+
+    @Test
     fun `rename and delete shortcuts act on the focused tag after filtering and renaming`() {
         val first = addTags("first::leaf")
         val second = addTags("second::leaf")

@@ -16,6 +16,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.isDialog
@@ -26,10 +27,13 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextInputSelection
+import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
+import androidx.compose.ui.text.TextRange
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.compose.theme.AnkiDroidTheme
@@ -50,6 +54,36 @@ class ManageTagsScreenTest : RobolectricTest() {
             visibleNodes = listOf(tagListItem("parent", "parent", 0, hasChildren = true, collapsed = true)),
             totalTagCount = 2,
         )
+
+    @Test
+    fun `search converts typed and pasted spaces and retains the insertion point`() {
+        val query = mutableStateOf("")
+        compose.setContent {
+            Screen(searchQuery = query.value, onSearch = { query.value = it })
+        }
+        val search = compose.onNode(hasSetTextAction())
+        for (prefix in listOf("parent", "parent:", "parent::")) {
+            search.performTextReplacement(prefix)
+            search.performTextInput(" ")
+            search.assertTextEquals("parent::")
+            search.performTextInput("child")
+            search.assertTextEquals("parent::child")
+            assertEquals("parent::child", query.value)
+        }
+        search.performTextReplacement("parent child leaf")
+        search.assertTextEquals("parent::child::leaf")
+        search.performTextInputSelection(TextRange(8, 13))
+        search.performTextInput("new ")
+        search.performTextInput("child")
+        search.assertTextEquals("parent::new::child::leaf")
+        assertEquals("parent::new::child::leaf", query.value)
+
+        compose.runOnIdle { query.value = "" }
+        assertEquals("", search.fetchSemanticsNode().config[SemanticsProperties.EditableText].text)
+        search.performTextInput("another child")
+        search.assertTextEquals("another::child")
+        assertEquals("another::child", query.value)
+    }
 
     @Test
     fun `undo shortcut in the search field does not undo collection changes`() {

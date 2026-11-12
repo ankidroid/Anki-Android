@@ -67,7 +67,9 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -358,9 +360,15 @@ internal fun TagSearchBar(
 ) {
     val focusManager = LocalFocusManager.current
     val hint = stringResource(CommonString.manage_tags_search_hint)
+    var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(query, selection = TextRange(query.length)))
+    }
     TextField(
-        value = query,
-        onValueChange = onQueryChange,
+        value = input.copy(text = query),
+        onValueChange = {
+            input = it.filterTagInput()
+            onQueryChange(input.text)
+        },
         modifier = modifier.semantics { contentDescription = hint },
         placeholder = { Text(hint) },
         leadingIcon = { Icon(painterResource(CommonR.drawable.ic_search_white), contentDescription = null) },
