@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
@@ -20,6 +21,8 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
                 putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
                 deckId?.let { putExtra(NoteEditorFragment.EXTRA_DID, it) }
             }
+        NoteEditorDestination.AddNoteWithSplash ->
+            Intent(context, IntentHandler2::class.java).putExtras(NoteEditorFragment.addNoteArgs())
         is NoteEditorDestination.ImageOcclusion ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.IMG_OCCLUSION.value)
