@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -21,12 +23,14 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ui.internationalization.trCase
 import androidx.appcompat.R as AppCompatR
 
-/** Displays the tag count, navigation, and clear-unused actions. */
+/** Displays the tag count, navigation, undo/redo, and clear-unused actions. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ManageTagsTopBar(
     content: ManageTagsState.Content?,
     onNavigateUp: () -> Unit,
+    onUndo: () -> Unit,
+    onRedo: () -> Unit,
     onClearUnused: () -> Unit,
 ) {
     val actionsEnabled = content != null && !content.isWorking
@@ -51,6 +55,26 @@ internal fun ManageTagsTopBar(
             }
         },
         actions = {
+            IconButton(
+                onClick = onUndo,
+                enabled = actionsEnabled && content.undoLabel != null,
+                modifier = Modifier.testTag("tag_undo"),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_undo_white),
+                    contentDescription = content?.undoLabel ?: stringResource(CommonString.undo),
+                )
+            }
+            IconButton(
+                onClick = onRedo,
+                enabled = actionsEnabled && content.redoLabel != null,
+                modifier = Modifier.testTag("tag_redo"),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_redo),
+                    contentDescription = content?.redoLabel ?: stringResource(CommonString.redo),
+                )
+            }
             if (content != null && content.totalTagCount > 0) {
                 IconButton(
                     enabled = actionsEnabled,

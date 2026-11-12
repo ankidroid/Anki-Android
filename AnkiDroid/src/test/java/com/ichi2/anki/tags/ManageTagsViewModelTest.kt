@@ -603,6 +603,8 @@ class ManageTagsViewModelTest : JvmTest() {
                     assertThat(removeTag("science"), sameInstance(refresh))
                     assertThat(renameTag("history", "past"), sameInstance(refresh))
                     assertThat(clearUnusedTags(), sameInstance(refresh))
+                    assertThat(undo(), sameInstance(refresh))
+                    assertThat(redo(), sameInstance(refresh))
                     assertThat(toggleCollapsed("science"), sameInstance(refresh))
                     assertThat(moveTag("history", "science"), sameInstance(refresh))
                     assertThat(refreshTags(), sameInstance(refresh))
