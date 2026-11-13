@@ -45,8 +45,8 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.doOnApplyWindowInsets
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.ext.getParcelableCompat
-import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
@@ -235,7 +235,7 @@ class ScheduleRemindersFragment :
         setContentInsets()
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
-        flowOfShowTroubleshooting.launchCollectionInViewLifecycleScope(::renderTroubleshootingSnackbar)
+        flowOfShowTroubleshooting.collectInViewLifecycle(::renderTroubleshootingSnackbar)
 
         // Set up recycler view
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())

@@ -71,7 +71,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
-import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -214,7 +214,7 @@ class ReviewerFragment :
                 whiteboardFragment?.resetCanvas()
             }.launchIn(viewScope)
 
-        viewModel.navigateFlow.launchCollectionInViewLifecycleScope { destination ->
+        viewModel.navigateFlow.collectInViewLifecycle { destination ->
             if (destination is DeckOptionsDestination && destination.options.size > 1) {
                 requireContext().showDeckOptionsSelectionDialog(destination.options) { selectedOption ->
                     Timber.i("Deck options target selected: ${selectedOption.deckId}")
@@ -225,7 +225,7 @@ class ReviewerFragment :
                         ),
                     )
                 }
-                return@launchCollectionInViewLifecycleScope
+                return@collectInViewLifecycle
             }
             navigate(destination)
         }
@@ -233,7 +233,7 @@ class ReviewerFragment :
         binding.webViewContainer.setFrameStyle()
 
         if (Prefs.showAnswerFeedback) {
-            viewModel.answerFeedbackFlow.launchCollectionInViewLifecycleScope { rating ->
+            viewModel.answerFeedbackFlow.collectInViewLifecycle { rating ->
                 binding.answerFeedback.show(rating)
             }
         }
@@ -291,19 +291,19 @@ class ReviewerFragment :
             return changed
         }
 
-        viewModel.typeAnswerFlow.launchCollectionInViewLifecycleScope { typeInAnswer ->
+        viewModel.typeAnswerFlow.collectInViewLifecycle { typeInAnswer ->
             if (typeInAnswer == null) {
                 binding.typeAnswerContainer.isVisible = false
-                return@launchCollectionInViewLifecycleScope
+                return@collectInViewLifecycle
             }
 
             if (isHtmlTypeAnswerEnabled) {
-                if (!autoFocusTypeAnswer) return@launchCollectionInViewLifecycleScope
+                if (!autoFocusTypeAnswer) return@collectInViewLifecycle
                 webViewLayout.focusOnWebView()
                 // `evaluateJavascript()` doesn't trigger the IME unless the WebView
                 // has been touched before, so ´loadUrl()` is used instead.
                 webViewLayout.loadUrl("javascript:document.getElementById('typeans')?.focus();")
-                return@launchCollectionInViewLifecycleScope
+                return@collectInViewLifecycle
             }
 
             binding.typeAnswerContainer.isVisible = true
@@ -317,7 +317,7 @@ class ReviewerFragment :
             }
         }
 
-        viewModel.onTypedAnswerResultFlow.launchCollectionInViewLifecycleScope { request ->
+        viewModel.onTypedAnswerResultFlow.collectInViewLifecycle { request ->
             if (isHtmlTypeAnswerEnabled) {
                 val script = """document.getElementById("typeans").value;"""
                 webViewLayout.evaluateJavascript(script) { callback ->
@@ -390,7 +390,7 @@ class ReviewerFragment :
 
         binding.answerArea.setRelativeHeight(Prefs.newStudyScreenAnswerButtonSize)
 
-        viewModel.answerButtonsNextTimeFlow.launchCollectionInViewLifecycleScope { times ->
+        viewModel.answerButtonsNextTimeFlow.collectInViewLifecycle { times ->
             binding.answerArea.setNextTimes(times)
         }
 
@@ -409,7 +409,7 @@ class ReviewerFragment :
     }
 
     private fun setupCounts() {
-        viewModel.countsFlow.launchCollectionInViewLifecycleScope { counts ->
+        viewModel.countsFlow.collectInViewLifecycle { counts ->
             binding.studyCounts.updateCounts(counts)
         }
 
@@ -520,7 +520,7 @@ class ReviewerFragment :
     }
 
     private fun setupResetProgress() {
-        viewModel.resetProgressFlow.launchCollectionInViewLifecycleScope {
+        viewModel.resetProgressFlow.collectInViewLifecycle {
             showDialogFragment(ForgetCardsDialog())
         }
         // TODO handle 'Reset progress' in the ViewModel instead of the activity, once
@@ -529,7 +529,7 @@ class ReviewerFragment :
     }
 
     private fun setupCheckPronunciation() {
-        viewModel.voiceRecorderEnabledFlow.launchCollectionInViewLifecycleScope { isEnabled ->
+        viewModel.voiceRecorderEnabledFlow.collectInViewLifecycle { isEnabled ->
             if (isEnabled && binding.checkPronunciationContainer.getFragment<CheckPronunciationFragment?>() == null) {
                 childFragmentManager.commit {
                     add(binding.checkPronunciationContainer.id, CheckPronunciationFragment())
@@ -557,7 +557,7 @@ class ReviewerFragment :
             false,
         )
 
-        viewModel.whiteboardEnabledFlow.launchCollectionInViewLifecycleScope { isEnabled ->
+        viewModel.whiteboardEnabledFlow.collectInViewLifecycle { isEnabled ->
             val existingFragment = whiteboardFragment
             childFragmentManager.commit {
                 if (isEnabled) {
@@ -576,7 +576,7 @@ class ReviewerFragment :
     }
 
     private fun setupTimebox() {
-        viewModel.timeBoxReachedFlow.launchCollectionInViewLifecycleScope { timebox ->
+        viewModel.timeBoxReachedFlow.collectInViewLifecycle { timebox ->
             Timber.i("ReviewerFragment: Timebox reached (reps %d - secs %d)", timebox.reps, timebox.secs)
 
             viewModel.stopAutoAdvance()
@@ -601,35 +601,35 @@ class ReviewerFragment :
     }
 
     private fun setupActions() {
-        viewModel.actionFeedbackFlow.launchCollectionInViewLifecycleScope { message ->
+        viewModel.actionFeedbackFlow.collectInViewLifecycle { message ->
             showSnackbar(message, duration = 500)
         }
 
-        viewModel.editNoteTagsFlow.launchCollectionInViewLifecycleScope { noteId ->
+        viewModel.editNoteTagsFlow.collectInViewLifecycle { noteId ->
             tagsDialogFactory.show(requireActivity(), noteIds = listOf(noteId))
         }
 
-        viewModel.setDueDateFlow.launchCollectionInViewLifecycleScope { cardId ->
+        viewModel.setDueDateFlow.collectInViewLifecycle { cardId ->
             SetDueDateDialog.show(requireActivity(), listOf(cardId))
         }
 
-        viewModel.pageUpFlow.launchCollectionInViewLifecycleScope {
+        viewModel.pageUpFlow.collectInViewLifecycle {
             webViewLayout.pageUp()
         }
 
-        viewModel.pageDownFlow.launchCollectionInViewLifecycleScope {
+        viewModel.pageDownFlow.collectInViewLifecycle {
             webViewLayout.pageDown()
         }
 
         val repository = StudyScreenRepository()
 
-        viewModel.isMarkedFlow.launchCollectionInViewLifecycleScope { isMarked ->
+        viewModel.isMarkedFlow.collectInViewLifecycle { isMarked ->
             if (!repository.isMarkShownInToolbar) {
                 binding.markIcon.isVisible = isMarked
             }
         }
         val flagView = binding.flagIcon
-        viewModel.flagFlow.launchCollectionInViewLifecycleScope { flag ->
+        viewModel.flagFlow.collectInViewLifecycle { flag ->
             if (!repository.isFlagShownInToolbar) {
                 if (flag == Flag.NONE) {
                     flagView.isVisible = false

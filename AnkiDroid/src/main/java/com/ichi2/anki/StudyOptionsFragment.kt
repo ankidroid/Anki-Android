@@ -53,7 +53,7 @@ import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnApplyWindowInsets
-import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -148,7 +148,7 @@ class StudyOptionsFragment :
             setSupportActionBarText(title = "")
         }
         setupContentInsets(view)
-        viewModel.flowOfState.launchCollectionInViewLifecycleScope(::rebuildUi)
+        viewModel.flowOfState.collectInViewLifecycle(::rebuildUi)
         refreshInterface()
     }
 
