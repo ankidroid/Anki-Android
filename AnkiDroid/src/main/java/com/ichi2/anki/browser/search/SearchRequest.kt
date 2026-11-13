@@ -5,6 +5,7 @@ package com.ichi2.anki.browser.search
 import androidx.annotation.CheckResult
 import anki.search.SearchNode
 import anki.search.searchNode
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.SearchJoiner
 
@@ -70,3 +71,11 @@ data class SearchRequest(
 
     companion object
 }
+
+suspend fun SearchRequest.toTagScopeSearch(): String =
+    withCol {
+        copyFilters { it.copy(tags = emptyList()) }
+            .toSearchString()
+            .getOrThrow()
+            .value
+    }
