@@ -24,6 +24,17 @@ class TagsTest : InMemoryAnkiTest() {
         }
 
     @Test
+    @Ignore("Upstream Anki Issue 5963: https://github.com/ankitects/anki/issues/5963")
+    fun `backend merges newer Unicode case pairs`() =
+        runTest {
+            val note = addBasicNote()
+
+            col.backend.addNoteTags(noteIds = listOf(note.id), tags = "\ua7d0 \ua7d1")
+
+            assertEquals(listOf("\ua7d0"), col.getNote(note.id).tags)
+        }
+
+    @Test
     fun test_split() {
         val tags = Tags(col)
         val tagsList1 = ArrayList<String>()
