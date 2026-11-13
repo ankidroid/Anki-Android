@@ -4,24 +4,34 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.annotation.StringRes
+import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.ScrollState
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.net.toUri
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
 import com.ichi2.anki.common.analytics.LinkAction
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
-import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.dialogs.help.ARG_MENU_ITEMS
 import com.ichi2.anki.dialogs.help.HelpDialog
+import com.ichi2.anki.dialogs.help.HelpItem
+import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrl
+import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrlResource
+import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
 import com.ichi2.anki.dialogs.help.childHelpMenuItems
 import com.ichi2.anki.dialogs.help.mainHelpMenuItems
+import com.ichi2.anki.dialogs.help.supportMenuItems
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.utils.IntentUtil
-import dev.androidbroadcast.vbpd.viewBinding
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Full-screen "More" destination in the bottom navigation bar.
@@ -30,91 +40,60 @@ import dev.androidbroadcast.vbpd.viewBinding
  * Help items open the existing [HelpDialog] focused on their subsection.
  * Support items directly open their respective URLs.
  */
-class MoreFragment : Fragment(R.layout.fragment_more) {
-    private val binding by viewBinding(FragmentMoreBinding::bind)
+class MoreFragment : Fragment() {
+    @VisibleForTesting
+    internal val scrollState = ScrollState(0)
 
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
+    ): View {
         val marketIntent = AnkiDroidApp.getMarketIntent(requireContext())
-
-        binding.moreSettings.setOnClickListener {
-            navigate(PreferencesDestination.Root)
-        }
-
-        // Help section: each opens HelpDialog with the relevant sub-items
-        binding.moreHelpManual.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_USING_ANKIDROID))
-            openHelpSection(CommonString.help_title_using_ankidroid)
-        }
-        binding.moreHelpGetHelp.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_GET_HELP))
-            openHelpSection(CommonString.help_title_get_help)
-        }
-        binding.moreHelpCommunity.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_COMMUNITY))
-            openHelpSection(CommonString.help_title_community)
-        }
-        binding.moreHelpPrivacy.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_PRIVACY))
-            openHelpSection(CommonString.help_title_privacy)
-        }
-
-        // Support section: direct URL actions
-        binding.moreSupportDonate.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_DONATE))
-            openUrl(getString(R.string.link_opencollective_donate))
-        }
-        binding.moreSupportTranslate.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_TRANSLATE))
-            openUrl(getString(R.string.link_translation))
-        }
-        binding.moreSupportDevelop.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_DEVELOP))
-            openUrl(getString(R.string.link_ankidroid_development_guide))
-        }
-        binding.moreSupportRate.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_RATE))
-            if (IntentUtil.canOpenIntent(requireContext(), marketIntent)) {
-                startActivity(marketIntent)
+        val canRate = IntentUtil.canOpenIntent(requireContext(), marketIntent)
+        val supportItems =
+            supportMenuItems
+                .filterNot { it.action is Rate && !canRate }
+                .filterNot { it.analyticsId == LinkAction.OPENED_DONATE && !BuildConfig.SHOW_DONATE_LINKS }
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setBackgroundColor(MaterialColors.getColor(this, CommonR.attr.appBarColor))
+            setContent {
+                AnkiDroidTheme {
+                    MoreScreen(
+                        helpItems = mainHelpMenuItems.toList(),
+                        supportItems = supportItems,
+                        onSettingsClick = { navigate(PreferencesDestination.Root) },
+                        onHelpItemClick = { section ->
+                            Analytics.send(LinkClicked(section.analyticsId))
+                            openHelpSection(section)
+                        },
+                        onSupportItemClick = { item ->
+                            Analytics.send(LinkClicked(item.analyticsId))
+                            when (val action = item.action) {
+                                is OpenUrl -> openUrl(action.url)
+                                is OpenUrlResource -> openUrl(getString(action.urlResourceId))
+                                Rate -> startActivity(marketIntent)
+                                else -> {}
+                            }
+                        },
+                        scrollState = scrollState,
+                    )
+                }
             }
-        }
-        binding.moreSupportOther.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_OTHER))
-            openUrl(getString(R.string.link_contribution))
-        }
-        binding.moreSupportFeedback.setOnClickListener {
-            Analytics.send(LinkClicked(LinkAction.OPENED_SEND_FEEDBACK))
-            openUrl(AnkiDroidApp.feedbackUrl)
-        }
-
-        // Hide rate if Play Store not available
-        if (!IntentUtil.canOpenIntent(requireContext(), marketIntent)) {
-            binding.moreSupportRate.visibility = View.GONE
-        }
-
-        if (!BuildConfig.SHOW_DONATE_LINKS) {
-            binding.moreSupportDonate.isVisible = false
         }
     }
 
     /**
-     * Opens [HelpDialog] showing the children of the help section matching [titleRes].
-     * The parent ID is derived from [mainHelpMenuItems] to avoid hardcoded coupling.
+     * Opens [HelpDialog] showing the children of the help [section].
      */
-    private fun openHelpSection(
-        @StringRes titleRes: Int,
-    ) {
-        val sectionId = mainHelpMenuItems.single { it.titleResId == titleRes }.id
-        val children = childHelpMenuItems.filter { it.parentId == sectionId }
+    private fun openHelpSection(section: HelpItem) {
+        val children = childHelpMenuItems.filter { it.parentId == section.id }
         val dialog =
             HelpDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putInt(HelpDialog.ARG_MENU_TITLE, titleRes)
+                        putInt(HelpDialog.ARG_MENU_TITLE, section.titleResId)
                         putParcelableArray(ARG_MENU_ITEMS, children.toTypedArray())
                     }
             }

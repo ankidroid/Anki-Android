@@ -11,7 +11,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.dp
-import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -22,6 +21,7 @@ import com.ichi2.testutils.lastItemView
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateKeyboard
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -153,8 +153,8 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
             advanceRobolectricLooper()
             captureScreen("bottom_navigation_more_tab")
 
-            val more = deckPicker.supportFragmentManager.findFragmentByTag(BottomNavController.NavigationItem.MORE.tag)
-            FragmentMoreBinding.bind(checkNotNull(more).requireView()).moreScrollView.fullScroll(View.FOCUS_DOWN)
+            val more = deckPicker.supportFragmentManager.findFragmentByTag(BottomNavController.NavigationItem.MORE.tag) as MoreFragment
+            runBlocking { more.scrollState.scrollTo(more.scrollState.maxValue) }
             advanceRobolectricLooper()
             captureScreen("bottom_navigation_more_tab_scrolled_to_end")
         }

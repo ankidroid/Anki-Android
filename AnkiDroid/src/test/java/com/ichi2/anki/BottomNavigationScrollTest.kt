@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.compose.foundation.ScrollState
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -18,12 +19,12 @@ import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.common.utils.dp
-import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.databinding.PageStatisticsBinding
 import com.ichi2.anki.pages.scrolledUpToBottom
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withPref
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThanOrEqualTo
@@ -99,12 +100,11 @@ class BottomNavigationScrollTest : RobolectricTest() {
             val nav = deckPicker.bottomNav
             nav.selectedItemId = NavigationItem.MORE.id
             advanceRobolectricLooper()
-            val scrollView = deckPicker.moreBinding.moreScrollView
             val behavior = HideViewOnScrollBehavior.from(nav)
 
-            deckPicker.scrollFrom(scrollView, 40)
+            deckPicker.scrollFrom(deckPicker.moreView, 40)
             assertThat(behavior.isScrolledOut, equalTo(true))
-            deckPicker.scrollFrom(scrollView, -40)
+            deckPicker.scrollFrom(deckPicker.moreView, -40)
             assertThat(behavior.isScrolledIn, equalTo(true))
         }
 
@@ -115,11 +115,10 @@ class BottomNavigationScrollTest : RobolectricTest() {
             val nav = deckPicker.bottomNav
             nav.selectedItemId = NavigationItem.MORE.id
             advanceRobolectricLooper()
-            val scrollView = deckPicker.moreBinding.moreScrollView
             val behavior = HideViewOnScrollBehavior.from(nav)
-            scrollView.scrollTo(0, scrollView.getChildAt(0).height)
+            deckPicker.moreScrollTo { it.maxValue }
 
-            deckPicker.scrollFrom(scrollView, 40)
+            deckPicker.scrollFrom(deckPicker.moreView, 40)
             assertThat(behavior.isScrolledOut, equalTo(true))
             // the container grows into the bar's space
             deckPicker.binding.root.requestLayout()
@@ -151,14 +150,12 @@ class BottomNavigationScrollTest : RobolectricTest() {
             val nav = activity.bottomNav
             nav.selectedItemId = NavigationItem.MORE.id
             advanceRobolectricLooper()
-            val scroll = activity.moreBinding.moreScrollView
-            scroll.scrollTo(0, 200)
-            advanceRobolectricLooper()
-            assertThat("More must be scrolled away from the top", scroll.scrollY > 70, equalTo(true))
+            activity.moreScrollTo { 200 }
+            assertThat("More must be scrolled away from the top", activity.more.scrollState.value > 70, equalTo(true))
             val behavior = HideViewOnScrollBehavior.from(nav)
             val states = mutableListOf<Int>()
             behavior.addOnScrollStateChangedListener { _, state -> states.add(state) }
-            val origin = IntArray(2).also(scroll::getLocationInWindow)
+            val touchOrigin = IntArray(2).also(activity.moreView::getLocationInWindow)[1] + activity.moreView.height / 3
             val start = SystemClock.uptimeMillis()
 
             fun touch(
@@ -166,7 +163,7 @@ class BottomNavigationScrollTest : RobolectricTest() {
                 offset: Float,
                 delta: Long,
             ) {
-                val event = MotionEvent.obtain(start, start + delta, action, 100f, origin[1] + offset, 0)
+                val event = MotionEvent.obtain(start, start + delta, action, 100f, touchOrigin + offset, 0)
                 activity.dispatchTouchEvent(event)
                 event.recycle()
                 advanceRobolectricLooper()
@@ -353,8 +350,17 @@ class BottomNavigationScrollTest : RobolectricTest() {
     private val View.contentBottomOnScreen: Int
         get() = topOnScreen + height - paddingBottom
 
-    private val DeckPicker.moreBinding: FragmentMoreBinding
-        get() = FragmentMoreBinding.bind(supportFragmentManager.findFragmentByTag(NavigationItem.MORE.tag)!!.requireView())
+    private val DeckPicker.more: MoreFragment
+        get() = supportFragmentManager.findFragmentByTag(NavigationItem.MORE.tag) as MoreFragment
+
+    private val DeckPicker.moreView: View
+        get() = more.requireView()
+
+    private fun DeckPicker.moreScrollTo(position: (ScrollState) -> Int) {
+        val scrollState = more.scrollState
+        runBlocking { scrollState.scrollTo(position(scrollState)) }
+        advanceRobolectricLooper()
+    }
 
     private val DeckPicker.statisticsBinding: PageStatisticsBinding
         get() = PageStatisticsBinding.bind(supportFragmentManager.findFragmentByTag(NavigationItem.STATS.tag)!!.requireView())
