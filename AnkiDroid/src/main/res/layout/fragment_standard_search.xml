@@ -136,7 +136,10 @@
         android:paddingStart="16dp"
         android:layout_marginEnd="24dp"
         android:text="Saved searches"
-        app:layout_constraintStart_toStartOf="@+id/search_history_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/manage_saved_searches_container"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constrainedWidth="true"
         app:layout_constraintTop_toTopOf="@id/manage_saved_searches_container"
         app:layout_constraintBottom_toBottomOf="@id/manage_saved_searches_container" />
 
