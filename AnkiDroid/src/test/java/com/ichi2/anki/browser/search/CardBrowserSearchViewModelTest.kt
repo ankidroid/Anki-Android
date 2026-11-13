@@ -9,6 +9,7 @@ import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.Companion.MAX_SEARCH_HISTORY_ENTRIES
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.assertFalse
@@ -43,6 +44,27 @@ class CardBrowserSearchViewModelTest : JvmTest() {
             assertThat("no initial search history", searchHistory, empty())
             searchHistoryAvailableFlow.test {
                 assertFalse("no history => history unavailable", expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `Search tools cannot be opened by default`() =
+        withViewModel {
+            toggleAdvancedSearch()
+
+            assertEquals(false, advancedSearchFlow.value)
+        }
+
+    @Test
+    fun `Search tools state is restored only when enabled`() =
+        runTest {
+            for (enabled in listOf(false, true)) {
+                Prefs.devUsingCardBrowserSearchTools = enabled
+                val savedState = SavedStateHandle(mapOf("advancedSearch" to true, "searchText" to "tag:example"))
+                withViewModel(CardBrowserSearchViewModel(savedState)) {
+                    assertEquals(enabled, advancedSearchFlow.value)
+                    assertEquals("tag:example", searchTextFlow.value)
+                }
             }
         }
 
@@ -90,7 +112,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     @Test
     fun `appendAdvancedSearch appends spacing`() =
-        withViewModel {
+        withViewModel(useSearchTools = true) {
             this.searchTextFlow.test {
                 assertEquals("", this.expectMostRecentItem())
 
@@ -106,7 +128,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     @Test
     fun `onSearchTextChanged takes priority over appendAdvancedSearch`() =
-        withViewModel {
+        withViewModel(useSearchTools = true) {
             this.searchTextFlow.test {
                 assertEquals("", this.expectMostRecentItem())
 
@@ -122,7 +144,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     @Test
     fun `appended search text is shared between modes`() =
-        withViewModel {
+        withViewModel(useSearchTools = true) {
             searchTextFlow.test {
                 expectMostRecentItem()
 
@@ -136,18 +158,20 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     @Test
     fun `switching modes preserves the latest search text`() =
-        withViewModel {
+        withViewModel(useSearchTools = true) {
             searchTextFlow.test {
                 expectMostRecentItem()
 
                 onSearchTextChanged(" basic draft ")
                 assertEquals(" basic draft ", expectMostRecentItem())
                 toggleAdvancedSearch()
+                assertEquals(true, advancedSearchFlow.value)
                 expectNoEvents()
 
                 onSearchTextChanged("tag:updated draft")
                 assertEquals("tag:updated draft", expectMostRecentItem())
                 toggleAdvancedSearch()
+                assertEquals(false, advancedSearchFlow.value)
                 expectNoEvents()
 
                 onSearchTextChanged("")
@@ -348,7 +372,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     @Test
     fun `submit saved search - clears all filter types in advanced mode`() =
-        withViewModel(cardCount = 0) {
+        withViewModel(cardCount = 0, useSearchTools = true) {
             resetSearchState(
                 SearchRequest(
                     "previous search",
@@ -363,6 +387,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
             ).join()
             isScreenOpenFlow.value = true
             toggleAdvancedSearch()
+            assertEquals(true, advancedSearchFlow.value)
 
             submittedSearchFlow.test {
                 expectNoEvents()
@@ -481,8 +506,10 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     fun withViewModel(
         cardCount: Int = 1,
+        useSearchTools: Boolean = false,
         block: suspend CardBrowserSearchViewModel.() -> Unit,
     ) = runTest {
+        Prefs.devUsingCardBrowserSearchTools = useSearchTools
         addNotes(count = cardCount)
         withViewModel(CardBrowserSearchViewModel(SavedStateHandle()), block)
     }

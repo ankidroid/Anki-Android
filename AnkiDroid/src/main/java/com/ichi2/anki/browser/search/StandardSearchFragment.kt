@@ -41,6 +41,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.alignWithFirstLineOf
 import com.ichi2.anki.utils.ext.hasCheckedBackground
@@ -87,7 +88,10 @@ class StandardSearchFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toggleAdvancedSearch.setOnClickListener { viewModel.toggleAdvancedSearch() }
+        binding.toggleAdvancedSearch.apply {
+            isVisible = Prefs.devUsingCardBrowserSearchTools
+            setOnClickListener { viewModel.toggleAdvancedSearch() }
+        }
 
         registerChildDeckSelectedHandler(action = ::onDeckSelected)
 

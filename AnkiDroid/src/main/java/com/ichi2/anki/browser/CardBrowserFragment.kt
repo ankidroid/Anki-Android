@@ -1162,11 +1162,21 @@ class CardBrowserFragment :
             if (searchView == null) return
 
             val standard = getOrCreateSearchFragment(StandardSearchFragment.TAG, ::StandardSearchFragment)
-            val advanced = getOrCreateSearchFragment(AdvancedSearchFragment.TAG, ::AdvancedSearchFragment)
+            val advanced =
+                if (inAdvancedSearch) {
+                    getOrCreateSearchFragment(AdvancedSearchFragment.TAG, ::AdvancedSearchFragment)
+                } else {
+                    childFragmentManager.findFragmentByTag(AdvancedSearchFragment.TAG)
+                }
 
             childFragmentManager.commit {
-                hide(if (inAdvancedSearch) standard else advanced)
-                show(if (inAdvancedSearch) advanced else standard)
+                if (inAdvancedSearch) {
+                    hide(standard)
+                    show(requireNotNull(advanced))
+                } else {
+                    advanced?.let { hide(it) }
+                    show(standard)
+                }
             }
         }
 
