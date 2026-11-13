@@ -301,9 +301,6 @@ class CardBrowserSearchViewModel(
             filterStateUpdateFlow.value = FilterUpdate.System(submittedSearch.filters)
 
             isScreenOpenFlow.value = false
-
-            savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_ENABLED)
-            savedStateHandle.remove<Any>(STATE_SEARCH_TEXT)
         }
 
     fun syncState(search: SearchRequest) =
