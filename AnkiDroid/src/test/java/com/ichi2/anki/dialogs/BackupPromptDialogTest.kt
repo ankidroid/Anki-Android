@@ -9,9 +9,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.IntentSender
 import android.net.Uri
+import android.os.Bundle
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
@@ -112,7 +112,10 @@ class BackupPromptDialogTest : RobolectricTest() {
     }
 
     private fun DeckPicker.saveExport(name: String) {
-        supportFragmentManager.setFragmentResult(REQUEST_EXPORT_SAVE, bundleOf(RESULT_EXPORT_PATH to createExport(name).path))
+        supportFragmentManager.setFragmentResult(
+            REQUEST_EXPORT_SAVE,
+            Bundle().apply { putString(RESULT_EXPORT_PATH, createExport(name).path) },
+        )
         val picker = assertNotNull(shadowOf(this).nextStartedActivity)
         assertEquals(Intent.ACTION_CREATE_DOCUMENT, picker.action)
         shadowOf(this).receiveResult(picker, Activity.RESULT_OK, Intent().setData(Uri.fromFile(File(tempFolder.root, name))))
@@ -122,7 +125,10 @@ class BackupPromptDialogTest : RobolectricTest() {
 
     private fun DeckPicker.shareExport(name: String): Intent {
         registerShareSheet()
-        supportFragmentManager.setFragmentResult(REQUEST_EXPORT_SHARE, bundleOf(RESULT_EXPORT_PATH to createExport(name).path))
+        supportFragmentManager.setFragmentResult(
+            REQUEST_EXPORT_SHARE,
+            Bundle().apply { putString(RESULT_EXPORT_PATH, createExport(name).path) },
+        )
         val chooser = assertNotNull(shadowOf(this).nextStartedActivity)
         assertEquals(Intent.ACTION_CHOOSER, chooser.action)
         return chooser

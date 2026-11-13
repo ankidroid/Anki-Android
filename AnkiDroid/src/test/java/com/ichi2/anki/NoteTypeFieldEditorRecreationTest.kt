@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.fragment.app.DialogFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -589,7 +588,7 @@ class NoteTypeFieldEditorRecreationTest : RobolectricTest() {
     private fun pickLanguageHint(locale: Locale) {
         assertIs<LocaleSelectionDialog>(shownDialog()).parentFragmentManager.setFragmentResult(
             REQUEST_HINT_LOCALE_SELECTION,
-            bundleOf(RESULT_SELECTED_LOCALE to locale),
+            Bundle().apply { putSerializable(RESULT_SELECTED_LOCALE, locale) },
         )
         advanceRobolectricLooper()
     }

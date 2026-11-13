@@ -49,6 +49,7 @@ val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
 val ktlintVersion: String = libs.versions.ktlint.get()
+val androidxCoreVersion: String = libs.versions.androidxCore.get()
 
 // Shared state for the GitHub Actions test summary listener.
 // Only registered when running under GitHub Actions; null otherwise.
@@ -75,6 +76,15 @@ val unitTestForkMaxHeapGb = 2
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "androidx.core" && requested.name == "core-ktx") {
+                useVersion(androidxCoreVersion)
+                because("Older core-ktx versions shadow the Kotlin APIs and deprecations now provided by core")
+            }
+        }
+    }
+
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     configure<KtlintExtension> {
         version.set(ktlintVersion)

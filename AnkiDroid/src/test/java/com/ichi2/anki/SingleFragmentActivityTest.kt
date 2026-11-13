@@ -4,7 +4,7 @@
 package com.ichi2.anki
 
 import android.content.Intent
-import androidx.core.os.bundleOf
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.account.AccountActivity
@@ -38,7 +38,7 @@ class SingleFragmentActivityTest : RobolectricTest() {
         for (action in CustomStudyAction.entries) {
             activity.supportFragmentManager.setFragmentResult(
                 CustomStudyAction.REQUEST_KEY,
-                bundleOf(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION to action.ordinal),
+                Bundle().apply { putInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION, action.ordinal) },
             )
             advanceRobolectricLooper()
 
