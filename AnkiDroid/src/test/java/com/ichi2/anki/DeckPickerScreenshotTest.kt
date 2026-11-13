@@ -132,6 +132,19 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun bottom_navigation_statistics_selected() {
+        enableBottomNavigation()
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            val bottomNavigation = requireNotNull(deckPicker.binding.bottomNavigation)
+            bottomNavigation.selectedItemId = R.id.nav_stats
+            advanceRobolectricLooper()
+            check(bottomNavigation.selectedItemId == R.id.nav_stats)
+
+            captureScreen("bottom_navigation_statistics_selected")
+        }
+    }
+
+    @Test
     fun hierarchy_lines() =
         runTest {
             enableBottomNavigation()
