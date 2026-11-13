@@ -16,6 +16,7 @@ import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.core.util.TypedValueCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -128,6 +129,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
+            remoteViews.setBackgrounds(cornersTooRound = false)
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.CardAnalysis(appWidgetId.id).toIntent() }
             val configPendingIntent =
@@ -153,6 +155,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
+            remoteViews.setBackgrounds(cornersTooRound = false)
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.CardAnalysis(appWidgetId.id).toIntent() }
             val configPendingIntent =
@@ -211,20 +214,30 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
 
             val cornersTooRound = size.height > 0 && size.height < CORNER_RADIUS_DP * 3
-            if (cornersTooRound) {
-                remoteViews.setInt(
-                    android.R.id.background,
-                    "setBackgroundResource",
-                    R.drawable.widget_card_analysis_rounded_background_small,
-                )
-                remoteViews.setInt(
-                    R.id.cardAnalysisDataHolder,
-                    "setBackgroundResource",
-                    R.drawable.widget_card_analysis_rounded_inner_background_small,
-                )
-            }
+            remoteViews.setBackgrounds(cornersTooRound)
             remoteViews.fitTo(context, size)
             return remoteViews
+        }
+
+        private fun RemoteViews.setBackgrounds(cornersTooRound: Boolean) {
+            setInt(
+                android.R.id.background,
+                "setBackgroundResource",
+                if (cornersTooRound) {
+                    R.drawable.widget_card_analysis_rounded_background_small
+                } else {
+                    R.drawable.widget_card_analysis_rounded_background
+                },
+            )
+            setInt(
+                R.id.cardAnalysisDataHolder,
+                "setBackgroundResource",
+                if (cornersTooRound) {
+                    R.drawable.widget_card_analysis_rounded_inner_background_small
+                } else {
+                    R.drawable.widget_card_analysis_rounded_inner_background
+                },
+            )
         }
 
         /** Shrinks the text and padding evenly until the counts and deck name fit in [size] without splitting a word. */
@@ -260,17 +273,26 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 return root.measuredHeight <= availableHeight && counts.all { it.lineCount == 1 } && name.breaksOnlyBetweenWords()
             }
 
-            if (fitsAtScale(1f)) return
-
-            var minScale = 0f
-            var maxScale = 1f
-            while ((maxScale - minScale) * textSizes.max() > 1f) {
-                val scale = (minScale + maxScale) / 2
-                if (fitsAtScale(scale)) minScale = scale else maxScale = scale
-            }
-            fitsAtScale(minScale)
-            for (view in textViews) {
-                setTextViewTextSize(view.id, TypedValue.COMPLEX_UNIT_PX, view.textSize)
+            if (fitsAtScale(1f)) {
+                for (view in textViews) {
+                    setTextViewTextSize(
+                        view.id,
+                        TypedValue.COMPLEX_UNIT_SP,
+                        TypedValueCompat.pxToSp(view.textSize, context.resources.displayMetrics),
+                    )
+                }
+            } else {
+                // Binary search for the largest scale that still fits, to within 1px of the largest text size
+                var minScale = 0f
+                var maxScale = 1f
+                while ((maxScale - minScale) * textSizes.max() > 1f) {
+                    val scale = (minScale + maxScale) / 2
+                    if (fitsAtScale(scale)) minScale = scale else maxScale = scale
+                }
+                fitsAtScale(minScale)
+                for (view in textViews) {
+                    setTextViewTextSize(view.id, TypedValue.COMPLEX_UNIT_PX, view.textSize)
+                }
             }
             for (view in paddedViews) {
                 setViewPadding(view.id, view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
