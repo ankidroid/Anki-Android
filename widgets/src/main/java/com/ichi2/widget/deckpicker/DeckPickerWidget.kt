@@ -16,6 +16,7 @@ import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -56,6 +57,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
          * Key used for passing the selected deck IDs in the intent extras.
          */
         const val EXTRA_SELECTED_DECK_IDS = "deck_picker_widget_selected_deck_ids"
+
+        private const val CORNER_RADIUS_DP = 28
 
         /**
          * Updates the widget with the deck data.
@@ -158,7 +161,22 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 remoteViews.addView(R.id.deckCollection, deckView)
             }
 
+            val cornersTooRound = size.height > 0 && size.height < CORNER_RADIUS_DP * 3
+            remoteViews.setBackgrounds(
+                if (cornersTooRound) {
+                    R.drawable.widget_deck_picker_rounded_background_small
+                } else {
+                    R.drawable.widget_deck_picker_rounded_background
+                },
+            )
             return remoteViews
+        }
+
+        private fun RemoteViews.setBackgrounds(
+            @DrawableRes background: Int,
+        ) {
+            setInt(android.R.id.background, "setBackgroundResource", background)
+            setInt(R.id.deckCollection, "setBackgroundResource", background)
         }
 
         /** Shrink the first row only when its configured text size cannot fit in the widget. */
@@ -201,6 +219,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
+            remoteViews.setBackgrounds(R.drawable.widget_deck_picker_rounded_background)
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.DeckPicker(appWidgetId.id).toIntent() }
             val configPendingIntent =
@@ -224,6 +243,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_widget_state))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
+            remoteViews.setBackgrounds(R.drawable.widget_deck_picker_rounded_background)
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.DeckPicker(appWidgetId.id).toIntent() }
             val configPendingIntent =
