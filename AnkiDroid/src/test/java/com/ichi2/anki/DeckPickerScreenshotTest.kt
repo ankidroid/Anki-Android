@@ -11,6 +11,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -141,6 +142,21 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
             check(bottomNavigation.selectedItemId == R.id.nav_stats)
 
             captureScreen("bottom_navigation_statistics_selected")
+        }
+    }
+
+    @Test
+    fun bottom_navigation_more_tab() {
+        enableBottomNavigation()
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            checkNotNull(deckPicker.binding.bottomNavigation).selectedItemId = R.id.nav_more
+            advanceRobolectricLooper()
+            captureScreen("bottom_navigation_more_tab")
+
+            val more = deckPicker.supportFragmentManager.findFragmentByTag(BottomNavController.NavigationItem.MORE.tag)
+            FragmentMoreBinding.bind(checkNotNull(more).requireView()).moreScrollView.fullScroll(View.FOCUS_DOWN)
+            advanceRobolectricLooper()
+            captureScreen("bottom_navigation_more_tab_scrolled_to_end")
         }
     }
 
