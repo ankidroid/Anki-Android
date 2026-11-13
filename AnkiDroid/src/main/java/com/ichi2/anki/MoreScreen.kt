@@ -83,9 +83,13 @@ fun MoreScreen(
             )
             MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help_title_support_ankidroid))
-            for (item in supportItems) {
-                MoreListRow(item.iconResId, stringResource(item.titleResId)) { onSupportItemClick(item) }
-            }
+            MoreGroup(
+                rows =
+                    supportItems.map { item ->
+                        MoreRowItem(item.iconResId, stringResource(item.titleResId)) { onSupportItemClick(item) }
+                    },
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
         }
     }
 }
