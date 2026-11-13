@@ -469,6 +469,9 @@ open class PrefsRepository protected constructor(
     @set:VisibleForTesting
     var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
+    @set:VisibleForTesting
+    var devUsingCardBrowserSearchTools: Boolean by booleanPref(R.string.dev_card_browser_search_tools, false)
+
     private val isWebDebugEnabledByUser by booleanPref(R.string.html_javascript_debugging_key, false)
     val isWebDebugEnabled: Boolean
         get() = (isWebDebugEnabledByUser || BuildConfig.DEBUG) && !isRunningAsUnitTest
