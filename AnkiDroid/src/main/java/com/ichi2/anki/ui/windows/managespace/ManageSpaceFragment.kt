@@ -32,7 +32,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
-import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.CoroutineScope
@@ -252,7 +252,7 @@ class ManageSpaceFragment : SettingsFragment() {
             viewModel.flowOfDeleteBackupsSize to R.string.pref_delete_backups_key,
         ).forEach { (flowOfSize, key) ->
             val preference = requirePreference<TextWidgetPreference>(key)
-            flowOfSize.launchCollectionInViewLifecycleScope { size -> preference.setWidgetTextBy(size) }
+            flowOfSize.collectInViewLifecycle { size -> preference.setWidgetTextBy(size) }
         }
     }
 

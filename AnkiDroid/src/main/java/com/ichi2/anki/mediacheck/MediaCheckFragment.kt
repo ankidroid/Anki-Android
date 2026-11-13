@@ -29,7 +29,7 @@ import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
 import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.utils.showAndAwaitDismissal
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
@@ -74,7 +74,7 @@ class MediaCheckFragment :
         observeProgress(viewModel) { progress -> getString(progress.messageRes) }
         viewModel.checkMedia()
 
-        viewModel.mediaCheckResult.launchCollectionInViewLifecycleScope { result ->
+        viewModel.mediaCheckResult.collectInViewLifecycle { result ->
             updateWebView(result?.report.orEmpty())
             if (result != null) {
                 binding.tagMissingMediaButton.isVisible = result.missingCount != 0

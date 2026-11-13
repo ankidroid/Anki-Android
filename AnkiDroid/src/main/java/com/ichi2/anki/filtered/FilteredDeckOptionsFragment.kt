@@ -37,7 +37,7 @@ import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
-import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.cancelable
@@ -109,10 +109,10 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
             viewLifecycleOwner,
             discardBackHandler,
         )
-        viewModel.hasUnsavedChanges.launchCollectionInViewLifecycleScope { status ->
+        viewModel.hasUnsavedChanges.collectInViewLifecycle { status ->
             discardBackHandler.isEnabled = status
         }
-        viewModel.state.launchCollectionInViewLifecycleScope { state ->
+        viewModel.state.collectInViewLifecycle { state ->
             when (state) {
                 is Initializing -> {
                     if (state.throwable != null) {
@@ -148,7 +148,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                             positiveButton(CommonString.dialog_ok)
                             setOnDismissListener { viewModel.clearError() }
                         }
-                        return@launchCollectionInViewLifecycleScope
+                        return@collectInViewLifecycle
                     }
                     if (state.browserQuery != null) {
                         navigate(BrowserDestination.Search(query = state.browserQuery, allDecks = false))
