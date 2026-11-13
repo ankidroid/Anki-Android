@@ -2,6 +2,8 @@
 
 package com.ichi2.compose.ui.dialogs
 
+import android.os.Build
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -64,6 +66,16 @@ fun AnkiDroidDialog(
             SideEffect {
                 if (window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
                     window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
+                }
+                if (
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
+                    !properties.usePlatformDefaultWidth &&
+                    properties.decorFitsSystemWindows &&
+                    window.attributes.height != MATCH_PARENT
+                ) {
+                    // Compose's WRAP_CONTENT height calculation mixes screen and window coordinates
+                    // in split screen before API 30. Let the window constrain the height instead.
+                    window.setLayout(window.attributes.width, MATCH_PARENT)
                 }
             }
             MaterialTheme(typography = typography) {
