@@ -615,6 +615,36 @@ class ManageTagsViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `closing the screen keeps queued expansion saves ahead of a reopened screen`() =
+        runTest {
+            addTags("science::biology", "history::ancient")
+            val closing = ManageTagsViewModel()
+            withQueuedCollectionAccess {
+                withViewModel(closing) {
+                    toggleCollapsed("science")
+                    toggleCollapsed("history")
+                    toggleCollapsed("history")
+                    assertEquals(listOf("history", "science", "science::biology"), loadedState.visibleTagNames)
+                }
+                withViewModel {
+                    refreshTags().join()
+                    assertEquals(listOf("history", "science", "science::biology"), loadedState.visibleTagNames)
+                }
+            }
+        }
+
+    @Test
+    fun `completed expansion saves survive closing and reopening the screen`() =
+        runTest {
+            addTags("science::biology")
+            withViewModel { toggleCollapsed("science").join() }
+            withViewModel {
+                assertEquals(listOf("science", "science::biology"), loadedState.visibleTagNames)
+                assertFalse(loadedState.visibleNodes.first().collapsed)
+            }
+        }
+
+    @Test
     fun `deleting a tag waits for expansion saves so they cannot recreate it`() =
         runTest {
             addTags("science::biology", "history")
