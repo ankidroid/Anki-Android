@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -65,26 +64,21 @@ fun MoreScreen(
                 .fillMaxSize()
                 .nestedScroll(rememberNestedScrollInteropConnection())
                 .verticalScroll(scrollState)
-                .padding(top = 8.dp, bottom = 16.dp),
+                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
         ) {
             MoreGroup(
                 rows = listOf(MoreRowItem(R.drawable.ic_settings_black, stringResource(CommonString.settings), onSettingsClick)),
-                modifier = Modifier.padding(horizontal = 16.dp),
             )
-            MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help))
             MoreGroup(
                 rows = helpItems.map { item -> MoreRowItem(item.iconResId, stringResource(item.titleResId)) { onHelpItemClick(item) } },
-                modifier = Modifier.padding(horizontal = 16.dp),
             )
-            MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help_title_support_ankidroid))
             MoreGroup(
                 rows =
                     supportItems.map { item ->
                         MoreRowItem(item.iconResId, stringResource(item.titleResId)) { onSupportItemClick(item) }
                     },
-                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
     }
@@ -94,15 +88,10 @@ fun MoreScreen(
 private fun MoreSectionHeader(text: String) {
     Text(
         text = text,
-        style = MaterialTheme.typography.labelLarge,
+        style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 4.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 8.dp),
     )
-}
-
-@Composable
-private fun MoreDivider() {
-    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
 }
 
 private class MoreRowItem(
