@@ -35,6 +35,18 @@ class TagsTest : InMemoryAnkiTest() {
         }
 
     @Test
+    @Ignore("Upstream Anki Issue 5964: https://github.com/ankitects/anki/issues/5964")
+    fun `backend renames every spelling of a tag subtree`() =
+        runTest {
+            val note = addBasicNote()
+            col.backend.addNoteTags(noteIds = listOf(note.id), tags = "Straße::a STRASSE::b")
+
+            col.backend.renameTags(currentPrefix = "Straße", newPrefix = "target")
+
+            assertEquals(setOf("target::a", "target::b"), col.getNote(note.id).tags.toSet())
+        }
+
+    @Test
     fun test_split() {
         val tags = Tags(col)
         val tagsList1 = ArrayList<String>()
