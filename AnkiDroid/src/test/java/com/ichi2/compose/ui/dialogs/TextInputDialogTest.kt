@@ -37,6 +37,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.profiles.RenameProfileDialog
 import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.testutils.ShadowLowerPaneView
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -52,6 +53,24 @@ import kotlin.test.assertTrue
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    @Config(sdk = [29, Config.TARGET_SDK], qualifiers = "w411dp-h400dp-mdpi", shadows = [ShadowLowerPaneView::class])
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `text input stays usable in the lower split screen pane`() {
+        var submitted: String? = null
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog("Add profile", "Profile name", "Add", { submitted = it }, {})
+            }
+        }
+        compose.onNodeWithText("Add profile").assertIsDisplayed()
+        compose.onNode(hasSetTextAction()).assertIsDisplayed().performTextInput("Work")
+        compose.onNodeWithText("Cancel").assertIsDisplayed().assertHeightIsAtLeast(40.dp)
+        val add = compose.onNodeWithText("Add").assertIsDisplayed().assertHeightIsAtLeast(40.dp)
+        add.performTouchInput { click() }
+        assertEquals("Work", submitted)
+    }
 
     @Test
     fun `multiline Enter inserts a newline without submitting`() {
