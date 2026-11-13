@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
         android:fitsSystemWindows="true"
+        app:liftOnScrollTargetViewId="@id/card_browser_list"
         app:statusBarForeground="?attr/colorSurface">
         <com.google.android.material.search.SearchBar
             android:id="@+id/search_bar"
