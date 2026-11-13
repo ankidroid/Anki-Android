@@ -48,6 +48,9 @@ class InstantEditorViewModelParameterizedTest : JvmTest() {
                 arrayOf("{hello}", "{{{c1::hello}}}"),
                 arrayOf("test,", "{{c1::test}},"),
                 arrayOf("{{c1::test}},", "test,"),
+                arrayOf("20°C", "{{c1::20}}°C"),
+                arrayOf("€100", "€{{c1::100}}"),
+                arrayOf("🙂", "🙂"),
             )
     }
 }
