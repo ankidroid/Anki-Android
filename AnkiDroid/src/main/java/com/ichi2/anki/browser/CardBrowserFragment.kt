@@ -148,9 +148,9 @@ import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
@@ -1315,38 +1315,38 @@ class CardBrowserFragment :
             navigate(command.destination)
         }
 
-        activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
-        activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
-        activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
-        activityViewModel.flowOfPaneRow.launchCollectionInLifecycleScope(::onPaneRowChanged)
-        activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
-        activityViewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
-        activityViewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
-        activityViewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        activityViewModel.flowOfSearchFeedback.filterNotNull().launchCollectionInLifecycleScope(::onSearchFeedback)
-        activityViewModel.flowOfLastCompletedSearch.filterNotNull().launchCollectionInLifecycleScope(::onLastCompletedSearchChanged)
-        activityViewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
-        activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
-        activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
-        viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
-        activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
-        activityViewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
-        searchViewModel.advancedSearchFlow.launchCollectionInLifecycleScope(::advancedSearchChanged)
-        searchViewModel.searchTextFlow.launchCollectionInLifecycleScope(::onSearchViewTextChanged)
-        searchViewModel.closeSearchViewFlow.launchCollectionInLifecycleScope(::onSearchViewClosed)
+        activityViewModel.flowOfReverseDirection.collectInLifecycle(::reverseDirectionChanged)
+        activityViewModel.flowOfIsTruncated.collectInLifecycle(::onIsTruncatedChanged)
+        activityViewModel.flowOfSelectedRows.collectInLifecycle(::onSelectedRowsChanged)
+        activityViewModel.flowOfPaneRow.collectInLifecycle(::onPaneRowChanged)
+        activityViewModel.flowOfActiveColumns.collectInLifecycle(::onColumnsChanged)
+        activityViewModel.flowOfCardsUpdated.collectInLifecycle(::cardsUpdatedChanged)
+        activityViewModel.flowOfMultiSelectModeChanged.collectInLifecycle(::onMultiSelectModeChanged)
+        activityViewModel.flowOfSearchState.collectInLifecycle(::searchStateChanged)
+        activityViewModel.flowOfSearchFeedback.filterNotNull().collectInLifecycle(::onSearchFeedback)
+        activityViewModel.flowOfLastCompletedSearch.filterNotNull().collectInLifecycle(::onLastCompletedSearchChanged)
+        activityViewModel.flowOfColumnHeadings.collectInLifecycle(::onColumnNamesChanged)
+        activityViewModel.flowOfCardStateChanged.collectInLifecycle(::onCardsMarkedEvent)
+        activityViewModel.flowOfToggleSelectionState.collectInLifecycle(::onToggleSelectionStateUpdated)
+        viewModel.flowOfSearchForDecks.collectInLifecycle(::onSearchForDecks)
+        activityViewModel.flowOfScrollRequest.collectInLifecycle(::autoScrollTo)
+        activityViewModel.flowOfCanSearch.collectInLifecycle(::onCanSaveChanged)
+        searchViewModel.advancedSearchFlow.collectInLifecycle(::advancedSearchChanged)
+        searchViewModel.searchTextFlow.collectInLifecycle(::onSearchViewTextChanged)
+        searchViewModel.closeSearchViewFlow.collectInLifecycle(::onSearchViewClosed)
         // Since the Browse tab is phone-only, we don't accept side-by-side (tablet) requests
         if (isHostedInBottomNavigation()) {
             activityViewModel.flowOfNoteEditorCommand
                 .filterIsInstance<NoteEditorCommand.LaunchActivity>()
-                .launchCollectionInLifecycleScope(::onLaunchNoteEditor)
+                .collectInLifecycle(::onLaunchNoteEditor)
         }
-        searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
-        searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
-        activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
-        activityViewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
-        activityViewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
-        activityViewModel.flowOfSortTypeChanged.launchCollectionInLifecycleScope(::onSortTypeChanged)
-        activityViewModel.flowOfCurrentSort.launchCollectionInLifecycleScope(::onCurrentSortChanged)
+        searchViewModel.submittedSearchFlow.filterNotNull().collectInLifecycle(::onSearchSubmitted)
+        searchViewModel.userMessageFlow.filterNotNull().collectInLifecycle(::onUserMessage)
+        activityViewModel.searchRequestFlow.collectInLifecycle(::onSearchRequestUpdated)
+        activityViewModel.flowOfChangeNoteType.collectInLifecycle(::onChangeNoteType)
+        activityViewModel.flowOfSaveSearchNamePrompt.collectInLifecycle(::onSaveSearchNamePrompt)
+        activityViewModel.flowOfSortTypeChanged.collectInLifecycle(::onSortTypeChanged)
+        activityViewModel.flowOfCurrentSort.collectInLifecycle(::onCurrentSortChanged)
     }
 
     private fun setupFragmentResultListeners() {

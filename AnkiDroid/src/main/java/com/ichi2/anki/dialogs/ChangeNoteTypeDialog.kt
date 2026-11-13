@@ -68,7 +68,7 @@ import com.ichi2.anki.sync.launchCatchingRequiringOneWaySync
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.InitStatus
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.Themes
 import com.ichi2.utils.LanguageUtil
@@ -177,7 +177,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     private fun bindSaveButtonState(binding: DialogChangeNoteTypeBinding) {
         // disabled by default until hasChangesFlow emits true
         binding.btnSave.isEnabled = false
-        viewModel.hasChangesFlow.launchCollectionInLifecycleScope {
+        viewModel.hasChangesFlow.collectInLifecycle {
             binding.btnSave.isEnabled = it
         }
     }

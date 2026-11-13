@@ -84,7 +84,7 @@ import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
 import com.ichi2.anki.utils.showSearchError
 import com.ichi2.themes.Themes
@@ -536,14 +536,14 @@ open class CardBrowser :
             }
         }
 
-        viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
-        viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
-        viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
-        viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
-        viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
-        viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.flowOfLastCompletedSearch.filterNotNull().launchCollectionInLifecycleScope(::onLastCompletedSearchChanged)
-        viewModel.flowOfNoteEditorCommand.launchCollectionInLifecycleScope(::onNoteEditorCommand)
+        viewModel.flowOfSearchQueryExpanded.collectInLifecycle(::onSearchQueryExpanded)
+        viewModel.flowOfSelectedRows.collectInLifecycle(::onSelectedRowsChanged)
+        viewModel.flowOfFilterQuery.collectInLifecycle(::onFilterQueryChanged)
+        viewModel.flowOfDeckId.collectInLifecycle(::onDeckIdChanged)
+        viewModel.flowOfMultiSelectModeChanged.collectInLifecycle(::onMultiSelectModeChanged)
+        viewModel.flowOfSearchState.collectInLifecycle(::searchStateChanged)
+        viewModel.flowOfLastCompletedSearch.filterNotNull().collectInLifecycle(::onLastCompletedSearchChanged)
+        viewModel.flowOfNoteEditorCommand.collectInLifecycle(::onNoteEditorCommand)
     }
 
     private fun hideKeyboard() {

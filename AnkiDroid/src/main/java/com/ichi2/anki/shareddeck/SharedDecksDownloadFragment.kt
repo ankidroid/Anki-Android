@@ -48,7 +48,7 @@ import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.ARG_DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.utils.ImportUtils
@@ -195,7 +195,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * FragmentManager work would throw, while this only runs while the screen is showing.
      */
     private fun observeLoginRequired() {
-        viewModel.uiState.launchCollectionInLifecycleScope { state ->
+        viewModel.uiState.collectInLifecycle { state ->
             if (state.phase == DownloadPhase.LoginRequired) {
                 Timber.i("Download requires login, returning to shared decks")
                 (activity as SharedDecksActivity).showLoginRequiredDialog()

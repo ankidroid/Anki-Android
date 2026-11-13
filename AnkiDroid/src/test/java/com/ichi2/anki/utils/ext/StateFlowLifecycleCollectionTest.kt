@@ -34,7 +34,7 @@ class StateFlowLifecycleCollectionTest : RobolectricTest() {
 
         controller.create().start().resume()
         with(controller.get()) {
-            concurrentFlow.launchCollectionInLifecycleScope { updates.add(it) }
+            concurrentFlow.collectInLifecycle { updates.add(it) }
         }
         advanceRobolectricLooper()
 
