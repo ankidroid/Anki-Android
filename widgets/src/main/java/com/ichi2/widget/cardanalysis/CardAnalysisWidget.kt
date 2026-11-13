@@ -213,7 +213,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val cornersTooRound = size.height > 0 && size.height < CORNER_RADIUS_DP * 3
             if (cornersTooRound) {
                 remoteViews.setInt(
-                    R.id.widget_deck_picker,
+                    android.R.id.background,
                     "setBackgroundResource",
                     R.drawable.widget_card_analysis_rounded_background_small,
                 )
