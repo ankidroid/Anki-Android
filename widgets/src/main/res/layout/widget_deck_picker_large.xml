@@ -1,9 +1,10 @@
 <RelativeLayout
-    android:id="@+id/widget_deck_picker"
+    android:id="@android:id/background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@drawable/widget_deck_picker_rounded_background"
+    android:clipToOutline="true"
     android:clickable="true"
     android:focusable="false"
     android:theme="@style/Theme.Material3.DynamicColors.DayNight">
