@@ -11,6 +11,8 @@ import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import kotlin.test.assertFailsWith
@@ -36,6 +38,46 @@ class SearchRequestTest : JvmTest() {
     }
 
     @Test
+    fun `deck filter - a deck named underscore star is not a wildcard`() {
+        // unescaped, '_*' matches every deck
+        val selected = addBasicNote("selected").apply { moveToDeck("_*") }
+        addBasicNote("unrelated").apply { moveToDeck("Other") }
+
+        val entry = deckSearch("_*")
+
+        assertThat(entry.toValidSearchString(), equalTo("""deck:\_\*"""))
+        assertThat(entry.cardsFound(), containsInAnyOrder(selected.firstCard().id))
+    }
+
+    @Test
+    fun `deck filter - wildcards in the deck name are escaped`() {
+        // '_' is a single character wildcard, so an unescaped name also matches 'Chapter11'
+        val selected = addBasicNote("selected").apply { moveToDeck("Chapter_1") }
+        addBasicNote("unrelated").apply { moveToDeck("Chapter11") }
+
+        assertThat(deckSearch("Chapter_1").cardsFound(), containsInAnyOrder(selected.firstCard().id))
+    }
+
+    @Test
+    fun `deck filter - OR alternatives stay within the deck`() {
+        val first = addBasicNote("first").apply { moveToDeck("Selected") }
+        val second = addBasicNote("second").apply { moveToDeck("Selected") }
+        addBasicNote("second").apply { moveToDeck("Other") }
+
+        val entry = deckSearch("Selected", query = "first OR second")
+
+        assertThat(entry.cardsFound(), containsInAnyOrder(first.firstCard().id, second.firstCard().id))
+    }
+
+    @Test
+    fun `deck filter - a deck in the query does not replace the deck filter`() {
+        addBasicNote("selected").apply { moveToDeck("Selected") }
+        addBasicNote("unrelated").apply { moveToDeck("Other") }
+
+        assertThat(deckSearch("Selected", query = "deck:Other").cardsFound(), empty())
+    }
+
+    @Test
     fun `search string generation - complex`() {
         assertThat(
             validEntry().toValidSearchString(),
@@ -56,6 +98,17 @@ class SearchRequestTest : JvmTest() {
             val searchStringResult = invalidRequest.toSearchStringResult()
             assertFailsWith<InvalidSearchException> { searchStringResult.getOrThrow() }
         }
+
+    /** A search for [query] in the existing deck named [deckName] */
+    private fun deckSearch(
+        deckName: String,
+        query: String = "",
+    ): SearchRequest {
+        val deck = DeckNameId(deckName, requireNotNull(col.decks.idForName(deckName)))
+        return SearchRequest(query = query, filters = SearchFilters.partial(decks = listOf(deck)))
+    }
+
+    private fun SearchRequest.cardsFound() = col.findCards(toValidSearchString())
 
     /**
      * Returns a [SearchRequest] with all filters set
