@@ -1729,6 +1729,9 @@ open class DeckPicker :
         keyCode: Int,
         event: KeyEvent,
     ): Boolean {
+        if (selectedBottomNavItem() == NavigationItem.BROWSER && window.currentFocus?.onCheckIsTextEditor() == true) {
+            return super.onKeyUp(keyCode, event)
+        }
         if (toolbarSearchView?.hasFocus() == true) {
             Timber.d("Skipping keypress: search action bar is focused")
             return true
