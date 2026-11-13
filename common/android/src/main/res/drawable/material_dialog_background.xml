@@ -24,6 +24,8 @@
     <shape android:shape="rectangle">
         <corners android:radius="@dimen/m3_alert_dialog_corner_size"/>
         <solid android:color="?attr/colorSurfaceContainerHigh"/>
+        <!-- Same stroke as frame_dialog_eink, so the fill follows its corners instead of overflowing them -->
+        <stroke android:width="?attr/widgetStrokeWidth" android:color="?attr/widgetStrokeColor"/>
     </shape>
 
 </inset>
