@@ -3,6 +3,7 @@ package com.ichi2.anki
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
@@ -37,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.dialogs.help.HelpItem
+import com.ichi2.compose.theme.widgetBorder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,9 +108,19 @@ private fun MoreGroup(
     rows: List<MoreRowItem>,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        rows.forEachIndexed { index, row ->
-            MoreGroupRow(row, shape = groupRowShape(index, rows.size))
+    val border = MaterialTheme.widgetBorder
+    if (border == null) {
+        Column(modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            rows.forEachIndexed { index, row ->
+                MoreGroupRow(row, shape = groupRowShape(index, rows.size))
+            }
+        }
+    } else {
+        val shape = RoundedCornerShape(20.dp)
+        Column(modifier.clip(shape).border(border, shape)) {
+            for (row in rows) {
+                MoreGroupRow(row, shape = RectangleShape)
+            }
         }
     }
 }
