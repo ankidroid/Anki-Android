@@ -31,10 +31,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DispatchKeyEventListener
@@ -74,8 +71,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
-import com.ichi2.anki.utils.ext.collectIn
-import com.ichi2.anki.utils.ext.collectLatestIn
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -179,38 +175,46 @@ class ReviewerFragment :
         setupWhiteboard()
         setupTimebox()
 
-        viewModel.finishResultFlow.collectIn(lifecycleScope) { result ->
-            requireActivity().run {
-                setResult(result)
-                finish()
-            }
-        }
+        val viewScope = viewLifecycleOwner.lifecycleScope
 
-        viewModel.statesMutationEvalFlow.collectIn(lifecycleScope) { eval ->
-            // Completion is signaled by `statesMutated`
-            webViewLayout.evaluateJavascript(eval) { result ->
-                // eval failed, usually a syntax error
-                // Note: this is `"null"`, not null
-                if ("null" == result) {
-                    viewModel.onStateMutationCallback()
+        viewModel.finishResultFlow
+            .onEach { result ->
+                requireActivity().run {
+                    setResult(result)
+                    finish()
                 }
-            }
-        }
+            }.launchIn(viewScope)
 
-        viewModel.showingAnswer.collectIn(lifecycleScope) { showingAnswer ->
-            // reset zoom if flipped
-            if (showingAnswer) reviewerWebViewClient.resetZoom()
-            // focus on the whole layout so motion controllers can be captured
-            // without navigating the other View elements
-            binding.rootLayout.requestFocus()
-        }
+        viewModel.statesMutationEvalFlow
+            .onEach { eval ->
+                // Completion is signaled by `statesMutated`
+                webViewLayout.evaluateJavascript(eval) { result ->
+                    // eval failed, usually a syntax error
+                    // Note: this is `"null"`, not null
+                    if ("null" == result) {
+                        viewModel.onStateMutationCallback()
+                    }
+                }
+            }.launchIn(viewScope)
 
-        // reset zoom if the card changes (incl. bury/suspend)
-        viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
-            reviewerWebViewClient.resetZoom()
-        }
+        viewModel.showingAnswer
+            .onEach { showingAnswer ->
+                // reset zoom if flipped
+                if (showingAnswer) reviewerWebViewClient.resetZoom()
+                // focus on the whole layout so motion controllers can be captured
+                // without navigating the other View elements
+                binding.rootLayout.requestFocus()
+            }.launchIn(viewScope)
 
-        viewModel.navigateFlow.collectIn(lifecycleScope) { destination ->
+        viewModel.onCardUpdatedFlow
+            .onEach {
+                // reset zoom if the card changes (incl. bury/suspend)
+                reviewerWebViewClient.resetZoom()
+                binding.typeAnswerEditText.text = null
+                whiteboardFragment?.resetCanvas()
+            }.launchIn(viewScope)
+
+        viewModel.navigateFlow.launchCollectionInViewLifecycleScope { destination ->
             if (destination is DeckOptionsDestination && destination.options.size > 1) {
                 requireContext().showDeckOptionsSelectionDialog(destination.options) { selectedOption ->
                     Timber.i("Deck options target selected: ${selectedOption.deckId}")
@@ -221,7 +225,7 @@ class ReviewerFragment :
                         ),
                     )
                 }
-                return@collectIn
+                return@launchCollectionInViewLifecycleScope
             }
             navigate(destination)
         }
@@ -229,7 +233,7 @@ class ReviewerFragment :
         binding.webViewContainer.setFrameStyle()
 
         if (Prefs.showAnswerFeedback) {
-            viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { rating ->
+            viewModel.answerFeedbackFlow.launchCollectionInViewLifecycleScope { rating ->
                 binding.answerFeedback.show(rating)
             }
         }
@@ -266,75 +270,66 @@ class ReviewerFragment :
         }
 
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
-        lifecycleScope.launch {
-            val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
+        val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
 
-            /**
-             * Sync keyboard suggestions and `imeHintLocales` on the answer field to match
-             * [typeInAnswer]. Returns `true` if anything changed (caller should `restartInput()`).
-             *
-             * @see TypeAnswerEditText.noSuggest
-             */
-            fun TypeAnswerEditText.syncTypeAnswerProperties(typeInAnswer: TypeAnswer): Boolean {
-                var changed = false
-                if (noSuggest != typeInAnswer.noSuggest) {
-                    noSuggest = typeInAnswer.noSuggest
-                    changed = true
-                }
-                if (imeHintLocales != typeInAnswer.imeHintLocales) {
-                    imeHintLocales = typeInAnswer.imeHintLocales
-                    changed = true
-                }
-                return changed
+        /**
+         * Sync keyboard suggestions and `imeHintLocales` on the answer field to match
+         * [typeInAnswer]. Returns `true` if anything changed (caller should `restartInput()`).
+         *
+         * @see TypeAnswerEditText.noSuggest
+         */
+        fun TypeAnswerEditText.syncTypeAnswerProperties(typeInAnswer: TypeAnswer): Boolean {
+            var changed = false
+            if (noSuggest != typeInAnswer.noSuggest) {
+                noSuggest = typeInAnswer.noSuggest
+                changed = true
+            }
+            if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                imeHintLocales = typeInAnswer.imeHintLocales
+                changed = true
+            }
+            return changed
+        }
+
+        viewModel.typeAnswerFlow.launchCollectionInViewLifecycleScope { typeInAnswer ->
+            if (typeInAnswer == null) {
+                binding.typeAnswerContainer.isVisible = false
+                return@launchCollectionInViewLifecycleScope
             }
 
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.typeAnswerFlow.collect { typeInAnswer ->
-                    if (typeInAnswer == null) {
-                        binding.typeAnswerContainer.isVisible = false
-                        return@collect
-                    }
+            if (isHtmlTypeAnswerEnabled) {
+                if (!autoFocusTypeAnswer) return@launchCollectionInViewLifecycleScope
+                webViewLayout.focusOnWebView()
+                // `evaluateJavascript()` doesn't trigger the IME unless the WebView
+                // has been touched before, so ´loadUrl()` is used instead.
+                webViewLayout.loadUrl("javascript:document.getElementById('typeans')?.focus();")
+                return@launchCollectionInViewLifecycleScope
+            }
 
-                    if (isHtmlTypeAnswerEnabled) {
-                        if (!autoFocusTypeAnswer) return@collect
-                        webViewLayout.focusOnWebView()
-                        // `evaluateJavascript()` doesn't trigger the IME unless the WebView
-                        // has been touched before, so ´loadUrl()` is used instead.
-                        webViewLayout.loadUrl("javascript:document.getElementById('typeans')?.focus();")
-                        return@collect
-                    }
-
-                    binding.typeAnswerContainer.isVisible = true
-                    binding.typeAnswerEditText.apply {
-                        if (syncTypeAnswerProperties(typeInAnswer)) {
-                            context?.getSystemService<InputMethodManager>()?.restartInput(this)
-                        }
-                        if (autoFocusTypeAnswer) {
-                            requestFocus()
-                        }
-                    }
+            binding.typeAnswerContainer.isVisible = true
+            binding.typeAnswerEditText.apply {
+                if (syncTypeAnswerProperties(typeInAnswer)) {
+                    context?.getSystemService<InputMethodManager>()?.restartInput(this)
+                }
+                if (autoFocusTypeAnswer) {
+                    requestFocus()
                 }
             }
         }
-        viewModel.onCardUpdatedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
-            binding.typeAnswerEditText.text = null
-        }
 
-        viewModel.onTypedAnswerResultFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { request ->
-                if (isHtmlTypeAnswerEnabled) {
-                    val script = """document.getElementById("typeans").value;"""
-                    webViewLayout.evaluateJavascript(script) { callback ->
-                        // the retuned string comes with surrounding `"`, so remove it once
-                        val typedAnswer = callback.removeSurrounding("\"")
-                        request.complete(typedAnswer)
-                    }
-                } else {
-                    val typedAnswer = binding.typeAnswerEditText.text.toString()
+        viewModel.onTypedAnswerResultFlow.launchCollectionInViewLifecycleScope { request ->
+            if (isHtmlTypeAnswerEnabled) {
+                val script = """document.getElementById("typeans").value;"""
+                webViewLayout.evaluateJavascript(script) { callback ->
+                    // the retuned string comes with surrounding `"`, so remove it once
+                    val typedAnswer = callback.removeSurrounding("\"")
                     request.complete(typedAnswer)
                 }
+            } else {
+                val typedAnswer = binding.typeAnswerEditText.text.toString()
+                request.complete(typedAnswer)
             }
+        }
     }
 
     @NeedsTest("Whiteboard takes priority on key events")
@@ -395,19 +390,18 @@ class ReviewerFragment :
 
         binding.answerArea.setRelativeHeight(Prefs.newStudyScreenAnswerButtonSize)
 
-        viewModel.answerButtonsNextTimeFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { times ->
-                binding.answerArea.setNextTimes(times)
-            }
+        viewModel.answerButtonsNextTimeFlow.launchCollectionInViewLifecycleScope { times ->
+            binding.answerArea.setNextTimes(times)
+        }
 
         val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
-        viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
-            if (isAnswerShown) {
-                insetsController.hide(WindowInsetsCompat.Type.ime())
-            }
-            binding.answerArea.setAnswerState(isAnswerShown)
-        }
+        viewModel.showingAnswer
+            .onEach { isAnswerShown ->
+                if (isAnswerShown) {
+                    insetsController.hide(WindowInsetsCompat.Type.ime())
+                }
+                binding.answerArea.setAnswerState(isAnswerShown)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         if (Prefs.hideHardAndEasyButtons) {
             binding.answerArea.hideHardAndEasyButtons()
@@ -415,11 +409,9 @@ class ReviewerFragment :
     }
 
     private fun setupCounts() {
-        viewModel.countsFlow
-            .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { counts ->
-                binding.studyCounts.updateCounts(counts)
-            }
+        viewModel.countsFlow.launchCollectionInViewLifecycleScope { counts ->
+            binding.studyCounts.updateCounts(counts)
+        }
 
         lifecycleScope.launch {
             if (!CollectionPreferences.getShowRemainingDueCounts()) {
@@ -521,24 +513,23 @@ class ReviewerFragment :
 
     private fun setupAnswerTimer() {
         lifecycle.addObserver(viewModel.answerTimer)
-        viewModel.answerTimer.state.collectIn(lifecycleScope) { state ->
-            binding.timer.setup(state)
-        }
+        viewModel.answerTimer.state
+            .onEach { state ->
+                binding.timer.setup(state)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun setupResetProgress() {
-        viewModel.resetProgressFlow
-            .flowWithLifecycle(lifecycle)
-            .onEach {
-                showDialogFragment(ForgetCardsDialog())
-            }.launchIn(lifecycleScope)
+        viewModel.resetProgressFlow.launchCollectionInViewLifecycleScope {
+            showDialogFragment(ForgetCardsDialog())
+        }
         // TODO handle 'Reset progress' in the ViewModel instead of the activity, once
         //  a mechanism of showing a progress bar if the operation takes too long is implemented
         registerOnForgetHandler { listOf(viewModel.getCardId()) }
     }
 
     private fun setupCheckPronunciation() {
-        viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
+        viewModel.voiceRecorderEnabledFlow.launchCollectionInViewLifecycleScope { isEnabled ->
             if (isEnabled && binding.checkPronunciationContainer.getFragment<CheckPronunciationFragment?>() == null) {
                 childFragmentManager.commit {
                     add(binding.checkPronunciationContainer.id, CheckPronunciationFragment())
@@ -566,7 +557,7 @@ class ReviewerFragment :
             false,
         )
 
-        viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
+        viewModel.whiteboardEnabledFlow.launchCollectionInViewLifecycleScope { isEnabled ->
             val existingFragment = whiteboardFragment
             childFragmentManager.commit {
                 if (isEnabled) {
@@ -582,13 +573,10 @@ class ReviewerFragment :
                 }
             }
         }
-        viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
-            whiteboardFragment?.resetCanvas()
-        }
     }
 
     private fun setupTimebox() {
-        viewModel.timeBoxReachedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { timebox ->
+        viewModel.timeBoxReachedFlow.launchCollectionInViewLifecycleScope { timebox ->
             Timber.i("ReviewerFragment: Timebox reached (reps %d - secs %d)", timebox.reps, timebox.secs)
 
             viewModel.stopAutoAdvance()
@@ -613,50 +601,44 @@ class ReviewerFragment :
     }
 
     private fun setupActions() {
-        viewModel.actionFeedbackFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { message ->
-                showSnackbar(message, duration = 500)
-            }
+        viewModel.actionFeedbackFlow.launchCollectionInViewLifecycleScope { message ->
+            showSnackbar(message, duration = 500)
+        }
 
-        viewModel.editNoteTagsFlow.collectIn(lifecycleScope) { noteId ->
+        viewModel.editNoteTagsFlow.launchCollectionInViewLifecycleScope { noteId ->
             tagsDialogFactory.show(requireActivity(), noteIds = listOf(noteId))
         }
 
-        viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->
+        viewModel.setDueDateFlow.launchCollectionInViewLifecycleScope { cardId ->
             SetDueDateDialog.show(requireActivity(), listOf(cardId))
         }
 
-        viewModel.pageUpFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+        viewModel.pageUpFlow.launchCollectionInViewLifecycleScope {
             webViewLayout.pageUp()
         }
 
-        viewModel.pageDownFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+        viewModel.pageDownFlow.launchCollectionInViewLifecycleScope {
             webViewLayout.pageDown()
         }
 
         val repository = StudyScreenRepository()
 
-        viewModel.isMarkedFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { isMarked ->
-                if (!repository.isMarkShownInToolbar) {
-                    binding.markIcon.isVisible = isMarked
-                }
+        viewModel.isMarkedFlow.launchCollectionInViewLifecycleScope { isMarked ->
+            if (!repository.isMarkShownInToolbar) {
+                binding.markIcon.isVisible = isMarked
             }
+        }
         val flagView = binding.flagIcon
-        viewModel.flagFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { flag ->
-                if (!repository.isFlagShownInToolbar) {
-                    if (flag == Flag.NONE) {
-                        flagView.isVisible = false
-                    } else {
-                        flagView.setImageDrawable(ContextCompat.getDrawable(requireContext(), flag.drawableRes))
-                        flagView.isVisible = true
-                    }
+        viewModel.flagFlow.launchCollectionInViewLifecycleScope { flag ->
+            if (!repository.isFlagShownInToolbar) {
+                if (flag == Flag.NONE) {
+                    flagView.isVisible = false
+                } else {
+                    flagView.setImageDrawable(ContextCompat.getDrawable(requireContext(), flag.drawableRes))
+                    flagView.isVisible = true
                 }
             }
+        }
     }
 
     override fun onSelectedTags(

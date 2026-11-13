@@ -38,7 +38,6 @@ import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
@@ -152,9 +151,10 @@ abstract class CardViewerFragment(
     ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
-        viewModel.eval.collectIn(lifecycleScope) { eval ->
-            webViewLayout.evaluateJavascript(eval)
-        }
+        viewModel.eval
+            .onEach { eval ->
+                webViewLayout.evaluateJavascript(eval)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onStart() {
