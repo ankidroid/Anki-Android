@@ -16,10 +16,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 context(fragment: Fragment)
-fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+fun <T> Flow<T>.collectInLifecycle(block: suspend (T) -> Unit) {
     fragment.lifecycleScope.launch {
         fragment.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            this@launchCollectionInLifecycleScope.collect {
+            this@collectInLifecycle.collect {
                 if (isRobolectric) {
                     fragment.lifecycle.postOnNewHandlerIfAlive { block(it) }
                 } else {
@@ -47,18 +47,18 @@ fun <T> Flow<T>.launchCollectionInViewLifecycleScope(block: suspend (T) -> Unit)
 // Workaround a bug in overload resolution. Replace with the following when the compiler is fixed:
 //  state: Lifecycle.State = Lifecycle.State.STARTED
 context(activity: AnkiActivity)
-fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
-    launchCollectionInLifecycleScope(Lifecycle.State.STARTED, block)
+fun <T> Flow<T>.collectInLifecycle(block: suspend (T) -> Unit) {
+    collectInLifecycle(Lifecycle.State.STARTED, block)
 }
 
 context(activity: AnkiActivity)
-fun <T> Flow<T>.launchCollectionInLifecycleScope(
+fun <T> Flow<T>.collectInLifecycle(
     state: Lifecycle.State,
     block: suspend (T) -> Unit,
 ) {
     activity.lifecycleScope.launch {
         activity.lifecycle.repeatOnLifecycle(state) {
-            this@launchCollectionInLifecycleScope.collect {
+            this@collectInLifecycle.collect {
                 if (isRobolectric) {
                     activity.lifecycle.postOnNewHandlerIfAlive { block(it) }
                 } else {
@@ -70,11 +70,11 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(
 }
 
 context(activity: AnkiActivity)
-fun <T> StateFlow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+fun <T> StateFlow<T>.collectInLifecycle(block: suspend (T) -> Unit) {
     activity.lifecycleScope.launch {
         var lastValue: T? = null
         activity.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            this@launchCollectionInLifecycleScope.collect {
+            this@collectInLifecycle.collect {
                 // on re-resume, an unchanged value will be emitted for a StateFlow
                 if (lastValue == it) return@collect
                 lastValue = it

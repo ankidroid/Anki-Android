@@ -40,7 +40,7 @@ import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
 import com.ichi2.anki.utils.doOnApplyWindowInsets
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
@@ -155,7 +155,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     }
 
     private fun setupSummary() {
-        viewModel.state.launchCollectionInLifecycleScope { state ->
+        viewModel.state.collectInLifecycle { state ->
             val context = requireContext()
             val (iconRes, tintColor, summaryText) =
                 when (state.summaryStatus) {
@@ -193,7 +193,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                 with(this) { check.resolveAction() }
             }
         binding.checksList.adapter = checksAdapter
-        viewModel.state.launchCollectionInLifecycleScope { state ->
+        viewModel.state.collectInLifecycle { state ->
             val visibleChecks = state.checks.filter { it.result !is CheckResult.Unavailable }
             checksAdapter.submitList(visibleChecks)
         }

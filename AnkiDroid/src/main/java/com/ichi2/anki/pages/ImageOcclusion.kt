@@ -25,7 +25,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.ARG_IMAGE_OCCLUSION
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import timber.log.Timber
 
 /**
@@ -137,7 +137,7 @@ class ImageOcclusion : PageFragment(R.layout.page_image_occlusion) {
             deckNameView.text = name
         }
 
-        viewModel.deckNameFlow?.launchCollectionInLifecycleScope(::onDeckNameChanged) ?: run {
+        viewModel.deckNameFlow?.collectInLifecycle(::onDeckNameChanged) ?: run {
             deckNameView.isVisible = false
         }
     }

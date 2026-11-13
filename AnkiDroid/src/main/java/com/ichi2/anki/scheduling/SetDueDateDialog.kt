@@ -50,7 +50,7 @@ import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnImeHidden
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.openUrl
@@ -208,7 +208,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                 binding.changeInterval.also { cb ->
                     // `.also` is used as .isVisible is an extension, so Kotlin prefers
                     // incorrectly setting Fragment.isVisible
-                    viewModel.fsrsEnabled.launchCollectionInLifecycleScope {
+                    viewModel.fsrsEnabled.collectInLifecycle {
                         cb.isVisible = viewModel.canSetUpdateIntervalToMatchDueDate
                         cb.isChecked = viewModel.updateIntervalToMatchDueDate
                     }
