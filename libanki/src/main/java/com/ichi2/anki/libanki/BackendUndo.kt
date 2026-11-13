@@ -16,6 +16,14 @@ data class UndoStatus(
     // not currently used
     val lastStep: UndoStepCounter,
 ) {
+    @NotInPyLib
+    val undoAvailable: Boolean
+        get() = undo != null
+
+    @NotInPyLib
+    val redoAvailable: Boolean
+        get() = redo != null
+
     companion object {
         fun from(proto: UndoStatusProto): UndoStatus =
             UndoStatus(
@@ -35,10 +43,7 @@ fun Collection.undoLabel(): String? {
 }
 
 @NotInPyLib
-fun Collection.undoAvailable(): Boolean {
-    val status = undoStatus()
-    return status.undo != null
-}
+fun Collection.undoAvailable(): Boolean = undoStatus().undoAvailable
 
 @NotInPyLib
 fun Collection.redoLabel(): String? {
@@ -47,4 +52,4 @@ fun Collection.redoLabel(): String? {
 }
 
 @NotInPyLib
-fun Collection.redoAvailable(): Boolean = undoStatus().redo != null
+fun Collection.redoAvailable(): Boolean = undoStatus().redoAvailable
