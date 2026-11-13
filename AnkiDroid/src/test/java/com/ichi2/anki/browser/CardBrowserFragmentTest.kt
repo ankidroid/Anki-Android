@@ -14,11 +14,13 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.requireChildFragment
+import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.getVisibleRows
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SelectableDeck
@@ -29,9 +31,11 @@ import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.sameInstance
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.empty
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import kotlin.test.assertNotNull
 
 /** Test of [CardBrowserFragment] */
@@ -178,19 +182,21 @@ class CardBrowserFragmentTest : RobolectricTest() {
         }
 
     @Test
-    fun `filtered deck search escapes the deck name`() =
+    fun `filtered deck search is the browser search`() =
         withCardBrowserFragment {
-            val deckId = addDeck("Chapter_1")
+            // 'OR' binds looser than the selected deck, and '_' is a wildcard which also matches 'Chapter11'
+            val first = addBasicNote("first").apply { moveToDeck("Chapter_1") }
+            val second = addBasicNote("second").apply { moveToDeck("Chapter_1") }
+            addBasicNote("second").apply { moveToDeck("Chapter11") }
+            addBasicNote("first").apply { moveToDeck("Other") }
+            val deckId = requireNotNull(col.decks.idForName("Chapter_1"))
             activityViewModel.searchRequestFlow.update { request ->
-                request.copyFilters { it.copy(decks = listOf(DeckNameId("Chapter_1", deckId))) }
+                request.copy(query = "first OR second").copyFilters { it.copy(decks = listOf(DeckNameId("Chapter_1", deckId))) }
             }
 
-            // '_' is a single character wildcard, so an unescaped name also matches 'Chapter11'
-            assertThat(buildDeckNameSearch(), equalTo("""deck:Chapter\_1"""))
+            val search = filteredDeckSearch()
 
-            val selected = addBasicNote("In Chapter_1").apply { moveToDeck("Chapter_1") }
-            addBasicNote("In Chapter11").apply { moveToDeck("Chapter11") }
-            assertThat(col.findCards(buildDeckNameSearch()!!), equalTo(listOf(selected.firstCard().id)))
+            assertThat(col.findCards(search), containsInAnyOrder(first.firstCard().id, second.firstCard().id))
         }
 
     @Test
@@ -229,6 +235,21 @@ class CardBrowserFragmentTest : RobolectricTest() {
         val tools = requireChildFragment<AdvancedSearchFragment>(AdvancedSearchFragment.TAG)
         assertThat("Basic search visibility", basic.isVisible, equalTo(!advancedSearch))
         assertThat("Search tools visibility", tools.isVisible, equalTo(advancedSearch))
+    }
+
+    /** Opens the filtered deck screen, returning the search it was opened with */
+    private fun CardBrowserFragment.filteredDeckSearch(): String {
+        showFilteredDeckScreen()
+
+        val activity = shadowOf(requireActivity())
+        advanceRobolectricLooperUntil { activity.peekNextStartedActivity() != null }
+        val intent = requireNotNull(activity.nextStartedActivity)
+        assertThat(
+            intent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME),
+            equalTo(FilteredDeckOptionsFragment::class.java.name),
+        )
+        val arguments = requireNotNull(intent.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS))
+        return requireNotNull(arguments.getString(FilteredDeckOptionsFragment.ARG_SEARCH))
     }
 
     private suspend fun withStartedBrowser(block: suspend ActivityScenario<CardBrowser>.(CardBrowser) -> Unit) {

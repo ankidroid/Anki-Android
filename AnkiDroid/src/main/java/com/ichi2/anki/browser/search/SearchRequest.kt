@@ -6,6 +6,7 @@ import androidx.annotation.CheckResult
 import anki.search.SearchNode
 import anki.search.searchNode
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.SearchJoiner
 
 /**
@@ -49,11 +50,7 @@ data class SearchRequest(
                         add(searchNode { parsableText = query.trim() })
                     }
 
-                    add(
-                        filters.decks.toGroupNode { nameAndId ->
-                            searchNode { deck = nameAndId.name }
-                        },
-                    )
+                    add(filters.decks.toGroupNode { it.toSearchNode() })
                     add(filters.flags.toGroupNode { it.toSearchNode() })
                     add(filters.tags.toGroupNode { t -> searchNode { tag = t } })
                     add(
@@ -70,3 +67,14 @@ data class SearchRequest(
 
     companion object
 }
+
+/**
+ * The backend escapes wildcards in deck names, except for a deck named exactly `_*`,
+ * which is left as a wildcard matching every deck
+ */
+private fun DeckNameId.toSearchNode(): SearchNode =
+    if (name == "_*") {
+        searchNode { parsableText = """deck:\_\*""" }
+    } else {
+        searchNode { deck = name }
+    }
