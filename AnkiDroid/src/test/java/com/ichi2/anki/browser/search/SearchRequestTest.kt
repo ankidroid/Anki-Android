@@ -78,6 +78,18 @@ class SearchRequestTest : JvmTest() {
     }
 
     @Test
+    fun `deck filter - a renamed deck uses its current name`() {
+        val selected = addBasicNote("selected").apply { moveToDeck("Selected") }
+        val entry = deckSearch("Selected")
+
+        // the request keeps the old name, which is then reused by another deck
+        col.decks.rename(requireNotNull(col.decks.idForName("Selected")), "Renamed")
+        addBasicNote("unrelated").apply { moveToDeck("Selected") }
+
+        assertThat(entry.cardsFound(), containsInAnyOrder(selected.firstCard().id))
+    }
+
+    @Test
     fun `search string generation - complex`() {
         assertThat(
             validEntry().toValidSearchString(),

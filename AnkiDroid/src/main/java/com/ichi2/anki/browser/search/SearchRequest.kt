@@ -69,12 +69,17 @@ data class SearchRequest(
 }
 
 /**
+ * Uses the deck's current name, as it may have been renamed after it was selected.
+ *
  * The backend escapes wildcards in deck names, except for a deck named exactly `_*`,
  * which is left as a wildcard matching every deck
  */
-private fun DeckNameId.toSearchNode(): SearchNode =
-    if (name == "_*") {
+context(col: Collection)
+private fun DeckNameId.toSearchNode(): SearchNode {
+    val currentName = col.decks.nameIfExists(id) ?: name
+    return if (currentName == "_*") {
         searchNode { parsableText = """deck:\_\*""" }
     } else {
-        searchNode { deck = name }
+        searchNode { deck = currentName }
     }
+}
