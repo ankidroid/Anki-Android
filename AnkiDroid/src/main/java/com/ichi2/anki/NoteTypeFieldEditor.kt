@@ -19,7 +19,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -179,7 +178,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                 Timber.i("Ignoring %s while an earlier input waits for the collection", key)
                 return
             }
-            pendingInput = bundleOf(PENDING_KEY to key, PENDING_VALUE to result)
+            pendingInput =
+                Bundle().apply {
+                    putString(PENDING_KEY, key)
+                    putBundle(PENDING_VALUE, result)
+                }
         } else {
             applyDialogInput(key, result)
         }
@@ -340,7 +343,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                             ConfirmationDialog.newFullSyncInstance(
                                 context = this@NoteTypeFieldEditor,
                                 requestKey = REQUEST_ADD_FIELD,
-                                result = bundleOf(RESULT_FIELD_NAME to fieldName),
+                                result = Bundle().apply { putString(RESULT_FIELD_NAME, fieldName) },
                             ),
                         )
                     }
@@ -523,7 +526,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                     ConfirmationDialog.newFullSyncInstance(
                         context = this@NoteTypeFieldEditor,
                         requestKey = REQUEST_REPOSITION_FIELD,
-                        result = bundleOf(RESULT_FIELD_INDEX to newPosition - 1),
+                        result = Bundle().apply { putInt(RESULT_FIELD_INDEX, newPosition - 1) },
                     ),
                 )
             }
@@ -601,7 +604,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
     }
 
     fun handleAction(contextMenuAction: NoteTypeFieldEditorContextMenuAction) {
-        onDialogInput(INPUT_CONTEXT_MENU_ACTION, bundleOf(INPUT_ACTION to contextMenuAction.name))
+        onDialogInput(INPUT_CONTEXT_MENU_ACTION, Bundle().apply { putString(INPUT_ACTION, contextMenuAction.name) })
     }
 
     private fun performAction(contextMenuAction: NoteTypeFieldEditorContextMenuAction) {

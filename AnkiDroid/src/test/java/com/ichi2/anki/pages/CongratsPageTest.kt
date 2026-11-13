@@ -2,8 +2,8 @@
 package com.ichi2.anki.pages
 
 import android.app.Activity
+import android.os.Bundle
 import android.os.Looper
-import androidx.core.os.bundleOf
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
@@ -231,7 +231,7 @@ class CongratsPageTest : RobolectricTest() {
         onFragment { page ->
             page.requireActivity().supportFragmentManager.setFragmentResult(
                 CustomStudyAction.REQUEST_KEY,
-                bundleOf(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION to action.ordinal),
+                Bundle().apply { putInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION, action.ordinal) },
             )
         }
     }
