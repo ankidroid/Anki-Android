@@ -13,7 +13,7 @@
         android:id="@+id/chip_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:scrollbars="horizontal"
+        android:scrollbars="none"
         android:paddingBottom="4dp"
 
         app:layout_constraintEnd_toStartOf="@+id/toggle_advanced_search"
