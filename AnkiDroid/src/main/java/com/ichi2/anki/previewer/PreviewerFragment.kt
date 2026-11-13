@@ -36,8 +36,8 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.getIntOrNull
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -201,7 +201,7 @@ class PreviewerFragment :
             bindingMap.onGenericMotionEvent(event)
         }
 
-        viewModel.showingAnswer.collectIn(lifecycleScope) {
+        viewModel.showingAnswer.launchCollectionInViewLifecycleScope {
             // focus on the whole layout so motion controllers can be captured
             // without navigating the other View elements
             binding.root.requestFocus()

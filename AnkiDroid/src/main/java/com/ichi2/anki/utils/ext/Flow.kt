@@ -9,30 +9,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.common.utils.android.isRobolectric
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-
-fun <T> Flow<T>.collectLatestIn(
-    scope: CoroutineScope,
-    action: suspend (value: T) -> Unit,
-): Job =
-    scope.launch {
-        collectLatest(action)
-    }
-
-fun <T> Flow<T>.collectIn(
-    scope: CoroutineScope,
-    collector: FlowCollector<T>,
-): Job =
-    scope.launch {
-        collect(collector)
-    }
 
 context(fragment: Fragment)
 fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {

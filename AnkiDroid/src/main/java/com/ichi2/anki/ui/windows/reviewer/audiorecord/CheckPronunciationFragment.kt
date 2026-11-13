@@ -13,13 +13,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentCheckPronunciationBinding
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
-import com.ichi2.anki.utils.ext.collectIn
+import com.ichi2.anki.utils.ext.launchCollectionInViewLifecycleScope
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
 
@@ -106,44 +104,36 @@ class CheckPronunciationFragment : Fragment(R.layout.fragment_check_pronunciatio
     }
 
     private fun observeViewModel() {
-        viewModel.isPlaybackVisibleFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isVisible ->
+        viewModel.isPlaybackVisibleFlow.launchCollectionInViewLifecycleScope { isVisible ->
             binding.playView.isVisible = isVisible
             binding.recordView.setRecordDisplayVisibility(!isVisible)
         }
-        viewModel.playbackProgressFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { progress ->
-                binding.playView.setPlaybackProgress(progress)
-            }
-        viewModel.playbackProgressBarMaxFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { max ->
-                binding.playView.setPlaybackProgressBarMax(max)
-            }
-        viewModel.isPlayingFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isPlaying ->
+        viewModel.playbackProgressFlow.launchCollectionInViewLifecycleScope { progress ->
+            binding.playView.setPlaybackProgress(progress)
+        }
+        viewModel.playbackProgressBarMaxFlow.launchCollectionInViewLifecycleScope { max ->
+            binding.playView.setPlaybackProgressBarMax(max)
+        }
+        viewModel.isPlayingFlow.launchCollectionInViewLifecycleScope { isPlaying ->
             val iconRes = if (isPlaying) R.drawable.ic_replay else R.drawable.ic_play
             binding.playView.changePlayIcon(iconRes)
         }
-        viewModel.replayFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+        viewModel.replayFlow.launchCollectionInViewLifecycleScope {
             binding.playView.rotateReplayIcon()
         }
     }
 
     private fun observeStudyScreenViewModel() {
-        studyScreenViewModel.voiceRecorderEnabledFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { isEnabled ->
-                if (!isEnabled) {
-                    viewModel.resetAll()
-                    binding.recordView.forceReset()
-                }
+        studyScreenViewModel.voiceRecorderEnabledFlow.launchCollectionInViewLifecycleScope { isEnabled ->
+            if (!isEnabled) {
+                viewModel.resetAll()
+                binding.recordView.forceReset()
             }
-        studyScreenViewModel.replayVoiceFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) {
-                viewModel.onPlayOrReplay()
-            }
-        studyScreenViewModel.onCardUpdatedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { showingAnswer ->
+        }
+        studyScreenViewModel.replayVoiceFlow.launchCollectionInViewLifecycleScope {
+            viewModel.onPlayOrReplay()
+        }
+        studyScreenViewModel.onCardUpdatedFlow.launchCollectionInViewLifecycleScope {
             binding.playView.isVisible = false
             viewModel.onCancelPlayback()
             binding.recordView.setRecordDisplayVisibility(true)
