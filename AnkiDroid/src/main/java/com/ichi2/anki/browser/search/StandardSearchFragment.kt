@@ -42,6 +42,7 @@ import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.alignWithFirstLineOf
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import dev.androidbroadcast.vbpd.viewBinding
@@ -260,7 +261,11 @@ class StandardSearchFragment :
                     if (convertView != null) {
                         ViewSavedSearchItemBinding.bind(convertView)
                     } else {
-                        ViewSavedSearchItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                        ViewSavedSearchItemBinding.inflate(LayoutInflater.from(context), parent, false).also { binding ->
+                            binding.root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                                binding.favorite.alignWithFirstLineOf(binding.title)
+                            }
+                        }
                     }
 
                 val item = getItem(position)!!
