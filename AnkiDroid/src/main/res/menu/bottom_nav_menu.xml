@@ -8,14 +8,14 @@
     tools:ignore="UnusedResources">
 <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_list_black" />
+        android:icon="@drawable/bottom_nav_cards_stack_icon" />
     <item
         android:id="@+id/nav_browser"
         android:icon="@drawable/ic_flashcard_black"
         android:title="@string/bottom_nav_browse" />
     <item
         android:id="@+id/nav_stats"
-        android:icon="@drawable/ic_bar_chart_black" />
+        android:icon="@drawable/bottom_nav_leaderboard_icon" />
     <item
         android:id="@+id/nav_more"
         android:icon="@drawable/ic_menu_24"
