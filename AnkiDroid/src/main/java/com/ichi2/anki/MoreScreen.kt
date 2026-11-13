@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,7 +36,6 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.dialogs.help.HelpItem
 
@@ -69,11 +67,9 @@ fun MoreScreen(
                 .verticalScroll(scrollState)
                 .padding(top = 8.dp, bottom = 16.dp),
         ) {
-            MoreListRow(
-                icon = R.drawable.ic_settings_black,
-                title = stringResource(CommonString.settings),
-                minHeight = 56.dp,
-                onClick = onSettingsClick,
+            MoreGroup(
+                rows = listOf(MoreRowItem(R.drawable.ic_settings_black, stringResource(CommonString.settings), onSettingsClick)),
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help))
@@ -107,37 +103,6 @@ private fun MoreSectionHeader(text: String) {
 @Composable
 private fun MoreDivider() {
     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-}
-
-@Composable
-private fun MoreListRow(
-    @DrawableRes icon: Int,
-    title: String,
-    minHeight: Dp = 48.dp,
-    onClick: () -> Unit,
-) {
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .heightIn(min = minHeight)
-                .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(24.dp),
-        )
-        Spacer(Modifier.width(16.dp))
-        Text(
-            text = title,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-    }
 }
 
 private class MoreRowItem(
