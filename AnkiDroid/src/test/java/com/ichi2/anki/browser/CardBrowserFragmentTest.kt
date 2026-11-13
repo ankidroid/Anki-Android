@@ -29,6 +29,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.throwOnShowError
+import com.ichi2.testutils.withPref
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
@@ -233,6 +234,40 @@ class CardBrowserFragmentTest : RobolectricTest() {
             throwOnShowError = originalThrowOnShowError
         }
     }
+
+    @Test
+    fun `search view stays open after leaving and returning once a search was submitted`() =
+        withPref(Prefs::devUsingCardBrowserSearchView, true) {
+            runTest {
+                withStartedBrowser { browser ->
+                    val fragment = browser.cardBrowserFragment
+                    val search = assertNotNull(fragment.searchView)
+                    search.show()
+                    advanceRobolectricLooper()
+                    fragment.searchViewModel.onSearchTextChanged("a")
+                    fragment.searchViewModel.submitCurrentSearch()
+                    browser.viewModel.searchJob?.join()
+                    advanceRobolectricLooper()
+                    assertThat("submitting closes the search view", search.isShowing, equalTo(false))
+
+                    search.show()
+                    advanceRobolectricLooper()
+                    fragment
+                        .requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+                        .binding.toggleAdvancedSearch
+                        .performClick()
+                    advanceRobolectricLooper()
+                    assertThat("search view open before leaving", search.isShowing, equalTo(true))
+
+                    stopBrowser()
+                    resumeBrowser { }
+                    advanceRobolectricLooper()
+
+                    assertThat("search view is still open", search.isShowing, equalTo(true))
+                    assertThat("Search tools still enabled", fragment.searchViewModel.advancedSearchFlow.value, equalTo(true))
+                }
+            }
+        }
 
     @Test
     fun `shortcut labels use Sentence case`() =

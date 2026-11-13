@@ -76,7 +76,7 @@ class CardBrowserSearchViewModel(
             it.entryToSearchString.size > MAX_SEARCH_HISTORY_ENTRIES
         }
 
-    val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
+    val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     val submittedSearchFlow = MutableSharedFlow<SearchRequest?>(extraBufferCapacity = 1, replay = 1)
 
