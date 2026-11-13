@@ -72,6 +72,7 @@
             android:scrollbars="horizontal"
             android:layout_marginTop="-8dp"
             android:paddingHorizontal="16dp"
+            android:clipToPadding="false"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <com.google.android.material.chip.ChipGroup

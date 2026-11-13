@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.widget.HorizontalScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.search.SearchView
@@ -14,8 +15,26 @@ import com.ichi2.testutils.simulateKeyboard
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.windowInsetsOf
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 
 class CardBrowserSearchViewScreenshotTest : ScreenshotTest() {
+    @Test
+    fun filterChips(
+        @TestParameter rtl: Boolean,
+    ) {
+        if (rtl) RuntimeEnvironment.setQualifiers("+ldrtl")
+        withCardBrowserFragment(useSearchView = true) {
+            advanceRobolectricLooper()
+            val scroller = requireView().findViewById<HorizontalScrollView>(R.id.chip_group)
+            val direction = if (rtl) "rtl" else "ltr"
+            captureScreen("${direction}_chips_start")
+
+            scroller.scrollTo(scroller.getChildAt(0).width, 0)
+            scroller.scrollTo(scroller.scrollX / 2, 0)
+            captureScreen("${direction}_chips_scrolled")
+        }
+    }
+
     @Test
     fun browser(
         @TestParameter landscape: Boolean,
