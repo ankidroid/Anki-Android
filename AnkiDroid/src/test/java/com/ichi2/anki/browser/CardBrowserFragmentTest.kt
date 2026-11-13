@@ -20,12 +20,15 @@ import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.requireChildFragment
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.getVisibleRows
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.throwOnShowError
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
@@ -35,7 +38,13 @@ import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.empty
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertNotNull
 
 /** Test of [CardBrowserFragment] */
@@ -198,6 +207,32 @@ class CardBrowserFragmentTest : RobolectricTest() {
 
             assertThat(col.findCards(search), containsInAnyOrder(first.firstCard().id, second.firstCard().id))
         }
+
+    @Test
+    fun `invalid browser query is not reported as a crash when creating a filtered deck`() {
+        val originalReporter = CrashReportService.getReporter()
+        val originalThrowOnShowError = throwOnShowError
+        val reporter = mock<CrashReporter>()
+        CrashReportService.setReporter(reporter)
+        try {
+            withCardBrowserFragment {
+                throwOnShowError = false
+                activityViewModel.setQuery("and").join()
+                advanceRobolectricLooper()
+
+                showFilteredDeckScreen()
+                advanceRobolectricLooper()
+                // The error handler sends its crash report when the dialog is dismissed.
+                requireNotNull(ShadowDialog.getLatestDialog()) { "the error is shown" }.dismiss()
+                advanceRobolectricLooper()
+
+                verify(reporter, never()).sendExceptionReport(any<Throwable>(), anyOrNull(), anyOrNull(), any())
+            }
+        } finally {
+            CrashReportService.setReporter(originalReporter)
+            throwOnShowError = originalThrowOnShowError
+        }
+    }
 
     @Test
     fun `shortcut labels use Sentence case`() =
