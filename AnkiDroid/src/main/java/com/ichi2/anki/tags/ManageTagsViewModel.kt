@@ -20,10 +20,12 @@ import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.text.Normalizer
 import anki.tags.TagTreeNode as BackendTagTreeNode
@@ -120,7 +122,6 @@ class ManageTagsViewModel : ViewModel() {
      */
     fun toggleCollapsed(tag: TagName): Job {
         tagOperation?.takeUnless { it.isCompleted }?.let { return it }
-        val previousSave = expansionSave
         val operation =
             viewModelScope.launch(start = CoroutineStart.LAZY) {
                 val node =
@@ -137,9 +138,12 @@ class ManageTagsViewModel : ViewModel() {
                         if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
                     }
                 updateState { it.copy(visibleNodes = computeVisibleNodes(searchQuery.value), error = null) }
-                previousSave?.join()
                 try {
-                    withCol { tags.setCollapsed(node.fullTag, newCollapsed) }
+                    // Queue every tap before a reopened screen can load the tree. These small
+                    // preference writes must finish even when closing clears this ViewModel.
+                    withContext(NonCancellable) {
+                        withCol { tags.setCollapsed(node.fullTag, newCollapsed) }
+                    }
                 } catch (e: CancellationException) {
                     throw e
                 } catch (e: Exception) {
