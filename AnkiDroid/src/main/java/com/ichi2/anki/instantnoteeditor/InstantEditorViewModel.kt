@@ -183,12 +183,14 @@ class InstantEditorViewModel :
      * Extracts the cloze ordinals from text (if any).
      *
      * `"{{c2::text}} {{c1::more}}"` => `[2, 1]`
+     *
+     * Nested and touching clozes are included: `"{{c1::H2{{c2::O}}}}"` => `[1, 2]`
      */
     @CheckResult
     private fun getClozeOrdinals(text: String): List<Int> =
-        clozePattern
+        clozeStartPattern
             .findAll(text)
-            .mapNotNull { it.groups[2]?.value?.toIntOrNull() }
+            .mapNotNull { it.groupValues[1].toIntOrNull() }
             .toList()
 
     /**
@@ -235,7 +237,8 @@ class InstantEditorViewModel :
      * The method also handles incrementing the cloze number based on the current cloze mode.
      *
      * @param text the text to be converted into a cloze deletion
-     * @return the cloze-deleted version of the input text or clean text if already cloze
+     * @return the cloze-deleted version of the input text, clean text if already cloze,
+     * or the unchanged text if it contains no word to cloze (e.g. an emoji)
      */
     fun buildClozeText(text: String): String {
         val cloze = processClozeUndo(text)
@@ -246,9 +249,11 @@ class InstantEditorViewModel :
 
         Timber.d("Text doesn't have cloze, selecting and adding cloze")
 
-        val matcher = clozeBuilderPattern.findAll(text).firstOrNull()
-
-        val clozeText: String?
+        val matcher = clozeBuilderPattern.find(text)
+        if (matcher == null) {
+            Timber.d("Text has no word to cloze")
+            return text
+        }
 
         val clozeNumber = currentClozeNumber.value
         if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
@@ -257,13 +262,12 @@ class InstantEditorViewModel :
         intClozeList.add(clozeNumber)
 
         // Extract the first, second, and third regex groups from the matcher
-        val punctuationAtStart: String? = matcher?.groups?.get(1)?.value
-        val capturedWord: String? = matcher?.groups?.get(2)?.value
-        val punctuationAtEnd: String? = matcher?.groups?.get(4)?.value
+        val punctuationAtStart = matcher.groupValues[1]
+        val capturedWord = matcher.groupValues[2]
+        val punctuationAtEnd = matcher.groupValues[4]
 
-        clozeText = "$punctuationAtStart{{c$clozeNumber::$capturedWord}}$punctuationAtEnd"
-
-        return clozeText
+        // keep any text outside the match, e.g. the '°C' of '20°C'
+        return text.replaceRange(matcher.range, "$punctuationAtStart{{c$clozeNumber::$capturedWord}}$punctuationAtEnd")
     }
 
     /**
@@ -274,40 +278,59 @@ class InstantEditorViewModel :
      *
      * Example: word is {{c`number`::`text`}} then it extracts `number`
      *
+     * The outer cloze is used, as it's the one [updateClozeNumber] changes:
+     * '{{c1::{x} + {{c2::y}}}}' is 1
+     *
      * @param word The word to be analyzed for a cloze number.
      * @return The extracted cloze number as an integer if found, otherwise null.
      */
     fun getWordClozeNumber(word: String): Int? {
-        val matcher = clozePattern.find(word)
-        return matcher
-            ?.groups
-            ?.get(2)
-            ?.value
+        val outerCloze = outerClozeRanges(word).firstOrNull() ?: return null
+        return clozeStartPattern
+            .matchAt(word, outerCloze.first)
+            ?.groupValues
+            ?.get(1)
             ?.toIntOrNull()
     }
 
     fun getWordsFromFieldText(): List<String> {
         val sentence = actualClozeFieldText.value ?: ""
 
+        // Only split on spaces outside of clozes, as a cloze may contain spaces.
+        // Text touching a cloze stays in the same word, e.g. '{{c1::20}}°C'
+        val clozeRanges = outerClozeRanges(sentence)
+
         val words = mutableListOf<String>()
-        var lastIndex = 0
+        var wordStart = 0
 
-        clozePattern.findAll(sentence).forEach { matchResult ->
-            val cloze = matchResult.value
-            // Add any words between the last match and this match
-            val inBetween = sentence.substring(lastIndex, matchResult.range.first)
-            words.addAll(inBetween.trim().split(spaceRegex).filter { it.isNotEmpty() })
-            words.add(cloze)
-            lastIndex = matchResult.range.last + 1
-        }
+        spaceRegex
+            .findAll(sentence)
+            .filter { space -> clozeRanges.none { space.range.first in it } }
+            .forEach { space ->
+                words.addAll(splitBetweenClozes(sentence.substring(wordStart, space.range.first)))
+                wordStart = space.range.last + 1
+            }
+        words.addAll(splitBetweenClozes(sentence.substring(wordStart)))
 
-        // Add any remaining words after the last cloze
-        if (lastIndex < sentence.length) {
-            val remaining = sentence.substring(lastIndex).trim()
-            words.addAll(remaining.split(spaceRegex).filter { it.isNotEmpty() })
-        }
+        return combineWordsWithPunctuation(words.filter { it.isNotEmpty() })
+    }
 
-        return combineWordsWithPunctuation(words)
+    /**
+     * Splits [word] before each cloze after the first, so a word has at most one cloze
+     * and can be renumbered on its own: '{{c1::a}}-{{c2::b}}' -> ['{{c1::a}}-', '{{c2::b}}']
+     *
+     * A nested cloze stays in its outer cloze: '{{c1::H2{{c2::O}}}}' is one word
+     */
+    private fun splitBetweenClozes(word: String): List<String> {
+        val outerClozes = outerClozeRanges(word)
+        // clozePattern isn't used: its trailing punctuation would include the '{{' of the next cloze
+        val clozeStarts =
+            clozeStartPattern
+                .findAll(word)
+                .map { it.range.first }
+                .filter { start -> outerClozes.none { start in it && start != it.first } }
+        val wordStarts = listOf(0) + clozeStarts.drop(1) + word.length
+        return wordStarts.zipWithNext { start, end -> word.substring(start, end) }
     }
 
     private fun combineWordsWithPunctuation(words: List<String>): List<String> {
@@ -332,11 +355,11 @@ class InstantEditorViewModel :
         word: String,
         newClozeNumber: Int,
     ): String =
-        clozePattern.replace(word) { matchResult ->
-            val punctutationAtStart = matchResult.groupValues[1]
-            val content = matchResult.groupValues[3]
-            val punctutationAtEnd = matchResult.groupValues[4]
-            "$punctutationAtStart{{c$newClozeNumber::$content}}$punctutationAtEnd"
+        // a nested cloze is a separate card, so only the outer cloze is renumbered.
+        // Reversed, so a renumbered cloze doesn't move the clozes before it
+        outerClozeRanges(word).reversed().fold(word) { text, cloze ->
+            val clozeStart = clozeStartPattern.matchAt(text, cloze.first) ?: return@fold text
+            text.replaceRange(clozeStart.range, "{{c$newClozeNumber::")
         }
 
     /**
@@ -363,6 +386,22 @@ class InstantEditorViewModel :
      *         if an undo is confirmed.
      */
     private fun processClozeUndo(text: String): String? {
+        // the outer cloze is removed, as it's the one shown by the chip: [getWordClozeNumber]
+        val outerCloze = outerClozeRanges(text).firstOrNull()
+        val outerClozeStart = outerCloze?.let { clozeStartPattern.matchAt(text, it.first) }
+        if (outerCloze != null && outerClozeStart != null) {
+            outerClozeStart.groupValues[1].toIntOrNull()?.let { clozeNumber ->
+                if (currentClozeNumber.value - clozeNumber == 1) {
+                    decrementClozeNumber()
+                }
+                shouldResetClozeNumber(clozeNumber)
+            }
+            // remove its '}}' and then its '{{cN::', keeping the answer and any nested cloze
+            return text
+                .removeRange(outerCloze.last - 1..outerCloze.last)
+                .removeRange(outerClozeStart.range)
+        }
+
         val matchResult = clozePattern.find(text)
         val capturedClozeNumber = matchResult?.groups?.get(2)?.value
         if (capturedClozeNumber != null && currentClozeNumber.value - capturedClozeNumber.toInt() == 1) {
@@ -383,7 +422,7 @@ class InstantEditorViewModel :
         val capturedWord: String = matchResult.groups[3]?.value ?: ""
         val punctuationAtEnd: String = matchResult.groups[4]?.value ?: ""
 
-        return punctuationAtStart + capturedWord + punctuationAtEnd
+        return text.replaceRange(matchResult.range, punctuationAtStart + capturedWord + punctuationAtEnd)
     }
 
     fun setEditorMode(mode: InstantNoteEditorActivity.EditMode) {
@@ -463,6 +502,37 @@ private val punctuationPattern = Regex("""\p{Punct}+$""")
 
 /** Used when splitting words **/
 private val spaceRegex = Regex("\\s+")
+
+/** The start of a cloze: {{c`number`:: **/
+private val clozeStartPattern = Regex("""\{\{c(\d+)::""")
+
+/**
+ * The ranges of the clozes in [text] which aren't inside another cloze, from '{{' to the
+ * matching '}}', so '{{c1::H2{{c2::O}}}}' is one range. A cloze without its '}}' has no range.
+ */
+private fun outerClozeRanges(text: String): List<IntRange> {
+    val ranges = mutableListOf<IntRange>()
+    var depth = 0
+    var outerStart = 0
+    var i = 0
+    while (i < text.length) {
+        val clozeStart = clozeStartPattern.matchAt(text, i)
+        when {
+            clozeStart != null -> {
+                if (depth == 0) outerStart = i
+                depth++
+                i = clozeStart.range.last + 1
+            }
+            depth > 0 && text.startsWith("}}", i) -> {
+                depth--
+                if (depth == 0) ranges.add(outerStart..i + 1)
+                i += 2
+            }
+            else -> i++
+        }
+    }
+    return ranges
+}
 
 /** Used to build cloze text here word is not null **/
 private val clozeBuilderPattern = "(\\p{Punct}*)((?:\\w|\\p{Pd}|\\p{Pc}|'|(\\(\\w+\\)))+)(\\p{Punct}*)".toRegex()
