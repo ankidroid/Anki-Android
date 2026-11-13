@@ -965,6 +965,15 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun `'preview' caps the input at 5 digits`() {
+        addBasicNote()
+        withStudyPreviewDialog {
+            onSubscreenEditText().perform(replaceText("123456"))
+            assertThat(binding.detailsEditText2.text.toString(), equalTo("12345"))
+        }
+    }
+
+    @Test
     fun `'review ahead' disables Create when no cards are due in the period`() =
         runTest {
             // a card due tomorrow matches 'review ahead by 1 day'
@@ -1161,6 +1170,43 @@ class CustomStudyDialogTest : RobolectricTest() {
                 assertThat("review-ahead: disabled when nothing matches", dialog.positiveButton.isEnabled, equalTo(false))
             }
         }
+
+    @Test
+    fun `'review forgotten cards' caps the input length`() {
+        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) { fragment ->
+            onSubscreenEditText().perform(replaceText("123"))
+            assertThat(
+                fragment.binding.detailsEditText2.text
+                    .toString(),
+                equalTo("12"),
+            )
+        }
+    }
+
+    @Test
+    fun `'study by card state or tag' caps the input length`() {
+        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+            onSubscreenEditText().perform(replaceText("123456"))
+            assertThat(
+                fragment.binding.detailsEditText2.text
+                    .toString(),
+                equalTo("12345"),
+            )
+        }
+    }
+
+    @Test
+    fun `'extend limits' dialogs cap the input length, allowing for the minus sign`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) {
+                onSubscreenEditText().perform(replaceText("-1234567"))
+                assertThat("$option negative", binding.detailsEditText2.text.toString(), equalTo("-12345"))
+
+                onSubscreenEditText().perform(replaceText("1234567"))
+                assertThat("$option positive", binding.detailsEditText2.text.toString(), equalTo("123456"))
+            }
+        }
+    }
 
     /** Adds a note to [deckName] whose card is due tomorrow */
     private fun addNoteDueTomorrow(deckName: String) {
