@@ -128,11 +128,15 @@ function parsePlayReleaseApkBuild(annotations) {
 /**
  * The comparison comment this workflow posted earlier, or null.
  * Anyone can write the marker into a comment, so only the Actions bot's comments count.
+ * Other bot comments can quote PR-controlled text that contains the marker (such as
+ * screenshot directory names), so the marker must start the body.
  */
 function selectComparisonComment(comments, marker) {
     return (
         (Array.isArray(comments) ? comments : []).find(
-            comment => comment?.user?.login === COMMENT_AUTHOR && comment.body?.includes(marker),
+            comment =>
+                comment?.user?.login === COMMENT_AUTHOR &&
+                String(comment.body ?? "").startsWith(marker),
         ) ?? null
     );
 }
