@@ -422,7 +422,11 @@ data class TagListItemState(
 /** Normalize partial search text without filling empty hierarchy components with "blank". */
 private fun String.foldForTagSearch(): String {
     val normalized = Normalizer.normalize(this, Normalizer.Form.NFC)
-    return if (normalized.isAscii()) normalized.lowercase() else UCharacter.foldCase(normalized, true)
+    if (normalized.isAscii()) return normalized.lowercase()
+    val folded = UCharacter.foldCase(normalized, true)
+    // Folding can decompose characters such as Greek ΐ, so normalize again before comparing.
+    // https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-3/#G34145
+    return Normalizer.normalize(folded, Normalizer.Form.NFC)
 }
 
 sealed class ManageTagsState {

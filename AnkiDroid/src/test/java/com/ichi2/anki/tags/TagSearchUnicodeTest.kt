@@ -20,6 +20,26 @@ class TagSearchUnicodeTest {
     }
 
     @Test
+    fun `filter matches Greek accents in either case`() {
+        val lower = "πρωτεΐνη"
+        val upper = "ΠΡΩΤΕΪ\u0301ΝΗ"
+        for ((name, query) in listOf(lower to upper, upper to lower)) {
+            val row = TagListItemState(name, name, 0, hasChildren = false, collapsed = false)
+            assertEquals(listOf(row), ManageTagsViewModel.applySearchFilter(listOf(row), query), "$name / $query")
+        }
+    }
+
+    @Test
+    fun `Greek accent search reveals matching children`() {
+        val parent = TagListItemState("science", "science", 0, hasChildren = true, collapsed = true)
+        val child = TagListItemState("science::πρωτεΐνη", "πρωτεΐνη", 1, hasChildren = false, collapsed = false)
+        assertEquals(
+            listOf(parent.copy(collapsed = false), child),
+            ManageTagsViewModel.applySearchFilter(listOf(parent, child), "ΠΡΩΤΕΪ\u0301ΝΗ"),
+        )
+    }
+
+    @Test
     fun `normalized path search reveals matching children`() {
         val parent = TagListItemState("café", "café", 0, hasChildren = true, collapsed = true)
         val child = TagListItemState("café::ος", "ος", 1, hasChildren = false, collapsed = false)
