@@ -86,7 +86,7 @@ class TagsDialogTest : RobolectricTest() {
             }
         val listener = Mockito.mock(TagsDialogListener::class.java)
         val args = TagsDialog().withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, ids).requireArguments()
-        FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_Light, TagsDialogFactory(listener)).use { scenario ->
+        FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_AnkiDroid, TagsDialogFactory(listener)).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onFragment { fragment ->
                 advanceRobolectricLooperUntil { fragment.binding.tagsList.adapter != null }
@@ -114,7 +114,7 @@ class TagsDialogTest : RobolectricTest() {
         val fragment = TagsDialog(listener).withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, listOf(addBasicNote().id))
         fragment.requireArguments().requireParcelable<IdsFile>(TagsDialog.ARG_TAGS_FILE).changeFile()
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup().get()
             fragment.show(activity.supportFragmentManager, "tags")
             advanceRobolectricLooper()
@@ -130,7 +130,7 @@ class TagsDialogTest : RobolectricTest() {
         val file = fragment.requireArguments().requireParcelable<IdsFile>(TagsDialog.ARG_TAGS_FILE)
         val savedState =
             Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-                controller.get().setTheme(CommonR.style.Theme_Light)
+                controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
                 val activity = controller.setup().get()
                 fragment.show(activity.supportFragmentManager, "tags")
                 advanceRobolectricLooper()
@@ -139,7 +139,7 @@ class TagsDialogTest : RobolectricTest() {
         assertTrue(file.delete())
         ShadowToast.reset()
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup(savedState).get()
             advanceRobolectricLooper()
             assertNull(activity.supportFragmentManager.findFragmentByTag("tags"))
@@ -214,7 +214,7 @@ class TagsDialogTest : RobolectricTest() {
                 .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_Light, factory).use { scenario ->
+        FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_AnkiDroid, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onFragment { Timber.d("Dialog successfully opened") }
         }
@@ -431,7 +431,7 @@ class TagsDialogTest : RobolectricTest() {
         factory: TagsDialogFactory? = null,
         block: (TagsDialog) -> Unit,
     ) {
-        FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_Light, factory).use { scenario ->
+        FragmentScenario.launch(TagsDialog::class.java, args, CommonR.style.Theme_AnkiDroid, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onFragment { tagsDialog: TagsDialog ->
                 advanceRobolectricLooperUntil { tagsDialog.binding.tagsList.adapter != null }

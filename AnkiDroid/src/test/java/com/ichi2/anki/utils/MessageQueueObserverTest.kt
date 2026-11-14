@@ -62,7 +62,7 @@ class MessageQueueObserverTest : RobolectricTest() {
         runTest {
             val waiting =
                 launch(start = CoroutineStart.UNDISPATCHED) {
-                    AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_Light)).showAndAwaitDismissal {}
+                    AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_AnkiDroid)).showAndAwaitDismissal {}
                 }
             val dialog = ShadowDialog.getLatestDialog()
 

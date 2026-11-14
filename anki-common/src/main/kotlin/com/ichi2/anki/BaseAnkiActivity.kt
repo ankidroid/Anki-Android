@@ -62,7 +62,9 @@ open class BaseAnkiActivity(
             }
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(activitySetup?.wrapForActiveProfile(newBase) ?: newBase)
+        val base = activitySetup?.wrapForActiveProfile(newBase) ?: newBase
+        activitySetup?.applyNightMode(base)
+        super.attachBaseContext(base)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

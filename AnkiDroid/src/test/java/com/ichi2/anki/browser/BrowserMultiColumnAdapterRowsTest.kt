@@ -17,7 +17,7 @@ import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
 class BrowserMultiColumnAdapterRowsTest : RobolectricTest() {
-    private val browserContext by lazy { ContextThemeWrapper(targetContext, CommonR.style.Theme_Light) }
+    private val browserContext by lazy { ContextThemeWrapper(targetContext, CommonR.style.Theme_AnkiDroid) }
 
     @Test
     fun `scroll during search refresh does not crash - Issue 17759`() =

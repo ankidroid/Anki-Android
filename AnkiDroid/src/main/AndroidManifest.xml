@@ -107,7 +107,7 @@
         android:preserveLegacyExternalStorage="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme_Light"
+        android:theme="@style/Theme.AnkiDroid"
         android:enableOnBackInvokedCallback="true"
         android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >
@@ -240,7 +240,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.DeckPicker"
-            android:theme="@style/Theme_Dark.Launcher"
+            android:theme="@style/Theme.AnkiDroid.Launcher"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
@@ -269,7 +269,7 @@
         <activity
             android:name="com.ichi2.anki.CardBrowser"
             android:label="@string/card_browser"
-            android:theme="@style/Theme_Dark.Launcher"
+            android:theme="@style/Theme.AnkiDroid.Launcher"
             android:exported="false"
             android:parentActivityName=".DeckPicker"
             />
@@ -319,7 +319,7 @@
         <activity
             android:name="com.ichi2.anki.Reviewer"
             android:exported="true"
-            android:theme="@style/Theme_Dark.Launcher"
+            android:theme="@style/Theme.AnkiDroid.Launcher"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
@@ -368,7 +368,7 @@
         <activity
             android:name="com.ichi2.anki.IntentHandler2"
             android:label="@string/fact_adder_intent_title"
-            android:theme="@style/Theme_Dark.Launcher"
+            android:theme="@style/Theme.AnkiDroid.Launcher"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             >

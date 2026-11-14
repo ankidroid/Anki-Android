@@ -1209,7 +1209,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         addBasicNote()
         val customStudy = CustomStudyDialog().apply { arguments = argumentsDisplayingSubscreen(option) }
         Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
-            controller.get().setTheme(CommonR.style.Base_Theme_Light)
+            controller.get().setTheme(CommonR.style.Theme_AnkiDroid)
             val activity = controller.setup().get()
             activity.showDialogFragment(customStudy)
             onSubscreenEditText().perform(replaceText(typed))

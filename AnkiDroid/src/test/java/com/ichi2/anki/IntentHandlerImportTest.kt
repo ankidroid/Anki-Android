@@ -24,7 +24,9 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -62,6 +64,18 @@ class IntentHandlerImportTest : RobolectricTest() {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
             shadowOf(Looper.getMainLooper()).idle()
             assertTrue(activity.isFinishing)
+        }
+
+    @Test
+    @Config(sdk = [24, Config.TARGET_SDK])
+    fun `intent handler preserves the system font size`() =
+        runTest {
+            RuntimeEnvironment.setFontScale(1.5f)
+            every { ImportUtils.prepareImport(any(), any()) } returns ImportResult.Failure("Unavailable file")
+
+            val activity = launchImport()
+
+            assertEquals(1.5f, activity.resources.configuration.fontScale)
         }
 
     @Test

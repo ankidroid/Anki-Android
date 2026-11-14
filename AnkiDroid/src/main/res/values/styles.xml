@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
 
-    <style name="Theme_Dark.Launcher">
+    <style name="Theme.AnkiDroid.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:colorBackground">@color/material_theme_grey</item>
+        <item name="android:statusBarColor">#3d3d3d</item>
+        <item name="android:navigationBarColor">@color/material_theme_grey</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
 
     <style name="Animation.Translucent" parent="@android:style/Animation.Translucent">

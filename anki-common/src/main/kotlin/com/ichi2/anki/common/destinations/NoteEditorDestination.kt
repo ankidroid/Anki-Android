@@ -20,6 +20,9 @@ sealed class NoteEditorDestination : Destination() {
         val deckId: DeckId? = null,
     ) : NoteEditorDestination()
 
+    /** Opens the Note Editor through the splash screen. */
+    data object AddNoteWithSplash : NoteEditorDestination()
+
     /**
      * Opens the Note Editor for image occlusion editing.
      * @property imageUri The image to occlude. May be null if not yet known.
