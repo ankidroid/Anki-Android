@@ -161,7 +161,6 @@ import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
-import com.ichi2.utils.setPaddedIcon
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
@@ -776,7 +775,6 @@ class CardBrowserFragment :
                     menu.wireUndoItemRtlCompliantAction { onMenuItemSelected(it) }
 
                     menu.findItem(R.id.action_flag).subMenu?.setupFlags()
-                    requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(menu)
                 }
 
                 override fun onPrepareMenu(menu: Menu) {
@@ -805,7 +803,7 @@ class CardBrowserFragment :
                     }
                     menu.findItem(R.id.action_mark_card).apply {
                         title = TR.sentenceCase.toggleMark
-                        setPaddedIcon(requireContext(), R.drawable.ic_star_border_white)
+                        setIcon(R.drawable.ic_star_border_white)
                         isVisible = vm.hasSelectedAnyRows()
                     }
                     menu.findItem(R.id.action_change_note_type).apply {
@@ -980,6 +978,13 @@ class CardBrowserFragment :
             menu.findItem(R.id.action_search_by_flag)?.isVisible = false
             menu.findItem(R.id.action_show_suspended)?.isVisible = false
             menu.findItem(R.id.action_sort_by_size)?.isVisible = false
+        }
+
+        menuHost.addPrepareMenuProvider { menu ->
+            if (activityViewModel.isInMultiSelectMode) {
+                // Apply overflow padding after 'Preview' is a search-bar button.
+                requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+            }
         }
     }
 

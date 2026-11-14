@@ -2,11 +2,13 @@
 
 package com.ichi2.anki
 
+import android.view.View
 import android.widget.HorizontalScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.search.SearchView
 import com.google.testing.junit.testparameterinjector.TestParameter
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.withCardBrowserFragment
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.ui.RecyclerFastScroller
@@ -16,8 +18,39 @@ import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.windowInsetsOf
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
+import kotlin.test.assertTrue
 
 class CardBrowserSearchViewScreenshotTest : ScreenshotTest() {
+    @Test
+    fun previewIconDuringSelection(
+        @TestParameter rtl: Boolean,
+    ) {
+        if (rtl) RuntimeEnvironment.setQualifiers("+ldrtl")
+        repeat(3) { addBasicNote("Card $it", "Answer $it") }
+        withCardBrowserFragment(useSearchView = true) {
+            (requireActivity() as CardBrowser).waitForSearchResults()
+            advanceRobolectricLooper()
+            val direction = if (rtl) "rtl" else "ltr"
+
+            fun capturePreview(state: String) {
+                val preview = requireNotNull(searchBar).findViewById<View>(R.id.action_preview_many)
+                assertTrue(preview?.isShown == true, "Preview must be visible in the new search bar")
+                captureScreen("${direction}_preview_$state")
+            }
+
+            capturePreview("before_selection")
+            val row = requireNotNull(cardsListView.findViewHolderForAdapterPosition(0)).itemView
+            assertTrue(row.performLongClick())
+            advanceRobolectricLooper()
+            assertTrue(activityViewModel.isInMultiSelectMode)
+            capturePreview("selected")
+
+            activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
+            advanceRobolectricLooper()
+            capturePreview("after_selection")
+        }
+    }
+
     @Test
     fun filterChips(
         @TestParameter rtl: Boolean,
