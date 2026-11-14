@@ -24,6 +24,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.databinding.FragmentStudyOptionsBinding
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.QueueType
@@ -483,7 +485,7 @@ class StudyOptionsFragmentTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "xlarge")
-    fun `Rebuild and Empty stay hidden until the panel shows the filtered deck`() {
+    fun `menu offers the actions of the shown deck until the panel shows the filtered deck`() {
         val shown = addDeck("Shown", setAsSelected = true)
         addNoteToDeck(shown)
         addNoteToDeck(addDeck("OtherHome"))
@@ -498,6 +500,7 @@ class StudyOptionsFragmentTest : RobolectricTest() {
                 fragment!!.onPrepareMenu(menu)
                 assertFalse(menu.findItem(R.id.action_rebuild).isVisible)
                 assertFalse(menu.findItem(R.id.action_empty).isVisible)
+                assertTrue(menu.findItem(R.id.action_custom_study).isVisible)
             },
             doneWhen = { true },
         )
@@ -545,6 +548,33 @@ class StudyOptionsFragmentTest : RobolectricTest() {
 
             assertEquals(undoStatus, col.undoStatus())
         }
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `congrats screen opens custom study for the shown deck before a refresh redraws the panel`() {
+        val shown = addDeck("Shown", setAsSelected = true)
+        val other = addDeck("Other")
+        addNoteToDeck(shown, queueType = QueueType.Suspended)
+        addNoteToDeck(other)
+        var customStudyDeck: DeckId? = null
+
+        withPanelBehindSelection(
+            shown,
+            other,
+            whileBehind = { fragment!!.binding.studyoptionsStart.performClick() },
+            doneWhen = {
+                customStudyDeck =
+                    supportFragmentManager.fragments
+                        .filterIsInstance<CustomStudyDialog>()
+                        .singleOrNull()
+                        ?.requireArguments()
+                        ?.getLong(CustomStudyViewModel.ARG_DECK_ID)
+                customStudyDeck != null
+            },
+        )
+
+        assertEquals(shown, customStudyDeck)
     }
 
     private fun addFilteredDecksWithACardEach(): Pair<DeckId, DeckId> {
