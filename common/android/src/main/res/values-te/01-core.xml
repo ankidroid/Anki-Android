@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>
     <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, చీటీలు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
-    <string name="context_menu_anki_card_label">Anki card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">చీటీల బ్రౌజర్</string>
+    <string name="context_menu_anki_card_label">అంకీ కార్డ్</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">సేకరణలను కలపడం సాధ్యం కాదు.\nమీరు ఏ సేకరణను ఉంచాలనుకుంటున్నారు?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">అంకిడ్రాయిడ్</string>
@@ -160,11 +160,11 @@
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">బ్యాక్గ్రౌండ్ మీడియా సింకింగ్ ను ప్రారంభింస్తుంది మరియు రివ్యూ రిమైండర్‌లను సృష్టించడానికి మిమ్మల్ని అనుమతిస్తుంది</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">అవర్సరం ఉంది</string>
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">ఐచ్ఛికం</string>
-    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
-    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">ఈ అనుమతిని మీరే సొంతంగా సెట్టింగ్ల నుంచి ఇవ్వాలి </string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">ఈ అనుమతిని మీరే సొంతంగా సెట్టింగ్ల నుంచి తీసివేయాలి </string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ఖాతాను తీసివేయండి</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">తక్షణ చీటి</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">ప్రొఫైల్ జోడించు </string>
 </resources>

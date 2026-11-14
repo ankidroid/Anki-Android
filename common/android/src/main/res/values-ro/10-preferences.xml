@@ -24,38 +24,38 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="enabled" comment="Generic label for something that is turned on">Enabled</string>
+    <string name="enabled" comment="Generic label for something that is turned on">Activat</string>
     <string name="disabled" comment="Generic label for something that is turned off">Dezactivat</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
+        <item quantity="one">%d minut</item>
         <item quantity="few">%d mins</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d minute</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Niciun rezultat</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
-    <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_studying" maxLength="41">Învățare</string>
+    <string name="pref_cat_system_wide" maxLength="41">Pentru tot sistemul</string>
+    <string name="pref_cat_reviewing" maxLength="41">Recapitulare</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizare</string>
+    <string name="pref_cat_scheduling" maxLength="41">Programare</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Tablă</string>
+    <string name="pref_cat_themes" maxLength="41">Teme</string>
+    <string name="pref_cat_gestures" maxLength="41">Gesturi</string>
+    <string name="pref_cat_controls" maxLength="41">Moduri de control</string>
     <string name="pref_cat_advanced" maxLength="41">Avansat</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
-    <string name="pref_cat_security" maxLength="41">Security</string>
+    <string name="pref_cat_editing" maxLength="41">Editare</string>
+    <string name="pref_cat_security" maxLength="41">Siguranță</string>
     <!-- Card template JavaScript API permissions -->
-    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
-    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
-    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <string name="allow_dangerous_js_api_title" maxLength="41">Permite global JavaScrips API-uri periculoase</string>
+    <string name="allow_dangerous_js_api_summ">Permite oricărui card sau șablon să citească și să modifice alte carduri, sau datele tale cu privire la colecțiile Anki.\nLasă oprit dacă nu ai încredere în toate cardurile și șabloanele din colecție.</string>
+    <string name="dangerous_js_api_denied_snackbar">Siguranță: S-a blocat orice apel nesigur JavaScript.\nDacă ai încredere în toate cardurile și șabloanele din colecție, asta poate fi deblocat din setările avansate</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
-    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_title" maxLength="41">Permite cardurilor să deschidă alte aplicații</string>
     <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
     <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->

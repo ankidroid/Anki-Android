@@ -26,15 +26,15 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">సొరుగు తెరవండి</string>
     <string name="drawer_close">సొరుగును మూసివేయండి</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">నోట్ సేవ్ చేయబడింది</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">కార్డ్ డెక్:</string>
     <string name="CardEditorNoteDeck" comment="Label of the field choosing which deck a note\'s cards go into, in the note editor.">డెక్:</string>
     <string name="CardEditorModel">రకం:</string>
     <string name="CardEditorTags">టాగ్లు:%1$s</string>
     <string name="CardEditorCards">కార్డులు:%1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="edit_occlusions">మూసివేతలను సవరించండి</string>
+    <string name="paste_from_clipboard" maxLength="28">క్లిప్ బోర్డు నుంచి అతికించు </string>
     <string name="add_new_filter_tags">జోడించు / వడపోత టాగ్లు</string>
     <string name="add_tag" maxLength="28">ట్యాగ్ను జోడించండి</string>
     <string name="check_all_tags" maxLength="28">అన్ని ట్యాగ్లను తనిఖీ చేయండి/ అన్ని ట్యాగ్లను అన్ చెక్ చేయండి</string>
@@ -45,15 +45,15 @@
     <string name="save_whiteboard" maxLength="28">వైట్‌బోర్డ్‌ను సేవ్ చేయండి</string>
     <string name="enable_stylus" maxLength="28">స్టైలస్ రాయడం ప్రారంభించండి</string>
     <string name="disable_stylus">స్టైలస్ రైటింగ్‌ని నిలిపివేయండి</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="eraser" maxLength="28">రబ్బరు</string>
+    <string name="add_brush" maxLength="28">బ్రష్ జోడించు </string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">ఎడమ</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">దిగువ</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">కుడి</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">మరిన్ని ఎంపికలు</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">సిరా</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">మందం </string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
     <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">వైట్బోర్డ్ ప్రారంభించండి</string>

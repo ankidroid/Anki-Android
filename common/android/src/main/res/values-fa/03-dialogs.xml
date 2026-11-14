@@ -45,11 +45,11 @@
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_extend_limits_title">تمدید محدودیت روزانه</string>
+    <string name="custom_study_increase">افزایش</string>
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_ahead_description">مرور کارت‌های دارای موعد در:</string>
+    <string name="custom_study_preview">پیش‌نمایش کارت‌های جدید اضافه‌شده در:</string>
     <string name="custom_study_tags">انتخاب x کارت از دسته کارت ها:</string>
     <string name="storage_full_title">حافظه</string>
     <string name="storage_almost_full_title">اوکی</string>
@@ -70,7 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">خروج</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش&#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">اجازه دادن</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
     <string name="dialog_positive_delete" maxLength="28">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -78,7 +78,7 @@
     <string name="dialog_positive_overwrite">رونويسي کردن</string>
     <string name="dialog_positive_repair">اصلاح</string>
     <string name="dialog_positive_replace">جایگزین کردن</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nتاریخ و زمان را تصحیح کنید یا «تاریخ و زمان خودکار» را فعال نمایید، سپس مجدداً همگام‌سازی کنید.\n\nزمان فعلی دستگاه شما: %2$s</string>
     <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
     <string name="dialog_invalid_custom_certificate">متن ارائه شده به یک گواهی X509 کدگذاری شده با PEM معتبر تبدیل نمی‌شود</string>
     <string name="dialog_invalid_custom_certificate_title">خطا در تجزیه گواهی</string>
@@ -87,7 +87,7 @@
     <string name="check_media_warning">با مجموعه‌های رسانه‌ای حجیم، این کار ممکن است بسیار زمان‌بر باشد. آیا ادامه می‌دهید؟</string>
     <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
     <string name="check_media_adding_missing_tag">در حال اضافه کردن تگ ها&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">برچسب‌ها اضافه شدند</string>
     <string name="delete_media_message">حذف رسانه&#8230;</string>
     <string name="delete_media_result_title">نتیجه حذف</string>
     <plurals name="delete_media_result_message">
@@ -106,7 +106,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
     <string name="permission_denied">مجوز رد شد.</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">دسترسی به میکروفون رد شد. لطفاً آن را در تنظیمات برنامه مجاز کنید.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">دیتابیس قفل است</string>
-    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">برنامهٔ AnkiDroid دیگری در حال استفاده از این مجموعه است. حتی اگر در ظاهر در حال اجرا نباشد، ممکن است تداخل ایجاد کند.\n\nبرای ادامهٔ استفاده از هر دو برنامه، «%s» را در تنظیمات پیشرفتهٔ یکی از برنامه‌ها تغییر دهید.\n\nبرای استفاده از این برنامه در حال حاضر، برنامهٔ متداخل را توقف اجباری (Force stop) کنید.</string>
     <string name="incompatible_database_version_title">نسخه پایگاه داده ناسازگار است</string>
     <string name="incompatible_database_version_summary">نسخه ی پایگاه داده پیشرفته‌تر از نسخه ای است که AnkiDroid توانایی کار کردن با آن را دارد. یا AnkiDroid را ارتقاء دهید یا درجه پایگاه داده را پایین آورید\n\nنسخه های همایت شده: %1$d\nنسخه پایگاه داده: %2$d\n\nگزینه های بازگرداندن زیر مجموعه شما را بازنویسی میکنند، ممکن تر با نسخه پایگاه داده سازگار:</string>
     <!-- Deck Picker Background-->
@@ -139,7 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">انتخاب زبان</string>
     <string name="locale_selection_dialog_summary">بعضی کیبورد‌های چند‌زبانه مثل GBoard توانایی این را دارند که هنگام تغییر نوشته زبانتان را تغییر دهند\n\nلطفا ویژگی “setImeHintLocales” را از سازنده‌ی کیبورد خود درخواست کنید اگر کیبوردتان توانایی تغییر زبان ندارد.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">زبان ناشناخته [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استفاده از AnkiDroid</string>
     <string name="help_item_ankidroid_manual">دفترچه راهنما AnkiDroid</string>
@@ -226,11 +226,11 @@
     <string name="change_cloze_mode">حالت کلوز را تغییر بده</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView سیستم قدیمی است. برخی ویژگی‌ها به درستی کار نخواهند کرد. لطفاً آن را به‌روزرسانی کنید. \n\nنسخه نصب‌شده: %1$d\nحداقل نسخه مورد نیاز: %2$d</string>
-    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
+    <string name="webview_unsupported_message">نسخهٔ WebView شما با AnkiDroid ناسازگار است. برخی ویژگی‌ها به‌درستی کار نخواهند کرد. لطفاً آن را به‌روزرسانی کنید.</string>
     <string name="compress">فشرده سازی</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
-    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
+    <string name="tts_no_engine_title">هیچ موتور تبدیل متن به گفتار (TTS) نصب نشده است</string>
+    <string name="tts_no_engine_message">برنامه‌ای نصب کنید که موتور تبدیل متن به گفتار را برای دستگاه شما فراهم کند.</string>
     <string name="tts_error_dialog_title">زبان پشتیبانی نشده است</string>
     <string name="tts_error_dialog_reason_text">موتور متن به گفتار <b>%1$s</b> این زبان را همایت نمیکند: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">موتور را تغییر بده</string>
@@ -264,11 +264,11 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">نام قالب‌بندی کارت %s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">اسم نوع یادداشت%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">از</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">به</string>
     <!-- Add and rename profile dialogs -->
-    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">تغییر نام نمایه</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">نام نمایه</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">نام نمایه نمی‌تواند خالی باشد</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">نام نمایه باید %1$d نویسه (کاراکتر) یا کمتر باشد  </string>
 </resources>

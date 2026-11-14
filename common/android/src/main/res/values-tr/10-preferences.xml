@@ -168,9 +168,9 @@
     <string name="use_current" maxLength="41">Yeni kartlar için deste</string>
     <string name="learn_cutoff" maxLength="41">Önceden öğrenme sınırı</string>
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
-    <string name="timeboxing" maxLength="41">Timeboxing</string>
-    <string name="use_timebox" maxLength="41">Use timebox</string>
-    <string name="time_limit_label" maxLength="41">Time limit</string>
+    <string name="timeboxing" maxLength="41">Zaman Kutulama</string>
+    <string name="use_timebox" maxLength="41">Zaman Kutulamayı kullan</string>
+    <string name="time_limit_label" maxLength="41">Zaman sınırı</string>
     <plurals name="timebox_minutes_suffix">
         <item quantity="one">dk</item>
         <item quantity="other">dk</item>
@@ -457,6 +457,6 @@
     <!-- External Directory Selection Preference -->
     <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Ayarlanmamış</string>
     <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Özel yol</string>
-    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
+    <string name="pref_enter_custom_path" maxLength="41">Özel yolu girin</string>
     <string name="pref_directory_not_writable">Dizin yazılabilir değil</string>
 </resources>
