@@ -67,6 +67,9 @@ object SentenceCaseExtension {
     fun checkMediaAction() = resourceCase(tr().mediaCheckCheckMediaAction(), R.string.sentence_check_media)
 
     @Composable
+    fun clearUnusedTags() = resourceCase(tr().browsingClearUnusedTags(), R.string.sentence_clear_unused_tags)
+
+    @Composable
     fun customStudy() = resourceCase(tr().actionsCustomStudy(), R.string.sentence_custom_study)
 
     /** The 'Empty Cards' menu action. For the window/dialog title, use [emptyCardsTitle]. */
@@ -118,6 +121,9 @@ object SentenceCaseExtension {
 
     @Composable
     fun renameDeck() = resourceCase(tr().actionsRenameDeck(), R.string.sentence_rename_deck)
+
+    @Composable
+    fun renameTag() = resourceCase(tr().actionsRenameTag(), R.string.sentence_rename_tag)
 
     @Composable
     fun deckOptions() = resourceCase(tr().deckConfigTitle(), R.string.sentence_deck_options)
