@@ -333,6 +333,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         render(CustomStudyInitialization.Loading)
         dialog.setOnShowListener {
+            if (!isAdded) return@setOnShowListener
             launchCatchingTask {
                 render(initialization.await())
             }

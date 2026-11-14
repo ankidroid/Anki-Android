@@ -93,6 +93,7 @@ class CustomStudyInitializationTest : RobolectricTest() {
                 assertEquals(DEFAULT_DECK_ID, col.decks.selected(), "A closed Custom Study must not change deck selection")
                 assertEquals(undoStatus, col.undoStatus())
             }
+            shadowOf(Looper.getMainLooper()).idle()
         } finally {
             ioDispatcher = previousIo
         }
