@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/type_answer_hint"
         android:imeOptions="actionDone"
+        android:importantForAutofill="no"
         android:inputType="text|textNoSuggestions" />
     <!--
          Looks like setting android:imeActionLabel confuses the
