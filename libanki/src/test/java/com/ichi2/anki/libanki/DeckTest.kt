@@ -9,6 +9,7 @@ import org.json.JSONObject
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -181,5 +182,32 @@ class DeckTest : InMemoryAnkiTest() {
         assertEquals(firstFilter.search, search)
         assertEquals(firstFilter.limit, limit)
         assertEquals(firstFilter.order, order)
+    }
+
+    @Test
+    fun `second filter updates the legacy array without changing the first filter`() {
+        val deck = Deck("""{"terms":[["first",5,0]]}""")
+        val terms = deck.jsonObject.getJSONArray("terms")
+        val first = terms.getJSONArray(0)
+        assertNull(deck.secondFilter)
+        deck.secondFilter = null
+        assertEquals(1, terms.length())
+
+        val second = Deck.Term("second", 10, 1)
+        deck.secondFilter = second
+        assertEquals(2, terms.length())
+        assertSame(second.array, terms.getJSONArray(1))
+        deck.secondFilter!!.search = "updated"
+        assertEquals("updated", terms.getJSONArray(1).getString(0))
+
+        val replacement = Deck.Term("replacement", 20, 2)
+        deck.secondFilter = replacement
+        assertEquals(2, terms.length())
+        assertSame(replacement.array, terms.getJSONArray(1))
+
+        deck.secondFilter = null
+        assertNull(deck.secondFilter)
+        assertEquals(1, terms.length())
+        assertSame(first, terms.getJSONArray(0))
     }
 }
