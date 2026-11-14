@@ -243,6 +243,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
                 )
                 assertEquals(mode, FullScreenMode.fromPreference(prefs))
             }
+            advanceRobolectricLooper()
         }
 
     @Test
