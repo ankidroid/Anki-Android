@@ -77,6 +77,7 @@ class ComposableTranslationsTest : RobolectricTest() {
             assertThat(trCase().frontTemplate(), equalTo("Front template"))
             assertThat(trCase().backTemplate(), equalTo("Back template"))
             assertThat(trCase().renameDeck(), equalTo("Rename deck"))
+            assertThat(trCase().renameTag(), equalTo("Rename tag"))
             assertThat(trCase().deleteDeck(), equalTo("Delete deck"))
             assertThat(trCase().createDeck(), equalTo("Create deck"))
             assertThat(trCase().selectDeck(), equalTo("Select deck"))

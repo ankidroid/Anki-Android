@@ -35,12 +35,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
@@ -52,7 +54,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param onConfirm called with the text, but only while it is valid
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
- * @param errorMessageFor error to show for the current input, null when valid
+ * @param errorMessageFor plain or annotated error to show for the current input, null when valid
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
@@ -72,7 +74,7 @@ fun TextInputDialog(
     maxLengthCounter: Int? = null,
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
-    errorMessageFor: (String) -> String? = { null },
+    errorMessageFor: (String) -> CharSequence? = { null },
     helperText: String? = null,
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
@@ -86,7 +88,8 @@ fun TextInputDialog(
     var submissionAttempted by rememberSaveable { mutableStateOf(false) }
     val errorMessage = if (validateOnInput || submissionAttempted) errorMessageFor(input.text) else null
     val displayedError = errorMessage?.takeIf { hasUserEdited || submissionAttempted }
-    val supportingMessage = displayedError ?: helperText
+    val supportingMessage =
+        (displayedError ?: helperText)?.let { it as? AnnotatedString ?: AnnotatedString(it.toString()) }
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
 
@@ -95,7 +98,11 @@ fun TextInputDialog(
         submissionAttempted = true
         if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
-    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
+    AnkiDroidDialog(
+        onDismissRequest = onDismissRequest,
+        modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()),
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
             shape = AlertDialogDefaults.shape,
@@ -141,7 +148,7 @@ fun TextInputDialog(
                                 {
                                     Row(Modifier.fillMaxWidth()) {
                                         if (supportingMessage != null || !validateOnInput) {
-                                            Text(supportingMessage.orEmpty(), Modifier.weight(1f))
+                                            Text(supportingMessage ?: AnnotatedString(""), Modifier.weight(1f))
                                         } else {
                                             Spacer(Modifier.weight(1f))
                                         }
