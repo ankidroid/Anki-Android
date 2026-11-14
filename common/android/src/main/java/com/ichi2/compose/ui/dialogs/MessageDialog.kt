@@ -2,29 +2,48 @@
 
 package com.ichi2.compose.ui.dialogs
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.content.res.use
 import com.ichi2.anki.common.android.R
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
+import androidx.appcompat.R as AppCompatR
+import com.google.android.material.R as MaterialR
 
 /**
- * A Material 3 [AlertDialog] with a text message and two actions.
+ * A Material 3 message dialog with two actions.
  *
  * Changes to the standard M3 dialog:
- * * 16dp vertical padding.
+ * * Primary body text and the theme's widget outline, matching AnkiDroid's View dialogs.
+ * * The View dialog theme's width, including its phone/tablet and orientation variants.
+ * * The View dialog title, body and action panel spacing.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
  *
@@ -39,33 +58,112 @@ fun MessageDialog(
     onDismissRequest: () -> Unit,
     dismissText: String = stringResource(R.string.dialog_cancel),
     enabled: Boolean = true,
-    properties: DialogProperties = DialogProperties(),
+    properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
-    AlertDialog(
+    val titleBottomPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_title_bottom_margin)
+    AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+        // Keep the View dialog's device width for long messages (verified on API 34/36).
+        // Robolectric does not match reality here.
+        modifier = Modifier.width(alertDialogWidth()),
         properties = properties,
-        title = {
-            // Read the window from inside AlertDialog's composition.
-            val window = (LocalView.current.parent as? DialogWindowProvider)?.window
-            SideEffect {
-                if (window != null && window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
-                    window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
+    ) {
+        Surface(
+            shape = AlertDialogDefaults.shape,
+            color = AlertDialogDefaults.containerColor,
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            shadowElevation = ankiDroidDialogElevation(),
+            border = MaterialTheme.widgetBorder,
+        ) {
+            Layout(
+                modifier = Modifier.padding(ankiDroidDialogContentPadding()),
+                content = {
+                    Text(
+                        title,
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = AlertDialogDefaults.titleContentColor,
+                        modifier = Modifier.padding(bottom = titleBottomPadding),
+                    )
+                    // The View dialog's message panel also has a 48dp minimum height.
+                    Box(Modifier.heightIn(min = 48.dp)) {
+                        Text(
+                            message,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.verticalScroll(rememberScrollState()),
+                        )
+                    }
+                    AnkiDroidDialogButtons(
+                        confirmText = confirmText,
+                        dismissText = dismissText,
+                        onConfirm = onConfirm,
+                        onDismissRequest = onDismissRequest,
+                        confirmEnabled = enabled,
+                    )
+                },
+            ) { children, constraints ->
+                // Reserve actions first so a long title or message cannot push them off-screen.
+                val actions = children[2].measure(constraints.copy(minHeight = 0))
+                val title =
+                    children[0].measure(
+                        constraints.copy(minHeight = 0, maxHeight = (constraints.maxHeight - actions.height).coerceAtLeast(0)),
+                    )
+                val body =
+                    children[1].measure(
+                        constraints.copy(
+                            minHeight = 0,
+                            maxHeight = (constraints.maxHeight - actions.height - title.height).coerceAtLeast(0),
+                        ),
+                    )
+                layout(constraints.maxWidth, title.height + body.height + actions.height) {
+                    title.placeRelative(0, 0)
+                    body.placeRelative(0, title.height)
+                    actions.placeRelative(0, title.height + body.height)
                 }
             }
-            Text(title)
-        },
-        text = {
-            Text(message, modifier = Modifier.verticalScroll(rememberScrollState()))
-        },
-        confirmButton = {
-            TextButton(onClick = onConfirm, enabled = enabled) { Text(confirmText) }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) { Text(dismissText) }
-        },
-    )
+        }
+    }
 }
+
+/** Resolve the View dialog's themed minimum width before window insets are consumed. */
+@SuppressLint("ConfigurationScreenWidthHeight")
+@Composable
+fun alertDialogWidth(): Dp {
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val density = LocalDensity.current
+    val resources = LocalResources.current
+    // Re-read on rotation or resizing: the theme has orientation and screen size variants.
+    return remember(context, configuration, density, resources) {
+        val metrics = resources.displayMetrics
+        // DecorView resolves fractions against the configured screen width. Compose's
+        // available width can already exclude a landscape cutout or system bar.
+        val availableWidth = configuration.screenWidthDp * metrics.density
+        // The width attributes come from the alert dialog overlay rather than the Activity theme.
+        val dialogTheme = TypedValue()
+        context.theme.resolveAttribute(AppCompatR.attr.alertDialogTheme, dialogTheme, true)
+        context.obtainStyledAttributes(dialogTheme.resourceId, intArrayOf(configuration.alertDialogMinWidthAttribute)).use {
+            val value = it.peekValue(0)
+            val pixels =
+                when (value?.type) {
+                    TypedValue.TYPE_DIMENSION -> value.getDimension(metrics)
+                    TypedValue.TYPE_FRACTION -> value.getFraction(availableWidth, availableWidth)
+                    else -> availableWidth
+                }
+            // DecorView truncates to whole pixels before measuring the dialog.
+            with(density) { pixels.toInt().toDp() }
+        }
+    }
+}
+
+@get:AttrRes
+private val Configuration.alertDialogMinWidthAttribute: Int
+    get() =
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            android.R.attr.windowMinWidthMajor
+        } else {
+            android.R.attr.windowMinWidthMinor
+        }
 
 /** @see MessageDialog */
 @Preview(name = "Confirm deletion", widthDp = 320)
