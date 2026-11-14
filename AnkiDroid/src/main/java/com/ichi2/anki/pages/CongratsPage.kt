@@ -39,35 +39,20 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicBoolean
 
-class CongratsPage :
-    PageFragment(),
-    ChangeManager.Subscriber {
+class CongratsPage : PageFragment() {
     override val pagePath: String = "congrats"
 
     private val viewModel by viewModels<CongratsViewModel>()
-
-    init {
-        ChangeManager.subscribe(this)
-    }
-
-    // TODO: move this to the ViewModel
-    override fun opExecuted(
-        changes: OpChanges,
-        handler: Any?,
-    ) {
-        // typically due to 'day rollover'. handler !== viewModel excludes changes this
-        // screen caused itself (eg. unburying), which are already handled directly
-        if (changes.studyQueues && handler !== viewModel) {
-            Timber.i("study queues updated")
-            viewModel.onStudyQueuesChanged()
-        }
-    }
 
     override fun onViewCreated(
         view: View,
@@ -88,7 +73,6 @@ class CongratsPage :
         viewModel.unburyState
             .onEach { state ->
                 when (state) {
-                    UnburyState.OpenStudy -> openStudyOptionsAndFinish()
                     UnburyState.SelectMode -> {
                         val unburyOptions =
                             mutableListOf(
@@ -122,25 +106,28 @@ class CongratsPage :
                 navigate(destination)
             }.launchIn(lifecycleScope)
 
-        // a rebuild triggered elsewhere (eg. deck options) while this screen wasn't visible may
-        // have been missed, so recheck on every STARTED entry instead of trusting only the
-        // opExecuted callback. Launched from inside repeatOnLifecycle so the collector is
-        // guaranteed active before it emits (congratsRefreshState has no replay cache, so
-        // emitting with no active collector silently drops the event).
-        // viewLifecycleOwner (not the fragment's own lifecycle) is required by lint - see
-        // UnsafeRepeatOnLifecycleDetector.
+        // Subscribe before refreshing on STARTED so reload requests reach an active collector.
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.refreshIfNeeded() }
-                viewModel.congratsRefreshState.collect { state ->
-                    when (state) {
-                        CongratsRefreshState.ReloadPage -> {
-                            Timber.d("congrats: reloading page after rebuild")
-                            webViewLayout.post { webViewLayout.reload() }
-                        }
-                        CongratsRefreshState.DeckHasCardsToStudy -> openStudyOptionsAndFinish()
+                launch(start = CoroutineStart.UNDISPATCHED) {
+                    viewModel.studyOptionsDestination.collect { destination ->
+                        Timber.i("opening study options")
+                        navigate(destination)
+                        requireActivity().finish()
+                        viewModel.onStudyOptionsOpened()
                     }
                 }
+                launch(start = CoroutineStart.UNDISPATCHED) {
+                    viewModel.congratsRefreshState.collect { state ->
+                        when (state) {
+                            CongratsRefreshState.ReloadPage -> {
+                                Timber.d("congrats: reloading page after rebuild")
+                                webViewLayout.post { webViewLayout.reload() }
+                            }
+                        }
+                    }
+                }
+                viewModel.refreshIfNeeded()
             }
         }
 
@@ -159,7 +146,7 @@ class CongratsPage :
             when (CustomStudyAction.fromBundle(bundle)) {
                 CustomStudyAction.CUSTOM_STUDY_SESSION,
                 CustomStudyAction.EXTEND_STUDY_LIMITS,
-                -> openStudyOptionsAndFinish()
+                -> viewModel.onCustomStudyCompleted()
             }
         }
     }
@@ -169,12 +156,6 @@ class CongratsPage :
             "unbury" to { viewModel.onUnbury() },
             "customStudy" to { onStudyMore() },
         )
-
-    private fun openStudyOptionsAndFinish() {
-        Timber.i("opening study options")
-        navigate(StudyOptionsDestination)
-        requireActivity().finish()
-    }
 
     private fun onStudyMore() {
         launchCatchingTask {
@@ -190,10 +171,50 @@ class CongratsPage :
 
 class CongratsViewModel :
     ViewModel(),
-    OnErrorListener {
+    OnErrorListener,
+    ChangeManager.Subscriber {
     override val onError = MutableSharedFlow<String>()
     val unburyState = MutableSharedFlow<UnburyState>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
+
+    // Keep the request until the fragment has performed navigation.
+    val studyOptionsDestination: SharedFlow<StudyOptionsDestination>
+        field = MutableSharedFlow<StudyOptionsDestination>(replay = 1)
+
+    // Navigation finishes this page, so ensure it only occur once.
+    private val studyOptionsRequested = AtomicBoolean(false)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun onStudyOptionsOpened() {
+        studyOptionsDestination.resetReplayCache()
+    }
+
+    init {
+        ChangeManager.subscribe(this)
+    }
+
+    override fun onCleared() {
+        ChangeManager.unsubscribe(this)
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        // Changes this ViewModel causes are already handled by the operation's completion.
+        if (changes.studyQueues && handler !== this) {
+            Timber.i("study queues updated")
+            onStudyQueuesChanged()
+        }
+    }
+
+    fun onCustomStudyCompleted() = launchCatchingIO { openStudyOptions() }
+
+    private suspend fun openStudyOptions() {
+        if (studyOptionsRequested.compareAndSet(false, true)) {
+            studyOptionsDestination.emit(StudyOptionsDestination)
+        }
+    }
 
     fun onUnbury() {
         launchCatchingIO {
@@ -217,7 +238,7 @@ class CongratsViewModel :
         undoableOp(handler = this) {
             sched.unburyDeck(decks.getCurrentId(), mode)
         }
-        unburyState.emit(UnburyState.OpenStudy)
+        openStudyOptions()
     }
 
     fun onDeckOptions() {
@@ -237,7 +258,7 @@ class CongratsViewModel :
 
     fun onStudyQueuesChanged() {
         launchCatchingIO {
-            if (congratsRefreshState.subscriptionCount.value == 0) {
+            if (congratsRefreshState.subscriptionCount.value == 0 && studyOptionsDestination.subscriptionCount.value == 0) {
                 missedRefresh = true
                 return@launchCatchingIO
             }
@@ -254,30 +275,29 @@ class CongratsViewModel :
         val stillFinished = isDeckFinished()
         if (!missedRefresh && stillFinished) return
         missedRefresh = false
-        congratsRefreshState.emit(
-            if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
-        )
+        emitRefreshState(stillFinished)
     }
 
     private suspend fun emitRefreshState() {
         missedRefresh = false
-        val stillFinished = isDeckFinished()
-        congratsRefreshState.emit(
-            if (stillFinished) CongratsRefreshState.ReloadPage else CongratsRefreshState.DeckHasCardsToStudy,
-        )
+        emitRefreshState(isDeckFinished())
+    }
+
+    private suspend fun emitRefreshState(stillFinished: Boolean) {
+        if (stillFinished) {
+            congratsRefreshState.emit(CongratsRefreshState.ReloadPage)
+        } else {
+            openStudyOptions()
+        }
     }
 
     private suspend fun isDeckFinished(): Boolean = withCol { currentDeckStudyState().availability == StudyAvailability.NoCardsAvailable }
 }
 
 sealed class UnburyState {
-    data object OpenStudy : UnburyState()
-
     data object SelectMode : UnburyState()
 }
 
 sealed class CongratsRefreshState {
     data object ReloadPage : CongratsRefreshState()
-
-    data object DeckHasCardsToStudy : CongratsRefreshState()
 }
