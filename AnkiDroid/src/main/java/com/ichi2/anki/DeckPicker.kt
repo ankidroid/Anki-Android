@@ -68,6 +68,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withStarted
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
@@ -134,9 +135,11 @@ import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.OptionsMenuState
 import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.deckpicker.SyncIconState
+import com.ichi2.anki.deckpicker.isDatabaseCorruption
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
@@ -200,6 +203,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
+import com.ichi2.anki.utils.awaitDismissal
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
@@ -208,6 +212,7 @@ import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -232,7 +237,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
@@ -494,6 +501,45 @@ open class DeckPicker :
             x = request.x,
             y = request.y,
         )
+    }
+
+    private fun findDatabaseRecovery() =
+        supportFragmentManager.fragments.filterIsInstance<DatabaseErrorDialog>().firstOrNull {
+            it.lifecycle.currentState != Lifecycle.State.DESTROYED
+        }
+
+    override fun showDatabaseErrorDialog(
+        errorDialogType: DatabaseErrorDialogType,
+        exceptionData: CustomExceptionData?,
+    ) {
+        val continuesRecovery = viewModel.inCorruptionRecovery && findDatabaseRecovery() != null
+        viewModel.inCorruptionRecovery = errorDialogType == DatabaseErrorDialogType.DIALOG_LOAD_FAILED || continuesRecovery
+        super.showDatabaseErrorDialog(errorDialogType, exceptionData)
+    }
+
+    private suspend fun awaitDatabaseRecovery(): Boolean {
+        var corruptionPromptClosed = false
+        while (true) {
+            val recovery = findDatabaseRecovery() ?: break
+            if (viewModel.inCorruptionRecovery) corruptionPromptClosed = true
+            recovery.lifecycle.currentStateFlow.first { it == Lifecycle.State.DESTROYED }
+            yield()
+        }
+        if (corruptionPromptClosed) viewModel.dropCorruptionErrors()
+        return corruptionPromptClosed
+    }
+
+    private suspend fun withStartedAfterRecovery(block: (afterCorruptionPrompt: Boolean) -> Unit) {
+        var afterCorruptionPrompt = false
+        do {
+            if (awaitDatabaseRecovery()) afterCorruptionPrompt = true
+            val recoveryOpened =
+                withStarted {
+                    val opened = findDatabaseRecovery() != null
+                    if (!opened) block(afterCorruptionPrompt)
+                    opened
+                }
+        } while (recoveryOpened)
     }
 
     // ----------------------------------------------------------------------------
@@ -954,6 +1000,12 @@ open class DeckPicker :
             fragment?.refreshInterface()
         }
 
+        fun onCreatedDeckSelected(param: Unit) {
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
+
         fun onStartupResponse(response: StartupResponse) {
             Timber.d("onStartupResponse: %s", response)
             when (response) {
@@ -1023,6 +1075,13 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
         viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
+            var dialog: AlertDialog? = null
+            withStartedAfterRecovery { afterCorruptionPrompt ->
+                if (!afterCorruptionPrompt || !error.isDatabaseCorruption) dialog = showException(error)
+            }
+            dialog?.awaitDismissal()
+        }
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().launchCollectionInLifecycleScope(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
@@ -1033,6 +1092,7 @@ open class DeckPicker :
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
+        viewModel.flowOfCreatedDeckSelected.launchCollectionInLifecycleScope(::onCreatedDeckSelected)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
         viewModel.flowOfShowContextMenu.launchCollectionInLifecycleScope(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.launchCollectionInLifecycleScope(::showDeckPickerRightClickContextMenu)
@@ -2377,32 +2437,18 @@ open class DeckPicker :
      * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
      * is often the hidden Default deck.
      */
-    private fun onDeckCreated(deckId: DeckId) =
-        launchCatchingTask {
-            viewModel.selectDeck(deckId).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
-        }
+    private fun onDeckCreated(deckId: DeckId) = viewModel.selectCreatedDeck(deckId)
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
      * @param did ID of the deck to delete
      */
-    fun deleteDeck(did: DeckId) =
-        launchCatchingTask {
-            viewModel.deleteDeck(did).join()
-        }
+    fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() =
-        launchCatchingTask {
-            viewModel.deleteSelectedDeck().join()
-        }
+    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck()
 
     private fun emptyFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.emptyFilteredDeck(did).join()
-        }
+        viewModel.emptyFilteredDeck(did)
     }
 
     override fun onAttachedToWindow() {
