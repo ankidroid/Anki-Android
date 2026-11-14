@@ -121,7 +121,14 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Credential Prep
+        env:
+          ANALYTICS_API_KEY: ${{ secrets.ANALYTICS_API_KEY }}
         run: |
+          if [ -z "$ANALYTICS_API_KEY" ]; then
+            echo "::warning::⚠️ The ANALYTICS_API_KEY secret is not set, so this release sends analytics with a dummy key"
+            echo "### ⚠️ ANALYTICS_API_KEY is not set: this release sends analytics with a dummy key" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "ANALYTICS_API_KEY=$ANALYTICS_API_KEY" >> $GITHUB_ENV
           echo "KEYSTOREPATH=$HOME/src/android-keystore" >> $GITHUB_ENV
           echo "KEYALIAS=nrkeystorealias" >> $GITHUB_ENV
           echo "KEYSTOREPWD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
