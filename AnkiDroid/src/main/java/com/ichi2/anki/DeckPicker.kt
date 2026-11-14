@@ -2182,7 +2182,7 @@ open class DeckPicker :
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
         val pane =
-            supportFragmentManager.findFragmentById(containerId) ?: DeckPickerSidePanel().also {
+            supportFragmentManager.findFragmentById(containerId) as? DeckPickerSidePanel ?: DeckPickerSidePanel().also {
                 supportFragmentManager.commitNow {
                     replace(containerId, it)
                     setPrimaryNavigationFragment(it)

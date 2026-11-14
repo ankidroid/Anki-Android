@@ -13,8 +13,10 @@ import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commitNow
 import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHandler
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.deckpicker.DeckPickerSidePanel
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption.SCHEDULE_REMINDERS
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
@@ -52,6 +54,22 @@ class DeckPickerPaneHistoryTest : RobolectricTest() {
 
     @After
     fun resetSpace() = BackupManagerTestUtilities.reset()
+
+    @Test
+    fun `recreation replaces a legacy study options fragment with a pane owner`() {
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        settle(controller.get())
+        // Simulate saved state from before side-panel navigation had its own owner.
+        controller.get().supportFragmentManager.commitNow {
+            replace(R.id.studyoptions_fragment, StudyOptionsFragment())
+        }
+
+        controller.recreate()
+        settle(controller.get())
+
+        assertTrue(controller.get().supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) is DeckPickerSidePanel)
+        assertNotNull(controller.get().fragment)
+    }
 
     @Test
     fun `shrinking removes reminders and their navigation history`() {
