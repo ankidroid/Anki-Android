@@ -972,6 +972,8 @@ open class DeckPicker :
         fun onFocusedDeckChanged(deckId: DeckId?) {
             // A fresh ViewModel has no focused deck until the collection is loaded.
             if (deckId == null) return
+            // Returning to the previous deck is still a new selection if another scroll was pending.
+            if (deckId != lastFocusedDeck) lastFocusedDeck = null
             tryShowStudyOptionsPanel()
             scrollToFocusedDeck()
         }

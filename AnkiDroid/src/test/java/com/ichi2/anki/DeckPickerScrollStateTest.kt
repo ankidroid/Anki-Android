@@ -9,7 +9,9 @@ import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
+import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackupManagerTestUtilities
 import io.mockk.every
 import io.mockk.mockkObject
@@ -161,6 +163,46 @@ class DeckPickerScrollStateTest : RobolectricTest() {
         settle(controller.get())
 
         assertDeckVisible(controller.get(), target)
+    }
+
+    @Test
+    fun `returning to the previous selection before a pending scroll reveals it`() {
+        val initial = col.decks.selected()
+        val intermediate = col.decks.id("Test Deck 03")
+        val activity = launch().get()
+        val viewModel = activity.viewModel
+        val adapter = list(activity).adapter as DeckAdapter
+        val initialRefresh = viewModel.updateDeckList()
+        advanceRobolectricLooperUntil {
+            initialRefresh.isCompleted && adapter.itemCount == 81 &&
+                adapter.currentList == viewModel.flowOfDeckList.value.data && viewModel.focusedDeck == initial
+        }
+        scrollAwayFromSelection(activity)
+
+        deliverSelectionWithoutDelayedScroll(viewModel, intermediate)
+        deliverSelectionWithoutDelayedScroll(viewModel, initial)
+        advanceRobolectricLooperUntil {
+            adapter.currentList == viewModel.flowOfDeckList.value.data &&
+                adapter.currentList.any { it.did == initial && it.isSelected }
+        }
+
+        assertDeckVisible(activity, initial)
+    }
+
+    private fun deliverSelectionWithoutDelayedScroll(
+        viewModel: DeckPickerViewModel,
+        deckId: Long,
+    ) {
+        val selection = viewModel.selectDeck(deckId)
+        repeat(1000) {
+            shadowOf(Looper.getMainLooper()).idle()
+            if (selection.isCompleted) {
+                assertEquals(deckId, viewModel.focusedDeck)
+                return
+            }
+            Thread.sleep(1)
+        }
+        assertTrue(selection.isCompleted, "Selection did not complete")
     }
 
     @Test
