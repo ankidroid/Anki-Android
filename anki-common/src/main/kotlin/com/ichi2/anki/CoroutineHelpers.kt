@@ -329,14 +329,14 @@ fun Fragment.launchCatchingViewTask(
 fun Context.showError(
     message: CharSequence,
     crashReportData: CrashReportData?,
-) {
+): AlertDialog? {
     crashReportData.throwIfDialogUnusable(message.toString())
 
     Timber.i("Error dialog displayed")
 
     val helpAction = crashReportData?.helpAction?.takeIf { it.canExecute(this) }
 
-    try {
+    return try {
         AlertDialog
             .Builder(this)
             .create {
@@ -364,6 +364,7 @@ fun Context.showError(
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
         crashReportData?.sendCrashReport()
+        null
     }
 }
 
