@@ -4,12 +4,10 @@
 package com.ichi2.anki
 
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import androidx.work.NetworkType
 import anki.collection.Progress
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withColExclusive
@@ -25,23 +23,12 @@ import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.fullUploadOrDownload
 import com.ichi2.anki.sync.syncCollection
-import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
-import com.ichi2.utils.dismissSafely
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
-import kotlin.time.Duration.Companion.milliseconds
 
 object SyncPreferences {
     const val PREF_CURRENT_SYNC_URI = "currentSyncUri"
@@ -357,52 +344,6 @@ fun shouldFetchMedia(): Boolean {
     val shouldFetchMedia = Prefs.shouldFetchMedia
     return shouldFetchMedia == ShouldFetchMedia.ALWAYS ||
         (shouldFetchMedia == ShouldFetchMedia.ONLY_UNMETERED && !NetworkUtils.isActiveNetworkMetered())
-}
-
-suspend fun monitorMediaSync(deckPicker: DeckPicker) {
-    val backend = CollectionManager.getBackend()
-    val scope = CoroutineScope(Dispatchers.IO)
-    var isAborted = false
-
-    val dialog =
-        withContext(Dispatchers.Main) {
-            AlertDialog
-                .Builder(deckPicker)
-                .setTitle(with(deckPicker) { TR.sentenceCase.mediaSyncLog })
-                .setMessage("")
-                .setPositiveButton(CommonString.dialog_continue) { _, _ ->
-                    scope.cancel()
-                }.setNegativeButton(TR.syncAbortButton()) { _, _ ->
-                    isAborted = true
-                    cancelMediaSync(backend)
-                }.show()
-        }
-
-    fun showMessage(msg: String) = deckPicker.showSnackbar(msg, Snackbar.LENGTH_SHORT)
-
-    scope.launch {
-        try {
-            while (true) {
-                // this will throw if the sync exited with an error
-                val resp = backend.mediaSyncStatus()
-                if (!resp.active) {
-                    break
-                }
-                val text = resp.progress.run { "$added\n$removed\n$checked" }
-                dialog.setMessage(text)
-                delay(100.milliseconds)
-            }
-            showMessage(if (isAborted) TR.syncMediaAborted() else TR.syncMediaComplete())
-        } catch (_: BackendInterruptedException) {
-            showMessage(TR.syncMediaAborted())
-        } catch (_: CancellationException) {
-            // do nothing
-        } catch (_: Exception) {
-            showMessage(TR.syncMediaFailed())
-        } finally {
-            dialog.dismissSafely()
-        }
-    }
 }
 
 /**

@@ -30,6 +30,7 @@ import androidx.core.view.ContentInfoCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -55,6 +56,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
+import com.ichi2.anki.databinding.ViewSyncProgressLayoutBinding
 import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.SyncIconState
@@ -81,6 +83,7 @@ import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.MediaSyncBottomSheet
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.Destination
@@ -1959,6 +1962,31 @@ class DeckPickerTest : RobolectricTest() {
 
             assertThat(menu.findItem(R.id.action_sync), nullValue())
         }
+
+    @Test
+    fun `long pressing the sync button shows the media sync status`() =
+        deckPicker {
+            createMenuJob?.join()
+
+            syncButton().button.performLongClick()
+            advanceRobolectricLooper()
+
+            assertNotNull(supportFragmentManager.findFragmentByTag(MediaSyncBottomSheet.TAG))
+        }
+
+    @Test
+    fun `tapping the sync button during a media sync shows the media sync status`() =
+        deckPicker {
+            createMenuJob?.join()
+            syncButton().progressIndicator.isVisible = true
+
+            syncButton().button.performClick()
+            advanceRobolectricLooper()
+
+            assertNotNull(supportFragmentManager.findFragmentByTag(MediaSyncBottomSheet.TAG))
+        }
+
+    private fun DeckPicker.syncButton() = ViewSyncProgressLayoutBinding.bind(assertNotNull(menu().findItem(R.id.action_sync).actionView))
 
     @Test
     fun `fatal error arriving after menu creation blanks the options menu`() =
