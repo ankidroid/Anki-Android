@@ -185,6 +185,10 @@ class ReviewerFragment :
                 }
             }.launchIn(viewScope)
 
+        viewModel.gestureFlow
+            .onEach { rawGesture -> reviewerWebViewClient.onGesture(rawGesture) }
+            .launchIn(viewScope)
+
         viewModel.statesMutationEvalFlow
             .onEach { eval ->
                 // Completion is signaled by `statesMutated`
@@ -691,24 +695,24 @@ class ReviewerFragment :
             }
         }
 
+        fun onGesture(rawGesture: RawGesture) {
+            if (isScrolling) return
+            gestureParser.parse(rawGesture, scale, webViewLayout) { gesture ->
+                if (gesture == null) return@parse
+                Timber.v("ReviewerFragment::onGesture %s", gesture)
+                // Stylus mode passes finger input through to the WebView. Whiteboard
+                // bindings still take priority while the whiteboard is visible.
+                if (whiteboardFragment?.takeIf { it.isVisible }?.onGesture(gesture) != true) {
+                    bindingMap.onGesture(gesture)
+                }
+            }
+        }
+
         override fun handleUrl(
             webView: WebView,
             url: Uri,
         ): Boolean {
             return when (url.scheme) {
-                "gesture" -> {
-                    if (isScrolling) return true
-                    gestureParser.parse(url, scale, webView) { gesture ->
-                        if (gesture == null) return@parse
-                        Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        // Stylus mode passes finger input through to the WebView. Whiteboard
-                        // bindings still take priority while the whiteboard is visible.
-                        if (whiteboardFragment?.takeIf { it.isVisible }?.onGesture(gesture) != true) {
-                            bindingMap.onGesture(gesture)
-                        }
-                    }
-                    true
-                }
                 "ankidroid" -> {
                     when (url.host) {
                         "show-answer" -> viewModel.onShowAnswer()
