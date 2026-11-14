@@ -37,9 +37,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.android.AnkiShakeDetector
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.isRobolectric
@@ -57,7 +55,7 @@ import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
-import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.reviewer.ScreenBindings
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
@@ -80,7 +78,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.ui.TypeAnswerEditText
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.show
-import com.squareup.seismic.ShakeDetector
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -99,17 +96,19 @@ class ReviewerFragment :
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener,
-    TagsDialogListener,
-    ShakeDetector.Listener {
+    TagsDialogListener {
     override val viewModel: ReviewerViewModel by viewModels()
 
     @VisibleForTesting
     internal val binding by viewBinding(FragmentReviewerBinding::bind)
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
-    private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
+
+    @VisibleForTesting
+    internal lateinit var bindings: ScreenBindings
+        private set
+
     private lateinit var reviewerWebViewClient: ReviewerWebViewClient
-    private var shakeDetector: AnkiShakeDetector? = null
     private val whiteboardFragment get() = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName) as? WhiteboardFragment
     private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
 
@@ -132,17 +131,11 @@ class ReviewerFragment :
             nightMode = Themes.isNightTheme,
         )
 
-    override fun onStart() {
-        super.onStart()
-        shakeDetector?.start()
-    }
-
     override fun onStop() {
         super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
         }
-        shakeDetector?.stop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -332,15 +325,10 @@ class ReviewerFragment :
         }
     }
 
-    @NeedsTest("Whiteboard takes priority on key events")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (
-            event.action != KeyEvent.ACTION_DOWN ||
-            view?.let { binding.typeAnswerEditText }?.isFocused == true
-        ) {
-            return false
-        }
-        return whiteboardFragment?.dispatchKeyEvent(event) == true || bindingMap.onKeyDown(event)
+        if (view?.let { binding.typeAnswerEditText }?.isFocused == true) return false
+        // the root layout keeps the focus, so the WebView only receives the gamepad buttons passed to it
+        return bindings.dispatchKeyEvent(event) || webViewLayout.dispatchGamepadKeyEvent(event)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -351,31 +339,21 @@ class ReviewerFragment :
         return true
     }
 
-    @NeedsTest("Whiteboard takes priority on shake events")
-    override fun hearShake() {
-        // Sensor events still arrive while a dialog or another window covers the reviewer.
-        if (view?.hasWindowFocus() != true) {
-            Timber.d("Ignoring shake: reviewer window does not have focus")
-            return
-        }
-
-        if (whiteboardFragment?.onScreenShake() != true) {
-            bindingMap.onGesture(Gesture.SHAKE)
-        }
-    }
-
     private fun setupBindings() {
-        bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
+        val bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
+        // only triggers actions while the whiteboard is visible, so the study screen bindings get the input otherwise
+        val whiteboardBindingMap =
+            BindingMap(sharedPrefs(), WhiteboardAction.entries) { action, binding ->
+                whiteboardFragment?.takeIf { it.isVisible }?.processAction(action, binding) == true
+            }
+        // the whiteboard bindings take priority over the study screen ones
+        bindings = ScreenBindings(this, whiteboardBindingMap, bindingMap)
+        // joystick events follow the focus, which the root layout keeps,
+        // so the WebView only receives the joystick movements passed to it
         binding.root.setOnGenericMotionListener { _, event ->
-            bindingMap.onGenericMotionEvent(event)
-        }
-        if (isBound(Gesture.SHAKE)) {
-            shakeDetector = AnkiShakeDetector.createInstance(requireContext(), this)
+            bindings.onGenericMotionEvent(event) || webViewLayout.dispatchGamepadMotionEvent(event)
         }
     }
-
-    private fun isBound(gesture: Gesture): Boolean =
-        bindingMap.isBound(gesture) || BindingMap(sharedPrefs(), WhiteboardAction.entries).isBound(gesture)
 
     private fun setupAnswerButtons() {
         if (!Prefs.showAnswerButtons) {
@@ -552,6 +530,7 @@ class ReviewerFragment :
                     f.setOnScrollByListener { y ->
                         webViewLayout.scrollVerticallyBy(y)
                     }
+                    f.setOnGestureListener { gesture -> bindings.onGesture(gesture) }
                 }
             },
             false,
@@ -564,9 +543,7 @@ class ReviewerFragment :
                     if (existingFragment != null) {
                         show(existingFragment)
                     } else {
-                        val newFragment = WhiteboardFragment()
-                        newFragment.gestureFallbackListener = { gesture -> bindingMap.onGesture(gesture) }
-                        add(R.id.web_view_container, newFragment, WhiteboardFragment::class.jvmName)
+                        add(R.id.web_view_container, WhiteboardFragment(), WhiteboardFragment::class.jvmName)
                     }
                 } else {
                     existingFragment?.let { hide(it) }
@@ -663,7 +640,7 @@ class ReviewerFragment :
         private val gestureParser by lazy {
             GestureParser(
                 scope = lifecycleScope,
-                isDoubleTapEnabled = bindingMap.isBound(Gesture.DOUBLE_TAP),
+                isDoubleTapEnabled = bindings.isBound(Gesture.DOUBLE_TAP),
             )
         }
         private var hasShownUnsupportedFeatureWarning = false
@@ -701,11 +678,9 @@ class ReviewerFragment :
                     gestureParser.parse(url, scale, webView) { gesture ->
                         if (gesture == null) return@parse
                         Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        // Stylus mode passes finger input through to the WebView. Whiteboard
-                        // bindings still take priority while the whiteboard is visible.
-                        if (whiteboardFragment?.takeIf { it.isVisible }?.onGesture(gesture) != true) {
-                            bindingMap.onGesture(gesture)
-                        }
+                        // Stylus mode passes finger input through to the WebView,
+                        // where the whiteboard bindings still take priority
+                        bindings.onGesture(gesture)
                     }
                     true
                 }

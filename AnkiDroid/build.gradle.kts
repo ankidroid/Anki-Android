@@ -314,6 +314,9 @@ android {
             all { test ->
                 // Profile coverage checks must rerun when the generated profiles change.
                 test.inputs.dir("src/main/generated/baselineProfiles")
+                // JUnit inspects every test class, but Robolectric's View shadows reference classes that
+                // only exist inside Robolectric: inspecting them makes the discovery of all tests fail
+                test.exclude("**/testutils/RecordingWebView*")
                 test.useJUnitPlatform {
                     // ./gradlew testFullDebugUnitTest -Pscreenshot
                     if (project.hasProperty("screenshot")) {
