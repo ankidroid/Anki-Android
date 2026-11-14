@@ -204,7 +204,9 @@ class DeckPickerViewModel :
     // warning dialog appears, we should immediately refresh the UI in case the user decides not to sync.
     // Otherwise, the progress indicator remains indefinitely. This replay=1 ensures that the collector will
     // receive the dismissal event even if it starts after the emission.
-    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
+
+    /** Emits whether the reload changed [focusedDeck], which already triggers a study panel refresh. */
+    val flowOfDecksReloaded = MutableSharedFlow<Boolean>(extraBufferCapacity = 1, replay = 1)
 
     // TODO: Use a sensible default rather than null
     val flowOfOptionsMenuState = MutableStateFlow<OptionsMenuState?>(null)
@@ -488,12 +490,14 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // current deck may have changed
-                focusedDeck = withCol { decks.current().id }
+                val currentDeckId = withCol { decks.current().id }
+                val focusedDeckChanged = focusedDeck != currentDeckId
+                focusedDeck = currentDeckId
                 refreshUndoMenuState()
 
                 // Reopening can leave the counts and selection unchanged after a skipped display refresh.
                 flowOfRefreshDeckList.emit(Unit)
-                flowOfDecksReloaded.emit(Unit)
+                flowOfDecksReloaded.emit(focusedDeckChanged)
             }
         this.loadDeckCounts = loadDeckCounts
         return loadDeckCounts
