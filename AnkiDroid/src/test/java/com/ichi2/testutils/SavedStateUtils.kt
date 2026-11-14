@@ -13,6 +13,8 @@ import org.robolectric.android.controller.ActivityController
 /** Stops the activity and captures its saved instance state. */
 fun ActivityController<*>.saveState(): Bundle = Bundle().also { pause().stop().saveInstanceState(it) }
 
+fun ActivityController<*>.saveAndDestroy(): Bundle = saveState().also { destroy() }
+
 fun Bundle.parcelSize(): Int = withParcel { it.dataSize() }
 
 fun Bundle.parcelledCopy(classLoader: ClassLoader?): Bundle =

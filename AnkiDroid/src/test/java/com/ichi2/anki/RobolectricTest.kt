@@ -11,6 +11,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.os.Bundle
 import android.os.Looper
 import android.widget.Button
 import android.widget.TextView
@@ -52,6 +53,9 @@ import com.ichi2.testutils.filter
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.rules.CollectionStorageRule
 import com.ichi2.testutils.withCollectionTestDispatcher
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
@@ -76,6 +80,8 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertNotNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -427,6 +433,45 @@ open class RobolectricTest(
 
     internal inline fun <reified T : Activity?> startRegularActivity(i: Intent? = null): T =
         startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
+
+    protected fun <T : Activity> restoreActivityController(
+        clazz: Class<T>,
+        intent: Intent,
+        savedState: Bundle,
+    ): ActivityController<T> =
+        Robolectric
+            .buildActivity(clazz, intent)
+            .also { saveControllerForCleanup(it) }
+            .setup(savedState)
+
+    protected fun <T : Activity> restoreWhileCollectionLoads(
+        clazz: Class<T>,
+        intent: Intent,
+        savedState: Bundle,
+        block: (controller: ActivityController<T>, releaseLoad: CountDownLatch) -> Unit,
+    ) {
+        val realCollection = col
+        val loadStarted = CountDownLatch(1)
+        val releaseLoad = CountDownLatch(1)
+        mockkObject(CollectionManager)
+        every { CollectionManager.isOpenUnsafe() } returns false
+        every { CollectionManager.getColUnsafe() } answers {
+            if (Looper.myLooper() != Looper.getMainLooper()) {
+                loadStarted.countDown()
+                check(releaseLoad.await(15, TimeUnit.SECONDS)) { "Background load was not released" }
+            }
+            realCollection
+        }
+        try {
+            val controller = restoreActivityController(clazz, intent, savedState)
+            check(loadStarted.await(5, TimeUnit.SECONDS)) { "Collection load did not begin" }
+            block(controller, releaseLoad)
+        } finally {
+            releaseLoad.countDown()
+            unmockkObject(CollectionManager)
+            advanceRobolectricLooper()
+        }
+    }
 
     fun equalFirstField(
         expected: Card,
