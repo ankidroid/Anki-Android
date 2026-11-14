@@ -465,6 +465,102 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `switching sets up the new profile before saving it`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        assertTrue("the profile folder must exist before the restart", File(appDataRoot, work.value).isDirectory)
+        val deckPath = profilePrefs(work).getString(PREF_COLLECTION_PATH, null)
+        assertEquals(File(context.getExternalFilesDir(null), work.value).absolutePath, deckPath)
+        assertTrue("the collection folder must exist before the restart", File(deckPath!!).isDirectory)
+    }
+
+    @Test
+    fun `a profile that cannot be set up is not switched to`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        File(appDataRoot, work.value).writeText("a file where the profile folder belongs")
+
+        val switched = with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        assertFalse(switched)
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `switching keeps a collection folder the profile already chose`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        val chosen = File(context.getExternalFilesDir(null), "chosen-by-work").apply { mkdirs() }
+        writeProfileCollectionPath(work, chosen)
+
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        assertEquals(chosen.absolutePath, profilePrefs(work).getString(PREF_COLLECTION_PATH, null))
+    }
+
+    @Test
+    fun `switching back to Default needs no setup`() {
+        val work = ProfileManager.create(context).createNewProfile(ProfileName.fromTrustedSource("Work"))
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, work.value) }
+        val manager = ProfileManager.create(context)
+
+        val switched = with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(ProfileId.DEFAULT) }
+
+        assertTrue(switched)
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    @Config(minSdk = Build.VERSION_CODES.P)
+    fun `setting up the new profile leaves this process's WebView alone (API 28+)`() {
+        mockkStatic(WebView::class)
+        every { WebView.setDataDirectorySuffix(any()) } just runs
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        verify(exactly = 0) { WebView.setDataDirectorySuffix(any()) }
+        assertEquals(ProfileId.DEFAULT, manager.activeProfileContext.profileId)
+    }
+
+    @Test
+    fun `a switch that cannot be saved keeps the current profile`() {
+        val registry = DiskFullPreferences(context.getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE))
+        val manager = ProfileManager.create(contextWithRegistry(registry))
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        registry.isDiskFull = true
+
+        val switched = with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        assertFalse(switched)
+        assertEquals(
+            "a failed commit keeps the new value in memory, so the next write would save the switch after all",
+            ProfileId.DEFAULT.value,
+            registry.getString(PREF_LAST_ACTIVE_PROFILE_ID, null),
+        )
+    }
+
+    @Test
+    fun `restoring the running profile saves it again if the save fails`() {
+        val diskFull = DiskFullPreferences(context.getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE))
+        val registry = RecordingPreferences(diskFull)
+        val manager = ProfileManager.create(contextWithRegistry(registry))
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+        diskFull.isDiskFull = true
+        registry.editors.clear()
+
+        manager.restoreRunningProfile()
+
+        assertEquals(ProfileId.DEFAULT.value, registry.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
+        assertEquals("the failed commit left the switch target on disk", 1, registry.editors.sumOf { it.applies })
+    }
+
+    @Test
     fun `ProfileId DEFAULT must be strictly 'default' to preserve legacy compatibility`() {
         assertEquals("default", ProfileId.DEFAULT.value)
     }
@@ -939,6 +1035,36 @@ class ProfileManagerTest {
 
         override fun edit(): SharedPreferences.Editor = RecordingEditor(delegate.edit()).also { editors += it }
     }
+
+    private class DiskFullPreferences(
+        private val delegate: SharedPreferences,
+    ) : SharedPreferences by delegate {
+        var isDiskFull = false
+
+        override fun edit(): SharedPreferences.Editor {
+            val editor = delegate.edit()
+            return object : SharedPreferences.Editor by editor {
+                override fun commit(): Boolean {
+                    if (!isDiskFull) return editor.commit()
+                    editor.apply()
+                    return false
+                }
+            }
+        }
+    }
+
+    private fun profilePrefs(profileId: ProfileId) =
+        context.getSharedPreferences("profile_${profileId.value}_${context.packageName}_preferences", Context.MODE_PRIVATE)
+
+    private fun contextWithRegistry(registry: SharedPreferences) =
+        object : ContextWrapper(context) {
+            override fun getApplicationContext(): Context? = null
+
+            override fun getSharedPreferences(
+                name: String,
+                mode: Int,
+            ): SharedPreferences = if (name == PROFILE_REGISTRY_FILENAME) registry else super.getSharedPreferences(name, mode)
+        }
 
     private fun makeActiveProfileUnloadable(): ProfileId {
         val profileId = ProfileManager.create(context).createNewProfile(ProfileName.fromTrustedSource("Work"))

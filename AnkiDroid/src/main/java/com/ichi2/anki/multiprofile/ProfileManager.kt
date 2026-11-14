@@ -16,6 +16,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.AnkiDroidFolder
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
@@ -23,6 +24,7 @@ import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Manages the creation, loading, and switching of user profiles.
@@ -35,6 +37,17 @@ class ProfileManager private constructor(
 
     lateinit var activeProfileContext: ProfileContextWrapper
         private set
+
+    private val switching = AtomicBoolean(false)
+
+    val isSwitching: Boolean
+        get() = switching.get()
+
+    fun tryStartSwitch(): Boolean = switching.compareAndSet(false, true)
+
+    fun endSwitch() = switching.set(false)
+
+    fun isActive(profileId: ProfileId): Boolean = profileId == activeProfileContext.profileId
 
     /**
      * Stores the Registry of all profiles (ID -> Display Name) and the
@@ -152,13 +165,39 @@ class ProfileManager private constructor(
      * Persists [newProfileId] as the active profile.
      *
      * @param newProfileId The [ProfileId] to activate on next launch.
+     * @return false if the new profile could not be set up or the switch could not be saved,
+     *   in which case the current profile stays active
      */
     @VisibleForTesting
     context(_: ProfileSwitchContext)
-    fun switchActiveProfile(newProfileId: ProfileId) {
+    fun switchActiveProfile(newProfileId: ProfileId): Boolean {
         Timber.i("Switching profile to ID: $newProfileId")
+        try {
+            prepareProfile(newProfileId)
+        } catch (e: Exception) {
+            Timber.w(e, "Could not set up $newProfileId, staying on the current profile")
+            return false
+        }
         // commit, not apply: the app restarts straight after a switch, and a pending apply() would be lost
-        profileRegistry.setLastActiveProfileId(newProfileId, commit = true)
+        return profileRegistry.commitLastActiveProfileId(newProfileId).also { saved ->
+            if (!saved) Timber.w("Could not save the switch to $newProfileId")
+        }
+    }
+
+    fun restoreRunningProfile() {
+        val runningProfileId = activeProfileContext.profileId
+        Timber.i("Restoring the running profile: $runningProfileId")
+        if (!profileRegistry.commitLastActiveProfileId(runningProfileId, revertOnFailure = false)) {
+            Timber.w("Could not restore $runningProfileId as the active profile, retrying in the background")
+            profileRegistry.setLastActiveProfileId(runningProfileId)
+        }
+    }
+
+    private fun prepareProfile(profileId: ProfileId) {
+        val wrapper = ProfileContextWrapper.create(profileContext, profileId, resolveProfileDirectory(profileId).file)
+        ensureProfileCollectionPath(wrapper)
+        if (profileId.isDefault()) return
+        CollectionHelper.initializeAnkiDroidDirectory(CollectionHelper.getCurrentAnkiDroidDirectory(wrapper))
     }
 
     private fun loadProfileData(profileId: ProfileId) {
@@ -601,11 +640,21 @@ class ProfileManager private constructor(
             return id?.let { ProfileId(it) }
         }
 
-        fun setLastActiveProfileId(
+        fun setLastActiveProfileId(id: ProfileId) {
+            globalPrefs.edit { putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value) }
+        }
+
+        /** @return whether [id] was saved to disk. If it wasn't and [revertOnFailure] is set, the previous ID is put back. */
+        fun commitLastActiveProfileId(
             id: ProfileId,
-            commit: Boolean = false,
-        ) {
-            globalPrefs.edit(commit = commit) { putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value) }
+            revertOnFailure: Boolean = true,
+        ): Boolean {
+            val previous = globalPrefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null)
+            val editor = globalPrefs.edit()
+            editor.putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value)
+            if (editor.commit()) return true
+            if (revertOnFailure) globalPrefs.edit { putString(PREF_LAST_ACTIVE_PROFILE_ID, previous) }
+            return false
         }
 
         fun getWebViewProfileId(): ProfileId? {

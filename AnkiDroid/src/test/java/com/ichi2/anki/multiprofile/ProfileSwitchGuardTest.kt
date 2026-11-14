@@ -8,6 +8,7 @@ import com.ichi2.anki.multiprofile.ProfileSwitchGuard.BlockReason
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard.Result
 import com.ichi2.anki.multiprofile.ProfileSwitchGuard.SafetyCheck
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
@@ -16,7 +17,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ProfileSwitchGuardTest {
-    private val profileManager: ProfileManager = mockk(relaxed = true)
+    private val profileManager: ProfileManager =
+        mockk(relaxed = true) {
+            with(ProfileSwitchContext) { every { switchActiveProfile(any()) } returns true }
+        }
     private val targetId = ProfileId("p_12345678")
 
     @Test
@@ -120,5 +124,14 @@ class ProfileSwitchGuardTest {
                 setOf(BlockReason.BACKUP_IN_PROGRESS, BlockReason.COLLECTION_BUSY),
                 (result as Result.Blocked).reasons,
             )
+        }
+
+    @Test
+    fun `invoke returns Failed when the switch cannot be saved`() =
+        runTest {
+            with(ProfileSwitchContext) { every { profileManager.switchActiveProfile(targetId) } returns false }
+            val guard = ProfileSwitchGuard(profileManager, emptyList())
+
+            assertEquals(Result.Failed, guard(targetId))
         }
 }
