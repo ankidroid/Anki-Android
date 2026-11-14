@@ -1,0 +1,9 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
+SPDX-FileComment: Inherited Anki star, copyright Alex Fraser.
+
+SPDX-License-Identifier: GPL-3.0-or-later
+SPDX-FileComment: AnkiDroid adaptations, where present.
+
+SPDX-FileComment: Byte-for-byte snapshot of https://github.com/ankidroid/Anki-Android/blob/f6267972c97577cb82bd2857f4f81dfb04b7742e/AnkiDroid/src/main/res/drawable-mdpi/logo_star_144dp.png
+SPDX-FileComment: Source SVG: https://github.com/ankidroid/Anki-Android/blob/f6267972c97577cb82bd2857f4f81dfb04b7742e/docs/graphics/src/logo_star_144dp.svg
+SPDX-FileComment: See docs/licenses/ANKI_STAR_LICENSE.md
