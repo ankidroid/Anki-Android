@@ -2,28 +2,31 @@
 
 package com.ichi2.compose.ui.dialogs
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
 import com.ichi2.anki.common.android.R
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 
 /**
- * A Material 3 [AlertDialog] with a text message and two actions.
+ * A Material 3 message dialog with two actions.
  *
  * Changes to the standard M3 dialog:
+ * * Primary body text, matching AnkiDroid's View dialogs.
+ * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * 16dp vertical padding.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
@@ -39,32 +42,47 @@ fun MessageDialog(
     onDismissRequest: () -> Unit,
     dismissText: String = stringResource(R.string.dialog_cancel),
     enabled: Boolean = true,
-    properties: DialogProperties = DialogProperties(),
+    properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
-    AlertDialog(
+    val titleBottomPadding = 16.dp
+    AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+        // Keep the View dialog's device width for long messages (verified on API 34/36).
+        // Robolectric does not match reality here.
+        modifier = Modifier.width(alertDialogWidth()),
         properties = properties,
-        title = {
-            // Read the window from inside AlertDialog's composition.
-            val window = (LocalView.current.parent as? DialogWindowProvider)?.window
-            SideEffect {
-                if (window != null && window.attributes.windowAnimations != R.style.Animation_AnkiDroidDialog) {
-                    window.setWindowAnimations(R.style.Animation_AnkiDroidDialog)
+    ) {
+        Surface(
+            shape = AlertDialogDefaults.shape,
+            color = AlertDialogDefaults.containerColor,
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            shadowElevation = ankiDroidDialogElevation(),
+        ) {
+            Column(Modifier.padding(ankiDroidDialogContentPadding())) {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = AlertDialogDefaults.titleContentColor,
+                    modifier = Modifier.padding(bottom = titleBottomPadding),
+                )
+                Box(Modifier.weight(1f, fill = false)) {
+                    Text(
+                        message,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.verticalScroll(rememberScrollState()),
+                    )
                 }
+                AnkiDroidDialogButtons(
+                    confirmText = confirmText,
+                    dismissText = dismissText,
+                    onConfirm = onConfirm,
+                    onDismissRequest = onDismissRequest,
+                    confirmEnabled = enabled,
+                )
             }
-            Text(title)
-        },
-        text = {
-            Text(message, modifier = Modifier.verticalScroll(rememberScrollState()))
-        },
-        confirmButton = {
-            TextButton(onClick = onConfirm, enabled = enabled) { Text(confirmText) }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) { Text(dismissText) }
-        },
-    )
+        }
+    }
 }
 
 /** @see MessageDialog */

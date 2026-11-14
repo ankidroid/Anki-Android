@@ -5,6 +5,7 @@ package com.ichi2.compose.ui.dialogs
 
 import android.view.animation.AnimationUtils
 import android.view.animation.Transformation
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
@@ -22,10 +23,13 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
+import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextInputSelection
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.unit.dp
@@ -33,6 +37,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.profiles.RenameProfileDialog
 import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.testutils.ShadowLowerPaneView
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,6 +53,50 @@ import kotlin.test.assertTrue
 class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    @Config(sdk = [29, Config.TARGET_SDK], qualifiers = "w411dp-h400dp-mdpi", shadows = [ShadowLowerPaneView::class])
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `text input stays usable in the lower split screen pane`() {
+        var submitted: String? = null
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog("Add profile", "Profile name", "Add", { submitted = it }, {})
+            }
+        }
+        compose.onNodeWithText("Add profile").assertIsDisplayed()
+        compose.onNode(hasSetTextAction()).assertIsDisplayed().performTextInput("Work")
+        compose.onNodeWithText("Cancel").assertIsDisplayed().assertHeightIsAtLeast(40.dp)
+        val add = compose.onNodeWithText("Add").assertIsDisplayed().assertHeightIsAtLeast(40.dp)
+        add.performTouchInput { click() }
+        assertEquals("Work", submitted)
+    }
+
+    @Test
+    fun `multiline Enter inserts a newline without submitting`() {
+        var submitted: String? = null
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Certificate",
+                    label = "PEM",
+                    confirmText = "Save",
+                    singleLine = false,
+                    onConfirm = { submitted = it },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction())
+        field.performTextInput("first")
+        field.performKeyInput { pressKey(Key.Enter) }
+        field.performTextInput("second")
+
+        assertNull(submitted)
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("first\nsecond")))
+        compose.onNodeWithText("Save").performClick()
+        assertEquals("first\nsecond", submitted)
+    }
 
     @Test
     fun `field semantics retain the label and editable value`() {

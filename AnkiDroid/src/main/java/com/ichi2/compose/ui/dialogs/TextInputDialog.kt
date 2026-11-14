@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -41,12 +42,13 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 
 /**
- * Dialog asking the user for a single line of text. Compose counterpart of
+ * Dialog asking the user for text. Compose counterpart of
  * the View based `AlertDialog.input(...)` helper.
  *
  * @param onConfirm called with the text, but only while it is valid
@@ -58,6 +60,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param transformInput applied to text edits, not cursor-only changes
  * @param validateOnInput when false, validate on confirmation instead of while editing
  * @param enabled whether confirmation is allowed from the button or keyboard
+ * @param singleLine whether the field is restricted to one line; multiline input uses the Enter key for newlines
  */
 @Composable
 fun TextInputDialog(
@@ -78,6 +81,8 @@ fun TextInputDialog(
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
     validateOnInput: Boolean = true,
     enabled: Boolean = true,
+    singleLine: Boolean = true,
+    properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
@@ -95,14 +100,19 @@ fun TextInputDialog(
         submissionAttempted = true
         if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
-    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
+    AnkiDroidDialog(
+        onDismissRequest = onDismissRequest,
+        modifier = Modifier.width(alertDialogWidth()),
+        properties = properties,
+    ) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
+            shadowElevation = ankiDroidDialogElevation(),
         ) {
-            Layout(modifier = Modifier.padding(24.dp), content = {
+            Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     Text(
                         title,
@@ -149,8 +159,14 @@ fun TextInputDialog(
                                     }
                                 }
                             },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
+                        singleLine = singleLine,
+                        minLines = if (singleLine) 1 else 4,
+                        maxLines = if (singleLine) 1 else 8,
+                        keyboardOptions =
+                            KeyboardOptions(
+                                capitalization = capitalization,
+                                imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
+                            ),
                         keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
                     )
                 }
