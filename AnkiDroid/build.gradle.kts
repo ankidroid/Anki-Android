@@ -329,7 +329,7 @@ android {
                                 )
                             }
                         }
-                        validateInput(theme, listOf("light", "plain", "dark", "black", "eink", "all"))
+                        validateInput(theme, listOf("light", "plain", "dark", "black", "eink", "eink_night", "all"))
                         validateInput(device, listOf("phone", "tablet", "foldable", "desktop", "all"))
 
                         test.systemProperty("screenshot.theme", theme)
