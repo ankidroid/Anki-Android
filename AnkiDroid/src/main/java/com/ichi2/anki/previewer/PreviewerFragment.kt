@@ -16,7 +16,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.Slider
 import com.ichi2.anki.CollectionManager.TR
@@ -44,7 +43,6 @@ import com.ichi2.anki.utils.savedStateViewModelFactory
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.performClickIfEnabled
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -104,51 +102,35 @@ class PreviewerFragment :
         super.onViewCreated(view, savedInstanceState)
         val cardsCount = viewModel.cardsCount()
 
-        lifecycleScope.launch {
-            viewModel.currentIndex
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { currentIndex ->
-                    val displayIndex = currentIndex + 1
-                    binding.slider.value = displayIndex.toFloat()
-                    binding.progressIndicator.text =
-                        getString(CommonString.preview_progress_bar_text, displayIndex, cardsCount)
-                }
+        viewModel.currentIndex.collectInViewLifecycle { currentIndex ->
+            val displayIndex = currentIndex + 1
+            binding.slider.value = displayIndex.toFloat()
+            binding.progressIndicator.text =
+                getString(CommonString.preview_progress_bar_text, displayIndex, cardsCount)
         }
         // ************************************* Menu items *************************************
         val menu = binding.toolbar.menu
         setupFlagMenu(menu)
 
-        lifecycleScope.launch {
-            viewModel.backSideOnly
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { isBackSideOnly ->
-                    setBackSideOnlyButtonIcon(menu, isBackSideOnly)
-                }
+        viewModel.backSideOnly.collectInViewLifecycle { isBackSideOnly ->
+            setBackSideOnlyButtonIcon(menu, isBackSideOnly)
         }
 
-        lifecycleScope.launch {
-            viewModel.isMarked
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { isMarked ->
-                    with(menu.findItem(R.id.action_mark)) {
-                        if (isMarked) {
-                            setIcon(R.drawable.ic_star)
-                            setTitle(CommonString.menu_unmark_note)
-                        } else {
-                            setIcon(R.drawable.ic_star_border_white)
-                            title = TR.sentenceCase.markNote
-                        }
-                    }
+        viewModel.isMarked.collectInViewLifecycle { isMarked ->
+            with(menu.findItem(R.id.action_mark)) {
+                if (isMarked) {
+                    setIcon(R.drawable.ic_star)
+                    setTitle(CommonString.menu_unmark_note)
+                } else {
+                    setIcon(R.drawable.ic_star_border_white)
+                    title = TR.sentenceCase.markNote
                 }
+            }
         }
 
         // handle selection of a new flag
-        lifecycleScope.launch {
-            viewModel.flag
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { flag ->
-                    menu.findItem(R.id.action_flag).setIcon(flag.drawableRes)
-                }
+        viewModel.flag.collectInViewLifecycle { flag ->
+            menu.findItem(R.id.action_flag).setIcon(flag.drawableRes)
         }
 
         @NeedsTest("webview don't vanish when only one card is in the list")
@@ -176,20 +158,16 @@ class PreviewerFragment :
             )
         }
 
-        lifecycleScope.launch {
-            viewModel.isNextButtonEnabled.collectLatest {
-                binding.nextButton.isEnabled = it
-            }
+        viewModel.isNextButtonEnabled.collectInViewLifecycle {
+            binding.nextButton.isEnabled = it
         }
 
         binding.nextButton.setOnClickListener {
             viewModel.onNextButtonClick()
         }
 
-        lifecycleScope.launch {
-            viewModel.isBackButtonEnabled.collectLatest {
-                binding.previousButton.isEnabled = it
-            }
+        viewModel.isBackButtonEnabled.collectInViewLifecycle {
+            binding.previousButton.isEnabled = it
         }
 
         binding.previousButton.setOnClickListener {

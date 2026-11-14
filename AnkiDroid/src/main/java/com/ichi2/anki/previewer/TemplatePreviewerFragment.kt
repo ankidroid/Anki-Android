@@ -5,16 +5,14 @@ package com.ichi2.anki.previewer
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentTemplatePreviewerBinding
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.workarounds.SafeWebViewLayout
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class TemplatePreviewerFragment :
@@ -49,15 +47,14 @@ class TemplatePreviewerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.showAnswer.setOnClickListener { viewModel.toggleShowAnswer() }
-        viewModel.showingAnswer
-            .onEach { showingAnswer ->
-                binding.showAnswer.text =
-                    if (showingAnswer) {
-                        getString(CommonString.hide_answer)
-                    } else {
-                        getString(CommonString.show_answer)
-                    }
-            }.launchIn(lifecycleScope)
+        viewModel.showingAnswer.collectInViewLifecycle { showingAnswer ->
+            binding.showAnswer.text =
+                if (showingAnswer) {
+                    getString(CommonString.hide_answer)
+                } else {
+                    getString(CommonString.show_answer)
+                }
+        }
 
         binding.webViewContainer.setFrameStyle()
     }

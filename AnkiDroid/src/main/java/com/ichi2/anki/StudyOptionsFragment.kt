@@ -148,7 +148,7 @@ class StudyOptionsFragment :
             setSupportActionBarText(title = "")
         }
         setupContentInsets(view)
-        viewModel.flowOfState.collectInViewLifecycle(::rebuildUi)
+        viewModel.flowOfState.collectInViewLifecycle(Lifecycle.State.STARTED, ::rebuildUi)
         refreshInterface()
     }
 

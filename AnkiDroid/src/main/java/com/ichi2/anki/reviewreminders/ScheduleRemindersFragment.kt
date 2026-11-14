@@ -235,7 +235,7 @@ class ScheduleRemindersFragment :
         setContentInsets()
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
-        flowOfShowTroubleshooting.collectInViewLifecycle(::renderTroubleshootingSnackbar)
+        flowOfShowTroubleshooting.collectInViewLifecycle(Lifecycle.State.STARTED, ::renderTroubleshootingSnackbar)
 
         // Set up recycler view
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
