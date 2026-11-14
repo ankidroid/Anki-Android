@@ -3,9 +3,7 @@
 
 package com.ichi2.compose.ui.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,7 +25,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -41,12 +37,14 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.CommonString
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 
 /**
- * Dialog asking the user for a single line of text. Compose counterpart of
+ * Dialog asking the user for text. Compose counterpart of
  * the View based `AlertDialog.input(...)` helper.
  *
  * @param onConfirm called with the text, but only while it is valid
@@ -58,6 +56,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param transformInput applied to text edits, not cursor-only changes
  * @param validateOnInput when false, validate on confirmation instead of while editing
  * @param enabled whether confirmation is allowed from the button or keyboard
+ * @param singleLine whether the field is restricted to one line; multiline input uses the Enter key for newlines
  */
 @Composable
 fun TextInputDialog(
@@ -78,6 +77,8 @@ fun TextInputDialog(
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
     validateOnInput: Boolean = true,
     enabled: Boolean = true,
+    singleLine: Boolean = true,
+    properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
@@ -95,15 +96,21 @@ fun TextInputDialog(
         submissionAttempted = true
         if (errorMessageFor(input.text) == null) onConfirm(input.text)
     }
-    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
+    AnkiDroidDialog(
+        onDismissRequest = onDismissRequest,
+        modifier = Modifier.fillMaxWidth(alertDialogWidthFraction()),
+        properties = properties,
+    ) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
             shape = AlertDialogDefaults.shape,
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
+            border = MaterialTheme.widgetBorder,
         ) {
-            Layout(modifier = Modifier.padding(24.dp), content = {
-                Column(Modifier.verticalScroll(rememberScrollState())) {
+            Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
+                // Match the custom input panel in dialog_versatile_text_preference.xml.
+                Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = 8.dp)) {
                     Text(
                         title,
                         style = MaterialTheme.typography.headlineSmall,
@@ -149,22 +156,24 @@ fun TextInputDialog(
                                     }
                                 }
                             },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
+                        singleLine = singleLine,
+                        minLines = if (singleLine) 1 else 4,
+                        maxLines = if (singleLine) 1 else 8,
+                        keyboardOptions =
+                            KeyboardOptions(
+                                capitalization = capitalization,
+                                imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
+                            ),
                         keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
                     )
                 }
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(top = if (hasSupportingText) 8.dp else 24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    TextButton(onClick = onDismissRequest) { Text(dismissText) }
-                    TextButton(
-                        onClick = ::confirmIfValid,
-                        enabled = enabled && (!validateOnInput || errorMessage == null),
-                    ) { Text(confirmText) }
-                }
+                AnkiDroidDialogButtons(
+                    confirmText = confirmText,
+                    dismissText = dismissText,
+                    onConfirm = ::confirmIfValid,
+                    onDismissRequest = onDismissRequest,
+                    confirmEnabled = enabled && (!validateOnInput || errorMessage == null),
+                )
             }) { children, constraints ->
                 val actions = children[1].measure(constraints.copy(minHeight = 0))
                 val body =

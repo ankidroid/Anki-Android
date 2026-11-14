@@ -2,7 +2,12 @@
 
 package com.ichi2.compose.ui.dialogs
 
+import android.content.Context
+import android.content.DialogInterface
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertIsDisplayed
@@ -36,6 +41,60 @@ import kotlin.test.assertTrue
 class MessageDialogTest {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    @Config(qualifiers = "w411dp-h891dp-mdpi")
+    fun `message panel spacing matches the View dialog`() {
+        val title = "Delete item"
+        val message = "Delete this item and its children? This action cannot be undone."
+        lateinit var context: Context
+        compose.setContent {
+            AnkiDroidPreview {
+                context = LocalContext.current
+                MessageDialog(
+                    title = title,
+                    message = message,
+                    confirmText = "Delete",
+                    onConfirm = {},
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val titleBounds = compose.onNodeWithText(title).fetchSemanticsNode().boundsInRoot
+        val messageBounds = compose.onNodeWithText(message).fetchSemanticsNode().boundsInRoot
+        val confirmBounds = compose.onNodeWithText("Delete").fetchSemanticsNode().boundsInRoot
+
+        lateinit var viewDialog: AlertDialog
+        compose.runOnIdle {
+            viewDialog =
+                AlertDialog
+                    .Builder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton("Delete", null)
+                    .setNegativeButton("Cancel", null)
+                    .show()
+        }
+        try {
+            compose.runOnIdle {
+                fun top(view: View): Float {
+                    val position = IntArray(2)
+                    view.getLocationInWindow(position)
+                    return position[1].toFloat()
+                }
+                val viewTitle = viewDialog.findViewById<View>(androidx.appcompat.R.id.alertTitle)!!
+                val viewMessage = viewDialog.findViewById<View>(android.R.id.message)!!
+                val viewConfirm = viewDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                // Text metrics can round differently between Compose and TextView.
+                assertEquals(top(viewTitle), titleBounds.top, absoluteTolerance = 1f)
+                assertEquals(top(viewMessage), messageBounds.top, absoluteTolerance = 1f)
+                assertEquals(top(viewConfirm), confirmBounds.top, absoluteTolerance = 1f)
+                assertEquals(viewConfirm.height.toFloat(), confirmBounds.height, absoluteTolerance = 1f)
+            }
+        } finally {
+            compose.runOnIdle { viewDialog.dismiss() }
+        }
+    }
 
     @Test
     @Config(qualifiers = "w640dp-h320dp-land")
