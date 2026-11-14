@@ -4,6 +4,7 @@ package com.ichi2.anki.browser
 
 import android.content.Intent
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -17,6 +18,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
+import com.ichi2.anki.browser.search.CardState
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.StandardSearchFragment
@@ -30,6 +32,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.throwOnShowError
+import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.testutils.withPref
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
@@ -139,6 +142,7 @@ class CardBrowserFragmentTest : RobolectricTest() {
             val basic = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
             assertThat("Basic search remains available", basic.isVisible, equalTo(true))
             assertFalse(basic.binding.toggleAdvancedSearch.isVisible)
+            assertSearchMode(advancedSearch = false)
             assertNull(childFragmentManager.findFragmentByTag(AdvancedSearchFragment.TAG))
         }
 
@@ -163,11 +167,7 @@ class CardBrowserFragmentTest : RobolectricTest() {
                     advanceRobolectricLooper()
 
                     for (advancedSearch in listOf(true, false)) {
-                        if (advancedSearch) {
-                            basicSearch.binding.toggleAdvancedSearch.performClick()
-                        } else {
-                            searchViewModel.toggleAdvancedSearch()
-                        }
+                        search.findViewById<View>(R.id.toggle_advanced_search).performClick()
                         advanceRobolectricLooper()
                         assertSearchMode(advancedSearch)
 
@@ -186,11 +186,10 @@ class CardBrowserFragmentTest : RobolectricTest() {
             search.show()
             advanceRobolectricLooper()
             assertSearchMode(advancedSearch = false)
-            val basicSearch = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
 
             for (query in listOf("  tag:edited draft  ", "")) {
                 search.editText.setText("basic draft")
-                basicSearch.binding.toggleAdvancedSearch.performClick()
+                search.findViewById<View>(R.id.toggle_advanced_search).performClick()
                 advanceRobolectricLooper()
                 assertSearchMode(advancedSearch = true)
 
@@ -198,13 +197,46 @@ class CardBrowserFragmentTest : RobolectricTest() {
                 search.editText.setSelection(query.length)
                 advanceRobolectricLooper()
 
-                searchViewModel.toggleAdvancedSearch()
+                search.findViewById<View>(R.id.toggle_advanced_search).performClick()
                 advanceRobolectricLooper()
                 assertSearchMode(advancedSearch = false)
 
                 assertThat(search.editText.text.toString(), equalTo(query))
                 assertThat(search.editText.selectionStart, equalTo(query.length))
                 assertThat(search.editText.selectionEnd, equalTo(query.length))
+            }
+        }
+
+    @Test
+    fun `filter chips remain visible in Search tools - Issue 23116`() =
+        withCardBrowserFragment(useSearchView = true, useSearchTools = true) {
+            val search = assertNotNull(searchView)
+            search.show()
+            advanceRobolectricLooper()
+
+            searchViewModel.setDecksFilter(col.decks.allNamesAndIds())
+            searchViewModel.setTagsFilter(listOf("example"))
+            searchViewModel.setCardStateFilter(listOf(CardState.New))
+            searchViewModel.setFlagsFilter(listOf(Flag.BLUE))
+            advanceRobolectricLooper()
+
+            val chips =
+                listOf(R.id.decks_chip, R.id.tags_chip, R.id.card_state_chip, R.id.flags_chip).map {
+                    search.findViewById<Chip>(it)
+                }
+            val labels = chips.map { it.text.toString() }
+
+            for (advancedSearch in listOf(false, true, false)) {
+                if (searchViewModel.advancedSearchFlow.value != advancedSearch) {
+                    search.findViewById<View>(R.id.toggle_advanced_search).performClick()
+                    advanceRobolectricLooper()
+                }
+                assertSearchMode(advancedSearch)
+                for ((chip, label) in chips.zip(labels)) {
+                    assertThat("$label chip visibility", chip.isShown, equalTo(true))
+                    assertThat("$label chip selection", chip.hasCheckedBackground, equalTo(true))
+                    assertThat(chip.text.toString(), equalTo(label))
+                }
             }
         }
 
@@ -322,9 +354,9 @@ class CardBrowserFragmentTest : RobolectricTest() {
     private fun CardBrowserFragment.assertSearchMode(advancedSearch: Boolean) {
         assertThat("active search mode", searchViewModel.advancedSearchFlow.value, equalTo(advancedSearch))
         val basic = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
-        val tools = childFragmentManager.findFragmentByTag(AdvancedSearchFragment.TAG)
-        assertThat("Basic search visibility", basic.isVisible, equalTo(!advancedSearch))
-        assertThat("Search tools visibility", tools?.isVisible == true, equalTo(advancedSearch))
+        val tools = basic.requireChildFragment<AdvancedSearchFragment>(AdvancedSearchFragment.TAG)
+        assertThat("Basic search visibility", basic.binding.basicSearchContent.isShown, equalTo(!advancedSearch))
+        assertThat("Search tools visibility", tools.requireView().isShown, equalTo(advancedSearch))
     }
 
     /** Opens the filtered deck screen, returning the search it was opened with */
