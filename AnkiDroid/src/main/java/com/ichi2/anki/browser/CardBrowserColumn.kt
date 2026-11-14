@@ -35,11 +35,10 @@ enum class ColumnType {
      */
     DATE,
 
+    DUE,
+
     /**
-     * Used when the type cannot be determined, or varies by context.
-     *
-     * For example, [CardBrowserColumn.DUE] may display a position number or a date
-     * depending on the card's state.
+     * Used when the type cannot be determined, such as a column unknown to [CardBrowserColumn].
      *
      * Visually: `↓` or `↑`
      */
@@ -84,7 +83,7 @@ enum class CardBrowserColumn(
      * Notes -> Cards (card count)
      */
     CARD("template", cardsType = ColumnType.TEXT, notesType = ColumnType.NUMERIC),
-    DUE("cardDue", ColumnType.UNSPECIFIED),
+    DUE("cardDue", ColumnType.DUE),
 
     /**
      * Cards -> Ease
@@ -199,6 +198,7 @@ fun ColumnType.humanReadableExplanation(descending: Boolean): Int? =
             ColumnType.TEXT -> CommonString.card_browser_order_subtitle_text_descending
             ColumnType.NUMERIC -> CommonString.card_browser_order_subtitle_numeric_descending
             ColumnType.DATE -> CommonString.card_browser_order_subtitle_date_descending
+            ColumnType.DUE -> CommonString.card_browser_order_subtitle_due_descending
             ColumnType.UNSPECIFIED -> null
         }
     } else {
@@ -206,6 +206,7 @@ fun ColumnType.humanReadableExplanation(descending: Boolean): Int? =
             ColumnType.TEXT -> CommonString.card_browser_order_subtitle_text_ascending
             ColumnType.NUMERIC -> CommonString.card_browser_order_subtitle_numeric_ascending
             ColumnType.DATE -> CommonString.card_browser_order_subtitle_date_ascending
+            ColumnType.DUE -> CommonString.card_browser_order_subtitle_due_ascending
             ColumnType.UNSPECIFIED -> null
         }
     }
