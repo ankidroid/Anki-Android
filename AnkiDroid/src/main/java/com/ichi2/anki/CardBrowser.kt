@@ -240,6 +240,7 @@ open class CardBrowser :
         } else {
             binding?.noteEditorFrame?.isVisible = false
             binding?.cardBrowserResizingDivider?.isVisible = false
+            fragment?.interruptRecording()
         }
 
         // must be called once we have an accessible collection
@@ -400,7 +401,7 @@ open class CardBrowser :
             message = this.getString(CommonString.save_changes_message),
             positiveMethod = {
                 launchCatchingTask {
-                    fragment?.saveNote()
+                    if (fragment?.saveNote() == false) return@launchCatchingTask
                     loadNoteEditorFragment(destination)
                 }
             },
@@ -424,6 +425,11 @@ open class CardBrowser :
      */
     val fragment: NoteEditorFragment?
         get() = supportFragmentManager.findFragmentById(R.id.note_editor_frame) as? NoteEditorFragment
+
+    override fun openDeckPicker() {
+        val editor = fragment ?: return super.openDeckPicker()
+        editor.discardRecordingFirst(onKeepEditing = { selectNavigationItem(R.id.nav_browser) }) { super.openDeckPicker() }
+    }
 
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
@@ -529,6 +535,7 @@ open class CardBrowser :
                         navigate(command.destination)
                     }
                     NoteEditorCommand.HidePane -> {
+                        fragment?.interruptRecording()
                         binding?.noteEditorFrame?.isVisible = false
                         invalidateOptionsMenu()
                     }
