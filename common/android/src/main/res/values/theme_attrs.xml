@@ -11,6 +11,7 @@
     <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
 
     <attr name="incrementerButtonBackground" format="color" />
+    <attr name="incrementerButtonIconColor" format="color" />
 
     <!-- Deck list colors and expander -->
     <attr name="selectedRowBackgroundColor" format="color"/> <!-- Selected deck, note type, browser row and settings header -->

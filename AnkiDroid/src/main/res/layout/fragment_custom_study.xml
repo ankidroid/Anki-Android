@@ -61,7 +61,7 @@
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="24dp"
-            app:iconTint="@color/white"
+            app:iconTint="?attr/incrementerButtonIconColor"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             tools:visibility="visible" />
 
@@ -99,7 +99,7 @@
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="24dp"
-            app:iconTint="@color/white"
+            app:iconTint="?attr/incrementerButtonIconColor"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             tools:visibility="visible" />
     </LinearLayout>
