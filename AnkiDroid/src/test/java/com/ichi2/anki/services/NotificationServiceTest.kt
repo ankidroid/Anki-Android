@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewreminders.ReviewReminderThresholdFilter
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.ext.insertReminder
 import io.mockk.CapturingSlot
 import io.mockk.coEvery
 import io.mockk.coVerify
