@@ -78,9 +78,9 @@ open class SafeWebViewLayout :
     @Suppress("DEPRECATION")
     val scale get() = uncheckedWebView.scale
 
-    val webViewScrollX get() = webView.scrollX
+    val webViewScrollX get() = activeWebView?.scrollX ?: 0
 
-    val webViewScrollY get() = webView.scrollY
+    val webViewScrollY get() = activeWebView?.scrollY ?: 0
 
     @MainThread
     fun zoomBy(zoomFactor: Float) {
