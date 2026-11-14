@@ -16,9 +16,10 @@ enum class ThemeConfig(
     DARK(NightTheme.DARK),
     BLACK(NightTheme.BLACK),
     EINK(DayTheme.EINK),
+    EINK_NIGHT(NightTheme.EINK),
     ;
 
-    val isNight get() = this == DARK || this == BLACK
+    val isNight get() = this == DARK || this == BLACK || this == EINK_NIGHT
 }
 
 /** Provides the themes selected with `-Ptheme`: a comma-separated list, or `all` */

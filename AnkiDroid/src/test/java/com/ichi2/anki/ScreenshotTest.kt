@@ -122,6 +122,7 @@ abstract class ScreenshotTest : RobolectricTest() {
             ThemeConfig.EINK -> prefs.dayTheme = DayTheme.EINK
             ThemeConfig.DARK -> prefs.nightTheme = NightTheme.DARK
             ThemeConfig.BLACK -> prefs.nightTheme = NightTheme.BLACK
+            ThemeConfig.EINK_NIGHT -> prefs.nightTheme = NightTheme.EINK
         }
     }
 
