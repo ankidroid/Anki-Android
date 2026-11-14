@@ -61,6 +61,7 @@ import com.ichi2.anki.logging.logActivityCreation
 import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.multimedia.MultimediaArgsStorage
 import com.ichi2.anki.multiprofile.ProfileContextWrapper
+import com.ichi2.anki.multiprofile.ProfileId
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.isPhoenixProcess
 import com.ichi2.anki.navigation.initializeNavigator
@@ -756,6 +757,9 @@ open class AnkiDroidApp :
             SharedPreferencesTestHook.override ?: if (isInitialized) instance.sharedPrefs() else null
 
         fun wrapForActiveProfile(base: Context): Context = (base.applicationContext as? AnkiDroidApp)?.profileManager?.wrap(base) ?: base
+
+        fun activeProfileId(context: Context): ProfileId =
+            (context.applicationContext as? AnkiDroidApp)?.profileManager?.activeProfileContext?.profileId ?: ProfileId.DEFAULT
 
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting

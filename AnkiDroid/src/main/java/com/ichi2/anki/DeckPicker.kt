@@ -2294,7 +2294,7 @@ open class DeckPicker :
         // This code should not be reachable with lower versions
         val shortcut =
             ShortcutInfoCompat
-                .Builder(this, shortcutData.deckId.toString())
+                .Builder(this, deckShortcutId(shortcutData.deckId))
                 .setIntent(
                     with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(shortcutData.deckId).toIntent() },
                 ).setIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher))
@@ -2329,7 +2329,7 @@ open class DeckPicker :
     @NeedsTest("ensure collapsed decks are also deleted")
     private fun disableDeckAndChildrenShortcuts(deckTreeDids: List<String>) {
         val errorMessage: CharSequence = getString(CommonString.deck_shortcut_doesnt_exist)
-        ShortcutUtils.disableShortcuts(this, deckTreeDids, errorMessage)
+        ShortcutUtils.disableShortcuts(this, deckTreeDids.map { deckShortcutId(it.toLong()) }, errorMessage)
     }
 
     fun renameDeckDialog(did: DeckId) {
