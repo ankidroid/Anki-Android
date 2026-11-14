@@ -54,9 +54,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
-        android:fitsSystemWindows="true"
-        app:liftOnScrollTargetViewId="@id/card_browser_list"
-        app:statusBarForeground="?attr/colorSurface">
+        app:liftOnScrollTargetViewId="@id/card_browser_list">
+
+        <!-- The top inset scrolls away with the controls so results can fill the screen. -->
+        <Space
+            android:id="@+id/browser_top_inset"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
         <com.google.android.material.search.SearchBar
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
@@ -164,6 +170,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            app:layout_scrollFlags="scroll|enterAlways"
             android:background="@drawable/browser_heading_bottom_divider"
             />
 

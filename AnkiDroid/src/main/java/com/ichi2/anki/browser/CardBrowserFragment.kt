@@ -33,6 +33,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
@@ -42,8 +43,10 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -56,6 +59,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -149,10 +153,12 @@ import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.collectInLifecycle
+import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.updateNestedScrolling
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.showSearchError
@@ -394,6 +400,7 @@ class CardBrowserFragment :
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         val layoutManager = StableScrollbarLayoutManager(requireContext())
         cardsListView.layoutManager = layoutManager
+        setupAppBarScrolling(view)
         cardsListView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
 
         browserColumnHeadings = view.findViewById(R.id.browser_column_headings)
@@ -515,16 +522,99 @@ class CardBrowserFragment :
         setupMenu()
     }
 
+    /**
+     * Keeps the search controls and headings visible when all results fit beneath the expanded app bar.
+     * Otherwise, the result list can scroll and collapse or reveal the app bar normally. If a change
+     * to the results or viewport makes the list fit, the app bar is expanded again.
+     *
+     * @param root Browser view containing the app bar; layouts without one need no scrolling setup.
+     */
+    private fun setupAppBarScrolling(root: View) {
+        val appBar = root.findViewById<AppBarLayout?>(R.id.browser_app_bar) ?: return
+        val list = cardsListView
+        // Prevent direct app-bar drags when the results fit with the controls visible.
+        appBar.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            behavior = appBarBehavior { list.isNestedScrollingEnabled }
+        }
+
+        // If every result fits beneath the expanded toolbar, keep the controls visible so the
+        // app bar doesn't scroll unnecessarily
+        // called on scroll/layout change
+        fun updateScrollability() {
+            if (!list.isLaidOut) return
+            val lastRow = layoutManager.findViewByPosition(cardsAdapter.itemCount - 1)
+            // The list is measured for the collapsed app bar. Subtract the space occupied by
+            // the expanded controls, even when they currently extend the list below the screen.
+            val expandedHeight = list.height - appBar.totalScrollRange
+            val fitsExpanded =
+                when {
+                    cardsAdapter.itemCount == 0 -> true
+                    // A missing last row or an offset first row means the full list is not visible.
+                    lastRow == null || list.canScrollVertically(-1) -> false
+                    else -> layoutManager.getDecoratedBottom(lastRow) + list.paddingBottom <= expandedHeight
+                }
+            list.updateNestedScrolling(!fitsExpanded)
+            if (fitsExpanded && appBar.top < 0) appBar.expand(animate = false)
+        }
+
+        // Recheck after viewport changes and as rows enter or leave the visible area.
+        list.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateScrollability() }
+        list.doOnScrolled { _, _ -> updateScrollability() }
+    }
+
+    /** Kotlin wrapper allowing a named [animate] argument. */
+    private fun AppBarLayout.expand(animate: Boolean) = setExpanded(true, animate)
+
+    /** Creates app-bar behavior whose direct dragging is controlled by [dragPredicate]. */
+    private fun appBarBehavior(dragPredicate: (AppBarLayout) -> Boolean) =
+        AppBarLayout.Behavior().apply {
+            setDragCallback(
+                object : AppBarLayout.Behavior.DragCallback() {
+                    override fun canDrag(appBarLayout: AppBarLayout) = dragPredicate(appBarLayout)
+                },
+            )
+        }
+
     private fun applyContentInsets(root: View) {
         val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
         val toolbarContainer = root.findViewById<View?>(R.id.toolbar_container)
-        val appBar = root.findViewById<View?>(R.id.browser_app_bar)
+        val appBar = root.findViewById<AppBarLayout?>(R.id.browser_app_bar)
+        val topInset = root.findViewById<View?>(R.id.browser_top_inset)
         val browserContent = root.findViewById<View?>(R.id.browser_content)
         val searchContent = root.findViewById<View?>(R.id.search_view_content_container)
+        // Keep the app-bar surface solid, and fade its controls beneath the status icons.
+        val statusBarScrim =
+            if (useSearchView) {
+                BrowserStatusBarDrawable(root, requireNotNull(appBar)).apply {
+                    root.overlay.add(this)
+                    appBar.addOnOffsetChangedListener(
+                        AppBarLayout.OnOffsetChangedListener { _, _ -> invalidateSelf() },
+                    )
+                    appBar.addLiftOnScrollProgressListener(
+                        object : AppBarLayout.LiftOnScrollProgressListener() {
+                            override fun onUpdate(
+                                elevation: Float,
+                                backgroundColor: Int,
+                                progress: Float,
+                            ) {
+                                // Keep the solid surface synchronized with the app bar's animation.
+                                color = backgroundColor
+                            }
+                        },
+                    )
+                    root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                        setBounds(0, 0, root.width, bounds.height())
+                    }
+                }
+            } else {
+                null
+            }
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
+            statusBarScrim?.setBounds(0, 0, v.width, insets.getInsets(statusBars()).top)
             if (useSearchView) {
                 // Keep the full-screen SearchView edge to edge: Material insets its own toolbar.
+                topInset?.updateLayoutParams { height = bars.top }
                 appBar?.updatePadding(left = bars.left, right = bars.right)
                 browserContent?.updatePadding(left = bars.left, right = bars.right)
             } else {
