@@ -46,7 +46,7 @@
     <string name="model_field_editor_changing">به روزرسانی فیلدها</string>
     <string name="model_field_editor_sort_field">مرتب کردن بر اساس این فیلد</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="delete_card_type" maxLength="28">حذف نوع کارت</string>
     <string name="add_card_type" maxLength="28">افزودن تایپ کارت</string>
     <!--Warnings-->
     <string name="model_delete_warning">آیا از حذف این نوع یادداشت اطمینان دارید؟</string>
