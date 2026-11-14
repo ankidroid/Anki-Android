@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.ichi2.anki.noteeditor.data.ToolbarPreferences
 import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.themes.Themes
 
@@ -42,7 +43,7 @@ internal class ToolbarLayoutDialogHost {
                             onChanged()
                         },
                         onDismiss = { isShowing = false },
-                        showSelectionBackground = Themes.currentTheme != DayTheme.EINK,
+                        showSelectionBackground = Themes.currentTheme != DayTheme.EINK && Themes.currentTheme != NightTheme.EINK,
                     )
                 }
             }

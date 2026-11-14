@@ -71,6 +71,7 @@
     <string-array name="night_theme_labels">
         <item>@string/night_theme_black</item>
         <item>@string/night_theme_dark</item>
+        <item>@string/day_theme_eink</item>
     </string-array>
     <string-array name="html_size_code_labels">
         <item>@string/html_size_code_xx_small</item>

@@ -40,7 +40,8 @@ object Themes {
     fun setTheme(context: Context) {
         updateCurrentTheme(context)
         context.setTheme(currentTheme.styleResId)
-        if (context is Activity && currentTheme != DayTheme.EINK && PrefsRepository(context).devMaterialYouEnabled) {
+        val isEink = currentTheme == DayTheme.EINK || currentTheme == NightTheme.EINK
+        if (context is Activity && !isEink && PrefsRepository(context).devMaterialYouEnabled) {
             DynamicColors.applyToActivityIfAvailable(context)
         }
     }
