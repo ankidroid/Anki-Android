@@ -35,6 +35,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -52,12 +53,14 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  * @param onConfirm called with the text, but only while it is valid
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
- * @param errorMessageFor error to show for the current input, null when valid
+ * @param errorMessageFor plain or annotated error to show for the current input, null when valid
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
  * @param validateOnInput when false, validate on confirmation instead of while editing
  * @param enabled whether confirmation is allowed from the button or keyboard
+ * @param asyncErrorMessageFor optional background validation, also rechecked before confirming
+ * @param validationKey invalidates background validation when external data changes
  */
 @Composable
 fun TextInputDialog(
@@ -72,30 +75,39 @@ fun TextInputDialog(
     maxLengthCounter: Int? = null,
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
-    errorMessageFor: (String) -> String? = { null },
+    errorMessageFor: (String) -> CharSequence? = { null },
     helperText: String? = null,
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
     validateOnInput: Boolean = true,
     enabled: Boolean = true,
+    asyncErrorMessageFor: (suspend (String) -> CharSequence?)? = null,
+    validationKey: Any? = null,
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
     }
-    var hasUserEdited by rememberSaveable { mutableStateOf(false) }
-    var submissionAttempted by rememberSaveable { mutableStateOf(false) }
-    val errorMessage = if (validateOnInput || submissionAttempted) errorMessageFor(input.text) else null
-    val displayedError = errorMessage?.takeIf { hasUserEdited || submissionAttempted }
-    val supportingMessage = displayedError ?: helperText
+    val validation =
+        rememberTextInputValidation(
+            text = { input.text },
+            enabled = enabled,
+            validateOnInput = validateOnInput,
+            errorMessageFor = errorMessageFor,
+            asyncErrorMessageFor = asyncErrorMessageFor,
+            validationKey = validationKey,
+            onConfirm = onConfirm,
+        )
+    val displayedError = validation.errorMessage
+    val supportingMessage =
+        (displayedError ?: helperText)?.let { it as? AnnotatedString ?: AnnotatedString(it.toString()) }
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
-
-    fun confirmIfValid() {
-        if (!enabled) return
-        submissionAttempted = true
-        if (errorMessageFor(input.text) == null) onConfirm(input.text)
+    val dismiss = {
+        validation.onDismiss()
+        onDismissRequest()
     }
-    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
+
+    AnkiDroidDialog(onDismissRequest = dismiss) {
         Surface(
             modifier = Modifier.widthIn(min = 280.dp, max = 560.dp),
             shape = AlertDialogDefaults.shape,
@@ -125,8 +137,7 @@ fun TextInputDialog(
                         onValueChange = { proposed ->
                             if (input.text != proposed.text) {
                                 input = transformInput(proposed)
-                                hasUserEdited = true
-                                submissionAttempted = false
+                                validation.onTextChanged()
                             } else {
                                 input = proposed
                             }
@@ -141,7 +152,7 @@ fun TextInputDialog(
                                 {
                                     Row(Modifier.fillMaxWidth()) {
                                         if (supportingMessage != null || !validateOnInput) {
-                                            Text(supportingMessage.orEmpty(), Modifier.weight(1f))
+                                            Text(supportingMessage ?: AnnotatedString(""), Modifier.weight(1f))
                                         } else {
                                             Spacer(Modifier.weight(1f))
                                         }
@@ -151,7 +162,7 @@ fun TextInputDialog(
                             },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = { confirmIfValid() }),
+                        keyboardActions = KeyboardActions(onDone = { validation.onConfirm() }),
                     )
                 }
                 FlowRow(
@@ -159,10 +170,10 @@ fun TextInputDialog(
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    TextButton(onClick = onDismissRequest) { Text(dismissText) }
+                    TextButton(onClick = dismiss) { Text(dismissText) }
                     TextButton(
-                        onClick = ::confirmIfValid,
-                        enabled = enabled && (!validateOnInput || errorMessage == null),
+                        onClick = validation.onConfirm,
+                        enabled = validation.canConfirm,
                     ) { Text(confirmText) }
                 }
             }) { children, constraints ->
