@@ -40,7 +40,7 @@ class AddonModelTest {
         assertEquals(addon.name, "valid-ankidroid-js-addon-test")
         assertEquals(addon.addonTitle, "Valid AnkiDroid JS Addon")
         assertEquals(addon.version, "1.0.0")
-        assertEquals(addon.ankidroidJsApi, "0.0.3")
+        assertEquals(addon.ankidroidJsApi, "0.0.4")
         assertEquals(addon.addonType, "reviewer")
         assertEquals(addon.icon, "") // reviewer icon is empty
 
