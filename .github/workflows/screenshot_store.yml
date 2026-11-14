@@ -72,7 +72,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Configure JDK
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: "jetbrains"
           java-version: "21"
@@ -81,7 +81,7 @@ jobs:
 
       # Better than caching and/or extensions of actions/setup-java
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
         with:
           # Use open source provider: https://github.com/gradle/actions/blob/main/docs/setup-gradle.md#basic-caching
           cache-provider: basic
@@ -105,7 +105,7 @@ jobs:
           ./gradlew recordScreenshots -Pscreenshot -Ptheme=light,dark --stacktrace --rerun-tasks
 
       - name: Upload screenshot baseline
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: ${{ always() }}
         with:
           name: screenshot  # downloaded by screenshot_compare.yml
@@ -114,7 +114,7 @@ jobs:
           retention-days: 30
 
       - name: Upload screenshot reports
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: ${{ always() }}
         with:
           name: screenshot-reports
@@ -123,7 +123,7 @@ jobs:
           retention-days: 30
 
       - name: Upload screenshot test results
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: ${{ always() }}
         with:
           name: screenshot-test-results
