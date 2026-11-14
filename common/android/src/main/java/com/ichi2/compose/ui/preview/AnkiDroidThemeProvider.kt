@@ -14,6 +14,7 @@ class AnkiDroidThemeProvider : PreviewParameterProvider<Theme> {
     override fun getDisplayName(index: Int): String =
         when (val theme = values.elementAt(index)) {
             DayTheme.EINK -> "E-ink"
+            NightTheme.EINK -> "E-ink night"
             else -> theme.toString().lowercase().replaceFirstChar(Char::titlecase)
         }
 }

@@ -14,6 +14,7 @@
     <string name="theme_plain_value">2</string>
     <string name="theme_black_value">3</string>
     <string name="theme_dark_value">4</string>
+    <string name="theme_eink_night_value">5</string>
 
     <string-array name="app_theme_values">
         <item>@string/theme_follow_system_value</item>
@@ -28,5 +29,6 @@
     <string-array name="night_theme_values">
         <item>@string/theme_black_value</item>
         <item>@string/theme_dark_value</item>
+        <item>@string/theme_eink_night_value</item>
     </string-array>
 </resources>
