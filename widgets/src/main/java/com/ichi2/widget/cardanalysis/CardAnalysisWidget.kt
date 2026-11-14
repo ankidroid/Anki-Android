@@ -16,6 +16,7 @@ import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.core.util.TypedValueCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
@@ -81,21 +82,20 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             appWidgetId: AppWidgetId,
         ) {
             val deckId = getDeckIdForWidget(context, appWidgetId)
-            val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
 
             if (deckId == NOT_FOUND_DECK_ID) {
                 // If deckId is null, it means no deck was selected or the selected deck was deleted.
                 // In this case, we don't save the null value to preferences because we want to
                 // keep the previous deck ID if the user reconfigures the widget later.
                 // Instead, we show a message prompting the user to reconfigure the widget.
-                showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
+                showMissingDeck(context, appWidgetManager, appWidgetId)
                 return
             }
 
             applicationScope.launchCatching(errorMessageHandler = {}) {
                 val isCollectionEmpty = isCollectionEmpty()
                 if (isCollectionEmpty) {
-                    showCollectionDeck(context, appWidgetManager, appWidgetId, remoteViews)
+                    showCollectionDeck(context, appWidgetManager, appWidgetId)
                     return@launchCatching
                 }
 
@@ -104,7 +104,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     // The deck was found but no data could be fetched, so update the preferences to remove the deck.
                     // This ensures that the widget does not retain a reference to a non-existent or invalid deck.
                     CardAnalysisWidgetPreferences(context).saveSelectedDeck(appWidgetId, NOT_FOUND_DECK_ID)
-                    showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
+                    showMissingDeck(context, appWidgetManager, appWidgetId)
                     return@launchCatching
                 }
                 showDeck(context, appWidgetManager, appWidgetId, deckData)
@@ -123,39 +123,48 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews,
-        ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_collection_state_in_widget))
-            remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
-            remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
-            remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
-            remoteViews.setBackgrounds(cornersTooRound = false)
-
-            val configIntent = with(DeferredNavigation) { WidgetConfigDestination.CardAnalysis(appWidgetId.id).toIntent() }
-            val configPendingIntent =
-                PendingIntent.getActivity(
-                    context,
-                    appWidgetId.id,
-                    configIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
-            remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
-
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
-        }
+        ) = showMessage(
+            context,
+            appWidgetManager,
+            appWidgetId,
+            CommonString.empty_collection_state_in_widget,
+            CommonString.empty_collection_state_in_widget_short,
+        )
 
         private fun showMissingDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews,
+        ) = showMessage(context, appWidgetManager, appWidgetId, CommonString.empty_widget_state, CommonString.empty_widget_state_short)
+
+        private fun showMessage(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: AppWidgetId,
+            @StringRes message: Int,
+            @StringRes shortMessage: Int,
         ) {
-            // Show empty_widget and set click listener to open configuration
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_widget_state))
+            val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
+            appWidgetManager.updateAppWidget(
+                appWidgetId,
+                sizedRemoteViews(options) {
+                    createMessageViews(context, appWidgetId, context.getString(message), context.getString(shortMessage), it)
+                },
+            )
+        }
+
+        private fun createMessageViews(
+            context: Context,
+            appWidgetId: AppWidgetId,
+            message: String,
+            shortMessage: String,
+            size: SizeF,
+        ): RemoteViews {
+            val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
-            remoteViews.setBackgrounds(cornersTooRound = false)
+            remoteViews.setBackgrounds(size.cornersTooRound())
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.CardAnalysis(appWidgetId.id).toIntent() }
             val configPendingIntent =
@@ -166,8 +175,8 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
-
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+            remoteViews.fitMessage(context, size, message, shortMessage)
+            return remoteViews
         }
 
         private suspend fun showDeck(
@@ -213,11 +222,12 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 )
             remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
 
-            val cornersTooRound = size.height > 0 && size.height < CORNER_RADIUS_DP * 3
-            remoteViews.setBackgrounds(cornersTooRound)
+            remoteViews.setBackgrounds(size.cornersTooRound())
             remoteViews.fitTo(context, size)
             return remoteViews
         }
+
+        private fun SizeF.cornersTooRound() = height > 0 && height < CORNER_RADIUS_DP * 3
 
         private fun RemoteViews.setBackgrounds(cornersTooRound: Boolean) {
             setInt(
@@ -282,14 +292,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     )
                 }
             } else {
-                // Binary search for the largest scale that still fits, to within 1px of the largest text size
-                var minScale = 0f
-                var maxScale = 1f
-                while ((maxScale - minScale) * textSizes.max() > 1f) {
-                    val scale = (minScale + maxScale) / 2
-                    if (fitsAtScale(scale)) minScale = scale else maxScale = scale
-                }
-                fitsAtScale(minScale)
+                fitsAtScale(largestFittingScale(textSizes.max()) { fitsAtScale(it) })
                 for (view in textViews) {
                     setTextViewTextSize(view.id, TypedValue.COMPLEX_UNIT_PX, view.textSize)
                 }
@@ -297,6 +300,80 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             for (view in paddedViews) {
                 setViewPadding(view.id, view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
             }
+        }
+
+        /** Fits [text] in [size] by trimming the padding, then by switching to [shortText], then by shrinking the text, never splitting a word. */
+        private fun RemoteViews.fitMessage(
+            context: Context,
+            size: SizeF,
+            text: String,
+            shortText: String,
+        ) {
+            val density = context.resources.displayMetrics.density
+            val widthSpec =
+                MeasureSpec.makeMeasureSpec(
+                    (size.width * density).roundToInt(),
+                    if (size.width > 0) MeasureSpec.EXACTLY else MeasureSpec.UNSPECIFIED,
+                )
+            val availableHeight = if (size.height > 0) size.height * density else Float.POSITIVE_INFINITY
+            val root = apply(context, null)
+            val message = WidgetCardAnalysisBinding.bind(root).emptyWidget
+            val textSize = message.textSize
+            val padding = listOf(message.paddingLeft, message.paddingTop, message.paddingRight, message.paddingBottom)
+
+            fun fits(
+                paddingScale: Float,
+                textScale: Float = 1f,
+            ): Boolean {
+                message.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * textScale)
+                val (left, top, right, bottom) = padding.map { (it * paddingScale).roundToInt() }
+                message.setPadding(left, top, right, bottom)
+                root.measure(widthSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
+                return root.measuredHeight <= availableHeight && message.breaksOnlyBetweenWords()
+            }
+
+            fun fitsWithLessPadding(): Boolean =
+                when {
+                    fits(1f) -> true
+                    !fits(0f) -> false
+                    else -> {
+                        fits(largestFittingScale(padding.max().toFloat()) { fits(it) })
+                        true
+                    }
+                }
+
+            message.text = text
+            var fitsAtTextSize = fitsWithLessPadding()
+            if (!fitsAtTextSize) {
+                message.text = shortText
+                fitsAtTextSize = fitsWithLessPadding()
+            }
+            if (fitsAtTextSize) {
+                setTextViewTextSize(
+                    R.id.empty_widget,
+                    TypedValue.COMPLEX_UNIT_SP,
+                    TypedValueCompat.pxToSp(textSize, context.resources.displayMetrics),
+                )
+            } else {
+                fits(0f, largestFittingScale(textSize) { fits(0f, it) })
+                setTextViewTextSize(R.id.empty_widget, TypedValue.COMPLEX_UNIT_PX, message.textSize)
+            }
+            setTextViewText(R.id.empty_widget, message.text)
+            setViewPadding(R.id.empty_widget, message.paddingLeft, message.paddingTop, message.paddingRight, message.paddingBottom)
+        }
+
+        /** Binary search for the largest scale that still fits, to within 1px of [largestSize]. */
+        private inline fun largestFittingScale(
+            largestSize: Float,
+            fitsAtScale: (Float) -> Boolean,
+        ): Float {
+            var minScale = 0f
+            var maxScale = 1f
+            while ((maxScale - minScale) * largestSize > 1f) {
+                val scale = (minScale + maxScale) / 2
+                if (fitsAtScale(scale)) minScale = scale else maxScale = scale
+            }
+            return minScale
         }
 
         private fun TextView.breaksOnlyBetweenWords(): Boolean {

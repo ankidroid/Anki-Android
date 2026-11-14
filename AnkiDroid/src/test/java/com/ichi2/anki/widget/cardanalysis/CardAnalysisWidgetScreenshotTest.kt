@@ -84,9 +84,21 @@ class CardAnalysisWidgetScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun missingDeckMinimumSize() =
+        runTest {
+            captureWidget("missing_deck_minimum_size", deckId = null, widthDp = 84, heightDp = 56)
+        }
+
+    @Test
     fun emptyCollection() =
         runTest {
             captureWidget("empty_collection", deckId = Consts.DEFAULT_DECK_ID, widthDp = 262, heightDp = 220)
+        }
+
+    @Test
+    fun emptyCollectionMinimumSize() =
+        runTest {
+            captureWidget("empty_collection_minimum_size", deckId = Consts.DEFAULT_DECK_ID, widthDp = 84, heightDp = 56)
         }
 
     private fun TestScope.captureDeck(
