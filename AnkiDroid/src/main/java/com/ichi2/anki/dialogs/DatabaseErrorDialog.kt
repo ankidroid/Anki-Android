@@ -24,7 +24,6 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.FatalInitializationError.StorageError
 import com.ichi2.anki.InitialActivity.StartupFailure.InitializationError
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
 import com.ichi2.anki.R
@@ -60,6 +59,7 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.startup.FatalInitializationError.StorageError
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.startup.resetAnkiDroidDirectory
 import com.ichi2.anki.ui.internationalization.sentenceCase

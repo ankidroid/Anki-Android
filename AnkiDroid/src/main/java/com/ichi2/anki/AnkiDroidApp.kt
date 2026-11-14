@@ -13,7 +13,6 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.system.Os
@@ -73,12 +72,13 @@ import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.startup.FatalInitializationError
+import com.ichi2.anki.startup.StartupErrors
 import com.ichi2.anki.startup.configureBackendTemporaryDirectory
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.startup.maybeSetDefaultCollectionPath
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.anki.widget.RECURRING_WIDGETS
-import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
@@ -103,8 +103,7 @@ import java.util.Locale
 open class AnkiDroidApp :
     Application(),
     ChangeManager.Subscriber {
-    /** An exception if AnkiDroidApp fails to load  */
-    private var fatalInitializationError: FatalInitializationError? = null
+    private val startupErrors = StartupErrors()
 
     private var appLifecycleObserver: AppLifecycleObserver? = null
 
@@ -420,7 +419,7 @@ open class AnkiDroidApp :
      * Manually initializes the collection directory and `.nomedia` if
      * [hasLegacyStorageAccessPermission] is set
      *
-     * On failure, sets [fatalInitializationError] to [storageError][FatalInitializationError.StorageError]
+     * On failure, records a [storage error][FatalInitializationError.StorageError] in [startupErrors].
      *
      * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
      *  is called on startup of the activity.
@@ -442,7 +441,7 @@ open class AnkiDroidApp :
                     }
                     CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 } catch (e: SystemStorageException) {
-                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                    startupErrors.recordFatalError(FatalInitializationError.StorageError(e))
                     return@setup
                 }
 
@@ -465,7 +464,7 @@ open class AnkiDroidApp :
                     // The user can't write to the AnkiDroid directory (=> cant write to the collection)
                     // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
                     // => show the 'fatal storage error' screen
-                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                    startupErrors.recordFatalError(FatalInitializationError.StorageError(e))
                 }
             }
         }
@@ -677,7 +676,7 @@ open class AnkiDroidApp :
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            fatalInitializationError = FatalInitializationError.WebViewError(e)
+            startupErrors.recordFatalError(FatalInitializationError.WebViewError(e))
             sendExceptionReport(e, "checkWebViewAvailable")
             Timber.e(e, "checkWebViewAvailable")
             false
@@ -814,11 +813,6 @@ open class AnkiDroidApp :
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
 
-        @VisibleForTesting
-        fun clearFatalError() {
-            this.instance.fatalInitializationError = null
-        }
-
         /**
          * Get the url for the properly translated feedback page
          * @return
@@ -847,36 +841,8 @@ open class AnkiDroidApp :
                     else -> appResources.getString(R.string.link_manual)
                 }
 
-        /** (optional) set if an unrecoverable error occurs during Application startup */
-        val fatalError: FatalInitializationError?
-            get() = instance.fatalInitializationError
+        /** Errors recorded during application startup. */
+        internal val startupErrors: StartupErrors
+            get() = instance.startupErrors
     }
-}
-
-/**
- * Types of unrecoverable errors which we want to inform the user of
- */
-sealed class FatalInitializationError {
-    data class WebViewError(
-        val error: Throwable,
-    ) : FatalInitializationError()
-
-    data class StorageError(
-        val error: SystemStorageException,
-    ) : FatalInitializationError()
-
-    /** Advanced/developer-facing string representing the error */
-    val errorDetail: String
-        get() =
-            when (this) {
-                is WebViewError -> ExceptionUtil.getExceptionMessage(error)
-                is StorageError -> error.message
-            }
-
-    val infoLink: Uri?
-        get() =
-            when (this) {
-                is WebViewError -> null
-                is StorageError -> error.infoUri?.toUri()
-            }
 }

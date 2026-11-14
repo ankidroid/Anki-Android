@@ -519,7 +519,7 @@ open class DeckPicker :
 
         // handle the first load: display the app introduction
         // This screen is currently better equipped to handle errors than IntroductionActivity
-        if (!hasShownAppIntro() && AnkiDroidApp.fatalError == null) {
+        if (!hasShownAppIntro() && !AnkiDroidApp.startupErrors.hasFatalError()) {
             Timber.i("Displaying app intro")
             val appIntro = Intent(this, IntroductionActivity::class.java)
             appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)

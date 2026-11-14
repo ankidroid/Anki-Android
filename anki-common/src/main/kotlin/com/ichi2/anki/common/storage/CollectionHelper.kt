@@ -131,7 +131,7 @@ object CollectionHelper {
      * Reads of an unset collection path rethrow this instead of [StorageNotConfiguredException],
      * so the storage failure is not mistaken for the expected 'no collection path set' state.
      */
-    // TODO: #19552 - consolidate with AnkiDroidApp.fatalError and StorageDecision (a dedicated
+    // TODO: #19552 - consolidate with AnkiDroidApp.startupErrors and StorageDecision (a dedicated
     //  'storage unavailable' state) once the storage setup flow exists
     var systemStorageFailure: SystemStorageException? = null
 
@@ -154,7 +154,7 @@ object CollectionHelper {
         storageDecisionTestOverride?.let { return it }
         if (ankiDroidDirectoryOverride != null) return StorageDecision.Decided
         // a recorded systemStorageFailure also leaves the path unset: startup has already
-        // surfaced it via AnkiDroidApp.fatalError, and reads rethrow it rather than
+        // surfaced it via AnkiDroidApp.startupErrors, and reads rethrow it rather than
         // reporting 'not configured'
         return if (preferences.contains(PREF_COLLECTION_PATH)) StorageDecision.Decided else StorageDecision.Undecided
     }
