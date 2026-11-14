@@ -163,6 +163,7 @@
         <item name="badgeErrorColor">#f45000</item>
         <item name="badgeWarningColor">#ff5e13</item>
         <item name="badgeTextColor">@color/white</item>
+        <item name="incrementerButtonIconColor">@color/white</item>
         <item name="widgetStrokeWidth">0dp</item>
         <item name="widgetStrokeColor">@color/transparent</item>
         <item name="studyScreenElevation">0.8dp</item>
