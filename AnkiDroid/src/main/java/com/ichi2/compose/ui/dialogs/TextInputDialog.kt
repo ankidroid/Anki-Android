@@ -62,14 +62,11 @@ import com.ichi2.compose.utils.toAnnotatedString
  * @param onConfirm called with the text, but only while it is valid
  * @param initialText initial value shown in the field
  * @param initialSelection initial cursor position or selected range; defaults to the end of [initialText]
- * @param errorMessageFor plain or annotated error to show for the current input, null when valid
+ * @param validation validation rules and when to run them; defaults to accepting any input
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
  * @param transformInput applied to text edits, not cursor-only changes
- * @param validateOnInput when false, validate on confirmation instead of while editing
  * @param enabled whether confirmation is allowed from the button or keyboard
- * @param asyncErrorMessageFor optional background validation, also rechecked before confirming
- * @param validationKey invalidates background validation when external data changes
  */
 @Composable
 fun TextInputDialog(
@@ -84,29 +81,24 @@ fun TextInputDialog(
     maxLengthCounter: Int? = null,
     lengthOf: (String) -> Int = { it.length },
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
-    errorMessageFor: (String) -> CharSequence? = { null },
+    validation: InputValidation = InputValidation.None,
     helperText: String? = null,
     description: String? = null,
     transformInput: (TextFieldValue) -> TextFieldValue = { it },
-    validateOnInput: Boolean = true,
     enabled: Boolean = true,
-    asyncErrorMessageFor: (suspend (String) -> CharSequence?)? = null,
-    validationKey: Any? = null,
 ) {
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
     }
-    val validation =
+    val validationState =
         rememberTextInputValidation(
             text = { input.text },
             enabled = enabled,
-            validateOnInput = validateOnInput,
-            errorMessageFor = errorMessageFor,
-            asyncErrorMessageFor = asyncErrorMessageFor,
-            validationKey = validationKey,
+            validation = validation,
             onConfirm = onConfirm,
         )
-    val displayedError = validation.errorMessage
+    val validateOnInput = validation.validateOnInput
+    val displayedError = validationState.errorMessage
     val supportingMessage = (displayedError ?: helperText)?.toAnnotatedString()
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
@@ -129,7 +121,7 @@ fun TextInputDialog(
         }
 
     val dismiss = {
-        validation.onDismiss()
+        validationState.onDismiss()
         onDismissRequest()
     }
 
@@ -171,7 +163,7 @@ fun TextInputDialog(
                         onValueChange = { proposed ->
                             if (input.text != proposed.text) {
                                 input = transformInput(proposed)
-                                validation.onTextChanged()
+                                validationState.onTextChanged()
                             } else {
                                 input = proposed
                             }
@@ -196,7 +188,7 @@ fun TextInputDialog(
                             },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(capitalization = capitalization, imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = { validation.onConfirm() }),
+                        keyboardActions = KeyboardActions(onDone = { validationState.onConfirm() }),
                     )
                 }
                 FlowRow(
@@ -206,8 +198,8 @@ fun TextInputDialog(
                 ) {
                     TextButton(onClick = dismiss) { Text(dismissText) }
                     TextButton(
-                        onClick = validation.onConfirm,
-                        enabled = validation.canConfirm,
+                        onClick = validationState.onConfirm,
+                        enabled = validationState.canConfirm,
                     ) { Text(confirmText) }
                 }
             }) { children, constraints ->

@@ -66,7 +66,7 @@ class TextInputDialogScreenshotTest : ComposeScreenshotTest() {
                 initialText = "History",
                 onConfirm = {},
                 onDismissRequest = {},
-                validateOnInput = false,
+                validation = InputValidation.Immediate(validateOnInput = false) { null },
             )
         }
     }

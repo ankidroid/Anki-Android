@@ -30,11 +30,7 @@ internal class TextInputValidation(
  *
  * @param text reads the current input, including edits made while confirmation is suspended
  * @param enabled whether confirmation is allowed; validation can still run when disabled
- * @param validateOnInput whether to run validation before a confirmation attempt
- * @param errorMessageFor synchronous validator; returns an error message or null when valid
- * @param asyncErrorMessageFor optional suspending validator; returns an error message or null when valid.
- *   It can run as the input changes and is rechecked on confirmation.
- * @param validationKey change this when external data used by asynchronous validation changes
+ * @param validation validation rules and when to run them
  * @param onConfirm called with the validated text. After asynchronous validation, the current text must
  *   still match the submitted text, the validation key must be unchanged, and confirmation must still be enabled.
  * @return feedback and actions for the dialog. Call `onTextChanged` after each text edit.
@@ -43,12 +39,19 @@ internal class TextInputValidation(
 internal fun rememberTextInputValidation(
     text: () -> String,
     enabled: Boolean,
-    validateOnInput: Boolean,
-    errorMessageFor: (String) -> CharSequence?,
-    asyncErrorMessageFor: (suspend (String) -> CharSequence?)?,
-    validationKey: Any?,
+    validation: InputValidation,
     onConfirm: (String) -> Unit,
 ): TextInputValidation {
+    val validateOnInput = validation.validateOnInput
+    val errorMessageFor: (String) -> CharSequence? =
+        when (validation) {
+            InputValidation.None -> { _ -> null }
+            is InputValidation.Immediate -> validation.check
+            is InputValidation.Async -> validation.precheck
+        }
+    val asyncValidation = validation as? InputValidation.Async
+    val asyncErrorMessageFor = asyncValidation?.check
+    val validationKey = asyncValidation?.invalidationKey
     var hasUserEdited by rememberSaveable { mutableStateOf(false) }
     var submissionAttempted by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()

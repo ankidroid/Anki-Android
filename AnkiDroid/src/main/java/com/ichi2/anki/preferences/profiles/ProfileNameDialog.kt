@@ -10,6 +10,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.anki.multiprofile.ProfileName.ValidationResult
 import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.compose.ui.dialogs.InputValidation
 import com.ichi2.compose.ui.dialogs.TextInputDialog
 import com.ichi2.compose.ui.preview.DialogPreviews
 
@@ -77,13 +78,14 @@ private fun ProfileNameDialog(
         maxLengthCounter = ProfileName.MAX_LENGTH,
         lengthOf = { it.trim().length },
         capitalization = KeyboardCapitalization.Words,
-        errorMessageFor = { text ->
-            when (val result = ProfileName.validate(text)) {
-                is ValidationResult.Valid -> nameExistsError.takeIf { result.name.existsIn(existingNames) }
-                is ValidationResult.Empty -> emptyError
-                is ValidationResult.TooLong -> tooLongError
-            }
-        },
+        validation =
+            InputValidation.Immediate { text ->
+                when (val result = ProfileName.validate(text)) {
+                    is ValidationResult.Valid -> nameExistsError.takeIf { result.name.existsIn(existingNames) }
+                    is ValidationResult.Empty -> emptyError
+                    is ValidationResult.TooLong -> tooLongError
+                }
+            },
     )
 }
 
