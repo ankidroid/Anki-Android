@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.SyncActionProvider
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 class BadgeDrawableBuilder(
     private val context: Context,
@@ -32,7 +33,7 @@ class BadgeDrawableBuilder(
         if (originalIcon is BadgeDrawable) {
             originalIcon = originalIcon.current
         }
-        val badge = BadgeDrawable(originalIcon)
+        val badge = BadgeDrawable(originalIcon, ThemeUtils.getThemeAttrColor(context, CommonR.attr.badgeTextColor))
         if (char != '\u0000') {
             badge.setText(char)
         }
