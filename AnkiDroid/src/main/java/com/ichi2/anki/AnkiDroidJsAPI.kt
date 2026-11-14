@@ -205,7 +205,6 @@ open class AnkiDroidJsAPI(
             return@withContext convertToByteArray(apiContract, -1)
         }
 
-        val currentCard = host.currentCard()
         val cardDataForJsAPI = host.cardData()
         val apiParams = apiContract.cardSuppliedData
 
@@ -281,7 +280,7 @@ open class AnkiDroidJsAPI(
                             )
                             return@withContext convertToByteArray(apiContract, false)
                         }
-                        host.setDue(currentCard.id, days)
+                        host.setDue(host.currentCard().id, days)
                         return@withContext convertToByteArray(apiContract, true)
                     } catch (_: NumberFormatException) {
                         showDeveloperContact(
@@ -293,35 +292,35 @@ open class AnkiDroidJsAPI(
                 }
 
                 "resetProgress" -> {
-                    host.resetProgress(currentCard.id)
+                    host.resetProgress(host.currentCard().id)
                     convertToByteArray(apiContract, true)
                 }
 
                 "cardMark" ->
                     convertToByteArray(
                         apiContract,
-                        currentCard.note(getColUnsafe).hasTag(getColUnsafe, "marked"),
+                        host.currentCard().note(getColUnsafe).hasTag(getColUnsafe, "marked"),
                     )
 
-                "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag())
-                "cardReps" -> convertToByteArray(apiContract, currentCard.reps)
-                "cardInterval" -> convertToByteArray(apiContract, currentCard.ivl)
-                "cardFactor" -> convertToByteArray(apiContract, currentCard.factor)
-                "cardMod" -> convertToByteArray(apiContract, currentCard.mod)
-                "cardId" -> convertToByteArray(apiContract, currentCard.id)
-                "cardNid" -> convertToByteArray(apiContract, currentCard.nid)
-                "cardType" -> convertToByteArray(apiContract, currentCard.type.code)
-                "cardDid" -> convertToByteArray(apiContract, currentCard.did)
-                "cardLeft" -> convertToByteArray(apiContract, currentCard.left)
-                "cardODid" -> convertToByteArray(apiContract, currentCard.oDid)
-                "cardODue" -> convertToByteArray(apiContract, currentCard.oDue)
-                "cardQueue" -> convertToByteArray(apiContract, currentCard.queue.code)
-                "cardLapses" -> convertToByteArray(apiContract, currentCard.lapses)
-                "cardDue" -> convertToByteArray(apiContract, currentCard.due)
+                "cardFlag" -> convertToByteArray(apiContract, host.currentCard().userFlag())
+                "cardReps" -> convertToByteArray(apiContract, host.currentCard().reps)
+                "cardInterval" -> convertToByteArray(apiContract, host.currentCard().ivl)
+                "cardFactor" -> convertToByteArray(apiContract, host.currentCard().factor)
+                "cardMod" -> convertToByteArray(apiContract, host.currentCard().mod)
+                "cardId" -> convertToByteArray(apiContract, host.currentCard().id)
+                "cardNid" -> convertToByteArray(apiContract, host.currentCard().nid)
+                "cardType" -> convertToByteArray(apiContract, host.currentCard().type.code)
+                "cardDid" -> convertToByteArray(apiContract, host.currentCard().did)
+                "cardLeft" -> convertToByteArray(apiContract, host.currentCard().left)
+                "cardODid" -> convertToByteArray(apiContract, host.currentCard().oDid)
+                "cardODue" -> convertToByteArray(apiContract, host.currentCard().oDue)
+                "cardQueue" -> convertToByteArray(apiContract, host.currentCard().queue.code)
+                "cardLapses" -> convertToByteArray(apiContract, host.currentCard().lapses)
+                "cardDue" -> convertToByteArray(apiContract, host.currentCard().due)
                 "deckName" ->
                     convertToByteArray(
                         apiContract,
-                        Decks.basename(host.collection.decks.name(currentCard.did)),
+                        Decks.basename(host.collection.decks.name(host.currentCard().did)),
                     )
 
                 "isActiveNetworkMetered" ->
@@ -430,7 +429,7 @@ open class AnkiDroidJsAPI(
                     val jsonObject = JSONObject(apiParams)
                     val noteId = jsonObject.getLong("noteId")
                     val tag = jsonObject.getString("tag")
-                    if (noteId != currentCard.nid) {
+                    if (noteId != host.currentCard().nid) {
                         permissions.requirePermission(DangerousJsApiPermission.MODIFY_TAGS)
                     }
                     undoableOp {
@@ -442,7 +441,7 @@ open class AnkiDroidJsAPI(
 
                 "setNoteTags" -> {
                     val jsonObject = JSONObject(apiParams)
-                    val noteId = currentCard.nid
+                    val noteId = host.currentCard().nid
                     val tags = jsonObject.getJSONArray("tags")
                     undoableOp {
                         fun Note.setTagsFromList(tagList: List<String>) {
@@ -465,7 +464,7 @@ open class AnkiDroidJsAPI(
                 }
 
                 "getNoteTags" -> {
-                    val noteId = currentCard.nid
+                    val noteId = host.currentCard().nid
                     val noteTags =
                         withCol {
                             getNote(noteId).tags
