@@ -153,7 +153,7 @@ class CardBrowserUserActionFeedbackTest : RobolectricTest() {
         withBrowser {
             val completed = activityViewModel.flowOfLastCompletedSearch.value
             activityViewModel.selectRowAtPosition(0)
-            activityViewModel.toggleMark()
+            activityViewModel.onEvent(BrowserEvent.ToggleMarkRequested)
             activityViewModel.updateSelectedCardsFlag(Flag.RED)
             advanceRobolectricLooper()
             assertEquals(completed, activityViewModel.flowOfLastCompletedSearch.value)

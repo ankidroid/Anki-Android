@@ -33,8 +33,9 @@ import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.browser.BrowserEvent
 import com.ichi2.anki.browser.BrowserRowCollection
-import com.ichi2.anki.browser.BrowserSearchFeedbackMode
+import com.ichi2.anki.browser.BrowserUiEffect
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -92,6 +93,7 @@ import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.receiveAsFlow
 import timber.log.Timber
 
 @Suppress("LeakingThis")
@@ -544,6 +546,16 @@ open class CardBrowser :
         viewModel.flowOfSearchState.collectInLifecycle(::searchStateChanged)
         viewModel.flowOfLastCompletedSearch.filterNotNull().collectInLifecycle(::onLastCompletedSearchChanged)
         viewModel.flowOfNoteEditorCommand.collectInLifecycle(::onNoteEditorCommand)
+        viewModel.uiEffects.receiveAsFlow().collectInLifecycle { effect ->
+            when (effect) {
+                BrowserUiEffect.RefreshControls -> refreshControls()
+            }
+        }
+    }
+
+    private fun refreshControls() {
+        hideProgressBar()
+        invalidateOptionsMenu()
     }
 
     private fun hideKeyboard() {
@@ -625,25 +637,6 @@ open class CardBrowser :
         )
     }
 
-    private fun forceRefreshSearch(
-        useSearchTextValue: Boolean = false,
-        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
-    ) {
-        if (useSearchTextValue && searchView != null) {
-            viewModel.setQuery(searchView!!.query.toString(), feedbackMode = feedbackMode)
-        } else {
-            viewModel.launchSearchForCards(feedbackMode = feedbackMode)
-        }
-    }
-
-    private fun refreshBrowserUI(feedbackMode: BrowserSearchFeedbackMode) {
-        hideProgressBar()
-        // reload whole view
-        forceRefreshSearch(feedbackMode = feedbackMode)
-        viewModel.endMultiSelectMode(SingleSelectCause.Other)
-        invalidateOptionsMenu() // maybe the availability of undo changed
-    }
-
     /**
      * Implementation of `by viewModels()` for use in [onCreate]
      *
@@ -671,19 +664,14 @@ open class CardBrowser :
         changes: OpChanges,
         handler: Any?,
     ) {
-        if (handler === this || handler === viewModel) {
-            return
-        }
-
-        if (changes.browserSidebar ||
-            changes.browserTable ||
-            changes.noteText ||
-            changes.card
-        ) {
-            // We refresh the Browser's own UI
-            val feedbackMode =
-                if (handler is NoteEditorFragment) BrowserSearchFeedbackMode.COUNT_ONLY else BrowserSearchFeedbackMode.NONE
-            refreshBrowserUI(feedbackMode)
+        val origin =
+            when {
+                handler === this || handler === viewModel -> BrowserEvent.CollectionChanged.Origin.BROWSER
+                handler is NoteEditorFragment -> BrowserEvent.CollectionChanged.Origin.NOTE_EDITOR
+                else -> BrowserEvent.CollectionChanged.Origin.EXTERNAL
+            }
+        launchCatchingTask {
+            viewModel.onEvent(BrowserEvent.CollectionChanged(changes, origin))
         }
     }
 

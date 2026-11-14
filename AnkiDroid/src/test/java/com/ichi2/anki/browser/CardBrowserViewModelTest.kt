@@ -7,6 +7,7 @@ import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.collection.OpChanges
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
@@ -87,6 +88,7 @@ import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -777,7 +779,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             assertThat("3 rows are selected", selectedRows.size, equalTo(3))
             assertThat("selection is not marked", queryAllSelectedNotes().all { !it.isMarked() })
 
-            toggleMark()
+            onEvent(BrowserEvent.ToggleMarkRequested)
 
             assertThat("3 rows are still selected", selectedRows.size, equalTo(3))
             assertThat("selection is now marked", queryAllSelectedNotes().all { it.isMarked() })
@@ -856,7 +858,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
         runViewModelTest(notes = 2) {
             selectRowsWithPositions(0)
 
-            ensureOpWithHandler(this) { toggleMark() }
+            ensureOpWithHandler(this) { onEvent(BrowserEvent.ToggleMarkRequested) }
         }
 
     @Test
@@ -880,7 +882,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
         runViewModelTest(notes = 2) {
             selectRowsWithPositions(0)
 
-            assertProgressAround { toggleMark() }
+            assertProgressAround { onEvent(BrowserEvent.ToggleMarkRequested) }
         }
 
     @Test
@@ -1644,6 +1646,34 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             searchJob?.join()
             assertThat("deleted row is no longer displayed", toDelete !in cards, equalTo(true))
             assertThat("pane falls back to the first remaining row", paneRow, equalTo(cards.first()))
+        }
+
+    @Test
+    fun `control refreshes survive a stopped browser and are consumed once`() =
+        runViewModelTest {
+            // The STARTED collector is cancelled while the note editor activity is on top.
+            uiEffects.receiveAsFlow().test {
+                expectNoEvents()
+            }
+            repeat(2) {
+                onEvent(
+                    BrowserEvent.CollectionChanged(
+                        OpChanges.newBuilder().setNoteText(true).build(),
+                        BrowserEvent.CollectionChanged.Origin.NOTE_EDITOR,
+                    ),
+                )
+            }
+
+            uiEffects.receiveAsFlow().test {
+                repeat(2) {
+                    assertEquals(BrowserUiEffect.RefreshControls, awaitItem())
+                }
+                expectNoEvents()
+            }
+            // Another stop/start without an edit must not repeat the refresh.
+            uiEffects.receiveAsFlow().test {
+                expectNoEvents()
+            }
         }
 
     @Test

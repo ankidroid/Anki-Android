@@ -70,6 +70,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -324,6 +326,10 @@ class CardBrowserViewModel(
      * If cards are marked or flagged
      */
     val flowOfCardStateChanged = MutableSharedFlow<Unit>()
+
+    // Queue effects while the browser's STARTED collector is stopped.
+    val uiEffects: ReceiveChannel<BrowserUiEffect>
+        field = Channel<BrowserUiEffect>(Channel.BUFFERED)
 
     val flowOfChangeNoteType = MutableSharedFlow<ChangeNoteTypeResponse>()
 
@@ -812,12 +818,36 @@ class CardBrowserViewModel(
     /** Whether any rows are selected */
     fun hasSelectedAnyRows(): Boolean = selectedRows.isNotEmpty()
 
+    /** Coordinates browser events; callers retain their existing coroutine error handling. */
+    suspend fun onEvent(event: BrowserEvent) {
+        when (event) {
+            BrowserEvent.ToggleMarkRequested -> toggleMark()
+            is BrowserEvent.CollectionChanged -> handleCollectionChanged(event)
+        }
+    }
+
+    private suspend fun handleCollectionChanged(event: BrowserEvent.CollectionChanged) {
+        if (event.origin == BrowserEvent.CollectionChanged.Origin.BROWSER) return
+        val changes = event.changes
+        if (!changes.browserSidebar && !changes.browserTable && !changes.noteText && !changes.card) return
+
+        val feedbackMode =
+            if (event.origin == BrowserEvent.CollectionChanged.Origin.NOTE_EDITOR) {
+                BrowserSearchFeedbackMode.COUNT_ONLY
+            } else {
+                BrowserSearchFeedbackMode.NONE
+            }
+        launchSearchForCards(feedbackMode = feedbackMode)
+        endMultiSelectMode(SingleSelectCause.Other)
+        uiEffects.send(BrowserUiEffect.RefreshControls)
+    }
+
     /**
      * All the notes of the selected cards will be marked
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked
      */
-    suspend fun toggleMark() {
+    private suspend fun toggleMark() {
         progressManager.withProgress {
             val cardIds = queryAllSelectedCardIds()
             if (cardIds.isEmpty()) {
