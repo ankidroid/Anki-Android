@@ -21,7 +21,9 @@ import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.multimedia.MultimediaActionHandler
 import com.ichi2.anki.multimedia.MultimediaActivityExtra
+import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaResult
+import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
@@ -59,27 +61,32 @@ internal class NoteEditorMultimediaController(
     private var pastedImageCache: HashMap<String, String> = HashMap()
 
     /**
-     * Subscribes to the next [MultimediaActionHandler] emitted by the bottom sheet
+     * Subscribes to the next [MultimediaBottomSheet.MultimediaAction] emitted by the bottom sheet
      * and launches its capture screen against [fieldIndex]. Cancels any previously
      * pending subscription so rapid field switches don't stack.
+     *
+     * [MultimediaViewModel.multimediaAction] has no replay, so a choice emitted while nothing
+     * is subscribed is lost. The subscription must start before anything that can suspend,
+     * such as loading the note, which waits while the collection is busy (#23183).
+     * [launchCatchingTask] runs on `Dispatchers.Main.immediate`, so the subscription is
+     * already active when this returns.
      */
     fun handleActions(fieldIndex: Int) {
         actionJob?.cancel()
         actionJob =
             fragment.launchCatchingTask {
+                // Must come before loading the note, or a choice made while the collection is busy is lost.
+                val action = fragment.multimediaViewModel.multimediaAction.first()
+                Timber.i("Selected multimedia action: %s", action)
                 val note = fragment.getCurrentMultimediaEditableNote()
                 if (note.isEmpty) return@launchCatchingTask
 
-                fragment.multimediaViewModel.multimediaAction.first { action ->
-                    Timber.i("Selected multimedia action: %s", action)
-                    val handler = MultimediaActionHandler.forAction(action)
-                    if (handler == MultimediaActionHandler.ImageFile) {
-                        // An empty image editor would be exposed during the picker's back animation.
-                        galleryPicker.launch(fieldIndex)
-                    } else {
-                        launchEditor(handler, fieldIndex, note)
-                    }
-                    true
+                val handler = MultimediaActionHandler.forAction(action)
+                if (handler == MultimediaActionHandler.ImageFile) {
+                    // An empty image editor would be exposed during the picker's back animation.
+                    galleryPicker.launch(fieldIndex)
+                } else {
+                    launchEditor(handler, fieldIndex, note)
                 }
             }
     }
