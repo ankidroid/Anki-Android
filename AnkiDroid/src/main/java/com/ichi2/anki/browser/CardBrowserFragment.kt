@@ -155,6 +155,7 @@ import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
+import com.ichi2.anki.utils.showSearchError
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.RtlCompliantActionProvider
@@ -1085,8 +1086,10 @@ class CardBrowserFragment :
         fun searchStateChanged(searchState: SearchState) {
             cardsAdapter.refreshRows()
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
-            if (searchState is SearchState.Completed) {
-                invalidateMenu()
+            when (searchState) {
+                Initializing, Searching -> { }
+                is SearchState.Completed -> invalidateMenu()
+                is SearchState.Error -> requireContext().showSearchError(searchState.error)
             }
         }
 

@@ -86,7 +86,6 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
-import com.ichi2.anki.utils.showSearchError
 import com.ichi2.themes.Themes
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
@@ -496,9 +495,7 @@ open class CardBrowser :
                     // this causes a very brief flicker, as we call `setQuery` to restore the menu state
                     searchView?.post { searchView?.clearFocus() }
                 }
-                is SearchState.Error -> {
-                    showSearchError(searchState.error)
-                }
+                is SearchState.Error -> { }
             }
         }
 
