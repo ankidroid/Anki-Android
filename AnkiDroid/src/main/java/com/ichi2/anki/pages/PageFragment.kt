@@ -10,7 +10,9 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withStarted
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.R
@@ -134,6 +136,15 @@ abstract class PageFragment(
     ): ByteArray {
         val methodName = uri.backendMethodName ?: throw IllegalArgumentException("unhandled request: $uri")
 
+        // A UI request may crash or silently fail if the app is in the background,
+        // so suspend it until the screen is visible. Other requests are not blocked.
+        // Multiple requests are queued, and resume in the order they were received.
+        // Throws if the screen is destroyed first.
+        // A detached fragment never starts, so handleUiPostRequest ignores its requests instead
+        if (activity != null && requiresVisibleScreen(methodName)) {
+            waitUntilStarted(methodName)
+        }
+
         val resolvedUiMethod =
             when (val uiResponse = activity.handleUiPostRequest(methodName, bytes)) {
                 is UiPostRequestResponse.Handled -> return uiResponse.data
@@ -148,6 +159,14 @@ abstract class PageFragment(
             }
             throw IllegalArgumentException("unhandled method: $methodName")
         }
+    }
+
+    /** Suspends until the screen is [STARTED][Lifecycle.State.STARTED] */
+    private suspend fun waitUntilStarted(methodName: String) {
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            Timber.i("deferring UI request '%s' until the screen is started", methodName)
+        }
+        withStarted { }
     }
 
     @CallSuper
