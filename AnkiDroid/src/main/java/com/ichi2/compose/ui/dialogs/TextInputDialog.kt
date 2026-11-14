@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.TextAutoSize
+import androidx.compose.foundation.text.modifiers.TextAutoSizeLayoutScope
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.MaterialTheme
@@ -33,14 +35,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.core.content.res.use
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
@@ -89,6 +98,23 @@ fun TextInputDialog(
     val supportingMessage = displayedError ?: helperText
     val hasSupportingText = maxLengthCounter != null || supportingMessage != null || !validateOnInput
     val focusRequester = remember { FocusRequester() }
+    val context = LocalContext.current
+    val density = LocalDensity.current
+    val titleFontSize = MaterialTheme.typography.headlineSmall.fontSize
+    val titleAutoSize =
+        remember(context, density, titleFontSize) {
+            val multilineFontSize =
+                context
+                    .obtainStyledAttributes(
+                        null,
+                        intArrayOf(android.R.attr.textSize),
+                        android.R.attr.textAppearanceMedium,
+                        android.R.style.TextAppearance_Medium,
+                    ).use { attributes ->
+                        with(density) { attributes.getDimensionPixelSize(0, titleFontSize.roundToPx()).toSp() }
+                    }
+            DialogTitleAutoSize(titleFontSize, multilineFontSize)
+        }
 
     fun confirmIfValid() {
         if (!enabled) return
@@ -106,9 +132,17 @@ fun TextInputDialog(
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     Text(
                         title,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style =
+                            MaterialTheme.typography.headlineSmall.copy(
+                                // Match the XML TextView's font metrics, including after shrinking.
+                                lineHeight = TextUnit.Unspecified,
+                                platformStyle = PlatformTextStyle(includeFontPadding = true),
+                            ),
                         color = AlertDialogDefaults.titleContentColor,
                         modifier = Modifier.padding(bottom = if (description == null) 16.dp else 8.dp),
+                        autoSize = titleAutoSize,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     if (description != null) {
                         Text(
@@ -178,6 +212,20 @@ fun TextInputDialog(
             }
             LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
         }
+    }
+}
+
+/** Matches AppCompat's DialogTitle: use medium text when the headline does not fit on one line. */
+private data class DialogTitleAutoSize(
+    val singleLineFontSize: TextUnit,
+    val multilineFontSize: TextUnit,
+) : TextAutoSize {
+    override fun TextAutoSizeLayoutScope.getFontSize(
+        constraints: Constraints,
+        text: AnnotatedString,
+    ): TextUnit {
+        val layout = performLayout(constraints, text, singleLineFontSize)
+        return if (layout.lineCount > 1 || layout.isLineEllipsized(0)) multilineFontSize else singleLineFontSize
     }
 }
 
