@@ -6,7 +6,8 @@ on:
 
 jobs:
   milestone:
-    if: ${{ github.event.pull_request.merged == true }}
+    # Maintains ankidroid/Anki-Android's own issues and PRs; do nothing on forks
+    if: github.event.pull_request.merged == true && github.repository == 'ankidroid/Anki-Android'
     runs-on: ubuntu-latest
     permissions:
       contents: read

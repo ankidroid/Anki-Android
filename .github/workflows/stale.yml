@@ -9,7 +9,8 @@ permissions:
 
 jobs:
   stale:
-
+    # Maintains ankidroid/Anki-Android's own issues and PRs; do nothing on forks
+    if: github.repository == 'ankidroid/Anki-Android'
     permissions:
       issues: write  # for actions/stale to close stale issues
       pull-requests: write  # for actions/stale to close stale PRs
