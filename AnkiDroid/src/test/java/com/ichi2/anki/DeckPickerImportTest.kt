@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.app.NotificationManager
 import android.content.ContentProvider
 import android.content.Intent
 import android.database.MatrixCursor
@@ -10,16 +11,20 @@ import android.os.Looper
 import android.provider.OpenableColumns
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.dialogs.ImportViewModel
 import com.ichi2.anki.testutils.SingleViewModelFactory
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
@@ -42,6 +47,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowContentResolver
 import java.io.File
 import kotlin.test.assertEquals
@@ -98,6 +104,130 @@ class DeckPickerImportTest : RobolectricTest() {
                 File(cachedPath).delete()
             }
         }
+
+    @Test
+    fun `confirmed import waits for resume without launching twice`() =
+        runTest {
+            val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+            val activity = controller.get()
+            controller.pause().stop()
+            ViewModelProvider(activity)[ImportViewModel::class.java].triggerImportAdd("/cache/deck.apkg")
+            advanceRobolectricLooper()
+            assertNull(shadowOf(activity).nextStartedActivity)
+
+            controller.start().resume().visible()
+            advanceRobolectricLooper()
+            val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
+            assertEquals(SingleFragmentActivity::class.java.name, intent.component?.className)
+            controller
+                .pause()
+                .stop()
+                .start()
+                .resume()
+                .visible()
+            advanceRobolectricLooper()
+            assertNull(shadowOf(activity).nextStartedActivity)
+        }
+
+    @Test
+    fun `stopped picker retains Add confirmation for the next picker`() {
+        assertRetainedConfirmation(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, "/cache/deck%20name.apkg")
+    }
+
+    @Test
+    fun `stopped picker retains Replace confirmation for the next picker`() {
+        assertRetainedConfirmation(ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM, "/cache/collection%20name.colpkg")
+    }
+
+    private fun assertRetainedConfirmation(
+        type: ImportDialog.Type,
+        path: String,
+    ) {
+        deferConfirmationFromStoppedPicker(type, path)
+
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+        controller.get().assertSingleImportConfirmation(type, path)
+        assertTrue(notifications.allNotifications.isEmpty())
+
+        controller.assertDismissedConfirmationIsNotReplayed()
+    }
+
+    private val notifications
+        get() = shadowOf(targetContext.getSystemService<NotificationManager>()!!)
+
+    private fun deferConfirmationFromStoppedPicker(
+        type: ImportDialog.Type,
+        path: String,
+    ) {
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        val activity = controller.get()
+        controller.pause().stop()
+
+        activity.showImportDialog(type, path)
+        advanceRobolectricLooper()
+        assertNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+        val notification = notifications.allNotifications.single()
+        assertEquals(DeckPicker::class.java.name, shadowOf(notification.contentIntent).savedIntent.component?.className)
+        controller.destroy()
+    }
+
+    private fun ActivityController<DeckPickerImport>.assertDismissedConfirmationIsNotReplayed() {
+        val activity = get()
+        (activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as ImportDialog).dismiss()
+        advanceRobolectricLooper()
+        pause()
+            .stop()
+            .start()
+            .resume()
+            .visible()
+        advanceRobolectricLooper()
+        assertEquals(1, activity.importConfirmations.size, "Resuming again must not replay the confirmation")
+        assertNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+    }
+
+    @Test
+    fun `pending Add confirmation waits for DeckPicker`() {
+        assertConfirmationWaitsForDeckPicker(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, "/cache/deck.apkg")
+    }
+
+    @Test
+    fun `pending Replace confirmation waits for DeckPicker`() {
+        assertConfirmationWaitsForDeckPicker(ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM, "/cache/collection.colpkg")
+    }
+
+    private fun assertConfirmationWaitsForDeckPicker(
+        type: ImportDialog.Type,
+        path: String,
+    ) {
+        DialogHandler.storeMessage(ImportDialog.newInstance(type, path).dialogHandlerMessage.toMessage())
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(EmptyAnkiActivity::class.java, Intent())
+        val activity = controller.get()
+        assertNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+
+        controller
+            .pause()
+            .stop()
+            .start()
+            .resume()
+            .visible()
+        advanceRobolectricLooper()
+        assertNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
+        controller.pause().stop()
+
+        val picker = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+        picker.assertSingleImportConfirmation(type, path)
+    }
+
+    @Test
+    fun `other pending dialogs can still resume on another activity`() {
+        DialogHandler.storeMessage(CollectionLoadingErrorDialog().toMessage())
+
+        val activity = startActivityNormallyOpenCollectionWithIntent(EmptyAnkiActivity::class.java, Intent())
+
+        val fragment = assertNotNull(activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as? DatabaseErrorDialog)
+        assertTrue(assertNotNull(fragment.dialog as? AlertDialog).isShowing)
+        assertNull(activity.dialogHandler.popMessage())
+    }
 
     @Test
     fun `finishing picker before text preparation completes suppresses navigation`() =
