@@ -408,9 +408,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 gravity = Gravity.CENTER
             }
+            filters += InputFilter.LengthFilter(maxInputLength(contextMenuOption, isSigned = isExtendLimits))
             if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
-                filters += arrayOf(InputFilter.LengthFilter(5), NonLeadingZeroInputFilter)
+                filters += NonLeadingZeroInputFilter
                 setSuffixText(userInputValue ?: defaultValue.toInt())
             }
         }
@@ -546,6 +547,21 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 else -> null
             }
     }
+
+    /**
+     * The maximum number of characters accepted when typing a value for [option].
+     *
+     * Derived from [ContextMenuOption.validRange] so the cap and the range can't drift apart.
+     *
+     * @param isSigned whether the input may start with a `-` (adds one character)
+     */
+    private fun maxInputLength(
+        option: ContextMenuOption,
+        isSigned: Boolean,
+    ): Int =
+        option.validRange.last
+            .toString()
+            .length + if (isSigned) 1 else 0
 
     /** Sets the suffix of the days input: `[1] day`, `[3] days` */
     private fun setSuffixText(days: Int) {
