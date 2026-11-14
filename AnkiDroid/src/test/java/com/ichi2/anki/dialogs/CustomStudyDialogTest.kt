@@ -5,6 +5,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
@@ -44,6 +45,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
+import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.REQUEST_SELECT_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.RESULT_SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
@@ -69,11 +71,14 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withContext
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
@@ -661,7 +666,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             ContextMenuOption.EXTEND_REV to { defaultsOfDefaultDeck.labelForReviewQueueAvailable() },
         ).forEach { (option, expectedLabel) ->
             withExtendLimitsDialog(option) {
-                val root = binding.root
+                val root = binding.root.getChildAt(0) as ViewGroup
                 val availableCards =
                     assertNotNull(
                         root.children.firstOrNull { it is TextView && it.isVisible && it.text.toString() == expectedLabel() },
@@ -806,6 +811,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     REQUEST_SELECT_TAGS,
                     Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, selectedTags) },
                 )
+                studyDialog.submitSubscreenData()
                 val customStudyDeck = col.decks.customStudySession
                 assertNotNull(customStudyDeck)
                 assertThat(col.decks.cardCount(customStudyDeck.id), equalTo(1))
@@ -910,6 +916,9 @@ class CustomStudyDialogTest : RobolectricTest() {
                         Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("testTag")) },
                     )
                 }
+                onView(withId(android.R.id.button1))
+                    .inRoot(isDialog())
+                    .perform(click())
                 assertNotNull(col.decks.customStudySession)
             }
         }
@@ -931,6 +940,209 @@ class CustomStudyDialogTest : RobolectricTest() {
         viewModel.selectedCardStateIndex = AdapterView.INVALID_POSITION
 
         assertThat(viewModel.selectedKind, equalTo(CramKind.CRAM_KIND_NEW))
+    }
+
+    @Test
+    fun `suspended new cards do not enable Create`() =
+        runTest {
+            addBasicNote().firstCard().update { queue = QueueType.Suspended }
+            assertEquals(1, col.findCards("is:new").size)
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                assertFalse(
+                    (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                    "Suspended cards cannot be added to a custom study session",
+                )
+                assertEquals(
+                    TR.customStudyNoCardsMatchedTheCriteriaYou(),
+                    fragment.binding.cardsStateSelectorLayout.error
+                        ?.toString(),
+                )
+            }
+        }
+
+    @Test
+    fun `Create is disabled while a changed card state is being validated`() =
+        runTest {
+            addBasicNote()
+            assertTrue(col.findCards("is:due").isEmpty())
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val positiveButton = (fragment.requireDialog() as AlertDialog).positiveButton
+                assertTrue(positiveButton.isEnabled, "The initial new-card selection is valid")
+
+                val collectionScheduler = TestCoroutineScheduler()
+                val previousDispatcher =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(collectionScheduler),
+                        useReentrantLock = false,
+                    )
+                try {
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                    runCurrent()
+
+                    assertFalse(
+                        positiveButton.isEnabled,
+                        "Create must be disabled while the newly selected state is still being checked",
+                    )
+                } finally {
+                    try {
+                        fragment.dismissNow()
+                        collectionScheduler.advanceUntilIdle()
+                        runCurrent()
+                    } finally {
+                        CollectionManager.setTestDispatcher(previousDispatcher)
+                    }
+                }
+            }
+        }
+
+    @Test
+    fun `learning cards enable Create for all review cards in random order`() =
+        runTest {
+            addBasicNote().firstCard().update {
+                type = CardType.Lrn
+                queue = QueueType.Lrn
+            }
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.ReviewCardsRandom)
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertTrue((fragment.requireDialog() as AlertDialog).positiveButton.isEnabled)
+                assertNull(fragment.binding.cardsStateSelectorLayout.error)
+            }
+        }
+
+    @Test
+    fun `manually buried new cards show an inline error and disable Create`() =
+        runTest {
+            assertBuriedCardsCannotCreate(QueueType.ManuallyBuried)
+        }
+
+    @Test
+    fun `sibling buried new cards show an inline error and disable Create`() =
+        runTest {
+            assertBuriedCardsCannotCreate(QueueType.SiblingBuried)
+        }
+
+    @Test
+    fun `rapid taps on the tags field open only one picker`() =
+        runTest {
+            val note = addBasicNote()
+            col.tags.bulkAdd(listOf(note.id), "selected")
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val tagsField = fragment.binding.tagsDummyEdittext
+                assertTrue(tagsField.isEnabled)
+
+                tagsField.performClick()
+                tagsField.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(
+                    1,
+                    fragment.parentFragmentManager.fragments.count { it is TagsDialog && it.dialog?.isShowing == true },
+                    "Repeated taps must not stack duplicate tag pickers",
+                )
+            }
+        }
+
+    @Test
+    fun `editing the count does not enable Create while stale tags are being pruned`() =
+        runTest {
+            val newNote = addBasicNote()
+            col.tags.bulkAdd(listOf(newNote.id), "new-only")
+            val dueNote = addBasicNote()
+            col.tags.bulkAdd(listOf(dueNote.id), "due-only")
+            dueNote.firstCard().update {
+                type = CardType.Rev
+                queue = QueueType.Rev
+                due = col.sched.today
+            }
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("new-only"))
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue(col.findCards("is:due tag:new-only").isEmpty())
+                val positiveButton = (fragment.requireDialog() as AlertDialog).positiveButton
+                assertTrue(positiveButton.isEnabled)
+
+                val collectionScheduler = TestCoroutineScheduler()
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                val previousDispatcher =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(collectionScheduler),
+                        useReentrantLock = false,
+                    )
+                try {
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                    runCurrent()
+                    // Complete query construction and the card lookup, leaving tag pruning queued.
+                    repeat(2) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+
+                    assertEquals("new-only", (fragment.binding.tagsChipGroup.getChildAt(0) as TextView).text.toString())
+                    fragment.binding.detailsEditText2.setText("99")
+
+                    assertFalse(
+                        positiveButton.isEnabled,
+                        "Create must wait until the selected tags have been validated for the new card state",
+                    )
+                    repeat(2) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+                    assertTrue(positiveButton.isEnabled, "The eligible Due selection is enabled once stale tags are removed")
+                    assertEquals(0, fragment.binding.tagsChipGroup.childCount)
+                } finally {
+                    try {
+                        fragment.dismissNow()
+                        collectionScheduler.advanceUntilIdle()
+                        runCurrent()
+                    } finally {
+                        CollectionManager.setTestDispatcher(previousDispatcher)
+                        Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                    }
+                }
+            }
+        }
+
+    private fun assertBuriedCardsCannotCreate(queue: QueueType) {
+        val card = addBasicNote().firstCard()
+
+        // Initialize Custom Study before burying the card.
+        val args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)
+
+        card.update { this.queue = queue }
+
+        assertEquals(1, col.findCards("is:new").size)
+        assertEquals(1, col.findCards("is:buried").size)
+
+        assertTrue(
+            col.findCards("is:new -is:buried -is:suspended").isEmpty(),
+            "Buried cards should not match the eligibility query",
+        )
+
+        withCustomStudyFragment(args) { fragment ->
+            assertFalse(
+                (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                "The backend cannot create a session from buried cards",
+            )
+
+            assertEquals(
+                TR.customStudyNoCardsMatchedTheCriteriaYou(),
+                fragment.binding.cardsStateSelectorLayout.error
+                    ?.toString(),
+            )
+        }
     }
 
     @Test
