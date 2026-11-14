@@ -685,11 +685,11 @@ class CustomStudyDialogTest : RobolectricTest() {
             withExtendLimitsDialog(option) {
                 val initial = assertNotNull(binding.detailsEditText2.textAsIntOrNull(), "$option initial value")
 
-                onStepper(CommonString.plus_sign).perform(click())
+                onStepper(CommonString.increase_value).perform(click())
                 assertThat("$option after +", binding.detailsEditText2.text.toString(), equalTo("${initial + 1}"))
 
-                onStepper(CommonString.minus_sign).perform(click())
-                onStepper(CommonString.minus_sign).perform(click())
+                onStepper(CommonString.decrease_value).perform(click())
+                onStepper(CommonString.decrease_value).perform(click())
                 assertThat("$option after -", binding.detailsEditText2.text.toString(), equalTo("${initial - 1}"))
             }
         }
@@ -699,7 +699,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     fun `'extend limits' stepper treats an empty value as 0`() {
         withExtendLimitsDialog(ContextMenuOption.EXTEND_NEW) {
             onSubscreenEditText().perform(replaceText(""))
-            onStepper(CommonString.plus_sign).perform(click())
+            onStepper(CommonString.increase_value).perform(click())
             assertThat(binding.detailsEditText2.text.toString(), equalTo("1"))
         }
     }
@@ -708,10 +708,10 @@ class CustomStudyDialogTest : RobolectricTest() {
     fun `steppers are not shown outside of 'extend limits'`() {
         withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) {
             shadowOf(Looper.getMainLooper()).idle()
-            onView(allOf(withContentDescription(CommonString.plus_sign), isDisplayed()))
+            onView(allOf(withContentDescription(CommonString.increase_value), isDisplayed()))
                 .inRoot(isDialog())
                 .check(doesNotExist())
-            onView(allOf(withContentDescription(CommonString.minus_sign), isDisplayed()))
+            onView(allOf(withContentDescription(CommonString.decrease_value), isDisplayed()))
                 .inRoot(isDialog())
                 .check(doesNotExist())
         }
