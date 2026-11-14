@@ -110,7 +110,7 @@ class StudyOptionsFragment :
                 Timber.i("StudyOptionsFragment:: start study button pressed")
                 val state = viewModel.state
                 if (state !is StudyOptionsState.Congrats) {
-                    parentFragmentManager.setStudyOptionsStudyResult()
+                    requireActivity().supportFragmentManager.setStudyOptionsStudyResult()
                 } else {
                     showCustomStudyContextMenu()
                 }
@@ -287,7 +287,7 @@ class StudyOptionsFragment :
             }
             R.id.action_schedule_reminders -> {
                 Timber.i("StudyOptionsFragment:: schedule reminders button pressed")
-                parentFragmentManager.setStudyOptionsAddEditReminderResult(viewModel.selectedDeckId)
+                requireActivity().supportFragmentManager.setStudyOptionsAddEditReminderResult(viewModel.selectedDeckId)
                 return true
             }
             R.id.action_unbury -> {
