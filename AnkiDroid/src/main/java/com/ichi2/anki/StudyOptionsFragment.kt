@@ -52,11 +52,13 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.awaitDismissal
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setSupportActionBarText
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.ui.CollectionMediaImageGetter
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
@@ -149,6 +151,9 @@ class StudyOptionsFragment :
         }
         setupContentInsets(view)
         viewModel.flowOfState.collectInViewLifecycle(::rebuildUi)
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
+            requireActivity().showException(error)?.awaitDismissal()
+        }
         refreshInterface()
     }
 
@@ -300,13 +305,13 @@ class StudyOptionsFragment :
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
                 val deckId = shownDeckId?.takeIf { shownState.isFiltered() } ?: return false
-                launchCatchingTask { viewModel.rebuildCram(deckId) }
+                viewModel.launchReportingErrors { viewModel.rebuildCram(deckId) }
                 return true
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
                 val deckId = shownDeckId?.takeIf { shownState.isFiltered() } ?: return false
-                launchCatchingTask { viewModel.emptyCram(deckId) }
+                viewModel.launchReportingErrors { viewModel.emptyCram(deckId) }
                 return true
             }
             else -> return false
