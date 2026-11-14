@@ -92,6 +92,7 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.renameDeck, equalTo("Rename deck"))
                     assertThat(TR.sentenceCase.customStudy, equalTo("Custom study"))
                     assertThat(TR.sentenceCase.deckOptions, equalTo("Deck options"))
+                    assertThat(TR.sentenceCase.clearUnusedTags, equalTo("Clear unused tags"))
                     assertThat(TR.sentenceCase.deleteDeck, equalTo("Delete deck"))
                     assertThat(TR.sentenceCase.createDeck, equalTo("Create deck"))
                     assertThat(TR.sentenceCase.selectDeck, equalTo("Select deck"))
