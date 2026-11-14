@@ -66,15 +66,16 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     confirmText = "Confirm",
                     onConfirm = { submitted.add(it) },
                     onDismissRequest = {},
-                    asyncErrorMessageFor = { text ->
-                        if (text == "slow") {
-                            slowResult.await()
-                        } else if (taken) {
-                            "Already exists"
-                        } else {
-                            null
-                        }
-                    },
+                    validation =
+                        InputValidation.Async { text ->
+                            if (text == "slow") {
+                                slowResult.await()
+                            } else if (taken) {
+                                "Already exists"
+                            } else {
+                                null
+                            }
+                        },
                 )
             }
         }
@@ -104,7 +105,16 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     confirmText = "Confirm",
                     onConfirm = { submitted.add(it) },
                     onDismissRequest = {},
-                    asyncErrorMessageFor = { text -> if (validateSubmission && text == "first") confirmation.await() else null },
+                    validation =
+                        InputValidation.Async { text ->
+                            if (validateSubmission &&
+                                text == "first"
+                            ) {
+                                confirmation.await()
+                            } else {
+                                null
+                            }
+                        },
                 )
             }
         }
@@ -134,7 +144,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                         title = "Rename",
                         label = "Name",
                         confirmText = "Confirm",
-                        asyncErrorMessageFor = { if (checkSubmission) check.await() else null },
+                        validation = InputValidation.Async { if (checkSubmission) check.await() else null },
                         onConfirm = { submitted.add(it) },
                         onDismissRequest = {
                             shown = false
@@ -169,7 +179,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                         title = "Rename",
                         label = "Name",
                         confirmText = "Confirm",
-                        asyncErrorMessageFor = { null },
+                        validation = InputValidation.Async { null },
                         onConfirm = { submitted.add(it) },
                         onDismissRequest = { if (!busy) shown = false },
                     )
@@ -199,17 +209,17 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     title = "Rename",
                     label = "Name",
                     confirmText = "Confirm",
-                    validationKey = key,
-                    asyncErrorMessageFor = {
-                        if (holdNext) {
-                            holdNext = false
-                            held.await()
-                        } else if (taken) {
-                            "Exists"
-                        } else {
-                            null
-                        }
-                    },
+                    validation =
+                        InputValidation.Async(invalidationKey = key) {
+                            if (holdNext) {
+                                holdNext = false
+                                held.await()
+                            } else if (taken) {
+                                "Exists"
+                            } else {
+                                null
+                            }
+                        },
                     onConfirm = { submitted.add(it) },
                     onDismissRequest = {},
                 )
@@ -241,12 +251,14 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     title = "Rename",
                     label = "Name",
                     confirmText = "Confirm",
-                    validateOnInput = false,
-                    errorMessageFor = { if (it.isBlank()) "Required" else null },
-                    asyncErrorMessageFor = { text ->
-                        checked.add(text)
-                        if (text == "dup") "Exists" else null
-                    },
+                    validation =
+                        InputValidation.Async(
+                            precheck = { if (it.isBlank()) "Required" else null },
+                            validateOnInput = false,
+                        ) { text ->
+                            checked.add(text)
+                            if (text == "dup") "Exists" else null
+                        },
                     onConfirm = { submitted.add(it) },
                     onDismissRequest = {},
                 )
@@ -278,8 +290,8 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
     }
 
     @Test
-    fun `removing the async validator clears its error`() {
-        var validator by mutableStateOf<(suspend (String) -> CharSequence?)?>({ if (it == "dup") "Exists" else null })
+    fun `switching to no validation clears the async error`() {
+        var validation by mutableStateOf<InputValidation>(InputValidation.Async { if (it == "dup") "Exists" else null })
         val submitted = mutableListOf<String>()
         compose.setContent {
             AnkiDroidTheme {
@@ -287,7 +299,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     title = "Rename",
                     label = "Name",
                     confirmText = "Confirm",
-                    asyncErrorMessageFor = validator,
+                    validation = validation,
                     onConfirm = { submitted.add(it) },
                     onDismissRequest = {},
                 )
@@ -297,7 +309,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
         field.performTextReplacement("dup")
         compose.onNodeWithText("Exists").assertIsDisplayed()
 
-        compose.runOnIdle { validator = null }
+        compose.runOnIdle { validation = InputValidation.None }
         compose.onNodeWithText("Exists").assertDoesNotExist()
         compose.onNodeWithText("Confirm").assertIsEnabled().performClick()
         assertEquals(listOf("dup"), submitted)
@@ -315,7 +327,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     confirmText = "Rename",
                     initialText = "History",
                     initialSelection = TextRange(1, 3),
-                    errorMessageFor = { if (it.isBlank()) "Name required" else null },
+                    validation = InputValidation.Immediate { if (it.isBlank()) "Name required" else null },
                     onConfirm = {},
                     onDismissRequest = {},
                 )
@@ -398,8 +410,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     title = "Rename",
                     label = "Name",
                     confirmText = "Confirm",
-                    validateOnInput = false,
-                    asyncErrorMessageFor = { if (it == "dup") "Exists" else null },
+                    validation = InputValidation.Async(validateOnInput = false) { if (it == "dup") "Exists" else null },
                     onConfirm = {},
                     onDismissRequest = {},
                 )
@@ -424,11 +435,11 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     label = "Name",
                     confirmText = "Confirm",
                     initialText = "Invalid",
-                    validateOnInput = false,
-                    errorMessageFor = {
-                        validations++
-                        if (it == "Allowed") null else "Invalid name"
-                    },
+                    validation =
+                        InputValidation.Immediate(validateOnInput = false) {
+                            validations++
+                            if (it == "Allowed") null else "Invalid name"
+                        },
                     onConfirm = { submitted = it },
                     onDismissRequest = {},
                 )
@@ -518,7 +529,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     label = "Name",
                     confirmText = "Rename",
                     initialText = "Existing",
-                    errorMessageFor = { validationError },
+                    validation = InputValidation.Immediate { validationError },
                     onConfirm = {},
                     onDismissRequest = {},
                 )
@@ -553,7 +564,7 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
                     initialText = "History",
                     onConfirm = { confirmed = true },
                     onDismissRequest = {},
-                    validateOnInput = false,
+                    validation = InputValidation.Immediate(validateOnInput = false) { null },
                 )
             }
         }
