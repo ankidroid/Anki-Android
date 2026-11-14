@@ -6,6 +6,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
@@ -13,18 +14,22 @@ import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ViewModelSavedStateHandle
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -46,8 +51,11 @@ import timber.log.Timber
 // EditText, but should not be coupled directly to the parent SearchView.
 class CardBrowserSearchViewModel(
     private val savedStateHandle: ViewModelSavedStateHandle,
-) : ViewModel() {
+) : ViewModel(),
+    ChangeManager.Subscriber {
     private val searchHistoryManager = SearchHistory()
+
+    private var searchHistoryLoad: Job? = null
 
     val advancedSearchFlow =
         savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_ENABLED, false).apply {
@@ -90,6 +98,21 @@ class CardBrowserSearchViewModel(
     val userMessageFlow = MutableSharedFlow<UserMessage?>()
 
     val isScreenOpenFlow = MutableStateFlow(false)
+
+    // An open search panel can belong to a hidden Browser tab.
+    val isBrowserVisibleFlow = MutableStateFlow(false)
+
+    // Keep IDs until the view can show the dialog, so deferred requests use current names.
+    private val pendingSaveSearchNamePromptFlow = MutableStateFlow<SearchHistoryEntry?>(null)
+    val saveSearchNamePromptFlow =
+        combine(pendingSaveSearchNamePromptFlow, isBrowserVisibleFlow) { entry, browserVisible ->
+            entry.takeIf { browserVisible }
+        }.mapLatest { entry ->
+            // Null also cancels an in-flight resolution when search closes or the Browser is hidden.
+            if (entry == null) return@mapLatest null
+            val filters = SearchFilters.from(entry) ?: return@mapLatest null
+            withCol { SearchRequest(entry.query, filters).toSearchString().getOrNull() }
+        }.filterNotNull()
 
     private val filterStateUpdateFlow = MutableStateFlow<FilterUpdate>(FilterUpdate.System(SearchFilters.EMPTY))
     val filtersFlow =
@@ -147,38 +170,58 @@ class CardBrowserSearchViewModel(
     }
 
     init {
+        ChangeManager.subscribe(this)
+        refreshSearchHistory()
+
         viewModelScope.launch {
             savedSearchesFlow.value = SavedSearches.loadFromConfig()
         }
+
+        combine(isScreenOpenFlow, isBrowserVisibleFlow) { screenOpen, browserVisible ->
+            screenOpen && browserVisible
+        }.distinctUntilChanged()
+            .onEach { searchVisible ->
+                if (searchVisible) refreshSearchHistory()
+            }.launchIn(viewModelScope)
 
         updateSearchFlow
             .onEach {
                 submitCurrentSearch(it)
             }.launchIn(viewModelScope)
+    }
 
-        searchHistoryFlow
-            .onEach { history ->
-                when (history) {
-                    is SearchHistoryItems.Loaded -> return@onEach
-                    is SearchHistoryItems.Loading -> {
-                        Timber.d("rendering search history query")
-                        val deckNameMap: List<DeckNameId> = withCol { decks.allNamesAndIds() }
-                        val ntidMap: List<NoteTypeNameID> =
-                            withCol { notetypes.allNamesAndIds().toList() }
-
-                        val searchStrings =
-                            history.input.map {
-                                it to (withCol { SearchRequest.from(it, deckNameMap, ntidMap)?.toSearchString() }?.getOrNull())
-                            }
-
-                        searchHistoryFlow.emit(
-                            SearchHistoryItems.Loaded(
-                                searchStrings,
-                            ),
+    private fun refreshSearchHistory() {
+        searchHistoryLoad?.cancel()
+        searchHistoryLoad =
+            viewModelScope.launch {
+                val entries = searchHistoryManager.entries
+                searchHistoryFlow.value =
+                    withCol {
+                        val deckNameMap = decks.allNamesAndIds()
+                        val ntidMap = notetypes.allNamesAndIds().toList()
+                        SearchHistoryItems.Loaded(
+                            entries.map { entry ->
+                                entry to SearchRequest.from(entry, deckNameMap, ntidMap)?.toSearchString()?.getOrNull()
+                            },
                         )
                     }
-                }
-            }.launchIn(viewModelScope)
+            }
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        if (changes.deck || changes.notetype) {
+            viewModelScope.launch {
+                // Changes made while search is hidden are picked up when it becomes visible.
+                if (isScreenOpenFlow.value && isBrowserVisibleFlow.value) refreshSearchHistory()
+            }
+        }
+    }
+
+    override fun onCleared() {
+        ChangeManager.unsubscribe(this)
     }
 
     /**
@@ -226,8 +269,8 @@ class CardBrowserSearchViewModel(
     fun submitCurrentSearch(searchToSubmit: SearchRequest) =
         viewModelScope.launch {
             Timber.i("submitting search")
-            val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
-            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
+            searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
+            refreshSearchHistory()
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
         }
@@ -248,6 +291,15 @@ class CardBrowserSearchViewModel(
                 )
             submitCurrentSearch()
         }
+
+    fun requestSaveSearch(entry: SearchHistoryEntry) {
+        Timber.i("requesting saved search name")
+        pendingSaveSearchNamePromptFlow.value = entry
+    }
+
+    fun onSaveSearchNamePromptShown() {
+        pendingSaveSearchNamePromptFlow.value = null
+    }
 
     fun addSavedSearch(savedSearch: SavedSearch) =
         viewModelScope.launch {
@@ -301,6 +353,7 @@ class CardBrowserSearchViewModel(
     fun resetSearchState(submittedSearch: SearchRequest) =
         viewModelScope.launch {
             Timber.i("clearing temp search state")
+            pendingSaveSearchNamePromptFlow.value = null
             advancedSearchFlow.value = false
             searchTextFlow.value = submittedSearch.query
             filterStateUpdateFlow.value = FilterUpdate.System(submittedSearch.filters)

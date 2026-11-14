@@ -3,12 +3,15 @@
 package com.ichi2.anki.browser.search
 
 import androidx.lifecycle.SavedStateHandle
+import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.Companion.MAX_SEARCH_HISTORY_ENTRIES
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
@@ -217,7 +220,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
     @Test
     fun `search history - submitted searches are trimmed and deduplicated`() =
         withViewModel {
-            // Loading and loaded states may contain the same history entries.
+            // Rendering previews can change without changing the history entries.
             searchHistoryListFlow.distinctUntilChanged().test {
                 submitSearch("aa")
                 assertThat(expectMostRecentItem(), hasSize(1))
@@ -230,6 +233,169 @@ class CardBrowserSearchViewModelTest : JvmTest() {
                 expectMostRecentItem()
             }
         }
+
+    @Test
+    fun `save prompt uses the history entry independently of current search`() =
+        withViewModel(cardCount = 0) {
+            val entry = SearchHistoryEntry("bonjour", flags = listOf(Flag.RED))
+            val queryToSave = withCol { SearchString.fromUserInput("bonjour flag:1").getOrThrow() }
+            isScreenOpenFlow.value = true
+            onSearchTextChanged("au revoir")
+            setFlagsFilter(listOf(Flag.BLUE))
+
+            saveSearchNamePromptFlow.test {
+                expectNoEvents()
+                requestSaveSearch(entry)
+                assertEquals(queryToSave, expectMostRecentItem())
+            }
+
+            assertEquals("au revoir", searchTextFlow.value)
+            assertEquals(listOf(Flag.BLUE), filtersFlow.value.flags)
+        }
+
+    @Test
+    fun `save prompt rejects a history entry whose deck was deleted after loading`() {
+        val deckId = addDeck("Deleted")
+        val entry = SearchHistoryEntry("bonjour", deckIds = listOf(deckId))
+        SearchHistory().addRecent(entry)
+
+        withViewModel(cardCount = 0) {
+            val renderedHistory = searchHistoryFlow.value.entryToSearchString
+            assertEquals("bonjour deck:Deleted", renderedHistory.single().second?.value)
+            col.decks.remove(listOf(deckId))
+
+            saveSearchNamePromptFlow.test {
+                requestSaveSearch(entry)
+                expectNoEvents()
+            }
+        }
+    }
+
+    @Test
+    fun `history previews follow deck renames`() {
+        val deckId = addDeck("Before")
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(deckId)))
+
+        withViewModel(cardCount = 0) {
+            isScreenOpenFlow.value = true
+            displayedSearchHistoryFlow.test {
+                val beforeRename = expectMostRecentItem().entryToSearchString
+                assertEquals("bonjour deck:Before", beforeRename.single().second?.value)
+
+                undoableOp { decks.rename(deckId, "After") }
+
+                val afterRename = expectMostRecentItem().entryToSearchString
+                assertEquals("bonjour deck:After", afterRename.single().second?.value)
+            }
+        }
+    }
+
+    @Test
+    fun `history previews follow note type renames`() {
+        val noteType = requireNotNull(col.notetypes.byName("Basic"))
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", noteTypes = listOf(noteType.id)))
+
+        withViewModel(cardCount = 0) {
+            isScreenOpenFlow.value = true
+            displayedSearchHistoryFlow.test {
+                val beforeRename = expectMostRecentItem().entryToSearchString
+                assertEquals("bonjour note:Basic", beforeRename.single().second?.value)
+
+                noteType.name = "Renamed"
+                undoableOp { notetypes.updateDict(noteType) }
+
+                val afterRename = expectMostRecentItem().entryToSearchString
+                assertEquals("bonjour note:Renamed", afterRename.single().second?.value)
+            }
+        }
+    }
+
+    @Test
+    fun `history keeps its previews while refreshing`() {
+        val deckId = addDeck("Before")
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(deckId)))
+
+        withViewModel(cardCount = 0) {
+            isScreenOpenFlow.value = true
+            displayedSearchHistoryFlow.test {
+                val beforeRename = expectMostRecentItem().entryToSearchString
+                assertEquals("bonjour deck:Before", beforeRename.single().second?.value)
+
+                undoableOp { decks.rename(deckId, "After") }
+
+                // The first update must contain the new preview, with no blank loading state.
+                val afterRename = awaitItem().entryToSearchString
+                assertEquals("bonjour deck:After", afterRename.single().second?.value)
+                expectNoEvents()
+            }
+        }
+    }
+
+    @Test
+    fun `answering a card does not reload history while search is closed`() {
+        val deckId = addDeck("Before")
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(deckId)))
+
+        withViewModel {
+            assertEquals(false, isScreenOpenFlow.value)
+            searchHistoryFlow.test {
+                assertEquals(
+                    "bonjour deck:Before",
+                    expectMostRecentItem()
+                        .entryToSearchString
+                        .single()
+                        .second
+                        ?.value,
+                )
+
+                // Make an unnecessary reload observable even when unchanged states are conflated.
+                col.decks.rename(deckId, "After")
+
+                val card = col.sched.card!!
+                val states = col.backend.getSchedulingStates(card.id)
+                undoableOp { sched.answerCard(sched.buildAnswer(card, states, Rating.GOOD)) }
+
+                expectNoEvents()
+            }
+        }
+    }
+
+    @Test
+    fun `deck changes while search is closed are loaded when search reopens`() {
+        val deckId = addDeck("Before")
+        SearchHistory().addRecent(SearchHistoryEntry("bonjour", deckIds = listOf(deckId)))
+
+        withViewModel(cardCount = 0) {
+            isScreenOpenFlow.value = true
+            isScreenOpenFlow.value = false
+
+            searchHistoryFlow.test {
+                assertEquals(
+                    "bonjour deck:Before",
+                    expectMostRecentItem()
+                        .entryToSearchString
+                        .single()
+                        .second
+                        ?.value,
+                )
+
+                undoableOp { decks.rename(deckId, "Intermediate") }
+                undoableOp { decks.rename(deckId, "After") }
+                expectNoEvents()
+
+                isScreenOpenFlow.value = true
+
+                assertEquals(
+                    "bonjour deck:After",
+                    expectMostRecentItem()
+                        .entryToSearchString
+                        .single()
+                        .second
+                        ?.value,
+                )
+            }
+        }
+    }
 
     @Test
     fun `add saved search - success modifies saved searches`() =
@@ -511,7 +677,10 @@ class CardBrowserSearchViewModelTest : JvmTest() {
     ) = runTest {
         Prefs.devUsingCardBrowserSearchTools = useSearchTools
         addNotes(count = cardCount)
-        withViewModel(CardBrowserSearchViewModel(SavedStateHandle()), block)
+        withViewModel(CardBrowserSearchViewModel(SavedStateHandle())) {
+            isBrowserVisibleFlow.value = true
+            block()
+        }
     }
 }
 
