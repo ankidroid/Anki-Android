@@ -32,6 +32,17 @@ inline fun RecyclerView.doOnScrolled(crossinline action: (dx: Int, dy: Int) -> U
 }
 
 /**
+ * @see isNestedScrollingEnabled
+ *
+ * A no-op (preserve the active nested scroll) if [enabled] is unchanged.
+ */
+fun RecyclerView.updateNestedScrolling(enabled: Boolean) {
+    if (isNestedScrollingEnabled != enabled) {
+        isNestedScrollingEnabled = enabled
+    }
+}
+
+/**
  * Runs [action] immediately, unless the RecyclerView is computing a layout or scrolling, in
  * which case it is posted to the next frame.
  *
