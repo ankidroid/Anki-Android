@@ -205,6 +205,11 @@ open class RobolectricTest(
             }
         }
         controllersForCleanup.clear()
+        try {
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+        } catch (failure: Throwable) {
+            noLiveActivities.recordCleanupFailure(failure)
+        }
 
         if (SharedPreferencesTestHook.override != null) {
             Timber.w("SharedPreferencesTestHook was not reset! Setting it to null.")
