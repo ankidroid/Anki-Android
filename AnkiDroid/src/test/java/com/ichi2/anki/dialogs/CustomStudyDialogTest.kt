@@ -60,6 +60,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.testutils.ext.snackbarText
+import com.ichi2.testutils.idleMainLooper
 import com.ichi2.testutils.isJsonHolderEqual
 import com.ichi2.testutils.launchFragment
 import com.ichi2.testutils.uninitializeField
@@ -100,6 +101,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
 import com.ichi2.anki.common.android.R as CommonR
 
 @RunWith(AndroidJUnit4::class)
@@ -247,7 +249,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     fragment.requireDialog().cancel()
 
                     runCurrent()
-                    shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+                    idleMainLooper(300.milliseconds)
                     activity.supportFragmentManager.executePendingTransactions()
 
                     assertFalse(fragment.isAdded)
@@ -1185,9 +1187,9 @@ class CustomStudyDialogTest : RobolectricTest() {
             while (fragment.dialog?.findViewById<View>(R.id.progress_bar)?.isVisible == true) {
                 check(System.nanoTime() - start < TimeUnit.SECONDS.toNanos(10)) { "Custom Study did not finish loading" }
                 Thread.sleep(10)
-                shadowOf(Looper.getMainLooper()).idleFor(16, TimeUnit.MILLISECONDS)
+                idleMainLooper(16.milliseconds)
             }
-            shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+            idleMainLooper(300.milliseconds)
             block(fragment)
         }
     }
@@ -1300,7 +1302,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
 
     private fun assertUnavailableMenu(fragment: CustomStudyDialog) {
-        shadowOf(Looper.getMainLooper()).idleFor(300, TimeUnit.MILLISECONDS)
+        idleMainLooper(300.milliseconds)
         assertFalse(fragment.dialog?.isShowing == true)
         onView(withId(com.google.android.material.R.id.snackbar_text))
             .check(matches(allOf(isDisplayed(), withText(CommonString.empty_deck))))

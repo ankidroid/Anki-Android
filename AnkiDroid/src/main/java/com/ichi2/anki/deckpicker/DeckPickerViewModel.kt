@@ -535,22 +535,32 @@ class DeckPickerViewModel :
         }
 
     /**
-     * Find the position of a deck in the flattened deck list.
+     * Find the position of a deck in the displayed deck list.
      * If the deck is a child of a collapsed deck, returns the position of the parent deck.
-     * Returns 0 if the deck is not found.
+     * Returns null if the displayed order has not caught up with the tree or the deck is not yet available.
      */
-    fun findDeckPosition(deckId: DeckId): Int {
-        val currentDeckList = flowOfDeckList.value.data
-        currentDeckList.forEachIndexed { index, treeNode ->
+    fun findDeckPosition(
+        deckId: DeckId,
+        displayedDecks: List<DisplayDeckNode>,
+    ): Int? {
+        // Focus can arrive before the refreshed tree has reached the adapter. An existing deck
+        // may be visible in the old list but move off screen when the new rows are committed.
+        val latestDecks = dueTree?.filterAndFlattenDisplay(DeckFilters.create(deckSearchQuery), deckId) ?: return null
+        if (displayedDecks.map { it.did } != latestDecks.map { it.did }) return null
+
+        displayedDecks.forEachIndexed { index, treeNode ->
             if (treeNode.did == deckId) {
                 return index
             }
         }
 
-        // If the deck is not in our list, search using the immediate parent
-        val collapsedDeck = dueTree?.find(deckId) ?: return 0
-        val parent = collapsedDeck.parent?.get() ?: return 0
-        return findDeckPosition(parent.did)
+        // Only fall back to an ancestor that hides the deck. An expanded parent's new child
+        // may be in the tree while its row is still waiting for the adapter diff to commit.
+        var ancestor = dueTree?.find(deckId)?.parent?.get()
+        while (ancestor != null && !ancestor.collapsed) {
+            ancestor = ancestor.parent?.get()
+        }
+        return ancestor?.let { findDeckPosition(it.did, displayedDecks) }
     }
 
     /**

@@ -4,7 +4,6 @@
 package com.ichi2.anki.ui
 
 import android.app.Activity
-import android.os.Looper
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
@@ -17,15 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.idleMainLooper
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
-import java.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -102,7 +102,7 @@ private class FastScrollerTestList(
 
     fun release() = touch(MotionEvent.ACTION_UP, fingerY)
 
-    fun waitPastAutoHide() = shadowOf(Looper.getMainLooper()).idleFor(AUTO_HIDE_WAIT)
+    fun waitPastAutoHide() = idleMainLooper(AUTO_HIDE_WAIT)
 
     private fun touch(
         action: Int,
@@ -115,13 +115,13 @@ private class FastScrollerTestList(
         showNextFrame()
     }
 
-    private fun showNextFrame() = shadowOf(Looper.getMainLooper()).idleFor(FRAME_INTERVAL)
+    private fun showNextFrame() = idleMainLooper(FRAME_INTERVAL)
 
     private companion object {
         const val WIDTH = 1000
         const val HEIGHT = 2000
-        val FRAME_INTERVAL: Duration = Duration.ofMillis(16)
-        val AUTO_HIDE_WAIT: Duration = Duration.ofSeconds(2)
+        val FRAME_INTERVAL = 16.milliseconds
+        val AUTO_HIDE_WAIT = 2.seconds
     }
 }
 
