@@ -4,6 +4,7 @@
 package com.ichi2.anki.widget.deckpicker
 
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.widgets.R
 import com.ichi2.widget.AppWidgetId
+import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import com.ichi2.widget.deckpicker.DeckPickerWidgetPreferences
 import kotlinx.coroutines.runBlocking
@@ -38,6 +40,10 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         ensureNonEmptyCollection()
+        AppWidgetManager.getInstance(targetContext).bindAppWidgetIdIfAllowed(
+            testWidgetId.id,
+            ComponentName(targetContext, DeckPickerWidget::class.java),
+        )
 
         val intent =
             Intent(targetContext, DeckPickerWidgetConfig::class.java).apply {
