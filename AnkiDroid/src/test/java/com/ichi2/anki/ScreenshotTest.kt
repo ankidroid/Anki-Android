@@ -53,17 +53,6 @@ abstract class ScreenshotTest : RobolectricTest() {
 
     var fileNamePrefix = ""
 
-    enum class ThemeConfig {
-        LIGHT,
-        PLAIN,
-        DARK,
-        BLACK,
-        EINK,
-        ;
-
-        val isNight get() = this == DARK || this == BLACK
-    }
-
     enum class DeviceConfig(
         private val screen: String,
         private val density: String,
@@ -234,17 +223,6 @@ abstract class ScreenshotTest : RobolectricTest() {
             val windowManager = targetContext.getSystemService<WindowManager>()
             return Shadow.extract<ShadowWindowManagerImpl>(windowManager).views
         }
-
-    class ThemeProvider : TestParameterValuesProvider() {
-        override fun provideValues(context: Context?): List<ThemeConfig> {
-            val requestedTheme = System.getProperty("screenshot.theme") ?: "light"
-            val requestedThemes = requestedTheme.split(",").map { it.trim().lowercase() }
-            if ("all" in requestedThemes) {
-                return ThemeConfig.entries
-            }
-            return ThemeConfig.entries.filter { requestedThemes.contains(it.name.lowercase()) }
-        }
-    }
 
     class DeviceProvider : TestParameterValuesProvider() {
         override fun provideValues(context: Context?): List<DeviceConfig> {

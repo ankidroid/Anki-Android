@@ -17,18 +17,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.unit.dp
-import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.ComposeScreenshotTest
 import com.ichi2.anki.R
-import com.ichi2.anki.settings.enums.Theme
 import org.junit.Test
 import com.ichi2.anki.common.android.R as CommonR
 
 class GroupedListScreenshotTest : ComposeScreenshotTest() {
     @Test
-    fun groupedList(
-        @TestParameter(valuesProvider = ThemeProvider::class) theme: Theme,
-    ) = capture("grouped_list", node = hasTestTag(SAMPLE_TAG), theme = theme) { GroupedListSample() }
+    fun groupedList() = capture("grouped_list", node = hasTestTag(SAMPLE_TAG)) { GroupedListSample() }
 
     @Test
     fun largeText() = capture("grouped_list_large_text", node = hasTestTag(SAMPLE_TAG), fontScale = 2f) { GroupedListSample() }
