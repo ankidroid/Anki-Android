@@ -46,7 +46,6 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.alignWithFirstLineOf
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.hasCheckedBackground
-import com.ichi2.anki.utils.ext.showOnce
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -120,8 +119,7 @@ class StandardSearchFragment :
         }
 
         binding.cardStateChip.setOnClickListener {
-            val sheet = CardStateBottomSheetFragment()
-            sheet.showOnce(childFragmentManager, CardStateBottomSheetFragment.TAG)
+            CardStateBottomSheetFragment.show(childFragmentManager)
         }
 
         binding.flagsChip.setOnClickListener {
