@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -58,21 +57,19 @@ fun MoreScreen(
                 .fillMaxSize()
                 .nestedScroll(rememberNestedScrollInteropConnection())
                 .verticalScroll(scrollState)
-                .padding(top = 8.dp, bottom = 16.dp),
+                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
         ) {
-            GroupedList(Modifier.padding(horizontal = 16.dp)) {
+            GroupedList {
                 moreItem(R.drawable.ic_settings_black, CommonString.settings, onSettingsClick)
             }
-            MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help))
-            GroupedList(Modifier.padding(horizontal = 16.dp)) {
+            GroupedList {
                 for (item in helpItems) {
                     moreItem(item.iconResId, item.titleResId) { onHelpItemClick(item) }
                 }
             }
-            MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help_title_support_ankidroid))
-            GroupedList(Modifier.padding(horizontal = 16.dp)) {
+            GroupedList {
                 for (item in supportItems) {
                     moreItem(item.iconResId, item.titleResId) { onSupportItemClick(item) }
                 }
@@ -85,15 +82,10 @@ fun MoreScreen(
 private fun MoreSectionHeader(text: String) {
     Text(
         text = text,
-        style = MaterialTheme.typography.labelLarge,
+        style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 4.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 8.dp),
     )
-}
-
-@Composable
-private fun MoreDivider() {
-    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
 }
 
 private fun GroupedListScope.moreItem(
