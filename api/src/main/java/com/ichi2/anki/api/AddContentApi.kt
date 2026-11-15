@@ -149,6 +149,8 @@ public class AddContentApi(
      *     mApi.addNote(noteTypeId, deckId, fields, tags)
      * ```
      *
+     * The filename may be adjusted to resolve conflicts or normalize it for Anki.
+     *
      * @param fileUri   Uri for the file to be added, required.
      * @param preferredName String to add to start of filename (do not use a file extension), required.
      * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image", required.

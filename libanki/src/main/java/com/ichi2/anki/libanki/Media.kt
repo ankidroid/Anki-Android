@@ -53,7 +53,7 @@ open class Media(
      */
 
     /**
-     * Add [filename][File.name] to the media folder, renaming if not unique
+     * Add [filename][File.name] to the media folder, reusing identical files and renaming conflicting files.
      *
      * @return possibly-renamed filename
      *
