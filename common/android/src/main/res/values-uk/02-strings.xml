@@ -205,7 +205,7 @@
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Редактор дошки</string>
-    <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
+    <string name="user_is_a_robot">Виявлено автоматизований тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %1$s, або перегляньте вікі. %2$s</string>
     <string name="invalid_json_data">Картці надано некоректні дані. %s</string>
@@ -226,9 +226,9 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Розмір шрифту</string>
     <string name="note_editor_toolbar_layout" maxLength="28">Вигляд панелі інструментів</string>
-    <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
-    <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
-    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
+    <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Прокручування</string>
+    <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Стос</string>
+    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Сховано</string>
     <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Показати попередній перегляд</string>
     <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Сховати попередній перегляд</string>
     <string name="format_insert_bold">Форматувати як жирний</string>
@@ -346,7 +346,7 @@
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Інтернет</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Завантажити</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Не вдалося відкрити налаштування синтезу мовлення</string>
-    <string name="shared_decks_ankiweb_login_limit">Shared decks are hosted on AnkiWeb, a free service separate from AnkiDroid. AnkiWeb asks you to log in to continue.</string>
+    <string name="shared_decks_ankiweb_login_limit">Поширені колоди розміщуються на AnkiWeb, безкоштовному сервісі, який окремий від AnkiDroid. AnkiWeb просить вас увійти, щоб продовжити.</string>
     <string name="deck_description_field_hint">Опис</string>
     <string name="deck_description_saved">Опис оновлено</string>
     <string name="format_deck_description_as_markdown">Форматувати як Markdown</string>
@@ -397,7 +397,7 @@
     <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Редагувати профіль</string>
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Видалити профіль</string>
     <!-- Profile that could not be opened -->
-    <string name="profile_load_failed_title" comment="Title of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of that profile">Couldn’t open profile “%1$s”</string>
-    <string name="profile_load_failed_message" comment="Message of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of the profile that was opened instead, %2$s is the name of the profile that could not be opened">Opened the “%1$s” profile instead. “%2$s” will be tried again next time.</string>
-    <string name="profile_load_failed_use_default" comment="Button in the dialog shown when the selected profile could not be opened. It makes AnkiDroid open the other profile from the next start. %1$s is the name of that other profile">Use “%1$s”</string>
+    <string name="profile_load_failed_title" comment="Title of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of that profile">Не вдалося відкрити профіль “%1$s”</string>
+    <string name="profile_load_failed_message" comment="Message of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of the profile that was opened instead, %2$s is the name of the profile that could not be opened">Відкрито натомість профіль “%1$s”. “%2$s” спробується відкритися наступного разу.</string>
+    <string name="profile_load_failed_use_default" comment="Button in the dialog shown when the selected profile could not be opened. It makes AnkiDroid open the other profile from the next start. %1$s is the name of that other profile">Використовувати \"%1$s\"</string>
 </resources>

@@ -24,7 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="enabled" comment="Generic label for something that is turned on">Enabled</string>
+    <string name="enabled" comment="Generic label for something that is turned on">مفعل</string>
     <string name="disabled" comment="Generic label for something that is turned off">مُعَطَّل</string>
     <plurals name="pref_summ_minutes">
         <item quantity="zero">%d دقيقة</item>
@@ -59,7 +59,7 @@
     <string name="dangerous_js_api_denied_snackbar">الأمان: تم ردع نداء شديد الخطر لـ JavaScript.\nإن كنت تثق بجميع البطاقات والقوالب في مجموعتك فيمكنك أن تسمح لهذا في الخيارات المتقدمة.</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">السماح للبطاقات بفتح تطبيقات أخرى</string>
-    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nWeb links may still open other apps when this setting is disabled.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="allow_card_external_launch_summ">تستطيع البطاقات فتح تطبيقات آخر على جهازك مما قد يؤدي إلى نتائج غير مرغوبة.\nروابط الويب قد تفتح تطبيقات أخرى حتى وإن كان هذا الخيار غير مفعل.\nدع هذا الخيار إلا إن كنت تأمن جميع البطاقات والقوالب في مجموعتك.</string>
     <string name="card_external_launch_denied_snackbar">الأمان: تم منع البطاقة من فتح تطبيق آخر.\nإن كنت تثق بجميع البطاقات والقوالب في مجموعتك فيمكنك أن تسمح لهذا في الخيارات المتقدمة.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">عرض الخط</string>
@@ -112,7 +112,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">النقر بثلاث أصابع</string>
     <string name="gestures_four_finger_tap" maxLength="41">النقر بأربع أصابع</string>
     <string name="gestures_shake" maxLength="41">رج الجهاز</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">قائمة «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق «%s» في عموم الجهاز</string>
     <string name="double_scrolling_gap" maxLength="41">مضاعفة فجوة التمرير</string>
     <string name="double_scrolling_gap_summ">مضاعفة فجوة التمرير مع القارئ الإلكتروني</string>
@@ -149,9 +149,9 @@
     <string name="select_locale_title">حدد اللغة</string>
     <string name="software_render" maxLength="41">عطِّل عارض البطاقات العَتادي</string>
     <string name="software_render_summ">عرض العتاد أسرع لكنه قد يسبب مشاكل، خصوصًا على أندرويد ٨ أو ٨٫١. إذا لم تكن ترى جزءًا من واجهة مراجعة البطاقة، جرب هذا الخيار.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">تعطيل وضع تحرير الحقل الفردي</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">السماح بقائمة سياق «ملء الفراغات» في الوضع الأفقي.</string>
     <string name="vertical_centering" maxLength="41">محاذاة للوسط</string>
     <string name="vertical_centering_summ">محاذاة محتوى البطاقات إلى الوسط عموديًا</string>
     <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج</string>
@@ -173,18 +173,18 @@
     <string name="use_current" maxLength="41">رزمة البطاقات الجديدة</string>
     <string name="learn_cutoff" maxLength="41">حد التعلم المبكر</string>
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>
-    <string name="timeboxing" maxLength="41">Timeboxing</string>
-    <string name="use_timebox" maxLength="41">Use timebox</string>
-    <string name="time_limit_label" maxLength="41">Time limit</string>
+    <string name="timeboxing" maxLength="41">مربع الوقت</string>
+    <string name="use_timebox" maxLength="41">استخدام مربع الوقت</string>
+    <string name="time_limit_label" maxLength="41">المهلة</string>
     <plurals name="timebox_minutes_suffix">
-        <item quantity="zero">mins</item>
-        <item quantity="one">min</item>
-        <item quantity="two">mins</item>
-        <item quantity="few">mins</item>
-        <item quantity="many">mins</item>
-        <item quantity="other">mins</item>
+        <item quantity="zero">دقيقة</item>
+        <item quantity="one">دقيقة</item>
+        <item quantity="two">دقيقة</item>
+        <item quantity="few">دقائق</item>
+        <item quantity="many">دقيقة</item>
+        <item quantity="other">دقيقة</item>
     </plurals>
-    <string name="pref_timebox_help_summary">Timeboxing divides your study into shorter sessions to help you stay focused. When the time limit is reached, you\'ll see how many cards you studied and can choose to take a break or continue.</string>
+    <string name="pref_timebox_help_summary">مربع الوقت يقسم دراستك إلى جلسات قصيرة ليساعدك على البقاء مُركزًا. عند انقضاء المهلة سترى عدد البطاقات التي درست وستعطى الخيار لأخذ استراحة.</string>
     <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="zero">%d ساعة بعد منتصف الليل</item>
@@ -243,80 +243,80 @@
          ################################## Review reminders ###################################
          ####################################################################################### -->
     <!-- Entry points -->
-    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
-    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
-    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
-    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
+    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">تذكيرات المراجعة</string>
+    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">عامٌّ للتطبيق</string>
+    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">خاص برزمة</string>
+    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">حدث خلل أثناء تحميل تذكيرات المراجعة وتم حذف التذكيرات التالفة. التفاصيل:</string>
     <!-- Schedule reminders screen -->
-    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
+    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">تعيين التذكيرات</string>
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">إضافة تنبيه</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">ليس لديك تنبيهات للمراجعة</string>
-    <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
-    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
-    <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
-    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
-    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
-    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
-    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
-    <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
-    <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Successfully edited review reminder</string>
+    <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">فحص المشاكل</string>
+    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">إعدادات التنبيهات</string>
+    <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">قائمة تذكيرات المراجعة</string>
+    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">لم يتم العثور على الرزمة</string>
+    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">التذكيرات غير متاحة</string>
+    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">حل</string>
+    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">تم إضافة تذكير المراجعة بنجاح</string>
+    <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">تم حذف تذكير المراجعة بنجاح</string>
+    <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">تم تعديل تذكير المراجعة بنجاح</string>
     <!-- Add / edit reminder dialog -->
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">إضافة تنبيه للمراجعة</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">تعديل تنبيه المراجعة</string>
-    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
-    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
-    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
-    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
-    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
-    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
-    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
-    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">Count these cards toward the threshold:</string>
-    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
-    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">الوقت:</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">الرزمة:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">خيارات متقدمة</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">حد البطاقات</string>
+    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">لا تذكرني إذا كان عدد البطاقات المستحقة أقل من هذا</string>
+    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">ذكرني فقط إن لم أراجع شيئًا اليوم</string>
+    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">الرجاء إدخال عدد صحيح من البطاقات</string>
+    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">يجب أن يكون الحد ٠ في الأقل</string>
+    <string name="add_edit_reminder_count_toward_threshold_heading" comment="Heading above the advanced review reminder options for choosing which kinds of cards (new / learning / to review) count toward the reminder\'s card threshold.">عد هذه البطاقات نحو الحد:</string>
+    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">أتود حذف هذا التذكير؟</string>
+    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">لا يمكن استرجاع التذكير بعد الحذف.</string>
     <!-- Reminder troubleshooting screen -->
-    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Reminders are unavailable.</string>
-    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Reminders may not work correctly.</string>
-    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Your reminders should work as expected.</string>
-    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
+    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">التذكيرات غير متاحة.</string>
+    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">قد لا تعمل التذكيرات بشكل صحيح.</string>
+    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">تذكيراتك تعمل كما يجب.</string>
+    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">لكل جهاز قيود مختلفة على التنبيهات. ابحث في إعدادات النظام أو على الأنترنت إذا استمرت المشاكل.</string>
     <!-- Troubleshooting check titles -->
-    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>
-    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Notification channel</string>
-    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
-    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Battery optimization</string>
-    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Power saving mode</string>
-    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
+    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">إذن الإشعارات</string>
+    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">قناة الإشعارات</string>
+    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">عدم الإزعاج</string>
+    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">تحسين البطارية</string>
+    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">وضع توفير الطاقة</string>
+    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">إذن التنبيهات</string>
     <!-- Troubleshooting check statuses -->
-    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>
-    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Denied</string>
-    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">On</string>
-    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Off</string>
-    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Unrestricted</string>
-    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Optimized</string>
-    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Restricted</string>
+    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">تم المنح</string>
+    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">مرفوض</string>
+    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">مفعل</string>
+    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">غير مفعل</string>
+    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">غير مقيد</string>
+    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">محسن</string>
+    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">مقيد</string>
     <!-- Troubleshooting check explanations -->
-    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">The review reminder notification channel must be enabled</string>
-    <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">Do Not Disturb may mute reminder notifications</string>
-    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">Battery optimization may delay reminders</string>
-    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Background usage is disabled. Reminders may not be delivered</string>
-    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Power saving mode may prevent timely delivery of reminders</string>
-    <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">Required to schedule reminders at exact times</string>
+    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">يجب تفعيل قناة تذكيرات المراجعة</string>
+    <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">وضع عدم الإزعاج قد يكتم التذكيرات</string>
+    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">تحسين البطارية قد يؤخر التذكيرات</string>
+    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">العمل في الخلفية معطل. قد لا تصل التذكيرات.</string>
+    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">وضع توفير الطاقة قد يؤخر التذكيرات</string>
+    <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">ضروري لتعيين التذكيرات في أوقات محددة</string>
     <!-- Troubleshooting check actions -->
-    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">Grant permission</string>
-    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Enable notification channel</string>
-    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Disable battery optimization</string>
-    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
+    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">منح الإذن</string>
+    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">تفعيل قناة التذكيرات</string>
+    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">تعطيل تحسين البطارية</string>
+    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">فتح إعدادات البطارية</string>
     <!-- Notification content -->
-    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">It\'s time to study your cards</string>
-    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">It\'s time to study \"%s\"</string>
-    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">Snooze %s</string>
+    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">حان وقت المراجعة</string>
+    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">حان وقت مراجعة «%s»</string>
+    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">تأجيل %s</string>
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
-        <item quantity="zero">%d cards due</item>
-        <item quantity="one">%d card due</item>
-        <item quantity="two">%d cards due</item>
-        <item quantity="few">%d cards due</item>
-        <item quantity="many">%d cards due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="zero">%d بطاقة مستحقة</item>
+        <item quantity="one">%d بطاقة مستحقة</item>
+        <item quantity="two">%d بطاقة مستحقة</item>
+        <item quantity="few">%d بطاقات مستحقة</item>
+        <item quantity="many">%d بطاقة مستحقة</item>
+        <item quantity="other">%d بطاقة مستحقة</item>
     </plurals>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
@@ -328,7 +328,7 @@
     <string name="analytics_title" maxLength="41">مشاركة بيانات استخدام الميزات</string>
     <string name="analytics_summ">تستطيع المساهمة في آنكي درويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
     <string name="note_editor_replace_newlines" maxLength="41">استبدال السطور الجديدة بـ HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
     <string name="type_in_answer_focus" maxLength="41">التركيز على «أدخل الإجابة»</string>
     <string name="type_in_answer_focus_summ">ركز على حقل «أدخل الإجابة» في شاشة الدراسة تلقائيًا</string>
     <!-- About -->
@@ -336,7 +336,7 @@
     <string name="pref_cat_about_title" maxLength="41">حول</string>
     <string name="contributors_title">مساهمون</string>
     <string name="about_contributors_description"><![CDATA[هؤلاء هم <a href=\"%1$s\">متطوعونا</a> الرائعون. تستطيع مساعدة آنكي درويد أيضًا بالبرمجة والترجمة والتبرع و<a href=\"%2$s\">المزيد</a>!]]></string>
-    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[هؤلاء هم <a href=\"%1$s\">متطوعونا</a> الرائعون. تستطيع مساعدة آنكي درويد أيضًا بالبرمجة والترجمة والتبرع و<a href=\"%2$s\">المزيد</a>!]]></string>
     <string name="license">الرخصة</string>
     <string name="license_description"><![CDATA[آنكي درويد مرخص تحت رخصتي <a href=\"%1$s\">GPL-3.0</a> و<a href=\"%2$s\">AGPL-3.0</a>، وتتوفر الشفرة المصدرية على <a href=\"%3$s\">GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[يستخدم آنكي درويد أيضًا مكتبات وأيقونات من طرف ثالث وهي مرخصة تحت <a href=\"%1$s\">رخص</a> متنوعة مفتوحة المصدر.]]></string>
@@ -469,15 +469,15 @@
     <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
     <string name="show_answer_feedback" maxLength="41">إظهار توكيد الإجابة</string>
     <string name="screen" maxLength="41">شاشة</string>
-    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
-    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
-    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">أتريد الإضافة إلى «%1$s» أيضًا؟</string>
+    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">تجاهل</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">إضافة</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">فتح الإعدادات</string>
     <string name="related_settings_title" comment="Title of the section for related settings">الإعدادات المرتبطة</string>
     <!-- External Directory Selection Preference -->
-    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
-    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
-    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
-    <string name="pref_directory_not_writable">Directory is not writable</string>
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">غير معين</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">مسار خاص</string>
+    <string name="pref_enter_custom_path" maxLength="41">إدخال المسار الخاص</string>
+    <string name="pref_directory_not_writable">لا يمكن الكتابة إلى هذا المجلد</string>
 </resources>
