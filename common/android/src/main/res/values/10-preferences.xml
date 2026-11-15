@@ -527,6 +527,8 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="answer_buttons_hidden" comment="Shown in the preview of the answer buttons settings when the answer buttons are hidden"
+        >Buttons hidden</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the 'Card' card frame of the Study Screen"
         >Card</string>

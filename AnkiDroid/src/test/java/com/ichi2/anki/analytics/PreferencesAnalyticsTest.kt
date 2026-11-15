@@ -81,13 +81,11 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.custom_sync_certificate_key, // customSyncCertificate
             // Experimental settings
             R.string.reviewer_menu_settings_key, // reviewerMenuSettings
-            R.string.show_answer_buttons_key, // showAnswerButtons
-            R.string.hide_hard_and_easy_key, // hideHardAndEasy
+            R.string.answer_buttons_settings_key, // answerButtonsSettings
             R.string.reviewer_frame_style_key, // reviewerFrameStyle
             R.string.hide_system_bars_key, // hideSystemBars
             R.string.ignore_display_cutout_key, // ignoreDisplayCutout
             R.string.reviewer_toolbar_position_key, // reviewerToolbarPosition
-            R.string.answer_button_size_pref_key, // answerBtnSize
             // Security-sensitive settings (GHSL-2026-084)
             R.string.pref_allow_dangerous_js_api, // allow_dangerous_js_api
             // Security-sensitive settings (GHSL-2026-085)

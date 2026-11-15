@@ -39,6 +39,7 @@ import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -123,6 +124,19 @@ class PreferencesFragment :
         if (result.key == getString(R.string.time_limit_preference)) {
             Timber.i("Preferences:: Opening timebox settings from search result")
             openPreferencesFragmentFromSearch(TimeboxSettingsFragment())
+            return
+        }
+
+        val answerButtonsKeys =
+            listOf(
+                R.string.show_answer_buttons_key,
+                R.string.show_estimates_preference,
+                R.string.hide_hard_and_easy_key,
+                R.string.answer_button_size_pref_key,
+            ).map { getString(it) }
+        if (Prefs.isNewStudyScreenEnabled && result.key in answerButtonsKeys) {
+            Timber.i("Preferences:: Opening answer buttons settings from search result")
+            openPreferencesFragmentFromSearch(AnswerButtonsSettingsFragment())
             return
         }
 

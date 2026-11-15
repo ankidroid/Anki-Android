@@ -68,17 +68,6 @@ class ReviewerOptionsFragment :
             }
         }
 
-        // Show estimate time
-        // Represents the collection pref "estTime": i.e.
-        // whether the buttons should indicate the duration of the interval if we click on them.
-        requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
-            title = CollectionManager.TR.preferencesShowNextReviewTimeAboveAnswer()
-            launchCatchingTask { isChecked = CollectionPreferences.getShowIntervalOnButtons() }
-            setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { CollectionPreferences.setShowIntervalsOnButtons(newValue) }
-            }
-        }
-
         requirePreference<PreferenceCategory>(R.string.pref_review_category_key).title =
             CollectionManager.TR.preferencesReview()
     }
