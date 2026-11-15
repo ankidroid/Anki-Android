@@ -396,6 +396,7 @@ class ReviewerFragment :
 
         val showHardAndEasyButtons = !Prefs.hideHardAndEasyButtons
         val buttonsHeightPercentage = Prefs.newStudyScreenAnswerButtonSize
+        val useThemeColors = Prefs.answerButtonsUseThemeColors
         binding.answerArea.setContent {
             AnkiDroidTheme {
                 val isAnswerShown by viewModel.showingAnswer.collectAsStateWithLifecycle()
@@ -407,6 +408,7 @@ class ReviewerFragment :
                     onShowAnswerClicked = { viewModel.onShowAnswer() },
                     showHardAndEasyButtons = showHardAndEasyButtons,
                     buttonsHeightPercentage = buttonsHeightPercentage,
+                    useThemeColors = useThemeColors,
                 )
             }
         }

@@ -18,6 +18,7 @@ data class AnswerButtonsSettingsState(
     /** `null` while it is loaded from the collection */
     val showNextTimes: Boolean?,
     val hideHardAndEasyButtons: Boolean,
+    val useThemeColors: Boolean,
     val buttonSize: Int,
 )
 
@@ -28,11 +29,13 @@ class AnswerButtonsSettingsViewModel(
     override val onError = Channel<Exception>(Channel.BUFFERED)
 
     val uiState: StateFlow<AnswerButtonsSettingsState>
-        field = MutableStateFlow(
+        field =
+        MutableStateFlow(
             AnswerButtonsSettingsState(
                 showAnswerButtons = prefs.showAnswerButtons,
                 showNextTimes = null,
                 hideHardAndEasyButtons = prefs.hideHardAndEasyButtons,
+                useThemeColors = prefs.answerButtonsUseThemeColors,
                 buttonSize = prefs.newStudyScreenAnswerButtonSize,
             ),
         )
@@ -57,6 +60,11 @@ class AnswerButtonsSettingsViewModel(
     fun setHideHardAndEasyButtons(value: Boolean) {
         prefs.hideHardAndEasyButtons = value
         uiState.update { it.copy(hideHardAndEasyButtons = value) }
+    }
+
+    fun setUseThemeColors(value: Boolean) {
+        prefs.answerButtonsUseThemeColors = value
+        uiState.update { it.copy(useThemeColors = value) }
     }
 
     fun setButtonSize(value: Int) {

@@ -18,15 +18,23 @@ class AnswerAreaScreenshotTest : ComposeScreenshotTest() {
     @Test
     fun answer() = captureAnswerArea("answer", isAnswerShown = true)
 
+    @Test
+    fun questionWithThemeColors() = captureAnswerArea("question_theme_colors", isAnswerShown = false, useThemeColors = true)
+
+    @Test
+    fun answerWithThemeColors() = captureAnswerArea("answer_theme_colors", isAnswerShown = true, useThemeColors = true)
+
     private fun captureAnswerArea(
         name: String,
         isAnswerShown: Boolean,
+        useThemeColors: Boolean = false,
     ) = capture(name) {
         AnswerArea(
             isAnswerShown = isAnswerShown,
             nextTimes = nextTimes,
             onRatingClicked = {},
             onShowAnswerClicked = {},
+            useThemeColors = useThemeColors,
         )
     }
 }
