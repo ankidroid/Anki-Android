@@ -19,6 +19,7 @@ import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_WEBVIEW_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
+import com.ichi2.testutils.withUndeletableContents
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -799,6 +800,25 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `deletion reports a failed registry write before the profile can reappear`() {
+        val work = ProfileManager.create(context).createNewProfile(ProfileName.fromTrustedSource("Work"))
+        // Copy the persisted registry into a separate store to model the process-local state.
+        val processRegistry = context.getSharedPreferences("profile_registry_in_memory", Context.MODE_PRIVATE)
+        processRegistry.edit(commit = true) {
+            prefs.all.forEach { (key, value) -> putString(key, value as String) }
+        }
+        val diskFull = DiskFullPreferences(processRegistry).apply { isDiskFull = true }
+        val manager = ProfileManager.create(contextWithRegistry(diskFull))
+
+        val deletion = runCatching { manager.deleteProfile(work) }
+        val reopened = ProfileManager.create(context)
+
+        assertTrue("Deletion must report failure if the registry file still lists the profile", deletion.isFailure)
+        assertTrue("The current screen must be able to retry deletion", work in manager.getAllProfiles())
+        assertTrue("The last persisted registry still lists the profile", work in reopened.getAllProfiles())
+    }
+
+    @Test
     fun `deleteProfile removes profile from registry`() {
         val manager = ProfileManager.create(context)
         val profileId = manager.createNewProfile(ProfileName.fromTrustedSource("Temporary"))
@@ -1008,6 +1028,62 @@ class ProfileManagerTest {
 
         assertFalse("media.trash contents should be deleted", trashFile.exists())
         assertFalse("media.trash folder should be deleted", trashFile.parentFile!!.exists())
+    }
+
+    @Test
+    fun `deleteProfile refuses the running profile once a switch away from it is saved`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        assertThrows(IllegalArgumentException::class.java) { manager.deleteProfile(ProfileId.DEFAULT) }
+        assertTrue(manager.getAllProfiles().containsKey(ProfileId.DEFAULT))
+    }
+
+    @Test
+    fun `a profile whose folder can't be deleted stays listed`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+
+        withUndeletableContents(File(appDataRoot, "${work.value}/files")) {
+            assertThrows(IOException::class.java) { manager.deleteProfile(work) }
+        }
+
+        assertTrue(manager.getAllProfiles().containsKey(work))
+    }
+
+    @Test
+    fun `Default stays listed if its data can't be deleted`() {
+        val work = ProfileManager.create(context).createNewProfile(ProfileName.fromTrustedSource("Work"))
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, work.value) }
+        val manager = ProfileManager.create(context)
+
+        withUndeletableContents(File(appDataRoot, "databases")) {
+            assertThrows(IOException::class.java) { manager.deleteProfile(ProfileId.DEFAULT) }
+        }
+
+        assertTrue(manager.getAllProfiles().containsKey(ProfileId.DEFAULT))
+    }
+
+    @Test
+    fun `a collection that can't be deleted keeps the settings that find it on retry`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        val collectionDir = File(appDataRoot, "relocated_work").apply { mkdirs() }
+        writeProfileCollectionPath(work, collectionDir)
+        val settings = File(appDataRoot, "shared_prefs/profile_${work.value}_${context.packageName}_preferences.xml")
+        val media = File(collectionDir, "collection.media")
+
+        withUndeletableContents(media) {
+            assertThrows(IOException::class.java) { manager.deleteProfile(work) }
+        }
+        assertTrue(manager.getAllProfiles().containsKey(work))
+        assertTrue(settings.exists())
+
+        manager.deleteProfile(work)
+
+        assertFalse(media.exists())
+        assertFalse(manager.getAllProfiles().containsKey(work))
     }
 
     /** Stubs [CookieManager.getInstance]. [completesRemoval] fires the cookie removal callback. */
