@@ -165,7 +165,7 @@ class SwitchProfilesViewModel(
          */
         private fun ProfileManager.profileItems(): List<ProfileItem> =
             getAllProfiles()
-                .map { (id, metadata) -> ProfileItem(id = id, name = metadata.displayName.value) }
+                .map { (id, metadata) -> ProfileItem(id = id, name = metadata.displayName.value, isActive = isActive(id)) }
                 .sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.name })
     }
 }
