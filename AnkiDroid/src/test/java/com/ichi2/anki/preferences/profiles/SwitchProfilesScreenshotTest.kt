@@ -4,6 +4,7 @@
 package com.ichi2.anki.preferences.profiles
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.isDialog
 import com.ichi2.anki.ComposeScreenshotTest
 import com.ichi2.anki.multiprofile.ProfileId
 import org.junit.Test
@@ -18,8 +19,13 @@ class SwitchProfilesScreenshotTest : ComposeScreenshotTest() {
         capture("profile_list") { Screen() }
     }
 
+    @Test
+    fun deleteDialog() {
+        capture("delete_profile", node = isDialog()) { Screen(profileToDelete = work) }
+    }
+
     @Composable
-    private fun Screen() {
+    private fun Screen(profileToDelete: ProfileItem? = null) {
         SwitchProfilesScreen(
             profiles = listOf(default, personal, work),
             isAddProfileDialogVisible = false,
@@ -27,6 +33,8 @@ class SwitchProfilesScreenshotTest : ComposeScreenshotTest() {
             profileToSwitchTo = null,
             isSwitchBlocked = false,
             profileSwitchFailed = null,
+            profileToDelete = profileToDelete,
+            profileDeleteFailed = null,
             onNavigateUp = {},
             onProfileClick = {},
             onAddProfileClick = {},
@@ -40,6 +48,9 @@ class SwitchProfilesScreenshotTest : ComposeScreenshotTest() {
             onSwitchBlockedDismiss = {},
             onSwitchFailedDismiss = {},
             onDeleteProfile = {},
+            onDeleteProfileConfirm = {},
+            onDeleteProfileDismiss = {},
+            onDeleteFailedDismiss = {},
         )
     }
 }

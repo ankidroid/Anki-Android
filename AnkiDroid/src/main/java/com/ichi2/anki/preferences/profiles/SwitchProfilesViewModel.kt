@@ -21,6 +21,9 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -53,7 +56,27 @@ class SwitchProfilesViewModel(
     val profileSwitchFailed: StateFlow<ProfileItem?>
         field = MutableStateFlow<ProfileItem?>(null)
 
+    val profileToDelete: StateFlow<ProfileItem?>
+        field = MutableStateFlow<ProfileItem?>(null)
+
+    val profileDeleteFailed: StateFlow<ProfileItem?>
+        field = MutableStateFlow<ProfileItem?>(null)
+
+    init {
+        viewModelScope.launch {
+            profileManager.isChangingProfile
+                .drop(1)
+                .filterNot { it }
+                .collect { refresh() }
+        }
+        viewModelScope.launch {
+            combine(profiles, profileManager.failedDeletion) { list, id -> list.firstOrNull { it.id == id } }
+                .collect { profileDeleteFailed.value = it }
+        }
+    }
+
     fun showAddProfileDialog() {
+        if (profileManager.isChangingProfile.value) return
         isAddProfileDialogVisible.value = true
     }
 
@@ -65,11 +88,14 @@ class SwitchProfilesViewModel(
     fun addProfile(name: ProfileName) {
         isAddProfileDialogVisible.value = false
         Timber.i("Add profile confirmed (%d chars)", name.value.length)
-        profileManager.createNewProfile(name)
+        if (!profileManager.isChangingProfile.value) {
+            profileManager.createNewProfile(name)
+        }
         refresh()
     }
 
     fun showRenameProfileDialog(profile: ProfileItem) {
+        if (profileManager.isChangingProfile.value) return
         profileBeingRenamed.value = profile
     }
 
@@ -81,12 +107,14 @@ class SwitchProfilesViewModel(
         val profile = profileBeingRenamed.value ?: return
         profileBeingRenamed.value = null
         Timber.i("Rename profile confirmed: %s", profile.id)
-        profileManager.renameProfile(profile.id, name)
+        if (!profileManager.isChangingProfile.value && profile.id in profileManager.getAllProfiles()) {
+            profileManager.renameProfile(profile.id, name)
+        }
         refresh()
     }
 
     fun requestSwitch(profile: ProfileItem) {
-        if (profileManager.isSwitching || profileManager.isActive(profile.id)) return
+        if (profileManager.isChangingProfile.value || profileManager.isActive(profile.id)) return
         profileToSwitchTo.value = profile
     }
 
@@ -97,7 +125,7 @@ class SwitchProfilesViewModel(
     fun switchProfile() {
         val profile = profileToSwitchTo.value ?: return
         profileToSwitchTo.value = null
-        if (!profileManager.tryStartSwitch()) return
+        if (!profileManager.tryStartProfileChange()) return
         Timber.i("Switch profile confirmed: %s", profile.id)
         viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
             withContext(NonCancellable) {
@@ -105,7 +133,7 @@ class SwitchProfilesViewModel(
                     ProfileSwitchGuard.Result.Success -> restartInto(profile)
                     is ProfileSwitchGuard.Result.Blocked -> {
                         Timber.i("Profile switch blocked: %s", result.reasons)
-                        profileManager.endSwitch()
+                        profileManager.endProfileChange()
                         isSwitchBlocked.value = true
                     }
                     ProfileSwitchGuard.Result.Failed -> onSwitchFailed(profile)
@@ -125,7 +153,7 @@ class SwitchProfilesViewModel(
     }
 
     private fun onSwitchFailed(profile: ProfileItem) {
-        profileManager.endSwitch()
+        profileManager.endProfileChange()
         profileSwitchFailed.value = profile
     }
 
@@ -137,9 +165,41 @@ class SwitchProfilesViewModel(
         profileSwitchFailed.value = null
     }
 
-    fun deleteProfile(profile: ProfileItem) {
-        Timber.i("Delete profile requested: %s", profile.id)
-        // TODO: implement profile deletion via ProfileManager
+    fun requestDelete(profile: ProfileItem) {
+        if (profileManager.isChangingProfile.value || profileManager.isActive(profile.id)) return
+        profileToDelete.value = profile
+    }
+
+    fun dismissDeleteProfileDialog() {
+        profileToDelete.value = null
+    }
+
+    fun deleteProfile() {
+        val profile = profileToDelete.value ?: return
+        profileToDelete.value = null
+        if (profileManager.getAllProfiles()[profile.id]?.displayName?.value != profile.name) {
+            refresh()
+            return
+        }
+        if (!profileManager.tryStartProfileChange()) return
+        Timber.i("Delete profile confirmed: %s", profile.id)
+        viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
+            withContext(NonCancellable) {
+                try {
+                    withContext(ioDispatcher) { profileManager.deleteProfile(profile.id) }
+                } catch (e: Exception) {
+                    Timber.w(e, "Deleting %s failed", profile.id)
+                    profileManager.reportFailedDeletion(profile.id)
+                } finally {
+                    profileManager.endProfileChange()
+                }
+                refresh()
+            }
+        }
+    }
+
+    fun dismissDeleteFailedMessage() {
+        profileManager.reportFailedDeletion(null)
     }
 
     /** Reloads the list from the registry. */
