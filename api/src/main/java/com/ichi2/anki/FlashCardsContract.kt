@@ -1392,7 +1392,10 @@ public object FlashCardsContract {
         public const val FILE_URI: String = "file_uri"
 
         /**
-         * The preferred name for the file that will be inserted/copied into collection.media
+         * The preferred filename without an extension for the file inserted/copied into
+         * `collection.media`.
+         *
+         * The returned filename may be normalized or renamed to avoid overwriting different contents.
          */
         public const val PREFERRED_NAME: String = "preferred_name"
     }
