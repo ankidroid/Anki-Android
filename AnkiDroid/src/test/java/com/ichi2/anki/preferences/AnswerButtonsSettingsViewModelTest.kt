@@ -21,6 +21,7 @@ class AnswerButtonsSettingsViewModelTest : JvmTest() {
         runTest {
             Prefs.showAnswerButtons = false
             Prefs.hideHardAndEasyButtons = true
+            Prefs.answerButtonsUseThemeColors = true
             Prefs.newStudyScreenAnswerButtonSize = 150
             CollectionPreferences.setShowIntervalsOnButtons(false)
 
@@ -34,6 +35,7 @@ class AnswerButtonsSettingsViewModelTest : JvmTest() {
                         showAnswerButtons = false,
                         showNextTimes = false,
                         hideHardAndEasyButtons = true,
+                        useThemeColors = true,
                         buttonSize = 150,
                     ),
                 ),
@@ -50,12 +52,14 @@ class AnswerButtonsSettingsViewModelTest : JvmTest() {
             viewModel.setShowAnswerButtons(false)
             viewModel.setShowNextTimes(true)
             viewModel.setHideHardAndEasyButtons(true)
+            viewModel.setUseThemeColors(true)
             viewModel.setButtonSize(170)
             advanceUntilIdle()
 
             assertThat(Prefs.showAnswerButtons, equalTo(false))
             assertThat(CollectionPreferences.getShowIntervalOnButtons(), equalTo(true))
             assertThat(Prefs.hideHardAndEasyButtons, equalTo(true))
+            assertThat(Prefs.answerButtonsUseThemeColors, equalTo(true))
             assertThat(Prefs.newStudyScreenAnswerButtonSize, equalTo(170))
         }
 }

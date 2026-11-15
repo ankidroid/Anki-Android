@@ -49,8 +49,14 @@ fun AnswerArea(
     modifier: Modifier = Modifier,
     showHardAndEasyButtons: Boolean = true,
     buttonsHeightPercentage: Int = 100,
+    useThemeColors: Boolean = false,
 ) {
     val colors = MaterialTheme.ankiColors
+    val colorScheme = MaterialTheme.colorScheme
+
+    fun background(default: Color) = if (useThemeColors) colorScheme.primaryContainer else default
+
+    fun content(default: Color) = if (useThemeColors) colorScheme.onPrimaryContainer else default
     Box(
         modifier = modifier.fillMaxWidth().relativeHeight(buttonsHeightPercentage),
         propagateMinConstraints = true,
@@ -65,8 +71,8 @@ fun AnswerArea(
             RatingButton(
                 easeName = CommonR.string.ease_button_again,
                 nextTime = nextTimes?.again,
-                textColor = colors.onAgainButton,
-                backgroundColor = colors.againButton,
+                textColor = content(colors.onAgainButton),
+                backgroundColor = background(colors.againButton),
                 onClick = { onRatingClicked(Rating.AGAIN) },
                 modifier = Modifier.padding(end = margin),
             )
@@ -74,8 +80,8 @@ fun AnswerArea(
                 RatingButton(
                     easeName = CommonR.string.ease_button_hard,
                     nextTime = nextTimes?.hard,
-                    textColor = colors.onHardButton,
-                    backgroundColor = colors.hardButton,
+                    textColor = content(colors.onHardButton),
+                    backgroundColor = background(colors.hardButton),
                     onClick = { onRatingClicked(Rating.HARD) },
                     modifier = Modifier.padding(horizontal = margin),
                 )
@@ -83,8 +89,8 @@ fun AnswerArea(
             RatingButton(
                 easeName = CommonR.string.ease_button_good,
                 nextTime = nextTimes?.good,
-                textColor = colors.onGoodButton,
-                backgroundColor = colors.goodButton,
+                textColor = content(colors.onGoodButton),
+                backgroundColor = background(colors.goodButton),
                 onClick = { onRatingClicked(Rating.GOOD) },
                 modifier = Modifier.padding(horizontal = margin),
             )
@@ -92,8 +98,8 @@ fun AnswerArea(
                 RatingButton(
                     easeName = CommonR.string.ease_button_easy,
                     nextTime = nextTimes?.easy,
-                    textColor = colors.onEasyButton,
-                    backgroundColor = colors.easyButton,
+                    textColor = content(colors.onEasyButton),
+                    backgroundColor = background(colors.easyButton),
                     onClick = { onRatingClicked(Rating.EASY) },
                     modifier = Modifier.padding(start = margin),
                 )
@@ -101,8 +107,8 @@ fun AnswerArea(
         }
         AnswerButton(
             text = AnnotatedString(stringResource(CommonR.string.show_answer)),
-            textColor = Color.White,
-            backgroundColor = colors.showAnswerButton,
+            textColor = content(Color.White),
+            backgroundColor = background(colors.showAnswerButton),
             onClick = onShowAnswerClicked,
             modifier = Modifier.matchParentSize().invisibleIf(isAnswerShown),
         )

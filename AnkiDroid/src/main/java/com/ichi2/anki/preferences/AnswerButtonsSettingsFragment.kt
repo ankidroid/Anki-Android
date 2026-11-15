@@ -38,6 +38,7 @@ class AnswerButtonsSettingsFragment : Fragment() {
                         onShowAnswerButtonsChange = viewModel::setShowAnswerButtons,
                         onShowNextTimesChange = viewModel::setShowNextTimes,
                         onHideHardAndEasyButtonsChange = viewModel::setHideHardAndEasyButtons,
+                        onUseThemeColorsChange = viewModel::setUseThemeColors,
                         onButtonSizeChange = viewModel::setButtonSize,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
                     )

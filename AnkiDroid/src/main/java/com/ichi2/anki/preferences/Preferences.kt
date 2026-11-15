@@ -132,6 +132,7 @@ class PreferencesFragment :
                 R.string.show_answer_buttons_key,
                 R.string.show_estimates_preference,
                 R.string.hide_hard_and_easy_key,
+                R.string.answer_buttons_theme_colors_key,
                 R.string.answer_button_size_pref_key,
             ).map { getString(it) }
         if (Prefs.isNewStudyScreenEnabled && result.key in answerButtonsKeys) {

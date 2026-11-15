@@ -75,6 +75,7 @@ fun AnswerButtonsSettingsScreen(
     onShowAnswerButtonsChange: (Boolean) -> Unit,
     onShowNextTimesChange: (Boolean) -> Unit,
     onHideHardAndEasyButtonsChange: (Boolean) -> Unit,
+    onUseThemeColorsChange: (Boolean) -> Unit,
     onButtonSizeChange: (Int) -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
@@ -105,6 +106,7 @@ fun AnswerButtonsSettingsScreen(
             AnswerAreaPreview(state)
             val showAnswerButtonsTitle = stringResource(CommonR.string.show_answer_buttons)
             val hideHardAndEasyTitle = stringResource(CommonR.string.hide_hard_and_easy)
+            val useThemeColorsTitle = stringResource(CommonR.string.answer_buttons_theme_colors)
             val buttonSizeTitle = stringResource(CommonR.string.button_size)
             val buttonSizeValue = stringResource(CommonR.string.percentage, state.buttonSize.toString())
             Column(
@@ -135,6 +137,13 @@ fun AnswerButtonsSettingsScreen(
                         title = hideHardAndEasyTitle,
                         checked = state.hideHardAndEasyButtons,
                         onCheckedChange = onHideHardAndEasyButtonsChange,
+                        enabled = state.showAnswerButtons,
+                    )
+                    switchItem(
+                        icon = R.drawable.ic_palette,
+                        title = useThemeColorsTitle,
+                        checked = state.useThemeColors,
+                        onCheckedChange = onUseThemeColorsChange,
                         enabled = state.showAnswerButtons,
                     )
                 }
@@ -209,6 +218,7 @@ private fun AnswerAreaPreview(state: AnswerButtonsSettingsState) {
                 onShowAnswerClicked = { isAnswerShown = true },
                 showHardAndEasyButtons = !state.hideHardAndEasyButtons,
                 buttonsHeightPercentage = state.buttonSize,
+                useThemeColors = state.useThemeColors,
             )
         }
         AnimatedVisibility(
@@ -235,6 +245,7 @@ private fun Modifier.measureOnly(): Modifier =
         layout(placeable.width, placeable.height) {}
     }
 
+/** An [item] with a switch as widget */
 private fun GroupedListScope.switchItem(
     @DrawableRes icon: Int,
     title: String,
@@ -273,12 +284,14 @@ private fun AnswerButtonsSettingsScreenPreview() {
                     showAnswerButtons = true,
                     showNextTimes = true,
                     hideHardAndEasyButtons = false,
+                    useThemeColors = false,
                     buttonSize = 100,
                 ),
             showNextTimesTitle = "Show next review time above answer buttons",
             onShowAnswerButtonsChange = {},
             onShowNextTimesChange = {},
             onHideHardAndEasyButtonsChange = {},
+            onUseThemeColorsChange = {},
             onButtonSizeChange = {},
             onNavigateUp = {},
         )

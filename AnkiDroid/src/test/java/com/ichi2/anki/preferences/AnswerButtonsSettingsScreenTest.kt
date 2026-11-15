@@ -27,6 +27,7 @@ class AnswerButtonsSettingsScreenTest : RobolectricTest() {
             showAnswerButtons = true,
             showNextTimes = true,
             hideHardAndEasyButtons = false,
+            useThemeColors = false,
             buttonSize = 100,
         )
 
@@ -42,6 +43,7 @@ class AnswerButtonsSettingsScreenTest : RobolectricTest() {
                     onShowAnswerButtonsChange = {},
                     onShowNextTimesChange = {},
                     onHideHardAndEasyButtonsChange = onHideHardAndEasyButtonsChange,
+                    onUseThemeColorsChange = {},
                     onButtonSizeChange = {},
                     onNavigateUp = {},
                 )

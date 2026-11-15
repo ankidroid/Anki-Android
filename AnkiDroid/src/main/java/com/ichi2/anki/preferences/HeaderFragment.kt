@@ -230,6 +230,7 @@ class HeaderFragment : SettingsFragment() {
                         R.string.show_answer_buttons_key to activity.getString(CommonString.show_answer_buttons),
                         R.string.show_estimates_preference to TR.preferencesShowNextReviewTimeAboveAnswer(),
                         R.string.hide_hard_and_easy_key to activity.getString(CommonString.hide_hard_and_easy),
+                        R.string.answer_buttons_theme_colors_key to activity.getString(CommonString.answer_buttons_theme_colors),
                         R.string.answer_button_size_pref_key to activity.getString(CommonString.button_size),
                     )
                 for ((key, title) in answerButtonsSettings) {
