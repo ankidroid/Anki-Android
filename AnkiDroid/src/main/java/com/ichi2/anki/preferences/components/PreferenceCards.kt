@@ -42,8 +42,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -55,6 +57,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ichi2.anki.CommonString
@@ -137,7 +140,17 @@ fun PreferenceStepperCard(
     unitSuffix: @Composable (count: Int) -> String,
     modifier: Modifier = Modifier,
 ) {
-    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val windowInfo = LocalWindowInfo.current
+    val density = LocalDensity.current
+    val windowWidthDp = with(density) { windowInfo.containerSize.width.toDp() }
+    val iconSize =
+        when {
+            windowWidthDp >= 600.dp -> 32.dp
+            windowWidthDp >= 360.dp -> 28.dp
+            else -> 24.dp
+        }
     var textValue by rememberSaveable { mutableStateOf(value.toString()) }
     val focusManager = LocalFocusManager.current
 
@@ -191,6 +204,7 @@ fun PreferenceStepperCard(
                     enabled = (textValue.toIntOrNull() ?: value) > validRange.first,
                     colors = buttonColors,
                     border = controlBorder,
+                    iconSize = iconSize,
                     onClick = {
                         val currentVal = textValue.toIntOrNull() ?: value
                         val prevVal = (currentVal - 1).coerceIn(validRange)
@@ -216,6 +230,7 @@ fun PreferenceStepperCard(
                     enabled = (textValue.toIntOrNull() ?: value) < validRange.last,
                     colors = buttonColors,
                     border = controlBorder,
+                    iconSize = iconSize,
                     onClick = {
                         val currentVal = textValue.toIntOrNull() ?: value
                         val nextVal = (currentVal + 1).coerceIn(validRange)
@@ -238,6 +253,7 @@ private fun StepperButton(
     border: BorderStroke?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    iconSize: Dp = 24.dp,
 ) {
     OutlinedIconButton(
         onClick = onClick,
@@ -250,6 +266,7 @@ private fun StepperButton(
         Icon(
             painter = painterResource(iconRes),
             contentDescription = contentDescription,
+            modifier = Modifier.size(iconSize),
         )
     }
 }
