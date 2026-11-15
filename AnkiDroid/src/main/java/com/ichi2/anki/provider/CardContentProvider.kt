@@ -1189,7 +1189,7 @@ class CardContentProvider : ContentProvider() {
                 return null
             }
             internalizeUri(fileUri, tempFile, cR)
-            val fname = media.addFile(tempFile)
+            val fname = media.addFile(tempFile, desiredName = "$preferredName.$fileExtension")
             Timber.d("insert -> MEDIA: fname = %s", fname)
             val f = File(fname)
             Timber.d("insert -> MEDIA: f = %s", f)

@@ -1396,6 +1396,7 @@ public object FlashCardsContract {
          * `collection.media`.
          *
          * The returned filename may be normalized or renamed to avoid overwriting different contents.
+         * An existing file with matching filename and contents may be reused.
          */
         public const val PREFERRED_NAME: String = "preferred_name"
     }

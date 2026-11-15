@@ -53,7 +53,7 @@ open class Media(
      */
 
     /**
-     * Add [filename][File.name] to the media folder, reusing identical files and renaming conflicting files.
+     * Add [file] to the media folder using [desiredName], reusing identical files and renaming conflicting files.
      *
      * @return possibly-renamed filename
      *
@@ -62,10 +62,14 @@ open class Media(
      */
     @LibAnkiAlias("add_file")
     @RustCleanup("use backend exception instead of EmptyMediaException")
-    fun addFile(file: File): String {
+    fun addFile(
+        file: File,
+        @NotInPyLib
+        desiredName: String = file.name,
+    ): String {
         // fail if non-existing or empty
         if (file.length() == 0L) throw EmptyMediaException()
-        return writeData(file.name, file.readBytes().toByteString())
+        return writeData(desiredName, file.readBytes().toByteString())
     }
 
     /**
