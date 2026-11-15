@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -60,6 +62,8 @@ fun SwitchProfilesScreen(
     profileToSwitchTo: ProfileItem?,
     isSwitchBlocked: Boolean,
     profileSwitchFailed: ProfileItem?,
+    profileToDelete: ProfileItem?,
+    profileDeleteFailed: ProfileItem?,
     onNavigateUp: () -> Unit,
     onProfileClick: (ProfileItem) -> Unit,
     onAddProfileClick: () -> Unit,
@@ -73,6 +77,9 @@ fun SwitchProfilesScreen(
     onSwitchBlockedDismiss: () -> Unit,
     onSwitchFailedDismiss: () -> Unit,
     onDeleteProfile: (ProfileItem) -> Unit,
+    onDeleteProfileConfirm: () -> Unit,
+    onDeleteProfileDismiss: () -> Unit,
+    onDeleteFailedDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -165,6 +172,28 @@ fun SwitchProfilesScreen(
             },
         )
     }
+
+    profileToDelete?.let { profile ->
+        MessageDialog(
+            title = stringResource(CommonString.delete_profile_title, profile.name),
+            message = stringResource(CommonString.delete_profile_message),
+            confirmText = stringResource(CommonString.dialog_positive_delete),
+            onConfirm = onDeleteProfileConfirm,
+            onDismissRequest = onDeleteProfileDismiss,
+        )
+    }
+
+    profileDeleteFailed?.let { profile ->
+        AlertDialog(
+            onDismissRequest = onDeleteFailedDismiss,
+            text = { Text(stringResource(CommonString.delete_profile_failed, profile.name)) },
+            confirmButton = {
+                TextButton(onClick = onDeleteFailedDismiss) {
+                    Text(stringResource(CommonString.dialog_ok))
+                }
+            },
+        )
+    }
 }
 
 private val AvatarSize = 40.dp
@@ -235,11 +264,15 @@ private fun ProfileRow(
                     contentDescription = stringResource(CommonString.edit_profile),
                 )
             }
-            IconButton(onClick = onDeleteClick) {
-                Icon(
-                    painterResource(R.drawable.ic_delete),
-                    contentDescription = stringResource(CommonString.delete_profile),
-                )
+            if (profile.isActive) {
+                Spacer(Modifier.minimumInteractiveComponentSize())
+            } else {
+                IconButton(onClick = onDeleteClick) {
+                    Icon(
+                        painterResource(R.drawable.ic_delete),
+                        contentDescription = stringResource(CommonString.delete_profile),
+                    )
+                }
             }
         }
     }
@@ -260,6 +293,8 @@ private fun SwitchProfilesScreenPreview() {
             profileToSwitchTo = null,
             isSwitchBlocked = false,
             profileSwitchFailed = null,
+            profileToDelete = null,
+            profileDeleteFailed = null,
             onNavigateUp = {},
             onProfileClick = {},
             onAddProfileClick = {},
@@ -273,6 +308,9 @@ private fun SwitchProfilesScreenPreview() {
             onSwitchBlockedDismiss = {},
             onSwitchFailedDismiss = {},
             onDeleteProfile = {},
+            onDeleteProfileConfirm = {},
+            onDeleteProfileDismiss = {},
+            onDeleteFailedDismiss = {},
         )
     }
 }

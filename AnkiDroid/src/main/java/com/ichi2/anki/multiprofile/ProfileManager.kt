@@ -23,13 +23,14 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.nio.file.LinkOption
 import java.nio.file.Path
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.deleteRecursively
@@ -47,14 +48,21 @@ class ProfileManager private constructor(
     lateinit var activeProfileContext: ProfileContextWrapper
         private set
 
-    private val switching = AtomicBoolean(false)
+    val isChangingProfile: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    val isSwitching: Boolean
-        get() = switching.get()
+    fun tryStartProfileChange(): Boolean = isChangingProfile.compareAndSet(false, true)
 
-    fun tryStartSwitch(): Boolean = switching.compareAndSet(false, true)
+    fun endProfileChange() {
+        isChangingProfile.value = false
+    }
 
-    fun endSwitch() = switching.set(false)
+    val failedDeletion: StateFlow<ProfileId?>
+        field = MutableStateFlow<ProfileId?>(null)
+
+    fun reportFailedDeletion(profileId: ProfileId?) {
+        failedDeletion.value = profileId
+    }
 
     fun isActive(profileId: ProfileId): Boolean = profileId == activeProfileContext.profileId
 
@@ -178,13 +186,17 @@ class ProfileManager private constructor(
      * Persists [newProfileId] as the active profile.
      *
      * @param newProfileId The [ProfileId] to activate on next launch.
-     * @return false if the new profile could not be set up or the switch could not be saved,
-     *   in which case the current profile stays active
+     * @return false if the new profile was deleted, could not be set up or the switch could not
+     *   be saved, in which case the current profile stays active
      */
     @VisibleForTesting
     context(_: ProfileSwitchContext)
     fun switchActiveProfile(newProfileId: ProfileId): Boolean {
         Timber.i("Switching profile to ID: $newProfileId")
+        if (!profileRegistry.contains(newProfileId)) {
+            Timber.w("Not switching to $newProfileId: it is no longer registered")
+            return false
+        }
         try {
             prepareProfile(newProfileId)
         } catch (e: Exception) {
@@ -405,14 +417,11 @@ class ProfileManager private constructor(
         /*
          * File-system data is removed before the registry entry. If deletion fails
          * or is interrupted, the registry entry remains so the user can retry.
-         *
-         * TODO: COULD_BE_BETTER: this method is not synchronized. Two concurrent calls from
-         * different threads/coroutines could both pass the require() checks below and
-         * race, eventually leaving the registry with zero profiles. Wrap the body in a
-         * Mutex (or move to a single-thread dispatcher) once delete is exposed through
-         * the UI. Not a concern today: the only entry points are tests and the (yet to
-         * land) settings screen, which is single-threaded.
          */
+        if (!profileRegistry.contains(profileId)) {
+            Timber.w("deleteProfile: %s is no longer registered", profileId)
+            return
+        }
         require(!isActive(profileId) && profileRegistry.getLastActiveProfileId() != profileId) {
             "Cannot delete the currently active profile ($profileId). Switch first."
         }

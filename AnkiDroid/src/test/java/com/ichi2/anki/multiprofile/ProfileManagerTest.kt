@@ -479,9 +479,10 @@ class ProfileManagerTest {
                 ): SharedPreferences = if (name == PROFILE_REGISTRY_FILENAME) registry else super.getSharedPreferences(name, mode)
             }
         val manager = ProfileManager.create(wrapper)
+        val other = manager.createNewProfile(ProfileName.fromTrustedSource("Other"))
         registry.editors.clear()
 
-        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(ProfileId("p_other")) }
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(other) }
 
         assertEquals("apply() is async and is lost when the process is killed", 1, registry.editors.sumOf { it.commits })
         assertEquals(0, registry.editors.sumOf { it.applies })
