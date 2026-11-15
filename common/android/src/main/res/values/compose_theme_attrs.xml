@@ -47,5 +47,6 @@
         <attr name="goodTextColor" />
         <attr name="easyBackgroundColor" />
         <attr name="easyTextColor" />
+        <attr name="studyScreenElevation" />
     </declare-styleable>
 </resources>

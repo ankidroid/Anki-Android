@@ -8,6 +8,7 @@ import android.view.ContextThemeWrapper
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ApplicationProvider
 import com.ichi2.anki.common.android.R
@@ -141,5 +142,11 @@ class ThemeTest {
         assertEquals(0xFFC8E6C9.toInt(), colors.goodButton.toArgb())
         assertEquals(ContextCompat.getColor(appContext, R.color.material_green_900), colors.onGoodButton.toArgb())
         assertEquals(ContextCompat.getColor(appContext, R.color.material_blue_700), colors.showAnswerButton.toArgb())
+    }
+
+    @Test
+    fun `study screen elevation follows the theme`() {
+        assertEquals(0.8f, themed(R.style.Theme_Light).toAnkiDroidDimensions().studyScreenElevation.value, absoluteTolerance = 0.001f)
+        assertEquals(0.dp, themed(R.style.Theme_Light_Eink).toAnkiDroidDimensions().studyScreenElevation)
     }
 }
