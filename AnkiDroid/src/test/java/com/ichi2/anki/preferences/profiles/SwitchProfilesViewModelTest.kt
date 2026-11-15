@@ -389,6 +389,15 @@ class SwitchProfilesViewModelTest {
     }
 
     @Test
+    fun `only the open profile is marked active`() {
+        createProfile("Work")
+
+        val active = viewModel().profiles.value.filter { it.isActive }
+
+        assertEquals(listOf(ProfileId.DEFAULT), active.map { it.id })
+    }
+
+    @Test
     fun `the list starts with the Default profile`() {
         assertEquals(listOf(ProfileId.DEFAULT), viewModel().profiles.value.map { it.id })
     }
