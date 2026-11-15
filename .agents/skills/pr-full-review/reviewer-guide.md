@@ -108,6 +108,8 @@ For code under `com.ichi2.anki.ui.compose.*` (see
 - Host Compose via a `ComposeView` returned from a Fragment's `onCreateView`.
 - Use existing drawables via `painterResource(R.drawable.…)`; don't add the
   material-icons artifacts.
+- Composables have a short KDoc: what they show and anything non-obvious about their
+  parameters (soft rule, not a blocker).
 - A rewrite adds a **Roborazzi screenshot test of the existing screen first** (ideally a
   separate PR), then the rewrite. One concern per migration — no simultaneous state/nav
   rework.
