@@ -34,11 +34,14 @@ fun <T> Flow<T>.collectInLifecycle(block: suspend (T) -> Unit) {
  * Collects while the fragment's current view is started. Call from [Fragment.onViewCreated].
  */
 context(fragment: Fragment)
-fun <T> Flow<T>.collectInViewLifecycle(block: suspend (T) -> Unit): Job {
+fun <T> Flow<T>.collectInViewLifecycle(
+    state: Lifecycle.State = Lifecycle.State.STARTED,
+    block: suspend (T) -> Unit,
+): Job {
     // Capture the owner before launching: the view may be destroyed or recreated before the job starts.
     val owner = fragment.viewLifecycleOwner
     return owner.lifecycleScope.launch {
-        owner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        owner.repeatOnLifecycle(state) {
             this@collectInViewLifecycle.collect(block)
         }
     }
