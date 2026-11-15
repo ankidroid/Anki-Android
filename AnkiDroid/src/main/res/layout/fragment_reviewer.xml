@@ -189,7 +189,7 @@
                 android:visibility="gone"
                 tools:layout="@layout/fragment_check_pronunciation" />
 
-            <com.ichi2.anki.ui.windows.reviewer.AnswerAreaView
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/answer_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

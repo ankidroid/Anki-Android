@@ -18,6 +18,7 @@ import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
+import androidx.compose.runtime.getValue
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -31,6 +32,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
@@ -76,6 +78,7 @@ import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.themes.Themes
 import com.ichi2.ui.TypeAnswerEditText
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
@@ -383,28 +386,29 @@ class ReviewerFragment :
             return
         }
 
-        binding.answerArea.setButtonListeners(
-            onRatingClicked = { viewModel.answerCard(it) },
-            onShowAnswerClicked = { viewModel.onShowAnswer() },
-        )
-
-        binding.answerArea.setRelativeHeight(Prefs.newStudyScreenAnswerButtonSize)
-
-        viewModel.answerButtonsNextTimeFlow.collectInViewLifecycle { times ->
-            binding.answerArea.setNextTimes(times)
-        }
-
         val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
         viewModel.showingAnswer
             .onEach { isAnswerShown ->
                 if (isAnswerShown) {
                     insetsController.hide(WindowInsetsCompat.Type.ime())
                 }
-                binding.answerArea.setAnswerState(isAnswerShown)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        if (Prefs.hideHardAndEasyButtons) {
-            binding.answerArea.hideHardAndEasyButtons()
+        val showHardAndEasyButtons = !Prefs.hideHardAndEasyButtons
+        val buttonsHeightPercentage = Prefs.newStudyScreenAnswerButtonSize
+        binding.answerArea.setContent {
+            AnkiDroidTheme {
+                val isAnswerShown by viewModel.showingAnswer.collectAsStateWithLifecycle()
+                val nextTimes by viewModel.answerButtonsNextTimeFlow.collectAsStateWithLifecycle()
+                AnswerArea(
+                    isAnswerShown = isAnswerShown,
+                    nextTimes = nextTimes,
+                    onRatingClicked = { viewModel.answerCard(it) },
+                    onShowAnswerClicked = { viewModel.onShowAnswer() },
+                    showHardAndEasyButtons = showHardAndEasyButtons,
+                    buttonsHeightPercentage = buttonsHeightPercentage,
+                )
+            }
         }
     }
 

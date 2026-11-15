@@ -6,6 +6,8 @@ import android.app.Activity
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.webkit.WebView
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -24,9 +26,11 @@ import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.TestInputMethodRule
+import com.ichi2.anki.testutil.awaitDisplayed
 import com.ichi2.anki.testutil.awaitJavascript
 import com.ichi2.anki.testutil.ensureWebViewIsSupported
 import com.ichi2.anki.testutil.focusInput
+import com.ichi2.anki.testutil.goodButton
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
@@ -59,6 +63,9 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
 
     @get:Rule
     val avoidDayRollover = AvoidDayRolloverRule()
+
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
 
     private var originalPreferences = emptyMap<String, Any?>()
     private var originalDeckId: DeckId = 0
@@ -175,9 +182,13 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
                 keyboard.perform("done")
                 webView.awaitJavascript("document.querySelector('#typeans .typeGood')?.textContent === 'été'")
                 if (question != "Third") {
-                    onView(withId(if (newReviewer) R.id.good_button else R.id.flashcard_layout_ease3))
-                        .also { it.checkWithTimeout(matches(isDisplayed())) }
-                        .perform(click())
+                    if (newReviewer) {
+                        composeRule.awaitDisplayed { goodButton() }.performClick()
+                    } else {
+                        onView(withId(R.id.flashcard_layout_ease3))
+                            .also { it.checkWithTimeout(matches(isDisplayed())) }
+                            .perform(click())
+                    }
                 }
             }
         }

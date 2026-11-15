@@ -82,13 +82,6 @@
         <attr name="permissions" format="string"/>
     </declare-styleable>
 
-    <declare-styleable name="AnswerButton">
-        <!-- Name of the ease (e.g. Again, Hard, Good, Easy -->
-        <attr name="easeName" format="string"/>
-        <!-- Time to bw shown above the ease name -->
-        <attr name="nextTime" format="string"/>
-    </declare-styleable>
-
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />
         <attr name="cycle_indeterminate_to_checked" format="boolean" />

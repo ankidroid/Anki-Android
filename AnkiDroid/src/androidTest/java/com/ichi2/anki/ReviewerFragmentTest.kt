@@ -2,13 +2,10 @@
 
 package com.ichi2.anki
 
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
@@ -16,10 +13,12 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.tests.InstrumentedTest
-import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.awaitDisplayed
+import com.ichi2.anki.testutil.clickShowAnswer
 import com.ichi2.anki.testutil.ensureWebViewIsSupported
+import com.ichi2.anki.testutil.goodButton
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.waitUntil
@@ -33,7 +32,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.UUID
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerFragmentTest : InstrumentedTest() {
@@ -42,6 +41,9 @@ class ReviewerFragmentTest : InstrumentedTest() {
 
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
+
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
 
     /** The collection is shared between tests: review a deck which only contains this test's cards */
     private var testDeckId: DeckId = 0
@@ -139,25 +141,18 @@ class ReviewerFragmentTest : InstrumentedTest() {
     private fun clickShowAnswerAndAnswerGood() {
         clickShowAnswer()
         ensureAnswerButtonsAreDisplayed()
-        onView(withId(R.id.good_button)).perform(click())
+        composeRule.goodButton().performClick()
     }
 
-    private fun clickShowAnswer() {
-        onView(withId(R.id.show_answer_button)).perform(click())
-    }
+    private fun clickShowAnswer() = composeRule.clickShowAnswer()
 
     private fun ensureAnswerButtonsAreDisplayed() {
         // We need to wait for the card to fully load to allow enough time for
         // the messages to be passed in and out of the WebView when evaluating
         // the custom JS scheduler code. The ease buttons are hidden until the
         // custom scheduler has finished running
-        onView(withId(R.id.good_button)).checkWithTimeout(
-            matches(isDisplayed()),
-            100,
-            // Increase to a max of 30 seconds because CI builds can be very
-            // slow
-            TimeUnit.SECONDS.toMillis(30),
-        )
+        // Increase to a max of 30 seconds because CI builds can be very slow
+        composeRule.awaitDisplayed(timeout = 30.seconds) { goodButton() }
     }
 
     companion object {
