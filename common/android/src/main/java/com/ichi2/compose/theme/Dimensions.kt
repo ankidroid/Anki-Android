@@ -48,3 +48,15 @@ val MaterialTheme.dimensions: Dimensions
     @Composable
     @ReadOnlyComposable
     get() = LocalDimensions.current
+
+@Immutable
+data class AnkiDroidDimensions(
+    val studyScreenElevation: Dp,
+)
+
+val LocalAnkiDroidDimensions = staticCompositionLocalOf { AnkiDroidDimensions(studyScreenElevation = 0.dp) }
+
+val MaterialTheme.ankiDimensions: AnkiDroidDimensions
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalAnkiDroidDimensions.current
