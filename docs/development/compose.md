@@ -60,6 +60,8 @@ A handful of things to follow when writing Compose in AnkiDroid.
 
 **Icons.** Use existing project drawables via `painterResource(R.drawable.xxx)`. Don't add `androidx.compose.material:material-icons-core` or `-extended`. The drawables we already ship cover what we need, and the icons artifact would only grow the build.
 
+**KDoc.** Give composables a short KDoc: what it shows, plus anything the signature doesn't tell you, like what a `modifier` is applied to or what usually goes in a slot. Leave out `@param` lines that only repeat the name. A private composable can get one line when it helps. This is a soft rule: reviewers may ask for it, lint won't.
+
 **Migrations include a screenshot test first.** If you're rewriting an existing screen in Compose (because it's already getting significant changes for another reason), the recommended pattern is two PRs: first add a Roborazzi screenshot test for the existing XML version so we have a visual baseline, then do the Compose rewrite on top of that. The first PR is a useful standalone contribution; the second one becomes a lot less risky to review.
 
 **Doing one thing per migration.** When a screen is being moved to Compose, that PR should not also restructure state management, introduce new architectural patterns, or rework navigation. One change at a time. This is the same lesson from the Java-to-Kotlin conversion: combining cleanup goals with the migration is what makes them never finish.
