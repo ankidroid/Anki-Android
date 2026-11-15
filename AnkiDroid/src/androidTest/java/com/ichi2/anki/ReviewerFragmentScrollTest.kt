@@ -3,11 +3,10 @@
 package com.ichi2.anki
 
 import android.webkit.WebView
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -16,7 +15,9 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.clickShowAnswer
 import com.ichi2.anki.testutil.ensureWebViewIsSupported
+import com.ichi2.anki.testutil.goodButton
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.waitUntil
@@ -41,6 +42,9 @@ import kotlin.time.Duration.Companion.seconds
 class ReviewerFragmentScrollTest : InstrumentedTest() {
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
+
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
 
     private var testDeckId: DeckId = 0
     private val newReviewerOptionsKey get() = testContext.getString(R.string.new_reviewer_options_key)
@@ -195,7 +199,7 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
             val originalScale = pageScale
             if (zoom) zoomIn()
             scrollDown()
-            onView(withId(R.id.good_button)).perform(click())
+            composeRule.goodButton().performClick()
             waitForCloze("[...]")
             waitForScale(originalScale)
             awaitAnimationFrames()
@@ -268,9 +272,7 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
         return currentLabel
     }
 
-    private fun clickShowAnswer() {
-        onView(withId(R.id.show_answer_button)).perform(click())
-    }
+    private fun clickShowAnswer() = composeRule.clickShowAnswer()
 
     private fun SafeWebViewLayout.waitForCloze(text: String) {
         waitUntil(timeout = 30.seconds, message = { "Cloze did not display '$text'" }) {
