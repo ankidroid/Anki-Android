@@ -224,6 +224,23 @@ class HeaderFragment : SettingsFragment() {
 
             if (Prefs.isNewStudyScreenEnabled) {
                 searchConfiguration.index(R.xml.preferences_reviewer)
+                // The answer buttons settings are in Compose, so they can't be indexed from the XML
+                val answerButtonsSettings =
+                    listOf(
+                        R.string.show_answer_buttons_key to activity.getString(CommonString.show_answer_buttons),
+                        R.string.show_estimates_preference to TR.preferencesShowNextReviewTimeAboveAnswer(),
+                        R.string.hide_hard_and_easy_key to activity.getString(CommonString.hide_hard_and_easy),
+                        R.string.answer_button_size_pref_key to activity.getString(CommonString.button_size),
+                    )
+                for ((key, title) in answerButtonsSettings) {
+                    searchConfiguration
+                        .indexItem()
+                        .withKey(activity.getString(key))
+                        .withTitle(title)
+                        .withResId(R.xml.preferences_reviewer)
+                        .addBreadcrumb(activity.getString(CommonString.new_study_screen))
+                        .addBreadcrumb(activity.getString(CommonString.answer_buttons))
+                }
                 val legacySettings =
                     AdvancedSettingsFragment.legacyStudyScreenSettings + AccessibilitySettingsFragment.legacyStudyScreenSettings +
                         AppearanceSettingsFragment.legacyStudyScreenSettings + ControlsSettingsFragment.legacyStudyScreenSettings
@@ -253,7 +270,8 @@ class HeaderFragment : SettingsFragment() {
                 is AccessibilitySettingsFragment -> R.string.pref_accessibility_screen_key
                 is BackupLimitsSettingsFragment -> R.string.pref_backup_limits_screen_key
                 is AdvancedSettingsFragment -> R.string.pref_advanced_screen_key
-                is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment -> R.string.new_reviewer_options_key
+                is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment, is AnswerButtonsSettingsFragment ->
+                    R.string.new_reviewer_options_key
                 is DeveloperOptionsFragment -> R.string.pref_developer_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
                 is SwitchProfilesFragment -> R.string.pref_switch_profile_screen_key

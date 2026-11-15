@@ -72,6 +72,13 @@
             android:icon="@drawable/ic_play_circle_white"
             />
 
+        <Preference
+            android:key="@string/answer_buttons_settings_key"
+            android:title="@string/answer_buttons"
+            android:icon="@drawable/ic_grading"
+            android:fragment="com.ichi2.anki.preferences.AnswerButtonsSettingsFragment"
+            />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -89,33 +96,8 @@
             android:key="@string/reviewer_toolbar_position_key"
             android:icon="@drawable/ic_toolbar"
             android:title="@string/toolbar_position"
-            app:useSimpleSummaryProvider="true"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/answer_buttons">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/show_answer_buttons_key"
-            android:title="@string/show_answer_buttons"
-            android:icon="@drawable/ic_shelf_auto_hide"
-            />
-
-        <SwitchPreferenceCompat
-            android:key="@string/show_estimates_preference"
-            android:icon="@drawable/ic_running_clock"
-            android:dependency="@string/show_answer_buttons_key"
-            tools:title="Show next review time above answer buttons"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/hide_hard_and_easy_key"
-            android:title="@string/hide_hard_and_easy"
-            android:icon="@drawable/ic_remove_done"
-            android:dependency="@string/show_answer_buttons_key"
-            app:allowDividerBelow="false"
-            />
+            app:useSimpleSummaryProvider="true"
+            app:allowDividerBelow="false"/>
     </PreferenceCategory>
 
     <com.ichi2.preferences.RelatedSettingsPreference

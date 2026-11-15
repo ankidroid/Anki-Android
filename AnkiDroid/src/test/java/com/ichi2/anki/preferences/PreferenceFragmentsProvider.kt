@@ -36,6 +36,7 @@ class PreferenceFragmentsProvider : TestParameterValuesProvider() {
                 AccessibilitySettingsFragment::class,
                 ReviewerOptionsFragment::class,
                 ReviewerMenuSettingsFragment::class,
+                AnswerButtonsSettingsFragment::class,
                 BackupLimitsSettingsFragment::class,
                 AdvancedSettingsFragment::class,
                 SwitchProfilesFragment::class,

@@ -24,8 +24,6 @@ class AccessibilitySettingsFragment : SettingsFragment() {
     private fun setupNewStudyScreenSettings() {
         if (!Prefs.isNewStudyScreenEnabled) return
 
-        requirePreference<Preference>(R.string.answer_button_size_pref_key).isVisible = true
-
         for (key in legacyStudyScreenSettings) {
             val keyString = getString(key)
             findPreference<Preference>(keyString)?.isVisible = false
