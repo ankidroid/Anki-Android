@@ -49,11 +49,11 @@
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty do AnkiDroid, usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'Domyślne\'</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_extend_limits_title">Zwiększ dzienne limity</string>
+    <string name="custom_study_increase">Zwiększ</string>
     <string name="custom_study_forgotten">Przejrzyj zapomniane karty z ostatnich x dni:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_ahead_description">Przejrzyj karty oczekujące w następnej kolejności:</string>
+    <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich:</string>
     <string name="custom_study_tags">Wybierz x kart z talii:</string>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
@@ -82,7 +82,7 @@
     <string name="dialog_positive_overwrite">Nadpisz</string>
     <string name="dialog_positive_repair">Napraw</string>
     <string name="dialog_positive_replace">Zastąp</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nPopraw datę i godzinę lub włącz automatyczną datę i godzinę, a następnie zsynchronizuj ponownie.\n\nAktualny czas urządzenia to: %2$s</string>
     <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
     <string name="dialog_invalid_custom_certificate">Podany tekst nie rozwiązuje poprawnego certyfikatu X509 zakodowanego PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Błąd podczas parsowania certyfikatu</string>
@@ -91,7 +91,7 @@
     <string name="check_media_warning">To może zająć dużo czasu w przypadku dużych kolekcji multimedialnych. Kontynuować?</string>
     <string name="check_media_message">Sprawdzanie mediów&#8230;</string>
     <string name="check_media_adding_missing_tag">Dodawanie tagów&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Tagi dodane</string>
     <string name="delete_media_message">Usuwanie mediów&#8230;</string>
     <string name="delete_media_result_title">Wynik usuwania</string>
     <plurals name="delete_media_result_message">
@@ -112,7 +112,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Nie uzyskano uprawnienia do nagrywania dźwięków</string>
     <string name="permission_denied">Brak uprawnień</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Odmowa dostępu do mikrofonu. Proszę udzielić go w ustawieniach aplikacji.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Kontynuuj mimo to</string>
     <string name="integrity_check_insufficient_space">Funkcja \"sprawdź bazę danych\" używa dużej ilości pamięci tymczasowej.\n\nZalecane jest, aby przed kontynuowaniem na urządzeniu było dostępne przynajmniej  %s wolnego miejsca.</string>
@@ -145,7 +145,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Ustaw język</string>
     <string name="locale_selection_dialog_summary">Niektóre wielojęzyczne klawiatury takie jak GBoard obsługują zmianę języka podczas edycji tekstu\n\nJeśli twoja klawiatura automatycznie nie zmienia języka, możesz spróbować poprosić jej twórcę o włączenie funkcji „setImeHintLocales”.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Nieznany język [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Używanie AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Podręcznik AnkiDroid</string>
@@ -242,11 +242,11 @@
     <string name="change_cloze_mode">Zmień rodzaj luki</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">System WebView jest nieaktualny. Niektóre funkcje nie będą działać poprawnie. Zaktualizuj go.\n\nZainstalowana wersja: %1$d\nMinimalna wymagana wersja: %2$d</string>
-    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
+    <string name="webview_unsupported_message">Twój WebView jest niezgodny z AnkiDroid. Niektóre funkcje nie będą działać poprawnie. Proszę go zaktualizować.</string>
     <string name="compress">Kompresuj</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
-    <string name="tts_no_engine_message">Install an app that provides a text-to-speech engine for your device.</string>
+    <string name="tts_no_engine_title">Brak zainstalowanego silnika tekstu na mowę</string>
+    <string name="tts_no_engine_message">Zainstaluj aplikację, która zapewnia silnik tekstowy na mowę dla twojego urządzenia.</string>
     <string name="tts_error_dialog_title">Ten język nie jest obsługiwany</string>
     <string name="tts_error_dialog_reason_text">Silnik zamiany tekstu na mowę <b>%1$s</b> nie obsługuje następującego języka: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Zmień silnik</string>
@@ -280,10 +280,10 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Nazwa szablonu karty%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Nazwa typu notatki%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Od</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Do</string>
     <!-- Add and rename profile dialogs -->
-    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Zmień nazwę profilu</string>
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Nazwa profilu</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Nazwa profilu nie może być pusta</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Nazwa profilu musi mieć %1$d znaków lub mniej</string>

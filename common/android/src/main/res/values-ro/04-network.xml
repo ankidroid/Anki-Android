@@ -26,7 +26,7 @@
     <string name="youre_offline">Ești deconectat</string>
     <string name="sync_error">Eroare de sincronizare</string>
     <string name="vague_error" comment="Network error dialog title">Eroare</string>
-    <string name="retry">Reincearca</string>
+    <string name="retry">Încearcă din nou</string>
     <string name="menu_get_shared_decks">Obține pachete partajate</string>
     <string name="connection_error_message">A intervenit o eroare de rețea.</string>
     <string name="not_logged_in_title">Conectaţi-vă la AnkiWeb</string>
@@ -46,7 +46,7 @@
     <string name="sync_log_uploading_message">Sincronizare completă din local</string>
     <string name="sync_database_acknowledge">Colecție sincronizată</string>
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Baza de date este coruptă. Vă rugăm să o refaceți înainte de a încerca din nou să sincronizați.\n\nVedeți %s pentru informații despre repararea bazei de date.</string>
+    <string name="sync_corrupt_database">Baza de date este coruptă. Refă-o înainte de a încerca din nou să sincronizezi.\n\nVezi %s pentru informații despre repararea bazei de date.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remote</string>

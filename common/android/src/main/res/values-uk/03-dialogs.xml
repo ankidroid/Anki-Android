@@ -49,7 +49,7 @@
     <string name="repair_deck_dialog">Ви дійсно бажаєте спробувати відновити базу даних?\n\nПеред початком спроби в підкаталозі \'%s\' буде створена копія.</string>
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
+    <string name="custom_study_extend_limits_title">Збільшити денний ліміт</string>
     <string name="custom_study_increase">Збільшити</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
     <string name="custom_study_ahead_description">Картки до повторень через:</string>
@@ -82,7 +82,7 @@
     <string name="dialog_positive_overwrite">Перезаписати</string>
     <string name="dialog_positive_repair">Виправити</string>
     <string name="dialog_positive_replace">Замінити</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nВиправте дату та час або ввімкніть їхнє автоматичне визначення і тоді синхронізуйтеся знову.\n\nПоточний час на вашому пристрої: %2$s</string>
     <string name="dialog_collection_path_not_dir">Вказаний шлях не є дійсним</string>
     <string name="dialog_invalid_custom_certificate">Наданий текст не перетворюється на дійсний сертифікат X509 з PEM-кодуванням</string>
     <string name="dialog_invalid_custom_certificate_title">Помилка парсингу сертифікату</string>
@@ -123,7 +123,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">База даних заблокована</string>
-    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Інший додаток AnkiDroid використовує цю колекцію. Конфлікт може виникнути, навіть якщо він не запущений візуально.\n\nЩоб і надалі користуватися обома додатками, змініть ‘%s’ у розширених налаштуваннях одного з них.\n\nЩоб користуватися цим додатком зараз, примусово зупиніть конфліктуючий додаток.</string>
     <string name="incompatible_database_version_title">Несумісна версія бази даних</string>
     <string name="incompatible_database_version_summary">Версія бази даних занадто нова, і ця версія AnkiDroid несумісна з нею. Оновіть AnkiDroid або скористайтеся більш старою версією бази даних, щоб відкрити її\n\nПідтримувана версія: %1$d\nВерсія бази даних: %2$d\n\nНаступні варіанти відновлення перезапишуть поточну колекцію,, можливо, з сумісною версією бази даних:</string>
     <!-- Deck Picker Background-->
@@ -242,7 +242,7 @@
     <string name="change_cloze_mode">Змінити режим Cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Системний WebView застарілий. Деякі функції не будуть правильно працювати. Оновіть його, будь ласка.\n\nВстановлена версія: %1$d\nЯк мінімум потрібна версія: %2$d</string>
-    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
+    <string name="webview_unsupported_message">Ваш WebView несумісний з AnkiDroid. Деякі функції не працюватимуть належним чином. Будь ласка, оновіть його.</string>
     <string name="compress">Стиснути</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">Не встановлено синтез мовлення (TTS)</string>

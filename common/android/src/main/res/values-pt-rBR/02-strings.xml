@@ -69,7 +69,7 @@
     <string name="leech_notification">Cartão marcado como sanguessuga</string>
     <string name="webview_crash_unknown">Erro desconhecido</string>
     <string name="webview_crash_unknwon_detailed">Isso foi causado por um erro interno no WebView</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">Memória insuficiente</string>
     <string name="webview_crash_oom_details">O WebView foi encerrado pelo sistema. Isso normalmente acontece quando o aplicativo fica sem memória, muitas vezes devido a fontes ou mídias grandes.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashou. Causa: %s</string>
     <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
@@ -223,8 +223,8 @@
     <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
     <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
     <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Mostrar pré-visualização</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Esconder pré-visualização</string>
     <string name="format_insert_bold">Formatar como Negrito</string>
     <string name="format_insert_italic">Formatar como Itálico</string>
     <string name="format_insert_underline">Formatar como Sublinhado</string>
@@ -267,7 +267,7 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Baixar baralho</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir no navegador</string>
-    <string name="try_again">Try again</string>
+    <string name="try_again">Tente novamente</string>
     <string name="cancel_download">Cancelar download</string>
     <string name="cancel_download_question_title">Cancelar download?</string>
     <string name="downloading_file">Baixando %s</string>
@@ -277,8 +277,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Velocidade</string>
+    <string name="download_time_left_label">Tempo restante</string>
     <string name="deck_download_progress_message">Você pode usar outros apps enquanto o download está rodando</string>
     <string name="check_network">Por favor, verifique sua conexão de rede</string>
     <string name="external_storage_unavailable">Transferência abortada, o armazenamento externo não está disponível</string>
@@ -382,8 +382,8 @@
     <string comment="Shown when retrying a running action" name="already_in_progress">Já em progresso</string>
     <!-- Switch profiles screen -->
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Editar perfil</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Excluir perfil</string>
     <!-- Profile that could not be opened -->
     <string name="profile_load_failed_title" comment="Title of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of that profile">Couldn’t open profile “%1$s”</string>
     <string name="profile_load_failed_message" comment="Message of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of the profile that was opened instead, %2$s is the name of the profile that could not be opened">Opened the “%1$s” profile instead. “%2$s” will be tried again next time.</string>
