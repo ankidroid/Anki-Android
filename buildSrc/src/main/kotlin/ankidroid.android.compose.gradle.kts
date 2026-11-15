@@ -26,6 +26,7 @@ dependencies {
     "implementation"(libsLibrary("androidx-compose-material3"))
     "debugImplementation"(libsLibrary("androidx-compose-ui-tooling"))
     "testImplementation"(libsLibrary("androidx-compose-ui-test-junit4"))
+    "androidTestImplementation"(libsLibrary("androidx-compose-ui-test-junit4"))
     // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>().
     "debugImplementation"(libsLibrary("androidx-compose-ui-test-manifest"))
 }
