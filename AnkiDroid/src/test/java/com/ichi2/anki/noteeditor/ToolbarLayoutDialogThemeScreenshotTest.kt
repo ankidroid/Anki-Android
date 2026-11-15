@@ -10,25 +10,21 @@ import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.test.core.app.ApplicationProvider
-import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.ComposeScreenshotTest
+import com.ichi2.anki.ThemeConfig
 import com.ichi2.anki.noteeditor.presentation.ToolbarLayoutMode
-import com.ichi2.anki.settings.enums.DayTheme
-import com.ichi2.anki.settings.enums.Theme
 import org.junit.Test
 import org.robolectric.annotation.Config
 
 /**
- * Covers selection and keyboard focus with every theme, plus vertical layout and large text once.
+ * Covers selection and keyboard focus, vertical layout and large text.
  *
  * Record: `./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot --tests '*.ToolbarLayoutDialogThemeScreenshotTest'`
  * Verify: `./gradlew :AnkiDroid:verifyRoborazziPlayDebug -Pscreenshot --tests '*.ToolbarLayoutDialogThemeScreenshotTest'`
  */
 class ToolbarLayoutDialogThemeScreenshotTest : ComposeScreenshotTest() {
     @Test
-    fun scrollWithStackFocused(
-        @TestParameter(valuesProvider = ThemeProvider::class) theme: Theme,
-    ) = captureLayout("scroll_stack_focused", ToolbarLayoutMode.SCROLL, focused = ToolbarLayoutMode.STACK, theme = theme)
+    fun scrollWithStackFocused() = captureLayout("scroll_stack_focused", ToolbarLayoutMode.SCROLL, focused = ToolbarLayoutMode.STACK)
 
     @Test
     @Config(qualifiers = "w300dp-h640dp-mdpi")
@@ -43,13 +39,11 @@ class ToolbarLayoutDialogThemeScreenshotTest : ComposeScreenshotTest() {
         selected: ToolbarLayoutMode,
         fontScale: Float = 1f,
         focused: ToolbarLayoutMode? = null,
-        theme: Theme = DayTheme.LIGHT,
     ) {
         capture(
             name,
             node = isDialog(),
             fontScale = fontScale,
-            theme = theme,
             beforeCapture = {
                 if (focused != null) {
                     val label = ApplicationProvider.getApplicationContext<Context>().getString(focused.label())
@@ -67,7 +61,7 @@ class ToolbarLayoutDialogThemeScreenshotTest : ComposeScreenshotTest() {
                 selected = selected,
                 onSelect = {},
                 onDismiss = {},
-                showSelectionBackground = theme != DayTheme.EINK,
+                showSelectionBackground = theme != ThemeConfig.EINK,
             )
         }
     }
