@@ -26,7 +26,7 @@ class CardStateBottomSheetFragmentTest : RobolectricTest() {
     @Test
     fun `card state checkbox exposes its label to TalkBack`() =
         withCardBrowserFragment {
-            CardStateBottomSheetFragment().show(childFragmentManager, CardStateBottomSheetFragment.TAG)
+            CardStateBottomSheetFragment.show(childFragmentManager)
             shadowOf(Looper.getMainLooper()).idle()
 
             onView(withId(R.id.list)).inRoot(isDialog()).check { view, _ ->

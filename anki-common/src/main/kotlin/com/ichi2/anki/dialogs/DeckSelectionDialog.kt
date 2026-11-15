@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -419,6 +420,9 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
     }
 
+    /** Keeps at most one deck selector open in [manager]. */
+    fun show(manager: FragmentManager) = showOnce(manager, TAG)
+
     // TODO: allow filtering to SelectableDeck.Deck, excluding 'AllDecks'
 
     companion object {
@@ -558,7 +562,7 @@ fun Fragment.startDeckSelection(
         withContext(Dispatchers.Main) {
             awaitStarted()
             val targetManager = if (asChild) childFragmentManager else parentFragmentManager
-            dialog.showOnce(targetManager, DeckSelectionDialog.TAG)
+            dialog.show(targetManager)
         }
     }
 
@@ -610,7 +614,7 @@ fun FragmentActivity.startDeckSelection(
             )
         withContext(Dispatchers.Main) {
             awaitStarted()
-            dialog.showOnce(supportFragmentManager, DeckSelectionDialog.TAG)
+            dialog.show(supportFragmentManager)
         }
     }
 }

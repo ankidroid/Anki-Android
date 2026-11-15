@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -19,6 +20,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
 import com.ichi2.anki.databinding.ItemBrowserFilterBottomSheetBinding
 import com.ichi2.anki.utils.ext.behavior
+import com.ichi2.anki.utils.ext.showOnce
 import dev.androidbroadcast.vbpd.viewBinding
 import com.ichi2.anki.common.android.R as CommonR
 
@@ -123,6 +125,9 @@ class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment
 
     companion object {
         const val TAG = "CardStateBottomSheetFragment"
+
+        /** Keeps at most one card-state filter open in [manager]. */
+        fun show(manager: FragmentManager) = CardStateBottomSheetFragment().showOnce(manager, TAG)
     }
 }
 

@@ -26,7 +26,7 @@ class FlagsBottomSheetFragmentTest : RobolectricTest() {
     @Test
     fun `flag checkbox exposes its label to TalkBack`() =
         withCardBrowserFragment {
-            FlagsBottomSheetFragment.createInstance(requireContext()).show(childFragmentManager, FlagsBottomSheetFragment.TAG)
+            FlagsBottomSheetFragment.createInstance(requireContext()).show(childFragmentManager)
             shadowOf(Looper.getMainLooper()).idle()
 
             onView(withId(R.id.list)).inRoot(isDialog()).check { view, _ ->
