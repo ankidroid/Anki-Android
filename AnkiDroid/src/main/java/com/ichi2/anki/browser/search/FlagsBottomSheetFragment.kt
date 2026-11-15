@@ -20,6 +20,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
 import com.ichi2.anki.databinding.ItemBrowserFilterBottomSheetBinding
 import com.ichi2.anki.utils.ext.behavior
+import com.ichi2.anki.utils.ext.showOnce
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -147,7 +148,7 @@ class FlagsBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_bot
      *
      * @see BottomSheetDialogFragment.show
      */
-    fun show(manager: FragmentManager) = this.show(manager, TAG)
+    fun show(manager: FragmentManager) = showOnce(manager, TAG)
 
     companion object {
         const val TAG = "FlagsBottomSheetFragment"

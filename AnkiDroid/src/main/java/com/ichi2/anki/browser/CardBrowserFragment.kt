@@ -158,6 +158,7 @@ import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.showOnce
 import com.ichi2.anki.utils.ext.updateNestedScrolling
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
@@ -440,7 +441,7 @@ class CardBrowserFragment :
             view.findViewById<Chip>(R.id.card_state_chip)?.apply {
                 setOnClickListener {
                     val fragment = CardStateBottomSheetFragment()
-                    fragment.show(childFragmentManager, CardStateBottomSheetFragment.TAG)
+                    fragment.showOnce(childFragmentManager, CardStateBottomSheetFragment.TAG)
                 }
             }
         flagsChip =
