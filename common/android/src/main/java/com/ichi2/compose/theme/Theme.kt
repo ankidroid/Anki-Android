@@ -53,12 +53,22 @@ fun AnkiDroidTheme(content: @Composable () -> Unit) {
  */
 @VisibleForTesting
 internal fun Context.toAnkiDroidColors(scheme: ColorScheme): AnkiDroidColors {
-    var colors = AnkiDroidColors(fabContainer = scheme.primaryContainer, onFab = scheme.onPrimaryContainer)
+    val defaults = scheme.toDefaultAnkiDroidColors()
+    var colors = defaults
     withStyledAttributes(attrs = R.styleable.ComposeTheme) {
         colors =
             AnkiDroidColors(
-                fabContainer = color(R.styleable.ComposeTheme_fabNormalColor, scheme.primaryContainer),
+                fabContainer = color(R.styleable.ComposeTheme_fabNormalColor, defaults.fabContainer),
                 onFab = scheme.onPrimary,
+                showAnswerButton = color(R.styleable.ComposeTheme_showAnswerButtonBackground, defaults.showAnswerButton),
+                againButton = color(R.styleable.ComposeTheme_againBackgroundColor, defaults.againButton),
+                onAgainButton = color(R.styleable.ComposeTheme_againTextColor, defaults.onAgainButton),
+                hardButton = color(R.styleable.ComposeTheme_hardBackgroundColor, defaults.hardButton),
+                onHardButton = color(R.styleable.ComposeTheme_hardTextColor, defaults.onHardButton),
+                goodButton = color(R.styleable.ComposeTheme_goodBackgroundColor, defaults.goodButton),
+                onGoodButton = color(R.styleable.ComposeTheme_goodTextColor, defaults.onGoodButton),
+                easyButton = color(R.styleable.ComposeTheme_easyBackgroundColor, defaults.easyButton),
+                onEasyButton = color(R.styleable.ComposeTheme_easyTextColor, defaults.onEasyButton),
             )
     }
     return colors

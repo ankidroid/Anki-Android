@@ -36,6 +36,16 @@
         <attr name="colorSurfaceBright" />
         <attr name="android:colorBackground" />
         <attr name="colorOnBackground" />
+        <!-- AnkiDroid custom colors -->
         <attr name="fabNormalColor" />
+        <attr name="showAnswerButtonBackground" />
+        <attr name="againBackgroundColor" />
+        <attr name="againTextColor" />
+        <attr name="hardBackgroundColor" />
+        <attr name="hardTextColor" />
+        <attr name="goodBackgroundColor" />
+        <attr name="goodTextColor" />
+        <attr name="easyBackgroundColor" />
+        <attr name="easyTextColor" />
     </declare-styleable>
 </resources>

@@ -133,4 +133,13 @@ class ThemeTest {
         val scheme = context.toMaterial3ColorScheme()
         assertEquals(scheme.onPrimary.toArgb(), context.toAnkiDroidColors(scheme).onFab.toArgb())
     }
+
+    @Test
+    fun `light theme bridges the answer button colors`() {
+        val context = themed(R.style.Theme_Light)
+        val colors = context.toAnkiDroidColors(context.toMaterial3ColorScheme())
+        assertEquals(0xFFC8E6C9.toInt(), colors.goodButton.toArgb())
+        assertEquals(ContextCompat.getColor(appContext, R.color.material_green_900), colors.onGoodButton.toArgb())
+        assertEquals(ContextCompat.getColor(appContext, R.color.material_blue_700), colors.showAnswerButton.toArgb())
+    }
 }
