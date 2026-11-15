@@ -49,6 +49,22 @@ class CardContentProviderMediaTest : RobolectricTest() {
     }
 
     @Test
+    fun `repeated media imports reuse the existing file`() {
+        val first = assertNotNull(insertMedia(preferredName = "cover", contents = "cover contents"))
+        val second = assertNotNull(insertMedia(preferredName = "cover", contents = "cover contents"))
+
+        assertEquals(first, second)
+        assertEquals("cover.png", mediaFile(first).name)
+        assertEquals("cover contents", mediaFile(first).readText())
+        assertEquals(
+            1,
+            col.media.dir
+                .listFiles()!!
+                .size,
+        )
+    }
+
+    @Test
     fun `media imports preserve different contents with the same preferred name`() {
         val first = assertNotNull(insertMedia(preferredName = "cover", contents = "original cover"))
         val second = assertNotNull(insertMedia(preferredName = "cover", contents = "changed cover"))
@@ -56,6 +72,31 @@ class CardContentProviderMediaTest : RobolectricTest() {
         assertNotEquals(first, second)
         assertEquals("original cover", mediaFile(first).readText())
         assertEquals("changed cover", mediaFile(second).readText())
+        assertEquals(
+            2,
+            col.media.dir
+                .listFiles()!!
+                .size,
+        )
+    }
+
+    @Test
+    fun `repeated conflicting media imports reuse the renamed file`() {
+        // 4 cover.png imports:
+        // success
+        val original = assertNotNull(insertMedia(preferredName = "cover", contents = "original cover"))
+        // Different contents - another name is selected
+        val conflicting = assertNotNull(insertMedia(preferredName = "cover", contents = "changed cover"))
+        // Duplicate of the second - reuses the renamed file
+        val repeated = assertNotNull(insertMedia(preferredName = "cover", contents = "changed cover"))
+        // Duplicate of the first - reuses the original file
+        val repeatedOriginal = assertNotNull(insertMedia(preferredName = "cover", contents = "original cover"))
+
+        // Both contents are preserved, with only two media files.
+        assertEquals(conflicting, repeated)
+        assertEquals(original, repeatedOriginal)
+        assertEquals("changed cover", mediaFile(repeated).readText())
+        assertEquals("original cover", mediaFile(repeatedOriginal).readText())
         assertEquals(
             2,
             col.media.dir
