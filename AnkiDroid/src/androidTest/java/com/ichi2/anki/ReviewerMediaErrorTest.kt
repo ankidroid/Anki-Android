@@ -3,11 +3,14 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.os.Build
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.RequiresApi
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
@@ -172,6 +175,12 @@ class ReviewerMediaErrorTest : InstrumentedTest() {
                         client.onReceivedHttpError(view, request, errorResponse)
                         errors.add(request.url.path to errorResponse.statusCode)
                     }
+
+                    @RequiresApi(Build.VERSION_CODES.O)
+                    override fun onRenderProcessGone(
+                        view: WebView,
+                        detail: RenderProcessGoneDetail,
+                    ): Boolean = client.onRenderProcessGone(view, detail)
                 }
         }
         return errors
