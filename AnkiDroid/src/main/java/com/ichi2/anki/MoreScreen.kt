@@ -2,6 +2,7 @@
 package com.ichi2.anki
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,9 +33,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.dialogs.help.HelpItem
+import com.ichi2.compose.ui.components.GroupedList
+import com.ichi2.compose.ui.components.GroupedListScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,8 +76,10 @@ fun MoreScreen(
             )
             MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help))
-            for (item in helpItems) {
-                MoreListRow(item.iconResId, stringResource(item.titleResId)) { onHelpItemClick(item) }
+            GroupedList(Modifier.padding(horizontal = 16.dp)) {
+                for (item in helpItems) {
+                    moreItem(item.iconResId, item.titleResId) { onHelpItemClick(item) }
+                }
             }
             MoreDivider()
             MoreSectionHeader(stringResource(CommonString.help_title_support_ankidroid))
@@ -127,5 +133,18 @@ private fun MoreListRow(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
+    }
+}
+
+private fun GroupedListScope.moreItem(
+    @DrawableRes icon: Int,
+    @StringRes title: Int,
+    onClick: () -> Unit,
+) {
+    item(
+        modifier = Modifier.clickable(role = Role.Button, onClick = onClick),
+        leadingContent = { Icon(painterResource(icon), contentDescription = null) },
+    ) {
+        Text(stringResource(title))
     }
 }
