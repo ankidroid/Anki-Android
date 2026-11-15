@@ -18,7 +18,6 @@
     <style name="AnswerButton" parent="Widget.Material3.Button.ElevatedButton">
         <item name="android:padding">0dp</item>
         <item name="cornerRadius">@dimen/answer_button_corner_radius</item>
-        <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
         <item name="elevation">?attr/studyScreenElevation</item>
         <item name="strokeWidth">?attr/widgetStrokeWidth</item>
         <item name="strokeColor">?attr/widgetStrokeColor</item>
