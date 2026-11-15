@@ -30,7 +30,7 @@ class TagsDialogFactory(
 
     private fun newTagsDialog(): TagsDialog = TagsDialog(listener)
 
-    /** Preserves an open tag editor and its unconfirmed selections. */
+    /** Preserves an open tag editor or filter and its unconfirmed selections. */
     @MainThread
     fun show(
         activity: FragmentActivity,
@@ -39,8 +39,8 @@ class TagsDialogFactory(
         checkedTags: ArrayList<String> = arrayListOf(),
     ) {
         val existingDialog = activity.supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG)
-        if (type == DialogType.EDIT_TAGS && existingDialog is TagsDialog && existingDialog.isEditingTags) {
-            Timber.d("Ignoring 'edit tags' request: dialog is already open")
+        if (type != DialogType.CUSTOM_STUDY && existingDialog is TagsDialog && existingDialog.type == type) {
+            Timber.d("Ignoring tags request (%s): dialog is already open", type)
             return
         }
         val dialog = newTagsDialog().withArguments(activity, type, noteIds, checkedTags)
