@@ -1166,7 +1166,7 @@ class CardContentProvider : ContentProvider() {
             val media = col.media
             // idea, open input stream and save to cache directory, then
             // pass this (hopefully temporary) file to the media.addFile function.
-            val fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)) // return eg "jpeg"
+            val fileExtension = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)) // return eg "jpeg"
             // should we be enforcing strict mimetypes? which types?
             val tempMediaDir = FileUtil.getAnkiCacheDirectory(context!!, "temp-media")
             if (tempMediaDir == null) {
@@ -1180,7 +1180,7 @@ class CardContentProvider : ContentProvider() {
                         // the beginning of the filename.
                         preferredName + "_",
                         // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
-                        ".$fileMimeType",
+                        ".$fileExtension",
                         File(tempMediaDir),
                     )
                 tempFile.deleteOnExit()
