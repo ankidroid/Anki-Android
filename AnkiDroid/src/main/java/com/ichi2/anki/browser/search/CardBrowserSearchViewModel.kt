@@ -312,7 +312,7 @@ class CardBrowserSearchViewModel(
         viewModelScope.launch {
             Timber.d("syncing search state")
             filterStateUpdateFlow.emit(FilterUpdate.System(search.filters))
-            submittedSearchFlow.emit(search)
+            submittedSearchFlow.resetReplayCache()
         }
 
     enum class UserMessage {
