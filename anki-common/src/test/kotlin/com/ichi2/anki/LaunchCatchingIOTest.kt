@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -30,6 +31,18 @@ class LaunchCatchingIOTest {
             val error = withTimeout(1.seconds) { viewModel.onError.receive() }
 
             assertThat(error.message, equalTo("failed"))
+        }
+
+    @Test
+    fun `a failed child coroutine is passed to the error handler`() =
+        runTestWithViewModel { viewModel ->
+            var message: String? = null
+            viewModel.launchCatchingIO(errorMessageHandler = { message = it }) {
+                launch { throw IllegalStateException("child") }
+            }
+            advanceUntilIdle()
+
+            assertThat(message, equalTo("java.lang.IllegalStateException: child"))
         }
 
     private fun runTestWithViewModel(block: suspend TestScope.(ErrorViewModel) -> Unit) =

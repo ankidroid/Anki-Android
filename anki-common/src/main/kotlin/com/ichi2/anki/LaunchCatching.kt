@@ -7,6 +7,7 @@ import com.ichi2.anki.libanki.exception.InvalidSearchException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -30,7 +31,8 @@ fun <T> CoroutineScope.launchCatching(
 ): Job =
     launch(context) {
         try {
-            block()
+            // also catches failures of child coroutines
+            coroutineScope { block() }
         } catch (cancellationException: CancellationException) {
             // CancellationException should be re-thrown to propagate it to the parent coroutine
             throw cancellationException
