@@ -1267,7 +1267,14 @@ class CardBrowserFragment :
             Timber.i("relaying submitted search to activity")
             // Consume this submission so lifecycle restarts do not replay the search.
             searchViewModel.submittedSearchFlow.tryEmit(null)
-            activityViewModel.launchSearchForCards(value, forceRefresh = false, feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
+            activityViewModel.launchSearchForCards(
+                value,
+                forceRefresh = false,
+                feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS,
+                onSuccess = {
+                    searchViewModel.onSearchSucceeded(value)
+                },
+            )
         }
 
         fun onUserMessage(message: UserMessage) =

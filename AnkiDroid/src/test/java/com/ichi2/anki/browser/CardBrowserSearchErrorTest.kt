@@ -11,10 +11,15 @@ import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.browser.search.SearchRequest
+import com.ichi2.anki.ioDispatcher
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.setIntroductionSlidesShown
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.throwOnShowError
 import com.ichi2.testutils.withPref
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
@@ -45,6 +50,19 @@ class CardBrowserSearchErrorTest : RobolectricTest() {
         }
 
     @Test
+    fun `rejected searches never enter history - Issue 23301`() =
+        withSuccessfulSearch {
+            val history = SearchHistory().entries
+            for ((query, error) in rejectedQueries) {
+                openSearch(query)
+                submitSearch()
+                assertSearchError(error).dismiss()
+
+                assertEquals(history, SearchHistory().entries)
+            }
+        }
+
+    @Test
     fun `rejected searches can be retried`() =
         withSuccessfulSearch {
             repeat(2) {
@@ -56,6 +74,7 @@ class CardBrowserSearchErrorTest : RobolectricTest() {
             openSearch("cat")
             submitSearch()
             assertEquals(1, activityViewModel.rowCount)
+            assertEquals("cat", SearchHistory().entries.single().query)
         }
 
     @Test
@@ -114,6 +133,28 @@ class CardBrowserSearchErrorTest : RobolectricTest() {
         }
 
     @Test
+    fun `successful searches reuse results without duplicating history`() =
+        withSuccessfulSearch {
+            val completedSearch = activityViewModel.searchJob
+            val history = SearchHistory().entries
+            openSearch(" cat ")
+            submitSearch()
+
+            assertSame(completedSearch, activityViewModel.searchJob)
+            assertEquals(history, SearchHistory().entries)
+        }
+
+    @Test
+    fun `successful searches with no results enter history`() =
+        withSuccessfulSearch {
+            openSearch("dog")
+            submitSearch()
+
+            assertEquals(0, activityViewModel.rowCount)
+            assertEquals("dog", SearchHistory().entries.first().query)
+        }
+
+    @Test
     fun `programmatic query updates preserve history and update the search bar`() =
         withSuccessfulSearch {
             val history = SearchHistory().entries
@@ -122,6 +163,45 @@ class CardBrowserSearchErrorTest : RobolectricTest() {
 
             assertEquals(history, SearchHistory().entries)
             assertContains(assertNotNull(searchBar).text.toString(), "is:suspended")
+        }
+
+    @Test
+    fun `sorting an in flight submitted search preserves its history`() =
+        withSuccessfulSearch {
+            val scheduler = (ioDispatcher as TestDispatcher).scheduler
+            val previousDispatcher = ioDispatcher
+            try {
+                ioDispatcher = StandardTestDispatcher(scheduler)
+                searchViewModel.submitCurrentSearch(SearchRequest("dog")).join()
+                advanceRobolectricLooper()
+                activityViewModel.setSortType(SortType.NoOrdering).join()
+                scheduler.runCurrent()
+                awaitSearch()
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
+
+            assertEquals("dog", activityViewModel.searchRequestFlow.value.query)
+            assertEquals(0, activityViewModel.rowCount)
+            assertEquals(0, assertNotNull(activityViewModel.flowOfLastCompletedSearch.value).rowCount)
+            assertEquals("dog", SearchHistory().entries.first().query)
+        }
+
+    @Test
+    fun `a submitted search waiting for initialization enters history`() =
+        withSuccessfulSearch {
+            activityViewModel.flowOfInitCompleted.value = false
+            openSearch("dog")
+            submitSearch()
+            assertEquals("cat", SearchHistory().entries.first().query)
+
+            activityViewModel.flowOfInitCompleted.value = true
+            awaitSearch()
+
+            assertEquals("dog", activityViewModel.searchRequestFlow.value.query)
+            assertEquals(0, activityViewModel.rowCount)
+            assertEquals(0, assertNotNull(activityViewModel.flowOfLastCompletedSearch.value).rowCount)
+            assertEquals("dog", SearchHistory().entries.first().query)
         }
 
     private fun withSuccessfulSearch(block: suspend CardBrowserFragment.(recreate: () -> CardBrowserFragment) -> Unit) {
@@ -208,6 +288,13 @@ class CardBrowserSearchErrorTest : RobolectricTest() {
     private fun DeckPicker.browseTab() = supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) as CardBrowserFragment
 
     companion object {
+        private val rejectedQueries =
+            listOf(
+                "is:now" to "now",
+                List(1000) { (0x4e00 + it).toChar() }.joinToString(" or ") to "too large",
+                "re:b[" to "regex",
+            )
+
         @ParameterizedRobolectricTestRunner.Parameters(name = "embedded={0}")
         @JvmStatic
         fun parameters() = listOf(arrayOf(false), arrayOf(true))

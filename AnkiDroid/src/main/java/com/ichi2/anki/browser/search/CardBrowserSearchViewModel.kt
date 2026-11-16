@@ -199,10 +199,15 @@ class CardBrowserSearchViewModel(
     fun submitCurrentSearch(searchToSubmit: SearchRequest) =
         viewModelScope.launch {
             Timber.i("submitting search")
-            val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
-            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
+        }
+
+    /** Records history only after the backend accepts the search. */
+    fun onSearchSucceeded(search: SearchRequest) =
+        viewModelScope.launch {
+            val updatedEntries = searchHistoryManager.addRecent(search.toHistoryEntry())
+            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
         }
 
     fun submitCurrentSearch() {
