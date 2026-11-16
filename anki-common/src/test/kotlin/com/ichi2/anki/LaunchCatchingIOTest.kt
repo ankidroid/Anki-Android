@@ -3,6 +3,8 @@
 package com.ichi2.anki
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -17,6 +19,7 @@ import kotlinx.coroutines.withTimeout
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import kotlin.test.assertIs
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -31,6 +34,18 @@ class LaunchCatchingIOTest {
             val error = withTimeout(1.seconds) { viewModel.onError.receive() }
 
             assertThat(error.message, equalTo("failed"))
+        }
+
+    @Test
+    fun `a cancellation the task did not cause is shown`() =
+        runTestWithViewModel { viewModel ->
+            val cancelled = CompletableDeferred<Unit>().apply { cancel() }
+            viewModel.launchCatchingIO { cancelled.await() }
+            advanceUntilIdle()
+
+            val error = withTimeout(1.seconds) { viewModel.onError.receive() }
+
+            assertIs<CancellationException>(error)
         }
 
     @Test
