@@ -64,6 +64,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -101,9 +102,9 @@ fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel
     viewModelScope.launch(ioDispatcher) {
         try {
             block()
-        } catch (e: CancellationException) {
-            throw e
         } catch (e: Exception) {
+            // propagate our own cancellation; others are errors
+            if (e is CancellationException) ensureActive()
             Timber.w(e)
             onError.send(e)
             if (throwOnShowError) throw IllegalStateException("throwOnShowError: $e", e)

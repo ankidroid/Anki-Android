@@ -8,6 +8,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -33,10 +34,9 @@ fun <T> CoroutineScope.launchCatching(
         try {
             // also catches failures of child coroutines
             coroutineScope { block() }
-        } catch (cancellationException: CancellationException) {
-            // CancellationException should be re-thrown to propagate it to the parent coroutine
-            throw cancellationException
         } catch (exception: Exception) {
+            // propagate our own cancellation; others are errors
+            if (exception is CancellationException) ensureActive()
             Timber.w(exception)
             val message =
                 when (exception) {
