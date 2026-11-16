@@ -20,6 +20,7 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.deleteApprovedCrashReports
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
@@ -420,6 +421,7 @@ class ProfileManager private constructor(
         } else {
             val profileDir = resolveProfileDirectory(profileId).file
             if (profileDir.exists()) {
+                deleteApprovedCrashReports(profileContext, File(profileDir, "files"))
                 val removed = profileDir.deleteRecursively()
                 Timber.d("deleteProfile: removed profile dir %s (success=%b)", profileDir, removed)
             } else {

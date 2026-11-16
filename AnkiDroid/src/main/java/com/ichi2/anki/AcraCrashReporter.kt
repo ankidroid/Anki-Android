@@ -33,8 +33,11 @@ import org.acra.config.HttpSenderConfigurationBuilder
 import org.acra.config.LimiterConfigurationBuilder
 import org.acra.config.LimiterData
 import org.acra.config.ToastConfigurationBuilder
+import org.acra.file.CrashReportPersister
+import org.acra.file.ReportLocator
 import org.acra.sender.HttpSender
 import timber.log.Timber
+import java.io.File
 
 private object AcraCrashReporter : CrashReporter {
     /** Our ACRA configurations, initialized during Application.onCreate()  */
@@ -129,11 +132,12 @@ private object AcraCrashReporter : CrashReporter {
                         .withText(toastText)
                         .withEnabled(true)
                         .build(),
+                    // DEFECT: #23770 failedReportLimit counts all profiles' approved reports, so one profile's backlog blocks the rest
                     LimiterConfigurationBuilder()
                         .withExceptionClassLimit(1000)
                         .withStacktraceLimit(1)
-                        .withDeleteReportsOnAppUpdate(true)
-                        .withResetLimitsOnAppUpdate(true)
+                        .withDeleteReportsOnAppUpdate(false)
+                        .withResetLimitsOnAppUpdate(false)
                         .withEnabled(true)
                         .build(),
                 )
@@ -325,6 +329,7 @@ private object AcraCrashReporter : CrashReporter {
         newValue: String,
     ) {
         setReportingMode(newValue)
+        if (newValue == FEEDBACK_REPORT_NEVER) deleteApprovedCrashReports(ctx)
         // If the user changed error reporting, make sure future reports have a chance to post
         deleteLimiterData(ctx)
         // We also need to re-chain our UncaughtExceptionHandlers
@@ -394,6 +399,17 @@ fun initializeAcraCrashReporter() {
 }
 
 fun isAcraSenderProcess(): Boolean = AcraCrashReporter.isProperServiceProcess()
+
+fun deleteApprovedCrashReports(
+    context: Context,
+    profileFilesDir: File = context.filesDir,
+) {
+    val profileFolder = profileFilesDir.parentFile?.name ?: return
+    for (report in ReportLocator(context).approvedReports) {
+        val reportFilesDir = runCatching { CrashReportPersister().load(report).getString(ReportField.FILE_PATH) }.getOrNull() ?: continue
+        if (File(reportFilesDir).parentFile?.name == profileFolder) report.delete()
+    }
+}
 
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 val CrashReportService.acraCoreConfigBuilder: CoreConfigurationBuilder
