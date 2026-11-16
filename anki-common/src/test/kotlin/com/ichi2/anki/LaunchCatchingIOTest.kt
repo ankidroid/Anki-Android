@@ -29,7 +29,7 @@ class LaunchCatchingIOTest {
 
             val error = withTimeout(1.seconds) { viewModel.onError.receive() }
 
-            assertThat(error, equalTo("java.lang.IllegalStateException: failed"))
+            assertThat(error.message, equalTo("failed"))
         }
 
     private fun runTestWithViewModel(block: suspend TestScope.(ErrorViewModel) -> Unit) =
@@ -48,6 +48,6 @@ class LaunchCatchingIOTest {
     private class ErrorViewModel :
         ViewModel(),
         OnErrorListener {
-        override val onError = Channel<String>(Channel.BUFFERED)
+        override val onError = Channel<Exception>(Channel.BUFFERED)
     }
 }

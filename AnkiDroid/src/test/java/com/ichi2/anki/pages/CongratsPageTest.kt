@@ -2,10 +2,13 @@
 package com.ichi2.anki.pages
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Looper
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -16,17 +19,23 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.backend.BackendError
 import anki.scheduler.CongratsInfoResponse
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.ioDispatcher
+import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.throwOnShowError
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.testutils.launchFragmentInContainer
@@ -34,12 +43,19 @@ import com.ichi2.testutils.saveState
 import com.ichi2.testutils.uninitializeField
 import com.ichi2.testutils.withFragment
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.hamcrest.Matchers.allOf
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -225,6 +241,50 @@ class CongratsPageTest : RobolectricTest() {
             assertEquals(assertNotNull(col.decks.customStudySession).id, selectedNote.firstCard().did)
             assertEquals(Consts.DEFAULT_DECK_ID, otherNote.firstCard().did)
         }
+
+    @Test
+    fun `an unexpected ViewModel error is reported when its dialog is dismissed`() =
+        runTest {
+            throwOnShowError = false
+            val crashReporter = mock<CrashReporter>()
+            val originalCrashReporter = CrashReportService.getReporter()
+            CrashReportService.setReporter(crashReporter)
+            try {
+                launchFragmentInContainer<CongratsPage>().use { scenario ->
+                    failViewModel(scenario, IllegalStateException("unexpected"))
+
+                    ShadowDialog.getLatestDialog().dismiss()
+                    shadowOf(Looper.getMainLooper()).idle()
+
+                    verify(crashReporter).sendExceptionReport(any<IllegalStateException>(), anyOrNull(), anyOrNull(), any())
+                }
+            } finally {
+                CrashReportService.setReporter(originalCrashReporter)
+            }
+        }
+
+    @Test
+    fun `a locked collection error in the ViewModel links to settings`() =
+        runTest {
+            throwOnShowError = false
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                failViewModel(scenario, CollectionLockedException(BackendDbLockedException(mock<BackendError>())))
+
+                val helpButton = (ShadowDialog.getLatestDialog() as AlertDialog).getButton(DialogInterface.BUTTON_NEUTRAL)
+                assertEquals("Settings", helpButton?.text?.toString())
+            }
+        }
+
+    /** Throws [exception] in a [CongratsViewModel] task, and waits for the resulting error */
+    private fun TestScope.failViewModel(
+        scenario: AnkiFragmentScenario<CongratsPage>,
+        exception: Exception,
+    ) {
+        val viewModel = scenario.withFragment { ViewModelProvider(this)[CongratsViewModel::class.java] }
+        viewModel.launchCatchingIO { throw exception }
+        advanceUntilIdle()
+        shadowOf(Looper.getMainLooper()).idle()
+    }
 
     /** Posts [action] where [CustomStudyDialog] posts it: the activity's fragment manager */
     private fun AnkiFragmentScenario<CongratsPage>.postCustomStudyResult(action: CustomStudyAction) {

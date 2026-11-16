@@ -32,6 +32,7 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.showException
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.currentDeckStudyState
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -80,13 +81,8 @@ class CongratsPage :
         viewModel.onError
             .receiveAsFlow()
             .flowWithLifecycle(lifecycle)
-            .onEach { errorMessage ->
-                AlertDialog
-                    .Builder(requireContext())
-                    .setTitle(CommonString.vague_error)
-                    .setMessage(errorMessage)
-                    .show()
-            }.launchIn(lifecycleScope)
+            .onEach { requireActivity().showException(it) }
+            .launchIn(lifecycleScope)
 
         viewModel.unburyState
             .onEach { state ->
@@ -194,7 +190,7 @@ class CongratsPage :
 class CongratsViewModel :
     ViewModel(),
     OnErrorListener {
-    override val onError = Channel<String>(Channel.BUFFERED)
+    override val onError = Channel<Exception>(Channel.BUFFERED)
     val unburyState = MutableSharedFlow<UnburyState>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
 

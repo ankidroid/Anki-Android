@@ -1009,14 +1009,6 @@ open class DeckPicker :
             }
         }
 
-        fun onError(errorMessage: String) {
-            AlertDialog
-                .Builder(this)
-                .setTitle(CommonString.vague_error)
-                .setMessage(errorMessage)
-                .show()
-        }
-
         viewModel.deckDeletedNotification.collectInLifecycle(::onDeckDeleted)
         viewModel.flowOfDeleteDeckConfirmation.collectInLifecycle(::showDeleteDeckConfirmationDialog)
         viewModel.flowOfRenameDeck.collectInLifecycle(::renameDeckDialog)
@@ -1032,7 +1024,7 @@ open class DeckPicker :
         viewModel.flowOfExportDeck.collectInLifecycle(::onExportDeck)
         viewModel.flowOfCreateShortcut.collectInLifecycle(::createIcon)
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
-        viewModel.onError.receiveAsFlow().collectInLifecycle(::onError)
+        viewModel.onError.receiveAsFlow().collectInLifecycle { showException(it) }
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.collectInLifecycle(::onStudiedTodayChanged)
