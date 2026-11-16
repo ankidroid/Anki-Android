@@ -175,7 +175,32 @@ class SharedDecksDownloadFragment : Fragment() {
         downloadManager = (activity as SharedDecksActivity).downloadManager
         registerDownloadReceiver()
         observeLoginRequired()
-        downloadFile(fileToBeDownloaded)
+        if (!viewModel.isDownloadStarted) {
+            downloadFile(fileToBeDownloaded)
+        } else if (viewModel.isDownloadInProgress) {
+            onBackPressedCallback.isEnabled = true
+            resumeDownload()
+        }
+    }
+
+    private val downloadResumer = Runnable { resumeDownload() }
+
+    private fun resumeDownload() {
+        if (!viewModel.isDownloadInProgress) return
+        when (isDownloadRunning()) {
+            true -> startDownloadProgressChecker()
+            false -> {
+                Timber.i("Download ended while the screen was away")
+                onComplete.onReceive(
+                    requireContext(),
+                    Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, viewModel.downloadId),
+                )
+            }
+            null -> {
+                Timber.w("Download status unavailable, checking again")
+                handler.postDelayed(downloadResumer, DOWNLOAD_PROGRESS_CHECK_DELAY)
+            }
+        }
     }
 
     /**
@@ -197,6 +222,7 @@ class SharedDecksDownloadFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        handler.removeCallbacks(downloadResumer)
         stopDownloadProgressChecker()
         removeCancelConfirmationDialog()
         super.onDestroyView()
@@ -475,6 +501,17 @@ class SharedDecksDownloadFragment : Fragment() {
         handler.removeCallbacks(downloadProgressChecker)
         isProgressCheckerRunning = false
     }
+
+    private fun isDownloadRunning(): Boolean? =
+        try {
+            downloadManager.query(DownloadManager.Query().setFilterById(viewModel.downloadId))?.use { cursor ->
+                cursor.moveToFirst() &&
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)) !in
+                    listOf(DownloadManager.STATUS_SUCCESSFUL, DownloadManager.STATUS_FAILED)
+            }
+        } catch (_: IllegalArgumentException) {
+            null
+        }
 
     /**
      * Reads the current progress out of [DownloadManager] and reports it to the ViewModel.

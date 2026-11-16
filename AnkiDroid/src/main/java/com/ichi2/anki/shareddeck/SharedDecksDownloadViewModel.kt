@@ -27,6 +27,9 @@ class SharedDecksDownloadViewModel : ViewModel() {
 
     var isDownloadInProgress = false
 
+    val isDownloadStarted: Boolean
+        get() = uiState.value.fileName != null
+
     /** A download was enqueued. Also called on a retry, which clears the failed state. */
     fun onDownloadStarted(fileName: String) {
         Timber.i("download started")
