@@ -30,6 +30,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.customStudyDefaultsResponse
@@ -39,6 +40,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
@@ -718,56 +720,60 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
-    fun `boundary values validate correctly across study modes`() {
-        // STUDY_FORGOT boundary values: 0 (invalid), 1 (valid), 30 (valid), 31 (invalid)
-        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) { fragment ->
-            val dialog = fragment.dialog as AlertDialog
+    fun `boundary values validate correctly across study modes`() =
+        runTest {
+            TimeManager.reset()
+            col.sched.answerCard(addBasicNote().firstCard(), CardAnswer.Rating.AGAIN)
 
-            onSubscreenEditText().perform(replaceText("0"))
-            assertThat("0 in STUDY_FORGOT is disabled", dialog.positiveButton.isEnabled, equalTo(false))
-            assertThat(
-                "0 error in STUDY_FORGOT",
-                fragment.binding.detailsEditText2Layout.error
-                    ?.toString(),
-                containsString("1"),
-            )
+            // STUDY_FORGOT boundary values: 0 (invalid), 1 (valid), 30 (valid), 31 (invalid)
+            withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) { fragment ->
+                val dialog = fragment.dialog as AlertDialog
 
-            onSubscreenEditText().perform(replaceText("1"))
-            assertThat("1 in STUDY_FORGOT is enabled", dialog.positiveButton.isEnabled, equalTo(true))
-            assertThat("1 error in STUDY_FORGOT is null", fragment.binding.detailsEditText2Layout.error, nullValue())
+                onSubscreenEditText().perform(replaceText("0"))
+                assertThat("0 in STUDY_FORGOT is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat(
+                    "0 error in STUDY_FORGOT",
+                    fragment.binding.detailsEditText2Layout.error
+                        ?.toString(),
+                    containsString("1"),
+                )
 
-            onSubscreenEditText().perform(replaceText("30"))
-            assertThat("30 in STUDY_FORGOT is enabled", dialog.positiveButton.isEnabled, equalTo(true))
-            assertThat("30 error in STUDY_FORGOT is null", fragment.binding.detailsEditText2Layout.error, nullValue())
+                onSubscreenEditText().perform(replaceText("1"))
+                assertThat("1 in STUDY_FORGOT is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+                assertThat("1 error in STUDY_FORGOT is null", fragment.binding.detailsEditText2Layout.error, nullValue())
 
-            onSubscreenEditText().perform(replaceText("31"))
-            assertThat("31 in STUDY_FORGOT is disabled", dialog.positiveButton.isEnabled, equalTo(false))
-            assertThat(
-                "31 error in STUDY_FORGOT",
-                fragment.binding.detailsEditText2Layout.error
-                    ?.toString(),
-                containsString("30"),
-            )
+                onSubscreenEditText().perform(replaceText("30"))
+                assertThat("30 in STUDY_FORGOT is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+                assertThat("30 error in STUDY_FORGOT is null", fragment.binding.detailsEditText2Layout.error, nullValue())
+
+                onSubscreenEditText().perform(replaceText("31"))
+                assertThat("31 in STUDY_FORGOT is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat(
+                    "31 error in STUDY_FORGOT",
+                    fragment.binding.detailsEditText2Layout.error
+                        ?.toString(),
+                    containsString("30"),
+                )
+            }
+
+            // EXTEND_NEW boundary values: -99999 (valid), 0 (invalid), 99999 (valid), 100000 (invalid)
+            withExtendLimitsDialog(ContextMenuOption.EXTEND_NEW) { dialog ->
+                onSubscreenEditText().perform(replaceText("-99999"))
+                assertThat("-99999 in EXTEND_NEW is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+                assertThat("-99999 error is null", binding.detailsEditText2Layout.error, nullValue())
+
+                onSubscreenEditText().perform(replaceText("0"))
+                assertThat("0 in EXTEND_NEW is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+
+                onSubscreenEditText().perform(replaceText("99999"))
+                assertThat("99999 in EXTEND_NEW is enabled", dialog.positiveButton.isEnabled, equalTo(true))
+                assertThat("99999 error is null", binding.detailsEditText2Layout.error, nullValue())
+
+                onSubscreenEditText().perform(replaceText("100000"))
+                assertThat("100000 in EXTEND_NEW is disabled", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat("100000 error in EXTEND_NEW", binding.detailsEditText2Layout.error?.toString(), containsString("99999"))
+            }
         }
-
-        // EXTEND_NEW boundary values: -99999 (valid), 0 (invalid), 99999 (valid), 100000 (invalid)
-        withExtendLimitsDialog(ContextMenuOption.EXTEND_NEW) { dialog ->
-            onSubscreenEditText().perform(replaceText("-99999"))
-            assertThat("-99999 in EXTEND_NEW is enabled", dialog.positiveButton.isEnabled, equalTo(true))
-            assertThat("-99999 error is null", binding.detailsEditText2Layout.error, nullValue())
-
-            onSubscreenEditText().perform(replaceText("0"))
-            assertThat("0 in EXTEND_NEW is disabled", dialog.positiveButton.isEnabled, equalTo(false))
-
-            onSubscreenEditText().perform(replaceText("99999"))
-            assertThat("99999 in EXTEND_NEW is enabled", dialog.positiveButton.isEnabled, equalTo(true))
-            assertThat("99999 error is null", binding.detailsEditText2Layout.error, nullValue())
-
-            onSubscreenEditText().perform(replaceText("100000"))
-            assertThat("100000 in EXTEND_NEW is disabled", dialog.positiveButton.isEnabled, equalTo(false))
-            assertThat("100000 error in EXTEND_NEW", binding.detailsEditText2Layout.error?.toString(), containsString("99999"))
-        }
-    }
 
     @Test
     fun `creating a tags custom session uses selected card state`() =
