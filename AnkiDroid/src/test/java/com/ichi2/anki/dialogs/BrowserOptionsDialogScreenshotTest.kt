@@ -25,7 +25,15 @@ class BrowserOptionsDialogScreenshotTest : ScreenshotTest() {
             browser.cardBrowserFragment.showOptionsDialog()
             advanceRobolectricLooper()
 
-            captureScreen(if (hasDefaultSearch) "default_search_populated" else "default_search_empty")
+            val dialog =
+                browser.supportFragmentManager.fragments
+                    .filterIsInstance<BrowserOptionsDialog>()
+                    .single()
+                    .requireDialog()
+            captureView(
+                if (hasDefaultSearch) "default_search_populated" else "default_search_empty",
+                dialog.window!!.decorView,
+            )
         } finally {
             Prefs.devUsingCardBrowserSearchView = previousSearchView
         }
