@@ -15,6 +15,8 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageNotConfiguredException
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.FragmentCoroutineTracker
@@ -284,6 +286,18 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
 
                 assertThat(message, containsString("Advanced settings"))
             }
+        }
+
+    @Test
+    fun `launchCatching can end with undoableOp`() =
+        runTest {
+            var message: String? = null
+
+            launchCatching(errorMessageHandler = { message = it }) {
+                undoableOp { sched.unburyDeck(Consts.DEFAULT_DECK_ID) }
+            }.join()
+
+            assertNull(message)
         }
 
     /**
