@@ -142,6 +142,13 @@ class CardBrowserViewModel(
     var searchJob: Job? = null
         private set
 
+    private class PendingSearchSuccess(
+        val request: SearchRequest,
+        val callback: () -> Unit,
+    )
+
+    private var pendingSearchSuccess: PendingSearchSuccess? = null
+
     // temporary flow for refactoring - called when cards are cleared
     val flowOfCardsUpdated = MutableSharedFlow<Unit>()
 
@@ -1455,11 +1462,13 @@ class CardBrowserViewModel(
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
      * @param feedbackMode the feedback requested for this search, resolved by [browserSearchFeedback]
+     * @param onSuccess called on the main thread when the search succeeds, including a cached result
      */
     fun launchSearchForCards(
         searchRequest: SearchRequest,
         forceRefresh: Boolean,
         feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+        onSuccess: (() -> Unit)? = null,
     ) = viewModelScope.launch {
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
@@ -1470,10 +1479,11 @@ class CardBrowserViewModel(
         searchRequestFlow.value = searchRequest
         if (isDuplicateSearch) {
             Timber.d("skipping duplicate search: forceRefresh is false")
+            onSuccess?.invoke()
             return@launch
         }
 
-        launchSearchForCards(feedbackMode = feedbackMode)
+        launchSearchForCards(feedbackMode = feedbackMode, onSuccess = onSuccess)
     }
 
     /**
@@ -1481,8 +1491,17 @@ class CardBrowserViewModel(
      *
      * @see com.ichi2.anki.searchForRows
      */
-    fun launchSearchForCards(feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE) {
+    fun launchSearchForCards(
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+        onSuccess: (() -> Unit)? = null,
+    ) {
         if (!initCompleted) return
+        val searchRequest = searchRequestFlow.value
+        // A refresh restarts the work, but still completes the same submitted query.
+        val pendingSuccess =
+            onSuccess?.let { PendingSearchSuccess(searchRequest, it) }
+                ?: pendingSearchSuccess?.takeIf { it.request == searchRequest }
+        pendingSearchSuccess = pendingSuccess
 
         viewModelScope.launch {
             searchJob?.cancel()
@@ -1494,9 +1513,14 @@ class CardBrowserViewModel(
             searchJob?.cancel()
             searchJob =
                 launchCatchingIO(
-                    errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
+                    errorMessageHandler = { error ->
+                        withContext(Dispatchers.Main) {
+                            if (pendingSearchSuccess === pendingSuccess) pendingSearchSuccess = null
+                            flowOfSearchState.emit(SearchState.Error(error))
+                        }
+                    },
                 ) {
-                    val searchString = withCol { searchRequestFlow.value.toSearchString().getOrThrow() }
+                    val searchString = withCol { searchRequest.toSearchString().getOrThrow() }
                     flowOfSearchState.emit(SearchState.Searching)
                     val sortOrder = SortType.buildSortOrder()
                     Timber.d("performing search: '%s'; order: %s", searchString, sortOrder)
@@ -1515,6 +1539,10 @@ class CardBrowserViewModel(
                         ensureActive()
                         flowOfSearchState.emit(completed)
                         flowOfSearchFeedback.value = completed.takeUnless { feedbackMode == BrowserSearchFeedbackMode.NONE }
+                        if (pendingSearchSuccess === pendingSuccess) {
+                            pendingSearchSuccess = null
+                            pendingSuccess?.callback?.invoke()
+                        }
                     }
                     selectUnvalidatedRowIds(pendingSelectionRestore)
                     pendingSelectionRestore = emptyList()
