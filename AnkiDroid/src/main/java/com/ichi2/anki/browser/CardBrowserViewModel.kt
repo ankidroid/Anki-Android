@@ -1369,16 +1369,17 @@ class CardBrowserViewModel(
     }
 
     /** Previewing */
-    suspend fun queryPreviewIntentData(): PreviewerDestination {
-        // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
-        return if (selectedRowCount() > 1) {
-            PreviewerDestination(currentIndex = 0, IdsFile(idsFileDirectory, queryAllSelectedCardIds(), IdsFile.Purpose.PREVIEW))
-        } else {
-            // Preview all cards, starting from the one that is currently selected
-            val startIndex = indexOfFirstCheckedCard() ?: 0
-            PreviewerDestination(startIndex, IdsFile(idsFileDirectory, queryOneCardIdPerNote(), IdsFile.Purpose.PREVIEW))
+    suspend fun queryPreviewIntentData(): PreviewerDestination =
+        progressManager.withProgress {
+            // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
+            if (selectedRowCount() > 1) {
+                PreviewerDestination(currentIndex = 0, IdsFile(idsFileDirectory, queryAllSelectedCardIds(), IdsFile.Purpose.PREVIEW))
+            } else {
+                // Preview all cards, starting from the one that is currently selected
+                val startIndex = indexOfFirstCheckedCard() ?: 0
+                PreviewerDestination(startIndex, IdsFile(idsFileDirectory, queryOneCardIdPerNote(), IdsFile.Purpose.PREVIEW))
+            }
         }
-    }
 
     private suspend fun queryOneCardIdPerNote(): List<CardId> = cards.queryOneCardIdPerRow()
 
