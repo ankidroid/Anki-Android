@@ -110,9 +110,9 @@ fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel
         }
     }
 
-fun ViewModel.launchCatchingIO(
+fun <T> ViewModel.launchCatchingIO(
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit,
+    block: suspend CoroutineScope.() -> T,
 ): Job = viewModelScope.launchCatching(ioDispatcher, errorMessageHandler, block)
 
 fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> = async(ioDispatcher, block = block)

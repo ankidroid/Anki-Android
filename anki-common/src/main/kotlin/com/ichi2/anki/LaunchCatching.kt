@@ -23,10 +23,10 @@ import kotlin.coroutines.EmptyCoroutineContext
  * `Exception.localizedMessage` or `Exception.toString()`
  * @param block code to execute inside [launch]
  */
-fun CoroutineScope.launchCatching(
+fun <T> CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit,
+    block: suspend CoroutineScope.() -> T,
 ): Job =
     launch(context) {
         try {
