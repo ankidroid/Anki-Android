@@ -144,12 +144,17 @@ class CardBrowserViewModel(
     var searchJob: Job? = null
         private set
 
+    private var successfulSearchRequest: SearchRequest? = null
+
     private class PendingSearchSuccess(
         val request: SearchRequest,
         val callback: () -> Unit,
     )
 
     private var pendingSearchSuccess: PendingSearchSuccess? = null
+
+    // Refreshing the current results must not supersede a pending submission.
+    private var latestSearchSubmissionId = 0L
 
     // temporary flow for refactoring - called when cards are cleared
     val flowOfCardsUpdated = MutableSharedFlow<Unit>()
@@ -1501,11 +1506,18 @@ class CardBrowserViewModel(
         feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
         onSuccess: (() -> Unit)? = null,
     ) = viewModelScope.launch {
+        val submissionId = ++latestSearchSubmissionId
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
         context(_: Collection)
         fun SearchRequest.asSearchString(): SearchString? = this.toSearchString().getOrNull()
-        val isDuplicateSearch = !forceRefresh && withCol { searchRequestFlow.value.asSearchString() == searchRequest.asSearchString() }
+        val cachedRequest = successfulSearchRequest
+        val isDuplicateSearch =
+            !forceRefresh && cachedRequest != null &&
+                withCol { searchRequest.asSearchString()?.let { it == cachedRequest.asSearchString() } == true } &&
+                successfulSearchRequest === cachedRequest
+        // Collection access can suspend while a newer submission updates the query.
+        if (submissionId != latestSearchSubmissionId) return@launch
         // Equivalent queries can still change the text and chip filters shown to the user.
         searchRequestFlow.value = searchRequest
         if (isDuplicateSearch) {
@@ -1536,6 +1548,7 @@ class CardBrowserViewModel(
 
         viewModelScope.launch {
             searchJob?.cancel()
+            successfulSearchRequest = null
             flowOfSearchFeedback.value = null
             // update the UI while we're searching
             clearCardsList()
@@ -1568,6 +1581,7 @@ class CardBrowserViewModel(
                     val completed = SearchState.Completed.fromCurrentState(feedbackMode)
                     withContext(Dispatchers.Main) {
                         ensureActive()
+                        successfulSearchRequest = searchRequest
                         flowOfSearchState.emit(completed)
                         flowOfSearchFeedback.value = completed.takeUnless { feedbackMode == BrowserSearchFeedbackMode.NONE }
                         if (pendingSearchSuccess === pendingSuccess) {
