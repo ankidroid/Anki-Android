@@ -94,18 +94,21 @@ var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 var throwOnShowError = false
 
 interface OnErrorListener {
-    val onError: Channel<String>
+    val onError: Channel<Exception>
 }
 
 fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel, T : OnErrorListener =
-    viewModelScope.launchCatching(
-        ioDispatcher,
-        {
-            onError.send(it)
-            if (throwOnShowError) throw IllegalStateException("throwOnShowError: $it")
-        },
-        { block() },
-    )
+    viewModelScope.launch(ioDispatcher) {
+        try {
+            block()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e)
+            onError.send(e)
+            if (throwOnShowError) throw IllegalStateException("throwOnShowError: $e", e)
+        }
+    }
 
 fun <T> T.launchCatchingIO(
     errorMessageHandler: suspend (String) -> Unit,

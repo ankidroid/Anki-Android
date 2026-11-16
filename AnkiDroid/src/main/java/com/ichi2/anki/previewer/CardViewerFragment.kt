@@ -37,6 +37,7 @@ import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.showException
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectInViewLifecycle
 import com.ichi2.anki.utils.ext.packageManager
@@ -220,13 +221,7 @@ abstract class CardViewerFragment(
     }
 
     private fun setupErrorListeners() {
-        viewModel.onError.receiveAsFlow().collectInViewLifecycle { errorMessage ->
-            AlertDialog
-                .Builder(requireContext())
-                .setTitle(CommonString.vague_error)
-                .setMessage(errorMessage)
-                .show()
-        }
+        viewModel.onError.receiveAsFlow().collectInViewLifecycle { requireActivity().showException(it) }
 
         viewModel.onMediaError.collectInViewLifecycle {
             showMediaErrorSnackbar(it)

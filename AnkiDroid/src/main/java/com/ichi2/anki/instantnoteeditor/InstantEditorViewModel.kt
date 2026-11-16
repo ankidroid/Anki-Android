@@ -41,7 +41,7 @@ class InstantEditorViewModel :
     ViewModel(),
     OnErrorListener,
     HasProgress<InstantEditorProgress> {
-    override val onError = Channel<String>(Channel.BUFFERED)
+    override val onError = Channel<Exception>(Channel.BUFFERED)
 
     override val progressManager = ProgressManager<InstantEditorProgress>()
 

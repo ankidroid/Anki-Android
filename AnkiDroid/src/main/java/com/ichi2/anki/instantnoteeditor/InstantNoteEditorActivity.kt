@@ -47,6 +47,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.showException
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.setTransparentBackground
@@ -486,13 +487,8 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
         viewModel.onError
             .receiveAsFlow()
             .flowWithLifecycle(lifecycle)
-            .onEach { errorMessage ->
-                AlertDialog
-                    .Builder(this)
-                    .setTitle(CommonString.vague_error)
-                    .setMessage(errorMessage)
-                    .show()
-            }.launchIn(lifecycleScope)
+            .onEach { showException(it) }
+            .launchIn(lifecycleScope)
 
         viewModel.instantEditorError
             .onEach { errorMessage ->

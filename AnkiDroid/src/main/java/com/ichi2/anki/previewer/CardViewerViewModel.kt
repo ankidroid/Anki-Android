@@ -29,7 +29,7 @@ abstract class CardViewerViewModel(
 ) : ViewModel(),
     OnErrorListener,
     PostRequestHandler {
-    override val onError = Channel<String>(Channel.BUFFERED)
+    override val onError = Channel<Exception>(Channel.BUFFERED)
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
     val mediaErrorHandler =
