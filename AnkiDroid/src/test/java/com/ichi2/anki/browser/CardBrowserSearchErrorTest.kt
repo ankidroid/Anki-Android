@@ -45,6 +45,20 @@ class CardBrowserSearchErrorTest : RobolectricTest() {
         }
 
     @Test
+    fun `rejected searches can be retried`() =
+        withSuccessfulSearch {
+            repeat(2) {
+                openSearch("is:now")
+                submitSearch()
+                assertSearchError("now").dismiss()
+            }
+
+            openSearch("cat")
+            submitSearch()
+            assertEquals(1, activityViewModel.rowCount)
+        }
+
+    @Test
     fun `closing the search screen does not rerun a rejected search`() =
         withSuccessfulSearch {
             openSearch("is:now")

@@ -127,6 +127,31 @@ import kotlin.test.assertTrue
 
 class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
     @Test
+    fun `a pending search cannot replace a newer submission after a refresh - Issue 23301`() =
+        runViewModelTest {
+            addBasicNote("older")
+            val newerCard = addBasicNote("newer").firstCard().id
+            searchJob?.join()
+            val scheduler = checkNotNull(currentCoroutineContext()[TestCoroutineScheduler])
+            val olderRequest = searchRequestFlow.value.copy(query = "older")
+            val newerRequest = searchRequestFlow.value.copy(query = "newer")
+            val successfulQueries = mutableListOf<String>()
+
+            withCollectionAccessOn(StandardTestDispatcher(scheduler)) {
+                launchSearchForCards(olderRequest, forceRefresh = false) { successfulQueries += "older" }
+                // Refreshing invalidates the cache while the older request is still comparing queries.
+                launchSearchForCards()
+                launchSearchForCards(newerRequest, forceRefresh = false) { successfulQueries += "newer" }
+                scheduler.runCurrent()
+                searchJob?.join()
+            }
+
+            assertEquals(newerRequest, searchRequestFlow.value)
+            assertEquals(listOf(CardOrNoteId(newerCard)), cards.toList())
+            assertEquals(listOf("newer"), successfulQueries)
+        }
+
+    @Test
     fun `a refresh alone does not discard a pending submission`() =
         runViewModelTest {
             val matchingCard = addBasicNote("cat").firstCard().id
@@ -196,6 +221,24 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             } finally {
                 ioDispatcher = previousDispatcher
             }
+        }
+
+    @Test
+    fun `overlapping rejected searches never report success`() =
+        runViewModelTest(notes = 1) {
+            searchJob?.join()
+            var successes = 0
+            val rejected = searchRequestFlow.value.copy(query = "is:now")
+            val scheduler = checkNotNull(currentCoroutineContext()[TestCoroutineScheduler])
+            withCollectionAccessOn(StandardTestDispatcher(scheduler)) {
+                repeat(2) {
+                    launchSearchForCards(rejected, forceRefresh = false) { successes++ }
+                }
+                scheduler.runCurrent()
+                searchJob?.join()
+            }
+
+            assertEquals(0, successes)
         }
 
     @Test
