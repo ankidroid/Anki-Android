@@ -39,9 +39,11 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -76,6 +78,7 @@ class CongratsPage :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.onError
+            .receiveAsFlow()
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
                 AlertDialog
@@ -191,7 +194,7 @@ class CongratsPage :
 class CongratsViewModel :
     ViewModel(),
     OnErrorListener {
-    override val onError = MutableSharedFlow<String>()
+    override val onError = Channel<String>(Channel.BUFFERED)
     val unburyState = MutableSharedFlow<UnburyState>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
 

@@ -61,9 +61,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -94,14 +94,14 @@ var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 var throwOnShowError = false
 
 interface OnErrorListener {
-    val onError: MutableSharedFlow<String>
+    val onError: Channel<String>
 }
 
 fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel, T : OnErrorListener =
     viewModelScope.launchCatching(
         ioDispatcher,
         {
-            onError.emit(it)
+            onError.send(it)
             if (throwOnShowError) throw IllegalStateException("throwOnShowError: $it")
         },
         { block() },

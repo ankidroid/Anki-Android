@@ -24,6 +24,7 @@ import com.ichi2.anki.progress.HasProgress
 import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +41,7 @@ class InstantEditorViewModel :
     ViewModel(),
     OnErrorListener,
     HasProgress<InstantEditorProgress> {
-    override val onError = MutableSharedFlow<String>()
+    override val onError = Channel<String>(Channel.BUFFERED)
 
     override val progressManager = ProgressManager<InstantEditorProgress>()
 
