@@ -158,6 +158,29 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    fun `options menu test - multiselect when deselecting row updates menu`() =
+        withOptionsMenu(
+            OptionsMenuType(
+                fragmented = false,
+                mutliselect = true,
+            ),
+            noteCount = 2,
+        ) {
+            assertEquals(2, viewModel.selectedRowCount())
+            assertEquals(false, menu.findItem(R.id.action_view_card_info)?.isVisible)
+            assertEquals(false, menu.findItem(R.id.action_edit_note)?.isVisible)
+
+            val firstSelectedId = viewModel.selectedRows.first()
+            viewModel.toggleRowSelection(firstSelectedId.toRowSelection())
+            advanceRobolectricLooper()
+
+            assertEquals(1, viewModel.selectedRowCount())
+
+            assertEquals(true, menu.findItem(R.id.action_view_card_info)?.isVisible)
+            assertEquals(true, menu.findItem(R.id.action_edit_note)?.isVisible)
+        }
+
+    @Test
     fun browserStartsWhenSnapshotDirectoryIsUnavailable() {
         ensureCollectionLoadIsSynchronous()
         addBasicNote("front", "back")
