@@ -124,8 +124,63 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import com.ichi2.testutils.withViewModel as withOwnedViewModel
 
 class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
+    @Test
+    fun `initial deck loading preserves a submitted search success callback`() =
+        runTest {
+            val matchingCard = addBasicNote("dog").firstCard().id
+            val scheduler = checkNotNull(currentCoroutineContext()[TestCoroutineScheduler])
+            withCollectionAccessOn(StandardTestDispatcher(scheduler)) {
+                val viewModel =
+                    CardBrowserViewModel(
+                        lastDeckIdRepository = createLastDeckIdRepository(),
+                        idsFileDirectory = createTransientDirectory(),
+                        options = null,
+                        initialDeckId = null,
+                        preferences = AnkiDroidApp.sharedPreferencesProvider,
+                        isFragmented = false,
+                        savedStateHandle = SavedStateHandle(),
+                    )
+                withOwnedViewModel(viewModel) {
+                    assertEquals(false, initCompleted)
+                    var successes = 0
+                    launchSearchForCards(searchRequestFlow.value.copy(query = "dog"), forceRefresh = false) { successes++ }.join()
+                    assertEquals("dog", searchRequestFlow.value.query)
+                    assertEquals(0, successes)
+
+                    scheduler.runCurrent()
+                    searchJob?.join()
+
+                    assertTrue(initCompleted)
+                    assertThat(searchRequestFlow.value.filters.decks, not(empty()))
+                    assertEquals(listOf(CardOrNoteId(matchingCard)), cards.toList())
+                    assertEquals(1, successes)
+
+                    launchSearchForCards()
+                    searchJob?.join()
+                    assertEquals(1, successes)
+                }
+            }
+        }
+
+    @Test
+    fun `a replacement search during startup discards the pending success callback`() =
+        runViewModelTest(initMode = InitMode.MANUAL) {
+            addBasicNote("cat")
+            val matchingCard = addBasicNote("dog").firstCard().id
+            var successes = 0
+            launchSearchForCards(searchRequestFlow.value.copy(query = "cat"), forceRefresh = false) { successes++ }.join()
+            setQuery("dog").join()
+
+            manualInit()
+            searchJob?.join()
+
+            assertEquals(listOf(CardOrNoteId(matchingCard)), cards.toList())
+            assertEquals(0, successes)
+        }
+
     @Test
     fun `a pending search cannot replace a newer submission after a refresh - Issue 23301`() =
         runViewModelTest {
