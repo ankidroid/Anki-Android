@@ -28,11 +28,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
+import anki.collection.OpChanges
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.copy
 import anki.scheduler.customStudyRequest
 import anki.search.SearchNode
+import anki.search.SearchNodeKt.rated
 import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -59,6 +61,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.RESULT_SELECTED_
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.SearchJoiner
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireActivity
 import com.ichi2.anki.snackbar.showSnackbar
@@ -112,7 +116,9 @@ import timber.log.Timber
  *
  * @see TagLimitFragment
  */
-class CustomStudyDialog : AnalyticsDialogFragment() {
+class CustomStudyDialog :
+    AnalyticsDialogFragment(),
+    ChangeManager.Subscriber {
     @VisibleForTesting(otherwise = PRIVATE)
     lateinit var binding: FragmentCustomStudyBinding
 
@@ -129,7 +135,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     private val userInputValue: Int?
         get() = binding.detailsEditText2.textAsIntOrNull()
 
-    /** The search for cards to review ahead. Cancelled when the input changes, so only the latest input counts */
+    /** The search for eligible cards. Cancelled when the input changes, so only the latest input counts */
     private var searchJob: Job? = null
 
     /** Whether a menu availability check or transition is already in progress. */
@@ -141,6 +147,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val option = selectedSubDialog ?: return
+        if (option == STUDY_FORGOT) ChangeManager.subscribe(this)
         parentFragmentManager.setFragmentResultListener(REQUEST_SELECT_TAGS, this) { _, bundle ->
             val tagsToInclude = bundle.getStringArrayList(RESULT_SELECTED_TAGS) ?: emptyList<String>()
             val selectedCardStateIndex = viewModel.selectedCardStateIndex
@@ -148,6 +155,19 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             val kind = viewModel.selectedKind
             val cardsAmount = userInputValue ?: 100 // the default value
             launchCustomStudy(option, cardsAmount, kind, tagsToInclude, emptyList())
+        }
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        if (!changes.studyQueues) return
+        // Day rollover can notify subscribers from a background thread.
+        lifecycleScope.launch {
+            val dialog = dialog as? AlertDialog ?: return@launch
+            // The initial validation runs in the show listener once the button exists.
+            if (dialog.getButton(AlertDialog.BUTTON_POSITIVE) != null) validateInput(dialog, STUDY_FORGOT)
         }
     }
 
@@ -577,7 +597,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             findCards(buildSearchString(search)).isNotEmpty()
         }
 
-    /** Enables 'Create' only if some cards would be reviewed ahead/previewed by [days] */
+    /** Enables 'Create' only if some cards can be studied within [days] */
     private suspend fun updateCreateButtonState(
         dialog: AlertDialog,
         days: Int?,
@@ -587,7 +607,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         if (days == null || days !in range) {
             binding.detailsEditText2Layout.error =
                 when {
-                    rawText.isEmpty() -> null
+                    rawText.isEmpty() || rawText == "-" -> null
                     days == null || days > range.last -> getString(CommonString.maximum_value_is, range.last)
                     days < range.first -> getString(CommonString.minimum_value_is, range.first)
                     else -> null
@@ -597,12 +617,49 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
         val hasCards =
             when (selectedSubDialog) {
+                STUDY_FORGOT -> hasForgottenCards(days)
                 STUDY_PREVIEW -> hasPreviewCards(days)
                 else -> hasCardsDueWithin(days)
             }
         binding.detailsEditText2Layout.error = if (hasCards) null else TR.customStudyNoCardsMatchedTheCriteriaYou()
         dialog.positiveButton.isEnabled = hasCards
     }
+
+    /**
+     * Whether forgotten cards can be included when creating or rebuilding the custom study session.
+     *
+     * Mirrors Anki's [forgotten-card search](https://github.com/ankitects/anki/blob/c06370ff4d87cb48d825f90cc83e02b9a4e84ecd/rslib/src/scheduler/filtered/custom_study.rs#L218-L226)
+     * and [filtered-deck exclusions](https://github.com/ankitects/anki/blob/c06370ff4d87cb48d825f90cc83e02b9a4e84ecd/rslib/src/scheduler/filtered/mod.rs#L114-L129).
+     * Cards in the reusable session are eligible because
+     * [rebuilding returns them to their home decks first](https://github.com/ankitects/anki/blob/c06370ff4d87cb48d825f90cc83e02b9a4e84ecd/rslib/src/scheduler/filtered/mod.rs#L188-L203).
+     */
+    private suspend fun hasForgottenCards(days: Int): Boolean =
+        withCol {
+            val customStudyDeck =
+                decks
+                    .byName(TR.customStudyCustomStudySession())
+                    ?.takeIf { it.isFiltered }
+            val availableDecks =
+                buildList {
+                    add(searchNode { negated = searchNode { deck = "filtered" } })
+                    customStudyDeck?.let { session -> add(searchNode { deck = session.name }) }
+                }
+            val search =
+                listOf(
+                    searchNode { deck = decks.name(viewModel.deckId) },
+                    searchNode {
+                        rated =
+                            rated {
+                                this.days = days
+                                rating = SearchNode.Rating.RATING_AGAIN
+                            }
+                    },
+                    searchNode { negated = CardState.Suspended.toSearchNode() },
+                    searchNode { negated = CardState.Buried.toSearchNode() },
+                    groupSearches(availableDecks, SearchJoiner.OR),
+                )
+            findCards(buildSearchString(search)).isNotEmpty()
+        }
 
     /** Whether the deck has cards due in the next [days] days, as 'review ahead' would select them */
     private suspend fun hasCardsDueWithin(days: Int): Boolean =
@@ -778,7 +835,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         ),
 
         /** Review forgotten cards */
-        STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }, validRange = 1..FORGOT_MAX_DAYS),
+        STUDY_FORGOT(
+            { TR.customStudyReviewForgottenCards() },
+            validRange = 1..FORGOT_MAX_DAYS,
+            requiresMatchingCards = true,
+        ),
 
         /** Review ahead */
         STUDY_AHEAD(
