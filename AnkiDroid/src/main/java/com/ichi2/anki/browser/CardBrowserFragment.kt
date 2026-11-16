@@ -543,9 +543,9 @@ class CardBrowserFragment :
         fun updateScrollability() {
             if (!list.isLaidOut) return
             val lastRow = layoutManager.findViewByPosition(cardsAdapter.itemCount - 1)
-            // The list is measured for the collapsed app bar. Subtract the space occupied by
-            // the expanded controls, even when they currently extend the list below the screen.
-            val expandedHeight = list.height - appBar.totalScrollRange
+            // The viewport now tracks the visible controls. Remove only the space gained by
+            // collapsing them when comparing against the fully expanded toolbar.
+            val expandedHeight = list.height + appBar.top
             val fitsExpanded =
                 when {
                     cardsAdapter.itemCount == 0 -> true
@@ -609,6 +609,11 @@ class CardBrowserFragment :
             } else {
                 null
             }
+        appBar?.addOnOffsetChangedListener { bar, offset ->
+            // ScrollingViewBehavior measures for a collapsed app bar. Reserve the portion below
+            // the viewport while it is expanded, including when a scrollbar jump leaves it open.
+            browserContent?.updatePadding(bottom = bar.totalScrollRange + offset)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
             statusBarScrim?.setBounds(0, 0, v.width, insets.getInsets(statusBars()).top)

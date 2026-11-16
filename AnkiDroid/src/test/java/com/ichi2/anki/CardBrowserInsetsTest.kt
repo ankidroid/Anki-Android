@@ -2,10 +2,14 @@
 
 package com.ichi2.anki
 
+import android.os.SystemClock
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.MeasureSpec
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.material.appbar.AppBarLayout
+import com.ichi2.anki.browser.withCardBrowserFragment
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.dispatchInsets
@@ -29,6 +33,48 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class CardBrowserInsetsTest : RobolectricTest() {
+    @Test
+    fun `scrollbar drag clears the navigation bar with the search toolbar expanded or collapsed`() {
+        repeat(200) { addBasicNote("Card $it", "Answer $it") }
+        withCardBrowserFragment(useSearchView = true) {
+            val browser = requireActivity() as CardBrowser
+            browser.waitForSearchResults()
+            val navBarBottom = 48.dp.toPx(targetContext)
+            val root = browser.findViewById<View>(R.id.root_layout)
+            val appBar = browser.findViewById<AppBarLayout>(R.id.browser_app_bar)
+            for (expanded in listOf(true, false, true)) {
+                appBar.setExpanded(expanded, false)
+                advanceRobolectricLooper()
+                browser.dispatchInsets(navBarBottom = 48.dp)
+                browser.layoutForTest()
+
+                val safeBottom = root.topOnScreen + root.height - navBarBottom
+                val scroller = browser.fastScroller
+                val fingerBottom = (safeBottom - scroller.topOnScreen).toFloat()
+                val downTime = SystemClock.uptimeMillis()
+                val touches =
+                    listOf(
+                        MotionEvent.ACTION_DOWN to (scroller.handle.top + scroller.handle.height / 2f),
+                        MotionEvent.ACTION_MOVE to fingerBottom,
+                        MotionEvent.ACTION_UP to fingerBottom,
+                    )
+                for ((action, y) in touches) {
+                    val event = MotionEvent.obtain(downTime, SystemClock.uptimeMillis(), action, scroller.width / 2f, y, 0)
+                    scroller.dispatchTouchEvent(event)
+                    event.recycle()
+                    browser.layoutForTest()
+                }
+
+                val list = browser.cardList
+                val lastRowBottom = list.topOnScreen + list.layoutManager!!.getDecoratedBottom(list.lastItemView)
+                val handleBottom = scroller.topOnScreen + scroller.handle.bottom
+                assertThat("drag reaches the end with expanded=$expanded", list.canScrollVertically(1), equalTo(false))
+                assertThat("the last row clears the navigation bar with expanded=$expanded", lastRowBottom, equalTo(safeBottom))
+                assertThat("the handle clears the navigation bar with expanded=$expanded", handleBottom, equalTo(safeBottom))
+            }
+        }
+    }
+
     @Test
     fun `track is full-height but the handle is inset to the last card's resting line`() =
         withCardBrowser(noteCount = 1) { browser ->
@@ -228,6 +274,9 @@ class CardBrowserInsetsTest : RobolectricTest() {
     /** The gap, in pixels, between the bottom of this view and the bottom of its parent. */
     private val View.distanceToParentBottom: Int
         get() = (parent as View).height - bottom
+
+    private val View.topOnScreen: Int
+        get() = IntArray(2).also(::getLocationOnScreen)[1]
 
     /**
      * The gap, in pixels, between the parent's bottom and where the last list item comes to rest.
