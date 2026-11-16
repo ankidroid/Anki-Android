@@ -747,6 +747,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":common:android"))
     implementation(project(":compat"))
+    implementation(project(":feature:browse"))
     implementation(project(":libanki"))
     implementation(project(":note-editor"))
     implementation(project(":vbpd"))

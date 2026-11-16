@@ -35,6 +35,7 @@ include(
     ":common",
     ":common:android",
     ":compat",
+    ":feature:browse",
     ":libanki",
     ":lint-rules",
     ":note-editor",
