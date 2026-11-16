@@ -48,6 +48,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.CardBrowserViewModelTestBase.InitMode
 import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.CardState
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.ifNotZero
@@ -81,6 +82,7 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
+import com.ichi2.testutils.withQueuedCollectionAccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -92,6 +94,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -2057,6 +2060,37 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
 
                 expectMostRecentItem()
             }
+        }
+
+    @Test
+    fun `returning to the current text supersedes a queued text search`() =
+        runTest {
+            val browser = viewModel()
+            val current = browser.searchRequestFlow.value
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            withQueuedCollectionAccess {
+                browser.launchSearchForCards(current.copy(query = "cat"), forceRefresh = false)
+                browser.launchSearchForCards(current, forceRefresh = false)
+                advanceUntilIdle()
+            }
+            assertEquals(current, browser.searchRequestFlow.value)
+        }
+
+    @Test
+    fun `unticking a card state supersedes the queued tick`() =
+        runTest {
+            val browser = viewModel()
+            val current = browser.searchRequestFlow.value
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            withQueuedCollectionAccess {
+                browser.launchSearchForCards(
+                    current.copyFilters { it.copy(cardStates = listOf(CardState.entries.first())) },
+                    forceRefresh = false,
+                )
+                browser.launchSearchForCards(current, forceRefresh = false)
+                advanceUntilIdle()
+            }
+            assertEquals(current, browser.searchRequestFlow.value)
         }
 
     @Test
