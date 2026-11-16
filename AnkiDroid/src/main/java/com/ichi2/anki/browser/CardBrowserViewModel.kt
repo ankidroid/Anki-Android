@@ -449,8 +449,11 @@ class CardBrowserViewModel(
                 is SelectableDeck.Deck -> listOf(deck.toDeckNameId())
             }
 
-        val updatedFilter = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
-        launchSearchForCards(updatedFilter, forceRefresh = false, feedbackMode = feedbackMode)
+        val currentSearch = searchRequestFlow.value
+        val updatedFilter = currentSearch.copyFilters { it.copy(decks = deckFilter) }
+        // Applying the initial deck still completes the search submitted during startup.
+        val onSuccess = pendingSearchSuccess?.takeIf { !initCompleted && it.request == currentSearch }?.callback
+        launchSearchForCards(updatedFilter, forceRefresh = false, feedbackMode = feedbackMode, onSuccess = onSuccess)
     }
 
     val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
@@ -1538,13 +1541,13 @@ class CardBrowserViewModel(
         feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
         onSuccess: (() -> Unit)? = null,
     ) {
-        if (!initCompleted) return
         val searchRequest = searchRequestFlow.value
         // A refresh restarts the work, but still completes the same submitted query.
         val pendingSuccess =
             onSuccess?.let { PendingSearchSuccess(searchRequest, it) }
                 ?: pendingSearchSuccess?.takeIf { it.request == searchRequest }
         pendingSearchSuccess = pendingSuccess
+        if (!initCompleted) return
 
         viewModelScope.launch {
             searchJob?.cancel()
