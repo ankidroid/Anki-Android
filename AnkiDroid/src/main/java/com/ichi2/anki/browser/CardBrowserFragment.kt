@@ -1192,6 +1192,14 @@ class CardBrowserFragment :
             searchView?.editText?.replaceText(text)
         }
 
+        suspend fun onSearchBarQueryChanged(search: SearchRequest) {
+            val text = search.toUserSpannable()
+            // Collection access can suspend while the draft or active request changes.
+            if (searchViewModel.isScreenOpenFlow.value) return
+            if (activityViewModel.searchRequestFlow.value != search) return
+            searchBar?.setText(text)
+        }
+
         fun onCanSaveChanged(canSave: Boolean) {
             // while using the Material 2 SearchView, invalidating the menu causes a keyboard
             // flicker, so update the state directly.
@@ -1207,11 +1215,17 @@ class CardBrowserFragment :
             // Queued search updates can arrive after finish(), before the lifecycle stops.
             if (activity?.isFinishing == true) return
 
-            // WARN: This changes the text when the SearchView is open
-            launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
-
             Timber.i("relaying submitted search to activity")
-            activityViewModel.launchSearchForCards(value, forceRefresh = false, feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
+            // Consume this submission so lifecycle restarts do not replay the search.
+            searchViewModel.submittedSearchFlow.tryEmit(null)
+            activityViewModel.launchSearchForCards(
+                value,
+                forceRefresh = false,
+                feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS,
+                onSuccess = {
+                    searchViewModel.onSearchSucceeded(value)
+                },
+            )
         }
 
         fun onUserMessage(message: UserMessage) =
@@ -1241,11 +1255,6 @@ class CardBrowserFragment :
         fun onSearchRequestUpdated(search: SearchRequest) {
             Timber.d("syncing searchview state from chip updates")
             val filters = search.filters
-
-            // Handle default search text
-            if (search.query.isNotEmpty() && searchBar?.text.isNullOrEmpty()) {
-                launchCatchingTask { searchBar?.setText(search.toUserSpannable()) }
-            }
 
             legacyDeckName?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             decksChip?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
@@ -1351,6 +1360,9 @@ class CardBrowserFragment :
         searchViewModel.submittedSearchFlow.filterNotNull().collectInLifecycle(::onSearchSubmitted)
         searchViewModel.userMessageFlow.filterNotNull().collectInLifecycle(::onUserMessage)
         activityViewModel.searchRequestFlow.collectInLifecycle(::onSearchRequestUpdated)
+        if (useSearchView) {
+            searchViewModel.searchBarQueryFlow(activityViewModel.searchRequestFlow).collectInLifecycle(::onSearchBarQueryChanged)
+        }
         activityViewModel.flowOfChangeNoteType.collectInLifecycle(::onChangeNoteType)
         activityViewModel.flowOfSaveSearchNamePrompt.collectInLifecycle(::onSaveSearchNamePrompt)
         activityViewModel.flowOfSortTypeChanged.collectInLifecycle(::onSortTypeChanged)

@@ -15,6 +15,7 @@ import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ViewModelSavedStateHandle
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -90,6 +91,12 @@ class CardBrowserSearchViewModel(
     val userMessageFlow = MutableSharedFlow<UserMessage?>()
 
     val isScreenOpenFlow = MutableStateFlow(false)
+
+    /** Emits the current browser search while the search screen is closed. */
+    fun searchBarQueryFlow(searchRequests: Flow<SearchRequest>): Flow<SearchRequest> =
+        searchRequests
+            .combine(isScreenOpenFlow) { search, isOpen -> search.takeUnless { isOpen } }
+            .filterNotNull()
 
     private val filterStateUpdateFlow = MutableStateFlow<FilterUpdate>(FilterUpdate.System(SearchFilters.EMPTY))
     val filtersFlow =
@@ -226,10 +233,15 @@ class CardBrowserSearchViewModel(
     fun submitCurrentSearch(searchToSubmit: SearchRequest) =
         viewModelScope.launch {
             Timber.i("submitting search")
-            val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
-            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
+        }
+
+    /** Records history only after the backend accepts the search. */
+    fun onSearchSucceeded(search: SearchRequest) =
+        viewModelScope.launch {
+            val updatedEntries = searchHistoryManager.addRecent(search.toHistoryEntry())
+            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
         }
 
     fun submitCurrentSearch() {
@@ -312,7 +324,6 @@ class CardBrowserSearchViewModel(
         viewModelScope.launch {
             Timber.d("syncing search state")
             filterStateUpdateFlow.emit(FilterUpdate.System(search.filters))
-            submittedSearchFlow.emit(search)
         }
 
     enum class UserMessage {

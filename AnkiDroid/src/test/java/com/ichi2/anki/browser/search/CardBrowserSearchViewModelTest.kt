@@ -14,6 +14,7 @@ import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.withViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.hamcrest.MatcherAssert.assertThat
@@ -79,10 +80,10 @@ class CardBrowserSearchViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `search updated after submit`() =
+    fun `successful search is added to history`() =
         withViewModel {
             searchHistoryListFlow.test {
-                submitSearch("Hello")
+                onSearchSucceeded(SearchRequest("Hello")).join()
 
                 val mostRecentItem = expectMostRecentItem()
                 assertThat(mostRecentItem, not(empty()))
@@ -98,6 +99,63 @@ class CardBrowserSearchViewModelTest : JvmTest() {
                 expectNoEvents()
                 submitSearch("Hello")
                 expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `submission does not record history before success - Issue 23301`() =
+        withViewModel {
+            isScreenOpenFlow.value = true
+            onSearchTextChanged("is:now")
+            submitCurrentSearch()
+
+            assertEquals(emptyList(), SearchHistory().entries)
+        }
+
+    @Test
+    fun `syncing browser filters does not submit another search`() =
+        withViewModel {
+            submittedSearchFlow.test {
+                syncState(SearchRequest("cat", SearchFilters.EMPTY.copy(flags = listOf(Flag.BLUE)))).join()
+
+                assertEquals(listOf(Flag.BLUE), filtersFlow.value.flags)
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `search bar follows active requests only while the search screen is closed`() =
+        runTest {
+            withViewModel(CardBrowserSearchViewModel(SavedStateHandle())) {
+                val initialSearch = SearchRequest("cat")
+                val searchRequests = MutableStateFlow(initialSearch)
+                isScreenOpenFlow.value = true
+
+                searchBarQueryFlow(searchRequests).test {
+                    testScheduler.runCurrent()
+                    expectNoEvents()
+
+                    isScreenOpenFlow.value = false
+                    assertEquals(initialSearch, awaitItem())
+
+                    val nextSearch = SearchRequest("dog")
+                    searchRequests.value = nextSearch
+                    assertEquals(nextSearch, awaitItem())
+
+                    isScreenOpenFlow.value = true
+                    testScheduler.runCurrent()
+                    searchRequests.value = SearchRequest("earlier")
+                    testScheduler.runCurrent()
+                    expectNoEvents()
+
+                    val latestSearch = SearchRequest("latest", SearchFilters.EMPTY.copy(flags = listOf(Flag.BLUE)))
+                    searchRequests.value = latestSearch
+                    testScheduler.runCurrent()
+                    expectNoEvents()
+
+                    isScreenOpenFlow.value = false
+                    assertEquals(latestSearch, awaitItem())
+                }
             }
         }
 
@@ -204,10 +262,11 @@ class CardBrowserSearchViewModelTest : JvmTest() {
 
     // there's no point in having this in the history as a user can trivially clear the search box.
     @Test
-    fun `a submitted empty string does not appear in the history`() =
+    fun `a successful empty search does not appear in the history`() =
         withViewModel {
             submittedSearchFlow.test {
                 submitSearch("")
+                onSearchSucceeded(SearchRequest("")).join()
                 assertThat(searchHistory, empty())
                 // matches Anki Desktop
                 assertThat(expectMostRecentItem()?.toSearchString(), equalTo("deck:*"))
@@ -215,18 +274,18 @@ class CardBrowserSearchViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `search history - submitted searches are trimmed and deduplicated`() =
+    fun `search history - successful searches are trimmed and deduplicated`() =
         withViewModel {
             // Loading and loaded states may contain the same history entries.
             searchHistoryListFlow.distinctUntilChanged().test {
-                submitSearch("aa")
+                onSearchSucceeded(SearchRequest("aa")).join()
                 assertThat(expectMostRecentItem(), hasSize(1))
 
-                submitSearch(" aa ")
+                onSearchSucceeded(SearchRequest(" aa ")).join()
                 expectNoEvents()
 
                 // confirm a new event would have appeared
-                submitSearch(" bb ")
+                onSearchSucceeded(SearchRequest(" bb ")).join()
                 expectMostRecentItem()
             }
         }
@@ -328,6 +387,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
                 assertEquals(0, expectMostRecentItem().size)
 
                 submitSavedSearch(savedSearches.single())
+                onSearchSucceeded(SearchRequest("sample query")).join()
                 val history = expectMostRecentItem().single()
                 assertEquals("sample query", history.query)
             }
@@ -395,6 +455,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
                 assertEquals(SearchRequest("bonjour flag:1"), expectMostRecentItem())
             }
             assertEquals(SearchFilters.EMPTY, filtersFlow.value)
+            onSearchSucceeded(SearchRequest("bonjour flag:1")).join()
             assertEquals(listOf(SearchHistoryEntry("bonjour flag:1")), searchHistory)
         }
 
@@ -462,7 +523,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
     fun `search history - displayed list is truncated when collapsed`() =
         withViewModel {
             repeat(MAX_SEARCH_HISTORY_ENTRIES + 3) { i ->
-                submitSearch("search $i")
+                onSearchSucceeded(SearchRequest("search $i")).join()
             }
             displayedSearchHistoryFlow.test {
                 val items = expectMostRecentItem()
@@ -475,7 +536,7 @@ class CardBrowserSearchViewModelTest : JvmTest() {
         withViewModel {
             val totalItems = MAX_SEARCH_HISTORY_ENTRIES + 3
             repeat(totalItems) { i ->
-                submitSearch("search $i")
+                onSearchSucceeded(SearchRequest("search $i")).join()
             }
             toggleHistoryExpanded()
             displayedSearchHistoryFlow.test {
@@ -492,13 +553,13 @@ class CardBrowserSearchViewModelTest : JvmTest() {
             }
 
             repeat(MAX_SEARCH_HISTORY_ENTRIES) { i ->
-                submitSearch("search $i")
+                onSearchSucceeded(SearchRequest("search $i")).join()
             }
             showHistoryToggleFlow.test {
                 assertThat(expectMostRecentItem(), equalTo(false))
             }
 
-            submitSearch("one more search")
+            onSearchSucceeded(SearchRequest("one more search")).join()
             showHistoryToggleFlow.test {
                 assertThat(expectMostRecentItem(), equalTo(true))
             }
