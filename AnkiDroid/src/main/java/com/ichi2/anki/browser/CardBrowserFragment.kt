@@ -1170,6 +1170,7 @@ class CardBrowserFragment :
         fun onSelectedRowsChanged(rows: Set<Any>) {
             legacyToolbarTitle?.text = rows.size.toString()
             cardsAdapter.notifyDataSetChanged()
+            if (isHostedInBottomNavigation()) invalidateMenu()
         }
 
         fun onPaneRowChanged(newPaneRow: CardOrNoteId?) {
