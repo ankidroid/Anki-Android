@@ -409,7 +409,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 gravity = Gravity.CENTER
             }
-            if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
+            if (contextMenuOption.showsDaySuffix) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
                 filters += arrayOf(InputFilter.LengthFilter(5), NonLeadingZeroInputFilter)
                 setSuffixText(userInputValue ?: defaultValue.toInt())
@@ -529,8 +529,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val value = userInputValue
         val range = contextMenuOption.validRange
 
-        if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
-            value?.let { setSuffixText(it) }
+        if (contextMenuOption.showsDaySuffix) value?.let { setSuffixText(it) }
+        if (contextMenuOption.requiresMatchingCards) {
             searchJob?.cancel()
             searchJob = launchCatchingTask { updateCreateButtonState(dialog, value) }
             return
@@ -752,12 +752,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      * Context menu options shown in the custom study dialog.
      *
      * @param checkAvailability Whether the menu option is available
+     * @param showsDaySuffix Whether the input displays a singular or plural day suffix
+     * @param requiresMatchingCards Whether valid input also requires matching cards before submission
      */
     @VisibleForTesting(otherwise = PRIVATE)
     enum class ContextMenuOption(
         val getTitle: Resources.() -> String,
         val validRange: IntRange,
         val checkAvailability: ((CustomStudyDefaults) -> Boolean)? = null,
+        val showsDaySuffix: Boolean = false,
+        val requiresMatchingCards: Boolean = false,
     ) {
         /** Increase today's new card limit */
         EXTEND_NEW(
@@ -777,10 +781,20 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }, validRange = 1..FORGOT_MAX_DAYS),
 
         /** Review ahead */
-        STUDY_AHEAD({ TR.customStudyReviewAhead() }, validRange = 1..Consts.DYN_MAX_SIZE),
+        STUDY_AHEAD(
+            { TR.customStudyReviewAhead() },
+            validRange = 1..Consts.DYN_MAX_SIZE,
+            showsDaySuffix = true,
+            requiresMatchingCards = true,
+        ),
 
         /** Preview new cards */
-        STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }, validRange = 1..Consts.DYN_MAX_SIZE),
+        STUDY_PREVIEW(
+            { TR.customStudyPreviewNewCards() },
+            validRange = 1..Consts.DYN_MAX_SIZE,
+            showsDaySuffix = true,
+            requiresMatchingCards = true,
+        ),
 
         /** Limit to particular tags */
         STUDY_TAGS({ TR.customStudyStudyByCardStateOrTag() }, validRange = 1..Consts.DYN_MAX_SIZE),
