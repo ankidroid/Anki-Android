@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.withStarted
 import com.ichi2.anki.snackbar.doOnDismissed
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.MessageQueue.Message
 import com.ichi2.anki.utils.MessageQueue.MessageId
+import com.ichi2.anki.utils.ext.awaitStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -36,7 +36,7 @@ fun <T> Fragment.observeMessages(
         owner.repeatOnLifecycle(Lifecycle.State.CREATED) {
             messages.map { it.firstOrNull() }.distinctUntilChanged().collectLatest { pending ->
                 if (pending == null) return@collectLatest
-                owner.withStarted {}
+                owner.awaitStarted()
                 show(pending.message)
                 acknowledge(pending.id)
             }
