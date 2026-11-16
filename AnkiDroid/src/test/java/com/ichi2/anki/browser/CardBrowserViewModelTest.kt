@@ -55,6 +55,7 @@ import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.common.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -82,6 +83,7 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
+import com.ichi2.testutils.withCollectionAccessOn
 import com.ichi2.testutils.withQueuedCollectionAccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -124,6 +126,78 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
+    @Test
+    fun `a refresh alone does not discard a pending submission`() =
+        runViewModelTest {
+            val matchingCard = addBasicNote("cat").firstCard().id
+            searchJob?.join()
+            val scheduler = checkNotNull(currentCoroutineContext()[TestCoroutineScheduler])
+            val request = searchRequestFlow.value.copy(query = "cat")
+            var successes = 0
+
+            withCollectionAccessOn(StandardTestDispatcher(scheduler)) {
+                launchSearchForCards(request, forceRefresh = false) { successes++ }
+                launchSearchForCards()
+                scheduler.runCurrent()
+                searchJob?.join()
+            }
+
+            assertEquals(request, searchRequestFlow.value)
+            assertEquals(listOf(CardOrNoteId(matchingCard)), cards.toList())
+            assertEquals(1, successes)
+        }
+
+    @Test
+    fun `refreshes of a pending search report success only once`() =
+        runViewModelTest {
+            val matchingCard = addBasicNote("cat").firstCard().id
+            searchJob?.join()
+            val scheduler = checkNotNull(currentCoroutineContext()[TestCoroutineScheduler])
+            val previousDispatcher = ioDispatcher
+            var successes = 0
+            try {
+                ioDispatcher = StandardTestDispatcher(scheduler)
+                launchSearchForCards(searchRequestFlow.value.copy(query = "cat"), forceRefresh = false) { successes++ }.join()
+                val submittedSearch = assertNotNull(searchJob)
+                repeat(2) { launchSearchForCards() }
+                searchJob?.join()
+
+                assertTrue(submittedSearch.isCancelled)
+                assertEquals(1, successes)
+                assertEquals(listOf(CardOrNoteId(matchingCard)), cards.toList())
+
+                launchSearchForCards()
+                searchJob?.join()
+                assertEquals(1, successes)
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
+        }
+
+    @Test
+    fun `refreshing a replacement query does not report success for the canceled submission`() =
+        runViewModelTest {
+            addBasicNote("cat")
+            val matchingCard = addBasicNote("dog").firstCard().id
+            searchJob?.join()
+            val scheduler = checkNotNull(currentCoroutineContext()[TestCoroutineScheduler])
+            val previousDispatcher = ioDispatcher
+            var successes = 0
+            try {
+                ioDispatcher = StandardTestDispatcher(scheduler)
+                launchSearchForCards(searchRequestFlow.value.copy(query = "cat"), forceRefresh = false) { successes++ }.join()
+                setQuery("dog").join()
+                launchSearchForCards()
+                searchJob?.join()
+
+                assertEquals(0, successes)
+                assertEquals("dog", searchRequestFlow.value.query)
+                assertEquals(listOf(CardOrNoteId(matchingCard)), cards.toList())
+            } finally {
+                ioDispatcher = previousDispatcher
+            }
+        }
+
     @Test
     fun `delete search history - Issue 14989`() =
         runViewModelTest {
