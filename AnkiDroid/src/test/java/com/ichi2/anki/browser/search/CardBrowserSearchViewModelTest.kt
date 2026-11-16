@@ -14,6 +14,7 @@ import com.ichi2.testutils.JvmPreferencesRule
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.withViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.hamcrest.MatcherAssert.assertThat
@@ -98,6 +99,68 @@ class CardBrowserSearchViewModelTest : JvmTest() {
                 expectNoEvents()
                 submitSearch("Hello")
                 expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `syncing browser filters does not submit another search`() =
+        withViewModel {
+            submittedSearchFlow.test {
+                syncState(SearchRequest("cat", SearchFilters.EMPTY.copy(flags = listOf(Flag.BLUE))))
+
+                assertEquals(listOf(Flag.BLUE), filtersFlow.value.flags)
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `applying a browser chip uses the active query after restoring an earlier draft`() =
+        withViewModel {
+            val activeSearch = SearchRequest("is:suspended")
+            syncState(activeSearch)
+            submittedSearchFlow.test {
+                onSearchTextChanged("cat")
+                expectNoEvents()
+
+                setFlagsFilter(listOf(Flag.BLUE))
+
+                assertEquals(activeSearch.copyFilters { it.copy(flags = listOf(Flag.BLUE)) }, awaitItem())
+            }
+        }
+
+    @Test
+    fun `search bar follows active requests only while the search screen is closed`() =
+        runTest {
+            withViewModel(CardBrowserSearchViewModel(SavedStateHandle())) {
+                val initialSearch = SearchRequest("cat")
+                val searchRequests = MutableStateFlow(initialSearch)
+                isScreenOpenFlow.value = true
+
+                searchBarQueryFlow(searchRequests).test {
+                    testScheduler.runCurrent()
+                    expectNoEvents()
+
+                    isScreenOpenFlow.value = false
+                    assertEquals(initialSearch, awaitItem())
+
+                    val nextSearch = SearchRequest("dog")
+                    searchRequests.value = nextSearch
+                    assertEquals(nextSearch, awaitItem())
+
+                    isScreenOpenFlow.value = true
+                    testScheduler.runCurrent()
+                    searchRequests.value = SearchRequest("earlier")
+                    testScheduler.runCurrent()
+                    expectNoEvents()
+
+                    val latestSearch = SearchRequest("latest", SearchFilters.EMPTY.copy(flags = listOf(Flag.BLUE)))
+                    searchRequests.value = latestSearch
+                    testScheduler.runCurrent()
+                    expectNoEvents()
+
+                    isScreenOpenFlow.value = false
+                    assertEquals(latestSearch, awaitItem())
+                }
             }
         }
 
