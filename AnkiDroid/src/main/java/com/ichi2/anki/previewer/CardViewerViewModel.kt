@@ -18,6 +18,7 @@ import com.ichi2.anki.multimedia.replaceAvRefsWithPlayButtons
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.pages.PostRequestUri
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -28,7 +29,7 @@ abstract class CardViewerViewModel(
 ) : ViewModel(),
     OnErrorListener,
     PostRequestHandler {
-    override val onError = MutableSharedFlow<String>()
+    override val onError = Channel<String>(Channel.BUFFERED)
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
     val mediaErrorHandler =

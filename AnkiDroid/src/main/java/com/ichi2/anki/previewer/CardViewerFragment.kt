@@ -55,6 +55,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.stripDangerousPermissions
 import com.ichi2.utils.title
 import com.ichi2.utils.usesDangerousScheme
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -219,7 +220,7 @@ abstract class CardViewerFragment(
     }
 
     private fun setupErrorListeners() {
-        viewModel.onError.collectInViewLifecycle { errorMessage ->
+        viewModel.onError.receiveAsFlow().collectInViewLifecycle { errorMessage ->
             AlertDialog
                 .Builder(requireContext())
                 .setTitle(CommonString.vague_error)

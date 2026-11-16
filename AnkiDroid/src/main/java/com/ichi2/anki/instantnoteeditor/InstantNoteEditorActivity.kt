@@ -62,6 +62,7 @@ import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -483,6 +484,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
     private fun setupErrorListeners() {
         Timber.d("Setting up error listeners")
         viewModel.onError
+            .receiveAsFlow()
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
                 AlertDialog

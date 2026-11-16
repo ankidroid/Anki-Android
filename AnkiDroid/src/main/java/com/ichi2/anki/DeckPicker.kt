@@ -234,6 +234,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
@@ -1031,7 +1032,7 @@ open class DeckPicker :
         viewModel.flowOfExportDeck.collectInLifecycle(::onExportDeck)
         viewModel.flowOfCreateShortcut.collectInLifecycle(::createIcon)
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
-        viewModel.onError.collectInLifecycle(::onError)
+        viewModel.onError.receiveAsFlow().collectInLifecycle(::onError)
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.collectInLifecycle(::onStudiedTodayChanged)
