@@ -101,7 +101,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constrainedHeight="true"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/search_history_bottom">
 
             <com.ichi2.ui.FixedTextView
                 android:id="@+id/search_history_label"
@@ -115,7 +118,8 @@
             <ListView
                 android:id="@+id/search_history"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 app:layout_constraintTop_toBottomOf="@id/search_history_label"
                 tools:layout_height="200dp"
                 tools:listitem="@layout/view_search_history_item"
@@ -133,6 +137,27 @@
                 />
 
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/search_history_max_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <Space
+            android:id="@+id/search_history_min_height"
+            android:layout_width="wrap_content"
+            android:layout_height="132dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/search_history_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="search_history_max_height,search_history_min_height" />
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/saved_searches_label"
