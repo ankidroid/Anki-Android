@@ -161,7 +161,8 @@ jobs:
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 50
+          # The comparison base can be more than 50 commits behind the tested merge commit.
+          fetch-depth: ${{ (github.event_name == 'pull_request' || github.event_name == 'merge_group') && '0' || '50' }}
 
       - name: Set up Codecov
         id: codecov
@@ -193,7 +194,27 @@ jobs:
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
+      - name: Select affected modules
+        # Select modules first so changes with no unit tests can skip the Robolectric SDK download.
+        id: affected_modules
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        env:
+          ORG_GRADLE_PROJECT_ciTestBase: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          shell: bash
+          command: |
+            if [[ -z "$ORG_GRADLE_PROJECT_ciTestBase" ]]; then
+              echo 'modules=*' >> "$GITHUB_OUTPUT"
+            else
+              ./gradlew selectAffectedTestModules --daemon &&
+              cat build/ci/affected-test-modules.properties >> "$GITHUB_OUTPUT"
+            fi
+
       - name: Gradle Dependency Download
+        if: steps.affected_modules.outputs.modules != ''
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
@@ -203,9 +224,12 @@ jobs:
 
         # update workflows/README.md when modifying this step
       - name: Run Unit Tests
+        if: steps.affected_modules.outputs.modules != ''
         # A step timeout fails the job rather than cancelling it, so the Gradle cache is still saved.
         # Leave at least 10m of the job timeout for setup (≤5m) and the cache upload (≤4m)
         timeout-minutes: 65
+        env:
+          ORG_GRADLE_PROJECT_ciTestModules: ${{ steps.affected_modules.outputs.modules }}
         run: ./gradlew :AnkiDroid:jacocoCiUnitTestReports --daemon
 
 
@@ -256,7 +280,7 @@ jobs:
         run: ./gradlew --stop
 
       - name: Upload unit coverage by module
-        if: steps.codecov.outcome == 'success' && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
+        if: steps.affected_modules.outputs.modules != '' && steps.codecov.outcome == 'success' && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
         shell: bash
         env:
           CODECOV_PYTHON: ${{ steps.codecov.outputs.python-path }}

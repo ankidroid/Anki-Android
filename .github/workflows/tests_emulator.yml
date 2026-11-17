@@ -278,6 +278,7 @@ jobs:
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
+        # TODO: split instrumented tests by module, and only run tests for affected modules.
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         timeout-minutes: 30
         with:
