@@ -122,7 +122,7 @@
         <item quantity="other">Eliminar o tipo de tarxeta “%2$s” e as súas %1$d tarxetas?</item>
     </plurals>
     <string name="card_template_editor_save_error">Non se puideron gardar os cambios no modelo de tarxetas: %s</string>
-    <string name="card_template_editor_changes_saved">Changes saved</string>
+    <string name="card_template_editor_changes_saved">Gardáronse os cambios</string>
     <string name="template_for_current_card_deleted">Eliminouse o modelo de tarxeta desta tarxeta.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escribir na base de datos do AnkiDroid</string>

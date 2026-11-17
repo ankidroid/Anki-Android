@@ -59,4 +59,5 @@
     <string name="waveform_button_description">Rādīt skaņu viļņus</string>
     <string name="field_content_description">Rādīt laika saturu</string>
     <string name="delete_audio_button_description">Izdzēst ierakstu</string>
+    <string name="insert_recording" maxLength="28" comment="Button of the note editor\'s audio recorder. Adds the finished recording to the field">Insert</string>
 </resources>

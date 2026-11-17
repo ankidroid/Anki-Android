@@ -38,7 +38,7 @@
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Yoyiş</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Yiğiş</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Kolleksiya böş</string>
-    <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">+ belgisi bosib kartalar qöşişni boşlang</string>
+    <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Karta qöşiş uçun “+” tugmasini bosing</string>
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">%d daqiqa qoldi</item>
@@ -122,14 +122,14 @@
         <item quantity="other">“%2$s” karta turini va şu turdagi  %1$d ta karta öçirilsinmi?</item>
     </plurals>
     <string name="card_template_editor_save_error">Karta şablon özgarişlarini saqlab bölmadi: %s</string>
-    <string name="card_template_editor_changes_saved">Changes saved</string>
+    <string name="card_template_editor_changes_saved">Özgarişlar saqlandi</string>
     <string name="template_for_current_card_deleted">Joriy kartaning karta turi öçirilgan.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid maʼlumotlar bazasidan oʼqiş va yoziş</string>
     <string name="read_write_permission_description">mavjud qaydlarga, kartalarga, qayd turlariga va dastalarga, şuningdek, yangilarini yaratişga ruxsat</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Karta brauzeri</string>
-    <string name="context_menu_anki_card_label">Anki card</string>
+    <string name="context_menu_anki_card_label">Anki karta</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Kolleksiyalarni birlaştirib bölmadi.\n Qaysi kolleksiyani qoldirmoqçisiz?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

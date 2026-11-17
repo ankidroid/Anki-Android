@@ -352,6 +352,8 @@
     <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Tillbaka</string>
     <string name="start_recording">Spela in</string>
     <string name="stop_recording">Stoppa</string>
+    <string name="pause_recording" comment="Description of a button which pauses an audio recording">Pause</string>
+    <string name="resume_recording" comment="Description of a button which continues a paused audio recording">Resume</string>
     <string name="play_recording">Spela upp</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Nästa</string>
     <!--  AlertDialog in the deleteCardTemplate  -->

@@ -222,9 +222,9 @@
     <string name="note_editor_toolbar_layout" maxLength="28">Toolbar layout</string>
     <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
     <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
-    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
+    <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Yaşirilgan</string>
     <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Şow preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Razmni yaşiriş</string>
     <string name="format_insert_bold">Qalin qilib formatlaş</string>
     <string name="format_insert_italic">Kursiv sifatida formatlaş</string>
     <string name="format_insert_underline">Tagiga çiziq tortib formatlaş</string>
@@ -239,8 +239,8 @@
     <string name="edit_toolbar_item">Asboblar paneli elementini tahrirlaş</string>
     <string name="toolbar_item_explain_edit_or_remove">Tanlangan matndan oldin va keyin kiritiladigan HTMLʼni kiriting\n\nUni tahrirlaş yoki olib taşlaş uçun asboblar paneli elementini uzoq vaqt bosib turing.</string>
     <string name="remove_toolbar_item">Asboblar paneli elementi olib taşlansinmi?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Tugma matni talab qilinadi</string>
+    <string name="before_after_text_requirement_error">Kamida bitta HTML maydoni talab qilinadi</string>
     <string name="note_editor_image_too_large">Rasm juda katta, rasmni qölda kiriting</string>
     <string name="note_editor_video_too_large">Video juda katta, videoni qölda kiriting</string>
     <string name="note_editor_audio_too_large">Audio fayl juda katta, audio faylni qölda kiriting</string>
@@ -276,9 +276,9 @@
     <string name="download_failed">Yuklab olib bölmadi</string>
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
-    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">—</string>
+    <string name="download_speed_label">Tezlik</string>
+    <string name="download_time_left_label">Qolgan vaqt</string>
     <string name="deck_download_progress_message">Yuklab oliş jarayonida boşqa ilovalardan foydalanişingiz mumkin</string>
     <string name="check_network">Iltimos, tarmoqqa ulanganingizni tekşiring</string>
     <string name="external_storage_unavailable">Yuklab oliş töxtatildi, taşqi xotira mavjud emas</string>
@@ -313,7 +313,7 @@
     <string name="intro_ankidroid_tagline_one">Kamroq öqi</string>
     <string name="intro_ankidroid_tagline_two">Köproq eslab qol</string>
     <string name="intro_short_ankidroid_explanation">Anki karta rejalaştiruvçisi eng zaif xotiralaringizni mustahkamlab va eng kuçli xotiralaringizni saqlab qoliş orqali vaqtni tejaydi</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Boşlaş</string>
     <string name="intro_sync_from_ankiweb">AnkiWebʼdan sinxronlaş</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid hali işga tuşirilmagan. AnkiDroidʼni oçing va qayta urinib köring</string>
@@ -351,6 +351,8 @@
     <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Orqaga</string>
     <string name="start_recording">Ovoz yoziş</string>
     <string name="stop_recording">Töxtatiş</string>
+    <string name="pause_recording" comment="Description of a button which pauses an audio recording">Pause</string>
+    <string name="resume_recording" comment="Description of a button which continues a paused audio recording">Resume</string>
     <string name="play_recording">Ijro etiş</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Keyingi</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
@@ -382,10 +384,10 @@
     <string comment="Shown when retrying a running action" name="already_in_progress">Bajarilmoqda</string>
     <!-- Switch profiles screen -->
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switç profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Profilni boşqariş</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Profilni öçiriş</string>
     <!-- Profile that could not be opened -->
-    <string name="profile_load_failed_title" comment="Title of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of that profile">Couldn’t open profile “%1$s”</string>
-    <string name="profile_load_failed_message" comment="Message of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of the profile that was opened instead, %2$s is the name of the profile that could not be opened">Opened the “%1$s” profile instead. “%2$s” will be tried again next time.</string>
-    <string name="profile_load_failed_use_default" comment="Button in the dialog shown when the selected profile could not be opened. It makes AnkiDroid open the other profile from the next start. %1$s is the name of that other profile">Use “%1$s”</string>
+    <string name="profile_load_failed_title" comment="Title of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of that profile">“%1$s” profilini oçib bölmadi</string>
+    <string name="profile_load_failed_message" comment="Message of the dialog shown when the selected profile could not be opened at startup. %1$s is the name of the profile that was opened instead, %2$s is the name of the profile that could not be opened">Buning örniga “%1$s” profili oçildi. “%2$s” keyingi safar yana urinib köriladi.</string>
+    <string name="profile_load_failed_use_default" comment="Button in the dialog shown when the selected profile could not be opened. It makes AnkiDroid open the other profile from the next start. %1$s is the name of that other profile">“%1$s” işlatiş</string>
 </resources>

@@ -45,8 +45,8 @@
     <string name="repair_deck_dialog">Rostdan ham maʼlumotlar bazasini tuzatmoqçimisiz?\n\nUrinişni boşlaşdan oldin uni nusxasi “%s” ostjildiga köçiriladi.</string>
     <string name="intent_aedict_empty">“default” turkumi böş</string>
     <string name="intent_aedict_category">AnkiDroidʼga kartalar qöşiş uçun barça Bloknot turkumlarini olib taşlang yoki \"default\" deb nomlangan turkumni qöşing</string>
-    <string name="custom_study_extend_limits_title">Extend daily limits</string>
-    <string name="custom_study_increase">Increase</string>
+    <string name="custom_study_extend_limits_title">Kunlik limitni oşiriş</string>
+    <string name="custom_study_increase">Oşiriş</string>
     <string name="custom_study_forgotten">Ötgan x kun içida unutilgan kartalarni takrorlaş:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preview new cards added in the last:</string>
@@ -87,7 +87,7 @@
     <string name="check_media_warning">Juda katta media kolleksiya uçun uzoq vaqt olişi mumkin. Davom etmoqçimisiz?</string>
     <string name="check_media_message">Media fayllar tekşirilmoqda&#8230;</string>
     <string name="check_media_adding_missing_tag">Teglar qöşilmoqda</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Teglar qöşildi</string>
     <string name="delete_media_message">Media fayllar öçirilmoqda&#8230;</string>
     <string name="delete_media_result_title">Öçiriş natijasi</string>
     <plurals name="delete_media_result_message">
@@ -106,7 +106,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio yozuvga ruxsat olib bölmadi</string>
     <string name="permission_denied">Ruxsat berilmadi</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Mikrofondan foydalanişga ruxsat berilmadi. Iltimos, ilova sozlamalarida ruxsat bering.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Baribir davom ettiriş</string>
     <string name="integrity_check_insufficient_space">Maʼlumotlar bazasini tekşiriş katta hajmdagi vaqtinçalik xotiradan foydalanadi.\n\nDavom etişdan oldin qurilmangizda kamida %s böş joy bölişi tavsiya etiladi.</string>
@@ -139,7 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Tilni sozlaş</string>
     <string name="locale_selection_dialog_summary">GBoard kabi baʻzi köp tilli klaviaturalar, matnni tahrirlaganda tilni özgartirişni qöllab-quvvatlaydi\n\nAgar klaviaturangiz tilni özgartirolmasa, klaviatura işlab çiqaruvçisidan “setImeHintLocales” funksiyasini sörang.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Nomaʼlum til [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroidʼni işlatiş</string>
     <string name="help_item_ankidroid_manual">AnkiDroid qöllanmasi</string>
@@ -150,7 +150,7 @@
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Bug haqida xabar beriş</string>
     <string name="help_title_support_ankidroid" maxLength="28">AnkiDroidʼga kömaklaşiş</string>
-    <string name="help_item_support_opencollective_donate">Xayriya qiliş</string>
+    <string name="help_item_support_opencollective_donate">Donat qiliş</string>
     <string name="help_item_support_develop_ankidroid">Dasturlaş</string>
     <string name="help_item_support_rate_ankidroid">Baho beriş</string>
     <string name="help_item_support_other_ankidroid">Boşqa</string>
@@ -226,7 +226,7 @@
     <string name="change_cloze_mode">Böşliqni töldiriş rejimini özgartiriş</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Tizim WebViewʼi eskirgan. Baʼzi xususiyatlar töğri işlamaydi. Iltimos, yangilang.\n\nÖrnatilgan versiya: %1$d\nMinimal talab qilinadigan versiya: %2$d</string>
-    <string name="webview_unsupported_message">Your WebView is incompatible with AnkiDroid. Some features won’t work correctly. Please update it.</string>
+    <string name="webview_unsupported_message">WebViewʼingiz AnkiDroid bilan mos kelmaydi. Ba\'zi funksiyalar töğri işlamaydi. Iltimos, uni yangilang.</string>
     <string name="compress">Siqiş</string>
     <!-- Tts playback error dialog -->
     <string name="tts_no_engine_title">No text-to-speeç engine installed</string>
@@ -264,17 +264,17 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Karta şabloni nomi%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Qayd turi nomi%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Bundan</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Bunga</string>
     <!-- Add and rename profile dialogs -->
-    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Rename profile</string>
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
+    <string name="rename_profile" comment="Title of the dialog where the user renames a profile">Profil nomini özgartiriş</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profil nomi</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profil nomi böş bölolmaydi</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d çaracters or fewer</string>
     <!-- Switch profile dialogs -->
-    <string name="switch_profile_title" comment="Title of the dialog that confirms switching to another profile. %1$s is the profile name">Switch to “%1$s”?</string>
-    <string name="switch_profile_message" comment="Message of the dialog that confirms switching to another profile. %1$s is the app name: \'AnkiDroid\'">%1$s will restart to open this profile.</string>
-    <string name="switch_profile_confirm" comment="Button that confirms switching to another profile">Switch</string>
+    <string name="switch_profile_title" comment="Title of the dialog that confirms switching to another profile. %1$s is the profile name">“%1$s”ga ötilsinmi?</string>
+    <string name="switch_profile_message" comment="Message of the dialog that confirms switching to another profile. %1$s is the app name: \'AnkiDroid\'">Uşbu profilni oçiş uçun %1$s qayta işga tuşadi.</string>
+    <string name="switch_profile_confirm" comment="Button that confirms switching to another profile">Ötiş</string>
     <string name="switch_profile_blocked" comment="Shown when the user tries to switch profiles while a sync or backup is running. %1$s is the app name: \'AnkiDroid\'">%1$s is syncing or backing up. Try again when it finishes.</string>
     <string name="switch_profile_failed" comment="Shown when AnkiDroid could not switch to another profile. %1$s is the profile name">Couldn’t switch to “%1$s”. Try again.</string>
 </resources>
