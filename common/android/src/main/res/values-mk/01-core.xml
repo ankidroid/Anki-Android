@@ -122,6 +122,7 @@
         <item quantity="other">Избришете тип на картичка \"%2$s\" и нејзините %1$d картички?</item>
     </plurals>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читајте и пишувајте на базата на податоци на AnkiDroid</string>

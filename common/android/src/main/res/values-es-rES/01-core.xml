@@ -122,6 +122,7 @@
         <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
     </plurals>
     <string name="card_template_editor_save_error">No se pueden guardar los cambios de plantilla de tarjeta: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>

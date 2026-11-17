@@ -122,6 +122,7 @@
         <item quantity="other">ਕੀ ਕਾਰਡ ਕਿਸਮ “%2$s”, ਅਤੇ ਇਸਦੇ %1$d ਕਾਰਡਾਂ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</item>
     </plurals>
     <string name="card_template_editor_save_error">ਕਾਰਡ ਟੈਮਪਲੇਟ ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ਮੌਜੂਦਾ ਕਾਰਡ ਲਈ ਕਾਰਡ ਦੀ ਕਿਸਮ ਮਿਟਾ ਦਿੱਤੀ ਗਈ ਸੀ।</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ਡੇਟਾਬੇਸ ਨੂੰ ਪੜ੍ਹੋ ਅਤੇ ਲਿਖੋ</string>

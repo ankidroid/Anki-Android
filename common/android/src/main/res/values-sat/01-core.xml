@@ -122,6 +122,7 @@
         <item quantity="other">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
     </plurals>
     <string name="card_template_editor_save_error">ᱠᱟᱰ ᱪᱷᱚᱸᱪ ᱵᱟᱭ ᱥᱚᱝᱪᱚᱭᱚᱜ ᱠᱟᱱᱟᱺ %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>

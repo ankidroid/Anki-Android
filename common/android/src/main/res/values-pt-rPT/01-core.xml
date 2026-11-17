@@ -122,6 +122,7 @@
         <item quantity="other">Eliminar o tipo de ficha \"%2$s\", e as suas %1$d fichas?</item>
     </plurals>
     <string name="card_template_editor_save_error">Incapaz de gravar alterações ao modelo das fichas: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">O tipo de ficha da ficha atual foi eliminado.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>

@@ -122,6 +122,7 @@
         <item quantity="other">“%2$s” karta turini va şu turdagi  %1$d ta karta öçirilsinmi?</item>
     </plurals>
     <string name="card_template_editor_save_error">Karta şablon özgarişlarini saqlab bölmadi: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Joriy kartaning karta turi öçirilgan.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid maʼlumotlar bazasidan oʼqiş va yoziş</string>

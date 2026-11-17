@@ -122,6 +122,7 @@
         <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
     </plurals>
     <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">წაკითხვა და ჩაწერა AnkiDroid-ის მონაცემთა ბაზაში</string>

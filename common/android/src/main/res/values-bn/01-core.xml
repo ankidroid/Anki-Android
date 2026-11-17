@@ -122,6 +122,7 @@
         <item quantity="other">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
     </plurals>
     <string name="card_template_editor_save_error">কার্ড-টেমপ্লেট এর পরিবর্তন সংরক্ষণ করা সম্ভব হচ্ছেনা: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">এই কার্ড সংশ্লিষ্ট কার্ড-টেমপ্লেট মুছে ফেলা হয়েছে।</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>

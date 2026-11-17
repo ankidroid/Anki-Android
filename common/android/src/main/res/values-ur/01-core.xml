@@ -122,6 +122,7 @@
         <item quantity="other">\"%2$s\" کارڈ کی قسم، اور اس کے %1$d کارڈز کو حذف کریں؟</item>
     </plurals>
     <string name="card_template_editor_save_error">کارڈ ٹیمپلیٹ کی تبدیلیاں محفوظ کرنے سے قاصر: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">موجودہ کارڈ کے لیے کارڈ کی قسم کو حذف کر دیا گیا تھا۔</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ڈیٹا بیس کو پڑھیں اور لکھیں۔</string>

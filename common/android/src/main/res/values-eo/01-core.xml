@@ -122,6 +122,7 @@
         <item quantity="other">Ĉu forigi la kartotipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
     </plurals>
     <string name="card_template_editor_save_error">Malsukcesis konservi la ŝanĝojn al la ŝablono de karto: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">La kartotipo por la nuna karto estas forigita.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al la datumbazo de AnkiDroid</string>

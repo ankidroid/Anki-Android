@@ -117,6 +117,7 @@
         <item quantity="other">Hapus tipe kartu \"%2$s\", beserta kartu %1$d?</item>
     </plurals>
     <string name="card_template_editor_save_error">Tidak dapat menyimpan perubahan templat kartu: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Templat untuk kartu ini sudah dihapus.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>

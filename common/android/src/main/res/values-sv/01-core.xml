@@ -122,6 +122,7 @@
         <item quantity="other">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
     </plurals>
     <string name="card_template_editor_save_error">Det går inte att spara ändringar i kortmallen: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Korttypen för det aktuella kortet har tagits bort.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>

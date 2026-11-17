@@ -122,6 +122,7 @@
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
     </plurals>
     <string name="card_template_editor_save_error">Änderungen an Kartenvorlagen konnten nicht gespeichert werden: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>

@@ -127,6 +127,7 @@
         <item quantity="other">Ștergi tipul de card \"%2$s\" și %1$d carduri?</item>
     </plurals>
     <string name="card_template_editor_save_error">Modificările șablonului cardului nu au putut fi salvate: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Tipul de card al cardului actual a fost șters</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Citește și scrie în baza de date a AnkiDroid</string>

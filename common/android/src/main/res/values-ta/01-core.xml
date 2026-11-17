@@ -122,6 +122,7 @@
         <item quantity="other">அட்டை வகை %2$s மற்றும் அதன் அட்டை %1$d நீக்க வேண்டுமா?</item>
     </plurals>
     <string name="card_template_editor_save_error">அட்டை டெம்ப்ளேட் மாற்றங்களைச் சேமிக்க முடியவில்லை: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">தற்போதைய அட்டைக்கான அட்டை வகை நீக்கப்பட்டது.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid டேட்டாபேஸ் எழுதப்</string>

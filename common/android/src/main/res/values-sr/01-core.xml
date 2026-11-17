@@ -127,6 +127,7 @@
         <item quantity="other">Да избришем тип картице \'%2$s\' и све %1$d његове картице?</item>
     </plurals>
     <string name="card_template_editor_save_error">Грешка при чувању шаблона картице: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Тип картице за тренутну картицу је обрисан.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>

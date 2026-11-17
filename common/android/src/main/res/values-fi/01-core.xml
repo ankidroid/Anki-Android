@@ -122,6 +122,7 @@
         <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>
     </plurals>
     <string name="card_template_editor_save_error">Korttimallin muutoksia ei voitu tallentaa: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Tämän kortin korttityyppi poistettiin.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>

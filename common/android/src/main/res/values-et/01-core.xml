@@ -122,6 +122,7 @@
         <item quantity="other">Kustutada “%2$s” kaarditüüp ja selle %1$d kaarti?</item>
     </plurals>
     <string name="card_template_editor_save_error">Ei suuda salvestada kaardimalli muudatusi: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Käesoleva kaardi tüüp kustutati.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Loe ja kirjuta AnkiDroid andmebaasi</string>

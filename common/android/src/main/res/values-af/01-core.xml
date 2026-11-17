@@ -122,6 +122,7 @@
         <item quantity="other">Skrap die \"%2$s\" kaarttipe en die samegaande %1$d kaarte?</item>
     </plurals>
     <string name="card_template_editor_save_error">Kan nie kaartsjabloonveranderinge stoor nie: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Die kaarttipe vir huidige kaart is uitgevee.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lees en skryf na die AnkiDroid databasis</string>

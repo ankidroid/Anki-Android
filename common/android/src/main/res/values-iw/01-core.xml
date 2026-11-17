@@ -128,6 +128,7 @@
         <item quantity="other">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
     </plurals>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הכרטיס: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">התבנית של הכרטיס הנוכחי נמחקה.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור למסד הנתונים של AnkiDroid</string>

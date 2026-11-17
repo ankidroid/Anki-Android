@@ -122,6 +122,7 @@
         <item quantity="other">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
     </plurals>
     <string name="card_template_editor_save_error">ପତ୍ର ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ ପତ୍ରର ପତ୍ର ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ଡାଟାବେସ୍ କୁ ପଢ଼ିବା ଓ ଲେଖିବା</string>

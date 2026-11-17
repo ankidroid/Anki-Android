@@ -124,6 +124,7 @@ Back - बैक</string>
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
     </plurals>
     <string name="card_template_editor_save_error">कार्ड टेम्प्लेट परिवर्तन सहेजने में असमर्थ: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">पढ़ें और AnkiDroid डेटाबेस के लिए लिखें</string>

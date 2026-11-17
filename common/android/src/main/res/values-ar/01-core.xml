@@ -142,6 +142,7 @@
         <item quantity="other">أَواثق من حذف نوع البطاقة «%2$s» وبطاقاته البالغ عددها %1$d بطاقة؟</item>
     </plurals>
     <string name="card_template_editor_save_error">يتعذر حفظ تغييرات قالب البطاقة: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات آنكي درويد</string>
