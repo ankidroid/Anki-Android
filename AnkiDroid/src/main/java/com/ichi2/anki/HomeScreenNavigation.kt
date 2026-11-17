@@ -53,6 +53,21 @@ fun setupBottomNavigation() {
     bottomNav.isVisible = true
     val scrollBehavior =
         object : HideViewOnScrollBehavior<BottomNavigationView>(EDGE_BOTTOM) {
+            override fun onNestedScroll(
+                coordinatorLayout: CoordinatorLayout,
+                child: BottomNavigationView,
+                target: View,
+                dxConsumed: Int,
+                dyConsumed: Int,
+                dxUnconsumed: Int,
+                dyUnconsumed: Int,
+                type: Int,
+                consumed: IntArray,
+            ) {
+                if (dyConsumed < 0 && !deckPicker.canRevealBottomNavFromScroll) return
+                super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed)
+            }
+
             override fun slideOut(
                 child: BottomNavigationView,
                 animate: Boolean,
@@ -269,7 +284,7 @@ fun Fragment.updateBottomNavOnScroll(dy: Int) {
     when {
         this is CardBrowserFragment && isAtEndOfList -> behavior.slideIn(bottomNav)
         dy > 0 -> behavior.slideOut(bottomNav)
-        dy < 0 -> behavior.slideIn(bottomNav)
+        dy < 0 && deckPicker.canRevealBottomNavFromScroll -> behavior.slideIn(bottomNav)
     }
 }
 
