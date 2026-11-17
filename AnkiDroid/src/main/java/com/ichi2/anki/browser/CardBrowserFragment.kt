@@ -462,16 +462,25 @@ class CardBrowserFragment :
 
         searchView =
             view.findViewById<SearchView>(R.id.search_view)?.apply {
-                editText.doAfterTextChanged { searchViewModel.onSearchTextChanged(it.toString()) }
+                editText.doAfterTextChanged {
+                    if (searchViewModel.isScreenOpenFlow.value && currentTransitionState != SearchView.TransitionState.HIDING) {
+                        searchViewModel.onSearchTextChanged(it.toString())
+                    }
+                }
                 addTransitionListener { _, _, state ->
                     if (state == SearchView.TransitionState.SHOWING) {
                         getOrCreateSearchFragment(StandardSearchFragment.TAG, ::StandardSearchFragment)
+                        val query = activityViewModel.searchRequestFlow.value.query
+                        searchBar?.setText(query)
+                        editText.setText(query)
+                        editText.moveCursorToEnd()
                         searchViewModel.isScreenOpenFlow.value = true
+                        requestFocusAndShowKeyboard()
                         return@addTransitionListener
                     }
-                    if (state == SearchView.TransitionState.SHOWN) {
-                        editText.setText(activityViewModel.searchRequestFlow.value.query)
-                        editText.moveCursorToEnd()
+                    if (state == SearchView.TransitionState.HIDING) {
+                        clearFocusAndHideKeyboard()
+                        editText.clearFocus()
                         return@addTransitionListener
                     }
 
@@ -485,10 +494,13 @@ class CardBrowserFragment :
 
                     // Exiting out the SearchView should reset the state
                     // The ViewModel remains active as it's tied to the host fragment.
-                    searchViewModel.resetSearchState(activityViewModel.searchRequestFlow.value)
+                    val currentSearch = activityViewModel.searchRequestFlow.value
+                    searchViewModel.resetSearchState(currentSearch)
+                    launchCatchingTask { searchBar?.setText(currentSearch.toUserSpannable()) }
                 }
                 editText.setOnEditorActionListener { _, actionId, event ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                        searchViewModel.onSearchTextChanged(editText.text.toString())
                         searchViewModel.submitCurrentSearch()
                         true
                     } else {
@@ -1207,8 +1219,9 @@ class CardBrowserFragment :
             // Queued search updates can arrive after finish(), before the lifecycle stops.
             if (activity?.isFinishing == true) return
 
-            // WARN: This changes the text when the SearchView is open
-            launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
+            if (searchView?.isShowing != true) {
+                launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
+            }
 
             Timber.i("relaying submitted search to activity")
             activityViewModel.launchSearchForCards(value, forceRefresh = false, feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
@@ -2082,10 +2095,18 @@ fun buildUserSpannable(
     val spannable = SpannableString(searchString.value)
 
     // gray out the additional filters, as they're handled by chips
-    if (searchString.value.startsWith(query)) {
+    val trimmedQuery = query.trim()
+    val queryEndIndex =
+        when {
+            trimmedQuery.isEmpty() -> 0
+            searchString.value.startsWith(trimmedQuery) -> trimmedQuery.length
+            searchString.value.startsWith("($trimmedQuery)") -> trimmedQuery.length + 2
+            else -> null
+        }
+    if (queryEndIndex != null) {
         spannable.setSpan(
             ForegroundColorSpan(Color.GRAY),
-            query.length,
+            queryEndIndex,
             searchString.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
         )

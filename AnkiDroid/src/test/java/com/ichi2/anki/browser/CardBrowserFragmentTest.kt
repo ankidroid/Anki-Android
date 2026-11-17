@@ -3,6 +3,7 @@
 package com.ichi2.anki.browser
 
 import android.content.Intent
+import android.text.style.ForegroundColorSpan
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.core.view.isVisible
@@ -19,6 +20,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SearchFilters
+import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.requireChildFragment
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -317,6 +319,52 @@ class CardBrowserFragmentTest : RobolectricTest() {
             activityViewModel.setSortType(SortType.NoOrdering).join()
             advanceRobolectricLooper()
             assertThat(sortChipDescription, equalTo("No sorting"))
+        }
+
+    @Test
+    fun `opening searchView sets query immediately without extra chip filters`() =
+        withCardBrowserFragment(useSearchView = true) {
+            val deckId = addDeck("zzz")
+            activityViewModel.setSelectedDeck(SelectableDeck.Deck(deckId, "zzz"))
+            activityViewModel.searchJob?.join()
+            advanceRobolectricLooper()
+            assertThat(searchBar!!.text.toString(), equalTo("deck:zzz"))
+
+            searchView!!.show()
+            assertThat(searchView!!.editText.text.toString(), equalTo(""))
+            assertThat(searchBar!!.text.toString(), equalTo(""))
+
+            advanceRobolectricLooper()
+            searchView!!.hide()
+            advanceRobolectricLooper()
+            assertThat(searchBar!!.text.toString(), equalTo("deck:zzz"))
+        }
+
+    @Test
+    fun `editing searchView text while closed is ignored`() =
+        withCardBrowserFragment(useSearchView = true) {
+            assertFalse(searchViewModel.isScreenOpenFlow.value)
+            searchView!!.editText.setText("edited while closed")
+            advanceRobolectricLooper()
+            assertThat(searchViewModel.searchTextFlow.value, equalTo(""))
+            assertThat(activityViewModel.searchTerms, equalTo(""))
+        }
+
+    @Test
+    fun `toUserSpannable dims extra filters when query is parenthesized`() =
+        runTest {
+            val deckId = addDeck("zzz")
+            val request =
+                SearchRequest(
+                    query = "5 is:new",
+                    filters = SearchFilters.partial(decks = listOf(DeckNameId("zzz", deckId))),
+                )
+            val spannable = request.toUserSpannable()
+            assertThat(spannable.toString(), equalTo("(5 is:new) deck:zzz"))
+            val spans = spannable.getSpans(0, spannable.length, ForegroundColorSpan::class.java)
+            assertThat(spans.size, equalTo(1))
+            assertThat(spannable.getSpanStart(spans.single()), equalTo("(5 is:new)".length))
+            assertThat(spannable.getSpanEnd(spans.single()), equalTo(spannable.length))
         }
 
     private fun CardBrowserFragment.assertSearchMode(advancedSearch: Boolean) {
