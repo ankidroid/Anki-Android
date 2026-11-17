@@ -18,6 +18,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.storage.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.libanki.AvTag
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
@@ -58,11 +59,11 @@ import kotlin.time.Duration.Companion.milliseconds
  * This class combines the above concerns behind an "adapter" interface in order to simplify complexity.
  *
  * **Public interface**
+ * * [autoplayAllForSide]
  * * [playAllForSide]
  * * [replayAll]
  * * [playOne]
  * * [stop]
- * * [loadCardAvTags] - informs the class of whether we're on the front/back of a card
  *
  * @see AvTag
  *
@@ -98,12 +99,6 @@ class CardMediaPlayer : Closeable {
 
     /** Serializes playbacks to avoid overloading the thread pool and a potential deadlock */
     private val playbackMutex = Mutex()
-
-    private var questionAvTags: List<AvTag> = emptyList()
-    private var answerAvTags: List<AvTag> = emptyList()
-
-    var config: CardSoundConfig? = null
-        private set
 
     var isEnabled: Boolean = true
         private set
@@ -155,54 +150,78 @@ class CardMediaPlayer : Closeable {
         onMediaGroupCompleted = listener
     }
 
-    suspend fun loadCardAvTags(card: Card) {
-        Timber.i("loading av tags for card %d", card.id)
-        stop()
-        val renderOutput = withCol { card.renderOutput(this) }
-        val autoPlay = withCol { card.autoplay(this) }
-        this.questionAvTags = renderOutput.questionAvTags
-        this.answerAvTags = renderOutput.answerAvTags
-
-        val currentConfig = config
-        val needsConfigUpdate =
-            currentConfig == null ||
-                !currentConfig.appliesTo(card) ||
-                autoPlay != currentConfig.autoplay
-
-        if (needsConfigUpdate) {
-            config = withCol { CardSoundConfig.create(this@withCol, card) }
+    suspend fun autoplayAllForSide(
+        card: Card,
+        cardSide: CardSide,
+    ) {
+        val avTags = withCol { if (card.autoplay(this)) card.avTags(this, cardSide) else null }
+        if (avTags != null) {
+            playAvTags(avTags, cardSide)
+        } else {
+            stop()
         }
     }
 
     /**
-     * Ensures that [questionAvTags] and [answerAvTags] are loaded
-     *
-     * Does not affect playback if they are
+     * Obtains all the [AvTag]s for the [cardSide] and plays them sequentially
      */
-    suspend fun ensureAvTagsLoaded(card: Card) {
-        if (config?.appliesTo(card) == true) return
-
-        Timber.i("loading sounds for card %d", card.id)
-        val renderOutput = withCol { card.renderOutput(this) }
-        this.questionAvTags = renderOutput.questionAvTags
-        this.answerAvTags = renderOutput.answerAvTags
-
-        val currentConfig = config
-        if (currentConfig == null || !currentConfig.appliesTo(card)) {
-            config = withCol { CardSoundConfig.create(this@withCol, card) }
-        }
+    suspend fun playAllForSide(
+        card: Card,
+        cardSide: CardSide,
+    ) {
+        playAvTags(withCol { card.avTags(this, cardSide) }, cardSide)
     }
 
-    suspend fun autoplayAllForSide(cardSide: CardSide) {
-        if (config?.autoplay == true) {
-            playAllForSide(cardSide)
-        }
-    }
-
-    suspend fun playAllForSide(cardSide: CardSide) {
+    private suspend fun playAvTags(
+        avTagList: List<AvTag>,
+        cardSide: CardSide,
+    ) {
         launchPlayback {
             Timber.i("playing sounds for %s", cardSide)
-            playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
+            try {
+                for ((index, avTag) in avTagList.withIndex()) {
+                    Timber.d("playing AV Tag %d/%d", index + 1, avTagList.size)
+                    if (!play(avTag, isAutomaticPlayback = true)) {
+                        Timber.d("stopping AV Tag playback early")
+                        break
+                    }
+                }
+            } finally {
+                // call the completion listener, even if a CancellationException was thrown
+                onMediaGroupCompleted?.invoke()
+            }
+        }
+    }
+
+    /**
+     * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed
+     */
+    suspend fun replayAll(
+        card: Card,
+        side: SingleCardSide,
+    ) {
+        val (cardSide, avTags) =
+            withCol {
+                val cardSide =
+                    when (side) {
+                        SingleCardSide.FRONT -> CardSide.QUESTION
+                        SingleCardSide.BACK ->
+                            if (card.replayQuestionAudioOnAnswerSide(this)) CardSide.BOTH else CardSide.ANSWER
+                    }
+                cardSide to card.avTags(this, cardSide)
+            }
+        playAvTags(avTags, cardSide)
+    }
+
+    private fun Card.avTags(
+        col: Collection,
+        cardSide: CardSide,
+    ): List<AvTag> {
+        val renderOutput = renderOutput(col)
+        return when (cardSide) {
+            CardSide.QUESTION -> renderOutput.questionAvTags
+            CardSide.ANSWER -> renderOutput.answerAvTags
+            CardSide.BOTH -> renderOutput.questionAvTags + renderOutput.answerAvTags
         }
     }
 
@@ -223,34 +242,6 @@ class CardMediaPlayer : Closeable {
         soundTagPlayer.release()
         ttsPlayer.close(logPrefix = "ttsPlayer")
         scope.cancel()
-    }
-
-    /**
-     * Obtains all the [AvTag]s for the [cardSide] and plays them sequentially
-     */
-    private suspend fun playAllAvTagsInternal(
-        cardSide: CardSide,
-        isAutomaticPlayback: Boolean,
-    ) {
-        val avTagList =
-            when (cardSide) {
-                CardSide.QUESTION -> questionAvTags
-                CardSide.ANSWER -> answerAvTags
-                CardSide.BOTH -> questionAvTags + answerAvTags
-            }
-
-        try {
-            for ((index, avTag) in avTagList.withIndex()) {
-                Timber.d("playing AV Tag %d/%d", index + 1, avTagList.size)
-                if (!play(avTag, isAutomaticPlayback)) {
-                    Timber.d("stopping AV Tag playback early")
-                    return
-                }
-            }
-        } finally {
-            // call the completion listener, even if a CancellationException was thrown
-            onMediaGroupCompleted?.invoke()
-        }
     }
 
     /**
@@ -299,18 +290,6 @@ class CardMediaPlayer : Closeable {
         }
         return true
     }
-
-    /** Whether the provided side has available media */
-    fun hasMedia(displayAnswer: Boolean): Boolean = if (displayAnswer) answerAvTags.isNotEmpty() else questionAvTags.isNotEmpty()
-
-    /**
-     * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed
-     */
-    suspend fun replayAll(side: SingleCardSide) =
-        when (side) {
-            SingleCardSide.BACK -> if (config?.replayQuestion == true) playAllForSide(CardSide.BOTH) else playAllForSide(CardSide.ANSWER)
-            SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
-        }
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
         val player =

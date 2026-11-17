@@ -8,6 +8,7 @@ import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
 import com.ichi2.anki.cardviewer.SingleCardSide.BACK
 import com.ichi2.anki.libanki.AvTag
+import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TemplateManager
 import com.ichi2.anki.libanki.TtsPlayer
@@ -41,6 +42,7 @@ import kotlin.test.assertFalse
 class CardMediaPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
     internal val ttsPlayer: TtsPlayer = mockk<TtsPlayer>()
+    private lateinit var card: Card
     internal val onMediaGroupCompleted: () -> Unit =
         mockk<() -> Unit>().also {
             every { it.invoke() } answers { }
@@ -116,6 +118,51 @@ class CardMediaPlayerTest : JvmTest() {
             coVerifyOrder {
                 tagPlayer.play(SoundOrVideoTag("back.mp3"), any())
             }
+        }
+
+    @Test
+    fun `autoplay plays the side if the deck plays media automatically`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("front.mp3")),
+            autoplay = true,
+        ) {
+            autoplayAllForSide(card, CardSide.QUESTION)
+            playAvTagsJob?.join()
+
+            coVerifySequence {
+                tagPlayer.play(SoundOrVideoTag("front.mp3"), any())
+            }
+        }
+
+    @Test
+    fun `autoplay plays nothing if the deck does not play media automatically`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("front.mp3")),
+            autoplay = false,
+        ) {
+            autoplayAllForSide(card, CardSide.QUESTION)
+            playAvTagsJob?.join()
+
+            coVerify(exactly = 0) { tagPlayer.play(any(), any()) }
+        }
+
+    @Test
+    fun `autoplay stops the playing media if the deck does not play media automatically`() =
+        runSoundPlayerTest(
+            answers = listOf(SoundOrVideoTag("back.mp3")),
+            autoplay = false,
+        ) {
+            val started = CompletableDeferred<Unit>()
+            coEvery { tagPlayer.play(any(), any()) } coAnswers {
+                started.complete(Unit)
+                awaitCancellation()
+            }
+            playOne(SoundOrVideoTag("front.mp3"))
+            started.await()
+
+            autoplayAllForSide(card, CardSide.ANSWER)
+
+            assertFalse(isPlaying, "media of the previous side is playing")
         }
 
     @Test
@@ -197,6 +244,22 @@ class CardMediaPlayerTest : JvmTest() {
         }
 
     @Test
+    fun `replay follows a change of the deck's replay question option`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("front.mp3")),
+            answers = listOf(SoundOrVideoTag("back.mp3")),
+            replayQuestion = true,
+        ) {
+            updateDeckConfig(CardUtils.getDeckIdForCard(card)) { replayq = false }
+
+            replayAllAndWait(BACK)
+
+            coVerifySequence {
+                tagPlayer.play(SoundOrVideoTag("back.mp3"), any())
+            }
+        }
+
+    @Test
     fun `media requested while the player is being disabled is not played`() =
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("question.mp3")),
@@ -212,7 +275,7 @@ class CardMediaPlayerTest : JvmTest() {
                 }
             }
             coEvery { tagPlayer.play(SoundOrVideoTag("one.mp3"), any()) } coAnswers { awaitCancellation() }
-            playAllForSide(CardSide.QUESTION)
+            playAllForSide(card, CardSide.QUESTION)
             started.await()
 
             coroutineScope {
@@ -241,7 +304,7 @@ class CardMediaPlayerTest : JvmTest() {
                     withContext(NonCancellable) { stopped.await() }
                 }
             }
-            playAllForSide(CardSide.QUESTION)
+            playAllForSide(card, CardSide.QUESTION)
             started.await()
 
             coroutineScope {
@@ -265,7 +328,7 @@ class CardMediaPlayerTest : JvmTest() {
                 started.send(Unit)
                 awaitCancellation()
             }
-            playAllForSide(CardSide.QUESTION)
+            playAllForSide(card, CardSide.QUESTION)
             started.receive()
             val wasIdle = AtomicBoolean(false)
             // unconfined: observes every change of the playback state
@@ -294,12 +357,12 @@ class CardMediaPlayerTest : JvmTest() {
     }
 
     private suspend fun CardMediaPlayer.playAllAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
-        this.playAllForSide(side.toCardSide())
+        this.playAllForSide(card, side.toCardSide())
         playAvTagsJob?.join()
     }
 
     private suspend fun CardMediaPlayer.replayAllAndWait(side: SingleCardSide) {
-        this.replayAll(side)
+        this.replayAll(card, side)
         playAvTagsJob?.join()
     }
 
@@ -308,13 +371,13 @@ class CardMediaPlayerTest : JvmTest() {
         playAvTagsJob?.join()
     }
 
-    suspend fun CardMediaPlayer.setup(
+    fun setup(
         questions: List<AvTag>,
         answers: List<AvTag>,
         replayQuestion: Boolean?,
         autoplay: Boolean?,
     ) {
-        val card = addBasicNote().firstCard()
+        card = addBasicNote().firstCard()
         mockkObject(card)
 
         every { card.renderOutput(any()) } answers {
@@ -337,15 +400,13 @@ class CardMediaPlayerTest : JvmTest() {
                 this.autoplay = autoplay
             }
         }
-
-        this.loadCardAvTags(card)
     }
 }
 
 /**
  *
- * @param autoplay [CardSoundConfig.autoplay]
- * @param replayQuestion [CardSoundConfig.replayQuestion]
+ * @param autoplay [Card.autoplay]
+ * @param replayQuestion [Card.replayQuestionAudioOnAnswerSide]
  */
 fun CardMediaPlayerTest.runSoundPlayerTest(
     questions: List<AvTag> = emptyList(),
@@ -362,6 +423,6 @@ fun CardMediaPlayerTest.runSoundPlayerTest(
         )
     cardMediaPlayer.setOnMediaGroupCompletedListener(onMediaGroupCompleted)
     assertThat("can play sounds", cardMediaPlayer.isEnabled)
-    cardMediaPlayer.setup(questions, answers, replayQuestion, autoplay)
+    setup(questions, answers, replayQuestion, autoplay)
     testBody(cardMediaPlayer)
 }

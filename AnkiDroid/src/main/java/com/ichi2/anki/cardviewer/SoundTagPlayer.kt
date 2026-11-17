@@ -29,7 +29,7 @@ import kotlin.coroutines.resumeWithException
 
 /** Player for (`[sound:...]`): [SoundOrVideoTag]  */
 @OptIn(UnstableApi::class)
-@NeedsTest("CardSoundConfig.autoplay should mean that video also isn't played automatically")
+@NeedsTest("Card.autoplay should mean that video also isn't played automatically")
 class SoundTagPlayer(
     private val soundUriBase: String,
     val videoPlayer: VideoPlayer,

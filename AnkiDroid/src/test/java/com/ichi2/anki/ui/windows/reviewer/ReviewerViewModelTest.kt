@@ -12,6 +12,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -116,6 +117,21 @@ class ReviewerViewModelTest : RobolectricTest() {
                 expectNoEvents()
             }
     }
+
+    @Test
+    fun `showing the answer stops the question audio`() =
+        runTest {
+            addBasicNote()
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            advanceUntilIdle()
+            val audio = Job().also { viewModel.cardMediaPlayer.playAvTagsJob = it }
+
+            viewModel.onShowAnswer()
+            advanceUntilIdle()
+
+            assertTrue(audio.isCancelled, "question audio should stop")
+        }
 
     @Test
     fun `answering waits for the custom scheduler of the first card`() =
