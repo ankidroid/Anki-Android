@@ -96,6 +96,23 @@ class AutoAdvanceTest {
         }
 
     @Test
+    fun `showing a side again restarts its timer`() =
+        testScope.runTest {
+            autoAdvance = createAutoAdvance()
+            autoAdvance.isEnabled = true
+            testScheduler.advanceUntilIdle()
+            autoAdvance.onShowAnswer()
+            advanceTimeBy(2.seconds)
+
+            autoAdvance.onShowAnswer()
+
+            advanceTimeBy(4.seconds)
+            coVerify(exactly = 0) { listener.onAutoAdvanceAction(any()) }
+            advanceTimeBy(2.seconds)
+            coVerify(exactly = 1) { listener.onAutoAdvanceAction(AnswerAction.ANSWER_GOOD) }
+        }
+
+    @Test
     fun `actions do not trigger if AutoAdvance is disabled`() =
         testScope.runTest {
             autoAdvance = createAutoAdvance()
