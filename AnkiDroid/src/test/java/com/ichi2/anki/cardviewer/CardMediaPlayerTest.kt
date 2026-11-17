@@ -27,6 +27,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancelAndJoin
@@ -34,10 +35,12 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertFalse
+import kotlin.time.Duration.Companion.seconds
 
 class CardMediaPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
@@ -381,6 +384,17 @@ class CardMediaPlayerTest : JvmTest() {
             assertFalse(wasIdle.get(), "the player was idle between two playbacks")
             idleWatcher.cancel()
             stop()
+        }
+
+    @Test
+    fun `a cancelled job set by a test leaves the player idle`() =
+        runSoundPlayerTest {
+            playAvTagsJob = Job()
+
+            stop()
+
+            assertFalse(isPlaying, "the player is playing a cancelled job")
+            withTimeout(1.seconds) { awaitIdle() }
         }
 
     private fun verifyNoSoundsPlayed() {

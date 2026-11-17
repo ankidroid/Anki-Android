@@ -117,6 +117,7 @@ class CardMediaPlayer : Closeable {
         get() = playingJob.value
         set(value) {
             playingJob.value = value
+            value?.invokeOnCompletion { playingJob.compareAndSet(value, null) }
         }
     val isPlaying get() = playAvTagsJob != null
 
