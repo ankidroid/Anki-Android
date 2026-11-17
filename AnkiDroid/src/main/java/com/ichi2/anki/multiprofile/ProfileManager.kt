@@ -74,7 +74,7 @@ class ProfileManager private constructor(
      */
     private fun initializeActiveProfile() {
         val activeProfileId =
-            profileRegistry.getLastActiveProfileId()
+            profileRegistry.getLastActiveProfileId()?.takeUnless { it.isDefault() && !profileRegistry.contains(it) }
                 ?: initializeDefaultProfile()
 
         Timber.i("Initializing profile: ${activeProfileId.value}")
@@ -85,8 +85,12 @@ class ProfileManager private constructor(
         Timber.i("No active profile found. Setting up Default.")
         val defaultId = ProfileId.DEFAULT
 
-        val metadata =
-            ProfileMetadata(displayName = ProfileName.fromTrustedSource(DEFAULT_PROFILE_DISPLAY_NAME))
+        val displayName =
+            generateSequence(1) { it + 1 }
+                .map { n -> if (n == 1) DEFAULT_PROFILE_DISPLAY_NAME else "$DEFAULT_PROFILE_DISPLAY_NAME $n" }
+                .map { ProfileName.fromTrustedSource(it) }
+                .first { !isNameTaken(it) }
+        val metadata = ProfileMetadata(displayName = displayName)
 
         profileRegistry.saveProfile(id = defaultId, metadata = metadata, isActive = true)
         profileRegistry.setLastActiveProfileId(defaultId)

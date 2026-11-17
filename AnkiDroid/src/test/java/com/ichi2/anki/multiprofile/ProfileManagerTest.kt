@@ -1279,6 +1279,28 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `recovery recreates Default after it was deleted`() {
+        val initial = ProfileManager.create(context)
+        val work = initial.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, work.value) }
+        val runningWork = ProfileManager.create(context)
+        runningWork.deleteProfile(ProfileId.DEFAULT)
+        val workDirectory = File(appDataRoot, work.value)
+        assertTrue(workDirectory.deleteRecursively())
+        workDirectory.writeText("a file where Work's directory belongs")
+        assertNull(ProfileManager.createOrNull(context))
+
+        assertTrue(ProfileManager.selectDefaultProfile(context))
+        val recovered = assertNotNull(ProfileManager.createOrNull(context))
+
+        assertEquals(ProfileId.DEFAULT, recovered.activeProfileContext.profileId)
+        assertTrue(
+            "The recovered active profile must appear in the profile list",
+            recovered.getAllProfiles().containsKey(ProfileId.DEFAULT),
+        )
+    }
+
+    @Test
     fun `deleting a relocated profile preserves personal corrupt collection repair notes`() {
         val manager = ProfileManager.create(context)
         val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
@@ -1294,6 +1316,29 @@ class ProfileManagerTest {
         manager.deleteProfile(work)
 
         assertTrue("Personal repair notes are not a generated corrupt collection copy", repairNotes.exists())
+    }
+
+    @Test
+    fun `recovering deleted Default preserves unique profile names`() {
+        val initial = ProfileManager.create(context)
+        val work = initial.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, work.value) }
+        val runningWork = ProfileManager.create(context)
+        runningWork.deleteProfile(ProfileId.DEFAULT)
+        val namedDefault = runningWork.createNewProfile(ProfileName.fromTrustedSource("Default"))
+        val workDirectory = File(appDataRoot, work.value)
+        assertTrue(workDirectory.deleteRecursively())
+        workDirectory.writeText("a file where Work's directory belongs")
+        assertNull(ProfileManager.createOrNull(context))
+
+        assertTrue(ProfileManager.selectDefaultProfile(context))
+        val recovered = assertNotNull(ProfileManager.createOrNull(context))
+        val profiles = recovered.getAllProfiles()
+        val names = profiles.values.map { it.displayName.value.lowercase() }
+
+        assertEquals(ProfileId.DEFAULT, recovered.activeProfileContext.profileId)
+        assertTrue("Recovery must retain the user-created profile", namedDefault in profiles)
+        assertEquals("Recovery must not create indistinguishable profile names", names.size, names.distinct().size)
     }
 
     @Test
