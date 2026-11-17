@@ -74,7 +74,7 @@ class ProfileManager private constructor(
      */
     private fun initializeActiveProfile() {
         val activeProfileId =
-            profileRegistry.getLastActiveProfileId()
+            profileRegistry.getLastActiveProfileId()?.takeUnless { it.isDefault() && !profileRegistry.contains(it) }
                 ?: initializeDefaultProfile()
 
         Timber.i("Initializing profile: ${activeProfileId.value}")
@@ -85,8 +85,7 @@ class ProfileManager private constructor(
         Timber.i("No active profile found. Setting up Default.")
         val defaultId = ProfileId.DEFAULT
 
-        val metadata =
-            ProfileMetadata(displayName = ProfileName.fromTrustedSource(DEFAULT_PROFILE_DISPLAY_NAME))
+        val metadata = ProfileMetadata(displayName = profileRegistry.freeDefaultName())
 
         profileRegistry.saveProfile(id = defaultId, metadata = metadata, isActive = true)
         profileRegistry.setLastActiveProfileId(defaultId)
@@ -801,6 +800,14 @@ class ProfileManager private constructor(
         }
 
         fun contains(id: ProfileId): Boolean = globalPrefs.contains(id.value)
+
+        fun freeDefaultName(): ProfileName {
+            val names = getAllProfiles().values.map { it.displayName.value }
+            return generateSequence(1) { it + 1 }
+                .map { n -> if (n == 1) DEFAULT_PROFILE_DISPLAY_NAME else "$DEFAULT_PROFILE_DISPLAY_NAME $n" }
+                .map { ProfileName.fromTrustedSource(it) }
+                .first { !it.existsIn(names) }
+        }
     }
 
     /**
@@ -917,9 +924,7 @@ class ProfileManager private constructor(
                 val failedId = registry.getLastActiveProfileId()?.takeUnless { it.isDefault() } ?: return null
                 return LoadFailure(
                     profileName = registry.getProfileMetadata(failedId)?.displayName ?: ProfileName.fromTrustedSource(failedId.value),
-                    defaultProfileName =
-                        registry.getProfileMetadata(ProfileId.DEFAULT)?.displayName
-                            ?: ProfileName.fromTrustedSource(DEFAULT_PROFILE_DISPLAY_NAME),
+                    defaultProfileName = registry.getProfileMetadata(ProfileId.DEFAULT)?.displayName ?: registry.freeDefaultName(),
                 )
             } catch (e: Exception) {
                 return null
