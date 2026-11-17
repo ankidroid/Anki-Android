@@ -19,6 +19,8 @@ internal class UnitTestCoverageReports(
 ) {
     private val runtimeModules by lazy { app.runtimeProjectDependencies("playDebugRuntimeClasspath").toSet() + app }
     private val coverageEnabled = app.isCoverageEnabled()
+
+    private val selectedModules = app.ciTestModules
     private val moduleClasses = mutableMapOf<Project, MutableList<FileCollection>>()
 
     /**
@@ -48,7 +50,7 @@ internal class UnitTestCoverageReports(
     }
 
     /**
-     * Runs unit tests for the app and supported modules in its runtime graph, then collects their
+     * Runs unit tests for selected modules in the app's runtime graph, then collects their
      * JaCoCo XML reports in `AnkiDroid/build/reports/codecov/` for CI to upload by module.
      * Each report includes coverage of the module's reachable project dependencies. Modules without
      * tests still get a report to replace their previous coverage. Tests are rerun; reports require
@@ -57,7 +59,7 @@ internal class UnitTestCoverageReports(
     private val ciReports =
         app.tasks.register<Sync>("jacocoCiUnitTestReports") {
             group = "verification"
-            description = "Runs unit tests, validates Codecov flags, and collects coverage XML by module."
+            description = "Runs selected unit tests, validates Codecov flags, and collects coverage XML by module."
             into(app.layout.buildDirectory.dir("reports/codecov"))
         }
 
@@ -115,6 +117,8 @@ internal class UnitTestCoverageReports(
     ) {
         val suites = moduleClasses.getOrPut(module) { mutableListOf() }
         suites.add(classes)
+        // Keep dependency classes and Codecov flags available even when a module's tests are skipped.
+        if (module.path !in selectedModules) return
 
         aggregate.configure {
             if (module in runtimeModules) {
@@ -205,6 +209,17 @@ internal class UnitTestCoverageReports(
             .filter { it in ciModules }
             .map { moduleClasses.getValue(it).single() }
 }
+
+/**
+ * `-PciTestModules` selects unit test suites and coverage reports by comma-separated project path,
+ * for example `:AnkiDroid,:libanki`. Unset or `*` selects all suites. An empty value selects none.
+ */
+private val Project.ciTestModules: UnitTestModules
+    get() =
+        when (val value = providers.gradleProperty("ciTestModules").orNull) {
+            null, "*" -> UnitTestModules.All
+            else -> UnitTestModules.Selected(value.split(',').filter { it.isNotEmpty() }.toSet())
+        }
 
 /**
  * The module's Codecov flag; CI uploads each report under its file name without the extension.
