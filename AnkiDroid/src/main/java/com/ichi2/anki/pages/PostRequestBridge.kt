@@ -105,10 +105,20 @@ class PostRequestBridge(
             } catch (e: Exception) {
                 // a handler may be canceled while the request isn't, e.g. by a timeout
                 if (e is CancellationException) currentCoroutineContext().ensureActive()
-                Timber.w(e, "POST request failed: %s", request.uri)
-                HTTP_INTERNAL_ERROR to (e.localizedMessage ?: e.javaClass.name).encodeToByteArray()
+                failure(request, e)
+            } catch (e: StackOverflowError) {
+                // card JavaScript can send deeply nested JSON, which overflows recursive parsers like org.json
+                failure(request, e)
             }
         return reply(request.id, status, body)
+    }
+
+    private fun failure(
+        request: Request,
+        e: Throwable,
+    ): Pair<Int, ByteArray> {
+        Timber.w(e, "POST request failed: %s", request.uri)
+        return HTTP_INTERNAL_ERROR to (e.localizedMessage ?: e.javaClass.name).encodeToByteArray()
     }
 
     private fun reply(
