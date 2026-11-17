@@ -30,6 +30,7 @@ import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.multiprofile.activeProfileId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment
 import com.ichi2.anki.sync.MeteredSyncPolicy
@@ -194,8 +195,15 @@ class IntentHandler : AbstractIntentHandler() {
         reloadIntent: Intent,
         reviewerIntent: Intent,
     ) {
-        val deckId = intent.getLongExtra(EXTRA_DECK_ID, 0)
+        val destination = intent.toExternalLaunch()
+        val deckId = destination.deckId
         Timber.i("Handling intent to review deck '%d'", deckId)
+        if (destination.profileId != activeProfileId()) {
+            Timber.w("Not reviewing deck '%d': it belongs to another profile", deckId)
+            showThemedToast(this, otherProfileDeckMessage(destination.profileId), false)
+            launchDeckPickerIfNoOtherTasks(reloadIntent)
+            return
+        }
 
         val reviewIntent =
             if (Prefs.isNewStudyScreenEnabled) {
@@ -383,6 +391,7 @@ class IntentHandler : AbstractIntentHandler() {
     companion object {
         private const val ACTION_DO_SYNC = "com.ichi2.anki.DO_SYNC"
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
+        const val EXTRA_PROFILE_ID = "EXTRA_PROFILE_ID"
         private const val ACTION_COPY_DEBUG_INFO = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val EXTRA_CLIPBOARD_DATA = "clip_data"
 
@@ -522,9 +531,10 @@ class IntentHandler : AbstractIntentHandler() {
          * @param context
          * @param deckId the deck ID of the deck to review
          */
+        // TODO: build this from ReviewDeckDestination.ExternalLaunch
         fun getReviewDeckIntent(
             context: Context,
             deckId: DeckId,
-        ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
+        ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId).putDeckProfile(context.activeProfileId())
     }
 }

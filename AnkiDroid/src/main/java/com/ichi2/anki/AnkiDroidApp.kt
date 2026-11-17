@@ -60,7 +60,9 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.logging.logActivityCreation
 import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.multimedia.MultimediaArgsStorage
+import com.ichi2.anki.multiprofile.ActiveProfileProvider
 import com.ichi2.anki.multiprofile.ProfileContextWrapper
+import com.ichi2.anki.multiprofile.ProfileId
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.isPhoenixProcess
 import com.ichi2.anki.navigation.initializeNavigator
@@ -102,7 +104,8 @@ import java.util.Locale
 @KotlinCleanup("IDE Lint")
 open class AnkiDroidApp :
     Application(),
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    ActiveProfileProvider {
     /** An exception if AnkiDroidApp fails to load  */
     private var fatalInitializationError: FatalInitializationError? = null
 
@@ -141,6 +144,9 @@ open class AnkiDroidApp :
 
     private val profileContext: ProfileContextWrapper?
         get() = profileManager?.activeProfileContext
+
+    override val activeProfileId: ProfileId
+        get() = profileContext?.profileId ?: ProfileId.DEFAULT
 
     /**
      * Runs before [onCreate] and before any ContentProvider, which is what the
