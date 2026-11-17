@@ -79,11 +79,14 @@ jobs:
             const pullRequests = await github.paginate(github.rest.pulls.list, {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: 'all',
+              // A closed PR can share this head (e.g. the branch was reopened against
+              // another base), so only open PRs may receive the comparison.
+              state: 'open',
               head: `${headOwner}:${headBranch}`,
               per_page: 100,
             });
             const matches = pullRequests.filter(pullRequest =>
+              pullRequest.state === 'open' &&
               pullRequest.head.repo?.full_name === headRepository &&
               pullRequest.head.ref === headBranch &&
               pullRequest.head.sha === headSha &&
