@@ -24,6 +24,7 @@ import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.reviewer.CardSide
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,6 +34,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -106,13 +109,45 @@ class CardMediaPlayer : Closeable {
         private set
 
     suspend fun setEnabled(enabled: Boolean) {
-        if (!enabled) stop()
-        this.isEnabled = enabled
+        playbackMutex.withLock {
+            isEnabled = enabled
+            if (!enabled) stop()
+        }
     }
 
+    private val playingJob = MutableStateFlow<Job?>(null)
+
     @VisibleForTesting
-    var playAvTagsJob: Job? = null
+    var playAvTagsJob: Job?
+        get() = playingJob.value
+        set(value) {
+            playingJob.value = value
+        }
     val isPlaying get() = playAvTagsJob != null
+
+    /** Suspends while media is playing */
+    suspend fun awaitIdle() {
+        playingJob.first { it == null }
+    }
+
+    /** Launches [block] as [playAvTagsJob], which is cleared however the playback ends */
+    private suspend fun launchPlayback(block: suspend () -> Unit) {
+        playbackMutex.withLock {
+            if (!isEnabled) return
+            val previousJob = playAvTagsJob
+            val job = scope.launch(start = CoroutineStart.LAZY) { block() }
+            // replaces the previous job before it ends, so the player isn't idle in between
+            playingJob.value = job
+            job.invokeOnCompletion { playingJob.compareAndSet(job, null) }
+            try {
+                previousJob?.cancelAndJoin()
+            } catch (e: CancellationException) {
+                job.cancel()
+                throw e
+            }
+            job.start()
+        }
+    }
 
     private var onMediaGroupCompleted: (suspend () -> Unit)? = null
 
@@ -165,32 +200,18 @@ class CardMediaPlayer : Closeable {
     }
 
     suspend fun playAllForSide(cardSide: CardSide) {
-        if (!isEnabled) return
-        playAvTagsJob =
-            playbackMutex.withLock {
-                playAvTagsJob?.cancelAndJoin()
-                scope.launch {
-                    Timber.i("playing sounds for %s", cardSide)
-                    playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
-                    playAvTagsJob = null
-                }
-            }
+        launchPlayback {
+            Timber.i("playing sounds for %s", cardSide)
+            playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
+        }
     }
 
     suspend fun playOne(tag: AvTag) {
-        if (!isEnabled) return
-
-        playAvTagsJob =
-            playbackMutex.withLock {
-                playAvTagsJob?.cancelAndJoin()
-                Timber.i("playing one AV Tag")
-
-                scope.launch {
-                    play(tag, isAutomaticPlayback = false)
-                    Timber.v("completed playing one AV Tag")
-                    playAvTagsJob = null
-                }
-            }
+        launchPlayback {
+            Timber.i("playing one AV Tag")
+            play(tag, isAutomaticPlayback = false)
+            Timber.v("completed playing one AV Tag")
+        }
     }
 
     suspend fun stop() {
@@ -211,7 +232,6 @@ class CardMediaPlayer : Closeable {
         cardSide: CardSide,
         isAutomaticPlayback: Boolean,
     ) {
-        if (!isEnabled) return
         val avTagList =
             when (cardSide) {
                 CardSide.QUESTION -> questionAvTags

@@ -11,6 +11,7 @@ import com.ichi2.anki.libanki.AvTag
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TemplateManager
 import com.ichi2.anki.libanki.TtsPlayer
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.TestException
 import io.mockk.coEvery
@@ -22,8 +23,20 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.test.assertFalse
 
 class CardMediaPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
@@ -181,6 +194,93 @@ class CardMediaPlayerTest : JvmTest() {
                 tagPlayer.play(SoundOrVideoTag("a.mp3"), any())
                 tagPlayer.play(SoundOrVideoTag("a.mp3"), any())
             }
+        }
+
+    @Test
+    fun `media requested while the player is being disabled is not played`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("question.mp3")),
+        ) {
+            val started = CompletableDeferred<Unit>()
+            val stopped = CompletableDeferred<Unit>()
+            coEvery { tagPlayer.play(SoundOrVideoTag("question.mp3"), any()) } coAnswers {
+                started.complete(Unit)
+                try {
+                    awaitCancellation()
+                } finally {
+                    withContext(NonCancellable) { stopped.await() }
+                }
+            }
+            coEvery { tagPlayer.play(SoundOrVideoTag("one.mp3"), any()) } coAnswers { awaitCancellation() }
+            playAllForSide(CardSide.QUESTION)
+            started.await()
+
+            coroutineScope {
+                // suspends until the question stops playing
+                launch(start = CoroutineStart.UNDISPATCHED) { setEnabled(false) }
+                launch(start = CoroutineStart.UNDISPATCHED) { playOne(SoundOrVideoTag("one.mp3")) }
+                stopped.complete(Unit)
+            }
+
+            assertFalse(isPlaying, "media is playing in a disabled player")
+            coVerify(exactly = 0) { tagPlayer.play(SoundOrVideoTag("one.mp3"), any()) }
+        }
+
+    @Test
+    fun `the player becomes idle if the request replacing a playback is cancelled`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("question.mp3")),
+        ) {
+            val started = CompletableDeferred<Unit>()
+            val stopped = CompletableDeferred<Unit>()
+            coEvery { tagPlayer.play(SoundOrVideoTag("question.mp3"), any()) } coAnswers {
+                started.complete(Unit)
+                try {
+                    awaitCancellation()
+                } finally {
+                    withContext(NonCancellable) { stopped.await() }
+                }
+            }
+            playAllForSide(CardSide.QUESTION)
+            started.await()
+
+            coroutineScope {
+                // suspends until the question stops playing
+                val request = launch(start = CoroutineStart.UNDISPATCHED) { playOne(SoundOrVideoTag("one.mp3")) }
+                request.cancelAndJoin()
+                stopped.complete(Unit)
+            }
+            awaitIdle()
+
+            coVerify(exactly = 0) { tagPlayer.play(SoundOrVideoTag("one.mp3"), any()) }
+        }
+
+    @Test
+    fun `the player is not idle while a playback replaces another`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("question.mp3")),
+        ) {
+            val started = Channel<Unit>(Channel.UNLIMITED)
+            coEvery { tagPlayer.play(any(), any()) } coAnswers {
+                started.send(Unit)
+                awaitCancellation()
+            }
+            playAllForSide(CardSide.QUESTION)
+            started.receive()
+            val wasIdle = AtomicBoolean(false)
+            // unconfined: observes every change of the playback state
+            val idleWatcher =
+                CoroutineScope(Dispatchers.Unconfined).launch {
+                    awaitIdle()
+                    wasIdle.set(true)
+                }
+
+            playOne(SoundOrVideoTag("one.mp3"))
+            started.receive()
+
+            assertFalse(wasIdle.get(), "the player was idle between two playbacks")
+            idleWatcher.cancel()
+            stop()
         }
 
     private fun verifyNoSoundsPlayed() {
