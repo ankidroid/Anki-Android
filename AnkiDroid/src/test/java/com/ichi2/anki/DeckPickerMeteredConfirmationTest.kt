@@ -384,6 +384,7 @@ class DeckPickerMeteredConfirmationTest : RobolectricTest() {
 
         recreate(controller)
         controller.start().resume().visible()
+        controller.get().awaitStartup()
         val dialog = warning(controller.get())
         assertTrue(attempts.isEmpty())
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
@@ -408,9 +409,10 @@ class DeckPickerMeteredConfirmationTest : RobolectricTest() {
     private fun recreate(controller: ActivityController<DeckPicker>) {
         val original = controller.get()
         controller.recreate()
-        controller.get().viewModel.awaitStartup()
+        val recreated = controller.get()
+        recreated.awaitStartup()
         advanceRobolectricLooper()
-        assertNotSame(original, controller.get())
+        assertNotSame(original, recreated)
     }
 
     private fun warning(activity: DeckPicker): AlertDialog {
