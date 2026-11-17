@@ -22,6 +22,7 @@ import kotlin.math.max
 
 // Top-level build file where you can add configuration options common to all subprojects/modules.
 plugins {
+    id("ankidroid.plugins.test-selection")
     // Use `id` to avoid classpath conflicts. Versions are pinned by buildSrc/.
     id("com.android.application") apply false
     id("com.android.library") apply false
