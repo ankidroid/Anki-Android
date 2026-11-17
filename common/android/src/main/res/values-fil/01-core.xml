@@ -122,6 +122,7 @@
         <item quantity="other">Burahin ang \"%2$s\" uri ng kard, at ang %1$d kard nito?</item>
     </plurals>
     <string name="card_template_editor_save_error">Hindi ma-i-save ang mga binago sa padron ng card: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Nabura ang uri ng card sa kasalukuyang card.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>

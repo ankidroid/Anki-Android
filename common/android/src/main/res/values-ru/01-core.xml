@@ -132,6 +132,7 @@
         <item quantity="other">Удалить тип “%2$s” и его %1$d карточек?</item>
     </plurals>
     <string name="card_template_editor_save_error">Не удаётся сохранить изменения в шаблоне: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>

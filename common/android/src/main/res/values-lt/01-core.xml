@@ -132,6 +132,7 @@
         <item quantity="other">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d kortelių?</item>
     </plurals>
     <string name="card_template_editor_save_error">Negalima užsaugoti kortelių šablono pakeitimo: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Esamos kortelės šablonas buvo ištrintas.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Skaitykite ir rašykite į „AnkiDroid“ duomenų bazę</string>

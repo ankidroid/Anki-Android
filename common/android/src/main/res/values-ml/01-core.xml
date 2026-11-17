@@ -122,6 +122,7 @@
         <item quantity="other">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡുകളും ഇല്ലാതാക്കണോ?</item>
     </plurals>
     <string name="card_template_editor_save_error">കാർഡ് ടെംപ്ലേറ്റ് മാറ്റങ്ങൾ സംരക്ഷിക്കാൻ കഴിയില്ല: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">നിലവിലെ കാർഡിനായുള്ള കാർഡ് തരം ഇല്ലാതാക്കി.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ഡാറ്റാബേസ് വായിച്ച് എഴുതുക</string>

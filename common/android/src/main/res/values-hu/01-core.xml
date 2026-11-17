@@ -122,6 +122,7 @@
         <item quantity="other">Törlöd a “%2$s” kártyatípust és a %1$d kártyákat?</item>
     </plurals>
     <string name="card_template_editor_save_error">Nem lehet elmenteni a kártya sablonjának változásait: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">A kártya típusa törölve lett.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>

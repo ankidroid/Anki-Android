@@ -117,6 +117,7 @@
         <item quantity="other">Padam jenis kad “%2$s”, dan %1$d kad-kadnya?</item>
     </plurals>
     <string name="card_template_editor_save_error">Gagal simpan suntingan templat kad: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Jenis kad bagi kad ini telah dipadam.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke pangkalan data AnkiDroid</string>

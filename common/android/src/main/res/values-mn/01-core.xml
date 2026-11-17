@@ -122,6 +122,7 @@
         <item quantity="other">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
     </plurals>
     <string name="card_template_editor_save_error">Картны загварын өөрчлөлтүүдийг хадгалах боломжгүй байна:%s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Энэ картны төрөл нь устгагдсан байна</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>

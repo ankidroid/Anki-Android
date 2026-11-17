@@ -122,6 +122,7 @@
         <item quantity="other">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డులు?</item>
     </plurals>
     <string name="card_template_editor_save_error">చీటి టెంప్లేట్ మార్పులను సేవ్ చేయడం సాధ్యపడలేదు: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ప్రస్తుత చీటి కోసం చీటి రకం తొలగించబడింది.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>

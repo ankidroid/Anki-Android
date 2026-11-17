@@ -117,6 +117,7 @@
         <item quantity="other">ลบชนิดการ์ด \"%2$s\" และการ์ด %1$d ใบของมันหรือไม่?</item>
     </plurals>
     <string name="card_template_editor_save_error">ไม่สามารถบันทึกการแก้ไขรูปแบบของการ์ด: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ชนิดการ์ดสำหรับการ์ดปัจจุบันถูกลบแล้ว</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">อ่านและเขียน ลงใน ฐานข้อมูล AnkiDroid\"</string>

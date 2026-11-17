@@ -122,6 +122,7 @@
         <item quantity="other">\"%2$s\" કાર્ડનો પ્રકાર અને તેના %1$d કાર્ડ કાઢી નાખીએ?</item>
     </plurals>
     <string name="card_template_editor_save_error">કાર્ડ ટેમ્પલેટ ફેરફારો સાચવવામાં અસમર્થ: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">વર્તમાન કાર્ડ માટે કાર્ડનો પ્રકાર કાઢી નાખવામાં આવ્યો હતો.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ડેટાબેઝ વાંચો અને લખો</string>

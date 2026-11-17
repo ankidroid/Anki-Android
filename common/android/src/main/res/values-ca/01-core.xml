@@ -122,6 +122,7 @@
         <item quantity="other">Voleu eliminar el tipus de carta \"%2$s\", i les seves %1$d cartes?</item>
     </plurals>
     <string name="card_template_editor_save_error">No es poden desar els canvis a la plantilla de carta: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">S\'ha esborrat el tipus de carta per la carta actual.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>

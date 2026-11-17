@@ -117,6 +117,7 @@
         <item quantity="other">\"%2$s\" кәрт төрен hәм аның %1$d кәртен бетерергәме?</item>
     </plurals>
     <string name="card_template_editor_save_error">Кәрт шаблонындагы үзгәртүләрне саклап булмый: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Бу кәртнең кәрт төре бетерелгән иде.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid мәгълүмәт базасына уку һәм язу</string>

@@ -122,6 +122,7 @@
         <item quantity="other">Verwijder het “%2$s” kaarttype, en zijn %1$d kaarten?</item>
     </plurals>
     <string name="card_template_editor_save_error">Kan de wijzigingen aan het kaartsjabloon niet opslaan: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Het kaarttype voor de huidige kaart is verwijderd.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>

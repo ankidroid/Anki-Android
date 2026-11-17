@@ -122,6 +122,7 @@
         <item quantity="other">Eliminare il tipo di carta «%2$s», e le sue carte %1$d?</item>
     </plurals>
     <string name="card_template_editor_save_error">Impossibile salvare le modifiche al modello di carta: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Il tipo di carta per la carta attuale è stato eliminato.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>

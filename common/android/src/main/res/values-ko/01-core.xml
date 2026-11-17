@@ -117,6 +117,7 @@
         <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
     </plurals>
     <string name="card_template_editor_save_error">카드 템플릿 변경 사항을 저장할 수 없습니다. %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">현재 카드의 카드 유형은 삭제되었습니다.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid 데이터베이스 읽고 쓰기</string>

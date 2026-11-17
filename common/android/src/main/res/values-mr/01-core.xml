@@ -122,6 +122,7 @@
         <item quantity="other">“%2$s” कार्ड प्रकार आणि त्याची %1$d कार्ड हटवायची?</item>
     </plurals>
     <string name="card_template_editor_save_error">कार्ड टेम्पलेट बदल जतन करण्यात अक्षम:%s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्डासाठी कार्ड प्रकार हटविला गेला.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid डेटाबेस वाचा आणि लिहा</string>

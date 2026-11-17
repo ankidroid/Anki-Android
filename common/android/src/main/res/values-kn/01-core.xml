@@ -122,6 +122,7 @@
         <item quantity="other">“%2$s” ಕಾರ್ಡ್ ಪ್ರಕಾರ ಮತ್ತು ಅದರ %1$d ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ?</item>
     </plurals>
     <string name="card_template_editor_save_error">ಕಾರ್ಡ್ ಟೆಂಪ್ಲೇಟ್ ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ:%s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">ಪ್ರಸ್ತುತ ಕಾರ್ಡ್‌ನ ಕಾರ್ಡ್ ಪ್ರಕಾರವನ್ನು ಅಳಿಸಲಾಗಿದೆ.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೇಟಾಬೇಸ್‌ಗೆ ಓದಿ ಮತ್ತು ಬರೆಯಿರಿ</string>

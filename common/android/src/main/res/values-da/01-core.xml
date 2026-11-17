@@ -122,6 +122,7 @@
         <item quantity="other">Slet korttypen “%2$s” og dens %1$d kort?</item>
     </plurals>
     <string name="card_template_editor_save_error">Kan ikke gemme kortskabelonændringer: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Korttypen for det aktuelle kort blev slettet.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Læse og skrive til AnkiDroid-databasen</string>

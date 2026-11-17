@@ -122,6 +122,7 @@
         <item quantity="other">\"%2$s\" 𐌺𐌰𐍂𐍄𐌰𐌷𐌰𐌹𐌳𐌰𐌿 𐍆𐍂𐌰𐌵𐌹𐍃𐍄𐌾𐌰𐌽, 𐌾𐌰𐌷 %1$d 𐌺𐌰𐍂𐍄𐍉𐌼 𐍃𐌴𐌹𐌽𐌰𐌹𐌼?</item>
     </plurals>
     <string name="card_template_editor_save_error">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐍆𐌰𐌿𐍂𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐌴: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">𐌷𐌰𐌹𐌳𐌿𐍃 𐌺𐌰𐍂𐍄𐍉 𐌺𐌰𐍂𐍄𐌰𐌹 𐌰𐌽𐌳𐍅𐌰𐌹𐍂𐌸𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌹𐌸𐍃 𐌹𐍃𐍄.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">𐌳𐌿 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌳𐌰𐍄𐌰𐌱𐌿𐍃𐌰 𐌰𐌽𐌰𐌺𐌿𐌽𐌽𐌰𐌽 𐌾𐌰𐌷 𐌼𐌴𐌻𐌾𐌰𐌽</string>

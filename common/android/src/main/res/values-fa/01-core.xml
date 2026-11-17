@@ -122,6 +122,7 @@
         <item quantity="other">حذف نوع کارت \"%2$s\"، و %1$d تا از کارت‌های آن؟</item>
     </plurals>
     <string name="card_template_editor_save_error">نمیتوان تغییرات قالب کارت را ذخیره کرد: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">نوع کارت برای کارت فعلی حذف شد.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">بخوان و به پایگاه داده AnkiDroid پیام بده</string>

@@ -132,6 +132,7 @@
         <item quantity="other">Выдаліць тып карткі \'%2$s\' і %1$d яе картак?</item>
     </plurals>
     <string name="card_template_editor_save_error">Немагчыма захаваць змены ў шаблоне карткі: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Тып карткі для бягучай карткі быў выдалены.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>

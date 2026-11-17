@@ -117,6 +117,7 @@
         <item quantity="other">カードタイプ \'%2$s\' とそのカード%1$d枚を削除しますか？</item>
     </plurals>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroidデータベースの読み取りと書き込み</string>

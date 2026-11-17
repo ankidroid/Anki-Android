@@ -122,6 +122,7 @@
         <item quantity="other">Të fshihet lloji i kartës \"%2$s\" dhe %1$d kartat e saj?</item>
     </plurals>
     <string name="card_template_editor_save_error">Ndryshimet e modelit të kartës nuk mund të ruhen: %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Lloji i kartës për kartën aktuale u fshi.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lexoni dhe shkruani në bazën e të dhënave AnkiDroid</string>

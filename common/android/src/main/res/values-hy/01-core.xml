@@ -122,6 +122,7 @@
         <item quantity="other">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
     </plurals>
     <string name="card_template_editor_save_error">Չստացվեց պահպանել քարտի կաղապարի փոփոխությունները. %s</string>
+    <string name="card_template_editor_changes_saved">Changes saved</string>
     <string name="template_for_current_card_deleted">Ներկայիս քարտի տեսակը ջնջվել է։</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Կարդալ և գրել AnkiDroid-ի շտեմարանի մեջ</string>
