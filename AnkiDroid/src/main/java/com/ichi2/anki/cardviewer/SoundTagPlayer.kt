@@ -135,8 +135,8 @@ class SoundTagPlayer(
                 Timber.d("starting sound tag")
                 start()
             } else {
-                Timber.d("unable to get audio focus, cancelling work")
-                continuation.cancel()
+                Timber.d("unable to get audio focus, stopping media")
+                continuation.resumeWithException(MediaException(MediaErrorBehavior.STOP_MEDIA))
             }
         }
     }
