@@ -577,6 +577,21 @@ class CardBrowserFragment :
             )
         }
 
+    internal val isAtEndOfList: Boolean
+        get() = isVisible && ::cardsListView.isInitialized && !cardsListView.canScrollVertically(1)
+
+    /** Keep the final row visible as reaching the end brings navigation back. */
+    internal fun keepRowsAboveReturningBottomBar(heightLost: Int) {
+        if (!isAtEndOfList) return
+        // The bar first replaces the padding reserved for the system bar and rounded corners.
+        val contentHeightLost = (heightLost - cardsListView.paddingBottom).coerceAtLeast(0)
+        if (contentHeightLost == 0) return
+        val firstPosition = layoutManager.findFirstVisibleItemPosition()
+        val firstRow = layoutManager.findViewByPosition(firstPosition) ?: return
+        val offset = layoutManager.getDecoratedTop(firstRow) - cardsListView.paddingTop - contentHeightLost
+        layoutManager.scrollToPositionWithOffset(firstPosition, offset)
+    }
+
     private fun applyContentInsets(root: View) {
         val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
         val toolbarContainer = root.findViewById<View?>(R.id.toolbar_container)

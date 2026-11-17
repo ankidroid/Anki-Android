@@ -5,6 +5,7 @@ package com.ichi2.anki
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.isVisible
@@ -25,6 +26,7 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.pages.Statistics
+import kotlin.math.roundToInt
 import com.google.android.material.R as MaterialR
 
 /**
@@ -49,19 +51,37 @@ fun setupBottomNavigation() {
     // Once raised above the bar, the summary overlaps the deck list: a solid background stops deck names showing through.
     studiedSummary.setBackgroundColor(MaterialColors.getColor(bottomNav, MaterialR.attr.colorSurface))
     bottomNav.isVisible = true
-    val scrollBehavior = HideViewOnScrollBehavior.from(bottomNav)
+    val scrollBehavior =
+        object : HideViewOnScrollBehavior<BottomNavigationView>(EDGE_BOTTOM) {
+            override fun slideOut(
+                child: BottomNavigationView,
+                animate: Boolean,
+            ) {
+                val browser = deckPicker.supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) as? CardBrowserFragment
+                if (browser?.isAtEndOfList == true) {
+                    slideIn(child, animate)
+                } else {
+                    super.slideOut(child, animate)
+                }
+            }
+        }
+    bottomNav.updateLayoutParams<CoordinatorLayout.LayoutParams> { behavior = scrollBehavior }
 
     fun updateFragmentBottomMargin() {
-        val margin =
-            if (scrollBehavior.isScrolledIn) {
-                bottomNav.height
-            } else {
-                ViewCompat.getRootWindowInsets(bottomNav)?.getInsets(navigationBars())?.bottom ?: 0
-            }
+        val browser = deckPicker.supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) as? CardBrowserFragment
+        // The browser pads its own last row, so its viewport can extend behind the gesture bar.
+        val systemBarInset =
+            if (browser?.isVisible == true) 0 else ViewCompat.getRootWindowInsets(bottomNav)?.getInsets(navigationBars())?.bottom ?: 0
+        val margin = (bottomNav.height - bottomNav.translationY).roundToInt().coerceAtLeast(systemBarInset)
         if (fragmentContainer.marginBottom != margin) {
+            browser?.keepRowsAboveReturningBottomBar(margin - fragmentContainer.marginBottom)
             fragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = margin }
         }
     }
+
+    // Move the viewport and its rows with the bar, rather than clipping rows at its destination
+    // as soon as the show/hide state changes.
+    bottomNav.animate().setUpdateListener { updateFragmentBottomMargin() }
 
     fun positionStudiedSummary(animate: Boolean) {
         // The "Studied X cards today" summary is anchored to the bottom of the Decks layout, not to the bar.
@@ -243,10 +263,14 @@ private fun showBottomNavFragment(
  */
 fun Fragment.updateBottomNavOnScroll(dy: Int) {
     val deckPicker = activity as? DeckPicker ?: return
-    if (dy == 0 || !isVisible || !deckPicker.bottomNavigationEnabled) return
+    if (!isVisible || !deckPicker.bottomNavigationEnabled) return
     val bottomNav = deckPicker.binding.bottomNavigation ?: return
     val behavior = HideViewOnScrollBehavior.from(bottomNav)
-    if (dy > 0) behavior.slideOut(bottomNav) else behavior.slideIn(bottomNav)
+    when {
+        this is CardBrowserFragment && isAtEndOfList -> behavior.slideIn(bottomNav)
+        dy > 0 -> behavior.slideOut(bottomNav)
+        dy < 0 -> behavior.slideIn(bottomNav)
+    }
 }
 
 /** Hides any fragments currently hosted in the bottom-nav container. */
