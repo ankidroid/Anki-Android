@@ -214,6 +214,24 @@ class CardMediaPlayerTest : JvmTest() {
         }
 
     @Test
+    fun `stopping playback does not call completed listener`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("aa.mp3")),
+        ) {
+            val started = CompletableDeferred<Unit>()
+            coEvery { tagPlayer.play(any(), any()) } coAnswers {
+                started.complete(Unit)
+                awaitCancellation()
+            }
+
+            playAllForSide(card, CardSide.QUESTION)
+            started.await()
+            stop()
+
+            verify(exactly = 0) { onMediaGroupCompleted.invoke() }
+        }
+
+    @Test
     fun `continue continues playback and calls completed listener`() =
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
@@ -241,6 +259,25 @@ class CardMediaPlayerTest : JvmTest() {
                 tagPlayer.play(SoundOrVideoTag("a.mp3"), any())
                 tagPlayer.play(SoundOrVideoTag("a.mp3"), any())
             }
+        }
+
+    @Test
+    fun `playing one sound over the side's media calls completed listener`() =
+        runSoundPlayerTest(
+            questions = listOf(SoundOrVideoTag("front.mp3")),
+        ) {
+            val started = CompletableDeferred<Unit>()
+            coEvery { tagPlayer.play(SoundOrVideoTag("front.mp3"), any()) } coAnswers {
+                started.complete(Unit)
+                awaitCancellation()
+            }
+            coEvery { tagPlayer.play(SoundOrVideoTag("one.mp3"), any()) } returns Unit
+            playAllForSide(card, CardSide.QUESTION)
+            started.await()
+
+            playOneAndWait(SoundOrVideoTag("one.mp3"))
+
+            ensureOnMediaGroupCompletedCalled()
         }
 
     @Test
