@@ -24,7 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="enabled" comment="Generic label for something that is turned on">Enabled</string>
+    <string name="enabled" comment="Generic label for something that is turned on">Yoqilgan</string>
     <string name="disabled" comment="Generic label for something that is turned off">Öçirilgan</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d daqiqa</item>
@@ -108,7 +108,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Uç barmoq bilan bosiş</string>
     <string name="gestures_four_finger_tap" maxLength="41">Tört barmoq bilan bosiş</string>
     <string name="gestures_shake" maxLength="41">Qurilmani silkitiş</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menyusi</string>
     <string name="card_browser_enable_external_context_menu_summary">“%s” kontekst menyusini ilova miqyosda yoqadi</string>
     <string name="double_scrolling_gap" maxLength="41">Tez aylantiriş</string>
     <string name="double_scrolling_gap_summ">Agar siz eReader bilan aylanma masofani ikki baravar oşirişni istasangiz, buni yoqing</string>
@@ -318,12 +318,12 @@
     <string name="open_changelog">Özgarişlar röyxatini oçiş</string>
     <string name="pref_cat_about_title" maxLength="41">AnkiDroid haqida</string>
     <string name="contributors_title">Hissa qöşganlar</string>
-    <string name="about_contributors_description"><![CDATA[Bular bizning ajoyib <a href=\"%1$s\">hissa qöşuvçilarimiz</a>. Siz ham dasturlaş, tarjima qiliş, xayriya qiliş va <a href=\"%2$s\">boşqa yöllar</a> orqali AnkiDroidʼga yordam berişingiz mumkin!]]></string>
+    <string name="about_contributors_description"><![CDATA[Bular — bizning ajoyib <a href=\"%1$s\">hissadorlarimiz</a>. Siz ham dasturlaş, tarjima qiliş, donat qiliş va <a href=\"%2$s\">boşqa yöllar</a> orqali AnkiDroidʼga yordam berişingiz mumkin!]]></string>
     <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Litsenziya</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> va <a href=\"%2$s\">AGPL-3.0</a> litsenziyalari ostida çiqarilgan, dastur kodi <a href=\"%3$s\">GitHubda</a> mavjud]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid, şuningdek, turli oçiq kodli <a href=\"%1$s\">litsenziyalar</a> asosida tarqatilgan uçinçi tomon kutubxonalari va piktogrammalaridan foydalanadi.]]></string>
-    <string name="donate_description"><![CDATA[<a href=\"%1$s\">Xayriya qiliş</a> orqali AnkiDroid rivojini qöllab-quvvatlaşingiz mumkin. Har qanday miqdordagi yordam yuksak qadrlanadi.]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\"> Donat qiliş</a> orqali AnkiDroid rivojlanişini qöllab-quvvatlaşingiz mumkin. Har qanday miqdordagi yordam biz uçun juda qadrli.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Qöl işorasini qöşiş</string>
     <string name="binding_add_key">Tugma qöşiş</string>

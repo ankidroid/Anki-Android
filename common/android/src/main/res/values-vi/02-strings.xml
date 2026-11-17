@@ -345,6 +345,8 @@
     <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Trở lại</string>
     <string name="start_recording">Ghi âm</string>
     <string name="stop_recording">Dừng</string>
+    <string name="pause_recording" comment="Description of a button which pauses an audio recording">Pause</string>
+    <string name="resume_recording" comment="Description of a button which continues a paused audio recording">Resume</string>
     <string name="play_recording">Phát</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Tiếp theo</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
