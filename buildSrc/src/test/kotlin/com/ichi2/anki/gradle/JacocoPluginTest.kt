@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 import java.io.File
 import java.util.Properties
 import javax.xml.parsers.DocumentBuilderFactory
@@ -192,6 +193,53 @@ class JacocoPluginTest {
     }
 
     @Test
+    fun `CI reports attribute dependency hits to the suite that ran`() {
+        writeFile(
+            "library/src/main/java/com/ichi2/Library.java",
+            "package com.ichi2; public class Library { public static int value() { return 7; } }",
+        )
+        writeFile(
+            "app/src/test/java/regression/AppTest.java",
+            """
+            package regression;
+            public class AppTest {
+                @org.junit.Test public void exercisesLibrary() {
+                    org.junit.Assert.assertEquals(7, com.ichi2.Library.value());
+                }
+            }
+            """.trimIndent(),
+        )
+        File(projectDir, "app/build.gradle").appendText(
+            "\ndependencies { testImplementation libs.junit.vintage.engine }\ntasks.withType(Test).configureEach { useJUnit() }\n",
+        )
+        val task = ":app:jacocoCiUnitTestReports"
+        val reports = File(projectDir, "app/build/reports/codecov")
+        val selected = runGradle(task, "-PciTestModules=:app")
+        assertThat(selected.task(":library:testDebugUnitTest"), equalTo(null))
+        assertThat(reports.list()?.toSet(), equalTo(setOf("app-test.xml")))
+        assertThat(coveredLines(reports.resolve("app-test.xml"), "com/ichi2/Library"), greaterThan(0))
+        assertThat(runGradle(task, "-PciTestModules=:app").output, containsString("Reusing configuration cache."))
+
+        // A suite that loses its final test must replace its previous hits in Codecov.
+        val appTest = File(projectDir, "app/src/test/java/regression/AppTest.java")
+        val appTestSource = appTest.readText()
+        assertThat(appTest.delete(), equalTo(true))
+        runGradle(task, "-PciTestModules=:app,:empty")
+        assertThat(reports.list()?.toSet(), equalTo(setOf("app-test.xml", "empty-test.xml")))
+        assertThat(coveredLines(reports.resolve("app-test.xml"), "com/ichi2/Library"), equalTo(0))
+
+        // Reusing a checkout must never upload a skipped suite's old XML.
+        runGradle(task, "-PciTestModules=:empty")
+        assertThat(reports.list()?.toSet(), equalTo(setOf("empty-test.xml")))
+        assertThat(coveredLines(reports.resolve("empty-test.xml"), "regression/Uncovered"), equalTo(0))
+
+        appTest.writeText(appTestSource)
+        val disabled = runGradle(task, "-PciTestModules=:app", "-Penable_coverage=false")
+        assertThat(disabled.task(":app:testPlayDebugUnitTest")?.outcome, equalTo(TaskOutcome.SUCCESS))
+        assertThat(reports.listFiles().orEmpty().isEmpty(), equalTo(true))
+    }
+
+    @Test
     fun `full CI runs seed a flag for each runtime suite`() {
         // Every module on the app's runtime graph gets a report task, including :empty, which has
         // no tests: CI uploads a report for each flag so stale coverage is replaced.
@@ -201,6 +249,41 @@ class JacocoPluginTest {
         }
         // :tooling is not on the app's runtime classpath, so it has no report.
         assertThat(output, not(containsString("tooling-test")))
+    }
+
+    @Test
+    fun `full CI selection retains all module tests and coverage sources`() {
+        val output = runCoverage("--dry-run", "-PciTestModules=*").output
+        assertThat(output, containsString(":app:testPlayDebugUnitTest SKIPPED"))
+        assertThat(output, containsString(":library:testDebugUnitTest SKIPPED"))
+        assertThat(output, containsString(":nested:core:test SKIPPED"))
+        assertThat(output, containsString("empty/src/main/kotlin"))
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = [":app", ":library", ":nested:core", ":app,:library", ""])
+    fun `unit report only schedules selected modules`(selection: String) {
+        val output = runCoverage("--dry-run", "-PciTestModules=$selection").output
+        val selected = selection.split(',').toSet()
+        for ((module, task) in listOf("app" to "testPlayDebugUnitTest", "library" to "testDebugUnitTest", "nested:core" to "test")) {
+            val expectedTask = containsString(":$module:$task SKIPPED")
+            val expectedSources = containsString("${module.replace(':', '/')}/src/main/kotlin")
+            assertThat(output, if (":$module" in selected) expectedTask else not(expectedTask))
+            assertThat(output, if (":$module" in selected) expectedSources else not(expectedSources))
+        }
+        assertThat(output, not(containsString("empty/src/main/kotlin")))
+    }
+
+    @Test
+    fun `changing selected modules invalidates configuration cache`() {
+        runCoverage("--dry-run", "-PciTestModules=:library")
+        val cached = runCoverage("--dry-run", "-PciTestModules=:library")
+        assertThat(cached.output, containsString("Reusing configuration cache."))
+
+        val changed = runCoverage("--dry-run", "-PciTestModules=:nested:core")
+        assertThat(changed.output, containsString(":nested:core:test SKIPPED"))
+        assertThat(changed.output, not(containsString(":library:testDebugUnitTest")))
+        assertThat(changed.output, not(containsString(":app:testPlayDebugUnitTest")))
     }
 
     /**
