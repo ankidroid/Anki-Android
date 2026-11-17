@@ -84,7 +84,9 @@ abstract class SelectAffectedTestModules : DefaultTask() {
      * Compares [comparisonBase] with the checked-out commit and includes both paths of a rename.
      * Returns `null` if the comparison is unavailable. An empty list means Git found no changes.
      */
+    @Suppress("ktlint:standard:comment-spacing")
     private fun changedPaths(): List<String>? {
+        //DEFECT: Reverting a target-only test dependency can leave stale hits if no test files changed.
         val base = comparisonBase.get()
         if (base.isEmpty()) return null
         if (!base.matches(Regex("[0-9a-fA-F]{40}"))) {
