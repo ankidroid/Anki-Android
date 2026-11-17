@@ -1467,7 +1467,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            cardMediaPlayer.loadCardAvTags(currentCard!!)
+            cardMediaPlayer.stop()
         }
         cardContent = content.html
         fillFlashcard()
@@ -1487,22 +1487,23 @@ abstract class AbstractFlashcardViewer :
             Timber.w("media is not played as the activity is inactive")
             return
         }
-        if (cardMediaPlayer.config?.autoplay != true && !doMediaReplay) return
+        val card = currentCard ?: return
+        if (!card.autoplay(getColUnsafe) && !doMediaReplay) return
         // Use TTS if TTS preference enabled and no other media source
-        val useTTS = tts.enabled && !cardMediaPlayer.hasMedia(displayAnswer)
+        val useTTS = tts.enabled && !card.hasMedia(displayAnswer)
         // We need to play the media from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
                 val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doMediaReplay) {
-                    true -> cardMediaPlayer.replayAll(side)
-                    false -> cardMediaPlayer.playAllForSide(side.toCardSide())
+                    true -> cardMediaPlayer.replayAll(card, side)
+                    false -> cardMediaPlayer.playAllForSide(card, side.toCardSide())
                 }
             }
             return
         }
 
-        val replayQuestion = cardMediaPlayer.config?.replayQuestion == true
+        val replayQuestion = card.replayQuestionAudioOnAnswerSide(getColUnsafe)
         // Text to speech is in effect here
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
@@ -1515,6 +1516,12 @@ abstract class AbstractFlashcardViewer :
         } else {
             replayOnTtsInit = true
         }
+    }
+
+    /** Whether the provided side has available media */
+    private fun Card.hasMedia(displayAnswer: Boolean): Boolean {
+        val renderOutput = renderOutput(getColUnsafe)
+        return if (displayAnswer) renderOutput.answerAvTags.isNotEmpty() else renderOutput.questionAvTags.isNotEmpty()
     }
 
     @VisibleForTesting
@@ -1570,7 +1577,7 @@ abstract class AbstractFlashcardViewer :
         content: String,
     ) {
         if (card != null) {
-            card.settings.mediaPlaybackRequiresUserGesture = cardMediaPlayer.config?.autoplay != true
+            card.settings.mediaPlaybackRequiresUserGesture = currentCard?.autoplay(getColUnsafe) != true
             card.loadDataWithBaseURL(
                 PostRequestBridge.BASE_URL,
                 content,

@@ -562,8 +562,7 @@ class ReviewerViewModel(
 
     private suspend fun loadAndPlayMedia(side: CardSide) {
         Timber.v("ReviewerViewModel::loadAndPlaySounds")
-        cardMediaPlayer.loadCardAvTags(currentCard.await())
-        cardMediaPlayer.autoplayAllForSide(side)
+        cardMediaPlayer.autoplayAllForSide(currentCard.await(), side)
     }
 
     private suspend fun updateMarkIcon() {
@@ -700,7 +699,7 @@ class ReviewerViewModel(
 
     private suspend fun replayMedia() {
         val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
-        cardMediaPlayer.replayAll(side)
+        cardMediaPlayer.replayAll(currentCard.await(), side)
     }
 
     private fun toggleWhiteboard() {
@@ -827,7 +826,6 @@ class ReviewerViewModel(
                 changes.noteText -> {
                     val card = currentCard.await()
                     withCol { card.load(this) }
-                    cardMediaPlayer.loadCardAvTags(card)
                     updateMarkIcon()
                     if (showingAnswer.value) {
                         showAnswer()
