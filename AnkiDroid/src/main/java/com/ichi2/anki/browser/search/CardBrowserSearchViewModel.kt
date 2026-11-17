@@ -216,6 +216,7 @@ class CardBrowserSearchViewModel(
         Timber.v("onSearchTextChanged '%s'", searchText)
 
         val sanitizedText = searchText.replace("\n", " ")
+        if (searchTextFlow.value == sanitizedText) return
 
         // move from system back to 'user'
         updateFilterState { it.copy() }
@@ -228,11 +229,12 @@ class CardBrowserSearchViewModel(
             Timber.i("submitting search")
             val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
             searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
-            closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
+            closeSearchViewFlow.emit(Unit)
         }
 
     fun submitCurrentSearch() {
+        updateFilterState { it.copy() }
         isScreenOpenFlow.value = false
     }
 
@@ -311,6 +313,7 @@ class CardBrowserSearchViewModel(
     fun syncState(search: SearchRequest) =
         viewModelScope.launch {
             Timber.d("syncing search state")
+            searchTextFlow.value = search.query
             filterStateUpdateFlow.emit(FilterUpdate.System(search.filters))
             submittedSearchFlow.emit(search)
         }

@@ -504,6 +504,23 @@ class CardBrowserSearchViewModelTest : JvmTest() {
             }
         }
 
+    @Test
+    fun `syncState preserves search query when filters are subsequently updated`() =
+        withViewModel {
+            val deck = col.decks.allNamesAndIds().first()
+            syncState(SearchRequest("synced query", SearchFilters.partial(decks = listOf(deck)))).join()
+            assertEquals("synced query", searchTextFlow.value)
+
+            submittedSearchFlow.test {
+                expectMostRecentItem()
+                setFlagsFilter(listOf(Flag.RED))
+                val updated = expectMostRecentItem()
+                assertEquals("synced query", updated?.query)
+                assertEquals(listOf(deck), updated?.filters?.decks)
+                assertEquals(listOf(Flag.RED), updated?.filters?.flags)
+            }
+        }
+
     fun withViewModel(
         cardCount: Int = 1,
         useSearchTools: Boolean = false,

@@ -98,6 +98,45 @@ class CardBrowserDeckSelectionTest : RobolectricTest() {
     }
 
     @Test
+    fun `main deck chip still filters after submitting a search`() {
+        addBasicNote("Matching")
+        val chosenDeck = addDeck("Chosen")
+        addBasicNote("Matching").moveToDeck("Chosen")
+        addBasicNote("Other").moveToDeck("Chosen")
+
+        withCardBrowserFragment(useSearchView = true) {
+            val search = assertNotNull(searchView)
+            search.show()
+            advanceRobolectricLooper()
+            search.editText.setText("Matching ")
+            search.editText.onEditorAction(IME_ACTION_SEARCH)
+            awaitSearch()
+            assertNull(childFragmentManager.findFragmentByTag(StandardSearchFragment.TAG))
+            assertEquals("Matching", activityViewModel.searchTerms)
+            assertEquals(2, activityViewModel.rowCount)
+
+            val chip = requireView().findViewById<Chip>(R.id.decks_chip)
+            assertTrue(chip.performClick())
+            selectDeck("Chosen")
+            awaitSearch()
+
+            assertEquals(chosenDeck, activityViewModel.deckId)
+            assertEquals("Matching", activityViewModel.searchTerms)
+            assertEquals("Chosen", chip.text.toString())
+            assertEquals(1, activityViewModel.rowCount)
+
+            assertTrue(chip.performClick())
+            selectDeck("All decks")
+            awaitSearch()
+
+            assertTrue(activityViewModel.hasSelectedAllDecks())
+            assertEquals("Matching", activityViewModel.searchTerms)
+            assertEquals("All decks", chip.text.toString())
+            assertEquals(2, activityViewModel.rowCount)
+        }
+    }
+
+    @Test
     fun `restored deck picker still updates search after browser recreation`() =
         runTest {
             addBasicNote("Outside")
