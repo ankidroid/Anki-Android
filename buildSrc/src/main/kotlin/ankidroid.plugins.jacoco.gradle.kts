@@ -87,9 +87,9 @@ val fileFilter =
     )
 
 registerJacocoCoverageReports(
-    fileFilter,
-    openReportRequested,
-    linuxHtmlCmd,
+    fileFilter = fileFilter,
+    openReportRequested = openReportRequested,
+    linuxHtmlCmd = linuxHtmlCmd,
 )
 
 // Issue 16640 - some emulators run, but register zero coverage
