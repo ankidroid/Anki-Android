@@ -9,9 +9,13 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.withCardBrowserFragment
+import com.ichi2.anki.common.utils.dp
+import com.ichi2.testutils.simulateKeyboard
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -69,6 +73,60 @@ class StandardSearchFragmentTest : RobolectricTest() {
 
         withFragment {
             assertTrue(binding.toggleSearchHistory.isVisible)
+        }
+    }
+
+    @Test
+    fun `expanded history keeps see less and saved searches on screen - Issue 23297`() {
+        val history = SearchHistory()
+        repeat(SearchHistory.MAX_ENTRIES) { history.addRecent(SearchHistoryEntry("prop:ivl>$it")) }
+
+        withShownFragment {
+            viewModel.toggleHistoryExpanded()
+            advanceRobolectricLooper()
+
+            assertSeeLessAndSavedSearchesOnScreen()
+        }
+    }
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `a long history entry keeps saved searches on screen - Issue 23297`() {
+        SearchHistory().addRecent(SearchHistoryEntry("tag:language ".repeat(200).trim()))
+
+        withShownFragment {
+            assertTrue(binding.savedSearchesLabel.bottom <= binding.root.height, "saved searches are on screen")
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "w360dp-h640dp-mdpi")
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `a short screen with the keyboard open shows a whole history row`() {
+        val history = SearchHistory()
+        repeat(SearchHistory.MAX_ENTRIES) { history.addRecent(SearchHistoryEntry("prop:ivl>$it")) }
+
+        withShownFragment {
+            requireActivity().simulateKeyboard(keyboardHeight = 280.dp)
+
+            val row = requireNotNull(binding.searchHistory.getChildAt(0))
+            assertTrue(binding.searchHistory.height >= row.height, "a whole history row is shown")
+            assertTrue(binding.searchHistoryContainer.bottom <= binding.root.height, "'See more' is on screen")
+        }
+    }
+
+    private fun StandardSearchFragment.assertSeeLessAndSavedSearchesOnScreen() {
+        assertTrue(binding.toggleSearchHistory.height > 0, "'See less' has a height")
+        assertTrue(binding.searchHistoryContainer.bottom <= binding.root.height, "'See less' is on screen")
+        assertTrue(binding.savedSearchesLabel.bottom <= binding.root.height, "saved searches are on screen")
+    }
+
+    private fun withShownFragment(block: StandardSearchFragment.() -> Unit) {
+        runTest { SavedSearches.saveToConfig(listOf(SavedSearch("Languages", "tag:language"))) }
+        withCardBrowserFragment(useSearchView = true) {
+            requireNotNull(searchView).show()
+            advanceRobolectricLooper()
+            block(requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG))
         }
     }
 
