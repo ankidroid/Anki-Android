@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
@@ -26,6 +27,9 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.pages.Statistics
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.themes.Themes
 import kotlin.math.roundToInt
 import com.google.android.material.R as MaterialR
 
@@ -203,6 +207,9 @@ fun selectedBottomNavItem(): NavigationItem? {
 context(deckPicker: DeckPicker)
 private fun showTab(item: NavigationItem) {
     val binding = deckPicker.binding
+    val surfaceToolbar = item == NavigationItem.BROWSER && Prefs.devUsingCardBrowserSearchView
+    WindowCompat.getInsetsController(deckPicker.window, deckPicker.window.decorView).isAppearanceLightStatusBars =
+        if (surfaceToolbar) !Themes.isNightTheme else Themes.currentTheme == DayTheme.EINK
     val contentWrapper = checkNotNull(binding.deckPickerContentWrapper)
     val fragmentContainer = checkNotNull(binding.bottomNavFragmentContainer)
     deckPicker.bottomNavBackCallback.isEnabled = item != NavigationItem.HOME
