@@ -702,7 +702,8 @@ class ReviewerFragment :
             return when (url.scheme) {
                 "gesture" -> {
                     if (isScrolling) return true
-                    gestureParser.parse(url, scale, webView) { gesture ->
+                    val rawGesture = RawGesture.fromUri(url) ?: return true
+                    gestureParser.parse(rawGesture, scale, webView) { gesture ->
                         if (gesture == null) return@parse
                         Timber.v("ReviewerFragment::onGesture %s", gesture)
                         // Stylus mode passes finger input through to the WebView. Whiteboard
