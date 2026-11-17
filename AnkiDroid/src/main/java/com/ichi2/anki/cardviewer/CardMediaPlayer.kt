@@ -31,11 +31,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 import java.io.Closeable
@@ -180,36 +180,13 @@ class CardMediaPlayer : Closeable {
     suspend fun playOne(tag: AvTag) {
         if (!isEnabled) return
 
-        suspend fun play(tag: AvTag) = play(tag, isAutomaticPlayback = false)
-
-        suspend fun retry() {
-            try {
-                play(tag)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Timber.w(e, "failed to replay media")
-            }
-        }
-
         playAvTagsJob =
             playbackMutex.withLock {
                 playAvTagsJob?.cancelAndJoin()
                 Timber.i("playing one AV Tag")
 
                 scope.launch {
-                    try {
-                        play(tag)
-                    } catch (e: MediaException) {
-                        when (e.continuationBehavior) {
-                            RETRY_MEDIA -> retry()
-                            CONTINUE_MEDIA, STOP_MEDIA -> { }
-                        }
-                    } catch (e: CancellationException) {
-                        throw e
-                    } catch (e: Exception) {
-                        Timber.w(e, "Exception playing AV Tag")
-                    }
+                    play(tag, isAutomaticPlayback = false)
                     Timber.v("completed playing one AV Tag")
                     playAvTagsJob = null
                 }
@@ -263,46 +240,45 @@ class CardMediaPlayer : Closeable {
     private suspend fun play(
         tag: AvTag,
         isAutomaticPlayback: Boolean,
-    ): Boolean =
-        withContext(Dispatchers.IO) {
-            suspend fun play() {
-                ensureActive()
-                when (tag) {
-                    is SoundOrVideoTag -> soundTagPlayer.play(tag, mediaErrorListener)
-                    is TTSTag -> {
-                        awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
-                            mediaErrorListener.onTtsError(it, isAutomaticPlayback)
-                        }
+    ): Boolean {
+        suspend fun play() {
+            currentCoroutineContext().ensureActive()
+            when (tag) {
+                is SoundOrVideoTag -> soundTagPlayer.play(tag, mediaErrorListener)
+                is TTSTag -> {
+                    awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
+                        mediaErrorListener.onTtsError(it, isAutomaticPlayback)
                     }
                 }
-                ensureActive()
             }
-
-            try {
-                play()
-            } catch (e: MediaException) {
-                when (e.continuationBehavior) {
-                    STOP_MEDIA -> return@withContext false
-                    CONTINUE_MEDIA -> return@withContext true
-                    RETRY_MEDIA -> {
-                        try {
-                            Timber.i("retrying media")
-                            play()
-                            Timber.i("retry succeeded")
-                        } catch (e: CancellationException) {
-                            throw e
-                        } catch (e: Exception) {
-                            Timber.w(e, "retry media failed")
-                        }
-                    }
-                }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Timber.w(e, "Unexpected media exception. Continuing")
-            }
-            return@withContext true
+            currentCoroutineContext().ensureActive()
         }
+
+        try {
+            play()
+        } catch (e: MediaException) {
+            when (e.continuationBehavior) {
+                STOP_MEDIA -> return false
+                CONTINUE_MEDIA -> return true
+                RETRY_MEDIA -> {
+                    try {
+                        Timber.i("retrying media")
+                        play()
+                        Timber.i("retry succeeded")
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Timber.w(e, "retry media failed")
+                    }
+                }
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Unexpected media exception. Continuing")
+        }
+        return true
+    }
 
     /** Whether the provided side has available media */
     fun hasMedia(displayAnswer: Boolean): Boolean = if (displayAnswer) answerAvTags.isNotEmpty() else questionAvTags.isNotEmpty()
