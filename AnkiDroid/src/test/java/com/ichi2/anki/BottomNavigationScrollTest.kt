@@ -12,6 +12,7 @@ import android.webkit.WebView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.behavior.HideViewOnScrollBehavior
@@ -22,6 +23,7 @@ import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.databinding.PageStatisticsBinding
 import com.ichi2.anki.pages.scrolledUpToBottom
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withPref
 import org.hamcrest.MatcherAssert.assertThat
@@ -314,6 +316,32 @@ class BottomNavigationScrollTest : RobolectricTest() {
 
             assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
             assertThat((container.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin < nav.height, equalTo(true))
+        }
+
+    @Test
+    fun `browser clears rounded corners after the bottom bar hides`() =
+        withBottomNavigation { deckPicker ->
+            deckPicker.bottomNav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+            val scroller = deckPicker.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
+            assertThat("the visible bar already clears the corners", scroller.handleBottomInset, equalTo(0))
+
+            HideViewOnScrollBehavior.from(deckPicker.bottomNav).slideOut(deckPicker.bottomNav)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+
+            val container = deckPicker.binding.bottomNavFragmentContainer!!
+            assertThat(
+                "the container and handle together clear the rounded corners",
+                container.marginBottom + scroller.handleBottomInset,
+                equalTo(48.dp.toPx(deckPicker)),
+            )
+
+            HideViewOnScrollBehavior.from(deckPicker.bottomNav).slideIn(deckPicker.bottomNav)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+            assertThat("restoring the bar removes the extra padding", scroller.handleBottomInset, equalTo(0))
         }
 
     private fun withBottomNavigation(test: (DeckPicker) -> Unit) =

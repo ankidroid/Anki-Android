@@ -47,6 +47,7 @@ import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -610,28 +611,28 @@ class CardBrowserFragment :
             } else {
                 null
             }
+        var contentInsets: WindowInsetsCompat? = null
 
-        fun updateBottomInsets(insets: WindowInsetsCompat) {
+        fun updateBottomInsets() {
+            val insets = contentInsets ?: return
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
-            // The bottom of the safe area is above the navigation bar, rounded display corners and keyboard.
-            // When scrolled to the bottom of the scrollbar should be aligned with the last row.
-            // Embedded content already ends above the bottom navigation, including its system-bar inset.
-            val safeAreaBottom =
-                if (activity is CardBrowser) maxOf(bars.bottom, insets.bottomCornerClearance(root)) else 0
-            // Due to clipToPadding=false, only the last row is affected
+            // The embedded host reserves space for its bottom bar. When it hides, its remaining
+            // margin may clear the system navigation bar without clearing the rounded corners.
+            val hostBottomMargin = if (activity is CardBrowser) 0 else (root.parent as? View)?.marginBottom ?: 0
+            val safeAreaBottom = (maxOf(bars.bottom, insets.bottomCornerClearance(root)) - hostBottomMargin).coerceAtLeast(0)
             cardsListView.updatePadding(bottom = safeAreaBottom)
-            searchContent?.updatePadding(left = bars.left, right = bars.right, bottom = safeAreaBottom)
-            // The scrollbar track stays full-height (edge to edge); only the handle is kept above
-            // the safe-area boundary so it remains touchable and aligns with the last row.
+            searchContent?.updatePadding(bottom = safeAreaBottom)
             browserScroller.handleBottomInset = safeAreaBottom
         }
 
+        root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateBottomInsets() }
         appBar?.addOnOffsetChangedListener { bar, offset ->
             // ScrollingViewBehavior measures for a collapsed app bar. Reserve the portion below
             // the viewport while it is expanded, including when a scrollbar jump leaves it open.
             browserContent?.updatePadding(bottom = bar.totalScrollRange + offset)
         }
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            contentInsets = insets
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
             statusBarScrim?.setBounds(0, 0, v.width, insets.getInsets(statusBars()).top)
             if (useSearchView) {
@@ -643,7 +644,8 @@ class CardBrowserFragment :
                 v.updatePadding(left = bars.left, right = bars.right)
                 toolbarContainer?.updatePadding(top = bars.top)
             }
-            updateBottomInsets(insets)
+            searchContent?.updatePadding(left = bars.left, right = bars.right)
+            updateBottomInsets()
             insets
         }
     }
