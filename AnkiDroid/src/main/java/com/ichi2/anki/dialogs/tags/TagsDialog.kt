@@ -20,7 +20,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -36,6 +35,7 @@ import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogTagsBinding
 import com.ichi2.anki.launchCatchingTask
@@ -326,9 +326,7 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbar.setTitle(titleRes)
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
-        val drawable = ContextCompat.getDrawable(requireContext(), CommonR.drawable.ic_add)
-        drawable?.setTint(requireContext().getColor(CommonR.color.white))
-        toolbarAddItem.icon = drawable
+        toolbarAddItem.icon?.mutate()?.setTint(getColorFromAttr(toolbar.context, CommonR.attr.actionBarTextColor))
 
         toolbarAddItem.setOnMenuItemClickListener {
             val query = toolbarSearchView!!.query.toString()
