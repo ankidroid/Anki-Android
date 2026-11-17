@@ -13,6 +13,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import com.ichi2.anki.BackupManager
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.AnkiDroidFolder
@@ -20,6 +21,7 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
@@ -420,11 +422,13 @@ class ProfileManager private constructor(
         Timber.i("deleteProfile: starting deletion of %s", profileId)
 
         val collectionDir = resolveStoredCollectionDir(profileId)
-        if (collectionDir != null) {
-            Timber.d("deleteProfile: cleaning collection dir %s", collectionDir)
-            deleteCollectionArtifactsSafely(collectionDir)
-        } else {
-            Timber.d("deleteProfile: no on-disk collection dir to clean for %s", profileId)
+        when {
+            collectionDir == null -> Timber.d("deleteProfile: no on-disk collection dir to clean for %s", profileId)
+            isUsedByAnotherProfile(collectionDir, profileId) -> Timber.w("deleteProfile: keeping a collection dir another profile uses")
+            else -> {
+                Timber.d("deleteProfile: cleaning collection dir %s", collectionDir)
+                deleteCollectionArtifactsSafely(collectionDir)
+            }
         }
 
         val appDataRoot = ContextCompat.getDataDir(profileContext)
@@ -479,6 +483,30 @@ class ProfileManager private constructor(
         return candidate.takeIf { it.exists() && it.isDirectory }
     }
 
+    private fun isUsedByAnotherProfile(
+        collectionDir: File,
+        profileId: ProfileId,
+    ): Boolean {
+        val canonicalPath = collectionDir.canonicalPath
+        return getAllProfiles().keys.any { other ->
+            val otherDir = resolveStoredCollectionDir(other)?.canonicalFile
+            when {
+                other == profileId || otherDir == null -> false
+                otherDir.path == canonicalPath -> true
+                else -> otherDir.path.equals(canonicalPath, ignoreCase = true) && otherDir.showsFilesFrom(collectionDir)
+            }
+        }
+    }
+
+    private fun File.showsFilesFrom(dir: File): Boolean {
+        val probe = File.createTempFile("probe", null, dir)
+        return try {
+            File(this, probe.name).exists()
+        } finally {
+            probe.delete()
+        }
+    }
+
     /**
      * The default-location fallback used when the profile has never written `PREF_COLLECTION_PATH`.
      *
@@ -530,15 +558,25 @@ class ProfileManager private constructor(
     private fun deleteCollectionArtifactsSafely(collectionDir: File) {
         if (!collectionDir.exists() || !collectionDir.isDirectory) return
 
-        collectionDir.listFiles()?.forEach { entry ->
+        collectionDir.listFiles { file -> file.name != NOMEDIA_FILE }?.forEach { entry ->
             when {
                 entry.isFile && entry.name in COLLECTION_ARTIFACT_FILES -> entry.toPath().deleteOrThrow()
+                entry.isDirectory && entry.name == BACKUP_DIR ->
+                    deleteOwnFiles(entry) {
+                        BackupManager.getBackupTimeString(it) != null ||
+                            LEGACY_BACKUP_FILE.matches(it)
+                    }
+                entry.isDirectory && entry.name == BROKEN_DIR -> deleteOwnFiles(entry) { BROKEN_COLLECTION_FILE.matches(it) }
                 entry.isDirectory && entry.name in COLLECTION_ARTIFACT_DIRS -> entry.toPath().deleteRecursivelyOrThrow()
                 else -> {
                     val entryType = if (entry.isDirectory) "Directory" else "File"
                     Timber.w("deleteProfile: leaving unknown entry untouched: <$entryType>")
                 }
             }
+        }
+
+        if (collectionDir.list()?.all { it == NOMEDIA_FILE } == true) {
+            File(collectionDir, NOMEDIA_FILE).toPath().deleteOrThrow()
         }
 
         // `File.delete()` on a directory succeeds iff it's empty, so a successful delete
@@ -560,6 +598,14 @@ class ProfileManager private constructor(
         Timber.w(silent, message)
     }
 
+    private fun deleteOwnFiles(
+        dir: File,
+        isOwnFile: (String) -> Boolean,
+    ) {
+        dir.listFiles { file -> file.isFile && isOwnFile(file.name) }?.forEach { it.toPath().deleteOrThrow() }
+        dir.delete()
+    }
+
     private fun Path.deleteOrThrow() {
         deleteIfExists()
         if (exists(LinkOption.NOFOLLOW_LINKS)) throw IOException("Could not delete $this")
@@ -579,11 +625,10 @@ class ProfileManager private constructor(
         if (appDataRoot == null) return
 
         val defaultFolders =
-            listOf(
-                "app_webview",
+            listOfNotNull(
+                "app_webview".takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.P },
                 "databases",
                 "files",
-                "cache",
                 "code_cache",
                 "no_backup",
             )
@@ -591,12 +636,13 @@ class ProfileManager private constructor(
         defaultFolders.forEach { folderName ->
             File(appDataRoot, folderName).toPath().deleteRecursivelyOrThrow()
         }
+        File(appDataRoot, "cache").listFiles()?.forEach { it.toPath().deleteRecursivelyOrThrow() }
 
         val sharedPrefsDir = File(appDataRoot, "shared_prefs")
         if (sharedPrefsDir.exists() && sharedPrefsDir.isDirectory) {
             sharedPrefsDir.listFiles()?.forEach { file ->
                 val fileName = file.name
-                val isRegistry = fileName == "$PROFILE_REGISTRY_FILENAME.xml"
+                val isRegistry = fileName.startsWith("$PROFILE_REGISTRY_FILENAME.xml")
                 val isOtherProfile = fileName.startsWith("profile_")
 
                 if (!isRegistry && !isOtherProfile) {
@@ -797,7 +843,11 @@ class ProfileManager private constructor(
                 "collection.media.db-journal",
                 "collection.media.db-wal",
                 "collection.media.db-shm",
-                ".nomedia",
+                "collection.media.ad.db2",
+                "collection.media.ad.db2-journal",
+                "collection.log",
+                "collection.log.old",
+                BackgroundImage.FILENAME,
             )
 
         /** Subdirectories AnkiDroid creates inside the collection directory. */
@@ -805,9 +855,13 @@ class ProfileManager private constructor(
             setOf(
                 "collection.media",
                 "media.trash",
-                "backup",
-                "broken",
             )
+
+        private const val BACKUP_DIR = "backup"
+        private const val BROKEN_DIR = BackupManager.BROKEN_COLLECTIONS_SUFFIX
+        private val BROKEN_COLLECTION_FILE = Regex("""collection-corrupt-\d{4}-\d{2}-\d{2}(-\d+)?\.anki2(-journal|-wal|-shm)?""")
+        private const val NOMEDIA_FILE = ".nomedia"
+        private val LEGACY_BACKUP_FILE = Regex("""collection-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}\.(apkg|anki2)|ankiDroidv16\.colpkg""")
 
         /**
          * Failure from the last [createOrNull], if any.
