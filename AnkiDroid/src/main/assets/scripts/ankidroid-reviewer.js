@@ -102,15 +102,12 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
         exceededSlop = false,
         primaryStartX = 0,
         primaryStartY = 0,
-        startTouches = new Map();
+        activeTouches = new Map();
 
     document.addEventListener(
         "touchstart",
         event => {
-            if (event.touches.length > maxTouchCount) {
-                maxTouchCount = event.touches.length;
-            }
-            if (startTouches.size === 0) {
+            if (activeTouches.size === 0) {
                 touchStartTime = Date.now();
                 exceededSlop = false;
                 const firstTouch = event.changedTouches[0] || event.touches[0];
@@ -119,10 +116,13 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             }
             for (let i = 0; i < event.changedTouches.length; i++) {
                 const touch = event.changedTouches[i];
-                startTouches.set(touch.identifier, {
+                activeTouches.set(touch.identifier, {
                     x: touch.pageX,
                     y: touch.pageY,
                 });
+            }
+            if (activeTouches.size > maxTouchCount) {
+                maxTouchCount = activeTouches.size;
             }
         },
         { passive: true },
@@ -134,7 +134,7 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             if (exceededSlop) return;
             for (let i = 0; i < event.changedTouches.length; i++) {
                 const touch = event.changedTouches[i];
-                const start = startTouches.get(touch.identifier);
+                const start = activeTouches.get(touch.identifier);
                 if (start) {
                     const dx = Math.abs(touch.pageX - start.x);
                     const dy = Math.abs(touch.pageY - start.y);
@@ -159,8 +159,11 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
     document.addEventListener(
         "touchend",
         event => {
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                activeTouches.delete(event.changedTouches[i].identifier);
+            }
             // Only process after the final finger is lifted
-            if (event.touches.length > 0) return;
+            if (activeTouches.size > 0) return;
 
             const touchCount = maxTouchCount;
             const elapsed = Date.now() - touchStartTime;
@@ -218,7 +221,7 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
         exceededSlop = false;
         primaryStartX = 0;
         primaryStartY = 0;
-        startTouches.clear();
+        activeTouches.clear();
     }
 
     /**
