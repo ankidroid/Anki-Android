@@ -34,6 +34,22 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CardBrowserInsetsTest : RobolectricTest() {
     @Test
+    fun `search toolbar rests four dp below the top safe area`() {
+        withCardBrowserFragment(useSearchView = true) {
+            val browser = requireActivity() as CardBrowser
+            browser.waitForSearchResults()
+            val root = requireView()
+            val searchBar = root.findViewById<View>(R.id.search_bar)
+            // Both a camera cutout and a regular status bar leave the same gap above the field.
+            for ((cutout, expectedTop) in listOf(48.dp to 52.dp, 0.dp to 28.dp, 48.dp to 52.dp)) {
+                browser.dispatchInsets(cutoutTop = cutout)
+                browser.layoutForTest()
+                assertThat(searchBar.topOnScreen - root.topOnScreen, equalTo(expectedTop.toPx(browser)))
+            }
+        }
+    }
+
+    @Test
     fun `scrollbar drag clears the navigation bar with the search toolbar expanded or collapsed`() {
         repeat(200) { addBasicNote("Card $it", "Answer $it") }
         withCardBrowserFragment(useSearchView = true) {
