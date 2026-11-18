@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Intent
 import android.database.MatrixCursor
+import android.net.Uri
 import android.os.Looper
 import android.util.Log
 import android.webkit.CookieManager
@@ -18,6 +19,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
@@ -87,6 +89,73 @@ class SharedDecksActivityTest : RobolectricTest() {
 
         verify(activity.downloadManager).remove(1L)
         assertNull(activity.downloadScreen)
+    }
+
+    @Test
+    fun `back after download failure closes the overlay before navigating web history`() {
+        val activity = startSharedDeckDownload()
+        activity.visit(getResourceString(R.string.shared_decks_url))
+        activity.visit(SHARED_DECK)
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+        whenever(activity.downloadManager.query(any())).thenAnswer {
+            MatrixCursor(arrayOf(DownloadManager.COLUMN_STATUS, DownloadManager.COLUMN_REASON)).apply {
+                addRow(arrayOf(DownloadManager.STATUS_FAILED, DownloadManager.ERROR_UNKNOWN))
+            }
+        }
+        activity.sendBroadcast(
+            Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 1L),
+        )
+        shadowOf(Looper.getMainLooper()).idle()
+
+        activity.onBackPressedDispatcher.onBackPressed()
+        activity.supportFragmentManager.executePendingTransactions()
+
+        assertTrue(activity.supportFragmentManager.fragments.isEmpty(), "Back closes the failed download screen")
+        assertEquals(SHARED_DECK, activity.webView.url)
+    }
+
+    @Test
+    fun `back with browser history lets an active download finish`() {
+        val activity = startSharedDeckDownload()
+        activity.visit(getResourceString(R.string.shared_decks_url))
+        activity.visit(SHARED_DECK)
+        assertTrue(activity.webView.canGoBack())
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+
+        activity.onBackPressedDispatcher.onBackPressed()
+        activity.supportFragmentManager.executePendingTransactions()
+
+        val deckUri = "content://downloads/all_downloads/1".toUri()
+        activity.completeDownload(DownloadManager.STATUS_SUCCESSFUL, localUri = deckUri)
+
+        assertEquals(deckUri, shadowOf(activity).nextStartedActivity?.data, "Back keeps the active download available for import")
+    }
+
+    @Test
+    fun `predictive back from a failed download restores browser back`() {
+        val activity = startSharedDeckDownload()
+        val sharedDecks = getResourceString(R.string.shared_decks_url)
+        activity.visit(sharedDecks)
+        activity.visit(SHARED_DECK)
+        assertTrue(activity.webView.canGoBack())
+        activity.receiveDownload()
+        activity.supportFragmentManager.executePendingTransactions()
+        activity.completeDownload(DownloadManager.STATUS_FAILED, reason = DownloadManager.ERROR_UNKNOWN)
+
+        val dispatcher = activity.onBackPressedDispatcher
+        dispatcher.dispatchOnBackStarted(BackEventCompat(0f, 0f, 0f, BackEventCompat.EDGE_LEFT))
+        activity.supportFragmentManager.executePendingTransactions()
+        dispatcher.onBackPressed()
+        shadowOf(Looper.getMainLooper()).idle()
+
+        assertEquals(0, activity.supportFragmentManager.backStackEntryCount, "The gesture closes the download screen")
+        assertEquals(SHARED_DECK, activity.webView.url)
+        dispatcher.onBackPressed()
+
+        assertFalse(activity.isFinishing, "Back still uses the browser history")
+        assertEquals(sharedDecks, activity.webView.url)
     }
 
     @Test
@@ -485,6 +554,26 @@ class SharedDecksActivityTest : RobolectricTest() {
 
     private val retryButton
         get() = composeRule.onNodeWithText(getResourceString(CommonString.try_again))
+
+    private fun SharedDecksActivity.completeDownload(
+        status: Int,
+        reason: Int = 0,
+        localUri: Uri? = null,
+    ) {
+        whenever(downloadManager.query(any())).thenAnswer {
+            MatrixCursor(
+                arrayOf(
+                    DownloadManager.COLUMN_STATUS,
+                    DownloadManager.COLUMN_REASON,
+                    DownloadManager.COLUMN_LOCAL_URI,
+                ),
+            ).apply { addRow(arrayOf<Any?>(status, reason, localUri?.toString())) }
+        }
+        sendBroadcast(
+            Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 1L),
+        )
+        shadowOf(Looper.getMainLooper()).idle()
+    }
 
     private fun captureInfoLogs(block: () -> Unit): List<String> {
         val messages = mutableListOf<String>()

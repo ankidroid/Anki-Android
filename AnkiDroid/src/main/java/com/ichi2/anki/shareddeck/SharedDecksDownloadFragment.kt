@@ -92,7 +92,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     private var downloadCancelConfirmationDialog: AlertDialog? = null
     private val onBackPressedCallback =
-        object : OnBackPressedCallback(isDownloadInProgress) {
+        object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 Timber.i("back pressed")
                 if (!isDownloadInProgress) {
@@ -278,7 +278,6 @@ class SharedDecksDownloadFragment : Fragment() {
             }
         fileName = currentFileName
         isDownloadInProgress = true
-        onBackPressedCallback.isEnabled = isDownloadInProgress
         Timber.d("Download ID -> $downloadId")
         Timber.d("File name -> $fileName")
         viewModel.onDownloadStarted(currentFileName)
@@ -627,7 +626,6 @@ class SharedDecksDownloadFragment : Fragment() {
         }
 
         isDownloadInProgress = false
-        onBackPressedCallback.isEnabled = isDownloadInProgress
 
         // If the cancel confirmation dialog is being shown and the download is no longer in progress, then remove the dialog.
         removeCancelConfirmationDialog()
@@ -642,7 +640,6 @@ class SharedDecksDownloadFragment : Fragment() {
                     Timber.i("cancelling download")
                     downloadManager.remove(downloadId)
                     isDownloadInProgress = false
-                    onBackPressedCallback.isEnabled = isDownloadInProgress
                     parentFragmentManager.popBackStack()
                 }
                 setNegativeButton(CommonString.dialog_no) { _, _ ->
