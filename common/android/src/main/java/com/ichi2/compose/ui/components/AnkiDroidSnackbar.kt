@@ -3,8 +3,10 @@
 package com.ichi2.compose.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,17 +29,28 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.common.android.R
 import com.ichi2.anki.settings.enums.Theme
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.AnkiDroidThemeProvider
 
-/** Uses the Material snackbar with AnkiDroid's close icon. */
+/** Uses Material's snackbar styling with the theme's outline for E-ink. */
 @Composable
 internal fun AnkiDroidSnackbar(
     data: SnackbarData,
     modifier: Modifier = Modifier,
 ) {
+    val border = MaterialTheme.widgetBorder
+    val shape =
+        if (border == null) {
+            SnackbarDefaults.shape
+        } else {
+            RoundedCornerShape(dimensionResource(R.dimen.mtrl_snackbar_background_corner_radius))
+        }
+    // The outline takes the place of Material's shadow on E-ink.
+    val snackbarModifier = if (border != null) modifier.clip(shape).border(border, shape) else modifier
     Snackbar(
-        modifier = modifier,
+        modifier = snackbarModifier,
+        shape = shape,
         action =
             data.visuals.actionLabel?.let { label ->
                 {
