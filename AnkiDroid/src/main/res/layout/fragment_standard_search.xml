@@ -40,25 +40,13 @@
                 tools:checked="true" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/flags_chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="middle"
-                android:maxLines="1"
-                app:chipIcon="@drawable/ic_flag_transparent"
-
-                android:text="Flags" />
-
-            <com.google.android.material.chip.Chip
                 android:id="@+id/tags_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:maxLines="1"
-                app:chipIcon="@drawable/ic_tag"
-
+                app:chipIcon="@drawable/ic_label_outline"
                 android:text="Tags" />
-
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/card_state_chip"
@@ -67,8 +55,16 @@
                 android:ellipsize="middle"
                 android:maxLines="1"
                 app:chipIcon="@drawable/ic_card_state_default"
-
                 android:text="Card state" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/flags_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                app:chipIcon="@drawable/ic_flag_transparent"
+                android:text="Flags" />
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
