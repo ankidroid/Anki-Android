@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.res.use
 import com.ichi2.anki.CommonString
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 import com.ichi2.compose.utils.toAnnotatedString
@@ -130,6 +131,7 @@ fun TextInputDialog(
         onDismissRequest()
     }
 
+    val border = MaterialTheme.widgetBorder
     AnkiDroidDialog(
         onDismissRequest = dismiss,
         modifier = Modifier.width(alertDialogWidth()),
@@ -141,6 +143,7 @@ fun TextInputDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             shadowElevation = ankiDroidDialogElevation(),
+            border = border,
         ) {
             Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
