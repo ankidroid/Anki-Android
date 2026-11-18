@@ -11,11 +11,20 @@ import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
+import com.ichi2.anki.libanki.DeckConfig
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import org.json.JSONTokener
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -28,6 +37,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerViewModelTest : RobolectricTest() {
@@ -132,6 +142,59 @@ class ReviewerViewModelTest : RobolectricTest() {
 
             assertTrue(audio.isCancelled, "question audio should stop")
         }
+
+    @Test
+    fun `finishing a question sound during the flip does not grade a still playing answer`() =
+        runTest {
+            val card = addBasicNote("[sound:question.mkv]", "[sound:answer.mkv]").firstCard()
+            val viewModel = startReviewerWithAnswerTimer()
+            updateDeckConfig(card.did) { autoplay = true }
+            viewModel.awaitVideoStart("question.mkv") { viewModel.playSoundFromUrl("playsound:q:0") }
+            val questionPlayback = assertNotNull(viewModel.cardMediaPlayer.playAvTagsJob)
+
+            // Hold delivery of _showAnswer to the WebView between the side change and answer playback.
+            val renderAnswer = CompletableDeferred<Unit>()
+            backgroundScope.launch(start = CoroutineStart.UNDISPATCHED) {
+                viewModel.eval.onSubscription { renderAnswer.await() }.collect()
+            }
+            viewModel.onShowAnswer()
+            runCurrent()
+            assertTrue(viewModel.showingAnswer.value)
+            viewModel.onVideoFinished()
+            questionPlayback.join()
+
+            viewModel.awaitVideoStart("answer.mkv") { renderAnswer.complete(Unit) }
+            advanceTimeBy(2.seconds)
+            runCurrent()
+
+            assertEquals(0, col.getCard(card.id).reps, "the answer recording has not finished")
+        }
+
+    private fun TestScope.startReviewerWithAnswerTimer(): ReviewerViewModel {
+        updateDeckConfig(col.decks.selected()) {
+            secondsToShowQuestion = 0.0
+            secondsToShowAnswer = 1.0
+            jsonObject.put(DeckConfig.ANSWER_ACTION, AnswerAction.ANSWER_GOOD.code)
+            jsonObject.put("waitForAudio", true)
+        }
+        val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+        viewModel.onPageFinished(false)
+        runCurrent()
+        viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+        runCurrent()
+        return viewModel
+    }
+
+    private suspend fun ReviewerViewModel.awaitVideoStart(
+        filename: String,
+        start: () -> Unit,
+    ) {
+        eval.filter { "video.play()" in it && filename in it }.test {
+            start()
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 
     @Test
     fun `answering waits for the custom scheduler of the first card`() =
