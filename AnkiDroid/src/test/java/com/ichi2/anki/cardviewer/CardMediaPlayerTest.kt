@@ -35,12 +35,15 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
 class CardMediaPlayerTest : JvmTest() {
@@ -388,6 +391,27 @@ class CardMediaPlayerTest : JvmTest() {
         }
 
     @Test
+    fun `stopping while replay looks up tags prevents that replay`() =
+        runTest {
+            val front = SoundOrVideoTag("front.mp3")
+            val card = addBasicNote("[sound:front.mp3]").firstCard()
+            val player = CardMediaPlayer(tagPlayer, CompletableDeferred(ttsPlayer), mockk())
+            val stopReturned = AtomicBoolean()
+            val playedAfterStop = AtomicBoolean()
+            coEvery { tagPlayer.play(front, any()) } coAnswers { playedAfterStop.set(stopReturned.get()) }
+
+            withQueuedCollectionAccess {
+                val replay = launch(start = CoroutineStart.UNDISPATCHED) { player.replayAll(card, SingleCardSide.FRONT) }
+                player.stop()
+                stopReturned.set(true)
+                replay.join()
+                player.awaitIdle()
+            }
+
+            assertFalse(playedAfterStop.get(), "the replay started after stop returned")
+        }
+
+    @Test
     fun `stopping while side playback looks up tags prevents that playback`() =
         runTest {
             val front = SoundOrVideoTag("front.mp3")
@@ -409,24 +433,91 @@ class CardMediaPlayerTest : JvmTest() {
         }
 
     @Test
-    fun `stopping while replay looks up tags prevents that replay`() =
+    fun `playing with no outgoing media dispatches before starting playback`() =
         runTest {
-            val front = SoundOrVideoTag("front.mp3")
-            val card = addBasicNote("[sound:front.mp3]").firstCard()
-            val player = CardMediaPlayer(tagPlayer, CompletableDeferred(ttsPlayer), mockk())
-            val stopReturned = AtomicBoolean()
-            val playedAfterStop = AtomicBoolean()
-            coEvery { tagPlayer.play(front, any()) } coAnswers { playedAfterStop.set(stopReturned.get()) }
+            val player =
+                CardMediaPlayer(
+                    tagPlayer,
+                    CompletableDeferred(ttsPlayer),
+                    mockk(),
+                    dispatcher = StandardTestDispatcher(testScheduler),
+                )
+            val tag = SoundOrVideoTag("sound.mp3")
+            coEvery { tagPlayer.play(tag, any()) } returns Unit
 
-            withQueuedCollectionAccess {
-                val replay = launch(start = CoroutineStart.UNDISPATCHED) { player.replayAll(card, SingleCardSide.FRONT) }
-                player.stop()
-                stopReturned.set(true)
-                replay.join()
-                player.awaitIdle()
+            player.playOne(tag)
+
+            coVerify(exactly = 0) { tagPlayer.play(any(), any()) }
+            runCurrent()
+            player.awaitIdle()
+            coVerify(exactly = 1) { tagPlayer.play(tag, any()) }
+        }
+
+    @Test
+    fun `stop waits for outgoing audio when its replacement is cancelled before dispatch`() =
+        runTest {
+            val player =
+                CardMediaPlayer(
+                    tagPlayer,
+                    CompletableDeferred(ttsPlayer),
+                    mockk(),
+                    dispatcher = StandardTestDispatcher(testScheduler),
+                )
+            val finishCleanup = CompletableDeferred<Unit>()
+            val outgoing =
+                backgroundScope.launch(start = CoroutineStart.UNDISPATCHED) {
+                    try {
+                        awaitCancellation()
+                    } finally {
+                        withContext(NonCancellable) { finishCleanup.await() }
+                    }
+                }
+            player.playAvTagsJob = outgoing
+
+            val replacement = launch(start = CoroutineStart.UNDISPATCHED) { player.playOne(SoundOrVideoTag("next.mp3")) }
+            val stopping = launch(start = CoroutineStart.UNDISPATCHED) { player.stop() }
+            runCurrent()
+            try {
+                assertFalse(stopping.isCompleted, "stop returned while the outgoing audio was still cleaning up")
+                assertTrue(player.isPlaying, "the player became idle before the outgoing audio stopped")
+            } finally {
+                finishCleanup.complete(Unit)
             }
+            replacement.join()
+            stopping.join()
 
-            assertFalse(playedAfterStop.get(), "the replay started after stop returned")
+            coVerify(exactly = 0) { tagPlayer.play(any(), any()) }
+        }
+
+    @Test
+    fun `stop waits for outgoing audio while a replacement is pending`() =
+        runSoundPlayerTest {
+            val started = CompletableDeferred<Unit>()
+            val cleanupStarted = CompletableDeferred<Unit>()
+            val finishCleanup = CompletableDeferred<Unit>()
+            coEvery { tagPlayer.play(SoundOrVideoTag("first.mp3"), any()) } coAnswers {
+                started.complete(Unit)
+                try {
+                    awaitCancellation()
+                } finally {
+                    cleanupStarted.complete(Unit)
+                    withContext(NonCancellable) { finishCleanup.await() }
+                }
+            }
+            coEvery { tagPlayer.play(SoundOrVideoTag("second.mp3"), any()) } returns Unit
+            playOne(SoundOrVideoTag("first.mp3"))
+            started.await()
+
+            coroutineScope {
+                launch(start = CoroutineStart.UNDISPATCHED) { playOne(SoundOrVideoTag("second.mp3")) }
+                cleanupStarted.await()
+                val stopping = launch(start = CoroutineStart.UNDISPATCHED) { stop() }
+                try {
+                    assertFalse(stopping.isCompleted, "stop returned while the outgoing audio was still cleaning up")
+                } finally {
+                    finishCleanup.complete(Unit)
+                }
+            }
         }
 
     @Test
