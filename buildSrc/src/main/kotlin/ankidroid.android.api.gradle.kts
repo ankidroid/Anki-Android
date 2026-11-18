@@ -12,12 +12,20 @@
 
 import com.android.build.api.dsl.LibraryExtension
 import com.ichi2.anki.gradle.configureAndroidLint
+import com.ichi2.anki.gradle.configureJacocoAgent
 import com.ichi2.anki.gradle.libsVersionFor
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 plugins {
     id("com.android.library")
+    jacoco
 }
+
+configure<JacocoPluginExtension> {
+    toolVersion = libsVersionFor("jacoco")
+}
+configureJacocoAgent()
 
 extensions.configure<LibraryExtension> {
     compileSdk = libsVersionFor("compileSdk").toInt()
