@@ -82,15 +82,14 @@ internal fun ManageTagsScreen(
     val showSyncWarning = hasAnkiWebAccount && content?.hasAppliedTagDeletion == true && !syncWarningDismissed
     val focusRequester = remember { FocusRequester() }
     var hasFocusedChild by remember { mutableStateOf(false) }
-    var focusedTag by remember { mutableStateOf<Pair<TagName, FocusRequester>?>(null) }
-    var shortcutFocus by remember { mutableStateOf<Pair<TagName, FocusRequester>?>(null) }
+    var focusedTag by remember { mutableStateOf<TagName?>(null) }
+    var shortcutFocus by remember { mutableStateOf<TagName?>(null) }
+    val restoreShortcutFocus = actionsEnabled && selectedTag == null && dialogAction == null
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
-    LaunchedEffect(shortcutFocus, actionsEnabled, selectedTag, dialogAction) {
-        val (tag, requester) = shortcutFocus ?: return@LaunchedEffect
-        if (actionsEnabled && selectedTag == null && dialogAction == null) {
-            // Wait until the disabled controls return and any rename dialog closes.
-            // Keep a new focus choice, such as moving to search during the usage check.
-            if (!hasFocusedChild && content.visibleNodes.any { it.fullTag == tag }) requester.requestFocus()
+    LaunchedEffect(shortcutFocus, restoreShortcutFocus, hasFocusedChild, content?.visibleNodes) {
+        val tag = shortcutFocus ?: return@LaunchedEffect
+        // Keep a new focus choice, and discard tags removed or hidden by the operation.
+        if (restoreShortcutFocus && (hasFocusedChild || content.visibleNodes.none { it.fullTag == tag })) {
             shortcutFocus = null
         }
     }
@@ -144,19 +143,21 @@ internal fun ManageTagsScreen(
             onSearch = onSearch,
             onToggleCollapsed = onToggleCollapsed,
             onSelectTag = { selectedTag = it.value },
-            onTagFocusChanged = { tag, requester ->
-                if (requester != null) {
-                    focusedTag = tag to requester
-                } else if (focusedTag?.first == tag) {
+            focusTag = shortcutFocus.takeIf { restoreShortcutFocus && !hasFocusedChild },
+            onFocusRestored = { shortcutFocus = null },
+            onTagFocusChanged = { tag, hasFocus ->
+                if (hasFocus) {
+                    focusedTag = tag
+                } else if (focusedTag == tag) {
                     focusedTag = null
                 }
             },
-            onTagShortcut = shortcut@{ action, tag, requester ->
+            onTagShortcut = shortcut@{ action, tag ->
                 if (!actionsEnabled || selectedTag != null || dialogAction != null || error != null) return@shortcut false
                 if (action == TagAction.RENAME) {
                     scope.launch {
                         val canRename = prepareRename(tag)
-                        shortcutFocus = tag to requester
+                        shortcutFocus = tag
                         if (canRename != true) return@launch
                         if (selectedTag != null || dialogAction != null) return@launch
                         // Select only after the check, so no actions sheet opens while waiting.
@@ -185,6 +186,10 @@ internal fun ManageTagsScreen(
         onDialogActionChange = { dialogAction = it },
         onAction = confirm@{ action, tag, input ->
             if (!onAction(action, tag, input)) return@confirm
+            if (action == TagAction.RENAME && shortcutFocus == tag) {
+                // Renaming changes the lazy-list key, so restore focus through the new row.
+                shortcutFocus = TagName.build(input)
+            }
             dialogAction = null
             selectedTag = null
         },

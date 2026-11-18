@@ -45,14 +45,25 @@ internal fun ManageTagsContent(
     onSearch: (String) -> Unit,
     onToggleCollapsed: (TagName) -> Unit,
     onSelectTag: (TagName) -> Unit,
-    onTagFocusChanged: (TagName, FocusRequester?) -> Unit,
-    onTagShortcut: (TagAction, TagName, FocusRequester) -> Boolean,
+    focusTag: TagName?,
+    onFocusRestored: () -> Unit,
+    onTagFocusChanged: (TagName, Boolean) -> Unit,
+    onTagShortcut: (TagAction, TagName) -> Boolean,
     onDismissSyncWarning: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     val content = state as? ManageTagsState.Content
     val actionsEnabled = content != null && !content.isWorking
     val listState = rememberLazyListState()
+    LaunchedEffect(focusTag) {
+        val tag = focusTag ?: return@LaunchedEffect
+        val nodes = content?.visibleNodes ?: return@LaunchedEffect
+        val index = nodes.indexOfFirst { it.fullTag == tag }
+        if (index >= 0 && listState.layoutInfo.visibleItemsInfo.none { it.key == nodes[index].fullTag.value }) {
+            // A rename can sort the tag outside the currently composed rows.
+            listState.scrollToItem(index)
+        }
+    }
     var expandedTag by remember { mutableStateOf<TagName?>(null) }
     var previousQuery by remember { mutableStateOf(searchQuery) }
     LaunchedEffect(searchQuery) {
@@ -107,6 +118,13 @@ internal fun ManageTagsContent(
                     LazyColumn(Modifier.fillMaxSize().testTag("tag_list"), state = listState) {
                         items(content.visibleNodes, key = { it.fullTag.value }) { item ->
                             val focusRequester = remember { FocusRequester() }
+                            LaunchedEffect(focusTag) {
+                                if (item.fullTag == focusTag) {
+                                    snapshotFlow { listState.layoutInfo.visibleItemsInfo.any { it.key == item.fullTag.value } }.first { it }
+                                    focusRequester.requestFocus()
+                                    onFocusRestored()
+                                }
+                            }
                             TagRow(
                                 item = item,
                                 actionsEnabled = actionsEnabled,
@@ -119,10 +137,10 @@ internal fun ManageTagsContent(
                                     (if (animateRows) Modifier.animateItem() else Modifier)
                                         .focusRequester(focusRequester)
                                         .onFocusChanged { focusState ->
-                                            onTagFocusChanged(item.fullTag, focusRequester.takeIf { focusState.hasFocus })
+                                            onTagFocusChanged(item.fullTag, focusState.hasFocus)
                                         }.onKeyEvent { event ->
                                             val action = event.tagActionShortcut() ?: return@onKeyEvent false
-                                            onTagShortcut(action, item.fullTag, focusRequester)
+                                            onTagShortcut(action, item.fullTag)
                                         },
                             )
                         }

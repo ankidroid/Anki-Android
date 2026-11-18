@@ -918,6 +918,71 @@ class ManageTagsFragmentTest : RobolectricTest() {
         }
 
     @Test
+    fun `confirming a rename shortcut keeps the renamed tag focused for another shortcut`() =
+        runTest {
+            val note = addTags("source")
+            addTags("other")
+            screen.open()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "source"))
+            prepareRenameShortcut(target)
+            screen.enterText("renamed")
+            screen.confirm(TagAction.RENAME).performClick()
+            compose.waitForIdle()
+            assertEquals(listOf("renamed"), col.getNote(note.id).tags)
+            compose
+                .onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "renamed"))
+                .assertIsFocused()
+                .performKeyInput { pressKey(Key.Delete) }
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "renamed")).assertIsDisplayed()
+            screen.cancel()
+        }
+
+    @Test
+    @Config(qualifiers = "w320dp-h480dp-mdpi")
+    fun `confirming a rename shortcut focuses a parent after it moves outside the visible rows`() =
+        runTest {
+            val note = addTags("A::child")
+            addTags(*(0..39).map { "Tag${it.toString().padStart(2, '0')}" }.toTypedArray())
+            screen.open()
+            prepareRenameShortcut(compose.onNodeWithTag("tag:A"))
+            screen.enterText("Z")
+            screen.confirm(TagAction.RENAME).performClick()
+            compose.waitForIdle()
+            assertEquals(listOf("Z::child"), col.getNote(note.id).tags)
+            compose
+                .onNodeWithTag("tag:Z")
+                .assertIsDisplayed()
+                .assertIsFocused()
+                .performKeyInput { pressKey(Key.R) }
+            compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertTextContains("Z")
+            screen.cancel()
+        }
+
+    @Test
+    fun `confirming a rename shortcut keeps focus moved to search during the operation`() =
+        runTest {
+            val note = addTags("source")
+            screen.open()
+            val target = compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "source"))
+            prepareRenameShortcut(target)
+            screen.enterText("renamed")
+            val confirm = screen.confirm(TagAction.RENAME).assertIsEnabled()
+            val search = compose.onNode(hasSetTextAction() and !hasAnyAncestor(isDialog()))
+            val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+            try {
+                confirm.performClick()
+                compose.waitForIdle()
+                search.performClick().assertIsFocused()
+                testScheduler.advanceUntilIdle()
+            } finally {
+                CollectionManager.setTestDispatcher(previous)
+            }
+            compose.waitForIdle()
+            assertEquals(listOf("renamed"), col.getNote(note.id).tags)
+            search.assertIsFocused()
+        }
+
+    @Test
     fun `cancelling a rename shortcut restores focus to an expandable tag row`() =
         runTest {
             addTags("parent::child")
