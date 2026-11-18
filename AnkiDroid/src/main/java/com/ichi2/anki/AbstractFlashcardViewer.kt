@@ -144,6 +144,7 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
 import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.ExternalAppLaunchWarning
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.settings.Prefs
@@ -296,7 +297,45 @@ abstract class AbstractFlashcardViewer :
     val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
 
-    private val appPermission by lazy { AppPermissions(this) { msg -> showSnackbar(msg) } }
+    private val appPermission
+        by lazy {
+            AppPermissions(
+                this,
+                showSnackbar = { msg -> showSnackbar(msg) },
+                showLaunchDeniedDialog = { launchWarning.show() },
+            )
+        }
+
+    private val launchWarning
+        by lazy {
+            ExternalAppLaunchWarning(
+                this,
+                onDialogShown = ::pauseAutomaticAnswerForDialog,
+                onDialogDismissed = ::resumeAutomaticAnswerAfterDialog,
+            )
+        }
+
+    /** Whether [automaticAnswer] was enabled when the launch warning opened */
+    private var automaticAnswerEnabledBeforeDialog = false
+
+    private fun pauseAutomaticAnswerForDialog() {
+        automaticAnswerEnabledBeforeDialog = !automaticAnswer.isDisabled
+        automaticAnswer.disable()
+    }
+
+    private fun resumeAutomaticAnswerAfterDialog() {
+        if (!automaticAnswerEnabledBeforeDialog) return
+        launchCatchingTask {
+            val waitingForActiveMedia =
+                automaticAnswerShouldWaitForMedia() &&
+                    (cardMediaPlayer.isPlaying || ReadText.textToSpeech?.isSpeaking == true)
+            if (waitingForActiveMedia) {
+                automaticAnswer.reEnableWithoutScheduling()
+            } else {
+                automaticAnswer.reEnable(displayAnswer)
+            }
+        }
+    }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -1343,6 +1382,7 @@ abstract class AbstractFlashcardViewer :
 
     open fun displayCardQuestion() {
         Timber.d("displayCardQuestion()")
+        launchWarning.onCardChanged()
         displayAnswer = false
         backButtonPressedToReturn = false
         setInterface()
@@ -2179,6 +2219,12 @@ abstract class AbstractFlashcardViewer :
 
     protected open fun onFling() {}
 
+    /** Simulates a shake. Only for tests. */
+    @VisibleForTesting
+    fun hearShakeForTesting() {
+        (gestureDetectorImpl as LinkDetectingGestureDetector).hearShake()
+    }
+
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
     internal inner class LinkDetectingGestureDetector :
@@ -2222,6 +2268,11 @@ abstract class AbstractFlashcardViewer :
         private val dispatchedTouchEvents = hashSetInit<MotionEvent>(2)
 
         override fun hearShake() {
+            // Shake events still arrive while a dialog covers the screen. Ignore them.
+            if (!this@AbstractFlashcardViewer.window.decorView.hasWindowFocus()) {
+                Timber.d("Ignoring shake: reviewer window does not have focus")
+                return
+            }
             gestureProcessor.onShake()
         }
 

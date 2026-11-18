@@ -62,6 +62,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
@@ -117,6 +118,7 @@ class ReviewerViewModel(
     private var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
+    private var autoAdvancePausedForLaunchWarning = false
     private val isHtmlTypeAnswerEnabled = repository.isHtmlTypeAnswerEnabled
     val answerTimer = AnswerTimer()
     private val actionsMutex = Mutex()
@@ -150,6 +152,7 @@ class ReviewerViewModel(
         }
         cardMediaPlayer.setOnMediaGroupCompletedListener {
             if (!autoAdvance.shouldWaitForAudio()) return@setOnMediaGroupCompletedListener
+            if (autoAdvancePausedForLaunchWarning) return@setOnMediaGroupCompletedListener
 
             if (showingAnswer.value) {
                 autoAdvance.onShowAnswer()
@@ -175,6 +178,9 @@ class ReviewerViewModel(
                 } else {
                     showQuestion()
                 }
+                // AlertDialogs are not restored across activity recreation. If one paused
+                // auto-advance before recreation, restore its timer after the card is visible.
+                resumeAutoAdvanceAfterLaunchWarningRecreation()
             }
         } else {
             launchCatchingIO {
@@ -414,6 +420,32 @@ class ReviewerViewModel(
     fun stopAutoAdvance() {
         Timber.v("ReviewerViewModel::stopAutoAdvance")
         autoAdvance.cancelQuestionAndAnswerActionJobs()
+    }
+
+    /** Pauses auto-advance while a modal launch warning hides the current card. */
+    fun pauseAutoAdvanceForLaunchWarning() {
+        autoAdvancePausedForLaunchWarning = true
+        stopAutoAdvance()
+    }
+
+    /** Restarts auto advance after [stopAutoAdvance] */
+    fun resumeAutoAdvance() {
+        autoAdvancePausedForLaunchWarning = false
+        if (!autoAdvance.isEnabled) return
+        viewModelScope.launch {
+            if (autoAdvance.shouldWaitForAudio() && cardMediaPlayer.isPlaying) return@launch
+            if (showingAnswer.value) {
+                autoAdvance.onShowAnswer()
+            } else {
+                autoAdvance.onShowQuestion()
+            }
+        }
+    }
+
+    private fun resumeAutoAdvanceAfterLaunchWarningRecreation() {
+        if (autoAdvancePausedForLaunchWarning) {
+            resumeAutoAdvance()
+        }
     }
 
     private suspend fun toggleAutoAdvance() {
