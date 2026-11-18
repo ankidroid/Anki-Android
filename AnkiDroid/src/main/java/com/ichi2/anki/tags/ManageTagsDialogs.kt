@@ -31,9 +31,11 @@ internal fun ManageTagsDialogs(
     validateRenameInput: (suspend (TagName, String) -> TagInputValidation?)? = null,
 ) {
     var renameAvailable by remember(selectedTag, tagRevision) { mutableStateOf<Boolean?>(null) }
-    LaunchedEffect(selectedTag, tagRevision) {
-        selectedTag?.let(TagName::build)?.let {
-            renameAvailable = canRenameTag(it)
+    LaunchedEffect(selectedTag, tagRevision, dialogAction) {
+        if (dialogAction == null) {
+            selectedTag?.let(TagName::build)?.let {
+                renameAvailable = canRenameTag(it)
+            }
         }
     }
     val tag = selectedTag?.let(TagName::build)

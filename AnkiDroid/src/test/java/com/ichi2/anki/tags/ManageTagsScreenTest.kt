@@ -35,6 +35,7 @@ import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.text.TextRange
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.compose.theme.AnkiDroidTheme
 import kotlinx.coroutines.CompletableDeferred
@@ -54,6 +55,39 @@ class ManageTagsScreenTest : RobolectricTest() {
             visibleNodes = listOf(tagListItem("parent", "parent", 0, hasChildren = true, collapsed = true)),
             totalTagCount = 2,
         )
+
+    @Test
+    fun `focusing rows and opening delete directly do not check rename eligibility`() {
+        var checks = 0
+        compose.setContent {
+            Screen(canRenameTag = {
+                checks++
+                true
+            })
+        }
+        val row = compose.onNodeWithTag("tag:parent")
+        row.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        assertEquals(0, checks)
+        row.performKeyInput { pressKey(Key.Delete) }
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_title)).assertIsDisplayed()
+        assertEquals(0, checks)
+    }
+
+    @Test
+    fun `direct rename uses its preparation without a second eligibility query`() {
+        var checks = 0
+        compose.setContent {
+            Screen(canRenameTag = {
+                checks++
+                true
+            })
+        }
+        val row = compose.onNodeWithTag("tag:parent")
+        row.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        row.performKeyInput { pressKey(Key.R) }
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertIsDisplayed()
+        assertEquals(0, checks)
+    }
 
     @Test
     fun `search converts typed and pasted spaces and retains the insertion point`() {
@@ -269,6 +303,7 @@ class ManageTagsScreenTest : RobolectricTest() {
         searchQuery: String = "",
         onSearch: (String) -> Unit = {},
         prepareRename: suspend (TagName) -> Boolean? = { true },
+        canRenameTag: suspend (TagName) -> Boolean? = { true },
     ) {
         AnkiDroidTheme {
             ManageTagsScreen(
@@ -277,7 +312,7 @@ class ManageTagsScreenTest : RobolectricTest() {
                 onSearch = onSearch,
                 onToggleCollapsed = {},
                 tagExists = { false },
-                canRenameTag = { true },
+                canRenameTag = canRenameTag,
                 prepareRename = prepareRename,
                 onAction = { _, _, _ -> true },
                 onUndo = onUndo,
