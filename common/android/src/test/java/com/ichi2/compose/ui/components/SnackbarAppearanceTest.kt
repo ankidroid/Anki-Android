@@ -48,6 +48,16 @@ class SnackbarAppearanceTest {
         assertEquals(Color.White, pixels[160, 82])
     }
 
+    @Test
+    @SuppressLint("NewApi") // Robolectric's @Config runs this test on API 36.
+    fun `e-ink snackbar has a black outline around its white surface`() {
+        show(DayTheme.EINK)
+        val pixels = compose.onRoot().captureToImage().toPixelMap()
+        // The snackbar has a 12dp outer margin and a 2dp theme stroke.
+        assertEquals(Color.Black, pixels[13, 50])
+        assertEquals(Color.White, pixels[16, 50])
+    }
+
     private fun show(theme: DayTheme) {
         val context = theme.themedContext(ApplicationProvider.getApplicationContext())
         val host = SnackbarHostState()
