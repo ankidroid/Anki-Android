@@ -163,6 +163,12 @@ class AutomaticAnswer(
         }
     }
 
+    /** Re-enables automatic answering without bypassing a pending media-completion callback. */
+    fun reEnableWithoutScheduling() {
+        isDisabled = false
+        hasPlayedSounds = false
+    }
+
     /** Stop any "Automatic show answer" tasks in order to avoid race conditions */
     fun onDisplayQuestion() {
         if (!settings.autoAdvanceIfShowingQuestion) return

@@ -71,6 +71,49 @@ class CardViewerFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `blocked launch warnings do not stack`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        withCardViewerWebView { webView ->
+            repeat(3) {
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("intent://example.org/#Intent;scheme=https;end"),
+                )
+                advanceRobolectricLooper()
+            }
+            assertThat(
+                "blocked navigation must not stack modal warnings over the card",
+                ShadowDialog.getShownDialogs().size,
+                equalTo(1),
+            )
+        }
+    }
+
+    @Test
+    fun `dismissing the launch warning stops it reopening for repeated launches`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        withCardViewerWebView { webView ->
+            val url = "intent://example.org/#Intent;scheme=https;end"
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
+            advanceRobolectricLooper()
+            assertThat(ShadowDialog.getShownDialogs().size, equalTo(1))
+
+            ShadowDialog.getLatestDialog().cancel()
+            advanceRobolectricLooper()
+
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
+            advanceRobolectricLooper()
+            assertThat(
+                "a dismissed warning must not reopen while the same card is displayed",
+                ShadowDialog.getShownDialogs().size,
+                equalTo(1),
+            )
+        }
+    }
+
+    @Test
     fun `dismissing the opt-in dialog denies the audio capture request`() {
         grantRecordAudioPermission()
         Prefs.allowTemplatesToRecordAudio = false
