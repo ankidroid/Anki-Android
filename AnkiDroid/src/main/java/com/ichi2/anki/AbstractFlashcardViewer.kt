@@ -1488,7 +1488,7 @@ abstract class AbstractFlashcardViewer :
             return
         }
         val card = currentCard ?: return
-        if (!card.autoplay(getColUnsafe) && !doMediaReplay) return
+        if (!doMediaReplay && !card.autoplay(getColUnsafe)) return
         // Use TTS if TTS preference enabled and no other media source
         val useTTS = tts.enabled && !card.hasMedia(displayAnswer)
         // We need to play the media from the proper side of the card
