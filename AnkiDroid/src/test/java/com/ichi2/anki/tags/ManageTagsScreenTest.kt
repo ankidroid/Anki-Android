@@ -57,6 +57,24 @@ class ManageTagsScreenTest : RobolectricTest() {
         )
 
     @Test
+    fun `selecting search text does not repeat the filter`() {
+        val query = mutableStateOf("parent")
+        val searches = mutableListOf<String>()
+        compose.setContent {
+            Screen(searchQuery = query.value, onSearch = {
+                searches.add(it)
+                query.value = it
+            })
+        }
+        val search = compose.onNode(hasSetTextAction())
+        search.performTextInputSelection(TextRange(0, 3))
+        search.performTextInputSelection(TextRange(6))
+        assertEquals(emptyList(), searches)
+        search.performTextInput(" child")
+        assertEquals(listOf("parent::child"), searches)
+    }
+
+    @Test
     fun `focusing rows and opening delete directly do not check rename eligibility`() {
         var checks = 0
         compose.setContent {

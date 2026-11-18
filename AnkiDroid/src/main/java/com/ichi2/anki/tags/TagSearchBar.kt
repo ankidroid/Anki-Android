@@ -52,7 +52,7 @@ internal fun TagSearchBar(
         value = input.copy(text = query),
         onValueChange = {
             input = it.filterTagInput()
-            onQueryChange(input.text)
+            if (input.text != query) onQueryChange(input.text)
         },
         modifier = modifier.semantics { contentDescription = hint },
         placeholder = { Text(hint) },
