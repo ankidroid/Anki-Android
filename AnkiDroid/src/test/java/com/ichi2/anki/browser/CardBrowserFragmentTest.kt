@@ -6,6 +6,7 @@ import android.content.Intent
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
@@ -49,6 +50,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.GraphicsMode
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -131,6 +133,39 @@ class CardBrowserFragmentTest : RobolectricTest() {
             assertNotNull(searchView).show()
             advanceRobolectricLooper()
             assertThat(assertNotNull(searchView).editText.text.toString(), equalTo("flag:4"))
+        }
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `No Flag remains visually distinct from the empty flag filter`() =
+        withCardBrowserFragment(useSearchView = true) {
+            assertNotNull(searchView).show()
+            advanceRobolectricLooper()
+            val chip = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG).binding.flagsChip
+            val unfiltered = assertNotNull(chip.chipIcon).toBitmap()
+
+            searchViewModel.setFlagsFilter(listOf(Flag.NONE))
+            advanceRobolectricLooper()
+
+            assertThat(chip.text.toString(), equalTo("No Flag"))
+            assertFalse(unfiltered.sameAs(assertNotNull(chip.chipIcon).toBitmap()), "The flag glyph should change color")
+        }
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `No Flag icon keeps its color when a second flag is selected`() =
+        withCardBrowserFragment(useSearchView = true) {
+            assertNotNull(searchView).show()
+            advanceRobolectricLooper()
+            val chip = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG).binding.flagsChip
+            searchViewModel.setFlagsFilter(listOf(Flag.NONE))
+            advanceRobolectricLooper()
+            val noFlag = assertNotNull(chip.chipIcon).toBitmap()
+
+            searchViewModel.setFlagsFilter(listOf(Flag.NONE, Flag.RED))
+            advanceRobolectricLooper()
+
+            assertTrue(noFlag.sameAs(assertNotNull(chip.chipIcon).toBitmap()), "The outline flag should stay tinted")
         }
 
     @Test
