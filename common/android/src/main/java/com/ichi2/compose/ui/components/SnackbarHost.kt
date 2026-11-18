@@ -3,6 +3,7 @@
 package com.ichi2.compose.ui.components
 
 import android.os.Build
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarData
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.AccessibilityManager
 import androidx.compose.ui.platform.LocalAccessibilityManager
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 import androidx.compose.material3.SnackbarHost as MaterialSnackbarHost
@@ -25,7 +27,7 @@ fun SnackbarHost(
     hostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     timeoutPaused: Boolean = false,
-    snackbar: @Composable (SnackbarData) -> Unit = { AnkiDroidSnackbar(it) },
+    snackbar: @Composable (SnackbarData) -> Unit = { AnkiDroidSnackbar(it, Modifier.padding(12.dp)) },
 ) {
     SnackbarHost(hostState, modifier, touch = null, timeoutPaused = timeoutPaused, snackbar = snackbar)
 }
