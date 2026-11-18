@@ -167,16 +167,18 @@ class CardMediaPlayer : Closeable {
         onMediaGroupCompleted = listener
     }
 
+    /** @return whether playback was started */
     suspend fun autoplayAllForSide(
         card: Card,
         cardSide: CardSide,
-    ) {
+    ): Boolean {
         val avTags = withCol { if (card.autoplay(this)) card.avTags(this, cardSide) else null }
-        if (avTags != null) {
-            launchPlayback { playAvTags(avTags, cardSide) }
-        } else {
+        if (avTags == null) {
             stop()
+            return false
         }
+        launchPlayback { playAvTags(avTags, cardSide) }
+        return true
     }
 
     /**
