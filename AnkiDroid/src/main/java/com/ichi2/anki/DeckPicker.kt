@@ -2594,7 +2594,18 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck()
+    private fun deleteSelectedDeck() {
+        val sidePanel = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
+        viewModel.deleteSelectedDeck(
+            hasSidePanel = sidePanel != null,
+            shownDeckId =
+                when (sidePanel) {
+                    is StudyOptionsFragment -> sidePanel.shownDeckId
+                    is ScheduleRemindersFragment -> sidePanel.shownDeckId
+                    else -> null
+                },
+        )
+    }
 
     private fun emptyFiltered(did: DeckId) {
         viewModel.emptyFilteredDeck(did)

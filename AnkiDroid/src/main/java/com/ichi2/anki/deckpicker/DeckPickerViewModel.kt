@@ -271,20 +271,21 @@ class DeckPickerViewModel :
     )
 
     /** Prepares a confirmation dialog for deleting the selected deck. */
-    fun requestDeleteDeckConfirmation() =
-        launchCatchingIO {
-            val request =
-                withCol {
-                    val deck = decks.current()
-                    DeleteDeckConfirmationRequest(
-                        deckId = deck.id,
-                        deckName = deck.name,
-                        totalCards = decks.cardCount(deck.id, includeSubdecks = true),
-                        isFilteredDeck = deck.isFiltered,
-                    )
-                }
-            flowOfDeleteDeckConfirmation.emit(request)
-        }
+    fun requestDeleteDeckConfirmation() = launchCatchingIO { emitDeleteDeckConfirmation() }
+
+    private suspend fun emitDeleteDeckConfirmation() {
+        val request =
+            withCol {
+                val deck = decks.current()
+                DeleteDeckConfirmationRequest(
+                    deckId = deck.id,
+                    deckName = deck.name,
+                    totalCards = decks.cardCount(deck.id, includeSubdecks = true),
+                    isFilteredDeck = deck.isFiltered,
+                )
+            }
+        flowOfDeleteDeckConfirmation.emit(request)
+    }
 
     fun requestRenameSelectedDeck() =
         launchCatchingIO {
@@ -472,15 +473,21 @@ class DeckPickerViewModel :
         }
 
     /**
-     * Deletes the currently selected deck
+     * Deletes the currently selected deck, or asks first if the side panel shows another deck or none
      */
-    fun deleteSelectedDeck() =
-        launchReportingErrors {
-            progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
-                val targetDeckId = withCol { decks.selected() }
+    fun deleteSelectedDeck(
+        hasSidePanel: Boolean,
+        shownDeckId: DeckId?,
+    ) = launchReportingErrors {
+        progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
+            val targetDeckId = withCol { decks.selected() }
+            if (!hasSidePanel || shownDeckId == targetDeckId) {
                 deleteDeck(targetDeckId).join()
+            } else {
+                emitDeleteDeckConfirmation()
             }
         }
+    }
 
     /**
      * Removes cards in [report] from the collection.
