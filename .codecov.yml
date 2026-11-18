@@ -6,6 +6,14 @@ comment: false
 github_checks:
   annotations: false
 
+# A skipped unit suite keeps its last report. Emulator coverage is measured on every PR.
+flag_management:
+  default_rules:
+    carryforward: true
+  individual_flags:
+    - name: emulator
+      carryforward: false
+
 coverage:
   range: "36...100"
   status:

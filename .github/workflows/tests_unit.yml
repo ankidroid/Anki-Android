@@ -190,7 +190,7 @@ jobs:
 
         # update workflows/README.md when modifying this step
       - name: Run Unit Tests
-        run: ./gradlew jacocoUnitTestReport --daemon
+        run: ./gradlew :AnkiDroid:jacocoCiUnitTestReports --daemon
 
 
       # Only runs:
@@ -239,7 +239,11 @@ jobs:
         if: contains(matrix.os, 'windows')
         run: ./gradlew --stop
 
-      - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
-        with:
-          verbose: true
-          fail_ci_if_error: ${{ github.repository == 'ankidroid/Anki-Android' }} # optional (default = false)
+      - name: Upload unit coverage by module
+        # Flake runs repeat the same tests. Upload once per OS when reports are available.
+        if: matrix.iteration == 1 && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
+        continue-on-error: ${{ github.repository != 'ankidroid/Anki-Android' }}
+        shell: bash
+        env:
+          FORK_BRANCH: ${{ github.event.pull_request.head.repo.full_name != github.repository && github.event.pull_request.head.label || '' }}
+        run: bash .github/upload_unit_coverage.sh
