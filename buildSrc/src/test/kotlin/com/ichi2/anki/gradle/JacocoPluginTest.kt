@@ -173,10 +173,167 @@ class JacocoPluginTest {
         for (name in preserved) assertThat(coveredNames, hasItems(name))
         assertThat(coveredNames.any { it.startsWith("org/robolectric/") }, equalTo(false))
 
-        val reportResult = runCoverage("-x", ":library:testDebugUnitTest", "-x", ":nested:core:test")
+        // Build the per-suite reports from the app's tests alone: the library's and core's test
+        // tasks are excluded, so their suites have no execution data.
+        val tasks = arrayOf(":app:jacocoCiUnitTestReports", "-x", ":library:testDebugUnitTest", "-x", ":nested:core:test")
+        val reportResult = runCoverage(*tasks)
         assertThat(reportResult.task(":app:jacocoUnitTestReport")?.outcome, equalTo(TaskOutcome.SUCCESS))
-        val cached = runCoverage("-x", ":library:testDebugUnitTest", "-x", ":nested:core:test")
+        val reports = File(projectDir, "app/build/reports/codecov")
+        // A class in :library that the app's tests exercise (see `preserved` above).
+        val libraryClass = "androidx/appcompat/widget/DialogTitleView"
+        // The app suite is credited for its hits in a dependency's classes...
+        assertThat(coveredLines(reports.resolve("app-test.xml"), libraryClass), greaterThan(0))
+        // ...and the library's own suite is not: each suite reports only its own tests' hits.
+        // The library report still exists, with zero coverage, although its tests did not run.
+        assertThat(coveredLines(reports.resolve("library-test.xml"), libraryClass), equalTo(0))
+
+        val cached = runCoverage(*tasks)
         assertThat(cached.output, containsString("Reusing configuration cache."))
+    }
+
+    @Test
+    fun `full CI runs seed a flag for each runtime suite`() {
+        // Every suite on the app's runtime graph gets a report task, including :empty, which has
+        // no tests: CI uploads a report for each flag so stale coverage is replaced.
+        val output = runGradle(":app:jacocoCiUnitTestReports", "--dry-run").output
+        for (flag in listOf("app-test", "library-test", "nested_core-test", "empty-test")) {
+            assertThat(output, containsString(":app:jacocoReport_$flag SKIPPED"))
+        }
+        // :tooling is not on the app's runtime classpath, so it has no suite.
+        assertThat(output, not(containsString("tooling-test")))
+    }
+
+    /**
+     * Regression: listing tasks failed with
+     * "Resolution of the configuration ':library:debugUnitTestRuntimeClasspath' was attempted
+     * without an exclusive lock".
+     *
+     * The per-module `jacocoReport_*` tasks belong to `:app`, but each one's classes depend on the
+     * project dependencies of a *different* module's unit test classpath. `tasks` realizes every
+     * task while it runs, outside task-graph calculation, and Gradle then holds only the lock of
+     * the project being reported on. Resolving another project's configuration from the task's
+     * configure action is refused, so the whole `tasks` report (and IDE task listings) failed.
+     *
+     * Correct behavior: the per-module report tasks are listed without resolving other projects'
+     * configurations; that resolution is deferred until the report's inputs are needed.
+     */
+    @Test
+    fun `listing tasks does not resolve other modules' classpaths`() {
+        // `:app:tasks --all` realizes :app's tasks, including jacocoReport_library-test, whose
+        // classes come from :library's debugUnitTestRuntimeClasspath. On the buggy revision,
+        // build() throws here because Gradle refuses that cross-project resolution.
+        // `--parallel` matches the repository's gradle.properties: Gradle enforces per-project
+        // locks only in parallel mode, so the fixture's default serial build passes either way.
+        val output = runGradle(":app:tasks", "--all", "--parallel").output
+        // The suite reports are still registered and visible to developers.
+        assertThat(output, containsString("jacocoReport_library-test"))
+        assertThat(output, containsString("jacocoCiUnitTestReports"))
+    }
+
+    @Test
+    fun `CI seeds a flag for an Android library with its unit test component disabled`() {
+        // Keep :empty in the app's runtime graph, but disable its debug unit test component.
+        // AGP then omits the test task and its classpath. Codecov still needs this module's
+        // zero-coverage report to replace any past uploads for its flag.
+        File(projectDir, "build.gradle").appendText(
+            "\n" +
+                """
+                project(':empty').androidComponents {
+                    beforeVariants(selector().withBuildType('debug')) {
+                        it.hostTests['UnitTest'].enable = false
+                    }
+                }
+                """.trimIndent() + "\n",
+        )
+
+        // Skip unrelated suites to exercise collection without needing any execution data.
+        // On the buggy revision, configuring this task fails on :empty's missing unit test
+        // classpath. The report should instead use :empty's production classes and show zero hits.
+        runGradle(
+            ":app:jacocoCiUnitTestReports",
+            "-x",
+            ":app:testPlayDebugUnitTest",
+            "-x",
+            ":library:testDebugUnitTest",
+            "-x",
+            ":nested:core:test",
+        )
+        val report = File(projectDir, "app/build/reports/codecov/empty-test.xml")
+        assertThat(coveredLines(report, "regression/Uncovered"), equalTo(0))
+    }
+
+    @Test
+    fun `flavored Android library outside app runtime does not break coverage`() {
+        // Coverage used to register the same report task for both debug variants of any Android
+        // library. Even an unrelated library broke Gradle configuration before any task could run.
+        // The app's coverage reports should only include modules it uses at runtime.
+        File(projectDir, "app/build.gradle").appendText("\nconfigurations.runtimeOnly.dependencies.removeIf { it.name == 'empty' }\n")
+        File(projectDir, "build.gradle").appendText(
+            "\n" +
+                """
+                project(':empty').android {
+                    flavorDimensions += 'tier'
+                    productFlavors {
+                        free { dimension 'tier' }
+                        paid { dimension 'tier' }
+                    }
+                }
+                """.trimIndent() + "\n",
+        )
+        // On the buggy revision, even help fails because the second debug variant tries to register
+        // jacocoReport_empty-test again. The coverage graph should also work and exclude :empty.
+        assertThat(runGradle("help").task(":help")?.outcome, equalTo(TaskOutcome.SUCCESS))
+        val reports = runGradle(":app:jacocoCiUnitTestReports", "--dry-run").output
+        assertThat(reports, containsString(":app:jacocoReport_library-test SKIPPED"))
+        assertThat(reports, not(containsString("empty-test")))
+    }
+
+    @ParameterizedTest
+    @CsvSource(":feature:browser:collection-import-export-and-synchronization", ":feature:browser:collection+reports")
+    fun `CI rejects an invalid Codecov flag for a renamed module`(modulePath: String) {
+        // Gradle accepts long names and characters such as + in project paths. Renaming the
+        // fixture reuses the nested module's sources while making its old Codecov flag stale.
+        // The generated flag must satisfy Codecov's rules before it can be used for uploads.
+        val settings = File(projectDir, "settings.gradle")
+        settings.writeText(settings.readText().replace(":nested:core", modulePath))
+        settings.appendText("\nproject('$modulePath').projectDir = new File(settingsDir, 'nested/core')\n")
+        val rootBuild = File(projectDir, "build.gradle")
+        rootBuild.writeText(rootBuild.readText().replace(":nested:core", modulePath))
+        // Gradle 9 requires directories for the new parent projects to exist, even though the
+        // renamed leaf still points to the original directory with its build and sources.
+        File(projectDir, "feature/browser").mkdirs()
+
+        val failure =
+            GradleRunner
+                .create()
+                .withProjectDir(projectDir)
+                .withTestKitDir(File("build/test-kit").absoluteFile)
+                .withPluginClasspath()
+                .withArguments(":app:jacocoCiUnitTestReports", "--dry-run")
+                .buildAndFail()
+
+        // Fail with the rejected flag and the Codecov constraints, rather than printing an
+        // unusable replacement block or silently changing the module's flag.
+        val flag = modulePath.removePrefix(":").replace(':', '_') + "-test"
+        assertThat(failure.output, containsString("Invalid Codecov flag '$flag'"))
+        assertThat(failure.output, containsString("1 to 45 letters, digits, underscores, hyphens, or dots"))
+    }
+
+    private fun coveredLines(
+        report: File,
+        className: String,
+    ): Int {
+        val document =
+            DocumentBuilderFactory
+                .newInstance()
+                .apply { setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false) }
+                .newDocumentBuilder()
+                .parse(report)
+        return XPathFactory
+            .newInstance()
+            .newXPath()
+            .evaluate("/report/package/class[@name='$className']/counter[@type='LINE']/@covered", document)
+            .toInt()
     }
 
     @Test
