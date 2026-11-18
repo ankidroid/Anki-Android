@@ -173,17 +173,17 @@ class JacocoPluginTest {
         for (name in preserved) assertThat(coveredNames, hasItems(name))
         assertThat(coveredNames.any { it.startsWith("org/robolectric/") }, equalTo(false))
 
-        // Build the per-suite reports from the app's tests alone: the library's and core's test
-        // tasks are excluded, so their suites have no execution data.
+        // Build the module reports from the app's tests alone: the library's and core's test
+        // tasks are excluded, so their reports have no execution data.
         val tasks = arrayOf(":app:jacocoCiUnitTestReports", "-x", ":library:testDebugUnitTest", "-x", ":nested:core:test")
         val reportResult = runCoverage(*tasks)
         assertThat(reportResult.task(":app:jacocoUnitTestReport")?.outcome, equalTo(TaskOutcome.SUCCESS))
         val reports = File(projectDir, "app/build/reports/codecov")
         // A class in :library that the app's tests exercise (see `preserved` above).
         val libraryClass = "androidx/appcompat/widget/DialogTitleView"
-        // The app suite is credited for its hits in a dependency's classes...
+        // The app's tests are credited for hits in a dependency's classes...
         assertThat(coveredLines(reports.resolve("app-test.xml"), libraryClass), greaterThan(0))
-        // ...and the library's own suite is not: each suite reports only its own tests' hits.
+        // ...and the library's report is not: each module reports only its own tests' hits.
         // The library report still exists, with zero coverage, although its tests did not run.
         assertThat(coveredLines(reports.resolve("library-test.xml"), libraryClass), equalTo(0))
 
@@ -193,13 +193,13 @@ class JacocoPluginTest {
 
     @Test
     fun `full CI runs seed a flag for each runtime suite`() {
-        // Every suite on the app's runtime graph gets a report task, including :empty, which has
+        // Every module on the app's runtime graph gets a report task, including :empty, which has
         // no tests: CI uploads a report for each flag so stale coverage is replaced.
         val output = runGradle(":app:jacocoCiUnitTestReports", "--dry-run").output
         for (flag in listOf("app-test", "library-test", "nested_core-test", "empty-test")) {
             assertThat(output, containsString(":app:jacocoReport_$flag SKIPPED"))
         }
-        // :tooling is not on the app's runtime classpath, so it has no suite.
+        // :tooling is not on the app's runtime classpath, so it has no report.
         assertThat(output, not(containsString("tooling-test")))
     }
 
@@ -280,12 +280,90 @@ class JacocoPluginTest {
                 }
                 """.trimIndent() + "\n",
         )
+        // Match the fixture's Codecov flags to its new runtime graph so they cannot cause the failure.
+        val config = File(projectDir, ".codecov.yml")
+        config.writeText(config.readLines().filterNot { it.startsWith("  empty-test:") }.joinToString("\n", postfix = "\n"))
+
         // On the buggy revision, even help fails because the second debug variant tries to register
         // jacocoReport_empty-test again. The coverage graph should also work and exclude :empty.
         assertThat(runGradle("help").task(":help")?.outcome, equalTo(TaskOutcome.SUCCESS))
         val reports = runGradle(":app:jacocoCiUnitTestReports", "--dry-run").output
         assertThat(reports, containsString(":app:jacocoReport_library-test SKIPPED"))
         assertThat(reports, not(containsString("empty-test")))
+    }
+
+    /**
+     * Regression: a stale `flags:` block in `.codecov.yml` broke every build that created
+     * `jacocoCiUnitTestReports`, not only the CI build that runs it.
+     *
+     * The flag check ran in the task's configure action, so `tasks` (and IDE task listings),
+     * which create all tasks without scheduling them, failed with "Could not create task
+     * ':app:jacocoCiUnitTestReports'. > Replace the flags section...". Developers hit this as soon
+     * as they added, removed or renamed a module, before they had a chance to update the file.
+     *
+     * Correct behavior: listing tasks still works; only a build that schedules the CI reports
+     * fails (see `CI rejects carryforward flags for retired suites`).
+     */
+    @Test
+    fun `stale Codecov flags do not break listing tasks`() {
+        // Retire :empty's flag while :empty is still on the app's runtime graph, as if a module
+        // had been added without updating .codecov.yml.
+        val config = File(projectDir, ".codecov.yml")
+        config.writeText(config.readLines().filterNot { it.startsWith("  empty-test:") }.joinToString("\n", postfix = "\n"))
+
+        // `tasks --all` creates jacocoCiUnitTestReports to describe it. On the buggy revision,
+        // build() throws here because creating the task runs the flag check.
+        val output = runGradle(":app:tasks", "--all").output
+        assertThat(output, containsString("jacocoCiUnitTestReports"))
+    }
+
+    @Test
+    fun `CI rejects carryforward flags for retired suites`() {
+        // A full run cannot replace a retired module's upload. Codecov would keep its hits
+        // on surviving dependency classes if the old module were still allowed to carry forward.
+        File(projectDir, "app/build.gradle").appendText("\nconfigurations.implementation.dependencies.removeIf { it.name == 'library' }\n")
+        // The remaining :empty runtime dependency still brings in :nested:core. Only :library
+        // has left the app graph; it still exists in settings, as a library used elsewhere could.
+        val failure =
+            GradleRunner
+                .create()
+                .withProjectDir(projectDir)
+                .withTestKitDir(File("build/test-kit").absoluteFile)
+                .withPluginClasspath()
+                .withArguments(":app:jacocoCiUnitTestReports", "--dry-run")
+                .buildAndFail()
+
+        // The original task succeeds and would upload the remaining modules without clearing the old flag.
+        val replacement = failure.output.substringAfter("Replace the flags section in .codecov.yml with:", "")
+        assertThat(replacement, containsString("nested_core-test: *unit"))
+        assertThat(replacement, not(containsString("library-test:")))
+    }
+
+    @ParameterizedTest
+    @CsvSource("nested_core", "_nested_core")
+    fun `CI rejects module paths with reserved underscores`(moduleName: String) {
+        // Flatten the nested project while reusing its existing directory and sources. The old
+        // path :nested:core and the new path :nested_core would produce the same flag, so
+        // reject literal underscores before they can reuse a retired module's coverage.
+        val settings = File(projectDir, "settings.gradle")
+        settings.writeText(settings.readText().replace(":nested:core", ":$moduleName"))
+        settings.appendText("\nproject(':$moduleName').projectDir = new File(settingsDir, 'nested/core')\n")
+        val rootBuild = File(projectDir, "build.gradle")
+        rootBuild.writeText(rootBuild.readText().replace(":nested:core", ":$moduleName"))
+
+        val failure =
+            GradleRunner
+                .create()
+                .withProjectDir(projectDir)
+                .withTestKitDir(File("build/test-kit").absoluteFile)
+                .withPluginClasspath()
+                .withArguments(":app:jacocoCiUnitTestReports", "--dry-run")
+                .buildAndFail()
+
+        // With escaping, the failure instead suggests a replacement flag. Require the
+        // module-path error so this test catches that behavior as well as a silent collision.
+        assertThat(failure.output, containsString("Invalid AnkiDroid module path ':$moduleName'"))
+        assertThat(failure.output, containsString("Underscores are reserved for nested module separators"))
     }
 
     @ParameterizedTest
