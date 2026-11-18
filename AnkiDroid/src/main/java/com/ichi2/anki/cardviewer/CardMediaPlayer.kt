@@ -157,7 +157,7 @@ class CardMediaPlayer : Closeable {
     ) {
         val avTags = withCol { if (card.autoplay(this)) card.avTags(this, cardSide) else null }
         if (avTags != null) {
-            playAvTags(avTags, cardSide)
+            launchPlayback { playAvTags(avTags, cardSide) }
         } else {
             stop()
         }
@@ -170,25 +170,26 @@ class CardMediaPlayer : Closeable {
         card: Card,
         cardSide: CardSide,
     ) {
-        playAvTags(withCol { card.avTags(this, cardSide) }, cardSide)
+        launchPlayback {
+            val avTags = withCol { card.avTags(this, cardSide) }
+            playAvTags(avTags, cardSide)
+        }
     }
 
     private suspend fun playAvTags(
         avTagList: List<AvTag>,
         cardSide: CardSide,
     ) {
-        launchPlayback {
-            Timber.i("playing sounds for %s", cardSide)
-            for ((index, avTag) in avTagList.withIndex()) {
-                Timber.d("playing AV Tag %d/%d", index + 1, avTagList.size)
-                if (!play(avTag, isAutomaticPlayback = true)) {
-                    Timber.d("stopping AV Tag playback early")
-                    break
-                }
+        Timber.i("playing sounds for %s", cardSide)
+        for ((index, avTag) in avTagList.withIndex()) {
+            Timber.d("playing AV Tag %d/%d", index + 1, avTagList.size)
+            if (!play(avTag, isAutomaticPlayback = true)) {
+                Timber.d("stopping AV Tag playback early")
+                break
             }
-            // skipped if canceled: the media did not complete, and the card side may have changed
-            onMediaGroupCompleted?.invoke()
         }
+        // skipped if canceled: the media did not complete, and the card side may have changed
+        onMediaGroupCompleted?.invoke()
     }
 
     /**
@@ -198,17 +199,20 @@ class CardMediaPlayer : Closeable {
         card: Card,
         side: SingleCardSide,
     ) {
-        val (cardSide, avTags) =
-            withCol {
-                val cardSide =
-                    when (side) {
-                        SingleCardSide.FRONT -> CardSide.QUESTION
-                        SingleCardSide.BACK ->
-                            if (card.replayQuestionAudioOnAnswerSide(this)) CardSide.BOTH else CardSide.ANSWER
-                    }
-                cardSide to card.avTags(this, cardSide)
-            }
-        playAvTags(avTags, cardSide)
+        // the lookup is part of the playback, so stopping the player also cancels it
+        launchPlayback {
+            val (cardSide, avTags) =
+                withCol {
+                    val cardSide =
+                        when (side) {
+                            SingleCardSide.FRONT -> CardSide.QUESTION
+                            SingleCardSide.BACK ->
+                                if (card.replayQuestionAudioOnAnswerSide(this)) CardSide.BOTH else CardSide.ANSWER
+                        }
+                    cardSide to card.avTags(this, cardSide)
+                }
+            playAvTags(avTags, cardSide)
+        }
     }
 
     private fun Card.avTags(
