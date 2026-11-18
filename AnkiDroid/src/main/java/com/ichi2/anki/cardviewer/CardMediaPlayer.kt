@@ -24,11 +24,13 @@ import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.reviewer.CardSide
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
@@ -40,7 +42,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.yield
 import timber.log.Timber
 import java.io.Closeable
 import kotlin.time.Duration.Companion.milliseconds
@@ -79,13 +83,20 @@ class CardMediaPlayer : Closeable {
     private val mediaErrorListener: MediaErrorListener
 
     @VisibleForTesting
-    constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, mediaErrorListener: MediaErrorListener) {
+    constructor(
+        soundTagPlayer: SoundTagPlayer,
+        ttsPlayer: Deferred<TtsPlayer>,
+        mediaErrorListener: MediaErrorListener,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    ) {
+        this.scope = CoroutineScope(SupervisorJob() + dispatcher)
         this.soundTagPlayer = soundTagPlayer
         this.ttsPlayer = ttsPlayer
         this.mediaErrorListener = mediaErrorListener
     }
 
     constructor(javascriptEvaluator: JavascriptEvaluator, mediaErrorListener: MediaErrorListener) {
+        this.scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         this.mediaErrorListener = mediaErrorListener
         this.soundTagPlayer =
             SoundTagPlayer(
@@ -95,7 +106,7 @@ class CardMediaPlayer : Closeable {
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(scope) }
     }
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope: CoroutineScope
 
     /** Serializes playbacks to avoid overloading the thread pool and a potential deadlock */
     private val playbackMutex = Mutex()
@@ -131,17 +142,22 @@ class CardMediaPlayer : Closeable {
         playbackMutex.withLock {
             if (!isEnabled) return
             val previousJob = playAvTagsJob
-            val job = scope.launch(start = CoroutineStart.LAZY) { block() }
+            val job =
+                scope.launch(start = CoroutineStart.UNDISPATCHED) {
+                    // registered before the job is visible, so stopping it always waits for the outgoing media
+                    withContext(NonCancellable) { previousJob?.join() }
+                    // continues on the player's dispatcher, not the caller's thread; also checks cancellation
+                    yield()
+                    block()
+                }
             // replaces the previous job before it ends, so the player isn't idle in between
-            playingJob.value = job
-            job.invokeOnCompletion { playingJob.compareAndSet(job, null) }
+            playAvTagsJob = job
             try {
                 previousJob?.cancelAndJoin()
             } catch (e: CancellationException) {
                 job.cancel()
                 throw e
             }
-            job.start()
         }
     }
 
