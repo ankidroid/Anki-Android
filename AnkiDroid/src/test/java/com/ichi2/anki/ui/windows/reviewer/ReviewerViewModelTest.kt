@@ -212,6 +212,23 @@ class ReviewerViewModelTest : RobolectricTest() {
             assertEquals(0, col.getCard(card.id).reps, "the answer recording has not finished")
         }
 
+    @Test
+    fun `editing the note stops its obsolete recording`() =
+        runTest {
+            val note = addBasicNote("[sound:old.mkv]")
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            runCurrent()
+            viewModel.awaitVideoStart("old.mkv") { viewModel.executeAction(ViewerAction.PLAY_MEDIA) }
+            val oldPlayback = assertNotNull(viewModel.cardMediaPlayer.playAvTagsJob)
+
+            note.setItem("Front", "[sound:new.mkv]")
+            viewModel.opExecuted(col.updateNote(note), null)
+            runCurrent()
+
+            assertTrue(oldPlayback.isCancelled, "the removed recording is still playing")
+        }
+
     private fun TestScope.startReviewerWithAnswerTimer(): ReviewerViewModel {
         updateDeckConfig(col.decks.selected()) {
             secondsToShowQuestion = 0.0
