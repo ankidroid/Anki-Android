@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.tags
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 
@@ -55,7 +57,11 @@ internal fun TagActionsBottomSheet(
     dismissing: Boolean = false,
 ) {
     if (LocalInspectionMode.current) {
-        Surface(shape = BottomSheetDefaults.ExpandedShape, color = BottomSheetDefaults.ContainerColor) {
+        Surface(
+            shape = BottomSheetDefaults.ExpandedShape,
+            color = BottomSheetDefaults.ContainerColor,
+            border = MaterialTheme.widgetBorder,
+        ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 BottomSheetDefaults.DragHandle()
                 TagActions(tag, enabled, canRename, onAction)
@@ -64,6 +70,7 @@ internal fun TagActionsBottomSheet(
         return
     }
     val focusRequester = remember { FocusRequester() }
+    val border = MaterialTheme.widgetBorder
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     LaunchedEffect(dismissing) {
         if (dismissing) {
@@ -75,6 +82,7 @@ internal fun TagActionsBottomSheet(
         onDismissRequest = onDismissRequest,
         modifier =
             Modifier
+                .then(if (border != null) Modifier.border(border, BottomSheetDefaults.ExpandedShape) else Modifier)
                 .onKeyEvent { event ->
                     val action = event.tagActionShortcut() ?: return@onKeyEvent false
                     if (enabled && (action != TagAction.RENAME || canRename == true)) onAction(action)
@@ -114,6 +122,7 @@ private fun TagActions(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                border = MaterialTheme.widgetBorder,
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),

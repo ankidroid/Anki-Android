@@ -2,20 +2,28 @@
 
 package com.ichi2.anki.tags
 
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.themedContext
 import com.ichi2.compose.theme.AnkiDroidTheme
 import org.junit.Rule
 import org.junit.Test
@@ -31,6 +39,20 @@ import kotlin.test.assertTrue
 class TagActionsBottomSheetTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    fun `e-ink actions sheet has an outline`() {
+        val context = DayTheme.EINK.themedContext(targetContext)
+        compose.setContent {
+            CompositionLocalProvider(LocalContext provides context, LocalInspectionMode provides true) {
+                AnkiDroidTheme {
+                    TagActionsBottomSheet(requireNotNull(TagName.build("Science")), true, {}, {})
+                }
+            }
+        }
+        val pixels = compose.onRoot().captureToImage().toPixelMap()
+        assertEquals(Color.Black, pixels[pixels.width / 2, 1])
+    }
 
     @Test
     fun `disabled rename summary uses the same disabled color as the action`() {
