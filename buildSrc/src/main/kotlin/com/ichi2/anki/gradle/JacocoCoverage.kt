@@ -126,7 +126,6 @@ private fun Project.configureAndroidAppCoverage(
             unitCoverage.registerAndroidSuite(
                 module = project,
                 variant = debugVariant,
-                taskName = "testPlayDebugUnitTest",
                 classExcludes = classExcludes,
             )
             includeTestExecutionData(
@@ -172,7 +171,6 @@ private fun Project.configureAndroidLibraryCoverage(
         unitCoverage.registerAndroidSuite(
             module = project,
             variant = this,
-            taskName = "testDebugUnitTest",
             classExcludes = classExcludes,
         ) {
             // Empty Android library test tasks may require resources supplied by the app.

@@ -18,13 +18,12 @@ internal class UnitTestCoverageReports(
     fun registerAndroidSuite(
         module: Project,
         variant: Variant,
-        taskName: String,
         classExcludes: List<String>,
         hasTests: () -> Boolean = { true },
     ) {
         registerSuite(
             module = module,
-            taskName = taskName,
+            taskName = "test${variant.name.replaceFirstChar { it.uppercase() }}UnitTest",
             sources = module.files(variant.sources.java?.all, variant.sources.kotlin?.all),
             classes =
                 module.androidCoverageClasses(
