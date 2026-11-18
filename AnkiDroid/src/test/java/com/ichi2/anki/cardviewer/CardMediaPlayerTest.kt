@@ -15,6 +15,7 @@ import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.TestException
+import com.ichi2.testutils.withQueuedCollectionAccess
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.coVerifyOrder
@@ -384,6 +385,48 @@ class CardMediaPlayerTest : JvmTest() {
             assertFalse(wasIdle.get(), "the player was idle between two playbacks")
             idleWatcher.cancel()
             stop()
+        }
+
+    @Test
+    fun `stopping while side playback looks up tags prevents that playback`() =
+        runTest {
+            val front = SoundOrVideoTag("front.mp3")
+            val card = addBasicNote("[sound:front.mp3]").firstCard()
+            val player = CardMediaPlayer(tagPlayer, CompletableDeferred(ttsPlayer), mockk())
+            val stopReturned = AtomicBoolean()
+            val playedAfterStop = AtomicBoolean()
+            coEvery { tagPlayer.play(front, any()) } coAnswers { playedAfterStop.set(stopReturned.get()) }
+
+            withQueuedCollectionAccess {
+                val playback = launch(start = CoroutineStart.UNDISPATCHED) { player.playAllForSide(card, CardSide.QUESTION) }
+                player.stop()
+                stopReturned.set(true)
+                playback.join()
+                player.awaitIdle()
+            }
+
+            assertFalse(playedAfterStop.get(), "the side playback started after stop returned")
+        }
+
+    @Test
+    fun `stopping while replay looks up tags prevents that replay`() =
+        runTest {
+            val front = SoundOrVideoTag("front.mp3")
+            val card = addBasicNote("[sound:front.mp3]").firstCard()
+            val player = CardMediaPlayer(tagPlayer, CompletableDeferred(ttsPlayer), mockk())
+            val stopReturned = AtomicBoolean()
+            val playedAfterStop = AtomicBoolean()
+            coEvery { tagPlayer.play(front, any()) } coAnswers { playedAfterStop.set(stopReturned.get()) }
+
+            withQueuedCollectionAccess {
+                val replay = launch(start = CoroutineStart.UNDISPATCHED) { player.replayAll(card, SingleCardSide.FRONT) }
+                player.stop()
+                stopReturned.set(true)
+                replay.join()
+                player.awaitIdle()
+            }
+
+            assertFalse(playedAfterStop.get(), "the replay started after stop returned")
         }
 
     @Test
