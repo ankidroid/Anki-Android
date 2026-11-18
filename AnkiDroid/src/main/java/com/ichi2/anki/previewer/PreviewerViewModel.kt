@@ -81,16 +81,15 @@ class PreviewerViewModel(
     fun toggleBackSideOnly() {
         Timber.v("toggleBackSideOnly() %b", !backSideOnly.value)
         launchCatchingIO {
-            val card = currentCard.await()
             backSideOnly.emit(!backSideOnly.value)
             if (!backSideOnly.value && showingAnswer.value) {
                 cardMediaPlayer.stop()
                 showQuestion()
-                cardMediaPlayer.autoplayAllForSide(card, CardSide.QUESTION)
+                cardMediaPlayer.autoplayAllForSide(currentCard.await(), CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
                 cardMediaPlayer.stop()
                 showAnswer()
-                cardMediaPlayer.autoplayAllForSide(card, CardSide.ANSWER)
+                cardMediaPlayer.autoplayAllForSide(currentCard.await(), CardSide.ANSWER)
             }
         }
     }
