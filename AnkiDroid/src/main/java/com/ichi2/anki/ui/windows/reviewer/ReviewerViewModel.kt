@@ -606,11 +606,12 @@ class ReviewerViewModel(
         setupAnswerTimer(card)
         autoAdvance.onCardChange(card)
         onCardUpdatedFlow.emit(Unit) // must be before showQuestion()
+        // must be before showQuestion(), so the counts can be used by the API
+        countsFlow.emit(StudyCounts(state))
         showQuestion()
         loadAndPlayMedia(CardSide.QUESTION)
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
-        countsFlow.emit(StudyCounts(state))
     }
 
     override suspend fun typeAnsFilter(text: String): String {
