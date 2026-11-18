@@ -252,6 +252,10 @@ class CardMediaPlayer : Closeable {
         }
     }
 
+    fun cancel() {
+        playAvTagsJob?.cancel()
+    }
+
     suspend fun stop() {
         if (isPlaying) Timber.i("stopping playing all AV tags")
         playAvTagsJob?.cancelAndJoin()

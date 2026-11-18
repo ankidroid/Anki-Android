@@ -222,6 +222,7 @@ class ReviewerViewModel(
         } ?: ""
 
         updateNextTimes()
+        cardMediaPlayer.cancel()
         showAnswer()
         loadAndPlayMedia(CardSide.ANSWER)
         if (!autoAdvance.shouldWaitForAudio()) {
