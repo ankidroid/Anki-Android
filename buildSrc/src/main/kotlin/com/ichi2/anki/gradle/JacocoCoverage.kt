@@ -195,6 +195,7 @@ private fun Project.configureJvmCoverage(
         unitCoverage.registerSuite(
             module = project,
             taskName = "test",
+            runtimeClasspath = "testRuntimeClasspath",
             sources = files(sources),
             classes = files(classes),
         )
