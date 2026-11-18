@@ -40,16 +40,22 @@ internal fun ManageTagsDialogs(
     }
     val tag = selectedTag?.let(TagName::build)
     val action = dialogAction
-    if (tag != null && action == null) {
+    // A direct shortcut opens its dialog without first displaying the sheet.
+    var showActionsSheet by remember(selectedTag) { mutableStateOf(tag != null && action == null) }
+    if (tag != null && showActionsSheet) {
         TagActionsBottomSheet(
             tag = tag,
             enabled = actionsEnabled,
             canRename = renameAvailable,
             onAction = onDialogActionChange,
-            onDismissRequest = onDismissRequest,
+            dismissing = action != null,
+            onDismissRequest = {
+                showActionsSheet = false
+                if (action == null) onDismissRequest()
+            },
         )
     }
-    if (action != null) {
+    if (action != null && !showActionsSheet) {
         ManageTagDialog(
             action = action,
             hasAnkiWebAccount = hasAnkiWebAccount,

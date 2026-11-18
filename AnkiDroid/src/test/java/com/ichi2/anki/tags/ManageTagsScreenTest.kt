@@ -25,6 +25,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
@@ -122,6 +123,29 @@ class ManageTagsScreenTest : RobolectricTest() {
         row.performKeyInput { pressKey(Key.R) }
         compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).assertIsDisplayed()
         assertEquals(0, checks)
+    }
+
+    @Test
+    fun `selecting a tag action animates the sheet closed`() {
+        compose.setContent { Screen() }
+        compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "parent")).performClick()
+        val sheetTitle = compose.onNodeWithTag("selected_tag_name").assertIsDisplayed()
+        val initialTop = sheetTitle.fetchSemanticsNode().positionInWindow.y
+        compose.mainClock.autoAdvance = false
+        try {
+            compose.onNodeWithText(targetContext.getString(CommonString.dialog_positive_delete)).performClick()
+            val positions =
+                List(6) {
+                    compose.mainClock.advanceTimeByFrame()
+                    sheetTitle.fetchSemanticsNode().positionInWindow.y
+                }
+            assertTrue(positions.any { it > initialTop }, "Sheet stayed at $initialTop during dismissal: $positions")
+            compose.mainClock.advanceTimeBy(1_000)
+            sheetTitle.assertDoesNotExist()
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_title)).assertIsDisplayed()
+        } finally {
+            compose.mainClock.autoAdvance = true
+        }
     }
 
     @Test

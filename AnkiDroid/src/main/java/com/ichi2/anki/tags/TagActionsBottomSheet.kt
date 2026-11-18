@@ -51,6 +51,7 @@ internal fun TagActionsBottomSheet(
     onAction: (TagAction) -> Unit,
     onDismissRequest: () -> Unit,
     canRename: Boolean? = true,
+    dismissing: Boolean = false,
 ) {
     if (LocalInspectionMode.current) {
         Surface(shape = BottomSheetDefaults.ExpandedShape, color = BottomSheetDefaults.ContainerColor) {
@@ -62,6 +63,13 @@ internal fun TagActionsBottomSheet(
         return
     }
     val focusRequester = remember { FocusRequester() }
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    LaunchedEffect(dismissing) {
+        if (dismissing) {
+            sheetState.hide()
+            onDismissRequest()
+        }
+    }
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         modifier =
@@ -72,7 +80,7 @@ internal fun TagActionsBottomSheet(
                     true
                 }.focusRequester(focusRequester)
                 .focusable(),
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        sheetState = sheetState,
     ) {
         LaunchedEffect(Unit) { focusRequester.requestFocus() }
         TagActions(tag, enabled, canRename, onAction)
