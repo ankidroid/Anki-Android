@@ -50,6 +50,53 @@ class ManageTagsViewModelTest : JvmTest() {
     val caseFolding = IcuCaseFoldingRule()
 
     /**
+     * A second collection notification can arrive after the first tag read, while that read's
+     * result is still queued on Main. Keep destructive controls disabled through the follow-up
+     * read so the UI cannot submit a confirmation that the in-flight operation will drop.
+     */
+    @Test
+    fun `tag actions remain disabled between coalesced refresh reads`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            withViewModel {
+                // Pause collection and UI work independently so Main can publish the first tree
+                // while the follow-up collection read is still waiting.
+                val backendScheduler = TestCoroutineScheduler()
+                val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(backendScheduler), useReentrantLock = false)
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                try {
+                    val refresh = refreshTags()
+                    runCurrent()
+                    backendScheduler.runCurrent()
+
+                    // The completed read cannot contain this edit. The existing refresh job must
+                    // absorb the notification and read the tree again before becoming idle.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    runCurrent()
+
+                    assertFalse(refresh.isCompleted)
+                    // Fails on the buggy head: publishing the first tree re-enables actions even
+                    // though the refresh is still running and will reject a Delete confirmation.
+                    assertTrue(loadedState.isWorking)
+
+                    backendScheduler.runCurrent()
+                    runCurrent()
+                    assertTrue(refresh.isCompleted)
+                    assertFalse(loadedState.isWorking)
+                    assertTrue(tagExists(TagName.asValid("destination")))
+                } finally {
+                    CollectionManager.setTestDispatcher(previousQueue)
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
+            }
+        }
+
+    /**
      * Pasting a tab between colons can hide a hierarchy separator until backend normalization.
      * Reject the empty component before the backend can turn it into a `blank` subtag.
      */
@@ -705,6 +752,39 @@ class ManageTagsViewModelTest : JvmTest() {
                     retry.join()
                     assertThat(loadedState.isWorking, equalTo(false))
                     assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+                }
+            }
+        }
+
+    /**
+     * An external collection change can queue a refresh while a tag operation is running.
+     * If the operation fails, the screen must show the updated tree and the operation error.
+     */
+    @Test
+    fun `failed tag operation still refreshes tags changed elsewhere`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // An ideographic space makes the backend reject the rename. Queue collection
+                    // access so the change notification can arrive before that failure.
+                    val rename = renameTag("source", "invalid\u3000target")
+                    assertTrue(loadedState.isWorking)
+
+                    // An external edit bypasses the ViewModel's pending rename and asks it to reload.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    rename.join()
+
+                    assertNotNull(loadedState.error)
+                    assertFalse(loadedState.isWorking)
+                    // Fails on the buggy revision: the exception skips the queued refresh,
+                    // so name validation still uses the tag tree from before the external edit.
+                    assertTrue(tagExists(TagName.asValid("destination")))
                 }
             }
         }
