@@ -139,7 +139,7 @@ private fun TagActions(
                 headlineContent = { Text(stringResource(label), color = color) },
                 supportingContent =
                     if (action == TagAction.RENAME && canRename == false) {
-                        { Text(stringResource(CommonString.manage_tags_rename_no_notes)) }
+                        { Text(stringResource(CommonString.manage_tags_rename_no_notes), color = color) }
                     } else {
                         null
                     },

@@ -3,6 +3,7 @@
 package com.ichi2.anki.tags
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
@@ -30,6 +31,26 @@ import kotlin.test.assertTrue
 class TagActionsBottomSheetTest : RobolectricTest(loadBackend = false) {
     @get:Rule
     val compose = createComposeRule()
+
+    @Test
+    fun `disabled rename summary uses the same disabled color as the action`() {
+        compose.setContent {
+            AnkiDroidTheme {
+                TagActionsBottomSheet(requireNotNull(TagName.build("Unused")), true, {}, {}, canRename = false)
+            }
+        }
+
+        fun textColor(id: Int): Color {
+            val layouts = mutableListOf<TextLayoutResult>()
+            compose
+                .onNodeWithText(targetContext.getString(id), useUnmergedTree = true)
+                .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            return layouts
+                .single()
+                .layoutInput.style.color
+        }
+        assertEquals(textColor(CommonString.rename), textColor(CommonString.manage_tags_rename_no_notes))
+    }
 
     @Test
     @Config(qualifiers = "w320dp-h480dp-port")
