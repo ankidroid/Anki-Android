@@ -71,6 +71,8 @@ class ManageTagsViewModel :
     private var tagOperation: Job? = null
     private var expansionSave: Job? = null
 
+    private val refreshes = TagRefreshTracker()
+
     private val undoHistory = ManageTagsUndoHistory()
 
     init {
@@ -87,10 +89,13 @@ class ManageTagsViewModel :
     }
 
     /** Reloads the tag tree from the backend. Preserves the current search query if any */
-    fun refreshTags() =
-        launchTagOpAndRefresh {
+    fun refreshTags(): Job {
+        // An unfinished operation may not reload, so it reloads on completion instead.
+        refreshes.requestRefresh()
+        return launchTagOpAndRefresh {
             Timber.i("Refreshing tags")
         }.job
+    }
 
     /**
      * Filters visible tags by [query]. Ancestors of matches are shown to preserve hierarchy.
@@ -286,18 +291,22 @@ class ManageTagsViewModel :
             undoHistory.trackTagChange(this, block)
         }
 
-    private suspend fun loadTags() {
+    private suspend fun loadTags(error: Throwable? = null) {
         Timber.i("Loading tags from collection")
-        val (tree, undoLabels) =
-            withCol { tags.tree() to undoHistory.labels(this) }
-        tagList = flattenTree(tree)
-        state.value =
-            ManageTagsState.Content(
-                visibleNodes = computeVisibleNodes(searchQuery.value),
-                totalTagCount = tagList.size,
-                undoLabel = undoLabels.undoLabel,
-                redoLabel = undoLabels.redoLabel,
-            )
+        refreshes.trackLoad {
+            val (tree, undoLabels) =
+                withCol { tags.tree() to undoHistory.labels(this) }
+            tagList = flattenTree(tree)
+            state.value =
+                ManageTagsState.Content(
+                    visibleNodes = computeVisibleNodes(searchQuery.value),
+                    isWorking = true,
+                    error = error,
+                    totalTagCount = tagList.size,
+                    undoLabel = undoLabels.undoLabel,
+                    redoLabel = undoLabels.redoLabel,
+                )
+        }
     }
 
     /**
@@ -354,6 +363,25 @@ class ManageTagsViewModel :
             }
         }
         try {
+            runTagOperationStep(block)
+            // A queued refresh belongs to a separate collection change, so reload even after a failure.
+            while (refreshes.isRefreshRequested) {
+                val current = state.value
+                val error =
+                    when (current) {
+                        is ManageTagsState.Content -> current.error
+                        is Error -> current.error
+                        ManageTagsState.Loading -> null
+                    }
+                runTagOperationStep { loadTags(error) }
+            }
+        } finally {
+            updateState { it.copy(isWorking = false) }
+        }
+    }
+
+    private suspend fun runTagOperationStep(block: suspend () -> Unit) {
+        try {
             block()
         } catch (e: CancellationException) {
             throw e
@@ -361,12 +389,10 @@ class ManageTagsViewModel :
             Timber.w(e, "Tag operation failed")
             state.update { current ->
                 when (current) {
-                    is ManageTagsState.Content -> current.copy(isWorking = false, error = e)
+                    is ManageTagsState.Content -> current.copy(error = e)
                     is ManageTagsState.Loading, is Error -> Error(e)
                 }
             }
-        } finally {
-            updateState { it.copy(isWorking = false) }
         }
     }
 
