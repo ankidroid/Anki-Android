@@ -224,8 +224,8 @@ class ReviewerViewModel(
         updateNextTimes()
         cardMediaPlayer.cancel()
         showAnswer()
-        loadAndPlayMedia(CardSide.ANSWER)
-        if (!autoAdvance.shouldWaitForAudio()) {
+        val isPlayingMedia = loadAndPlayMedia(CardSide.ANSWER)
+        if (!isPlayingMedia || !autoAdvance.shouldWaitForAudio()) {
             autoAdvance.onShowAnswer()
         } // else wait for onMediaGroupCompleted
 
@@ -561,9 +561,9 @@ class ReviewerViewModel(
         actionFeedbackFlow.emit(message.toString())
     }
 
-    private suspend fun loadAndPlayMedia(side: CardSide) {
+    private suspend fun loadAndPlayMedia(side: CardSide): Boolean {
         Timber.v("ReviewerViewModel::loadAndPlaySounds")
-        cardMediaPlayer.autoplayAllForSide(currentCard.await(), side)
+        return cardMediaPlayer.autoplayAllForSide(currentCard.await(), side)
     }
 
     private suspend fun updateMarkIcon() {
@@ -603,7 +603,9 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         onCardUpdatedFlow.emit(Unit) // must be before showQuestion()
         showQuestion()
-        loadAndPlayMedia(CardSide.QUESTION)
+        if (!loadAndPlayMedia(CardSide.QUESTION) && autoAdvance.shouldWaitForAudio()) {
+            autoAdvance.onShowQuestion()
+        }
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(StudyCounts(state))

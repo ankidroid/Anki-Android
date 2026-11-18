@@ -144,6 +144,48 @@ class ReviewerViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `the answer auto advances after interrupting a replay with autoplay disabled`() =
+        runTest {
+            val card = addBasicNote("[sound:question.mkv]").firstCard()
+            val viewModel = startReviewerWithAnswerTimer()
+            viewModel.awaitVideoStart("question.mkv") { viewModel.executeAction(ViewerAction.PLAY_MEDIA) }
+
+            viewModel.onShowAnswer()
+            runCurrent()
+            assertTrue(viewModel.showingAnswer.value)
+            advanceTimeBy(2.seconds)
+            runCurrent()
+
+            assertEquals(1, col.getCard(card.id).reps, "the answer timer should grade this card")
+        }
+
+    @Test
+    fun `the next question auto advances with autoplay disabled`() =
+        runTest {
+            addBasicNote("one")
+            addBasicNote("two")
+            updateDeckConfig(col.decks.selected()) {
+                secondsToShowQuestion = 1.0
+                secondsToShowAnswer = 0.0
+                jsonObject.put("waitForAudio", true)
+            }
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            runCurrent()
+            viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+            runCurrent()
+
+            viewModel.onShowAnswer()
+            viewModel.answerCard(Rating.GOOD)
+            runCurrent()
+            assertFalse(viewModel.showingAnswer.value)
+            advanceTimeBy(2.seconds)
+            runCurrent()
+
+            assertTrue(viewModel.showingAnswer.value, "the question timer should show the answer")
+        }
+
+    @Test
     fun `finishing a question sound during the flip does not grade a still playing answer`() =
         runTest {
             val card = addBasicNote("[sound:question.mkv]", "[sound:answer.mkv]").firstCard()
