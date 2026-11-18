@@ -12,8 +12,8 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
-import androidx.core.util.component1
-import androidx.core.util.component2
+import androidx.core.text.buildSpannedString
+import androidx.core.view.ContentInfoCompat
 import androidx.core.view.OnReceiveContentListener
 import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.CollectionManager.withCol
@@ -250,33 +250,68 @@ internal class NoteEditorMultimediaController(
 
     /**
      * Listener for handling content received via drag and drop or copy and paste.
-     * This listener processes URIs contained in the payload and attempts to paste the content into the target EditText view.
+     *
+     * If the clip advertises media and contains a URI, handle the entire clip to preserve the order of
+     * text and media. In other clips, pass text items through to default handling.
      */
     val onReceiveContentListener =
         OnReceiveContentListener { view, payload ->
-            val (uriContent, remaining) = payload.partition { item -> item.uri != null }
-
-            if (uriContent == null) {
-                return@OnReceiveContentListener remaining
+            val clip = payload.clip
+            if (!hasMedia(clip.description)) {
+                return@OnReceiveContentListener payload.partition { it.uri != null }.second
+            }
+            if (clip.items().none { it.uri != null }) {
+                return@OnReceiveContentListener payload
             }
 
-            val clip = uriContent.clip
-            val description = clip.description
-
-            if (!hasMedia(description)) {
-                return@OnReceiveContentListener remaining
-            }
-
-            for (uri in clip.items().map { it.uri }) {
+            // Read the live preference synchronously. Launching a coroutine for withCol could
+            // let Save read the field before the media is inserted.
+            val pasteAsPng =
                 try {
-                    onPaste(view as EditText, uri, description, getColUnsafe().config.pasteImagesAsPng)
+                    getColUnsafe().config.pasteImagesAsPng
                 } catch (e: Exception) {
                     Timber.w(e)
                     CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
+                    return@OnReceiveContentListener payload.partition { it.uri != null }.second
+                }
+            val content = readReceivedContent(view.context, payload, pasteAsPng)
+            if (content.isEmpty()) return@OnReceiveContentListener null
+
+            val field = view as EditText
+            fragment.insertStringInField(field, content)
+            if (field.hasFocus() && field.hasSelection()) {
+                field.setSelection(maxOf(field.selectionStart, field.selectionEnd))
+            }
+            null
+        }
+
+    /** Builds one insertion so both media and text retain their position in the clip. */
+    private fun readReceivedContent(
+        context: Context,
+        payload: ContentInfoCompat,
+        pasteAsPng: Boolean,
+    ): CharSequence =
+        buildSpannedString {
+            val clip = payload.clip
+            var followsText = false
+            for (item in clip.items()) {
+                val uri = item.uri
+                if (uri != null) {
+                    val tag = importPastedMedia(context, uri, clip.description, pasteAsPng) ?: continue
+                    append(tag)
+                    followsText = false
+                } else {
+                    val text =
+                        if (payload.flags and ContentInfoCompat.FLAG_CONVERT_TO_PLAIN_TEXT != 0) {
+                            item.coerceToText(context)?.toString()
+                        } else {
+                            item.coerceToStyledText(context)
+                        } ?: continue
+                    if (followsText) append('\n')
+                    append(text)
+                    followsText = true
                 }
             }
-
-            return@OnReceiveContentListener remaining
         }
 
     /**
