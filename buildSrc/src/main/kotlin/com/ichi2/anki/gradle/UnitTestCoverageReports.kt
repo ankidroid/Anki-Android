@@ -57,9 +57,30 @@ internal class UnitTestCoverageReports(
     private val ciReports =
         app.tasks.register<Sync>("jacocoCiUnitTestReports") {
             group = "verification"
-            description = "Runs unit tests and collects coverage XML by module."
+            description = "Runs unit tests, validates Codecov flags, and collects coverage XML by module."
             into(app.layout.buildDirectory.dir("reports/codecov"))
         }
+
+    init {
+        // Verify only when the CI reports are scheduled, but before their tests run. Creating the
+        // task, as `tasks` and IDE task listings do, must not fail on a stale `.codecov.yml`.
+        val ciReportsPath = "${app.path}:${ciReports.name}"
+        app.gradle.taskGraph.whenReady {
+            if (!hasTask(ciReportsPath)) return@whenReady
+            val configFile =
+                app.rootProject.layout.projectDirectory
+                    .file(".codecov.yml")
+            val config =
+                app.providers
+                    .fileContents(configFile)
+                    .asText
+                    .get()
+            CodecovCarryforwardFlags.verify(
+                config = config,
+                activeFlags = ciModules.map { it.unitCoverageFlag },
+            )
+        }
+    }
 
     fun registerAndroidSuite(
         module: Project,

@@ -6,13 +6,21 @@ comment: false
 github_checks:
   annotations: false
 
-# A skipped unit suite keeps its last report. Emulator coverage is measured on every PR.
-flag_management:
-  default_rules:
-    carryforward: true
-  individual_flags:
-    - name: emulator
-      carryforward: false
+# Only active modules may retain a previous unit test upload. Removing a flag also retires
+# its hits in other modules. Emulator coverage is measured on every PR.
+# Gradle checks this block against the active modules and prints a replacement when they change.
+flags:
+  AnkiDroid-test: &unit {carryforward: true}
+  anki-common-test: *unit
+  api-test: *unit
+  common-test: *unit
+  common_android-test: *unit
+  compat-test: *unit
+  feature_browse-test: *unit
+  libanki-test: *unit
+  note-editor-test: *unit
+  vbpd-test: *unit
+  widgets-test: *unit
 
 coverage:
   range: "36...100"
