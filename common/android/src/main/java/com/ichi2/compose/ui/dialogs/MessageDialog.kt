@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.common.android.R
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 
 /**
@@ -28,6 +29,7 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
  * * Primary body text, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * 16dp vertical padding.
+ * * The theme's widget outline distinguishes e-ink surfaces.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
  *
@@ -45,6 +47,7 @@ fun MessageDialog(
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     val titleBottomPadding = 16.dp
+    val border = MaterialTheme.widgetBorder
     AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
         // Keep the View dialog's device width for long messages (verified on API 34/36).
@@ -57,6 +60,7 @@ fun MessageDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             shadowElevation = ankiDroidDialogElevation(),
+            border = border,
         ) {
             Column(Modifier.padding(ankiDroidDialogContentPadding())) {
                 Text(
