@@ -4,16 +4,21 @@
 package com.ichi2.anki.shareddeck
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.Intent
 import android.database.MatrixCursor
+import android.os.Looper
 import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import androidx.activity.BackEventCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
+import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
@@ -42,6 +47,7 @@ import org.robolectric.shadows.ShadowDialog
 import timber.log.Timber
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
@@ -65,6 +71,22 @@ class SharedDecksActivityTest : RobolectricTest() {
         assertEquals(1, activity.supportFragmentManager.fragments.size)
         assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
         verify(activity.downloadManager).enqueue(any())
+    }
+
+    @Test
+    fun `back during an active download asks before leaving the screen`() {
+        val activity = startSharedDeckDownload()
+        val downloadScreen = activity.openDownloadScreen()
+
+        activity.pressBackOnDownloadScreen()
+
+        assertCancelDownloadPromptShown()
+        assertSame(downloadScreen, activity.downloadScreen)
+
+        activity.confirmCancelDownload()
+
+        verify(activity.downloadManager).remove(1L)
+        assertNull(activity.downloadScreen)
     }
 
     @Test
@@ -96,6 +118,21 @@ class SharedDecksActivityTest : RobolectricTest() {
         assertNotSame(fragment, activity.supportFragmentManager.fragments.single())
         assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
         verify(activity.downloadManager, times(2)).enqueue(any())
+    }
+
+    @Test
+    fun `predictive back dismisses the download screen if the download fails during the gesture`() {
+        val activity = startSharedDeckDownload()
+        activity.openDownloadScreen()
+
+        activity.startBackGesture()
+        activity.failDownload()
+        retryButton.assertExists("the download failed during the gesture")
+
+        activity.completeBackGesture()
+
+        assertNull(ShadowDialog.getLatestDialog(), "a failed download should not offer cancellation")
+        assertNull(activity.downloadScreen)
     }
 
     @Test
@@ -405,6 +442,49 @@ class SharedDecksActivityTest : RobolectricTest() {
             0L,
         )
     }
+
+    private fun SharedDecksActivity.openDownloadScreen(): Fragment {
+        receiveDownload()
+        supportFragmentManager.executePendingTransactions()
+        return requireNotNull(downloadScreen)
+    }
+
+    private val SharedDecksActivity.downloadScreen: Fragment?
+        get() = supportFragmentManager.fragments.singleOrNull()
+
+    private fun SharedDecksActivity.failDownload() {
+        whenever(downloadManager.query(any())).thenAnswer {
+            MatrixCursor(arrayOf(DownloadManager.COLUMN_STATUS, DownloadManager.COLUMN_REASON)).apply {
+                addRow(arrayOf(DownloadManager.STATUS_FAILED, DownloadManager.ERROR_UNKNOWN))
+            }
+        }
+        sendBroadcast(Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 1L))
+        shadowOf(Looper.getMainLooper()).idle()
+    }
+
+    private fun SharedDecksActivity.pressBackOnDownloadScreen() {
+        onBackPressedDispatcher.onBackPressed()
+        supportFragmentManager.executePendingTransactions()
+    }
+
+    private fun SharedDecksActivity.startBackGesture() {
+        onBackPressedDispatcher.dispatchOnBackStarted(BackEventCompat(0f, 0f, 0.3f, BackEventCompat.EDGE_LEFT))
+    }
+
+    private fun SharedDecksActivity.completeBackGesture() = pressBackOnDownloadScreen()
+
+    private fun assertCancelDownloadPromptShown() {
+        val dialog = assertNotNull(ShadowDialog.getLatestDialog() as? AlertDialog, "ask before abandoning the active download")
+        assertEquals(getResourceString(CommonString.cancel_download_question_title), dialog.title)
+    }
+
+    private fun SharedDecksActivity.confirmCancelDownload() {
+        clickAlertDialogButton { positiveButton }
+        supportFragmentManager.executePendingTransactions()
+    }
+
+    private val retryButton
+        get() = composeRule.onNodeWithText(getResourceString(CommonString.try_again))
 
     private fun captureInfoLogs(block: () -> Unit): List<String> {
         val messages = mutableListOf<String>()

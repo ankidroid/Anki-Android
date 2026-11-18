@@ -95,6 +95,10 @@ class SharedDecksDownloadFragment : Fragment() {
         object : OnBackPressedCallback(isDownloadInProgress) {
             override fun handleOnBackPressed() {
                 Timber.i("back pressed")
+                if (!isDownloadInProgress) {
+                    parentFragmentManager.popBackStack()
+                    return
+                }
                 showCancelConfirmationDialog()
             }
         }
@@ -181,6 +185,7 @@ class SharedDecksDownloadFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         downloadManager = (activity as SharedDecksActivity).downloadManager
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
         registerDownloadReceiver()
         observeLoginRequired()
         downloadFile(fileToBeDownloaded)
