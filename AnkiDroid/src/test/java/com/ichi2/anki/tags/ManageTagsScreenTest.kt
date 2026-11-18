@@ -21,6 +21,7 @@ import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -34,6 +35,7 @@ import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
@@ -44,6 +46,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
+import androidx.appcompat.R as AppCompatR
 
 @RunWith(AndroidJUnit4::class)
 class ManageTagsScreenTest : RobolectricTest() {
@@ -72,6 +76,19 @@ class ManageTagsScreenTest : RobolectricTest() {
         assertEquals(emptyList(), searches)
         search.performTextInput(" child")
         assertEquals(listOf("parent::child"), searches)
+    }
+
+    @Test
+    fun `search clear button has space before the field edge`() {
+        compose.setContent { Screen(searchQuery = "parent") }
+        val search = compose.onNode(hasSetTextAction()).fetchSemanticsNode().boundsInRoot
+        val clear =
+            compose
+                .onNodeWithContentDescription(
+                    targetContext.getString(AppCompatR.string.abc_searchview_description_clear),
+                ).fetchSemanticsNode()
+                .boundsInRoot
+        assertTrue(search.right - clear.right >= with(compose.density) { 8.dp.toPx() })
     }
 
     @Test

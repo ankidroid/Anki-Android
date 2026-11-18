@@ -60,7 +60,7 @@ internal fun TagSearchBar(
         trailingIcon =
             if (query.isNotEmpty()) {
                 {
-                    IconButton(onClick = { onQueryChange("") }) {
+                    IconButton(onClick = { onQueryChange("") }, modifier = Modifier.padding(end = 8.dp)) {
                         Icon(
                             painterResource(R.drawable.ic_clear_white),
                             stringResource(AppCompatR.string.abc_searchview_description_clear),
