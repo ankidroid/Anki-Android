@@ -3,6 +3,7 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -15,6 +16,7 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
 import anki.decks.SetDeckCollapsedRequest
+import anki.scheduler.CongratsInfoResponse
 import app.cash.turbine.test
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -22,6 +24,7 @@ import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
@@ -30,6 +33,7 @@ import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackupManagerTestUtilities
@@ -57,6 +61,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
+import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -422,6 +427,31 @@ class DeckPickerErrorTest : RobolectricTest() {
                 override fun emptyFilteredDeck(did: Long): OpChanges = if (failing()) throw failure else super.emptyFilteredDeck(did)
             }
         }
+
+    @Test
+    @Config(qualifiers = "xlarge")
+    fun `Shift+Del asks first while the side panel shows no deck`() {
+        backendOverride.replaceWith {
+            object : Backend() {
+                override fun congratsInfo(): CongratsInfoResponse = throw failure
+            }
+        }
+        val selected = addDeck("Selected", setAsSelected = true)
+        addNoteToDeck(selected)
+        throwOnShowError = false
+
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            advanceRobolectricLooperUntil { deckPicker.viewModel.loadDeckCounts?.isCompleted == true && deckPicker.fragment != null }
+            advanceRobolectricLooper()
+            assertNull(deckPicker.fragment!!.shownDeckId)
+
+            deckPicker.onKeyUp(KeyEvent.KEYCODE_DEL, KeyEvent(0, 0, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL, 0, KeyEvent.META_SHIFT_ON))
+            advanceRobolectricLooperUntil { deckPicker.viewModel.progressManager.progress.value is ViewModelProgress.Idle }
+
+            assertNotNull(col.decks.getLegacy(selected), "Shift+Del deleted a deck the side panel did not show")
+            assertTrue(deckPicker.supportFragmentManager.fragments.any { it is DeckPickerConfirmDeleteDeckDialog })
+        }
+    }
 
     @Test
     fun `failed selection of a new deck shows an error`() {
