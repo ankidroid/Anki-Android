@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.tags
 
+import android.view.WindowManager
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -45,6 +46,7 @@ import kotlinx.coroutines.CompletableDeferred
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -143,6 +145,25 @@ class ManageTagsScreenTest : RobolectricTest() {
             compose.mainClock.advanceTimeBy(1_000)
             sheetTitle.assertDoesNotExist()
             compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_title)).assertIsDisplayed()
+        } finally {
+            compose.mainClock.autoAdvance = true
+        }
+    }
+
+    @Test
+    fun `the delete dialog dims the activity as the sheet starts closing`() {
+        compose.setContent { Screen() }
+        compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_more_actions, "parent")).performClick()
+        compose.onNodeWithTag("selected_tag_name").assertIsDisplayed()
+        compose.mainClock.autoAdvance = false
+        try {
+            compose.onNodeWithText(targetContext.getString(CommonString.dialog_positive_delete)).performClick()
+            compose.mainClock.advanceTimeByFrame()
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_title)).assertExists()
+            compose.onNodeWithTag("selected_tag_name").assertExists()
+            val window = requireNotNull(ShadowDialog.getLatestDialog().window)
+            assertTrue(window.attributes.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND != 0)
+            assertTrue(window.attributes.dimAmount > 0f)
         } finally {
             compose.mainClock.autoAdvance = true
         }

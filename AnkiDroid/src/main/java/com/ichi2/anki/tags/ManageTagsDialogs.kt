@@ -40,7 +40,8 @@ internal fun ManageTagsDialogs(
     }
     val tag = selectedTag?.let(TagName::build)
     val action = dialogAction
-    // A direct shortcut opens its dialog without first displaying the sheet.
+    // Open confirmation above the sheet, then remove the sheet after its exit animation.
+    // Keeping the window attached avoids exposing the undimmed activity between dialogs.
     var showActionsSheet by remember(selectedTag) { mutableStateOf(tag != null && action == null) }
     if (tag != null && showActionsSheet) {
         TagActionsBottomSheet(
@@ -55,7 +56,7 @@ internal fun ManageTagsDialogs(
             },
         )
     }
-    if (action != null && !showActionsSheet) {
+    if (action != null) {
         ManageTagDialog(
             action = action,
             hasAnkiWebAccount = hasAnkiWebAccount,
