@@ -430,6 +430,8 @@
     <string name="ignore_display_cutout" maxLength="41">디스플레이 컷아웃 무시</string>
     <string name="show_answer_buttons" maxLength="41">답변 버튼 표시</string>
     <string name="hide_hard_and_easy" maxLength="41">\'어려움\', \'쉬움\' 버튼 숨기기</string>
+    <string name="answer_buttons_theme_colors" maxLength="41" comment="Use the same color in the answer buttons, matching the theme\'s color instead of Anki\'s">Use theme colors</string>
+    <string name="answer_buttons_hidden" comment="Shown in the preview of the answer buttons settings when the answer buttons are hidden">Buttons hidden</string>
     <string name="reviewer_frame_style" maxLength="41">프레임 스타일</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">카드</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">상자</string>

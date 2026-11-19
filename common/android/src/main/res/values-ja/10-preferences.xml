@@ -432,6 +432,8 @@
     <string name="ignore_display_cutout" maxLength="41">ディスプレイカットアウト（ディスプレイ上部の穴やくぼみ）を無視</string>
     <string name="show_answer_buttons" maxLength="41">解答表示ボタン・回答ボタンを表示</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
+    <string name="answer_buttons_theme_colors" maxLength="41" comment="Use the same color in the answer buttons, matching the theme\'s color instead of Anki\'s">Use theme colors</string>
+    <string name="answer_buttons_hidden" comment="Shown in the preview of the answer buttons settings when the answer buttons are hidden">Buttons hidden</string>
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">カード（角丸四角形）</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">ボックス（画面全幅四角形）</string>
