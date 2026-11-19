@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.ScrollState
 import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,12 +16,15 @@ import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.withPref
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class BottomNavigationRestoreTest : RobolectricTest() {
@@ -62,6 +66,22 @@ class BottomNavigationRestoreTest : RobolectricTest() {
     fun `restoring after process death keeps the open tab on screen`() =
         forEachTab { tab ->
             assertShowsTab(restoreAfterProcessDeath(launchOn(tab)), tab)
+        }
+
+    @Test
+    @Config(qualifiers = "w360dp-h500dp")
+    fun `restoring More after process death keeps its scroll position`() =
+        withBottomNavigation {
+            val controller = launchOn(NavigationItem.MORE)
+            val scroll = controller.get().moreScrollState
+            runBlocking { scroll.scrollTo(100) }
+            advanceRobolectricLooper()
+            val offset = scroll.value
+            assertThat("The More tab was scrolled", offset, greaterThan(0))
+
+            val restored = restoreAfterProcessDeath(controller)
+
+            assertThat(restored.moreScrollState.value, equalTo(offset))
         }
 
     @Test
@@ -158,6 +178,9 @@ class BottomNavigationRestoreTest : RobolectricTest() {
             equalTo(deckPicker.bottomNav.height),
         )
     }
+
+    private val DeckPicker.moreScrollState: ScrollState
+        get() = (supportFragmentManager.findFragmentByTag(NavigationItem.MORE.tag) as MoreFragment).scrollState
 
     private val DeckPicker.bottomNav: BottomNavigationView
         get() = binding.bottomNavigation!!

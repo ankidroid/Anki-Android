@@ -42,7 +42,13 @@ import com.ichi2.anki.common.android.R as CommonR
  */
 class MoreFragment : Fragment() {
     @VisibleForTesting
-    internal val scrollState = ScrollState(0)
+    internal var scrollState = ScrollState(0)
+        private set
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        savedInstanceState?.let { scrollState = ScrollState(it.getInt(STATE_SCROLL_POSITION)) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,6 +93,11 @@ class MoreFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(STATE_SCROLL_POSITION, scrollState.value)
+    }
+
     /**
      * Opens [HelpDialog] showing the children of the help [section].
      */
@@ -105,5 +116,9 @@ class MoreFragment : Fragment() {
 
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+    }
+
+    companion object {
+        private const val STATE_SCROLL_POSITION = "scrollPosition"
     }
 }
