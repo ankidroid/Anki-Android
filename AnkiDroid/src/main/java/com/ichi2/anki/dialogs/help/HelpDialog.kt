@@ -93,7 +93,7 @@ class HelpDialog : AnalyticsDialogFragment() {
             SendReport -> actionsDispatcher.onSendReport()
             null -> {
                 // there's no action so check if the selected item has children to show
-                val children = childHelpMenuItems.filter { it.parentId == selectedItem.id }
+                val children = childHelpMenuItems().filter { it.parentId == selectedItem.id }
                 if (children.isNotEmpty()) {
                     newHelpPage(children.toTypedArray())
                 }
@@ -130,7 +130,7 @@ class HelpDialog : AnalyticsDialogFragment() {
         fun newPrivacyPolicyInstance(): HelpDialog {
             Analytics.send(LinkClicked(LinkAction.OPENED_PRIVACY))
             val privacyId = mainHelpMenuItems.single { it.analyticsId == LinkAction.OPENED_PRIVACY }.id
-            val privacyItems = childHelpMenuItems.filter { it.parentId == privacyId }
+            val privacyItems = childHelpMenuItems().filter { it.parentId == privacyId }
             return HelpDialog().apply {
                 arguments =
                     Bundle().apply {
@@ -146,7 +146,7 @@ class HelpDialog : AnalyticsDialogFragment() {
         fun newSupportInstance(canRateApp: Boolean): HelpDialog {
             Analytics.send(LinkClicked(LinkAction.OPENED_SUPPORT_ANKIDROID))
             val actualMenuItems =
-                supportMenuItems
+                supportMenuItems()
                     .filterNot { it.action is Rate && !canRateApp }
                     .filterNot { it.analyticsId == LinkAction.OPENED_DONATE && !BuildConfig.SHOW_DONATE_LINKS }
             return HelpDialog().apply {
@@ -243,7 +243,7 @@ internal val mainHelpMenuItems =
 
 /** The menu items that are shown in the support menu. */
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-internal val supportMenuItems =
+internal fun supportMenuItems() =
     arrayOf(
         HelpItem(
             titleResId = CommonString.help_item_support_opencollective_donate,
@@ -291,7 +291,7 @@ internal val supportMenuItems =
 
 /** This array contains all the children of the top level menu items from the help menu. */
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-internal val childHelpMenuItems =
+internal fun childHelpMenuItems() =
     arrayOf(
         HelpItem(
             titleResId = CommonString.help_item_ankidroid_manual,

@@ -93,8 +93,8 @@ class HelpDialogTest {
     fun `Menu items IDs are consistent`() {
         // support menu items have unique ids
         assertEquals(
-            supportMenuItems.size,
-            supportMenuItems.map { it.id }.toSet().size,
+            supportMenuItems().size,
+            supportMenuItems().map { it.id }.toSet().size,
             "Support menu has items with the same id",
         )
         // main help menu items have unique ids
@@ -104,7 +104,7 @@ class HelpDialogTest {
             "Main help menu has items with the same id",
         )
         // help menu child items have a non-null valid parent id
-        val allFoundParentIds = childHelpMenuItems.map { it.parentId }
+        val allFoundParentIds = childHelpMenuItems().map { it.parentId }
         assertFalse(
             allFoundParentIds
                 .any { it == null || !mainHelpMenuItems.map { entry -> entry.id }.contains(it) },

@@ -52,7 +52,7 @@ class MoreFragment : Fragment() {
         val marketIntent = AnkiDroidApp.getMarketIntent(requireContext())
         val canRate = IntentUtil.canOpenIntent(requireContext(), marketIntent)
         val supportItems =
-            supportMenuItems
+            supportMenuItems()
                 .filterNot { it.action is Rate && !canRate }
                 .filterNot { it.analyticsId == LinkAction.OPENED_DONATE && !BuildConfig.SHOW_DONATE_LINKS }
         return ComposeView(requireContext()).apply {
@@ -88,7 +88,7 @@ class MoreFragment : Fragment() {
      * Opens [HelpDialog] showing the children of the help [section].
      */
     private fun openHelpSection(section: HelpItem) {
-        val children = childHelpMenuItems.filter { it.parentId == section.id }
+        val children = childHelpMenuItems().filter { it.parentId == section.id }
         val dialog =
             HelpDialog().apply {
                 arguments =
