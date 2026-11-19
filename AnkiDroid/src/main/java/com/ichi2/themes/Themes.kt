@@ -110,11 +110,9 @@ object Themes {
     }
 }
 
-@Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
 fun FragmentActivity.setTransparentStatusBar() {
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
         Themes.currentTheme !is NightTheme
-    window.statusBarColor = Color.TRANSPARENT
 }
 
 fun FragmentActivity.setTransparentBackground() {

@@ -624,12 +624,14 @@ open class AnkiActivity(
             },
         )
 
-    /** @see Window.setNavigationBarColor */
-    @Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
-    fun setNavigationBarColor(
+    /**
+     * @see Window.set NavigationBarColor
+     */
+    fun set NavigationBarColor(
         @AttrRes attr: Int,
     ) {
-        window.navigationBarColor = getColorFromAttr(this, attr)
+        @Suppress("DEPRECATION")
+        window.navigationBarsColor = getColorFromAttr(this, attr)
     }
 
     fun closeCollectionAndFinish() {
