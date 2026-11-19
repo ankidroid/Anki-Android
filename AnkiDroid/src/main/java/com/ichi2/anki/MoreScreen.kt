@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
@@ -74,38 +76,40 @@ fun MoreScreen(
     onKeyboardPaging: () -> Unit,
     scrollState: ScrollState,
 ) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .background(MaterialTheme.colorScheme.background),
-    ) {
-        TopAppBar(
-            title = { Text(stringResource(CommonString.bottom_nav_more)) },
-            windowInsets = WindowInsets(0),
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
-        )
+    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
         Column(
             Modifier
                 .fillMaxSize()
-                .nestedScroll(rememberTouchNestedScrollConnection())
-                .keyboardPaging(scrollState, onKeyboardPaging)
-                .verticalScroll(scrollState)
-                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .background(MaterialTheme.colorScheme.background),
         ) {
-            GroupedList {
-                moreItem(R.drawable.ic_settings_black, CommonString.settings, onSettingsClick)
-            }
-            MoreSectionHeader(stringResource(CommonString.help))
-            GroupedList {
-                for (item in helpItems) {
-                    moreItem(item.iconResId, item.titleResId) { onHelpItemClick(item) }
+            TopAppBar(
+                title = { Text(stringResource(CommonString.bottom_nav_more)) },
+                windowInsets = WindowInsets(0),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
+            )
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .nestedScroll(rememberTouchNestedScrollConnection())
+                    .keyboardPaging(scrollState, onKeyboardPaging)
+                    .verticalScroll(scrollState)
+                    .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
+            ) {
+                GroupedList {
+                    moreItem(R.drawable.ic_settings_black, CommonString.settings, onSettingsClick)
                 }
-            }
-            MoreSectionHeader(stringResource(CommonString.help_title_support_ankidroid))
-            GroupedList {
-                for (item in supportItems) {
-                    moreItem(item.iconResId, item.titleResId) { onSupportItemClick(item) }
+                MoreSectionHeader(stringResource(CommonString.help))
+                GroupedList {
+                    for (item in helpItems) {
+                        moreItem(item.iconResId, item.titleResId) { onHelpItemClick(item) }
+                    }
+                }
+                MoreSectionHeader(stringResource(CommonString.help_title_support_ankidroid))
+                GroupedList {
+                    for (item in supportItems) {
+                        moreItem(item.iconResId, item.titleResId) { onSupportItemClick(item) }
+                    }
                 }
             }
         }
