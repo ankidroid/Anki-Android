@@ -264,9 +264,9 @@
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">配置方案名称不能为空</string>
     <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">配置文件名称长度必须是 %1$d 个字符或更短</string>
     <!-- Switch profile dialogs -->
-    <string name="switch_profile_title" comment="Title of the dialog that confirms switching to another profile. %1$s is the profile name">Switch to “%1$s”?</string>
-    <string name="switch_profile_message" comment="Message of the dialog that confirms switching to another profile. %1$s is the app name: \'AnkiDroid\'">%1$s will restart to open this profile.</string>
-    <string name="switch_profile_confirm" comment="Button that confirms switching to another profile">Switch</string>
-    <string name="switch_profile_blocked" comment="Shown when the user tries to switch profiles while a sync or backup is running. %1$s is the app name: \'AnkiDroid\'">%1$s is syncing or backing up. Try again when it finishes.</string>
-    <string name="switch_profile_failed" comment="Shown when AnkiDroid could not switch to another profile. %1$s is the profile name">Couldn’t switch to “%1$s”. Try again.</string>
+    <string name="switch_profile_title" comment="Title of the dialog that confirms switching to another profile. %1$s is the profile name">切换到“%1$s”？</string>
+    <string name="switch_profile_message" comment="Message of the dialog that confirms switching to another profile. %1$s is the app name: \'AnkiDroid\'">%1$s 将重启以打开此配置文件。</string>
+    <string name="switch_profile_confirm" comment="Button that confirms switching to another profile">切换</string>
+    <string name="switch_profile_blocked" comment="Shown when the user tries to switch profiles while a sync or backup is running. %1$s is the app name: \'AnkiDroid\'">%1$s 正在同步或备份。当它完成后请重试。</string>
+    <string name="switch_profile_failed" comment="Shown when AnkiDroid could not switch to another profile. %1$s is the profile name">无法切换到“%1$s”。请重试。</string>
 </resources>

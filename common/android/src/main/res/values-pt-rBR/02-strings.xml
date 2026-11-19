@@ -219,7 +219,7 @@
     <string name="ankidroid_init_failed_storage">AnkiDroid não pode acessar o armazenamento devido a um erro do Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamanho da fonte</string>
-    <string name="note_editor_toolbar_layout" maxLength="28">Toolbar layout</string>
+    <string name="note_editor_toolbar_layout" maxLength="28">Layout da barra</string>
     <string comment="The toolbar is scrollable horizontally" name="note_editor_toolbar_scroll">Scroll</string>
     <string comment="The toolbar is stacked vertically if it overflows" name="note_editor_toolbar_stack">Stack</string>
     <string comment="The toolbar is not shown" name="note_editor_toolbar_hidden">Hidden</string>
