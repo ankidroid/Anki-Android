@@ -18,6 +18,7 @@ import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import java.util.Locale
 
 // TODO: move this to anki-common once dependencies are handled (#20737)
 @RunWith(AndroidJUnit4::class)
@@ -129,5 +130,53 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat("Ook? Ook?".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Ook? Ook?"))
                 }
             }.close()
+    }
+
+    @Test
+    fun `undo labels use sentence case only in English`() {
+        assertThat(
+            "Undo Bury Card".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo bury card"),
+        )
+        assertThat(
+            "Undo Bury".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo bury"),
+        )
+        assertThat(
+            "Undo \u2068Bury\u2069".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo \u2068bury\u2069"),
+        )
+        assertThat(
+            "Undo \u2068Unsuspend\u2069".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo \u2068unsuspend\u2069"),
+        )
+        assertThat(
+            "Undo AnkiWeb Import".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo AnkiWeb import"),
+        )
+        assertThat(
+            "Undo CSV Import".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo CSV import"),
+        )
+        assertThat(
+            "Undo Bury/Unsuspend".toUndoSentenceCase(Locale.ENGLISH),
+            equalTo("Undo bury/unsuspend"),
+        )
+        assertThat(
+            "Undo Karte Vergraben".toUndoSentenceCase(Locale.GERMAN),
+            equalTo("Undo Karte Vergraben"),
+        )
+        assertThat(
+            "Bury Card".toUndoOperationSentenceCase(Locale.ENGLISH),
+            equalTo("Bury card"),
+        )
+        assertThat(
+            "Bury/Unsuspend".toUndoOperationSentenceCase(Locale.ENGLISH),
+            equalTo("Bury/unsuspend"),
+        )
+        assertThat(
+            "AnkiWeb Import".toUndoOperationSentenceCase(Locale.ENGLISH),
+            equalTo("AnkiWeb import"),
+        )
     }
 }
