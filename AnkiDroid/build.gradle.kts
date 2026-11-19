@@ -7,7 +7,7 @@ import com.ichi2.anki.gradle.WriteReleaseMetadata
 import com.ichi2.anki.gradle.isCoverageEnabled
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
-import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.Locale
 import java.util.Properties
 import java.util.regex.Pattern
@@ -75,7 +75,11 @@ val gitCommitHash =
 /**
  * Epoch millis of the build. Displayed on the 'About' screen.
  *
- * CI passes the real time via -PbuildTime=<epoch> # example: 1776422957000
+ * Taken from, in order:
+ * - -PbuildTime=<epoch millis> # example: 1776422957000
+ * - SOURCE_DATE_EPOCH, in epoch seconds, which reproducible builds set to the commit time
+ *   (https://reproducible-builds.org/specs/source-date-epoch/)
+ * - the start of today in UTC, so that builds on the same day match in any time zone
  *
  * This value is captured in the configuration cache, so it can be stale when the cache is reused.
  */
@@ -83,10 +87,14 @@ val buildTimeMillis =
     providers
         .gradleProperty("buildTime")
         .orElse(
+            providers.environmentVariable("SOURCE_DATE_EPOCH").map { seconds ->
+                (seconds.trim().toLong() * 1000).toString()
+            },
+        ).orElse(
             providers.provider {
                 LocalDate
-                    .now()
-                    .atStartOfDay(ZoneId.systemDefault())
+                    .now(ZoneOffset.UTC)
+                    .atStartOfDay(ZoneOffset.UTC)
                     .toInstant()
                     .toEpochMilli()
                     .toString()
@@ -95,6 +103,13 @@ val buildTimeMillis =
 
 android {
     namespace = "com.ichi2.anki"
+
+    // AGP writes a dependency list into the APK signing block, encrypted for Google Play.
+    // The encryption makes it differ on every build, so APKs can't be reproduced.
+    // App bundles keep it for Google Play.
+    dependenciesInfo {
+        includeInApk = false
+    }
 
     buildFeatures {
         buildConfig = true

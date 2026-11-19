@@ -26,6 +26,11 @@ dependencyResolutionManagement {
     }
 }
 
+// Without a name, Gradle names the root project after the checkout directory, and Kotlin
+// puts that name into mangled `internal` member names (`openDB$<root>_libanki`), so builds
+// from different directories produce different dex files.
+rootProject.name = "AnkiDroid"
+
 // alphabetical ordering rather than dependency-tree ordering to avoid bikeshedding
 include(
     ":anki-common",
