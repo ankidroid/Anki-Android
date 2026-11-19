@@ -71,12 +71,14 @@ data class SearchRequest(
 /**
  * Uses the deck's current name, as it may have been renamed after it was selected.
  *
+ * A deleted deck matches no cards, as its name may be reused by another deck.
+ *
  * The backend escapes wildcards in deck names, except for a deck named exactly `_*`,
  * which is left as a wildcard matching every deck
  */
 context(col: Collection)
 private fun DeckNameId.toSearchNode(): SearchNode {
-    val currentName = col.decks.nameIfExists(id) ?: name
+    val currentName = col.decks.nameIfExists(id) ?: return searchNode { parsableText = "did:$id" }
     return if (currentName == "_*") {
         searchNode { parsableText = """deck:\_\*""" }
     } else {
