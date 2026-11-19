@@ -15,6 +15,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
@@ -315,6 +316,7 @@ class BottomNavigationScrollTest : RobolectricTest() {
 
     private fun withBottomNavigation(test: (DeckPicker) -> Unit) =
         withPref(Prefs::devBottomNavEnabled, true) {
+            InstrumentationRegistry.getInstrumentation().setInTouchMode(true)
             setIntroductionSlidesShown(true)
             test(startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).get())
         }

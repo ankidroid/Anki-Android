@@ -20,12 +20,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.InputModeManager
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.dialogs.help.HelpItem
 import com.ichi2.compose.ui.components.GroupedList
@@ -55,7 +63,7 @@ fun MoreScreen(
         Column(
             Modifier
                 .fillMaxSize()
-                .nestedScroll(rememberNestedScrollInteropConnection())
+                .nestedScroll(rememberTouchNestedScrollConnection())
                 .verticalScroll(scrollState)
                 .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
         ) {
@@ -99,4 +107,37 @@ private fun GroupedListScope.moreItem(
     ) {
         Text(stringResource(title))
     }
+}
+
+@Composable
+private fun rememberTouchNestedScrollConnection(): NestedScrollConnection {
+    val interop = rememberNestedScrollInteropConnection()
+    val inputModeManager = LocalInputModeManager.current
+    return remember(interop, inputModeManager) { TouchNestedScrollConnection(interop, inputModeManager) }
+}
+
+private class TouchNestedScrollConnection(
+    private val interop: NestedScrollConnection,
+    private val inputModeManager: InputModeManager,
+) : NestedScrollConnection {
+    private val isTouch: Boolean
+        get() = inputModeManager.inputMode == InputMode.Touch
+
+    override fun onPreScroll(
+        available: Offset,
+        source: NestedScrollSource,
+    ): Offset = if (isTouch) interop.onPreScroll(available, source) else Offset.Zero
+
+    override fun onPostScroll(
+        consumed: Offset,
+        available: Offset,
+        source: NestedScrollSource,
+    ): Offset = if (isTouch) interop.onPostScroll(consumed, available, source) else Offset.Zero
+
+    override suspend fun onPreFling(available: Velocity): Velocity = interop.onPreFling(available)
+
+    override suspend fun onPostFling(
+        consumed: Velocity,
+        available: Velocity,
+    ): Velocity = interop.onPostFling(consumed, available)
 }
