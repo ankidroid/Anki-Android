@@ -4,11 +4,11 @@ package com.ichi2.anki.dialogs.customstudy
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import anki.scheduler.CustomStudyDefaultsResponse
 import com.ichi2.anki.databinding.ItemRequireExcludeTagBinding
@@ -51,16 +51,22 @@ class IncludedExcludedTagsAdapter(
 
     /** Background color for a tag that is selected(references R.attr.colorPrimary). */
     // TODO implement a ripple effect or combine the two backgrounds into one background drawable
-    @ColorRes
     private val selectedItemBackground: Int
+
+    private val selectedItemTextColor: Int
 
     init {
         val ta =
             context.obtainStyledAttributes(
-                intArrayOf(android.R.attr.selectableItemBackground, androidx.appcompat.R.attr.colorPrimary),
+                intArrayOf(
+                    android.R.attr.selectableItemBackground,
+                    androidx.appcompat.R.attr.colorPrimary,
+                    com.google.android.material.R.attr.colorOnPrimary,
+                ),
             )
         selectableItemBackground = ta.getResourceId(0, 0)
         selectedItemBackground = ta.getColor(1, Color.BLUE)
+        selectedItemTextColor = ta.getColor(2, Color.WHITE)
         ta.recycle()
     }
 
@@ -87,8 +93,10 @@ class IncludedExcludedTagsAdapter(
             }
         if (isSelected) {
             holder.tagView.setBackgroundColor(selectedItemBackground)
+            holder.tagView.setTextColor(selectedItemTextColor)
         } else {
             holder.tagView.setBackgroundResource(selectableItemBackground)
+            holder.tagView.setTextColor(holder.defaultTextColors)
         }
         // "included" tags are allowed only if the relevant checkbox is checked
         holder.tagView.isEnabled = !(mode == Include && !isEnabled)
@@ -105,6 +113,7 @@ class IncludedExcludedTagsAdapter(
         binding: ItemRequireExcludeTagBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         val tagView: TextView = binding.tagView
+        val defaultTextColors: ColorStateList = tagView.textColors
     }
 
     enum class TagsSelectionMode {
