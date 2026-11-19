@@ -36,6 +36,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowChoreographer
 import java.time.Duration
+import java.util.Locale
 
 /**
  * Screenshot tests for [SharedDecksActivity]
@@ -78,6 +79,27 @@ class SharedDecksScreenshotTest : ScreenshotTest() {
                 else -> "download_$percent"
             }
         captureScreen(name)
+    }
+
+    /**
+     * Regression coverage for long localized stat labels wrapping onto multiple lines:
+     * both stat cards should match height and long words should hyphenate cleanly.
+     */
+    @Test
+    fun downloadFragmentWrappedStatLabel() {
+        val previousLocale = Locale.getDefault()
+        Locale.setDefault(Locale.GERMAN)
+        try {
+            RuntimeEnvironment.setQualifiers("+de")
+            RuntimeEnvironment.setFontScale(1.5f)
+            withSharedDecks { activity ->
+                activity.showDownloadFragment(percent = 30)
+                activity.simulateNavigationBar()
+                captureScreen("download_wrapped_stat_label")
+            }
+        } finally {
+            Locale.setDefault(previousLocale)
+        }
     }
 
     @Test
