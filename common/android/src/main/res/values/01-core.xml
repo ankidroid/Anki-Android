@@ -59,6 +59,8 @@
 
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of 'Undo' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Undo stroke</string>
+    <string name="undo_name_unbury" maxLength="28" comment="Shown after “Undo “ by the backend.">Unbury</string>
+    <string name="undo_name_unsuspend" maxLength="28" comment="Shown after “Undo “ by the backend.">Unsuspend</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>

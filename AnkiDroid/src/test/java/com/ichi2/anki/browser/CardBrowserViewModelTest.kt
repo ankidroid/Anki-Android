@@ -645,7 +645,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
     fun `suspend cards - cards - no selection`() =
         runViewModelTest(notes = 2) {
             ensureNoOpsExecuted {
-                toggleSuspendCards()
+                toggleSuspendCards().join()
 
                 assertAllUnsuspended("no selection")
             }
@@ -657,7 +657,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             suspendAll()
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
 
                 assertAllUnsuspended("all suspended: unsuspend")
             }
@@ -669,7 +669,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             suspendCards(cards.first().requireCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
 
                 assertAllSuspended("mixed selection: suspend all")
             }
@@ -680,7 +680,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
         runViewModelTest(notes = 2) {
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
 
                 assertAllSuspended("none suspended: suspend all")
             }
@@ -690,7 +690,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
     fun `suspend - notes - no selection`() =
         runViewModelNotesTest(notes = 2) {
             ensureNoOpsExecuted {
-                toggleSuspendCards()
+                toggleSuspendCards().join()
                 assertAllUnsuspended("none selected: do nothing")
             }
         }
@@ -701,7 +701,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             suspendAll()
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
                 assertAllUnsuspended("all suspended -> unsuspend")
             }
         }
@@ -713,7 +713,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             suspendNote(col.getNote(nid))
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
                 assertAllSuspended("mixed selection -> suspend all")
             }
         }
@@ -725,7 +725,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
             suspendCards(cards.first().requireCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
                 assertAllSuspended("mixed selection -> suspend all")
             }
         }
@@ -734,7 +734,7 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
         runViewModelNotesTest(notes = 2) {
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                toggleSuspendCards().join()
                 assertAllSuspended("none suspended -> suspend all")
             }
         }
