@@ -71,6 +71,7 @@ fun MoreScreen(
     onSettingsClick: () -> Unit,
     onHelpItemClick: (HelpItem) -> Unit,
     onSupportItemClick: (HelpItem) -> Unit,
+    onKeyboardPaging: () -> Unit,
     scrollState: ScrollState,
 ) {
     Column(
@@ -88,7 +89,7 @@ fun MoreScreen(
             Modifier
                 .fillMaxSize()
                 .nestedScroll(rememberTouchNestedScrollConnection())
-                .keyboardPaging(scrollState)
+                .keyboardPaging(scrollState, onKeyboardPaging)
                 .verticalScroll(scrollState)
                 .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
         ) {
@@ -167,15 +168,20 @@ private class TouchNestedScrollConnection(
     ): Velocity = interop.onPostFling(consumed, available)
 }
 
-private fun Modifier.keyboardPaging(scrollState: ScrollState) = this then KeyboardPagingElement(scrollState)
+private fun Modifier.keyboardPaging(
+    scrollState: ScrollState,
+    onPaging: () -> Unit,
+) = this then KeyboardPagingElement(scrollState, onPaging)
 
 private data class KeyboardPagingElement(
     val scrollState: ScrollState,
+    val onPaging: () -> Unit,
 ) : ModifierNodeElement<KeyboardPagingNode>() {
-    override fun create() = KeyboardPagingNode(scrollState)
+    override fun create() = KeyboardPagingNode(scrollState, onPaging)
 
     override fun update(node: KeyboardPagingNode) {
         node.scrollState = scrollState
+        node.onPaging = onPaging
     }
 }
 
@@ -183,6 +189,7 @@ private enum class Page { UP, DOWN, TOP, BOTTOM }
 
 private class KeyboardPagingNode(
     var scrollState: ScrollState,
+    var onPaging: () -> Unit,
 ) : DelegatingNode(),
     KeyInputModifierNode {
     private val pagingFocus = delegate(FocusTargetModifierNode(focusability = Focusability.Never))
@@ -219,6 +226,7 @@ private class KeyboardPagingNode(
                 Page.BOTTOM -> scrollState.maxValue
             }.coerceIn(0, scrollState.maxValue)
         val focusTarget = rowOnPage(target - scrollState.value, height, up = page == Page.UP || page == Page.TOP)
+        onPaging()
         pagingFocus.focusability = Focusability.Always
         pagingFocus.requestFocus()
         pendingTarget = target

@@ -249,6 +249,8 @@ fun Fragment.updateBottomNavOnScroll(dy: Int) {
     if (dy > 0) behavior.slideOut(bottomNav) else behavior.slideIn(bottomNav)
 }
 
+fun Fragment.showBottomNav() = updateBottomNavOnScroll(dy = -1)
+
 /** Hides any fragments currently hosted in the bottom-nav container. */
 context(deckPicker: DeckPicker)
 private fun FragmentTransaction.hideBottomNavFragments() {
