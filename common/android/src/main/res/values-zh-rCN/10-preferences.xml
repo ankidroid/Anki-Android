@@ -432,6 +432,8 @@
     <string name="ignore_display_cutout" maxLength="41">忽略显示屏刘海</string>
     <string name="show_answer_buttons" maxLength="41">显示回答按钮</string>
     <string name="hide_hard_and_easy" maxLength="41">隐藏“困难”和“简单”按钮</string>
+    <string name="answer_buttons_theme_colors" maxLength="41" comment="Use the same color in the answer buttons, matching the theme\'s color instead of Anki\'s">Use theme colors</string>
+    <string name="answer_buttons_hidden" comment="Shown in the preview of the answer buttons settings when the answer buttons are hidden">Buttons hidden</string>
     <string name="reviewer_frame_style" maxLength="41">框架样式</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">卡片</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">文本框</string>
