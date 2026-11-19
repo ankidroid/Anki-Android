@@ -73,7 +73,10 @@ class MoreFragment : Fragment() {
                             when (val action = item.action) {
                                 is OpenUrl -> openUrl(action.url)
                                 is OpenUrlResource -> openUrl(getString(action.urlResourceId))
-                                Rate -> startActivity(marketIntent)
+                                Rate ->
+                                    if (IntentUtil.canOpenIntent(requireContext(), marketIntent)) {
+                                        startActivity(marketIntent)
+                                    }
                                 else -> {}
                             }
                         },
