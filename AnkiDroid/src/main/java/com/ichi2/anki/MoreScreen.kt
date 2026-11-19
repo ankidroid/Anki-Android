@@ -24,14 +24,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequesterModifierNode
+import androidx.compose.ui.focus.FocusTargetModifierNode
+import androidx.compose.ui.focus.Focusability
 import androidx.compose.ui.focus.requestFocus
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.KeyInputModifierNode
+import androidx.compose.ui.input.key.isAltPressed
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
@@ -39,6 +43,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.node.DelegatingNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.TraversableNode
 import androidx.compose.ui.node.TraversableNode.Companion.TraverseDescendantsAction
@@ -54,6 +59,8 @@ import androidx.compose.ui.unit.dp
 import com.ichi2.anki.dialogs.help.HelpItem
 import com.ichi2.compose.ui.components.GroupedList
 import com.ichi2.compose.ui.components.GroupedListScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -172,47 +179,92 @@ private data class KeyboardPagingElement(
     }
 }
 
+private enum class Page { UP, DOWN, TOP, BOTTOM }
+
 private class KeyboardPagingNode(
     var scrollState: ScrollState,
-) : Modifier.Node(),
+) : DelegatingNode(),
     KeyInputModifierNode {
+    private val pagingFocus = delegate(FocusTargetModifierNode(focusability = Focusability.Never))
+    private var pagingJob: Job? = null
+    private var pendingTarget: Int? = null
+
     override fun onPreKeyEvent(event: KeyEvent): Boolean {
-        val up =
+        val page =
             when {
                 event.isCtrlPressed -> return false
-                event.key == Key.PageUp -> true
-                event.key == Key.PageDown -> false
-                event.key == Key.Spacebar && event.isShiftPressed -> true
+                event.key == Key.PageUp -> Page.UP
+                event.key == Key.PageDown -> Page.DOWN
+                event.key == Key.Spacebar && event.isShiftPressed -> Page.UP
+                event.key == Key.MoveHome -> Page.TOP
+                event.key == Key.MoveEnd -> Page.BOTTOM
+                event.key == Key.DirectionUp && event.isAltPressed -> Page.TOP
+                event.key == Key.DirectionDown && event.isAltPressed -> Page.BOTTOM
                 else -> return false
             }
-        if (event.type == KeyEventType.KeyDown) page(up)
+        if (event.type == KeyEventType.KeyDown) scroll(page)
         return true
     }
 
     override fun onKeyEvent(event: KeyEvent) = false
 
-    private fun page(up: Boolean) {
+    private fun scroll(page: Page) {
+        val height = requireLayoutCoordinates().size.height
+        val from = pendingTarget ?: scrollState.value
+        val target =
+            when (page) {
+                Page.UP -> from - height
+                Page.DOWN -> from + height
+                Page.TOP -> 0
+                Page.BOTTOM -> scrollState.maxValue
+            }.coerceIn(0, scrollState.maxValue)
+        val focusTarget = rowOnPage(target - scrollState.value, height, up = page == Page.UP || page == Page.TOP)
+        pagingFocus.focusability = Focusability.Always
+        pagingFocus.requestFocus()
+        pendingTarget = target
+        pagingJob?.cancel()
+        pagingJob =
+            coroutineScope.launch {
+                val job = coroutineContext.job
+                try {
+                    scrollState.animateScrollTo(target)
+                    withFrameNanos { }
+                } finally {
+                    if (pagingJob == job) {
+                        pagingJob = null
+                        pendingTarget = null
+                        if (isAttached) {
+                            if (pagingFocus.focusState.isFocused) focusTarget?.requestFocus()
+                            pagingFocus.focusability = Focusability.Never
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun rowOnPage(
+        shift: Int,
+        height: Int,
+        up: Boolean,
+    ): KeyboardPagingTargetNode? {
         val viewport = requireLayoutCoordinates()
-        val height = viewport.size.height
-        val target = (scrollState.value + if (up) -height else height).coerceIn(0, scrollState.maxValue)
-        val shift = (target - scrollState.value).toFloat()
         var next: KeyboardPagingTargetNode? = null
-        var nextTop = 0f
+        var nextBounds = Rect.Zero
+        var nextIsFullyShown = false
         traverseDescendants(KeyboardPagingTargetNode.TraverseKey) { row ->
-            val bounds = viewport.localBoundingBoxOf(row.requireLayoutCoordinates(), clipBounds = false).translate(0f, -shift)
-            val isOnNewPage = bounds.top >= 0 && bounds.bottom <= height
-            if (isOnNewPage && (next == null || (if (up) bounds.top < nextTop else bounds.top > nextTop))) {
-                next = row as KeyboardPagingTargetNode
-                nextTop = bounds.top
+            val bounds = viewport.localBoundingBoxOf(row.requireLayoutCoordinates(), clipBounds = false).translate(0f, -shift.toFloat())
+            if (bounds.bottom > 0 && bounds.top < height) {
+                val isFullyShown = bounds.top >= 0 && bounds.bottom <= height
+                val isCloser = if (up) bounds.top < nextBounds.top else bounds.bottom > nextBounds.bottom
+                if (next == null || (isFullyShown && !nextIsFullyShown) || (isFullyShown == nextIsFullyShown && isCloser)) {
+                    next = row as KeyboardPagingTargetNode
+                    nextBounds = bounds
+                    nextIsFullyShown = isFullyShown
+                }
             }
             TraverseDescendantsAction.ContinueTraversal
         }
-        val focusTarget = next
-        coroutineScope.launch {
-            scrollState.animateScrollTo(target)
-            withFrameNanos { }
-            focusTarget?.requestFocus()
-        }
+        return next
     }
 }
 
