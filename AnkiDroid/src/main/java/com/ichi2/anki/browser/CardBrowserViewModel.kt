@@ -1571,7 +1571,6 @@ class CardBrowserViewModel(
     /** Refreshes edits which use the result count as their feedback. */
     private fun refreshAfterEdit(changes: OpChanges) {
         if (changes.browserSidebar || changes.browserTable || changes.noteText || changes.card) {
-            endMultiSelectMode(SingleSelectCause.Other)
             launchSearchForCards(feedbackMode = BrowserSearchFeedbackMode.COUNT_ONLY)
         }
     }
