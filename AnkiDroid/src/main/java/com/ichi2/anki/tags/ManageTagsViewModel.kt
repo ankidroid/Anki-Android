@@ -90,7 +90,7 @@ class ManageTagsViewModel :
     fun refreshTags() =
         launchTagOpAndRefresh {
             Timber.i("Refreshing tags")
-        }
+        }.job
 
     /**
      * Filters visible tags by [query]. Ancestors of matches are shown to preserve hierarchy.
@@ -200,7 +200,7 @@ class ManageTagsViewModel :
      * Deletes [tag] and its children from all notes.
      * @see Tags.remove
      */
-    fun removeTag(tag: TagName) =
+    internal fun removeTag(tag: TagName) =
         launchTagOpAndRefresh {
             val result = tagUndoableOp { tags.remove(tag) }
             messageQueue.enqueue(TagRemoved(result.count))
@@ -210,7 +210,7 @@ class ManageTagsViewModel :
      * Renames [oldName] to [newName] on notes, including matching child tags.
      * @see Tags.rename
      */
-    fun renameTag(
+    internal fun renameTag(
         oldName: TagName,
         newName: TagName,
     ) = launchTagOpAndRefresh {
@@ -222,7 +222,7 @@ class ManageTagsViewModel :
      * Removes tags not present on any note. Queues a [ClearedUnusedTags] message with the count.
      * @see Tags.clearUnusedTags
      */
-    fun clearUnusedTags() =
+    internal fun clearUnusedTags() =
         launchTagOpAndRefresh {
             val result = tagUndoableOp { tags.clearUnusedTags() }
             Timber.i("Deleted %d unused tags", result.count)
@@ -248,7 +248,7 @@ class ManageTagsViewModel :
                 TagMoved(result.count)
             },
         )
-    }
+    }.job
 
     /**
      * Undoes the last change, respecting this screen's history boundary when possible.
@@ -262,7 +262,7 @@ class ManageTagsViewModel :
                 }
             pendingMessages.value.forEach { messageShown(it.id) }
             messageQueue.enqueue(UserMessage.Undone(result.operation))
-        }
+        }.job
 
     /**
      * Redoes the last undone change, respecting this screen's history boundary when possible.
@@ -276,7 +276,7 @@ class ManageTagsViewModel :
                 }
             pendingMessages.value.forEach { messageShown(it.id) }
             messageQueue.enqueue(UserMessage.Redone(result.operation))
-        }
+        }.job
 
     private suspend fun tagUndoableOp(block: Collection.() -> OpChangesWithCount): OpChangesWithCount =
         undoableOp(handler = this@ManageTagsViewModel) {
@@ -300,17 +300,29 @@ class ManageTagsViewModel :
     /**
      * Runs [block], then [reloads][loadTags], keeping any existing content visible.
      */
-    private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job =
+    private fun launchTagOpAndRefresh(block: suspend () -> Unit): TagOperation =
         launchTagOperation {
             block()
             loadTags()
         }
 
-    /** Starts an operation, or returns the unfinished operation's job without starting another. */
-    private fun launchTagOperation(block: suspend () -> Unit): Job {
+    /**
+     * Result of requesting a tag operation.
+     *
+     * @property job The job for this request, or the active job if another tag operation was
+     * already running. Join it to wait for that work to complete.
+     * @property accepted Whether this request started a new operation. An accepted request can
+     * still encounter a validation or execution error.
+     */
+    internal class TagOperation(
+        val job: Job,
+        val accepted: Boolean,
+    )
+
+    private fun launchTagOperation(block: suspend () -> Unit): TagOperation {
         val currentOperation = tagOperation
         if (currentOperation != null && !currentOperation.isCompleted) {
-            return currentOperation
+            return TagOperation(currentOperation, accepted = false)
         }
 
         // set 'tagOperation' before executing
@@ -324,8 +336,7 @@ class ManageTagsViewModel :
             }
         tagOperation = operation
         // calls from observers will now find this job
-        operation.start()
-        return operation
+        return TagOperation(operation, accepted = operation.start())
     }
 
     /**
