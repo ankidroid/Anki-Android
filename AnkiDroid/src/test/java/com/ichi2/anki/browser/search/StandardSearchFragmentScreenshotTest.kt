@@ -42,6 +42,32 @@ class StandardSearchFragmentScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun `expanded history leaves room for saved searches - Issue 23297`() {
+        SearchHistory().apply {
+            clear()
+            repeat(SearchHistory.MAX_ENTRIES) { addRecent(SearchHistoryEntry("prop:ivl>$it")) }
+            addRecent(SearchHistoryEntry("tag:language ".repeat(200).trim()))
+        }
+        runTest {
+            SavedSearches.saveToConfig(
+                listOf(
+                    SavedSearch("Languages", "tag:language"),
+                    SavedSearch("hello world", ""),
+                ),
+            )
+        }
+
+        withCardBrowserFragment(useSearchView = true) {
+            requireNotNull(searchView).show()
+            advanceRobolectricLooper()
+            requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG).viewModel.toggleHistoryExpanded()
+            advanceRobolectricLooper()
+
+            captureScreen("expanded_search_history")
+        }
+    }
+
+    @Test
     fun `large saved searches have bounded previews - Issue 22820`() {
         SearchHistory().clear()
         runTest {
