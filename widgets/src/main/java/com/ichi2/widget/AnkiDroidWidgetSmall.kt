@@ -95,7 +95,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         private val widgetSmallLayout: Int
             get() {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return R.layout.widget_small
-                return if (disableMaterialYouDynamicColor) R.layout.widget_small_unthemed else R.layout.widget_small
+                return R.layout.widget_small_unthemed
             }
 
         private fun buildUpdate(context: Context): RemoteViews {

@@ -24,10 +24,6 @@ fun getAppWidgetManager(context: Context): AppWidgetManager? {
     return AppWidgetManager.getInstance(context)
 }
 
-/** Whether 'Material You' dynamic color should be used for widgets */
-val disableMaterialYouDynamicColor: Boolean
-    get() = true
-
 /** Builds the widget's views once for each size the launcher may show it at, from its [options]. */
 inline fun sizedRemoteViews(
     options: Bundle,
