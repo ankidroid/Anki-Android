@@ -127,7 +127,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertTrue(tagExists(TagName.asValid("unused::child")))
                 assertNull(loadedState.undoLabel)
 
-                clearUnusedTags().join()
+                clearUnusedTags().job.join()
                 assertEquals(0, loadedState.totalTagCount)
                 assertNotNull(loadedState.undoLabel)
                 undo().join()
@@ -600,9 +600,13 @@ class ManageTagsViewModelTest : JvmTest() {
                     val refresh = refreshTags()
                     assertThat(refresh.isCompleted, equalTo(false))
 
-                    assertThat(removeTag("science"), sameInstance(refresh))
-                    assertThat(renameTag("history", "past"), sameInstance(refresh))
-                    assertThat(clearUnusedTags(), sameInstance(refresh))
+                    val deletion = removeTag(TagName.asValid("science"))
+                    val rename = renameTag(TagName.asValid("history"), TagName.asValid("past"))
+                    val clear = clearUnusedTags()
+                    for (operation in listOf(deletion, rename, clear)) {
+                        assertFalse(operation.accepted)
+                        assertThat(operation.job, sameInstance(refresh))
+                    }
                     assertThat(toggleCollapsed("science"), sameInstance(refresh))
                     assertThat(moveTag("history", "science"), sameInstance(refresh))
                     assertThat(refreshTags(), sameInstance(refresh))
@@ -612,7 +616,9 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("science", "history", "unused"))
                 assertThat(loadedState.visibleNodes.single { it.fullTagName == "science" }.collapsed, equalTo(true))
 
-                removeTag("science").join()
+                val deletion = removeTag(TagName.asValid("science"))
+                assertTrue(deletion.accepted)
+                deletion.job.join()
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("history", "unused"))
             }
         }
@@ -1679,7 +1685,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertEquals(4, loadedState.totalTagCount)
                 assertTrue(tagExists(TagName.asValid("unused::leaf")))
 
-                clearUnusedTags().join()
+                clearUnusedTags().job.join()
 
                 assertNull(loadedState.error)
                 assertEquals(2, loadedState.totalTagCount)

@@ -7,12 +7,12 @@ internal val ManageTagsState.Content.visibleTagNames: List<String>
 
 internal fun ManageTagsViewModel.toggleCollapsed(tag: String) = toggleCollapsed(TagName.asValid(tag))
 
-internal fun ManageTagsViewModel.removeTag(tag: String) = removeTag(TagName.asValid(tag))
+internal fun ManageTagsViewModel.removeTag(tag: String) = removeTag(TagName.asValid(tag)).job
 
 internal fun ManageTagsViewModel.renameTag(
     oldName: String,
     newName: String,
-) = renameTag(TagName.asValid(oldName), TagName.asValid(newName))
+) = renameTag(TagName.asValid(oldName), TagName.asValid(newName)).job
 
 internal fun ManageTagsViewModel.moveTag(
     tag: String,

@@ -22,7 +22,7 @@ class ManageTagsRenameUndoRegressionTest : JvmTest() {
             withViewModel(ManageTagsViewModel()) {
                 toggleCollapsed(source).join()
                 val originalTags = col.tags.all().sorted()
-                renameTag(source, destination).join()
+                renameTag(source, destination).job.join()
                 assertEquals(listOf("destination::child"), col.getNote(note.id).tags)
 
                 col.undo()
