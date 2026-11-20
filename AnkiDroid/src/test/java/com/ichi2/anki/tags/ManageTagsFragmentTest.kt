@@ -2,7 +2,11 @@
 
 package com.ichi2.anki.tags
 
+import android.os.Build
 import android.view.KeyEvent
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
 import androidx.activity.ComponentDialog
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
@@ -28,6 +32,8 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.commitNow
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonPlurals
@@ -45,6 +51,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -62,6 +69,22 @@ class ManageTagsFragmentTest : RobolectricTest() {
     @get:Rule
     val compose = createComposeRule()
     private val screen = ManageTagsTestHelper(this, compose)
+
+    @Test
+    @Config(sdk = [29, 30])
+    fun `keyboard resize preserves the window's keyboard visibility setting`() {
+        Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+            val activity = controller.setup().get()
+            val window = activity.window
+            window.setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN or SOFT_INPUT_ADJUST_PAN)
+
+            activity.supportFragmentManager.commitNow { add(ManageTagsFragment(), null) }
+
+            @Suppress("DEPRECATION")
+            val adjustment = if (Build.VERSION.SDK_INT < 30) SOFT_INPUT_ADJUST_RESIZE else SOFT_INPUT_ADJUST_PAN
+            assertEquals(SOFT_INPUT_STATE_ALWAYS_HIDDEN or adjustment, window.attributes.softInputMode)
+        }
+    }
 
     @Test
     fun `a search with a space between tag levels finds the child tag`() {

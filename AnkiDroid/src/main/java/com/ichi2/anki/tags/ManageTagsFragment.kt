@@ -33,6 +33,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.android.input.Shortcut
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
@@ -66,6 +67,11 @@ class ManageTagsFragment :
                 ),
                 CommonString.manage_tags,
             )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CompatHelper.compat.configureEdgeToEdgeImeInsets(requireActivity().window)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
