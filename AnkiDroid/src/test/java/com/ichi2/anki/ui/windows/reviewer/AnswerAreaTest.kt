@@ -12,18 +12,19 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
+import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.compose.theme.AnkiDroidTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestParameterInjector
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import com.ichi2.anki.common.android.R as CommonR
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestParameterInjector::class)
 class AnswerAreaTest : RobolectricTest() {
     @get:Rule
     val composeRule = createComposeRule()
@@ -118,6 +119,24 @@ class AnswerAreaTest : RobolectricTest() {
         composeRule.onNodeWithText(easy).assertDoesNotExist()
         composeRule.onNodeWithText(again).assertIsDisplayed()
         composeRule.onNodeWithText(good).assertIsDisplayed()
+    }
+
+    @Test
+    fun `rating buttons have equal widths`(
+        @TestParameter showHardAndEasyButtons: Boolean,
+    ) {
+        setAnswerArea(isAnswerShown = true, showHardAndEasyButtons = showHardAndEasyButtons)
+
+        val labels = if (showHardAndEasyButtons) listOf(again, hard, good, easy) else listOf(again, good)
+        val widths =
+            labels.map {
+                composeRule
+                    .onNodeWithText(it)
+                    .fetchSemanticsNode()
+                    .size.width
+            }
+        // Can differ by one pixel when the width is not evenly divisible due to rounding.
+        assertTrue(widths.max() - widths.min() <= 1, "Rating button widths: $widths")
     }
 
     @Test
