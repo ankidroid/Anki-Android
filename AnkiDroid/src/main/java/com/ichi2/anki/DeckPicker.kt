@@ -613,6 +613,12 @@ open class DeckPicker :
                 toggleListener =
                     FloatingActionBarToggleListener { isOpening ->
                         closeFloatingActionBarBackPressCallback.isEnabled = isOpening
+                        if (isOpening) {
+                            // The pane can register its Back callback after activity startup.
+                            closeFloatingActionBarBackPressCallback.remove()
+                            onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
+                            prioritizeDrawerBackCallback()
+                        }
                     },
                 initiallyOpen = savedInstanceState?.getBoolean("mIsFABOpen") == true,
             )
