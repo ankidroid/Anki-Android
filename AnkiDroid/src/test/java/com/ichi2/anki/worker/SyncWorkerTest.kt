@@ -24,6 +24,7 @@ import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.Deferred
@@ -76,7 +77,7 @@ class SyncWorkerTest : RobolectricTest() {
             assertEquals(Result.failure(), work.await())
             val notification = assertNotNull(syncNotification)
             assertEquals("sync failed", notification.extras.getString(Notification.EXTRA_TEXT))
-            assertTrue(notification.flags and Notification.FLAG_ONGOING_EVENT == 0)
+            assertTrue(!notification.flags.hasBitFlag(Notification.FLAG_ONGOING_EVENT))
         }
 
     @Test
@@ -186,7 +187,7 @@ class SyncWorkerTest : RobolectricTest() {
         val notification = foregroundInfo.notification
         assertEquals(NotificationChannel.SYNC.id, notification.channelId)
         assertNotNull(notification.smallIcon)
-        assertTrue(notification.flags and Notification.FLAG_ONGOING_EVENT != 0)
+        assertTrue(notification.flags.hasBitFlag(Notification.FLAG_ONGOING_EVENT))
     }
 
     /** Installs a backend whose sync finishes while a progress update waits for [releaseProgress]. */

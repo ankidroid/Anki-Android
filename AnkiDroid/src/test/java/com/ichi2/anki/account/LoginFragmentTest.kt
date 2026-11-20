@@ -21,6 +21,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.findAnkiActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.throwOnShowError
@@ -368,7 +369,7 @@ class LoginFragmentTest : RobolectricTest() {
     }
 
     private val AccountActivity.isBlockingTouches: Boolean
-        get() = window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE != 0
+        get() = window.attributes.flags.hasBitFlag(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     private val syncNowMessage: String
         get() = targetContext.getString(CommonString.sync_now)
