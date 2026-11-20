@@ -16,6 +16,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -48,11 +49,19 @@ internal fun TagSearchBar(
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(query, selection = TextRange(query.length)))
     }
+    // More than one input event can arrive before the parent composes with the next query.
+    var lastSentQuery by remember(query) { mutableStateOf(query) }
+
+    fun sendQuery(text: String) {
+        if (text == lastSentQuery) return
+        lastSentQuery = text
+        onQueryChange(text)
+    }
     TextField(
         value = input.copy(text = query),
         onValueChange = {
             input = it.filterTagInput()
-            if (input.text != query) onQueryChange(input.text)
+            sendQuery(input.text)
         },
         modifier = modifier.semantics { contentDescription = hint },
         placeholder = { Text(hint) },
@@ -60,7 +69,7 @@ internal fun TagSearchBar(
         trailingIcon =
             if (query.isNotEmpty()) {
                 {
-                    IconButton(onClick = { onQueryChange("") }, modifier = Modifier.padding(end = 8.dp)) {
+                    IconButton(onClick = { sendQuery("") }, modifier = Modifier.padding(end = 8.dp)) {
                         Icon(
                             painterResource(R.drawable.ic_clear_white),
                             stringResource(AppCompatR.string.abc_searchview_description_clear),

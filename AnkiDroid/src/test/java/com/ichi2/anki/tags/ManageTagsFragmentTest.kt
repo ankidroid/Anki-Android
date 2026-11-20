@@ -32,6 +32,7 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
+import androidx.compose.ui.text.AnnotatedString
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commitNow
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -525,6 +526,30 @@ class ManageTagsFragmentTest : RobolectricTest() {
                 assertTrue("i" in col.getNote(note.id).tags)
             }
         }
+
+    /**
+     * An IME or accessibility service can replace the search text twice before the next frame.
+     * Returning to the original text is still a change relative to the first replacement.
+     */
+    @Test
+    fun `two search edits before recomposition keep the final text`() {
+        addTags("abc")
+        screen.open()
+        screen.search("abc")
+        val input = compose.onNode(hasSetTextAction())
+        // Put the cursor at the start, so the final edit (cursor at the end) still reaches the
+        // field's callback even though its text matches the value in the last composition.
+        input.performSemanticsAction(SemanticsActions.SetSelection) { it(0, 0, false) }
+        val setText = requireNotNull(input.fetchSemanticsNode().config[SemanticsActions.SetText].action)
+        compose.runOnUiThread {
+            // Invoke both edits before Compose renders either of them.
+            assertTrue(setText(AnnotatedString("abcd")))
+            assertTrue(setText(AnnotatedString("abc")))
+        }
+        // Fails on the buggy head: the last composed query dropped the second edit.
+        assertEquals("abc", screen.viewModel.searchQuery.value)
+        compose.onNodeWithTag("tag:abc").assertIsDisplayed()
+    }
 
     /**
      * A collection refresh can start after the dialog rendered an enabled confirm handler. A
