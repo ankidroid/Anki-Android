@@ -848,7 +848,11 @@ class ProfileManager private constructor(
 
         const val DEFAULT_PROFILE_DISPLAY_NAME = "Default"
 
-        /** Files AnkiDroid creates directly inside the collection directory. */
+        /**
+         * Files AnkiDroid creates directly inside the collection directory.
+         *
+         * Matched case sensitively: AnkiDroid always names the collection `collection.anki2`.
+         */
         private val COLLECTION_ARTIFACT_FILES =
             setOf(
                 "collection.anki2",

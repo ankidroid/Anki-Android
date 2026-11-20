@@ -14,7 +14,12 @@ import java.io.File
  */
 @NotInPyLib
 sealed class CollectionFiles {
-    /** The 'standard' collection which AnkiDroid uses */
+    /**
+     * The 'standard' collection which AnkiDroid uses
+     *
+     * The app always keeps the default [collectionName], so its database is always
+     * `collection.anki2` in lower case, and code may match that name exactly.
+     */
     class FolderBasedCollection(
         folderPath: File,
         collectionName: String = "collection",
