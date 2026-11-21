@@ -90,6 +90,19 @@ class SearchRequestTest : JvmTest() {
     }
 
     @Test
+    fun `deck filter - a deleted deck matches no cards`() {
+        addBasicNote("selected").apply { moveToDeck("Selected") }
+        val entry = deckSearch("Selected")
+
+        // the request keeps the deleted deck, whose name is then reused by another deck
+        col.decks.remove(listOf(requireNotNull(col.decks.idForName("Selected"))))
+        addBasicNote("replacement").apply { moveToDeck("Selected") }
+        addBasicNote("default")
+
+        assertThat(entry.cardsFound(), empty())
+    }
+
+    @Test
     fun `search string generation - complex`() {
         assertThat(
             validEntry().toValidSearchString(),
