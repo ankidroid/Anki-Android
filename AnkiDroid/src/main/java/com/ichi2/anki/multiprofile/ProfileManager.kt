@@ -18,8 +18,13 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.AnkiDroidFolder
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.common.utils.android.SdCard
+import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.selectStoragePermissions
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
@@ -196,9 +201,24 @@ class ProfileManager private constructor(
     private fun prepareProfile(profileId: ProfileId) {
         val wrapper = ProfileContextWrapper.create(profileContext, profileId, resolveProfileDirectory(profileId).file)
         ensureProfileCollectionPath(wrapper)
-        if (profileId.isDefault()) return
-        CollectionHelper.initializeAnkiDroidDirectory(CollectionHelper.getCurrentAnkiDroidDirectory(wrapper))
+        if (profileId.isDefault() && needsStorageSetupOnStartup(wrapper)) {
+            Timber.i("Skipping the folder check for $profileId: startup sets up its storage first")
+            return
+        }
+        try {
+            CollectionHelper.initializeAnkiDroidDirectory(CollectionHelper.getCurrentAnkiDroidDirectory(wrapper))
+        } catch (e: StorageAccessException) {
+            if (!profileId.isDefault() || !startupOffersReinstallRecovery(wrapper)) throw e
+            Timber.i(e, "Switching to $profileId anyway: startup offers recovery for a folder lost on reinstall")
+        }
     }
+
+    private fun needsStorageSetupOnStartup(context: Context) =
+        CollectionHelper.storageDecision(context.sharedPrefs()) != StorageDecision.Decided ||
+            !selectStoragePermissions(context).hasRequiredPermissions(context)
+
+    private fun startupOffersReinstallRecovery(context: Context) =
+        SdCard.isMounted && ScopedStorageService.collectionWasMadeInaccessibleAfterUninstall(context)
 
     private fun loadProfileData(profileId: ProfileId) {
         val profileBaseDir = resolveProfileDirectory(profileId)

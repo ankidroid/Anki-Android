@@ -490,6 +490,21 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `a profile whose public folder needs storage access first is not switched to`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        ShadowEnvironment.setIsExternalStorageLegacy(true)
+        @Suppress("DEPRECATION")
+        val publicFolder = File(Environment.getExternalStorageDirectory(), work.value).apply { writeText("not a folder") }
+        writeProfileCollectionPath(work, publicFolder)
+
+        val switched = with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(work) }
+
+        assertFalse(switched)
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
     fun `switching keeps a collection folder the profile already chose`() {
         val manager = ProfileManager.create(context)
         val work = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
