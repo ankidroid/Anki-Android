@@ -9,20 +9,32 @@ package com.ichi2.anki.tags
  * Not thread-safe: [ManageTagsViewModel] uses it on the main thread.
  */
 internal class TagRefreshTracker {
-    /** Whether the tags changed since the last [load][trackLoad] started. */
-    var isRefreshRequested = false
+    /** Incremented for each refresh request. Compare two values to detect requests made in between. */
+    var revision = 0L
         private set
 
+    private var revisionAtLoadStart = 0L
+    private var lastLoadSucceeded = false
+
+    /** Whether the tags changed since the last [load][trackLoad] started. */
+    val isRefreshRequested: Boolean
+        get() = revision != revisionAtLoadStart
+
+    /** Whether the loaded tags may be stale: a refresh was requested, or the last load failed. */
+    val needsReload: Boolean
+        get() = isRefreshRequested || !lastLoadSucceeded
+
     fun requestRefresh() {
-        isRefreshRequested = true
+        revision++
     }
 
     /**
      * Runs [load], which satisfies the requests made before it started.
-     * Requests made while [load] runs remain pending.
+     * Requests made while [load] runs remain pending. If [load] fails, [needsReload] remains set.
      */
     suspend fun <T> trackLoad(load: suspend () -> T): T {
-        isRefreshRequested = false
-        return load()
+        revisionAtLoadStart = revision
+        lastLoadSucceeded = false
+        return load().also { lastLoadSucceeded = true }
     }
 }

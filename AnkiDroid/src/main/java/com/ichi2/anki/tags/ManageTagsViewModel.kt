@@ -69,6 +69,9 @@ class ManageTagsViewModel :
     private val searchCollapsedTags = mutableSetOf<TagName>()
 
     private var tagOperation: Job? = null
+
+    // A collection refresh can require another check without replacing the latest user action.
+    private var lastTagAction: Job? = null
     private var expansionSave: Job? = null
 
     private val refreshes = TagRefreshTracker()
@@ -92,8 +95,9 @@ class ManageTagsViewModel :
     fun refreshTags(): Job {
         // An unfinished operation may not reload, so it reloads on completion instead.
         refreshes.requestRefresh()
-        return launchTagOpAndRefresh {
+        return launchTagOperation(refreshOnly = true) {
             Timber.i("Refreshing tags")
+            loadTags()
         }.job
     }
 
@@ -132,6 +136,36 @@ class ManageTagsViewModel :
             updateState { it.copy(error = e) }
             null
         }
+
+    /** Checks a direct rename request while keeping other tag actions disabled. */
+    suspend fun prepareRename(tag: TagName): Boolean? {
+        while (true) {
+            var canRename: Boolean? = null
+            var checkedRevision = refreshes.revision
+            val operation =
+                launchTagOperation {
+                    do {
+                        if (refreshes.needsReload) {
+                            // The dialog also needs the updated tree for destination validation.
+                            canRename = null
+                            loadTags()
+                        }
+                        checkedRevision = refreshes.revision
+                        canRename = canRenameTag(tag)
+                    } while (refreshes.isRefreshRequested)
+                }
+            operation.job.join()
+            if (!operation.accepted || lastTagAction !== operation.job) return null
+            if (checkedRevision == refreshes.revision) {
+                if (canRename == false) messageQueue.enqueue(UserMessage.NoNotesToRename)
+                return canRename
+            }
+
+            // A newer refresh arrived before the shortcut resumed, even if it already finished.
+            tagOperation?.join()
+            if (lastTagAction !== operation.job) return null
+        }
+    }
 
     /** Finds a tag using its displayed expansion state when visible. */
     private fun findTagNode(tag: TagName): TagListItemState? {
@@ -331,7 +365,10 @@ class ManageTagsViewModel :
         val accepted: Boolean,
     )
 
-    private fun launchTagOperation(block: suspend () -> Unit): TagOperation {
+    private fun launchTagOperation(
+        refreshOnly: Boolean = false,
+        block: suspend () -> Unit,
+    ): TagOperation {
         val currentOperation = tagOperation
         if (currentOperation != null && !currentOperation.isCompleted) {
             return TagOperation(currentOperation, accepted = false)
@@ -347,6 +384,7 @@ class ManageTagsViewModel :
                 }
             }
         tagOperation = operation
+        if (!refreshOnly) lastTagAction = operation
         // calls from observers will now find this job
         return TagOperation(operation, accepted = operation.start())
     }
@@ -592,6 +630,9 @@ sealed interface UserMessage {
     data class TagRenamed(
         val notesAffected: Int,
     ) : UserMessage
+
+    /** The selected tag subtree has no notes, so rename is unavailable. */
+    data object NoNotesToRename : UserMessage
 
     /** @param notesAffected number of notes whose tags were reparented */
     data class TagMoved(
