@@ -1285,13 +1285,11 @@ class CardBrowserFragment :
             }
 
         fun onSearchRequestUpdated(search: SearchRequest) {
+            if (activity?.isFinishing == true) return
             Timber.d("syncing searchview state from chip updates")
             val filters = search.filters
 
-            // Handle default search text
-            if (search.query.isNotEmpty() && searchBar?.text.isNullOrEmpty()) {
-                launchCatchingTask { searchBar?.setText(search.toUserSpannable()) }
-            }
+            launchCatchingTask { searchBar?.setText(search.toUserSpannable()) }
 
             legacyDeckName?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             decksChip?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
