@@ -172,11 +172,20 @@
                 android:background="@drawable/button_background"/>
         </LinearLayout>
     </ScrollView>
-    <com.ichi2.anki.noteeditor.Toolbar
-        android:layout_gravity="bottom"
-        android:id="@+id/editor_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/inline_audio_recorder_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.ichi2.anki.noteeditor.Toolbar
+            android:id="@+id/editor_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/toolbar_layout_dialog"
         android:layout_width="wrap_content"
