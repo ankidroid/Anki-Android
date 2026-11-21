@@ -134,13 +134,14 @@ private fun ManageTagsScreen(
         validateRenameInput = viewModel::validateRenameInput,
         canRenameTag = viewModel::canRenameTag,
         prepareRename = viewModel::prepareRename,
-        onAction = { action, tag, input ->
+        onAction = { action, tag, input, onRenamed ->
             when (action) {
                 TagAction.RENAME ->
                     viewModel.renameTag(
                         requireNotNull(tag),
                         requireNotNull(TagName.build(input)),
                         allowMerge = false,
+                        onRenamed = onRenamed,
                     )
                 TagAction.DELETE -> viewModel.removeTag(requireNotNull(tag))
                 TagAction.CLEAR_UNUSED -> viewModel.clearUnusedTags()

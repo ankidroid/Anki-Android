@@ -394,7 +394,7 @@ class ManageTagsScreenTest : RobolectricTest() {
                 tagExists = { false },
                 canRenameTag = canRenameTag,
                 prepareRename = prepareRename,
-                onAction = { _, _, _ -> true },
+                onAction = { _, _, _, _ -> true },
                 onUndo = onUndo,
                 onRedo = onRedo,
                 onNavigateUp = {},

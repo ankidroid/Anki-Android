@@ -62,7 +62,7 @@ internal fun ManageTagsScreen(
     tagExists: (TagName) -> Boolean,
     canRenameTag: suspend (TagName) -> Boolean?,
     prepareRename: suspend (TagName) -> Boolean?,
-    onAction: (TagAction, TagName?, String) -> Boolean,
+    onAction: (TagAction, TagName?, String, onRenamed: () -> Unit) -> Boolean,
     onUndo: () -> Unit,
     onRedo: () -> Unit,
     onNavigateUp: () -> Unit,
@@ -185,11 +185,13 @@ internal fun ManageTagsScreen(
         canRenameTag = canRenameTag,
         onDialogActionChange = { dialogAction = it },
         onAction = confirm@{ action, tag, input ->
-            if (!onAction(action, tag, input)) return@confirm
-            if (action == TagAction.RENAME && shortcutFocus == tag) {
-                // Renaming changes the lazy-list key, so restore focus through the new row.
-                shortcutFocus = TagName.build(input)
-            }
+            val restoreRenameFocus = action == TagAction.RENAME && shortcutFocus == tag
+            val accepted =
+                onAction(action, tag, input) {
+                    // Follow the new row only if the rename actually changed notes.
+                    if (restoreRenameFocus && shortcutFocus == tag) shortcutFocus = TagName.build(input)
+                }
+            if (!accepted) return@confirm
             dialogAction = null
             selectedTag = null
         },
@@ -266,7 +268,7 @@ private fun ManageTagsScreenPreview(
             tagExists = { false },
             canRenameTag = { true },
             prepareRename = { true },
-            onAction = { _, _, _ -> true },
+            onAction = { _, _, _, _ -> true },
             onUndo = {},
             onRedo = {},
             onNavigateUp = {},

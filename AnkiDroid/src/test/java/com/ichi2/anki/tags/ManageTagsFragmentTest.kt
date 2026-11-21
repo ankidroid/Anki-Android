@@ -45,6 +45,8 @@ import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.dispatchInsets
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import org.junit.After
@@ -552,6 +554,97 @@ class ManageTagsFragmentTest : RobolectricTest() {
     }
 
     /**
+     * The dialog rejects existing destinations. That rule must also hold if a queued edit creates
+     * the destination after confirmation, before the rename can access the collection.
+     */
+    @Test
+    fun `rename does not merge into a destination created while confirmation waits`() =
+        runTest {
+            val source = addTags("source")
+            val other = addTags("other")
+            screen.open()
+            screen.action(TagAction.RENAME, "source")
+            screen.enterText("destination")
+            val confirm = screen.confirm(TagAction.RENAME).assertIsEnabled()
+
+            // Another client already has a write queued to add the tag. Neither operation can
+            // access the collection until the test scheduler is resumed.
+            val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+            try {
+                val edit =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        CollectionManager.withCol {
+                            getNote(other.id).also {
+                                it.addTag("destination")
+                                updateNote(it)
+                            }
+                        }
+                    }
+                confirm.performClick()
+                compose.waitForIdle()
+                assertTrue(assertIs<ManageTagsState.Content>(screen.viewModel.state.value).isWorking)
+                testScheduler.advanceUntilIdle()
+                edit.join()
+            } finally {
+                CollectionManager.setTestDispatcher(previous)
+            }
+
+            // Fails on the buggy head: the rename merges source into the newly created destination.
+            assertEquals(listOf("source"), col.getNote(source.id).tags)
+            assertEquals(setOf("destination", "other"), col.getNote(other.id).tags.toSet())
+            compose.onNodeWithText(targetContext.getString(CommonString.tag_already_exists)).assertIsDisplayed()
+        }
+
+    /**
+     * A rejected keyboard rename keeps the source. Restore focus there after the operation
+     * rather than selecting a destination created by another client.
+     */
+    @Test
+    fun `a rejected keyboard rename leaves focus on the source`() =
+        runTest {
+            val source = addTags("source")
+            val other = addTags("other")
+            screen.open()
+            val sourceActions =
+                compose.onNodeWithContentDescription(
+                    targetContext.getString(CommonString.manage_tags_more_actions, "source"),
+                )
+            prepareRenameShortcut(sourceActions)
+            screen.enterText("destination")
+            val confirm = screen.confirm(TagAction.RENAME).assertIsEnabled()
+
+            // Another client already has a write queued to add the tag. Neither operation can
+            // access the collection until the test scheduler is resumed.
+            val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+            try {
+                val edit =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        CollectionManager.withCol {
+                            getNote(other.id).also {
+                                it.addTag("destination")
+                                updateNote(it)
+                            }
+                        }
+                    }
+                confirm.performClick()
+                compose.waitForIdle()
+                assertTrue(assertIs<ManageTagsState.Content>(screen.viewModel.state.value).isWorking)
+                testScheduler.advanceUntilIdle()
+                edit.join()
+            } finally {
+                CollectionManager.setTestDispatcher(previous)
+            }
+
+            // The mutation was rejected. Focus must follow the unchanged source rather than
+            // the newly created destination, or the next keyboard action can target that tag.
+            assertEquals(listOf("source"), col.getNote(source.id).tags)
+            assertEquals(setOf("destination", "other"), col.getNote(other.id).tags.toSet())
+            compose.onNodeWithText(targetContext.getString(CommonString.tag_already_exists)).assertIsDisplayed()
+            sourceActions.assertIsFocused().performKeyInput { pressKey(Key.Delete) }
+            compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_delete_confirm, "source")).assertIsDisplayed()
+        }
+
+    /**
      * A collection refresh can start after the dialog rendered an enabled confirm handler. A
      * confirmation that cannot run must keep the user's draft available for retry.
      */
@@ -608,6 +701,30 @@ class ManageTagsFragmentTest : RobolectricTest() {
         assertTrue(unused in col.tags.all())
         assertEquals(listOf("caf\u00e9"), col.getNote(note.id).tags)
         screen.confirm(TagAction.RENAME).assertIsNotEnabled()
+    }
+
+    /**
+     * Android's Unicode case folding equates U+A7C0 and U+A7C1, while the backend registry
+     * stores them as distinct tags. An ordinary rename must reject that occupied destination.
+     */
+    @Test
+    fun `rename rejects an occupied destination even when Android treats the names as equal`() {
+        val sourceTag = "\ua7c0"
+        val destinationTag = "\ua7c1"
+        val source = addTags(sourceTag)
+        val destination = addTags(destinationTag)
+        // Both notes really have different tags in the collection. This is not a case-only
+        // rename, even though the Android-side identity comparison treats it as one.
+        assertTrue(col.tags.all().containsAll(listOf(sourceTag, destinationTag)))
+        screen.open()
+        screen.action(TagAction.RENAME, sourceTag)
+        screen.enterText(destinationTag)
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).performImeAction()
+        compose.waitForIdle()
+
+        // Fails on the buggy revision after it merges the source into the occupied destination.
+        assertEquals(listOf(sourceTag), col.getNote(source.id).tags)
+        assertEquals(listOf(destinationTag), col.getNote(destination.id).tags)
     }
 
     /**
