@@ -25,6 +25,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup.MarginLayoutParams
@@ -1706,30 +1707,58 @@ open class DeckPicker :
     /** Where the current downward drag started: reset whenever the finger moves up */
     private var touchAnchorY = 0f
     private var lastTouchY = 0f
+    private var bottomNavVelocityTracker: VelocityTracker? = null
+    private var fastReverseScroll = true
+
+    internal val canRevealBottomNavFromScroll: Boolean
+        get() = selectedBottomNavItem() != NavigationItem.BROWSER || fastReverseScroll
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         // Content which fits once the bottom bar hides can no longer scroll, so scrolling alone
-        // could never bring the bar back: a downward drag always restores it.
+        // could never bring the bar back. In the browser, slow adjustments should move content
+        // without reopening navigation; reaching the end of the list reveals it independently.
         if (bottomNavigationEnabled) {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     touchAnchorY = event.y
                     lastTouchY = event.y
+                    fastReverseScroll = false
+                    bottomNavVelocityTracker?.recycle()
+                    bottomNavVelocityTracker = VelocityTracker.obtain().apply { addMovement(event) }
                 }
                 MotionEvent.ACTION_MOVE -> {
+                    bottomNavVelocityTracker?.apply {
+                        addMovement(event)
+                        computeCurrentVelocity(1000)
+                    }
                     if (event.y < lastTouchY) {
                         touchAnchorY = event.y
+                        fastReverseScroll = false
                     } else if (event.y - touchAnchorY > ViewConfiguration.get(this).scaledTouchSlop) {
-                        binding.bottomNavigation?.let { HideViewOnScrollBehavior.from(it).slideIn(it) }
+                        if ((bottomNavVelocityTracker?.yVelocity ?: 0f) >= 400.dp.toPx(this)) fastReverseScroll = true
+                        if (canRevealBottomNavFromScroll) {
+                            binding.bottomNavigation?.let { HideViewOnScrollBehavior.from(it).slideIn(it) }
+                        }
                     }
                     lastTouchY = event.y
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    bottomNavVelocityTracker?.recycle()
+                    bottomNavVelocityTracker = null
                 }
             }
         }
         return super.dispatchTouchEvent(event)
     }
 
+    override fun dispatchGenericMotionEvent(event: MotionEvent): Boolean {
+        // Wheel scrolling has no touch velocity and must not inherit the previous drag's limit.
+        if (event.actionMasked == MotionEvent.ACTION_SCROLL) fastReverseScroll = true
+        return super.dispatchGenericMotionEvent(event)
+    }
+
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.action == KeyEvent.ACTION_DOWN) fastReverseScroll = true
         if (!bottomNavigationEnabled || event.action != KeyEvent.ACTION_DOWN || !event.isAltPressed) {
             return super.dispatchKeyEvent(event)
         }

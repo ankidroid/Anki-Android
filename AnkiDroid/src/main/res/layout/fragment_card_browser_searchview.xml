@@ -67,6 +67,7 @@
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             app:navigationIcon="@drawable/ic_menu_24"
             tools:hint="Search cards/notes"
             tools:menu="@menu/card_browser" />

@@ -40,11 +40,13 @@ import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -523,9 +525,9 @@ class CardBrowserFragment :
         fun updateScrollability() {
             if (!list.isLaidOut) return
             val lastRow = layoutManager.findViewByPosition(cardsAdapter.itemCount - 1)
-            // The list is measured for the collapsed app bar. Subtract the space occupied by
-            // the expanded controls, even when they currently extend the list below the screen.
-            val expandedHeight = list.height - appBar.totalScrollRange
+            // The viewport now tracks the visible controls. Remove only the space gained by
+            // collapsing them when comparing against the fully expanded toolbar.
+            val expandedHeight = list.height + appBar.top
             val fitsExpanded =
                 when {
                     cardsAdapter.itemCount == 0 -> true
@@ -554,6 +556,21 @@ class CardBrowserFragment :
                 },
             )
         }
+
+    internal val isAtEndOfList: Boolean
+        get() = isVisible && ::cardsListView.isInitialized && !cardsListView.canScrollVertically(1)
+
+    /** Keep the final row visible as reaching the end brings navigation back. */
+    internal fun keepRowsAboveReturningBottomBar(heightLost: Int) {
+        if (!isAtEndOfList) return
+        // The bar first replaces the padding reserved for the system bar and rounded corners.
+        val contentHeightLost = (heightLost - cardsListView.paddingBottom).coerceAtLeast(0)
+        if (contentHeightLost == 0) return
+        val firstPosition = layoutManager.findFirstVisibleItemPosition()
+        val firstRow = layoutManager.findViewByPosition(firstPosition) ?: return
+        val offset = layoutManager.getDecoratedTop(firstRow) - cardsListView.paddingTop - contentHeightLost
+        layoutManager.scrollToPositionWithOffset(firstPosition, offset)
+    }
 
     private fun applyContentInsets(root: View) {
         val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
@@ -589,7 +606,28 @@ class CardBrowserFragment :
             } else {
                 null
             }
+        var contentInsets: WindowInsetsCompat? = null
+
+        fun updateBottomInsets() {
+            val insets = contentInsets ?: return
+            val bars = insets.getInsets(systemBars() or displayCutout() or ime())
+            // The embedded host reserves space for its bottom bar. When it hides, its remaining
+            // margin may clear the system navigation bar without clearing the rounded corners.
+            val hostBottomMargin = if (activity is CardBrowser) 0 else (root.parent as? View)?.marginBottom ?: 0
+            val safeAreaBottom = (maxOf(bars.bottom, insets.bottomCornerClearance(root)) - hostBottomMargin).coerceAtLeast(0)
+            cardsListView.updatePadding(bottom = safeAreaBottom)
+            searchContent?.updatePadding(bottom = safeAreaBottom)
+            browserScroller.handleBottomInset = safeAreaBottom
+        }
+
+        root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateBottomInsets() }
+        appBar?.addOnOffsetChangedListener { bar, offset ->
+            // ScrollingViewBehavior measures for a collapsed app bar. Reserve the portion below
+            // the viewport while it is expanded, including when a scrollbar jump leaves it open.
+            browserContent?.updatePadding(bottom = bar.totalScrollRange + offset)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            contentInsets = insets
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
             statusBarScrim?.setBounds(0, 0, v.width, insets.getInsets(statusBars()).top)
             if (useSearchView) {
@@ -601,17 +639,8 @@ class CardBrowserFragment :
                 v.updatePadding(left = bars.left, right = bars.right)
                 toolbarContainer?.updatePadding(top = bars.top)
             }
-            // The bottom of the safe area is above the navigation bar, rounded display corners and keyboard.
-            // When scrolled to the bottom of the scrollbar should be aligned with the last row.
-            // Embedded content already ends above the bottom navigation, including its system-bar inset.
-            val safeAreaBottom =
-                if (activity is CardBrowser) maxOf(bars.bottom, insets.bottomCornerClearance(v)) else 0
-            // Due to clipToPadding=false, only the last row is affected
-            cardsListView.updatePadding(bottom = safeAreaBottom)
-            searchContent?.updatePadding(left = bars.left, right = bars.right, bottom = safeAreaBottom)
-            // The scrollbar track stays full-height (edge to edge); only the handle is kept above
-            // the safe-area boundary so it remains touchable and aligns with the last row.
-            browserScroller.handleBottomInset = safeAreaBottom
+            searchContent?.updatePadding(left = bars.left, right = bars.right)
+            updateBottomInsets()
             insets
         }
     }
