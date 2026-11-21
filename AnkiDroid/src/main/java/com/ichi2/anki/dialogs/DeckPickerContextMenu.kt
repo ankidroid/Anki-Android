@@ -18,6 +18,7 @@ import com.ichi2.anki.compat.requireSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.runCatching
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -93,17 +94,21 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         /**
          * Builds a [DeckPickerContextMenu] for [deckId], reading the deck's name and
          * the dynamic / has-buried flags from the collection.
+         * If a read fails, reports the error through [activity] and returns `null`.
          */
-        suspend fun newInstance(deckId: DeckId): DeckPickerContextMenu =
-            withCol {
-                DeckPickerContextMenu().apply {
-                    arguments =
-                        Bundle().apply {
-                            putLong(ARG_DECK_ID, deckId)
-                            putString(ARG_DECK_NAME, decks.name(deckId))
-                            putBoolean(ARG_DECK_IS_DYN, decks.isFiltered(deckId))
-                            putBoolean(ARG_DECK_HAS_BURIED_IN_DECK, sched.haveBuried())
-                        }
+        context(activity: FragmentActivity)
+        suspend fun createOrShowError(deckId: DeckId): DeckPickerContextMenu? =
+            activity.runCatching {
+                withCol {
+                    DeckPickerContextMenu().apply {
+                        arguments =
+                            Bundle().apply {
+                                putLong(ARG_DECK_ID, deckId)
+                                putString(ARG_DECK_NAME, decks.name(deckId))
+                                putBoolean(ARG_DECK_IS_DYN, decks.isFiltered(deckId))
+                                putBoolean(ARG_DECK_HAS_BURIED_IN_DECK, sched.haveBuried())
+                            }
+                    }
                 }
             }
 

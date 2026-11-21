@@ -11,6 +11,7 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.runCatching
 import com.ichi2.anki.settings.Prefs
 
 /**
@@ -53,22 +54,25 @@ class DeckPickerMenuContentProvider(
          * Builds a [DeckPickerMenuContentProvider] for [deckId] (reading the dynamic /
          * has-buried flags from the collection) and shows it as a popup anchored at
          * ([x], [y]) on the deck picker's recycler view.
+         * If a read fails, reports the error through [deckPicker].
          */
+        context(deckPicker: DeckPicker)
         suspend fun show(
-            deckPicker: DeckPicker,
             deckId: DeckId,
             x: Float,
             y: Float,
         ) {
             val provider =
-                withCol {
-                    DeckPickerMenuContentProvider(
-                        id = deckId,
-                        isDynamic = decks.isFiltered(deckId),
-                        hasBuriedInDeck = sched.haveBuried(),
-                        deckPicker = deckPicker,
-                    )
-                }
+                deckPicker.runCatching {
+                    withCol {
+                        DeckPickerMenuContentProvider(
+                            id = deckId,
+                            isDynamic = decks.isFiltered(deckId),
+                            hasBuriedInDeck = sched.haveBuried(),
+                            deckPicker = deckPicker,
+                        )
+                    }
+                } ?: return
             val anchorParent = deckPicker.deckPickerBinding.deckPickerContent
             val target = deckPicker.deckPickerBinding.decks
             MouseContextMenuHandler(viewGroup = anchorParent, menuContentProvider = provider)
