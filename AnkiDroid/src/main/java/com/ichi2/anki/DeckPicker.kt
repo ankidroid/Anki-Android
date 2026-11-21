@@ -57,6 +57,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
@@ -69,6 +70,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
@@ -309,6 +311,7 @@ open class DeckPicker :
 
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
+    private var lastFocusedDeck: DeckId? = null
     private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -511,6 +514,7 @@ open class DeckPicker :
         }
 
         super.onCreate(savedInstanceState)
+        lastFocusedDeck = savedInstanceState?.getLong(STATE_LAST_FOCUSED_DECK)?.takeIf { it != 0L }
         enableEdgeToEdge(
             statusBarStyle =
                 SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) {
@@ -591,6 +595,8 @@ open class DeckPicker :
                     Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
                 },
             )
+        // The first list may arrive after RecyclerView restores its view hierarchy.
+        deckListAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         deckPickerBinding.decks.adapter = deckListAdapter
         if (bottomNavigationEnabled) {
             deckPickerBinding.decks.addItemDecoration(
@@ -935,27 +941,52 @@ open class DeckPicker :
             binding.studyoptionsFrame?.isVisible = !collectionHasNoCards
         }
 
+        fun scrollToFocusedDeck() {
+            val deckId = viewModel.flowOfFocusedDeck.value ?: return
+            // A new collector replays the selection after recreation. Let RecyclerView restore
+            // its scroll position unless the selected deck actually changed.
+            if (deckId == lastFocusedDeck) return
+            if (deckListAdapter.currentList.isEmpty() || deckListAdapter.currentList != viewModel.flowOfDeckList.value.data) return
+            val position = viewModel.findDeckPosition(deckId)
+
+            // Skip centering if the deck is already on screen.
+            // Scrolling during a tap animation causes deck labels to overlap on older devices.
+            if (decksLayoutManager.positionIsVisible(position)) {
+                lastFocusedDeck = deckId
+                return
+            }
+            // Keep the scroll outside layout and the tap animation on older devices.
+            deckPickerBinding.decks.postDelayed({
+                if (viewModel.flowOfFocusedDeck.value != deckId || lastFocusedDeck == deckId) return@postDelayed
+                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
+                deckPickerBinding.decks.doOnNextLayout {
+                    if (viewModel.flowOfFocusedDeck.value == deckId && decksLayoutManager.positionIsVisible(position)) {
+                        lastFocusedDeck = deckId
+                    }
+                }
+            }, 10)
+        }
+
         fun onDeckListChanged(deckList: FlattenedDeckList) {
             // Filtering must not recreate the study options fragment: its menu invalidation closes search.
             deckListAdapter.submit(
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
+                onListCommitted = {
+                    // Restore the saved viewport before allowing a new selection to override it.
+                    deckPickerBinding.decks.doOnNextLayout { scrollToFocusedDeck() }
+                    deckPickerBinding.decks.requestLayout()
+                },
             )
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
-            if (deckId != null) tryShowStudyOptionsPanel()
-            val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
-
-            // Skip centering if the deck is already on screen.
-            // Scrolling during a tap animation causes deck labels to overlap on older devices.
-            if (decksLayoutManager.positionIsVisible(position)) {
-                return
-            }
-            // HACK: a small delay is required before scrolling works
-            deckPickerBinding.decks.postDelayed({
-                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
-            }, 10)
+            // A fresh ViewModel has no focused deck until the collection is loaded.
+            if (deckId == null) return
+            // Returning to the previous deck is still a new selection if another scroll was pending.
+            if (deckId != lastFocusedDeck) lastFocusedDeck = null
+            tryShowStudyOptionsPanel()
+            scrollToFocusedDeck()
         }
 
         fun onDecksReloaded(param: Unit) {
@@ -1632,6 +1663,7 @@ open class DeckPicker :
     public override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
+        lastFocusedDeck?.let { outState.putLong(STATE_LAST_FOCUSED_DECK, it) }
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
                 outState.putString("dbRestorationPath", it.newAnkiDroidDirectory.absolutePath)
@@ -2575,6 +2607,7 @@ open class DeckPicker :
 
         private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
         private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
+        private const val STATE_LAST_FOCUSED_DECK = "lastFocusedDeck"
 
         /**
          * Builds an intent for [DeckPicker]
