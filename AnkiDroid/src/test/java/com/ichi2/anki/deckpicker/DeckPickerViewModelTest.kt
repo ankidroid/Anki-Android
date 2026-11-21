@@ -8,11 +8,13 @@ import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModelStore
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.backend.backendError
 import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
 import anki.collection.OpChanges
 import anki.decks.SetDeckCollapsedRequest
 import app.cash.turbine.test
+import com.google.protobuf.ByteString
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.InitialActivity
@@ -39,8 +41,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -57,12 +61,16 @@ import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertSame
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.measureTime
 
 /** Test of [DeckPickerViewModel] */
 class DeckPickerViewModelTest : JvmTest() {
+    @get:Rule
+    val backendOverride = BackendOverrideRule()
+
     private val viewModels = ViewModelStore()
     private var viewModelCount = 0
     private val viewModel: DeckPickerViewModel by lazy { buildViewModel() }
@@ -433,6 +441,42 @@ class DeckPickerViewModelTest : JvmTest() {
                 assertEquals(x, item.x)
                 assertEquals(y, item.y)
             }
+        }
+    }
+
+    @Test
+    fun `deck search recovers after a failed deck read`() {
+        val failNextDeckRead = AtomicBoolean(false)
+        val readError = BackendInvalidInputException(backendError { message = "Could not read the current deck" })
+        backendOverride.replaceWith {
+            object : Backend() {
+                override fun getDeckLegacy(did: Long): ByteString {
+                    if (failNextDeckRead.compareAndSet(true, false)) throw readError
+                    return super.getDeckLegacy(did)
+                }
+            }
+        }
+        val first = addDeck("First")
+        val second = addDeck("Second")
+
+        runTest {
+            viewModel.reloadDeckCounts().join()
+            runCurrent()
+            val initialList = viewModel.flowOfDeckList.value
+            assertEquals(listOf(first, second), initialList.data.map { it.did })
+
+            failNextDeckRead.set(true)
+            viewModel.updateDeckFilter("First")
+            runCurrent()
+
+            assertSame(readError, viewModel.onError.tryReceive().getOrNull())
+            assertEquals(initialList, viewModel.flowOfDeckList.value)
+
+            viewModel.updateDeckFilter("Second")
+            runCurrent()
+
+            val filteredList = viewModel.flowOfDeckList.value
+            assertEquals(listOf(second), filteredList.data.map { it.did })
         }
     }
 
