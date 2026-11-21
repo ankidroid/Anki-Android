@@ -67,6 +67,10 @@ open class BaseCompat : Compat {
         )
     }
 
+    override fun configureEdgeToEdgeImeInsets(window: Window) {
+        window.setSoftInputAdjustment(SOFT_INPUT_ADJUST_RESIZE)
+    }
+
     override fun setDialogKeyboardResize(
         window: Window,
         resize: Boolean,

@@ -15,6 +15,10 @@ import com.ichi2.anki.common.utils.ext.setBitFlag
 @RequiresApi(30)
 @Suppress("ktlint:standard:property-naming")
 open class CompatV30 : CompatV29() {
+    override fun configureEdgeToEdgeImeInsets(window: Window) {
+        // Android 11 and later can deliver IME insets with the existing adjustment mode.
+    }
+
     override fun setDialogKeyboardResize(
         window: Window,
         resize: Boolean,
