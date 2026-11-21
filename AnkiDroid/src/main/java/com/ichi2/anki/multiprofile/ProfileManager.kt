@@ -13,6 +13,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import com.ichi2.anki.BackupManager
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.AnkiDroidFolder
@@ -20,11 +21,20 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
-import java.util.concurrent.atomic.AtomicBoolean
+import java.io.IOException
+import java.nio.file.LinkOption
+import java.nio.file.Path
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.deleteIfExists
+import kotlin.io.path.deleteRecursively
+import kotlin.io.path.exists
 
 /**
  * Manages the creation, loading, and switching of user profiles.
@@ -38,14 +48,21 @@ class ProfileManager private constructor(
     lateinit var activeProfileContext: ProfileContextWrapper
         private set
 
-    private val switching = AtomicBoolean(false)
+    val isChangingProfile: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    val isSwitching: Boolean
-        get() = switching.get()
+    fun tryStartProfileChange(): Boolean = isChangingProfile.compareAndSet(false, true)
 
-    fun tryStartSwitch(): Boolean = switching.compareAndSet(false, true)
+    fun endProfileChange() {
+        isChangingProfile.value = false
+    }
 
-    fun endSwitch() = switching.set(false)
+    val failedDeletion: StateFlow<ProfileId?>
+        field = MutableStateFlow<ProfileId?>(null)
+
+    fun reportFailedDeletion(profileId: ProfileId?) {
+        failedDeletion.value = profileId
+    }
 
     fun isActive(profileId: ProfileId): Boolean = profileId == activeProfileContext.profileId
 
@@ -65,7 +82,7 @@ class ProfileManager private constructor(
      */
     private fun initializeActiveProfile() {
         val activeProfileId =
-            profileRegistry.getLastActiveProfileId()
+            profileRegistry.getLastActiveProfileId()?.takeUnless { it.isDefault() && !profileRegistry.contains(it) }
                 ?: initializeDefaultProfile()
 
         Timber.i("Initializing profile: ${activeProfileId.value}")
@@ -76,8 +93,12 @@ class ProfileManager private constructor(
         Timber.i("No active profile found. Setting up Default.")
         val defaultId = ProfileId.DEFAULT
 
-        val metadata =
-            ProfileMetadata(displayName = ProfileName.fromTrustedSource(DEFAULT_PROFILE_DISPLAY_NAME))
+        val displayName =
+            generateSequence(1) { it + 1 }
+                .map { n -> if (n == 1) DEFAULT_PROFILE_DISPLAY_NAME else "$DEFAULT_PROFILE_DISPLAY_NAME $n" }
+                .map { ProfileName.fromTrustedSource(it) }
+                .first { !isNameTaken(it) }
+        val metadata = ProfileMetadata(displayName = displayName)
 
         profileRegistry.saveProfile(id = defaultId, metadata = metadata, isActive = true)
         profileRegistry.setLastActiveProfileId(defaultId)
@@ -165,13 +186,17 @@ class ProfileManager private constructor(
      * Persists [newProfileId] as the active profile.
      *
      * @param newProfileId The [ProfileId] to activate on next launch.
-     * @return false if the new profile could not be set up or the switch could not be saved,
-     *   in which case the current profile stays active
+     * @return false if the new profile was deleted, could not be set up or the switch could not
+     *   be saved, in which case the current profile stays active
      */
     @VisibleForTesting
     context(_: ProfileSwitchContext)
     fun switchActiveProfile(newProfileId: ProfileId): Boolean {
         Timber.i("Switching profile to ID: $newProfileId")
+        if (!profileRegistry.contains(newProfileId)) {
+            Timber.w("Not switching to $newProfileId: it is no longer registered")
+            return false
+        }
         try {
             prepareProfile(newProfileId)
         } catch (e: Exception) {
@@ -392,15 +417,12 @@ class ProfileManager private constructor(
         /*
          * File-system data is removed before the registry entry. If deletion fails
          * or is interrupted, the registry entry remains so the user can retry.
-         *
-         * TODO: COULD_BE_BETTER: this method is not synchronized. Two concurrent calls from
-         * different threads/coroutines could both pass the require() checks below and
-         * race, eventually leaving the registry with zero profiles. Wrap the body in a
-         * Mutex (or move to a single-thread dispatcher) once delete is exposed through
-         * the UI. Not a concern today: the only entry points are tests and the (yet to
-         * land) settings screen, which is single-threaded.
          */
-        require(profileRegistry.getLastActiveProfileId() != profileId) {
+        if (!profileRegistry.contains(profileId)) {
+            Timber.w("deleteProfile: %s is no longer registered", profileId)
+            return
+        }
+        require(!isActive(profileId) && profileRegistry.getLastActiveProfileId() != profileId) {
             "Cannot delete the currently active profile ($profileId). Switch first."
         }
         // the check above should catch it (deleting the only profile
@@ -412,6 +434,16 @@ class ProfileManager private constructor(
 
         Timber.i("deleteProfile: starting deletion of %s", profileId)
 
+        val collectionDir = resolveStoredCollectionDir(profileId)
+        when {
+            collectionDir == null -> Timber.d("deleteProfile: no on-disk collection dir to clean for %s", profileId)
+            isUsedByAnotherProfile(collectionDir, profileId) -> Timber.w("deleteProfile: keeping a collection dir another profile uses")
+            else -> {
+                Timber.d("deleteProfile: cleaning collection dir %s", collectionDir)
+                deleteCollectionArtifactsSafely(collectionDir)
+            }
+        }
+
         val appDataRoot = ContextCompat.getDataDir(profileContext)
 
         if (profileId.isDefault()) {
@@ -419,21 +451,9 @@ class ProfileManager private constructor(
             deleteDefaultProfileDataOnly(appDataRoot)
         } else {
             val profileDir = resolveProfileDirectory(profileId).file
-            if (profileDir.exists()) {
-                val removed = profileDir.deleteRecursively()
-                Timber.d("deleteProfile: removed profile dir %s (success=%b)", profileDir, removed)
-            } else {
-                Timber.d("deleteProfile: profile dir %s did not exist; skipping", profileDir)
-            }
+            Timber.d("deleteProfile: removing profile dir %s", profileDir)
+            profileDir.toPath().deleteRecursivelyOrThrow()
             deleteNamespacedSharedPreferences(appDataRoot, profileId)
-        }
-
-        val collectionDir = resolveStoredCollectionDir(profileId)
-        if (collectionDir != null) {
-            Timber.d("deleteProfile: cleaning collection dir %s", collectionDir)
-            deleteCollectionArtifactsSafely(collectionDir)
-        } else {
-            Timber.d("deleteProfile: no on-disk collection dir to clean for %s", profileId)
         }
 
         profileRegistry.removeProfile(profileId)
@@ -453,13 +473,9 @@ class ProfileManager private constructor(
         if (!sharedPrefsDir.exists() || !sharedPrefsDir.isDirectory) return
 
         val prefix = "profile_${profileId.value}_"
-        val deletedCount =
-            sharedPrefsDir
-                .listFiles()
-                ?.filter { it.name.startsWith(prefix) }
-                ?.count { it.delete() }
-                ?: 0
-        Timber.d("deleteNamespacedSharedPreferences: removed %d prefs file(s) for %s", deletedCount, profileId)
+        val prefsFiles = sharedPrefsDir.listFiles()?.filter { it.name.startsWith(prefix) }.orEmpty()
+        prefsFiles.forEach { it.toPath().deleteOrThrow() }
+        Timber.d("deleteNamespacedSharedPreferences: removed %d prefs file(s) for %s", prefsFiles.size, profileId)
     }
 
     /**
@@ -478,6 +494,35 @@ class ProfileManager private constructor(
                 ?: return null
 
         return candidate.takeIf { it.exists() && it.isDirectory }
+    }
+
+    private fun isUsedByAnotherProfile(
+        collectionDir: File,
+        profileId: ProfileId,
+    ): Boolean {
+        val canonicalPath = collectionDir.canonicalPath
+        return getAllProfiles().keys.any { other ->
+            val otherDir = resolveStoredCollectionDir(other)?.canonicalFile
+            when {
+                other == profileId || otherDir == null -> false
+                otherDir.path == canonicalPath -> true
+                else -> otherDir.path.equals(canonicalPath, ignoreCase = true) && otherDir.showsFilesFrom(collectionDir)
+            }
+        }
+    }
+
+    private fun File.showsFilesFrom(dir: File): Boolean {
+        val probe =
+            try {
+                File.createTempFile("probe", null, dir)
+            } catch (e: IOException) {
+                return true
+            }
+        return try {
+            File(this, probe.name).exists()
+        } finally {
+            probe.delete()
+        }
     }
 
     /**
@@ -531,15 +576,25 @@ class ProfileManager private constructor(
     private fun deleteCollectionArtifactsSafely(collectionDir: File) {
         if (!collectionDir.exists() || !collectionDir.isDirectory) return
 
-        collectionDir.listFiles()?.forEach { entry ->
+        collectionDir.listFiles { file -> file.name != NOMEDIA_FILE }?.forEach { entry ->
             when {
-                entry.isFile && entry.name in COLLECTION_ARTIFACT_FILES -> entry.delete()
-                entry.isDirectory && entry.name in COLLECTION_ARTIFACT_DIRS -> entry.deleteRecursively()
+                entry.isFile && entry.name in COLLECTION_ARTIFACT_FILES -> entry.toPath().deleteOrThrow()
+                entry.isDirectory && entry.name == BACKUP_DIR ->
+                    deleteOwnFiles(entry) {
+                        BackupManager.getBackupTimeString(it) != null ||
+                            LEGACY_BACKUP_FILE.matches(it)
+                    }
+                entry.isDirectory && entry.name == BROKEN_DIR -> deleteOwnFiles(entry) { BROKEN_COLLECTION_FILE.matches(it) }
+                entry.isDirectory && entry.name in COLLECTION_ARTIFACT_DIRS -> entry.toPath().deleteRecursivelyOrThrow()
                 else -> {
                     val entryType = if (entry.isDirectory) "Directory" else "File"
                     Timber.w("deleteProfile: leaving unknown entry untouched: <$entryType>")
                 }
             }
+        }
+
+        if (collectionDir.list()?.all { it == NOMEDIA_FILE } == true) {
+            File(collectionDir, NOMEDIA_FILE).toPath().deleteOrThrow()
         }
 
         // `File.delete()` on a directory succeeds iff it's empty, so a successful delete
@@ -561,6 +616,25 @@ class ProfileManager private constructor(
         Timber.w(silent, message)
     }
 
+    private fun deleteOwnFiles(
+        dir: File,
+        isOwnFile: (String) -> Boolean,
+    ) {
+        dir.listFiles { file -> file.isFile && isOwnFile(file.name) }?.forEach { it.toPath().deleteOrThrow() }
+        dir.delete()
+    }
+
+    private fun Path.deleteOrThrow() {
+        deleteIfExists()
+        if (exists(LinkOption.NOFOLLOW_LINKS)) throw IOException("Could not delete $this")
+    }
+
+    @OptIn(ExperimentalPathApi::class)
+    private fun Path.deleteRecursivelyOrThrow() {
+        deleteRecursively()
+        if (exists(LinkOption.NOFOLLOW_LINKS)) throw IOException("Could not delete $this")
+    }
+
     /**
      * Wipes the Default profile's legacy data from the root directories
      * while protecting the subdirectories belonging to other profiles.
@@ -579,21 +653,18 @@ class ProfileManager private constructor(
             )
 
         defaultFolders.forEach { folderName ->
-            val folder = File(appDataRoot, folderName)
-            if (folder.exists()) {
-                folder.deleteRecursively()
-            }
+            File(appDataRoot, folderName).toPath().deleteRecursivelyOrThrow()
         }
 
         val sharedPrefsDir = File(appDataRoot, "shared_prefs")
         if (sharedPrefsDir.exists() && sharedPrefsDir.isDirectory) {
             sharedPrefsDir.listFiles()?.forEach { file ->
                 val fileName = file.name
-                val isRegistry = fileName == "$PROFILE_REGISTRY_FILENAME.xml"
+                val isRegistry = fileName.startsWith("$PROFILE_REGISTRY_FILENAME.xml")
                 val isOtherProfile = fileName.startsWith("profile_")
 
                 if (!isRegistry && !isOtherProfile) {
-                    file.delete()
+                    file.toPath().deleteOrThrow()
                 }
             }
         }
@@ -739,7 +810,12 @@ class ProfileManager private constructor(
          * @param id The [ProfileId] of the profile to remove.
          */
         fun removeProfile(id: ProfileId) {
-            globalPrefs.edit { remove(id.value) }
+            val entry = globalPrefs.getString(id.value, null) ?: return
+            val editor = globalPrefs.edit()
+            editor.remove(id.value)
+            if (editor.commit()) return
+            globalPrefs.edit { putString(id.value, entry) }
+            throw IOException("Could not save the profile list")
         }
 
         fun contains(id: ProfileId): Boolean = globalPrefs.contains(id.value)
@@ -774,7 +850,11 @@ class ProfileManager private constructor(
 
         const val DEFAULT_PROFILE_DISPLAY_NAME = "Default"
 
-        /** Files AnkiDroid creates directly inside the collection directory. */
+        /**
+         * Files AnkiDroid creates directly inside the collection directory.
+         *
+         * Matched case sensitively: AnkiDroid always names the collection `collection.anki2`.
+         */
         private val COLLECTION_ARTIFACT_FILES =
             setOf(
                 "collection.anki2",
@@ -785,7 +865,7 @@ class ProfileManager private constructor(
                 "collection.media.db-journal",
                 "collection.media.db-wal",
                 "collection.media.db-shm",
-                ".nomedia",
+                BackgroundImage.FILENAME,
             )
 
         /** Subdirectories AnkiDroid creates inside the collection directory. */
@@ -793,9 +873,13 @@ class ProfileManager private constructor(
             setOf(
                 "collection.media",
                 "media.trash",
-                "backup",
-                "broken",
             )
+
+        private const val BACKUP_DIR = "backup"
+        private const val BROKEN_DIR = BackupManager.BROKEN_COLLECTIONS_SUFFIX
+        private val BROKEN_COLLECTION_FILE = Regex("""collection-corrupt-\d{4}-\d{2}-\d{2}(-\d+)?\.anki2(-journal|-wal|-shm)?""")
+        private const val NOMEDIA_FILE = ".nomedia"
+        private val LEGACY_BACKUP_FILE = Regex("""collection-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}\.apkg|ankiDroidv16\.colpkg""")
 
         /**
          * Failure from the last [createOrNull], if any.

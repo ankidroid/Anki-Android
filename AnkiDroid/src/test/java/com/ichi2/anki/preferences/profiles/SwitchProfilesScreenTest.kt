@@ -6,6 +6,7 @@ package com.ichi2.anki.preferences.profiles
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextReplacement
@@ -92,16 +93,52 @@ class SwitchProfilesScreenTest : RobolectricTest() {
         assertTrue(dismissed)
     }
 
+    @Test
+    fun `the open profile has no delete button`() {
+        val work = ProfileItem(id = ProfileId("p_work"), name = "Work")
+        var deleted: ProfileItem? = null
+        setScreen(profiles = listOf(default.copy(isActive = true), work), onDeleteProfile = { deleted = it })
+
+        composeRule.onNodeWithContentDescription(targetContext.getString(CommonString.delete_profile)).performClick()
+
+        assertEquals(work, deleted)
+    }
+
+    @Test
+    fun `confirming the delete dialog deletes the profile`() {
+        val work = ProfileItem(id = ProfileId("p_work"), name = "Work")
+        var confirmed = false
+        setScreen(profiles = listOf(default, work), profileToDelete = work, onDeleteProfileConfirm = { confirmed = true })
+
+        composeRule.onNodeWithText(targetContext.getString(CommonString.delete_profile_title, "Work")).assertIsDisplayed()
+        composeRule.onNodeWithText(targetContext.getString(CommonString.delete_profile_message)).assertIsDisplayed()
+        composeRule.onNodeWithText(targetContext.getString(CommonString.dialog_positive_delete)).performClick()
+
+        assertTrue(confirmed)
+    }
+
+    @Test
+    fun `a failed delete names the profile it could not delete`() {
+        val work = ProfileItem(id = ProfileId("p_work"), name = "Work")
+        setScreen(profiles = listOf(default, work), profileDeleteFailed = work)
+
+        composeRule.onNodeWithText(targetContext.getString(CommonString.delete_profile_failed, "Work")).assertIsDisplayed()
+    }
+
     private fun setScreen(
         profiles: List<ProfileItem>,
         profileBeingRenamed: ProfileItem? = null,
         profileToSwitchTo: ProfileItem? = null,
         isSwitchBlocked: Boolean = false,
         profileSwitchFailed: ProfileItem? = null,
+        profileToDelete: ProfileItem? = null,
+        profileDeleteFailed: ProfileItem? = null,
         onProfileClick: (ProfileItem) -> Unit = {},
         onRenameProfileConfirm: (ProfileName) -> Unit = {},
         onSwitchProfileConfirm: () -> Unit = {},
         onSwitchFailedDismiss: () -> Unit = {},
+        onDeleteProfile: (ProfileItem) -> Unit = {},
+        onDeleteProfileConfirm: () -> Unit = {},
     ) {
         composeRule.setContent {
             AnkiDroidTheme {
@@ -112,6 +149,8 @@ class SwitchProfilesScreenTest : RobolectricTest() {
                     profileToSwitchTo = profileToSwitchTo,
                     isSwitchBlocked = isSwitchBlocked,
                     profileSwitchFailed = profileSwitchFailed,
+                    profileToDelete = profileToDelete,
+                    profileDeleteFailed = profileDeleteFailed,
                     onNavigateUp = {},
                     onProfileClick = onProfileClick,
                     onAddProfileClick = {},
@@ -124,7 +163,10 @@ class SwitchProfilesScreenTest : RobolectricTest() {
                     onSwitchProfileDismiss = {},
                     onSwitchBlockedDismiss = {},
                     onSwitchFailedDismiss = onSwitchFailedDismiss,
-                    onDeleteProfile = {},
+                    onDeleteProfile = onDeleteProfile,
+                    onDeleteProfileConfirm = onDeleteProfileConfirm,
+                    onDeleteProfileDismiss = {},
+                    onDeleteFailedDismiss = {},
                 )
             }
         }

@@ -68,7 +68,7 @@ class SwitchProfilesRollbackCommitFailureTest : RobolectricTest() {
 
             assertEquals(1, failedCommits)
             assertEquals(target, model.profileSwitchFailed.value?.id)
-            assertFalse(manager.isSwitching)
+            assertFalse(manager.isChangingProfile.value)
             assertEquals(
                 ProfileId.DEFAULT,
                 ProfileManager.create(context).activeProfileContext.profileId,
