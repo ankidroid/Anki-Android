@@ -3,13 +3,25 @@
 package com.ichi2.anki.account
 
 import android.app.Activity.RESULT_OK
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.O
 import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityManager
+import android.view.autofill.AutofillValue
 import android.widget.Button
 import androidx.core.view.isVisible
+import androidx.credentials.CreatePasswordRequest
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.GetPasswordOption
+import androidx.credentials.PasswordCredential
+import androidx.credentials.exceptions.CreateCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
 import anki.backend.backendError
@@ -27,12 +39,21 @@ import com.ichi2.anki.throwOnShowError
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.rules.BackendOverrideRule
+import com.ichi2.testutils.skipTest
 import com.ichi2.testutils.withQueuedCollectionAccess
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.sun.net.httpserver.HttpServer
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.advanceTimeBy
@@ -40,6 +61,8 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -56,6 +79,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
@@ -65,6 +89,370 @@ import kotlin.time.TimeSource
 class LoginFragmentTest : RobolectricTest() {
     @get:Rule
     val backend = BackendOverrideRule()
+
+    // Robolectric has no credential provider, so its requests never complete
+    private val credentialManager =
+        mockk<CredentialManager> {
+            coEvery { getCredential(any(), any<GetCredentialRequest>()) } throws NoCredentialException()
+            coEvery { createCredential(any(), any()) } throws CreateCredentialCancellationException()
+        }
+
+    @Before
+    fun mockCredentialManager() {
+        mockkObject(CredentialManager.Companion)
+        every { CredentialManager.create(any()) } returns credentialManager
+    }
+
+    @After
+    fun unmockCredentialManager() {
+        unmockkObject(CredentialManager.Companion)
+    }
+
+    @Test
+    fun `custom sync does not automatically submit a saved AnkiWeb password`() =
+        runTest {
+            editPreferences {
+                putBoolean("syncBaseUrl_switch", true)
+                putString("syncBaseUrl", "https://custom-sync.example/")
+            }
+            val requests = mutableListOf<SyncLoginRequest>()
+            backend.replaceWith {
+                object : Backend() {
+                    override fun syncLogin(input: SyncLoginRequest): SyncAuth {
+                        requests += input
+                        return syncAuth { hkey = TEST_HKEY }
+                    }
+                }
+            }
+            coEvery {
+                credentialManager.getCredential(any(), any<GetCredentialRequest>())
+            } returns GetCredentialResponse(PasswordCredential("AnkiWeb: user@example.com", "ankiweb-password"))
+
+            val activity = startLoginScreen().get()
+            advanceRobolectricLooper()
+
+            assertTrue(requests.isEmpty(), "opening custom sync login must not send an AnkiWeb password to another server")
+            if (SDK_INT >= O) {
+                assertEquals(View.IMPORTANT_FOR_AUTOFILL_NO, activity.findViewById<View>(R.id.username).importantForAutofill)
+                assertEquals(View.IMPORTANT_FOR_AUTOFILL_NO, activity.findViewById<View>(R.id.password).importantForAutofill)
+            }
+        }
+
+    @Test
+    fun `endpoint override does not request saved AnkiWeb passwords`() =
+        runTest {
+            Prefs.currentSyncUri = "https://custom-sync.example/"
+
+            startLoginScreen()
+            advanceRobolectricLooper()
+
+            coVerify(exactly = 0) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+        }
+
+    @Test
+    fun `an expired session restored with a regional redirect offers saved AnkiWeb passwords`() =
+        runTest {
+            if (SDK_INT < O) skipTest("Autofill requires API 26")
+            Prefs.username = ""
+            Prefs.hkey = ""
+            Prefs.currentSyncUri = "https://sync19.ankiweb.net/"
+            succeedAuthentication { assertEquals("https://sync19.ankiweb.net/", it.endpoint) }
+            coEvery {
+                credentialManager.getCredential(any(), any<GetCredentialRequest>())
+            } returns GetCredentialResponse(PasswordCredential("AnkiWeb: user@example.com", "saved-password"))
+
+            val activity = startLoginScreen().get()
+            advanceRobolectricLooper()
+
+            assertTrue(activity.findViewById<View>(R.id.password).isImportantForAutofill)
+            coVerify(exactly = 1) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+            assertEquals(TEST_HKEY, Prefs.hkey)
+        }
+
+    @Test
+    fun `login through an endpoint override does not save a password for AnkiWeb`() =
+        runTest {
+            Prefs.currentSyncUri = "https://custom-sync.example/"
+            succeedAuthentication()
+
+            startLoginScreen().logIn()
+
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            coVerify(exactly = 0) { credentialManager.createCredential(any(), any()) }
+        }
+
+    @Test
+    fun `untagged autofill password is not submitted to AnkiWeb`() =
+        runTest {
+            succeedAuthentication()
+            coEvery {
+                credentialManager.getCredential(any(), any<GetCredentialRequest>())
+            } returns GetCredentialResponse(PasswordCredential("user@example.com", "custom-server-password"))
+
+            startLoginScreen()
+            advanceRobolectricLooper()
+
+            assertTrue(Prefs.hkey.isNullOrEmpty())
+        }
+
+    @Test
+    fun `legacy autofill fills the login form without submitting it`() =
+        runTest {
+            if (SDK_INT < O) skipTest("Autofill requires API 26")
+
+            succeedAuthentication()
+            val activity = startLoginScreen().get()
+            val password = activity.findViewById<TextInputEditField>(R.id.password)
+
+            activity.findViewById<TextInputEditText>(R.id.username).setText("user@example.com")
+            password.autofill(AutofillValue.forText("custom-server-password"))
+            advanceRobolectricLooper()
+
+            assertEquals("custom-server-password", password.text.toString())
+            assertTrue(Prefs.hkey.isNullOrEmpty())
+        }
+
+    @Test
+    fun `saved password is discarded if the endpoint changes while it is being retrieved`() =
+        runTest {
+            succeedAuthentication()
+            coEvery {
+                credentialManager.getCredential(any(), any<GetCredentialRequest>())
+            } coAnswers {
+                Prefs.currentSyncUri = "https://custom-sync.example/"
+                GetCredentialResponse(PasswordCredential("AnkiWeb: user@example.com", "hunter2"))
+            }
+
+            val activity = startLoginScreen().get()
+            advanceRobolectricLooper()
+
+            assertTrue(Prefs.hkey.isNullOrEmpty())
+            assertTrue(activity.findViewById<TextInputEditField>(R.id.password).text.isNullOrEmpty())
+        }
+
+    @Test
+    fun `custom sync login does not overwrite an AnkiWeb password`() =
+        runTest {
+            editPreferences {
+                putBoolean("syncBaseUrl_switch", true)
+                putString("syncBaseUrl", "https://custom-sync.example/")
+            }
+            succeedAuthentication()
+
+            startLoginScreen().logIn()
+
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            coVerify(exactly = 0) { credentialManager.createCredential(any(), any()) }
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `successful login offers to save the credential`() =
+        runTest {
+            succeedAuthentication()
+
+            startLoginScreen().logIn()
+
+            coVerify {
+                credentialManager.createCredential(
+                    any(),
+                    match<CreatePasswordRequest> { it.id == "AnkiWeb: user@example.com" && it.password == "hunter2" },
+                )
+            }
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `correcting an autofilled password offers to update the saved credential`() =
+        runTest {
+            if (SDK_INT < O) skipTest("Autofill requires API 26")
+            succeedAuthentication()
+            val activity = startLoginScreen().get()
+            val username = activity.findViewById<TextInputEditText>(R.id.username)
+            val password = activity.findViewById<TextInputEditField>(R.id.password)
+            username.autofill(AutofillValue.forText("AnkiWeb: user@example.com"))
+            password.autofill(AutofillValue.forText("old-password"))
+
+            password.setText("new-password")
+            activity.findViewById<Button>(R.id.login_button).performClick()
+            advanceRobolectricLooper()
+
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            coVerify(exactly = 1) {
+                credentialManager.createCredential(
+                    any(),
+                    match<CreatePasswordRequest> { it.id == "AnkiWeb: user@example.com" && it.password == "new-password" },
+                )
+            }
+        }
+
+    @Test
+    fun `correcting an autofilled email offers to save the new account ID`() =
+        runTest {
+            if (SDK_INT < O) skipTest("Autofill requires API 26")
+            succeedAuthentication { assertEquals("new@example.com", it.username) }
+            val activity = startLoginScreen().get()
+            val username = activity.findViewById<TextInputEditText>(R.id.username)
+            val password = activity.findViewById<TextInputEditField>(R.id.password)
+            username.autofill(AutofillValue.forText("AnkiWeb: old@example.com"))
+            password.autofill(AutofillValue.forText("saved-password"))
+
+            username.setText("AnkiWeb: new@example.com")
+            activity.findViewById<Button>(R.id.login_button).performClick()
+            advanceRobolectricLooper()
+
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            coVerify(exactly = 1) {
+                credentialManager.createCredential(
+                    any(),
+                    match<CreatePasswordRequest> { it.id == "AnkiWeb: new@example.com" && it.password == "saved-password" },
+                )
+            }
+        }
+
+    @Test
+    fun `an unchanged autofilled password is not offered for saving again after recreation`() =
+        runTest {
+            if (SDK_INT < O) skipTest("Autofill requires API 26")
+            succeedAuthentication()
+            val login = startLoginScreen()
+            login.get().findViewById<TextInputEditText>(R.id.username).autofill(AutofillValue.forText("AnkiWeb: user@example.com"))
+            login.get().findViewById<TextInputEditField>(R.id.password).autofill(AutofillValue.forText("saved-password"))
+
+            login.recreate()
+            login.get().findViewById<Button>(R.id.login_button).performClick()
+            advanceRobolectricLooper()
+
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            coVerify(exactly = 0) { credentialManager.createCredential(any(), any()) }
+        }
+
+    @Test
+    fun `recreation after the save prompt does not offer to save again`() =
+        runTest {
+            succeedAuthentication()
+            val login = startLoginScreen()
+            login.logIn()
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+
+            login.recreate()
+            advanceRobolectricLooper()
+
+            coVerify(exactly = 1) { credentialManager.createCredential(any(), any()) }
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `saved credential logs in without offering to save it again`() =
+        runTest {
+            succeedAuthentication()
+            coEvery {
+                credentialManager.getCredential(any(), any<GetCredentialRequest>())
+            } returns GetCredentialResponse(PasswordCredential("AnkiWeb: user@example.com", "hunter2"))
+
+            startLoginScreen()
+            advanceRobolectricLooper()
+
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            assertEquals("user@example.com", Prefs.username)
+            coVerify(exactly = 0) { credentialManager.createCredential(any(), any()) }
+            assertEquals(syncNowMessage, getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `app scoped saved passwords require the user to choose a credential`() =
+        runTest {
+            startLoginScreen()
+            advanceRobolectricLooper()
+
+            coVerify(exactly = 1) {
+                credentialManager.getCredential(
+                    any(),
+                    match<GetCredentialRequest> { !(it.credentialOptions.single() as GetPasswordOption).isAutoSelectAllowed },
+                )
+            }
+        }
+
+    @Test
+    fun `recreation relaunches a credential picker that was still pending`() =
+        runTest {
+            succeedAuthentication()
+            var requests = 0
+            coEvery { credentialManager.getCredential(any(), any<GetCredentialRequest>()) } coAnswers {
+                if (++requests == 1) awaitCancellation()
+                GetCredentialResponse(PasswordCredential("AnkiWeb: user@example.com", "saved-password"))
+            }
+            val login = startLoginScreen(forResult = true)
+            coVerify(exactly = 1) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+
+            login.recreate()
+            advanceRobolectricLooper()
+
+            coVerify(exactly = 2) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+            assertEquals(TEST_HKEY, Prefs.hkey)
+            assertEquals(RESULT_OK, shadowOf(login.get()).resultCode)
+        }
+
+    @Test
+    fun `recreation does not reopen a credential picker that the user dismissed`() =
+        runTest {
+            coEvery {
+                credentialManager.getCredential(any(), any<GetCredentialRequest>())
+            } throws GetCredentialCancellationException()
+            val login = startLoginScreen()
+            advanceRobolectricLooper()
+
+            login.recreate()
+            advanceRobolectricLooper()
+
+            coVerify(exactly = 1) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+        }
+
+    @Test
+    fun `manual sign-in supersedes an unfinished password lookup even when authentication fails`() =
+        runTest {
+            failAuthentication()
+            val lookupCancelled = CompletableDeferred<Unit>()
+            coEvery { credentialManager.getCredential(any(), any<GetCredentialRequest>()) } coAnswers {
+                try {
+                    awaitCancellation()
+                } finally {
+                    lookupCancelled.complete(Unit)
+                }
+            }
+            val login = startLoginScreen()
+            coVerify(exactly = 1) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+
+            login.logIn()
+
+            assertEquals("invalid credentials", login.get().snackbarText)
+            assertTrue(lookupCancelled.isCompleted, "a manual submission must cancel the earlier credential lookup")
+
+            login.recreate()
+            advanceRobolectricLooper()
+
+            coVerify(exactly = 1) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+        }
+
+    @Test
+    fun `a saved password stays out of a form whose password visibility was enabled`() =
+        runTest {
+            failAuthentication()
+            val selected = CompletableDeferred<GetCredentialResponse>()
+            coEvery { credentialManager.getCredential(any(), any<GetCredentialRequest>()) } coAnswers { selected.await() }
+            val activity = startLoginScreen().get()
+            val password = activity.findViewById<TextInputEditField>(R.id.password)
+            val passwordLayout = activity.findViewById<View>(R.id.password_layout)
+            val endIcon = passwordLayout.findViewById<View>(com.google.android.material.R.id.text_input_end_icon)
+            endIcon.performClick()
+            assertNull(password.transformationMethod)
+
+            selected.complete(GetCredentialResponse(PasswordCredential("AnkiWeb: user@example.com", "saved-password")))
+            advanceRobolectricLooper()
+
+            assertEquals("invalid credentials", activity.snackbarText)
+            assertTrue(password.text.isNullOrEmpty())
+        }
 
     /**
      * #21051: the locked-collection guidance is multi-sentence, so it is shown in a dialog
@@ -343,10 +731,13 @@ class LoginFragmentTest : RobolectricTest() {
             },
         )
 
-    private suspend fun succeedAuthentication() =
+    private suspend fun succeedAuthentication(onLogin: (SyncLoginRequest) -> Unit = {}) =
         backend.replaceWith {
             object : Backend() {
-                override fun syncLogin(input: SyncLoginRequest): SyncAuth = syncAuth { hkey = TEST_HKEY }
+                override fun syncLogin(input: SyncLoginRequest): SyncAuth {
+                    onLogin(input)
+                    return syncAuth { hkey = TEST_HKEY }
+                }
             }
         }
 

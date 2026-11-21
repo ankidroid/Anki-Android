@@ -5,6 +5,8 @@ package com.ichi2.anki.account
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.credentials.PasswordCredential
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager
@@ -18,6 +20,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
+import com.ichi2.anki.utils.ViewModelSavedStateHandle
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +29,20 @@ import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import java.net.URI
+
+private val ankiWebSyncHost = Regex("""sync[0-9]*\.ankiweb\.net""", RegexOption.IGNORE_CASE)
+
+internal fun usesAnkiWebEndpoint(endpoint: String? = getEndpoint()): Boolean {
+    if (Prefs.isCustomSyncEnabled) return false
+    if (endpoint == null) return true
+
+    val uri = runCatching { URI(endpoint) }.getOrNull() ?: return false
+    return uri.scheme.equals("https", ignoreCase = true) &&
+        uri.userInfo == null &&
+        (uri.port == -1 || uri.port == 443) &&
+        ankiWebSyncHost.matches(uri.host.orEmpty())
+}
 
 /** The operation [LoginViewModel] is running, shown as a progress message by the UI. */
 enum class LoginProgress {
@@ -34,6 +51,11 @@ enum class LoginProgress {
 
 /** The outcome of a login attempt, which the UI shows and then acknowledges. */
 sealed interface LoginMessage {
+    /** Offers saving the credentials of a successful login, before [LoggedIn] */
+    class SaveCredential(
+        val credential: PasswordCredential,
+    ) : LoginMessage
+
     data object LoggedIn : LoginMessage
 
     /**
@@ -50,10 +72,22 @@ sealed interface LoginMessage {
  * ViewModel that manages the state for user login. It handles the login process,
  * validates input fields, and provides results for login operations.
  */
-class LoginViewModel :
-    ViewModel(),
+class LoginViewModel(
+    private val savedStateHandle: ViewModelSavedStateHandle = SavedStateHandle(),
+) : ViewModel(),
     HasProgress<LoginProgress> {
     override val progressManager = ProgressManager<LoginProgress>()
+
+    internal val credentialLookupFinished: Boolean
+        get() = savedStateHandle[CREDENTIAL_LOOKUP_FINISHED] ?: false
+
+    internal fun finishCredentialLookup() {
+        savedStateHandle[CREDENTIAL_LOOKUP_FINISHED] = true
+    }
+
+    // Keep this in memory only so view recreation can still detect password edits.
+    internal var autofilledUsername: String? = null
+    internal var autofilledPassword: String? = null
 
     val loginButtonEnabled: StateFlow<Boolean>
         field = MutableStateFlow(false)
@@ -103,10 +137,15 @@ class LoginViewModel :
      *
      * @param username The username entered by the user.
      * @param password The password entered by the user.
+     * @param fromPasswordManager whether the credentials are associated with a saved AnkiWeb entry,
+     * which can only be used for AnkiWeb
+     * @param offerCredentialSave whether to offer saving the password after successful AnkiWeb login
      */
     fun login(
         username: String,
         password: String,
+        fromPasswordManager: Boolean = false,
+        offerCredentialSave: Boolean = !fromPasswordManager,
     ) {
         if (username.isEmpty() || password.isEmpty()) {
             Timber.i("Login cancelled - username/password missing")
@@ -116,6 +155,9 @@ class LoginViewModel :
             Timber.i("Login cancelled - already logging in")
             return
         }
+        val endpoint = getEndpoint()
+        val usesAnkiWeb = usesAnkiWebEndpoint(endpoint)
+        if (fromPasswordManager && !usesAnkiWeb) return
         // set before launching: the login may complete before `launch` returns
         loginStarted = true
         Timber.i("Logging in")
@@ -127,7 +169,7 @@ class LoginViewModel :
             // Not a child of this coroutine, which would then wait for it when cancelled:
             // waiting for collection access can't be interrupted, so the progress would remain
             // until the collection is available
-            val auth = viewModelScope.async { syncLogin(username, password, getEndpoint()) }
+            val auth = viewModelScope.async { syncLogin(username, password, endpoint) }
             val login = coroutineContext.job
             try {
                 progressManager.withProgress(
@@ -139,7 +181,13 @@ class LoginViewModel :
                     },
                 ) {
                     updateLogin(username, auth.await().hkey)
+                    autofilledUsername = null
+                    autofilledPassword = null
                     Timber.i("Login success")
+                }
+                // separate messages, so a recreation after saving does not offer it again
+                if (offerCredentialSave && usesAnkiWeb) {
+                    messageQueue.enqueue(LoginMessage.SaveCredential(PasswordCredential(username, password)))
                 }
                 messageQueue.enqueue(LoginMessage.LoggedIn)
             } catch (exc: CancellationException) {
@@ -180,6 +228,10 @@ class LoginViewModel :
     ) {
         Prefs.username = username
         Prefs.hkey = hkey
+    }
+
+    private companion object {
+        const val CREDENTIAL_LOOKUP_FINISHED = "credentialLookupFinished"
     }
 }
 

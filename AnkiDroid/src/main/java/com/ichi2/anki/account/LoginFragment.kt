@@ -17,10 +17,22 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
+import androidx.credentials.CreatePasswordRequest
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetPasswordOption
+import androidx.credentials.PasswordCredential
+import androidx.credentials.exceptions.CreateCredentialCancellationException
+import androidx.credentials.exceptions.CreateCredentialException
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
@@ -41,17 +53,26 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.utils.savedStateViewModelFactory
 import com.ichi2.anki.utils.showAndAwaitDismissal
 import com.ichi2.anki.utils.showSnackbarAndAwaitDismissal
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_my_account) {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels {
+        savedStateViewModelFactory(create = ::LoginViewModel)
+    }
     private val binding by viewBinding(FragmentMyAccountBinding::bind)
+    private val credentialManager by lazy { CredentialManager.create(requireContext()) }
+    private var credentialLookup: Job? = null
 
     override fun onViewCreated(
         view: View,
@@ -78,6 +99,12 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
         initListeners()
         initObservers()
+
+        // a saved AnkiWeb password must not be sent to a custom server
+        val afterLogout = arguments?.getBoolean(ARG_AFTER_LOGOUT) ?: false
+        if (!viewModel.credentialLookupFinished && !afterLogout && usesAnkiWebEndpoint()) {
+            loginWithSavedCredential()
+        }
     }
 
     /** Applies edge-to-edge insets for the screen */
@@ -104,17 +131,25 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
     }
 
     private fun login() {
+        viewModel.finishCredentialLookup()
+        credentialLookup?.cancel()
         hideKeyboard()
-        submitCredentials()
-    }
 
-    private fun submitCredentials() {
+        val enteredUsername =
+            binding.username.text
+                .toString()
+                .trim()
+        val username = enteredUsername.removePrefix(ANKIWEB_CREDENTIAL_PREFIX)
+        val fromPasswordManager = username != enteredUsername
+        val password = binding.password.text.toString()
         viewModel.login(
-            username =
-                binding.username.text
-                    .toString()
-                    .trim(),
-            password = binding.password.text.toString(),
+            username = username,
+            password = password,
+            fromPasswordManager = fromPasswordManager,
+            offerCredentialSave =
+                !fromPasswordManager ||
+                    enteredUsername != viewModel.autofilledUsername?.trim() ||
+                    password != viewModel.autofilledPassword,
         )
     }
 
@@ -159,10 +194,17 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.password.setAutoFillListener {
+            if (!usesAnkiWebEndpoint()) {
+                binding.username.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO
+                binding.password.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO
+                return
+            }
+            binding.username.setAutoFillListener { value ->
+                if (value.isText) viewModel.autofilledUsername = value.textValue.toString()
+            }
+            binding.password.setAutoFillListener { value ->
+                if (value.isText) viewModel.autofilledPassword = value.textValue.toString()
                 binding.passwordLayout.isEndIconVisible = false
-                Timber.i("Attempting login from autofill")
-                submitCredentials()
             }
         }
     }
@@ -205,6 +247,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
     /** Returns once the user has dealt with [message], so it is shown again if the screen is recreated first */
     private suspend fun showMessage(message: LoginMessage) {
         when (message) {
+            is LoginMessage.SaveCredential -> saveCredential(message.credential)
             LoginMessage.LoggedIn -> onLoginSuccess()
             is LoginMessage.Failed -> showLoginError(message.exception)
         }
@@ -234,6 +277,64 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                     exception.toCrashReportData(requireContext(), reportException = false),
                 )
             else -> showSnackbarAndAwaitDismissal(exception.message.toString())
+        }
+    }
+
+    /**
+     * Submits a credential explicitly chosen from the system's [CredentialManager], if any.
+     * Leave the user to fix manually if sign-in fails.
+     */
+    private fun loginWithSavedCredential() {
+        val request = GetCredentialRequest(listOf(GetPasswordOption()))
+        val owner = viewLifecycleOwner
+        credentialLookup =
+            owner.lifecycleScope.launch {
+                val canLookUpCredential = owner.withResumed { usesAnkiWebEndpoint() }
+                if (!canLookUpCredential) return@launch
+                val credential =
+                    try {
+                        credentialManager.getCredential(requireActivity(), request).credential
+                    } catch (_: GetCredentialCancellationException) {
+                        Timber.i("User cancelled credential retrieval")
+                        return@launch
+                    } catch (_: NoCredentialException) {
+                        Timber.i("No saved credentials found")
+                        return@launch
+                    } catch (e: GetCredentialException) {
+                        Timber.w(e, "Failed to retrieve credentials")
+                        return@launch
+                    } finally {
+                        // If recreation cancelled the lookup, the new view should offer the picker again.
+                        if (isActive) viewModel.finishCredentialLookup()
+                    }
+                ensureActive()
+                if (credential !is PasswordCredential) {
+                    Timber.w("Unexpected credential type: %s", credential.type)
+                    return@launch
+                }
+                // Autofill providers may also return app passwords saved for a custom server.
+                if (!credential.id.startsWith(ANKIWEB_CREDENTIAL_PREFIX) || !usesAnkiWebEndpoint()) return@launch
+                Timber.i("Attempting login from saved credential")
+                viewModel.login(
+                    username = credential.id.removePrefix(ANKIWEB_CREDENTIAL_PREFIX).trim(),
+                    password = credential.password,
+                    fromPasswordManager = true,
+                )
+            }
+    }
+
+    private suspend fun saveCredential(credential: PasswordCredential) {
+        try {
+            credentialManager.createCredential(
+                requireActivity(),
+                CreatePasswordRequest(id = ANKIWEB_CREDENTIAL_PREFIX + credential.id, password = credential.password),
+            )
+            Timber.i("Credential saved")
+        } catch (_: CreateCredentialCancellationException) {
+            Timber.i("User declined to save credential")
+        } catch (e: CreateCredentialException) {
+            // also thrown if no provider is available or saving is disabled in the system settings
+            Timber.i("Credential not saved: %s", e.type)
         }
     }
 
@@ -289,5 +390,14 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
     private fun updateLogoVisibility(configuration: Configuration) {
         binding.loginLogo.isVisible = !(isCompactWidth && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+    }
+
+    companion object {
+        private const val ANKIWEB_CREDENTIAL_PREFIX = "AnkiWeb: "
+
+        /** Whether the user just logged out, so they are not signed in again with a saved credential */
+        private const val ARG_AFTER_LOGOUT = "ARG_AFTER_LOGOUT"
+
+        fun afterLogout() = LoginFragment().apply { arguments = Bundle().apply { putBoolean(ARG_AFTER_LOGOUT, true) } }
     }
 }
