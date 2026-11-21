@@ -23,6 +23,7 @@
     <dimen name="deck_picker_left_padding_small">0dp</dimen>
     <dimen name="deck_picker_left_padding">24dp</dimen>
     <dimen name="note_editor_toolbar_height">52dp</dimen>
+    <dimen name="note_editor_min_fields_height">48dp</dimen>
 
     <dimen name="reviewer_side_margin">8dp</dimen>
     <dimen name="answer_button_margin_horizontal">3dp</dimen>
