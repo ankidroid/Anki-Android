@@ -161,6 +161,17 @@ jobs:
         with:
           fetch-depth: 50
 
+      - name: Set up Codecov
+        id: codecov
+        # Flake runs repeat the same tests. Only the first iteration uploads coverage.
+        # Runs hosted outside upstream opt in with their own Codecov token.
+        if: matrix.iteration == 1 && (github.repository == 'ankidroid/Anki-Android' || env.CODECOV_TOKEN != '')
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          # The pinned Codecov CLI's native parser does not support Python 3.15.
+          python-version: '3.13'
+          update-environment: false
+
       - name: Configure JDK
         uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
@@ -240,10 +251,9 @@ jobs:
         run: ./gradlew --stop
 
       - name: Upload unit coverage by module
-        # Flake runs repeat the same tests. Upload once per OS when reports are available.
-        if: matrix.iteration == 1 && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
-        continue-on-error: ${{ github.repository != 'ankidroid/Anki-Android' }}
+        if: steps.codecov.outcome == 'success' && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
         shell: bash
         env:
+          CODECOV_PYTHON: ${{ steps.codecov.outputs.python-path }}
           FORK_BRANCH: ${{ github.event.pull_request.head.repo.full_name != github.repository && github.event.pull_request.head.label || '' }}
         run: bash .github/upload_unit_coverage.sh
