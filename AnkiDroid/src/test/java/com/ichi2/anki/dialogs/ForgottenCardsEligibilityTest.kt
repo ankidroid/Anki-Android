@@ -104,6 +104,34 @@ class ForgottenCardsEligibilityTest : RobolectricTest() {
         }
 
     @Test
+    fun `reusable session cards do not enable Create for a deck named filtered`() =
+        runTest {
+            forgottenCard()
+            buildForgottenSession()
+            val deckId = addDeck("filtered")
+            col.setDeck(listOf(addBasicNote("Unreviewed", "Card").firstCard().id), deckId)
+            col.decks.select(deckId)
+
+            assertNoCardsCanBeStudied(deckId)
+            assertCreateAvailability(false, deckId = deckId)
+        }
+
+    // Detects when the bundled backend includes the fix for https://github.com/ankitects/anki/issues/6004
+    @Test
+    fun `backend still rejects forgotten cards from a deck named filtered`() =
+        runTest {
+            val card = forgottenCard()
+            val deckId = addDeck("filtered")
+            col.setDeck(listOf(card.id), deckId)
+            assertEquals(listOf(card.id), col.findCards("deck:Filtered rated:1:1"))
+
+            assertNoCardsCanBeStudied(
+                deckId,
+                message = "Custom Study now accepts filtered. Remove FullDeckName.toStoredNameSearchNode and this test",
+            )
+        }
+
+    @Test
     fun `changing the day range updates forgotten card eligibility`() =
         runTest {
             forgottenCard()
@@ -140,17 +168,21 @@ class ForgottenCardsEligibilityTest : RobolectricTest() {
         forgotDays = days
     }
 
-    private fun assertNoCardsCanBeStudied() {
-        val error = assertFailsWith<BackendException> { col.sched.customStudy(forgottenRequest()) }
+    private fun assertNoCardsCanBeStudied(
+        deckId: DeckId = Consts.DEFAULT_DECK_ID,
+        message: String? = null,
+    ) {
+        val error = assertFailsWith<BackendException>(message) { col.sched.customStudy(forgottenRequest(deckId = deckId)) }
         assertEquals(TR.customStudyNoCardsMatchedTheCriteriaYou(), error.message)
     }
 
     private fun assertCreateAvailability(
         expected: Boolean,
         days: String? = null,
+        deckId: DeckId = Consts.DEFAULT_DECK_ID,
     ) {
         Robolectric.buildActivity(EmptyAnkiActivity::class.java).setup().use { controller ->
-            val fragment = CustomStudyDialog.createSubDialog(Consts.DEFAULT_DECK_ID, STUDY_FORGOT)
+            val fragment = CustomStudyDialog.createSubDialog(deckId, STUDY_FORGOT)
             controller.get().showDialogFragment(fragment)
             days?.let { fragment.binding.detailsEditText2.setText(it) }
             shadowOf(Looper.getMainLooper()).idle()
