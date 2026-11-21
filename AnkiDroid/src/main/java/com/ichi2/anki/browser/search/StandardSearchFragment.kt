@@ -10,15 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.SearchHistoryItems
@@ -42,11 +37,9 @@ import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.alignWithFirstLineOf
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.collectInViewLifecycle
-import com.ichi2.anki.utils.ext.hasCheckedBackground
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -135,32 +128,11 @@ class StandardSearchFragment :
             }
         }
 
-        viewModel.filtersFlow.collectInLifecycle {
-            binding.decksChip.hasCheckedBackground = it.decks.any()
-            binding.tagsChip.hasCheckedBackground = it.tags.any()
-            binding.cardStateChip.hasCheckedBackground = it.cardStates.any()
-            binding.flagsChip.hasCheckedBackground = it.flags.any()
-
-            binding.decksChip.text = it.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
-            binding.tagsChip.text = formatChipDescription(it.tags, emptyValue = "Tags")
-            binding.cardStateChip.text = formatChipDescription(it.cardStates.map { it.label }, emptyValue = "Card state")
-            binding.cardStateChip.chipIcon = it.cardStates.firstOrNull().getIcon(requireContext())
-
-            binding.flagsChip.text =
-                formatChipDescription(
-                    it.flags,
-                    singleValue = if (it.flags.singleOrNull() == Flag.NONE) "No Flag" else TR.browsingFlag(),
-                    nonSingleValue = TR.browsingSidebarFlags(),
-                )
-            binding.flagsChip.chipIcon =
-                ContextCompat.getDrawable(requireContext(), it.flags.firstOrNull().iconRes)?.also { drawable ->
-                    if (it.flags.isEmpty()) {
-                        DrawableCompat.setTint(
-                            drawable.mutate(),
-                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
-                        )
-                    }
-                }
+        viewModel.filtersFlow.collectInLifecycle { filters ->
+            binding.decksChip.setDeckFilter(filters.decks)
+            binding.tagsChip.setTagFilter(filters.tags)
+            binding.cardStateChip.setCardStateFilter(filters.cardStates)
+            binding.flagsChip.setFlagFilter(filters.flags)
         }
     }
 

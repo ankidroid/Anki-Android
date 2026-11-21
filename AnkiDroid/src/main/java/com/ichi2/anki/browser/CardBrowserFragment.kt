@@ -34,7 +34,6 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuItemCompat
@@ -59,7 +58,6 @@ import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
@@ -100,9 +98,10 @@ import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment
 import com.ichi2.anki.browser.search.StandardSearchFragment
-import com.ichi2.anki.browser.search.formatChipDescription
-import com.ichi2.anki.browser.search.getIcon
-import com.ichi2.anki.browser.search.iconRes
+import com.ichi2.anki.browser.search.setCardStateFilter
+import com.ichi2.anki.browser.search.setDeckFilter
+import com.ichi2.anki.browser.search.setFlagFilter
+import com.ichi2.anki.browser.search.setTagFilter
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.navigate
@@ -152,7 +151,6 @@ import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.getParcelableCompat
-import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.removeFragmentByTag
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -1294,33 +1292,10 @@ class CardBrowserFragment :
             }
 
             legacyDeckName?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
-            decksChip?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
-            decksChip?.hasCheckedBackground = filters.decks.any()
-
-            tagsChip?.text = formatChipDescription(filters.tags, emptyValue = "Tags")
-            tagsChip?.hasCheckedBackground = filters.tags.any()
-
-            cardStateChip?.text = formatChipDescription(filters.cardStates.map { it.label }, emptyValue = "Card state")
-            cardStateChip?.chipIcon = filters.cardStates.firstOrNull().getIcon(requireContext())
-            cardStateChip?.hasCheckedBackground = filters.cardStates.any()
-
-            // Flags: Use the icon/checked state to explain what the filter is.
-            flagsChip?.text =
-                formatChipDescription(
-                    entries = filters.flags,
-                    singleValue = if (filters.flags.singleOrNull() == Flag.NONE) "No Flag" else TR.browsingFlag(),
-                    nonSingleValue = TR.browsingSidebarFlags(),
-                )
-            flagsChip?.chipIcon =
-                ContextCompat.getDrawable(requireContext(), filters.flags.firstOrNull().iconRes)?.also {
-                    if (filters.flags.isEmpty()) {
-                        DrawableCompat.setTint(
-                            it.mutate(),
-                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
-                        )
-                    }
-                }
-            flagsChip?.hasCheckedBackground = filters.flags.any()
+            decksChip?.setDeckFilter(filters.decks)
+            tagsChip?.setTagFilter(filters.tags)
+            cardStateChip?.setCardStateFilter(filters.cardStates)
+            flagsChip?.setFlagFilter(filters.flags)
 
             searchViewModel.syncState(search)
         }
