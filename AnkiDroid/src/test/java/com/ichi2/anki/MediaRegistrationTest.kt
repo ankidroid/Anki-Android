@@ -20,6 +20,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.GraphicsMode
 import org.robolectric.shadows.ShadowContentResolver
 import java.io.ByteArrayOutputStream
+import java.util.Base64
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -97,6 +98,33 @@ class MediaRegistrationTest : RobolectricTest() {
         assertEquals("png", importedFile.extension)
         assertEquals("""<img src="${importedFile.name}">""", html)
     }
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `an animated GIF keeps its frames when pasted as PNG`() =
+        assertKeptWhenPastedAsPng(
+            "animation.gif",
+            "image/gif",
+            "R0lGODlhAQABAIAAAP8AAAAA/yH/C05FVFNDQVBFMi4wAwEAAAAh+QQACgAAACwAAAAAAQABAAACAkQBACH5BAAKAAAALAAAAAABAAEAAAICTAEAOw==",
+        )
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `an animated PNG keeps its frames when pasted as PNG`() =
+        assertKeptWhenPastedAsPng(
+            "animation.png",
+            "image/png",
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACGFjVEwAAAACAAAAAPONk3AAAAAaZmNUTAAAAAAAAAABAAAAAQAAAAAAAAAAAAEACgAAWn8w0AAAAAxJREFUeJxj+M/AAAADAQEAyf6S7wAAABpmY1RMAAAAAQAAAAEAAAABAAAAAAAAAAAAAQAKAADBDNoEAAAAEGZkQVQAAAACeJxjYGD4DwABAwEAaL/t9AAAAABJRU5ErkJggg==",
+        )
+
+    @Test
+    @GraphicsMode(GraphicsMode.Mode.NATIVE)
+    fun `an animated WebP keeps its frames when pasted as PNG`() =
+        assertKeptWhenPastedAsPng(
+            "animation.webp",
+            "image/webp",
+            "UklGRngAAABXRUJQVlA4WAoAAAACAAAAAAAAAAAAQU5JTQYAAAAAAAAAAABBTk1GIgAAAAAAAAAAAAAAAAAAAGQAAAJWUDhMCgAAAC8AAAAAiP5H/wNBTk1GIgAAAAAAAAAAAAAAAAAAAGQAAAJWUDhMCgAAAC8AAAAAiOh//wM=",
+        )
 
     @Test
     @GraphicsMode(GraphicsMode.Mode.NATIVE)
@@ -323,6 +351,32 @@ class MediaRegistrationTest : RobolectricTest() {
         assertTrue(importedFile.name.length < originalFilename.length, "Expected the backend to shorten the filename")
         assertContentEquals(data, importedFile.readBytes())
         assertEquals(expectedTag.format(importedFile.name), html)
+    }
+
+    private fun assertKeptWhenPastedAsPng(
+        filename: String,
+        mimeType: String,
+        base64: String,
+    ) {
+        val image = Base64.getDecoder().decode(base64)
+        val uri = stubClipboardMedia(filename, image, mimeType = mimeType)
+
+        val html =
+            MediaRegistration.loadMediaIntoCollection(
+                targetContext,
+                uri,
+                ClipDescription("media", arrayOf(mimeType)),
+                pasteAsPng = true,
+                showError = { error("Unexpected paste error: $it") },
+            )
+
+        val importedFile =
+            col.media.dir
+                .listFiles()!!
+                .single()
+        assertEquals(filename.substringAfterLast('.'), importedFile.extension)
+        assertContentEquals(image, importedFile.readBytes(), "Converting to PNG keeps only the first frame")
+        assertEquals("""<img src="${importedFile.name}">""", html)
     }
 
     private fun stubClipboardMedia(

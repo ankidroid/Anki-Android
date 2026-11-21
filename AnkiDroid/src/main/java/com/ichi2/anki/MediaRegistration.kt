@@ -21,6 +21,8 @@ import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileNameAndExtension
 import com.ichi2.utils.openInputStreamSafe
 import timber.log.Timber
+import java.io.DataInputStream
+import java.io.EOFException
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -186,7 +188,7 @@ object MediaRegistration {
         val isVideo = ClipDescription.compareMimeTypes(mediaType, "video/*")
 
         // Converts to PNG if needed. Returns null on failure.
-        val bitmap = if (pasteAsPng && isImage) BitmapFactory.decodeFile(clipCopy.absolutePath) else null
+        val bitmap = if (pasteAsPng && isImage && !isAnimated(clipCopy)) BitmapFactory.decodeFile(clipCopy.absolutePath) else null
         if (bitmap != null) {
             clipCopy.delete()
             clipCopy = File.createTempFile(fileName, ".png")
@@ -259,6 +261,89 @@ object MediaRegistration {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeFile(file.absolutePath, bounds)
         return if (bounds.outWidth > 0) bounds.outMimeType ?: "image/*" else null
+    }
+
+    private const val GIF_EXTENSION_INTRODUCER = 0x21
+
+    private const val GIF_IMAGE_SEPARATOR = 0x2C
+
+    private fun isAnimated(file: File): Boolean =
+        try {
+            DataInputStream(file.inputStream().buffered()).use { input ->
+                val header = ByteArray(12)
+                input.mark(header.size)
+                input.readFully(header)
+                input.reset()
+                val signature = header.toString(Charsets.ISO_8859_1)
+                when {
+                    signature.startsWith("GIF8") -> input.hasSecondGifFrame()
+                    signature.startsWith("\u0089PNG") -> input.hasPngAnimationControl()
+                    signature.startsWith("RIFF") && signature.endsWith("WEBP") -> input.hasWebpAnimationFlag()
+                    else -> false
+                }
+            }
+        } catch (e: IOException) {
+            Timber.w(e, "Unable to check whether an image is animated")
+            false
+        }
+
+    private fun DataInputStream.hasSecondGifFrame(): Boolean {
+        skipFully(10)
+        val screenFlags = readUnsignedByte()
+        skipFully(2)
+        skipGifColorTable(screenFlags)
+        var frames = 0
+        while (true) {
+            when (readUnsignedByte()) {
+                GIF_EXTENSION_INTRODUCER -> skipFully(1)
+                GIF_IMAGE_SEPARATOR -> {
+                    if (++frames == 2) return true
+                    skipFully(8)
+                    skipGifColorTable(readUnsignedByte())
+                    skipFully(1)
+                }
+                else -> return false
+            }
+            skipGifSubBlocks()
+        }
+    }
+
+    private fun DataInputStream.skipGifColorTable(flags: Int) {
+        if (flags and 0x80 != 0) skipFully(3 shl ((flags and 0x07) + 1))
+    }
+
+    private fun DataInputStream.skipGifSubBlocks() {
+        while (true) {
+            val size = readUnsignedByte()
+            if (size == 0) return
+            skipFully(size)
+        }
+    }
+
+    private fun DataInputStream.hasPngAnimationControl(): Boolean {
+        skipFully(8)
+        while (true) {
+            val length = readInt()
+            when (readChunkType()) {
+                "acTL" -> return true
+                "IDAT" -> return false
+            }
+            skipFully(length)
+            skipFully(4)
+        }
+    }
+
+    private fun DataInputStream.hasWebpAnimationFlag(): Boolean {
+        skipFully(12)
+        if (readChunkType() != "VP8X") return false
+        skipFully(4)
+        return readUnsignedByte() and 0x02 != 0
+    }
+
+    private fun DataInputStream.readChunkType(): String = ByteArray(4).also { readFully(it) }.toString(Charsets.ISO_8859_1)
+
+    private fun DataInputStream.skipFully(count: Int) {
+        if (skipBytes(count) < count) throw EOFException()
     }
 
     private fun convertToPNG(
