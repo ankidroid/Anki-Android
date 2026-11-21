@@ -637,18 +637,21 @@ class CustomStudyDialog :
      */
     private suspend fun hasForgottenCards(days: Int): Boolean =
         withCol {
-            val customStudyDeck =
+            val deckSearch =
+                FullDeckName(decks.name(viewModel.deckId)).toStoredNameSearchNode() ?: return@withCol false
+            val customStudyDeckSearch =
                 decks
                     .byName(TR.customStudyCustomStudySession())
                     ?.takeIf { it.isFiltered }
+                    ?.let { it.fullName.toSearchNode() }
             val availableDecks =
                 buildList {
                     add(searchNode { negated = searchNode { deck = "filtered" } })
-                    customStudyDeck?.let { session -> add(session.fullName.toSearchNode()) }
+                    customStudyDeckSearch?.let { add(it) }
                 }
             val search =
                 listOf(
-                    FullDeckName(decks.name(viewModel.deckId)).toSearchNode(),
+                    deckSearch,
                     searchNode {
                         rated =
                             rated {
