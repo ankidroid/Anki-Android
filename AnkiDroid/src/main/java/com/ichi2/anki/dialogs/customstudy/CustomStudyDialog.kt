@@ -62,6 +62,8 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.SearchJoiner
+import com.ichi2.anki.model.FullDeckName
+import com.ichi2.anki.model.fullName
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireActivity
@@ -642,11 +644,11 @@ class CustomStudyDialog :
             val availableDecks =
                 buildList {
                     add(searchNode { negated = searchNode { deck = "filtered" } })
-                    customStudyDeck?.let { session -> add(searchNode { deck = session.name }) }
+                    customStudyDeck?.let { session -> add(session.fullName.toSearchNode()) }
                 }
             val search =
                 listOf(
-                    searchNode { deck = decks.name(viewModel.deckId) },
+                    FullDeckName(decks.name(viewModel.deckId)).toSearchNode(),
                     searchNode {
                         rated =
                             rated {
