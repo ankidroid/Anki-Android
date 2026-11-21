@@ -67,6 +67,16 @@ class PostRequestBridgeTest {
         }
 
     @Test
+    fun `a request that overflows the stack returns status 500`() =
+        runTest {
+            val bridge = bridge { _, _ -> throw StackOverflowError() }
+
+            val reply = bridge.handleMessage(request(id = 1, uri = "/_anki/foo"))
+
+            assertEquals(Reply(id = 1, status = 500, body = "java.lang.StackOverflowError"), reply.parse())
+        }
+
+    @Test
     fun `a request isn't answered if its coroutine is cancelled`() =
         runTest {
             val bridge = bridge { _, _ -> awaitCancellation() }
