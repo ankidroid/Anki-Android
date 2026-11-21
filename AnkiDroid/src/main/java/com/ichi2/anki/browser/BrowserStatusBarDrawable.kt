@@ -33,14 +33,10 @@ class BrowserStatusBarDrawable(
     override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 
     override fun draw(canvas: Canvas) {
+        if (searchView.currentTransitionState != SearchView.TransitionState.HIDDEN) return
         root.getLocationInWindow(rootLocation)
         appBar.getLocationInWindow(appBarLocation)
-        val appBarBottom =
-            if (searchView.currentTransitionState != SearchView.TransitionState.HIDDEN) {
-                bounds.bottom
-            } else {
-                (appBarLocation[1] - rootLocation[1] + appBar.height).coerceIn(bounds.top, bounds.bottom)
-            }
+        val appBarBottom = (appBarLocation[1] - rootLocation[1] + appBar.height).coerceIn(bounds.top, bounds.bottom)
 
         // Controls already sit on the app-bar surface, so blending with that same color keeps it solid.
         paint.color = color

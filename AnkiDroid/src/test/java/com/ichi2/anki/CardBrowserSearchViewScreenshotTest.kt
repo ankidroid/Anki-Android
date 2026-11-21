@@ -2,11 +2,18 @@
 
 package com.ichi2.anki
 
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.view.PixelCopy
 import android.view.View
 import android.widget.HorizontalScrollView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.get
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.filters.SdkSuppress
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.search.SearchView
 import com.google.testing.junit.testparameterinjector.TestParameter
@@ -242,6 +249,29 @@ class CardBrowserSearchViewScreenshotTest : ScreenshotTest() {
             }
             val mode = if (searchTools) "search_tools" else "search"
             captureScreen("${orientation}_${mode}_keyboard")
+        }
+    }
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P)
+    fun statusBarMatchesOpenSearch() {
+        withCardBrowserFragment(useSearchView = true) {
+            val browser = requireActivity() as CardBrowser
+            browser.dispatchInsets()
+            requireView().findViewById<SearchView>(R.id.search_view).show()
+            advanceRobolectricLooper()
+            val decor = browser.window.decorView
+            val screen = createBitmap(decor.width, decor.height)
+            PixelCopy.request(browser.window, screen, {}, Handler(Looper.getMainLooper()))
+            advanceRobolectricLooper()
+            val statusBarBottom = 24.dp.toPx(targetContext)
+            val x = screen.width / 2
+            assertEquals(
+                "#%08X".format(screen[x, statusBarBottom + 2]),
+                "#%08X".format(screen[x, statusBarBottom / 2]),
+                "status bar matches the search view",
+            )
+            captureScreen("status_bar_open_search")
         }
     }
 }
