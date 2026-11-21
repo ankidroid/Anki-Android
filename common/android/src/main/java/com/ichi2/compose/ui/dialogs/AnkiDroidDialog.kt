@@ -22,10 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.ichi2.anki.common.android.R
+import androidx.appcompat.R as AppCompatR
+import com.google.android.material.R as MaterialR
 
 /**
  * A [BasicAlertDialog] whose content renders inline in Compose previews.
@@ -85,9 +89,15 @@ fun AnkiDroidDialog(
     }
 }
 
-/** Insets inside the card. */
+/** Insets inside the card, matching the View dialog title and action panels. */
 @Composable
-fun ankiDroidDialogContentPadding(): PaddingValues = PaddingValues(24.dp)
+fun ankiDroidDialogContentPadding(): PaddingValues =
+    PaddingValues(
+        start = 24.dp,
+        top = dimensionResource(AppCompatR.dimen.abc_dialog_padding_top_material),
+        end = 24.dp,
+        bottom = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_bottom_padding),
+    )
 
 /** View dialog actions: end aligned, with confirmation above dismissal when stacked. */
 @Composable
@@ -98,25 +108,39 @@ fun AnkiDroidDialogButtons(
     onDismissRequest: () -> Unit,
     confirmEnabled: Boolean = true,
 ) {
-    val topPadding = 24.dp
-    val spacing = 8.dp
+    val topPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_top_padding)
+    val spacing = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_spacing)
+    val minWidth = dimensionResource(MaterialR.dimen.m3_btn_dialog_btn_min_width)
+    val inset = dimensionResource(MaterialR.dimen.m3_btn_inset)
+    val buttonPadding =
+        PaddingValues(
+            start = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_left),
+            top = dimensionResource(MaterialR.dimen.m3_btn_padding_top) + inset,
+            end = dimensionResource(MaterialR.dimen.m3_btn_text_btn_padding_right),
+            bottom = dimensionResource(MaterialR.dimen.m3_btn_padding_bottom) + inset,
+        )
     Layout(
         modifier = Modifier.fillMaxWidth().padding(top = topPadding),
         content = {
             TextButton(
                 onClick = onDismissRequest,
-            ) { Text(dismissText) }
+                modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
+                contentPadding = buttonPadding,
+            ) { Text(dismissText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
             TextButton(
                 onClick = onConfirm,
+                modifier = Modifier.sizeIn(minWidth = minWidth, minHeight = 48.dp),
+                contentPadding = buttonPadding,
                 enabled = confirmEnabled,
-            ) { Text(confirmText) }
+            ) { Text(confirmText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         },
     ) { children, constraints ->
         val buttonConstraints = constraints.copy(minWidth = 0, minHeight = 0)
         val dismiss = children[0].measure(buttonConstraints)
         val confirm = children[1].measure(buttonConstraints)
         val gap = spacing.roundToPx()
-        val stacked = dismiss.width + gap + confirm.width > constraints.maxWidth
+        // Both View actions have a start margin, including the first action.
+        val stacked = dismiss.width + confirm.width + 2 * gap > constraints.maxWidth
         val height = if (stacked) confirm.height + dismiss.height else maxOf(confirm.height, dismiss.height)
         layout(constraints.maxWidth, height) {
             if (stacked) {
