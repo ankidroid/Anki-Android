@@ -65,6 +65,12 @@ class JavaScriptSTT(
         return true
     }
 
+    fun close() {
+        recognitionCallback = null
+        speechRecognizer?.destroy()
+        speechRecognizer = null
+    }
+
     private fun createRecognitionListener(): RecognitionListener =
         object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) {}
