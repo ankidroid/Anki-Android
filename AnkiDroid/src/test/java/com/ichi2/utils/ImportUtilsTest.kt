@@ -159,6 +159,27 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     @Test
+    fun `content URIs with a data path are imported`() {
+        // Termux's provider serves files from Termux's own private /data folder
+        val uri = "content://com.termux.files/data/data/com.termux/files/home/deck.apkg".toUri()
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { "package contents".byteInputStream() }
+
+        val result = importerWithFileName("deck.apkg").prepareImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertEquals("package contents", File(assertIs<ImportResult.Success>(result).path).readText())
+        verifyNoInteractions(crashReporter)
+    }
+
+    @Test
+    fun `file URIs in data are still refused`() {
+        val uri = "file:///data/data/com.ichi2.anki/files/collection.anki2".toUri()
+
+        val result = importerWithFileName("collection.apkg").prepareImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertIs<SecurityException>(assertIs<ImportResult.Failure>(result).exception)
+    }
+
+    @Test
     fun `storage provider refused by media store imports through media store`() {
         val result = importRefusedStorageDocument { "package contents".byteInputStream() }
 

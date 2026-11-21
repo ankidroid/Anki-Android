@@ -176,7 +176,8 @@ data class FileNameAndExtension private constructor(
 /**
  * Open a stream on to the content associated with a content URI.
  * If there is no data associated with the URI, [FileNotFoundException] is thrown.
- * If the path is to the internal `/data` directory, a [SecurityException] is thrown.
+ * If a non-content URI has a path set to the internal `/data` directory, a [SecurityException] is thrown.
+ * Content URIs are exempt since their path is interpreted by the provider serving them, not by AnkiDroid.
  *
  * ##### Accepts the following URI schemes:
  *
@@ -191,7 +192,7 @@ data class FileNameAndExtension private constructor(
  * @return [InputStream] or `null` if the provider recently crashed.
  *
  * @throws FileNotFoundException if the provided URI could not be opened.
- * @throws SecurityException if a `/data` path is accessed
+ * @throws SecurityException if a non-content URI has a `/data` path
  *
  * @see ContentResolver.openAssetFileDescriptor
  *
@@ -199,7 +200,7 @@ data class FileNameAndExtension private constructor(
  */
 fun ContentResolver.openInputStreamSafe(uri: Uri): InputStream? {
     val normalized = FileSystems.getDefault().getPath(uri.path).normalize()
-    if (normalized.startsWith("/data")) {
+    if (uri.scheme != ContentResolver.SCHEME_CONTENT && normalized.startsWith("/data")) {
         throw SecurityException("java/android/unsafe-content-uri-resolution")
     }
     return openInputStream(uri)
