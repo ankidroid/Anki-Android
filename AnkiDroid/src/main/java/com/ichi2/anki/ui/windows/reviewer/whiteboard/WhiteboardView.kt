@@ -341,6 +341,7 @@ private class SmoothPath(
     // for efficiency use two primitives rather than a 'point' class
     private var lastX = 0f
     private var lastY = 0f
+    private val points = StrokePoints.Builder()
 
     /**
      * Extracts and draws a smooth curve from the [MotionEvent]
@@ -352,6 +353,7 @@ private class SmoothPath(
             val hy = event.getHistoricalY(i)
             // draw Bézier curves between the midpoints, ensuring a continuous curve
             path.quadTo(lastX, lastY, (lastX + hx) / 2f, (lastY + hy) / 2f)
+            points.sample(hx, hy)
             lastX = hx
             lastY = hy
         }
@@ -359,6 +361,7 @@ private class SmoothPath(
         val x = event.x
         val y = event.y
         path.quadTo(lastX, lastY, (lastX + x) / 2f, (lastY + y) / 2f)
+        points.sample(x, y)
         lastX = x
         lastY = y
     }
@@ -371,6 +374,7 @@ private class SmoothPath(
         y: Float,
     ) {
         path.lineTo(x, y)
+        points.lineTo(x, y)
         lastX = x
         lastY = y
     }
@@ -381,6 +385,7 @@ private class SmoothPath(
         y: Float,
     ) {
         path.moveTo(x, y)
+        points.moveTo(x, y)
         lastX = x
         lastY = y
     }
@@ -388,11 +393,12 @@ private class SmoothPath(
     /** @see Path.reset */
     fun reset() {
         path.reset()
+        points.clear()
         lastX = 0f
         lastY = 0f
     }
 
-    fun clone() = Path(path)
+    fun clone() = StrokePath(path, points.build())
 
     companion object {
         /** @see Canvas.drawPath */
