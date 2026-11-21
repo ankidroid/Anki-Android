@@ -52,4 +52,6 @@
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Kortlek saknas. Tryck för att konfigurera.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Samlingen är tom, använd appen för att lägga till kortlekar och omkonfigurera</string>
+    <string name="empty_widget_state_short" comment="Shown instead of empty_widget_state (“Missing deck. Tap to reconfigure.”) when the widget is too small for it, so it must be shorter">Tap to pick a deck</string>
+    <string name="empty_collection_state_in_widget_short" comment="Shown instead of empty_collection_state_in_widget (“Collection is empty&#8230;”) when the widget is too small for it, so it must be shorter">No decks yet</string>
 </resources>

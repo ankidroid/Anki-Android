@@ -52,4 +52,6 @@
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Pakka puuttuu. Määritä uudelleen painamalla tästä.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kokoelma on tyhjä. Käytä sovellusta pakkojen lisäämiseen ja määritä widget sitten uudelleen.</string>
+    <string name="empty_widget_state_short" comment="Shown instead of empty_widget_state (“Missing deck. Tap to reconfigure.”) when the widget is too small for it, so it must be shorter">Tap to pick a deck</string>
+    <string name="empty_collection_state_in_widget_short" comment="Shown instead of empty_collection_state_in_widget (“Collection is empty&#8230;”) when the widget is too small for it, so it must be shorter">No decks yet</string>
 </resources>
