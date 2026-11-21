@@ -55,7 +55,7 @@ class TestInputMethodRuleTest {
         private val disableFailure: Throwable? = null,
         private val ignoresSelection: Boolean = false,
     ) {
-        val previous = "previous.ime/.Keyboard"
+        val previous = "previous.ime/previous.ime.Keyboard"
         var selected = previous
         var enabledIme: String? = null
 
@@ -64,7 +64,7 @@ class TestInputMethodRuleTest {
                 object : Statement() {
                     override fun evaluate() = block()
                 }
-            TestInputMethodRule(::execute).apply(statement, Description.EMPTY).evaluate()
+            TestInputMethodRule(TestInputMethodSettings(::execute)).apply(statement, Description.EMPTY).evaluate()
         }
 
         private fun execute(command: String): String {
