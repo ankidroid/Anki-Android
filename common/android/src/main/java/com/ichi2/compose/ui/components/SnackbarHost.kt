@@ -3,7 +3,6 @@
 package com.ichi2.compose.ui.components
 
 import android.os.Build
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarData
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -24,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar as ViewSnackbar
 fun SnackbarHost(
     hostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    snackbar: @Composable (SnackbarData) -> Unit = { Snackbar(it) },
+    snackbar: @Composable (SnackbarData) -> Unit = { AnkiDroidSnackbar(it) },
 ) {
     val accessibilityManager = LocalAccessibilityManager.current
     val duration = hostState.currentSnackbarData?.visuals?.duration
