@@ -22,7 +22,7 @@
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Amministra sos campos</string>
     <!--Toasts-->
     <string name="toast_last_model">Non podes iscantzellare s\'ùrtima casta de nota tua</string>
-    <string name="toast_last_field">Sas castas de notas depent tènnere a su nessi unu campu</string>
+    <string name="toast_last_field">Sas castas de nota depent tènnere a su nessi unu campu</string>
     <string name="toast_empty_name">Depes insertare unu nùmene</string>
     <string name="toast_duplicate_field">Nùmene de su campu giai impreadu</string>
     <!--Plurals-->
@@ -31,11 +31,11 @@
         <item quantity="other">%d notas</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Iscantzella una casta de nota</string>
+    <string name="model_browser_delete">Iscantzella sa casta de nota</string>
     <string name="model_browser_template">Modìfica sas cartas</string>
     <!--Rename-->
     <string name="rename_model">Càmbia nùmene a sa casta de nota</string>
-    <string name="rename_card_type" maxLength="28">Rename card type</string>
+    <string name="rename_card_type" maxLength="28">Càmbia nùmene a sa casta de carta</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Imposta s\'impòsitu de limba a %s</string>
     <!--Field Editing-->
@@ -46,8 +46,8 @@
     <string name="model_field_editor_changing">Atualizatzione de sos campos</string>
     <string name="model_field_editor_sort_field">Òrdina sighende custu campu</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">Iscantzella sa casta de carta</string>
+    <string name="add_card_type" maxLength="28">Annanghe una casta de carta</string>
     <!--Warnings-->
     <string name="model_delete_warning">Ses seguru de chèrrere iscantzellare custa casta de nota?</string>
     <!--
@@ -55,26 +55,21 @@
         Delete the note types below?
         Basic, Basic (and reversed card), Cloze
      -->
-    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
+    <string name="model_delete_multiple_warning">Cheres iscantzellare sas castas de nota inoghe in suta?\n %s</string>
     <string name="field_delete_warning">Ses seguru de chèrrere iscantzellare custu campu?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">Annanghe: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">Clona: %1$s</string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Inserta su mollu chi su navigadore de cartas at a impreare pro ammustrare sas cartas tuas. Imprea custu pro visualizare una risposta prus cuntzisa.\n
-                                             \n
-                                             Unu mollu che a\n
-                                             “Sa capitale de {{Country}} est:”\n
-                                             si diat pòdere cumprimire in su navigadore de cartas comente\n
-                                             “Capitale: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
-    <string name="card_template_browser_appearance_saving_note">Custas modìficas s\'ant a aplicare cando s\'at a sarvare su mollu de carta</string>
+    <string name="card_template_browser_appearance_summary">Inserta su modellu chi su navigadore de cartas at a impreare pro ammustrare sas cartas tuas. Imprea custu pro ammustrare una risposta prus cuntzisa.\n\nUnu modellu frontale che a\n“Sa capitale de {{Country}} est:”\nsi diat pòdere abbreviare in su navigadore de cartas comente\n“Capitale: {{Country}}”</string>
+    <string name="card_template_browser_appearance_question_format">Formadu de sa pregunta</string>
+    <string name="card_template_browser_appearance_answer_format">Formadu de sa risposta</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Ses seguru chi cheres ripristinare s\'aspetu predefinidu de su navigadore?</string>
+    <string name="card_template_browser_appearance_saving_note">Custas modìficas s\'ant a aplicare cando s\'at a sarvare su modellu de carta</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Subraiscritura de su matzu (alluta)</string>
-    <string name="card_template_editor_deck_override_off">Subraiscritura de su matzu (istudada)</string>
+    <string name="card_template_editor_deck_override_on">Sostitutzione de su matzu (ativa)</string>
+    <string name="card_template_editor_deck_override_off">Sostitutzione de su matzu (disativa)</string>
     <string name="model_manager_deck_override_added_message">Imposta ‘%2$s’ che a matzu predefinidu pro ‘%1$s’</string>
     <string name="model_manager_deck_override_removed_message">Matzu predefinidu pro ‘%s’ bogadu</string>
     <string name="deck_override_explanation">Ischerta su matzu in ue pònnere a intro sas cartas noas ‘%s’</string>

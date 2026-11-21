@@ -77,7 +77,7 @@
     <string name="menu_unmark_note">Batal tandai catatan</string>
     <string name="menu_enable_voice_playback" maxLength="28">Mengaktifkan pemutaran suara</string>
     <string name="menu_disable_voice_playback">Menonaktifkan pemutaran suara</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Buat cadangan</string>
     <string name="new_dynamic_deck">Buat dek terfilter</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -89,7 +89,7 @@
     <string name="empty_cram_label" maxLength="28">Kosong</string>
     <string name="create_subdeck">Buat subdek</string>
     <string name="empty_filtered_deck">Mengosongkan dek yang telah difilter</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Pencarian dek</string>
     <string name="empty_deck">Dek ini kosong</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_congrats_finished">Selamat! Anda telah selesai untuk hari ini.</string>
