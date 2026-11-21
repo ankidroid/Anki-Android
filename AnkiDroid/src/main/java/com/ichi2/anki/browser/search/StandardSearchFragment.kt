@@ -207,17 +207,14 @@ class StandardSearchFragment :
 
                 val item = getItem(position)!!
 
-                fun openSavedSearchNamePrompt() {
-                    Timber.i("opening 'save search' name input dialog")
-                    val dialog =
-                        SaveBrowserSearchDialogFragment.newInstance(searchQuery = item.entry.query)
-
-                    dialog.show(childFragmentManager, "savedSearchName")
-                }
-
                 binding.title.text = item.toSpannable()
                 binding.root.setOnClickListener { viewModel.selectSearchHistoryEntry(item.entry) }
-                binding.favorite.setOnClickListener { openSavedSearchNamePrompt() }
+                // TODO: we may want to hide invalid entries (e.g. deleted deck).
+                //  `null` can currently either mean loading, or invalid.
+                binding.favorite.isEnabled = item.searchString != null
+                binding.favorite.setOnClickListener {
+                    viewModel.requestSaveSearch(item.entry)
+                }
                 return binding.root
             }
         }
@@ -230,12 +227,19 @@ class StandardSearchFragment :
         binding.searchHistory.apply {
             adapter = searchHistoryAdapter
             setOnItemClickListener { _, _, position, _ ->
-                viewModel.selectSearchHistoryEntry(getItemAtPosition(position) as SearchHistoryEntry)
+                viewModel.selectSearchHistoryEntry(searchHistoryAdapter.getItem(position)!!.entry)
             }
         }
 
         binding.toggleSearchHistory.setOnClickListener {
             viewModel.toggleHistoryExpanded()
+        }
+
+        viewModel.saveSearchNamePromptFlow.collectInViewLifecycle { searchQuery ->
+            Timber.i("opening 'save search' name input dialog")
+            val dialog = SaveBrowserSearchDialogFragment.newInstance(searchQuery = searchQuery.value)
+            dialog.show(childFragmentManager, "savedSearchName")
+            viewModel.onSaveSearchNamePromptShown()
         }
 
         // replace the data when the displayed search history is updated

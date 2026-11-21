@@ -18,6 +18,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesOnly
@@ -92,6 +93,7 @@ object ChangeManager {
      * @param owner The lifecycle owner controlling this subscription.
      * Defaults to [subscriber] if it implements [LifecycleOwner] (e.g. Activities/Fragments).
      * If provided, subscription waits for [Lifecycle.State.CREATED] and auto-unsubscribes on destroy.
+     * A [ViewModel] subscriber without an owner is unsubscribed when the ViewModel is cleared.
      *
      * @see Subscriber.opExecuted
      */
@@ -108,6 +110,7 @@ object ChangeManager {
 
         if (owner == null) {
             subscribers.add(weakRef)
+            (subscriber as? ViewModel)?.addCloseable { unsubscribe(subscriber) }
             return
         }
 
