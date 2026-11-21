@@ -105,7 +105,9 @@ fun DeckPicker.handleNewSync(
             try {
                 when (conflict) {
                     ConflictResolution.FULL_DOWNLOAD ->
-                        handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
+                        viewModel.downloadCollection {
+                            handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
+                        }
                     ConflictResolution.FULL_UPLOAD ->
                         handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
                     null -> {
@@ -138,6 +140,9 @@ fun DeckPicker.handleNewSync(
             withCol { notetypes.clearCache() }
             notifySubscribersAllValuesChanged(deckPicker)
             refreshState()
+        } catch (e: Exception) {
+            if (conflict != ConflictResolution.FULL_DOWNLOAD || e is CancellationException) throw e
+            viewModel.reportDownloadFailure(e)
         } finally {
             setLastSyncTimeToNow()
         }

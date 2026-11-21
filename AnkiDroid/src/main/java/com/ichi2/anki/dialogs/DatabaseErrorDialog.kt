@@ -330,8 +330,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(text = TR.sentenceCase.checkDatabase)
                     message(text = message)
                     positiveButton(CommonString.dialog_ok) {
-                        requireDeckPicker().integrityCheck()
                         requireActivity().dismissAllDialogFragments()
+                        requireDeckPicker().integrityCheck()
                     }
                     negativeButton(CommonString.dialog_cancel)
                 }
@@ -642,7 +642,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     override val dialogHandlerMessage
         get() = ShowDatabaseErrorDialog(requireDialogType())
 
-    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
+    fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
 
     private val exceptionData: CustomExceptionData? by lazy {
         BundleCompat.getParcelable(requireArguments(), ARG_EXCEPTION, CustomExceptionData::class.java)

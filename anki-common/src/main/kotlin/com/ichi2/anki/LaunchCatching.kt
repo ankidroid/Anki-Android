@@ -30,6 +30,21 @@ fun <T> CoroutineScope.launchCatching(
     errorMessageHandler: suspend (String) -> Unit,
     block: suspend CoroutineScope.() -> T,
 ): Job =
+    launchCatching(context, onError = { exception ->
+        val message =
+            when (exception) {
+                is BackendException, is InvalidSearchException -> exception.localizedMessage
+                else -> null
+            } ?: exception.toString()
+        errorMessageHandler.invoke(message)
+    }, block)
+
+@JvmName("launchCatchingException")
+fun <T> CoroutineScope.launchCatching(
+    context: CoroutineContext = EmptyCoroutineContext,
+    onError: suspend (Exception) -> Unit,
+    block: suspend CoroutineScope.() -> T,
+): Job =
     launch(context) {
         try {
             // also catches failures of child coroutines
@@ -38,11 +53,6 @@ fun <T> CoroutineScope.launchCatching(
             // propagate our own cancellation; others are errors
             if (exception is CancellationException) ensureActive()
             Timber.w(exception)
-            val message =
-                when (exception) {
-                    is BackendException, is InvalidSearchException -> exception.localizedMessage
-                    else -> null
-                } ?: exception.toString()
-            errorMessageHandler.invoke(message)
+            onError(exception)
         }
     }

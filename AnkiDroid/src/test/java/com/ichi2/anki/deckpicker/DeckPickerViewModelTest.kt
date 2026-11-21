@@ -278,7 +278,7 @@ class DeckPickerViewModelTest : JvmTest() {
 
             buildViewModel().run {
                 withQueuedCollectionAccess {
-                    val deletion = deleteSelectedDeck()
+                    val deletion = deleteSelectedDeck(hasSidePanel = false, shownDeckId = null)
                     val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(progressManager.progress.value)
                     assertEquals(DeckPickerProgress.DELETING_DECK, active.message)
                     deletion.join()
