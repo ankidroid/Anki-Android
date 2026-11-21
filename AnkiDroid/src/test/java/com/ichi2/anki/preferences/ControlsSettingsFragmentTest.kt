@@ -12,12 +12,14 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.preferences.ReviewerControlPreference
 import com.ichi2.testutils.HamcrestUtils
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,6 +28,13 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class ControlsSettingsFragmentTest : RobolectricTest() {
+    @Test
+    fun `settings layout manager is StableScrollbarLayoutManager`() {
+        withControlsSettings {
+            assertThat(listView.layoutManager, instanceOf(StableScrollbarLayoutManager::class.java))
+        }
+    }
+
     @Test
     fun `XML keys match the Enum keys`() {
         for (screen in ControlPreferenceScreen.entries) {
