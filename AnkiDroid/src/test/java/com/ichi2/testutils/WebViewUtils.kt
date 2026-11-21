@@ -16,9 +16,10 @@ val SafeWebViewLayout.webView: WebView
 fun mockWebResourceRequest(
     address: String,
     mainFrame: Boolean = true,
+    method: String = "GET",
 ): WebResourceRequest =
     mock {
         on { url } doReturn address.toUri()
-        on { method } doReturn "GET"
+        on { this.method } doReturn method
         on { isForMainFrame } doReturn mainFrame
     }
