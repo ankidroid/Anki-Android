@@ -141,6 +141,12 @@ class PreferencesFragment :
             return
         }
 
+        if (result.key == getString(R.string.learn_cutoff_preference)) {
+            Timber.i("Preferences:: Opening learn ahead settings from search result")
+            openPreferencesFragmentFromSearch(LearnAheadSettingsFragment())
+            return
+        }
+
         val fragment = getFragmentFromXmlRes(result.resourceFile) ?: return
         openPreferencesFragmentFromSearch(fragment)
 
