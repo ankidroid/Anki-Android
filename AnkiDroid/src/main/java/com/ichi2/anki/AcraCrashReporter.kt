@@ -132,8 +132,8 @@ private object AcraCrashReporter : CrashReporter {
                     LimiterConfigurationBuilder()
                         .withExceptionClassLimit(1000)
                         .withStacktraceLimit(1)
-                        .withDeleteReportsOnAppUpdate(true)
-                        .withResetLimitsOnAppUpdate(true)
+                        .withDeleteReportsOnAppUpdate(false)
+                        .withResetLimitsOnAppUpdate(false)
                         .withEnabled(true)
                         .build(),
                 )

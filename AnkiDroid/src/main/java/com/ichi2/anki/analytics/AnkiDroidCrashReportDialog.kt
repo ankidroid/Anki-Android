@@ -15,9 +15,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.anki.databinding.DialogFeedbackBinding
 import org.acra.dialog.CrashReportDialog
 import org.acra.dialog.CrashReportDialogHelper
+import org.acra.interaction.DialogInteraction
+import java.io.File
 
 /**
  * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
@@ -91,9 +94,14 @@ class AnkiDroidCrashReportDialog :
             // Therefore, on cancel, purge limits to make sure the user may actually send in future.
             // Better to maybe send to many reports than definitely too few.
             CrashReportService.deleteLimiterData(this)
-            helper!!.cancelReports()
+            cancelReports()
         }
         finish()
+    }
+
+    private fun cancelReports() {
+        val report = intent.getSerializableExtraCompat<File>(DialogInteraction.EXTRA_REPORT_FILE) ?: return
+        Thread { report.parentFile?.listFiles()?.forEach { it.delete() } }.start()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
