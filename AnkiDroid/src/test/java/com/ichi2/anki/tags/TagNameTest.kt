@@ -20,7 +20,7 @@ class TagNameTest : JvmTest() {
     fun `equivalent names persist collapse changes using the tree spelling`() =
         runTest {
             addBasicNote().update { addTag("café::child") }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed(TagName.asValid("cafe\u0301")).join()
                 assertTrue("café::child" in (state.value as ManageTagsState.Content).visibleTagNames)
                 refreshTags().join()

@@ -14,7 +14,9 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -48,6 +50,46 @@ import kotlin.time.Duration.Companion.seconds
 class ManageTagsViewModelTest : JvmTest() {
     @get:Rule
     val caseFolding = IcuCaseFoldingRule()
+
+    @Test
+    fun `preparing rename blocks overlapping requests and mutations until eligibility is known`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val tag = TagName.asValid("source")
+                    val request = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    assertFalse(request.isCompleted)
+                    assertTrue(loadedState.isWorking)
+                    val repeatedRequest = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    val deletion = removeTag(tag)
+
+                    assertEquals(true, request.await())
+                    assertNull(repeatedRequest.await())
+                    deletion.join()
+                    assertFalse(loadedState.isWorking)
+                }
+                assertEquals(listOf("source"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
+    fun `preparing rename distinguishes unused tags from failed checks`() =
+        runTest {
+            addUnusedTags("unused")
+            withViewModel {
+                val tag = TagName.asValid("unused")
+                assertEquals(false, prepareRename(tag))
+                assertNull(loadedState.error)
+                val warning = pendingMessages.value.single()
+                assertEquals(UserMessage.NoNotesToRename, warning.message)
+                messageShown(warning.id)
+                withLockedCollection { assertNull(prepareRename(tag)) }
+                assertIs<CollectionLockedException>(loadedState.error)
+                assertFalse(loadedState.isWorking)
+                assertTrue(pendingMessages.value.isEmpty())
+            }
+        }
 
     @Test
     fun `rename can be repeatedly undone and redone without losing tags`() =
@@ -460,7 +502,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertEquals(null, loadedState.error)
                 assertEquals(listOf("Straße::child"), col.getNote(note.id).tags)
                 assertEquals(undoBefore, col.undoStatus())
-                assertEquals(UserMessage.TagMoved(0), pendingMessages.value.single().message)
+                assertEquals(UserMessage.UnusedTagMoved(0), pendingMessages.value.single().message)
             }
         }
 
@@ -603,6 +645,8 @@ class ManageTagsViewModelTest : JvmTest() {
                     assertThat(removeTag("science"), sameInstance(refresh))
                     assertThat(renameTag("history", "past"), sameInstance(refresh))
                     assertThat(clearUnusedTags(), sameInstance(refresh))
+                    assertThat(undo(), sameInstance(refresh))
+                    assertThat(redo(), sameInstance(refresh))
                     assertThat(toggleCollapsed("science"), sameInstance(refresh))
                     assertThat(moveTag("history", "science"), sameInstance(refresh))
                     assertThat(refreshTags(), sameInstance(refresh))
@@ -665,7 +709,7 @@ class ManageTagsViewModelTest : JvmTest() {
     fun `initial load failure allows search input and retry`() =
         runTest {
             addTags("science", "history")
-            withViewModel(withLockedCollection { ManageTagsViewModel() }) {
+            withViewModel(withLockedCollection { createManageTagsViewModel() }) {
                 val failure = state.value
                 assertThat(failure, instanceOf(ManageTagsState.Error::class.java))
                 assertThat((failure as ManageTagsState.Error).error, instanceOf(CollectionLockedException::class.java))
@@ -698,7 +742,7 @@ class ManageTagsViewModelTest : JvmTest() {
                     val refresh = refreshTags()
                     assertThat(loadedState.isWorking, equalTo(true))
                     refresh.join()
-                    assertThat(loadedState, equalTo(previous))
+                    assertThat(loadedState.copy(tagRevision = previous.tagRevision), equalTo(previous))
                 }
             }
         }
@@ -708,7 +752,7 @@ class ManageTagsViewModelTest : JvmTest() {
         runTest {
             val note = addTags("source")
             val collection = col
-            val model = ManageTagsViewModel()
+            val model = createManageTagsViewModel()
             val store = ViewModelStore().apply { put("tags", model) }
             val observer = ChangeCounter()
             ChangeManager.subscribe(observer)
@@ -961,7 +1005,7 @@ class ManageTagsViewModelTest : JvmTest() {
     fun `closing the screen keeps queued expansion saves ahead of a reopened screen`() =
         runTest {
             addTags("science::biology", "history::ancient")
-            val closing = ManageTagsViewModel()
+            val closing = createManageTagsViewModel()
             withQueuedCollectionAccess {
                 withViewModel(closing) {
                     toggleCollapsed("science")
@@ -1204,7 +1248,7 @@ class ManageTagsViewModelTest : JvmTest() {
 
                 assertThat(col.getNote(first.id).tags, containsInAnyOrder("target::source::child", "unrelated"))
                 assertThat(col.getNote(second.id).tags, containsInAnyOrder("target::source", "target::source::other"))
-                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(2)))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.UnusedTagMoved(2)))
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("target", "unrelated"))
                 assertThat(loadedState.totalTagCount, equalTo(5))
             }
@@ -1459,7 +1503,7 @@ class ManageTagsViewModelTest : JvmTest() {
             withViewModel {
                 ensureOpsExecuted(1) { moveTag("source", "target").join() }
                 assertThat(col.getNote(note.id).tags, containsInAnyOrder("target::source", "target::source::child", "unrelated"))
-                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(1)))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.UnusedTagMoved(1)))
                 col.undo()
                 assertThat(col.getNote(note.id).tags, containsInAnyOrder(*original.toTypedArray()))
                 col.redo()
@@ -1630,7 +1674,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertFalse(tagExists(TagName.asValid("source")))
                 assertTrue(tagExists(TagName.asValid("target::source::child")))
                 assertEquals(
-                    UserMessage.TagMoved(1),
+                    UserMessage.UnusedTagMoved(1),
                     pendingMessages.value
                         .single()
                         .message,
@@ -1660,7 +1704,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertEquals(undoBefore, col.undoStatus())
                 assertEquals(2, loadedState.totalTagCount)
                 assertEquals(
-                    UserMessage.TagMoved(0),
+                    UserMessage.UnusedTagMoved(0),
                     pendingMessages.value
                         .single()
                         .message,
@@ -1754,7 +1798,7 @@ class ManageTagsViewModelTest : JvmTest() {
         }
     }
 
-    private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = withViewModel(ManageTagsViewModel(), block)
+    private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = withViewModel(createManageTagsViewModel(), block)
 
     /** Helper abstracting [com.ichi2.anki.libanki.Tags.all] */
     private fun checkCollectionTags(block: (List<String>) -> Unit) = block(col.tags.all())
