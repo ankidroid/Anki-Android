@@ -29,13 +29,15 @@ class ExternalAppLaunchWarning(
     private val onDialogDismissed: () -> Unit = {},
 ) {
     private var dialog: AlertDialog? = null
+    private var dismissalHandled = false
 
     /** True after the user dismisses a warning. Reset by [onCardChanged]. */
     private var suppressUntilCardChange = false
 
     fun show() {
-        if (dialog?.isShowing == true) return
+        if (dialog != null) return
         if (suppressUntilCardChange) return
+        dismissalHandled = false
         onDialogShown()
         dialog =
             AlertDialog.Builder(activity).show {
@@ -53,12 +55,20 @@ class ExternalAppLaunchWarning(
                     // A WebView navigation may be dispatched before the posted dismissal callback.
                     // Suppress it immediately so a cancelled warning cannot reopen.
                     suppressUntilCardChange = true
+                    notifyDismissed()
                 }
                 setOnDismissListener {
                     suppressUntilCardChange = true
-                    onDialogDismissed()
+                    notifyDismissed()
                 }
             }
+    }
+
+    private fun notifyDismissed() {
+        if (dismissalHandled) return
+        dismissalHandled = true
+        dialog = null
+        onDialogDismissed()
     }
 
     /** Allows the warning again when a new card is shown. */

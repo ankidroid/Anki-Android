@@ -20,6 +20,8 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TypeAnswerWebView
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.DeckConfig
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -38,7 +40,9 @@ import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.testutils.RecordingInputMethodManager
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.mockWebResourceRequest
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
 import org.junit.Test
@@ -49,6 +53,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
 import org.robolectric.shadow.api.Shadow
+import org.robolectric.shadows.ShadowDialog
 import kotlin.reflect.jvm.jvmName
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -60,6 +65,8 @@ import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerFragmentTest : RobolectricTest() {
@@ -71,6 +78,175 @@ class ReviewerFragmentTest : RobolectricTest() {
             remove(Prefs.key(R.string.disable_hardware_render_key))
         }
     }
+
+    @Test
+    fun `blocked launch pauses auto advance until the warning is dismissed`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            val config = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+            config.secondsToShowAnswer = 0.05
+            config.jsonObject.put(DeckConfig.ANSWER_ACTION, 2) // AnswerAction.ANSWER_GOOD
+            col.decks.save(config)
+            editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+
+            withReviewer { _ ->
+                viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+                advanceUntilIdle()
+                viewModel.executeAction(ViewerAction.SHOW_ANSWER)
+                viewModel.onStateMutationCallback()
+                // finish showing the answer, but do not run the auto-advance timer yet
+                advanceTimeBy(1.milliseconds)
+
+                val webView = assertIs<WebView>(binding.webViewLayout.getChildAt(0))
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("market://details?id=com.example"),
+                )
+                advanceRobolectricLooper()
+                assertEquals(1, ShadowDialog.getShownDialogs().size)
+
+                // a card hidden behind the warning must not be graded
+                advanceTimeBy(1.minutes)
+                assertEquals(0, col.getCard(card.id).reps)
+
+                // auto advance resumes after the warning is dismissed
+                ShadowDialog.getLatestDialog().cancel()
+                advanceRobolectricLooper()
+                // grading waits for the next card render, like in the real app
+                viewModel.onStateMutationCallback()
+                advanceUntilIdle()
+                assertEquals(1, col.getCard(card.id).reps)
+            }
+        }
+
+    @Test
+    fun `flipping the same card does not reopen a dismissed launch warning`() =
+        runTest {
+            addBasicNote()
+            editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+
+            withReviewer {
+                val webView = assertIs<WebView>(binding.webViewLayout.getChildAt(0))
+                val request = mockWebResourceRequest("market://details?id=com.example")
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request)
+                advanceRobolectricLooper()
+                ShadowDialog.getLatestDialog().cancel()
+                advanceRobolectricLooper()
+
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request)
+                advanceRobolectricLooper()
+
+                assertEquals(
+                    0,
+                    ShadowDialog.getShownDialogs().count { it.isShowing },
+                    "flipping the same card must not reset launch-warning suppression",
+                )
+            }
+        }
+
+    @Test
+    fun `media completion does not grade a card behind the launch warning`() =
+        runTest {
+            val card = addBasicNote("front", "[sound:answer.webm]").firstCard()
+            val config = col.decks.configDictForDeckId(card.currentDeckId())
+            config.secondsToShowQuestion = 0.0
+            config.secondsToShowAnswer = 0.05
+            config.jsonObject.put("waitForAudio", true)
+            config.jsonObject.put(DeckConfig.ANSWER_ACTION, 2)
+            col.decks.save(config)
+            editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+
+            withReviewer {
+                val webView = assertIs<WebView>(binding.webViewLayout.getChildAt(0))
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                advanceRobolectricLooperUntil {
+                    testScheduler.runCurrent()
+                    shadowOf(webView).lastEvaluatedJavascript?.contains("var videos") == true
+                }
+                viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+                advanceUntilIdle()
+
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("intent:#Intent;action=android.intent.action.MAIN;package=com.android.settings;end"),
+                )
+                advanceRobolectricLooper()
+                val warning = ShadowDialog.getShownDialogs().single { it.isShowing }
+                val playback = viewModel.cardMediaPlayer.playAvTagsJob
+                viewModel.onVideoFinished()
+                playback?.join()
+                advanceUntilIdle()
+
+                assertFalse(warning.isShowing && col.getCard(card.id).reps > 0)
+                warning.cancel()
+                advanceRobolectricLooper()
+                advanceUntilIdle()
+                assertEquals(1, col.getCard(card.id).reps)
+            }
+        }
+
+    @Test
+    fun `dismissing a launch warning still waits for answer media before grading`() =
+        runTest {
+            val card = addBasicNote("front", "[sound:answer.webm]").firstCard()
+            val config = col.decks.configDictForDeckId(card.currentDeckId())
+            config.secondsToShowQuestion = 0.0
+            config.secondsToShowAnswer = 0.05
+            config.jsonObject.put("waitForAudio", true)
+            config.jsonObject.put(DeckConfig.ANSWER_ACTION, 2)
+            col.decks.save(config)
+            editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+
+            withReviewer {
+                val webView = assertIs<WebView>(binding.webViewLayout.getChildAt(0))
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                advanceRobolectricLooperUntil {
+                    testScheduler.runCurrent()
+                    shadowOf(webView).lastEvaluatedJavascript?.contains("var videos") == true
+                }
+                viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+                advanceUntilIdle()
+
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("intent:#Intent;action=android.intent.action.MAIN;package=com.android.settings;end"),
+                )
+                advanceRobolectricLooper()
+                ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+                advanceRobolectricLooper()
+                advanceUntilIdle()
+
+                assertTrue(viewModel.cardMediaPlayer.isPlaying)
+                assertEquals(0, col.getCard(card.id).reps)
+                val playback = viewModel.cardMediaPlayer.playAvTagsJob
+                viewModel.onVideoFinished()
+                playback?.join()
+                advanceUntilIdle()
+                assertEquals(1, col.getCard(card.id).reps)
+            }
+        }
+
+    @Test
+    fun `a queued blocked launch cannot reopen a warning before its dismissal callback`() =
+        runTest {
+            addBasicNote()
+            editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+            withReviewer {
+                val webView = assertIs<WebView>(binding.webViewLayout.getChildAt(0))
+                val client = shadowOf(webView).webViewClient
+                val request = mockWebResourceRequest("intent:#Intent;action=android.intent.action.MAIN;package=com.android.settings;end")
+                client.shouldOverrideUrlLoading(webView, request)
+                ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+                advanceRobolectricLooper()
+                client.shouldOverrideUrlLoading(webView, request)
+                advanceRobolectricLooper()
+                assertEquals(0, ShadowDialog.getShownDialogs().count { it.isShowing })
+            }
+        }
 
     @Test
     fun `recreated WebView retains keyboard support`() =
