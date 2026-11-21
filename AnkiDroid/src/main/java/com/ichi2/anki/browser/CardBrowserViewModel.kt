@@ -144,6 +144,18 @@ class CardBrowserViewModel(
     var searchJob: Job? = null
         private set
 
+    private var successfulSearchRequest: SearchRequest? = null
+
+    private class PendingSearchSuccess(
+        val request: SearchRequest,
+        val callback: () -> Unit,
+    )
+
+    private var pendingSearchSuccess: PendingSearchSuccess? = null
+
+    // Refreshing the current results must not supersede a pending submission.
+    private var latestSearchSubmissionId = 0L
+
     // temporary flow for refactoring - called when cards are cleared
     val flowOfCardsUpdated = MutableSharedFlow<Unit>()
 
@@ -437,8 +449,11 @@ class CardBrowserViewModel(
                 is SelectableDeck.Deck -> listOf(deck.toDeckNameId())
             }
 
-        val updatedFilter = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
-        launchSearchForCards(updatedFilter, forceRefresh = false, feedbackMode = feedbackMode)
+        val currentSearch = searchRequestFlow.value
+        val updatedFilter = currentSearch.copyFilters { it.copy(decks = deckFilter) }
+        // Applying the initial deck still completes the search submitted during startup.
+        val onSuccess = pendingSearchSuccess?.takeIf { !initCompleted && it.request == currentSearch }?.callback
+        launchSearchForCards(updatedFilter, forceRefresh = false, feedbackMode = feedbackMode, onSuccess = onSuccess)
     }
 
     val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
@@ -1485,25 +1500,35 @@ class CardBrowserViewModel(
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
      * @param feedbackMode the feedback requested for this search, resolved by [browserSearchFeedback]
+     * @param onSuccess called on the main thread when the search succeeds, including a cached result
      */
     fun launchSearchForCards(
         searchRequest: SearchRequest,
         forceRefresh: Boolean,
         feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+        onSuccess: (() -> Unit)? = null,
     ) = viewModelScope.launch {
+        val submissionId = ++latestSearchSubmissionId
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
         context(_: Collection)
         fun SearchRequest.asSearchString(): SearchString? = this.toSearchString().getOrNull()
-        val isDuplicateSearch = !forceRefresh && withCol { searchRequestFlow.value.asSearchString() == searchRequest.asSearchString() }
+        val cachedRequest = successfulSearchRequest
+        val isDuplicateSearch =
+            !forceRefresh && cachedRequest != null &&
+                withCol { searchRequest.asSearchString()?.let { it == cachedRequest.asSearchString() } == true } &&
+                successfulSearchRequest === cachedRequest
+        // Collection access can suspend while a newer submission updates the query.
+        if (submissionId != latestSearchSubmissionId) return@launch
         // Equivalent queries can still change the text and chip filters shown to the user.
         searchRequestFlow.value = searchRequest
         if (isDuplicateSearch) {
             Timber.d("skipping duplicate search: forceRefresh is false")
+            onSuccess?.invoke()
             return@launch
         }
 
-        launchSearchForCards(feedbackMode = feedbackMode)
+        launchSearchForCards(feedbackMode = feedbackMode, onSuccess = onSuccess)
     }
 
     /**
@@ -1511,11 +1536,21 @@ class CardBrowserViewModel(
      *
      * @see com.ichi2.anki.searchForRows
      */
-    fun launchSearchForCards(feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE) {
+    fun launchSearchForCards(
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+        onSuccess: (() -> Unit)? = null,
+    ) {
+        val searchRequest = searchRequestFlow.value
+        // A refresh restarts the work, but still completes the same submitted query.
+        val pendingSuccess =
+            onSuccess?.let { PendingSearchSuccess(searchRequest, it) }
+                ?: pendingSearchSuccess?.takeIf { it.request == searchRequest }
+        pendingSearchSuccess = pendingSuccess
         if (!initCompleted) return
 
         viewModelScope.launch {
             searchJob?.cancel()
+            successfulSearchRequest = null
             flowOfSearchFeedback.value = null
             // update the UI while we're searching
             clearCardsList()
@@ -1524,9 +1559,14 @@ class CardBrowserViewModel(
             searchJob?.cancel()
             searchJob =
                 launchCatchingIO(
-                    errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
+                    errorMessageHandler = { error ->
+                        withContext(Dispatchers.Main) {
+                            if (pendingSearchSuccess === pendingSuccess) pendingSearchSuccess = null
+                            flowOfSearchState.emit(SearchState.Error(error))
+                        }
+                    },
                 ) {
-                    val searchString = withCol { searchRequestFlow.value.toSearchString().getOrThrow() }
+                    val searchString = withCol { searchRequest.toSearchString().getOrThrow() }
                     flowOfSearchState.emit(SearchState.Searching)
                     val sortOrder = SortType.buildSortOrder()
                     Timber.d("performing search: '%s'; order: %s", searchString, sortOrder)
@@ -1543,8 +1583,13 @@ class CardBrowserViewModel(
                     val completed = SearchState.Completed.fromCurrentState(feedbackMode)
                     withContext(Dispatchers.Main) {
                         ensureActive()
+                        successfulSearchRequest = searchRequest
                         flowOfSearchState.emit(completed)
                         flowOfSearchFeedback.value = completed.takeUnless { feedbackMode == BrowserSearchFeedbackMode.NONE }
+                        if (pendingSearchSuccess === pendingSuccess) {
+                            pendingSearchSuccess = null
+                            pendingSuccess?.callback?.invoke()
+                        }
                     }
                     selectUnvalidatedRowIds(pendingSelectionRestore)
                     pendingSelectionRestore = emptyList()

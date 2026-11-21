@@ -91,8 +91,9 @@ class CardBrowserFragmentTest : RobolectricTest() {
         withCardBrowserFragment(useSearchView = true) {
             searchViewModel.submittedSearchFlow.test {
                 searchViewModel.isScreenOpenFlow.value = true
+                searchView!!.editText.setText("cat")
                 searchView!!.editText.onEditorAction(IME_ACTION_SEARCH)
-                expectMostRecentItem()
+                assertThat(expectMostRecentItem()?.query, equalTo("cat"))
             }
         }
 
@@ -101,8 +102,9 @@ class CardBrowserFragmentTest : RobolectricTest() {
         withCardBrowserFragment(useSearchView = true) {
             searchViewModel.submittedSearchFlow.test {
                 searchViewModel.isScreenOpenFlow.value = true
+                searchView!!.editText.setText("cat")
                 searchView!!.editText.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
-                expectMostRecentItem()
+                assertThat(expectMostRecentItem()?.query, equalTo("cat"))
             }
         }
 
