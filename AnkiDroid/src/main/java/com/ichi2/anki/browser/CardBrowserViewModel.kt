@@ -16,6 +16,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
@@ -1146,7 +1147,10 @@ class CardBrowserViewModel(
                 undoableOp<OpChanges>(this@CardBrowserViewModel) {
                     val wantUnsuspend = cardIds.all { getCard(it).queue == QueueType.Suspended }
                     if (wantUnsuspend) {
+                        val undoStep =
+                            addCustomUndoEntry(AnkiDroidApp.instance.getString(CommonString.undo_name_unsuspend))
                         sched.unsuspendCards(cardIds)
+                        mergeUndoEntries(undoStep)
                     } else {
                         sched.suspendCards(cardIds).changes
                     }
@@ -1179,20 +1183,25 @@ class CardBrowserViewModel(
 
             // this variable exists as `undoableOp` needs an OpChanges as return value
             var wasBuried: Boolean? = null
-            undoableOp {
-                // this differs from Anki Desktop which uses the first selected card to determine the
-                // 'checked' status
-                val wantUnbury = cardIds.all { getCard(it).isBuried() }
+            val changes =
+                undoableOp<OpChanges>(this@CardBrowserViewModel) {
+                    // this differs from Anki Desktop which uses the first selected card to determine the
+                    // 'checked' status
+                    val wantUnbury = cardIds.all { getCard(it).isBuried() }
 
-                wasBuried = !wantUnbury
-                if (wantUnbury) {
-                    Timber.i("unburying %d cards", cardIds.size)
-                    sched.unburyCards(cardIds)
-                } else {
-                    Timber.i("burying %d cards", cardIds.size)
-                    sched.buryCards(cardIds).changes
+                    wasBuried = !wantUnbury
+                    if (wantUnbury) {
+                        Timber.i("unburying %d cards", cardIds.size)
+                        val undoStep =
+                            addCustomUndoEntry(AnkiDroidApp.instance.getString(CommonString.undo_name_unbury))
+                        sched.unburyCards(cardIds)
+                        mergeUndoEntries(undoStep)
+                    } else {
+                        Timber.i("burying %d cards", cardIds.size)
+                        sched.buryCards(cardIds).changes
+                    }
                 }
-            }
+            refreshAfterEdit(changes)
             BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
         }
     }
@@ -1571,7 +1580,6 @@ class CardBrowserViewModel(
     /** Refreshes edits which use the result count as their feedback. */
     private fun refreshAfterEdit(changes: OpChanges) {
         if (changes.browserSidebar || changes.browserTable || changes.noteText || changes.card) {
-            endMultiSelectMode(SingleSelectCause.Other)
             launchSearchForCards(feedbackMode = BrowserSearchFeedbackMode.COUNT_ONLY)
         }
     }

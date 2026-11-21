@@ -2062,6 +2062,7 @@ class CardBrowserTest : RobolectricTest() {
 
             // Simulate user's tapping the Undo button.
             val clicked = actionView?.performClick() ?: false
+            advanceRobolectricLooper()
 
             // Verify the tap is handled and the card is unsuspended.
             assertEquals(true, clicked, "Action view should handle click")
