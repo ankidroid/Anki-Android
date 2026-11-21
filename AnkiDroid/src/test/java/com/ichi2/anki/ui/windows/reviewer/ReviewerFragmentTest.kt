@@ -2,8 +2,10 @@
 
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.graphics.Path
 import android.text.InputType
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -23,6 +25,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.CardViewerActivity
+import com.ichi2.anki.reviewer.Axis
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -36,8 +39,10 @@ import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.testutils.RecordingInputMethodManager
+import com.ichi2.testutils.RecordingWebView
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.joystickEvent
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
@@ -296,7 +301,7 @@ class ReviewerFragmentTest : RobolectricTest() {
             bindToStudyScreenAndWhiteboard(ReviewerBinding.fromGesture(Gesture.SHAKE))
             withReviewer {
                 hideWhiteboard(this)
-                hearShake()
+                bindings.hearShake()
                 advanceUntilIdle()
                 advanceRobolectricLooper()
                 assertEquals(listOf(cardId), assertIs<SetDueDateDialog>(currentDialog).cardIds)
@@ -317,6 +322,132 @@ class ReviewerFragmentTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `whiteboard takes priority on key events`() =
+        checkWhiteboardTakesPriority(ReviewerBinding(Binding.KeyCode(KeyEvent.KEYCODE_F5), CardSide.BOTH)) {
+            dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_F5))
+        }
+
+    @Test
+    fun `whiteboard takes priority on shake events`() =
+        checkWhiteboardTakesPriority(ReviewerBinding.fromGesture(Gesture.SHAKE)) {
+            bindings.hearShake()
+        }
+
+    @Test
+    fun `whiteboard takes priority on joystick events`() =
+        checkWhiteboardTakesPriority(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.BOTH)) {
+            requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.X, 1f))
+        }
+
+    @Test
+    fun `whiteboard keeps the priority while the joystick is held`() =
+        checkWhiteboardTakesPriority(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.BOTH)) {
+            // a held joystick keeps sending events
+            repeat(2) { requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.X, 1f)) }
+        }
+
+    @Test
+    fun `holding a whiteboard joystick binding doesn't block the study screen bindings of other axes`() =
+        runTest {
+            val cardId = addBasicNote().firstCard().id
+            targetContext.sharedPrefs().edit {
+                val right = ReviewerBinding(Binding.AxisButtonBinding(Axis.HAT_X, 1f), CardSide.BOTH)
+                val down = ReviewerBinding(Binding.AxisButtonBinding(Axis.HAT_Y, 1f), CardSide.BOTH)
+                putString(WhiteboardAction.CLEAR.preferenceKey, listOf(right).toPreferenceString())
+                putString(ViewerAction.RESCHEDULE_NOTE.preferenceKey, listOf(down).toPreferenceString())
+            }
+            StudyScreenRepository().isWhiteboardEnabled = true
+            withReviewer {
+                advanceRobolectricLooper()
+                val whiteboard =
+                    assertIs<WhiteboardFragment>(childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName))
+                whiteboard.viewModel.addPath(Path().apply { lineTo(10f, 10f) })
+
+                // D-pad right, then down while right is still held
+                requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.HAT_X to 1f))
+                requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.HAT_X to 1f, Axis.HAT_Y to 1f))
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+
+                assertEquals(emptyList(), whiteboard.viewModel.paths.value, "right clears the whiteboard")
+                assertEquals(listOf(cardId), assertIs<SetDueDateDialog>(currentDialog).cardIds, "down reschedules the card")
+            }
+        }
+
+    @Test
+    fun `joystick event reaches the study screen while the whiteboard is hidden`() =
+        runTest {
+            val cardId = addBasicNote().firstCard().id
+            bindToStudyScreenAndWhiteboard(ReviewerBinding(Binding.AxisButtonBinding(Axis.X, 1f), CardSide.BOTH))
+            withReviewer {
+                hideWhiteboard(this)
+                requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.X, 1f))
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                assertEquals(listOf(cardId), assertIs<SetDueDateDialog>(currentDialog).cardIds)
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `unbound gamepad buttons are passed to the card WebView Issue 21395`() =
+        runTest {
+            addBasicNote()
+            withReviewer {
+                // `navigator.getGamepads()` only lists a gamepad after the WebView receives a button press
+                val press = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_L1)
+                val release = KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_L1)
+                requireActivity().dispatchKeyEvent(press)
+                requireActivity().dispatchKeyEvent(release)
+
+                val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
+                assertEquals(listOf(press, release), webView.dispatchedKeyEvents)
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `unbound joystick movements are passed to the card WebView Issue 21395`() =
+        runTest {
+            addBasicNote()
+            withReviewer {
+                // Joystick events go to the focused view, which is the study screen, not the WebView.
+                // Some gamepads report their D-pad as a joystick: this is the D-pad pressed right
+                requireActivity().dispatchGenericMotionEvent(joystickEvent(Axis.HAT_X, 1f))
+
+                val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
+                assertEquals(1f, webView.genericMotionEvents.last().getAxisValue(MotionEvent.AXIS_HAT_X))
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `gamepad presses handled by the study screen are not passed to the card WebView`() =
+        runTest {
+            addBasicNote()
+            addBasicNote()
+            val answerGood = ReviewerBinding(Binding.KeyCode(KeyEvent.KEYCODE_BUTTON_B), CardSide.ANSWER)
+            targetContext.sharedPrefs().edit {
+                putString(ViewerAction.ANSWER_GOOD.preferenceKey, listOf(answerGood).toPreferenceString())
+            }
+            withReviewer {
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                val answeredCardId = viewModel.getCardId()
+
+                requireActivity().dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B))
+                advanceUntilIdle()
+                assertNotEquals(answeredCardId, viewModel.getCardId(), "'B' answers the card")
+                // The release arrives on the next question, where 'B' isn't bound. The WebView returns
+                // a release without its press as unhandled, and Android performs 'B' -> 'Back'
+                requireActivity().dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_B))
+
+                val webView = Shadow.extract<RecordingWebView>(binding.webViewLayout.getChildAt(0))
+                assertEquals(emptyList(), webView.dispatchedKeyEvents)
+            }
+        }
+
     private fun bindToStudyScreenAndWhiteboard(binding: ReviewerBinding) {
         val bindings = listOf(binding).toPreferenceString()
         targetContext.sharedPrefs().edit {
@@ -324,6 +455,27 @@ class ReviewerFragmentTest : RobolectricTest() {
             putString(WhiteboardAction.CLEAR.preferenceKey, bindings)
         }
         StudyScreenRepository().isWhiteboardEnabled = true
+    }
+
+    private fun checkWhiteboardTakesPriority(
+        binding: ReviewerBinding,
+        trigger: ReviewerFragment.() -> Unit,
+    ) = runTest {
+        addBasicNote()
+        bindToStudyScreenAndWhiteboard(binding)
+        withReviewer {
+            advanceRobolectricLooper()
+            val whiteboard =
+                assertIs<WhiteboardFragment>(childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName))
+            whiteboard.viewModel.addPath(Path().apply { lineTo(10f, 10f) })
+
+            trigger()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+
+            assertEquals(emptyList(), whiteboard.viewModel.paths.value, "the whiteboard binding should trigger")
+            assertNull(currentDialog, "the study screen binding should not trigger")
+        }
     }
 
     private fun TestScope.hideWhiteboard(reviewer: ReviewerFragment) {
@@ -359,7 +511,7 @@ class ReviewerFragmentTest : RobolectricTest() {
 
             withReviewer { controller ->
                 fun shake() {
-                    hearShake()
+                    bindings.hearShake()
                     advanceUntilIdle()
                     advanceRobolectricLooper()
                 }

@@ -3,6 +3,8 @@
 package com.ichi2.anki.workarounds
 
 import android.os.Bundle
+import android.view.InputDevice
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.FrameLayout
@@ -10,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.anki.multimedia.MultimediaImageFragment
+import com.ichi2.testutils.RecordingWebView
 import com.ichi2.testutils.launchFragmentInContainer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -19,6 +22,8 @@ import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import org.robolectric.shadow.api.Shadow
 
 /**
  * [SafeWebViewLayout.onRenderProcessGone] requires API 26+; Robolectric's default SDK (targetSdk) satisfies that.
@@ -195,6 +200,31 @@ class SafeWebViewLayoutTest : RobolectricTest() {
                 equalTo(recoveryUrl),
             )
         }
+    }
+
+    @Test
+    @Config(shadows = [RecordingWebView::class])
+    fun `inner WebViews track gamepads before their first button press`() {
+        withMultimediaWebView { layout, _ ->
+            assertTracksGamepads(layout.getChildAt(0) as WebView, "created WebView")
+
+            layout.onRenderProcessGone(layout.getChildAt(0) as WebView)
+            assertTracksGamepads(layout.getChildAt(0) as WebView, "recreated WebView")
+        }
+    }
+
+    /**
+     * The WebView only starts tracking gamepads on its first gamepad key or joystick event,
+     * and Chromium ignores a button that is pressed when it starts tracking the gamepad.
+     */
+    private fun assertTracksGamepads(
+        webView: WebView,
+        message: String,
+    ) {
+        val event = Shadow.extract<RecordingWebView>(webView).genericMotionEvents.singleOrNull()
+        assertThat("$message receives a joystick event", event?.source, equalTo(InputDevice.SOURCE_JOYSTICK))
+        assertThat("$message: the joystick is at rest", event?.getAxisValue(MotionEvent.AXIS_X), equalTo(0f))
+        assertThat("$message: the joystick is at rest", event?.getAxisValue(MotionEvent.AXIS_Y), equalTo(0f))
     }
 
     private fun withMultimediaWebView(block: (SafeWebViewLayout, MultimediaImageFragment) -> Unit) {

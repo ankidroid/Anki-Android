@@ -13,7 +13,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
  *
  * That way, key presses and joystick movements can be detected to trigger their actions.
  *
- * * [onKeyDown]: captures key presses
+ * * [dispatchKeyEvent]: captures key presses
  * * [onGenericMotionEvent]: captures joystick/pedal input. Axes can either be bidirectional,
  *   or unidirectional.
  */
@@ -25,6 +25,9 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     private val keyMap = HashMap<Binding, List<Pair<A, B>>>()
     private val axisDetectors: List<SingleAxisDetector<B, A>>
     private val gestureMap = HashMap<Gesture, List<Pair<A, B>>>()
+
+    /** Key codes of the current presses handled by [dispatchKeyEvent] */
+    private val handledKeyCodes = mutableSetOf<Int>()
 
     init {
         val axisList = mutableListOf<SingleAxisDetector<B, A>>()
@@ -55,10 +58,29 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
         axisDetectors = axisList.toList()
     }
 
-    fun onKeyDown(event: KeyEvent): Boolean {
-        if (event.repeatCount > 0) {
-            return false
+    /**
+     * Triggers the actions bound to key presses, and consumes the repeats and the release of the
+     * presses it handled.
+     *
+     * Otherwise, they could reach a WebView, which returns a release without its press as unhandled,
+     * and Android then performs the key's fallback action (e.g. 'B' -> 'Back')
+     *
+     * @return whether [event] was handled
+     */
+    fun dispatchKeyEvent(event: KeyEvent): Boolean =
+        when (event.action) {
+            KeyEvent.ACTION_DOWN ->
+                if (event.repeatCount == 0) {
+                    handledKeyCodes.remove(event.keyCode)
+                    processKeyPress(event).also { handled -> if (handled) handledKeyCodes.add(event.keyCode) }
+                } else {
+                    event.keyCode in handledKeyCodes
+                }
+            KeyEvent.ACTION_UP -> handledKeyCodes.remove(event.keyCode)
+            else -> false
         }
+
+    private fun processKeyPress(event: KeyEvent): Boolean {
         val bindings = possibleKeyBindings(event)
         for (binding in bindings) {
             val actionAndMappableBindings = keyMap[binding] ?: continue
@@ -70,19 +92,29 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     }
 
     /**
-     * Accepts a [MotionEvent] and determines if one or more commands need to be executed
-     * @return whether one or more commands were executed
+     * Triggers the actions bound to axis movements past their threshold, once per movement.
+     * A handled movement belongs to its binding until released.
+     *
+     * @param heldAxes the axes of the movements handled by bindings of higher priority, which are
+     * ignored here. The axes of the movements handled here are added to it
+     * @return whether [ev] should be consumed: it triggered a handled action, or it continues a
+     * handled movement that Android would otherwise convert into D-pad presses. A joystick event
+     * carries all the axes of the device, so the movements of other axes still reach Android's
+     * joystick-to-D-pad conversion
      */
-    fun onGenericMotionEvent(ev: MotionEvent?): Boolean {
+    fun onGenericMotionEvent(
+        ev: MotionEvent?,
+        heldAxes: MutableSet<Axis> = mutableSetOf(),
+    ): Boolean {
         if (ev == null || axisDetectors.isEmpty()) return false
 
-        var processed = false
+        var consumed = false
         for (detector in axisDetectors) {
-            val action = detector.getAction(ev) ?: continue
-            processed = true
-            processor?.processAction(action, detector.mappableBinding)
+            if (detector.axis in heldAxes) continue
+            if (detector.onGenericMotionEvent(ev, processor)) consumed = true
         }
-        return processed
+        axisDetectors.filter { it.isHandled }.mapNotNullTo(heldAxes) { it.axis }
+        return consumed
     }
 
     fun onGesture(gesture: Gesture): Boolean {
