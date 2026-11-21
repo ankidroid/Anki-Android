@@ -7,7 +7,6 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.os.Bundle
-import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
 import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.testutils.idleMainLooper
 import com.ichi2.testutils.insetsOf
 import com.ichi2.testutils.webView
 import org.junit.Test
@@ -33,9 +33,9 @@ import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowChoreographer
 import java.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Screenshot tests for [SharedDecksActivity]
@@ -144,7 +144,7 @@ class SharedDecksScreenshotTest : ScreenshotTest() {
         }
         if (animatesForever) {
             // The animation never ends. Capture a fixed frame instead of draining it.
-            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(1))
+            idleMainLooper(1.seconds)
         } else {
             advanceRobolectricLooper()
         }
