@@ -9,10 +9,13 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.AccessibilityManager
 import androidx.compose.ui.platform.LocalAccessibilityManager
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 import androidx.compose.material3.SnackbarHost as MaterialSnackbarHost
 import com.google.android.material.snackbar.Snackbar as ViewSnackbar
 
@@ -26,9 +29,23 @@ fun SnackbarHost(
     val accessibilityManager = LocalAccessibilityManager.current
     val duration = hostState.currentSnackbarData?.visuals?.duration
     val timeouts = remember(accessibilityManager, duration) { SnackbarAccessibilityManager(accessibilityManager, duration) }
-    // Material's host owns the timeout and animations; adapt only its accessibility calculation
-    // so there is one timer for the currently displayed message.
-    CompositionLocalProvider(LocalAccessibilityManager provides timeouts) {
+    val data = hostState.currentSnackbarData
+    LaunchedEffect(data) {
+        if (data != null) {
+            delay(
+                timeouts
+                    .calculateRecommendedTimeoutMillis(
+                        originalTimeoutMillis = 0L,
+                        containsIcons = true,
+                        containsText = true,
+                        containsControls = data.visuals.actionLabel != null,
+                    ).milliseconds,
+            )
+            data.dismiss()
+        }
+    }
+    // Keep Material's transitions while this host owns dismissal.
+    CompositionLocalProvider(LocalAccessibilityManager provides NoSnackbarTimeout) {
         MaterialSnackbarHost(hostState, modifier) { data ->
             // The timeout override applies only to the host, not to custom snackbar content.
             CompositionLocalProvider(LocalAccessibilityManager provides accessibilityManager) {
@@ -36,6 +53,16 @@ fun SnackbarHost(
             }
         }
     }
+}
+
+/** Disables Material's timer while the host above manages the current message's duration. */
+private object NoSnackbarTimeout : AccessibilityManager {
+    override fun calculateRecommendedTimeoutMillis(
+        originalTimeoutMillis: Long,
+        containsIcons: Boolean,
+        containsText: Boolean,
+        containsControls: Boolean,
+    ): Long = Long.MAX_VALUE
 }
 
 /**
