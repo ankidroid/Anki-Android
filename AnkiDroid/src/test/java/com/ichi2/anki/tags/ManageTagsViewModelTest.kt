@@ -14,7 +14,9 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -48,6 +50,88 @@ import kotlin.time.Duration.Companion.seconds
 class ManageTagsViewModelTest : JvmTest() {
     @get:Rule
     val caseFolding = IcuCaseFoldingRule()
+
+    @Test
+    fun `preparing rename blocks overlapping requests and mutations until eligibility is known`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val tag = TagName.asValid("source")
+                    val request = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    assertFalse(request.isCompleted)
+                    assertTrue(loadedState.isWorking)
+                    val repeatedRequest = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    val deletion = removeTag(tag)
+
+                    assertEquals(true, request.await())
+                    assertNull(repeatedRequest.await())
+                    assertFalse(deletion.accepted)
+                    deletion.job.join()
+                    assertFalse(loadedState.isWorking)
+                }
+                assertEquals(listOf("source"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
+    fun `preparing rename distinguishes unused tags from failed checks`() =
+        runTest {
+            addUnusedTags("unused")
+            withViewModel {
+                val tag = TagName.asValid("unused")
+                assertEquals(false, prepareRename(tag))
+                assertNull(loadedState.error)
+                val warning = pendingMessages.value.single()
+                assertEquals(UserMessage.NoNotesToRename, warning.message)
+                messageShown(warning.id)
+                withLockedCollection { assertNull(prepareRename(tag)) }
+                assertIs<CollectionLockedException>(loadedState.error)
+                assertFalse(loadedState.isWorking)
+                assertTrue(pendingMessages.value.isEmpty())
+            }
+        }
+
+    /**
+     * Pressing R checks whether the tag can be renamed before the rename dialog opens. The check
+     * is a tag operation, and unlike the others, it does not reload the tags when it finishes.
+     *
+     * Bug: if the collection changes elsewhere during the check (an API client adds a tag, for
+     * example), the refresh requested by [ManageTagsViewModel.opExecuted] is merged into the running
+     * check and lost. The dialog then validates against the old tags: renaming to the added tag's
+     * name is accepted, rather than reported as existing, and merges the two tags.
+     *
+     * Correct behavior: when the check finishes, the screen knows about the added tag.
+     */
+    @Test
+    fun `a tag added while preparing a rename is known when the rename dialog opens`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                val source = TagName.asValid("source")
+                // Obtained before queueing: reading `col` would wait for the queue, blocking the test
+                val collection = col
+                // Collection access waits for the test scheduler, so the check stays in progress
+                withQueuedCollectionAccess {
+                    val preparation = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(source) }
+                    assertTrue(loadedState.isWorking)
+
+                    // Another component adds 'destination' and notifies subscribers during the check.
+                    // This bypasses the queue, as the change does not come from this screen.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+
+                    // The tag is used, so the rename dialog opens as soon as the check returns
+                    assertEquals(true, preparation.await())
+                    // Fails on the buggy revision (expected ALREADY_EXISTS, was VALID):
+                    // the dialog checked the tags loaded before 'destination' was added
+                    assertEquals(TagInputValidation.ALREADY_EXISTS, validateTagRename(source, "destination", ::tagExists))
+                }
+            }
+        }
 
     /**
      * A second collection notification can arrive after the first tag read, while that read's
@@ -92,6 +176,174 @@ class ManageTagsViewModelTest : JvmTest() {
                 } finally {
                     CollectionManager.setTestDispatcher(previousQueue)
                     Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
+            }
+        }
+
+    /**
+     * The last note carrying a tag can change while the result of the shortcut's eligibility
+     * check is still waiting on Main. The shortcut must use eligibility from the updated tree.
+     */
+    @Test
+    fun `preparing a rename rechecks eligibility after a coalesced collection change`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val source = TagName.asValid("source")
+            withViewModel {
+                // Finish the old eligibility read before Main can consume its result.
+                val backendScheduler = TestCoroutineScheduler()
+                val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(backendScheduler), useReentrantLock = false)
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                try {
+                    val preparation = async { prepareRename(source) }
+                    runCurrent()
+                    backendScheduler.runCurrent()
+                    assertFalse(preparation.isCompleted)
+
+                    // A background edit removes the last use; its cached tag remains visible.
+                    collection.getNote(note.id).also {
+                        it.removeTag("source")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    repeat(4) {
+                        runCurrent()
+                        backendScheduler.runCurrent()
+                    }
+                    runCurrent()
+
+                    assertTrue(tagExists(source))
+                    // Fails on the buggy head: stale true opens a dialog for a tag with no notes.
+                    assertEquals(false, preparation.await())
+                    assertEquals(UserMessage.NoNotesToRename, pendingMessages.value.single().message)
+                } finally {
+                    CollectionManager.setTestDispatcher(previousQueue)
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
+            }
+        }
+
+    /**
+     * A collection change can invalidate rename eligibility after the ViewModel check finishes
+     * and before the keyboard shortcut resumes. The shortcut must use the latest eligibility.
+     */
+    @Test
+    fun `preparing a rename checks changes before the shortcut resumes`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val source = TagName.asValid("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Drive the shortcut coroutine separately to model the Compose dispatcher.
+                    val shortcutScheduler = TestCoroutineScheduler()
+                    val preparation = async(shortcutScheduler + StandardTestDispatcher(shortcutScheduler)) { prepareRename(source) }
+                    shortcutScheduler.runCurrent()
+                    assertTrue(loadedState.isWorking)
+                    // Finish the check on Main while the shortcut is still waiting to resume.
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    assertFalse(preparation.isCompleted)
+
+                    // Remove the tag from its only note and let the new refresh finish before
+                    // resuming the shortcut. A pending-refresh flag alone misses this change.
+                    collection.getNote(note.id).also {
+                        it.removeTag("source")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    shortcutScheduler.runCurrent()
+                    runCurrent()
+                    shortcutScheduler.runCurrent()
+
+                    assertTrue(preparation.isCompleted)
+                    // Fails on the buggy revision: the shortcut receives the old true result.
+                    assertEquals(false, preparation.await())
+                    assertEquals(UserMessage.NoNotesToRename, pendingMessages.value.single().message)
+                }
+            }
+        }
+
+    /**
+     * A newer rename shortcut should supersede a completed check whose caller is still
+     * suspended, even if a collection refresh arrived between the two shortcuts.
+     */
+    @Test
+    fun `a refresh does not let an older rename shortcut supersede a newer one`() =
+        runTest {
+            addTags("first", "second")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Keep the first shortcut's caller paused after the ViewModel finishes its check.
+                    val firstScheduler = TestCoroutineScheduler()
+                    val first = async(firstScheduler + StandardTestDispatcher(firstScheduler)) { prepareRename(TagName.asValid("first")) }
+                    firstScheduler.runCurrent()
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    assertFalse(first.isCompleted)
+
+                    // A completed refresh changes the revision before a newer shortcut is accepted.
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    runCurrent()
+                    val second = async { prepareRename(TagName.asValid("second")) }
+                    runCurrent()
+                    assertTrue(second.isCompleted)
+                    assertEquals(true, second.await())
+
+                    // Let the older caller resume after the newer dialog can already be shown.
+                    firstScheduler.runCurrent()
+                    runCurrent()
+                    firstScheduler.runCurrent()
+                    assertTrue(first.isCompleted)
+                    // Fails before the fix because the new refresh revision makes the older shortcut retry and return true.
+                    assertNull(first.await())
+                }
+            }
+        }
+
+    /**
+     * A refresh that cannot read the collection leaves the tag list stale. A shortcut whose
+     * check was paused must reload after the lock clears before it opens the rename dialog.
+     */
+    @Test
+    fun `preparing a rename reloads the tag list after a failed intervening refresh`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val source = TagName.asValid("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Let the eligibility check finish, but keep the shortcut continuation paused.
+                    val shortcutScheduler = TestCoroutineScheduler()
+                    val preparation = async(shortcutScheduler + StandardTestDispatcher(shortcutScheduler)) { prepareRename(source) }
+                    shortcutScheduler.runCurrent()
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    assertFalse(preparation.isCompleted)
+
+                    // Add a conflicting destination and make its notification's reload fail.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    withLockedCollection {
+                        ChangeManager.notifySubscribersAllValuesChanged()
+                        runCurrent()
+                    }
+                    assertIs<CollectionLockedException>(loadedState.error)
+
+                    // The lock has cleared, so the shortcut can reload before it returns true.
+                    shortcutScheduler.runCurrent()
+                    runCurrent()
+                    shortcutScheduler.runCurrent()
+                    assertTrue(preparation.isCompleted)
+                    assertEquals(true, preparation.await())
+                    // Fails on the buggy revision: only eligibility is checked again, leaving
+                    // destination validation unaware of the newly added tag.
+                    assertEquals(TagInputValidation.ALREADY_EXISTS, validateTagRename(source, "destination", ::tagExists))
                 }
             }
         }
