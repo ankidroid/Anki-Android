@@ -64,4 +64,6 @@
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Paca ar iarraidh. Tapáil chun athchumrú.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Tá an bailiúchán folamh, bain úsáid as an aip chun deiceanna a chur leis agus ansin athchumraigh</string>
+    <string name="empty_widget_state_short" comment="Shown instead of empty_widget_state (“Missing deck. Tap to reconfigure.”) when the widget is too small for it, so it must be shorter">Tap to pick a deck</string>
+    <string name="empty_collection_state_in_widget_short" comment="Shown instead of empty_collection_state_in_widget (“Collection is empty&#8230;”) when the widget is too small for it, so it must be shorter">No decks yet</string>
 </resources>
