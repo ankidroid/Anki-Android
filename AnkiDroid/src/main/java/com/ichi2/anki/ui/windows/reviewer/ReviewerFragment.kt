@@ -211,6 +211,7 @@ class ReviewerFragment :
 
         viewModel.onCardUpdatedFlow
             .onEach {
+                onCardChanged()
                 // reset zoom if the card changes (incl. bury/suspend)
                 reviewerWebViewClient.resetZoom()
                 binding.typeAnswerEditText.text = null
@@ -365,6 +366,15 @@ class ReviewerFragment :
         if (whiteboardFragment?.onScreenShake() != true) {
             bindingMap.onGesture(Gesture.SHAKE)
         }
+    }
+
+    override fun onLaunchWarningShown() {
+        // pause auto-advance so cards are not graded behind the dialog
+        viewModel.pauseAutoAdvanceForLaunchWarning()
+    }
+
+    override fun onLaunchWarningDismissed() {
+        viewModel.resumeAutoAdvance()
     }
 
     private fun setupBindings() {

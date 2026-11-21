@@ -72,7 +72,8 @@ open class AnkiDroidJsAPI(
      */
 
     private val context: Context = activity
-    private val permissions = AppPermissions(context) { msg -> activity.showSnackbar(msg) }
+    private val permissions =
+        AppPermissions(context, showSnackbar = { msg -> activity.showSnackbar(msg) })
 
     // Text to speech
     private val talker = JavaScriptTTS()

@@ -36,6 +36,7 @@ import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.ExternalAppLaunchWarning
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showException
 import com.ichi2.anki.snackbar.showSnackbar
@@ -67,7 +68,33 @@ abstract class CardViewerFragment(
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
 
-    private val appPermission by lazy { AppPermissions(requireContext()) { showSnackbar(it) } }
+    private val appPermission
+        by lazy {
+            AppPermissions(
+                requireContext(),
+                showSnackbar = { showSnackbar(it) },
+                showLaunchDeniedDialog = { launchWarning.show() },
+            )
+        }
+
+    private val launchWarning
+        by lazy {
+            ExternalAppLaunchWarning(
+                requireActivity(),
+                onDialogShown = { onLaunchWarningShown() },
+                onDialogDismissed = { onLaunchWarningDismissed() },
+            )
+        }
+
+    /** Called when the launch warning opens. Subclasses can pause auto-advance here. */
+    protected open fun onLaunchWarningShown() {
+        // no automation here by default
+    }
+
+    /** Called when the launch warning is dismissed. Subclasses can resume auto-advance here. */
+    protected open fun onLaunchWarningDismissed() {
+        // no automation here by default
+    }
 
     /** The [PermissionRequest] being asked about via [optInDialog] or [microphonePermissionLauncher] */
     private var activeRequest: PermissionRequest? = null
@@ -156,6 +183,11 @@ abstract class CardViewerFragment(
         viewModel.eval.collectInViewLifecycle(Lifecycle.State.CREATED) { eval ->
             webViewLayout.evaluateJavascript(eval)
         }
+    }
+
+    /** Allows a new warning when the displayed card, rather than merely its side, changes. */
+    protected fun onCardChanged() {
+        launchWarning.onCardChanged()
     }
 
     override fun onStart() {

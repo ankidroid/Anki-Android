@@ -5,7 +5,9 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.os.Parcelable
+import android.speech.tts.TextToSpeech
 import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.CheckResult
 import androidx.core.os.BundleCompat
@@ -22,6 +24,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.ui.TransitionDirection
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.createBasicTypingNoteType
 import com.ichi2.anki.libanki.testutils.ext.newNote
@@ -30,6 +33,9 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
+import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.common.Flaky
@@ -37,6 +43,8 @@ import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.registerWebBrowser
+import io.mockk.coEvery
+import io.mockk.mockkObject
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
@@ -55,6 +63,12 @@ import org.mockito.Mockito.mock
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.Implementation
+import org.robolectric.annotation.Implements
+import org.robolectric.shadow.api.Shadow
+import org.robolectric.shadows.ShadowDialog
+import org.robolectric.shadows.ShadowTextToSpeech
 import timber.log.Timber
 import java.util.Locale
 import java.util.stream.Stream
@@ -103,6 +117,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             }
 
         fun hasAutomaticAnswerQueued(): Boolean = automaticAnswer.timeoutHandler.hasMessages(0)
+
+        fun showAnswerForTest() = displayCardAnswer()
+
+        fun hearShakeForTest() = hearShakeForTesting()
 
         /**
          * Fixes an issue with noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632
@@ -153,6 +171,255 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         advanceRobolectricLooper()
         targetContext.assertNoActivityStarted()
         assertEquals(viewer.getString(CommonString.activity_start_failed), viewer.snackbarText)
+    }
+
+    @Test
+    fun `blocked launch warnings do not stack`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        val viewer = getViewer(addCard = true)
+        val webView = assertNotNull(viewer.webView)
+
+        repeat(3) {
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                webView,
+                mockWebResourceRequest("market://details?id=com.example"),
+            )
+            advanceRobolectricLooper()
+        }
+
+        assertThat(
+            "blocked navigation must not stack modal warnings over the card",
+            ShadowDialog.getShownDialogs().size,
+            equalTo(1),
+        )
+    }
+
+    @Test
+    fun `dismissed launch warning is not reopened by repeated launches`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        val viewer = getViewer(addCard = true)
+        val webView = assertNotNull(viewer.webView)
+
+        shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+            webView,
+            mockWebResourceRequest("market://details?id=com.example"),
+        )
+        advanceRobolectricLooper()
+        assertThat(ShadowDialog.getShownDialogs().size, equalTo(1))
+
+        ShadowDialog.getLatestDialog().cancel()
+        advanceRobolectricLooper()
+
+        shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+            webView,
+            mockWebResourceRequest("market://details?id=com.example"),
+        )
+        advanceRobolectricLooper()
+        assertThat(
+            "a dismissed warning must not reopen while the same card is displayed",
+            ShadowDialog.getShownDialogs().size,
+            equalTo(1),
+        )
+    }
+
+    @Test
+    fun `shake does not answer a card behind the launch warning dialog`() {
+        editPreferences {
+            putBoolean("gestures", true)
+            putString(
+                ViewerCommand.ANSWER_GOOD.preferenceKey,
+                listOf(ReviewerBinding.fromGesture(Gesture.SHAKE)).toPreferenceString(),
+            )
+        }
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        val controller = getViewerController(addCard = true, startedWithShortcut = false)
+        val viewer = controller.get()
+        val webView = assertNotNull(viewer.webView)
+
+        shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+            webView,
+            mockWebResourceRequest("market://details?id=com.example"),
+        )
+        advanceRobolectricLooper()
+        assertThat("the launch warning is showing", ShadowDialog.getShownDialogs().size, equalTo(1))
+
+        // Android transfers window focus to the modal dialog
+        controller.windowFocusChanged(false)
+
+        viewer.showAnswerForTest()
+        advanceRobolectricLooper()
+
+        viewer.hearShakeForTest()
+        advanceRobolectricLooper()
+
+        assertThat(
+            "a shake must not answer a card behind a modal warning",
+            viewer.answered,
+            equalTo(null),
+        )
+    }
+
+    @Test
+    fun `launch warning pauses automatic answering until dismissed`() {
+        val config = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+        config.secondsToShowQuestion = 60.0
+        col.decks.save(config)
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        val viewer = getViewer(addCard = true)
+        val webView = assertNotNull(viewer.webView)
+        viewer.automaticAnswer.reEnable(false)
+        assertThat(viewer.hasAutomaticAnswerQueued(), equalTo(true))
+
+        shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+            webView,
+            mockWebResourceRequest("market://details?id=com.example"),
+        )
+        advanceRobolectricLooper()
+        assertThat("the launch warning is showing", ShadowDialog.getShownDialogs().size, equalTo(1))
+        assertThat(
+            "a card hidden behind the warning must not be graded",
+            viewer.hasAutomaticAnswerQueued(),
+            equalTo(false),
+        )
+
+        ShadowDialog.getLatestDialog().cancel()
+        advanceRobolectricLooper()
+        assertThat(
+            "automatic answering resumes when the warning is dismissed",
+            viewer.hasAutomaticAnswerQueued(),
+            equalTo(true),
+        )
+    }
+
+    @Test
+    fun `closing a launch warning does not schedule automatic answering during media playback`() {
+        val card = addBasicNote("front", "[sound:answer.webm]").firstCard()
+        val config = col.decks.configDictForDeckId(card.currentDeckId())
+        config.secondsToShowQuestion = 0.0
+        config.secondsToShowAnswer = 60.0
+        config.jsonObject.put("waitForAudio", true)
+        col.decks.save(config)
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        val viewer = getViewer(addCard = false)
+        val webView = assertNotNull(viewer.webView)
+        viewer.automaticAnswer.enable()
+        viewer.displayCardAnswer()
+        advanceRobolectricLooperUntil {
+            shadowOf(webView).lastEvaluatedJavascript?.contains("var videos") == true
+        }
+        assertTrue(viewer.cardMediaPlayer.isPlaying)
+
+        shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+            webView,
+            mockWebResourceRequest("intent:#Intent;action=android.intent.action.MAIN;package=com.android.settings;end"),
+        )
+        advanceRobolectricLooper()
+        ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+        advanceRobolectricLooper()
+
+        assertThat(viewer.hasAutomaticAnswerQueued(), equalTo(false))
+    }
+
+    @Test
+    @Config(sdk = [33], shadows = [PendingCardTextToSpeech::class])
+    fun `closing a launch warning still waits for legacy text to speech`() {
+        ShadowTextToSpeech.addLanguageAvailability(Locale.US)
+        val card = addBasicNote("front", "spoken answer").firstCard()
+        val config = col.decks.configDictForDeckId(card.currentDeckId())
+        config.secondsToShowQuestion = 0.0
+        config.secondsToShowAnswer = 60.0
+        config.jsonObject.put("waitForAudio", true)
+        col.decks.save(config)
+        editPreferences {
+            putBoolean("tts", true)
+            putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false)
+        }
+        MetaDB.storeLanguage(targetContext, card.currentDeckId(), card.ord, CardSide.QUESTION, "0")
+        MetaDB.storeLanguage(targetContext, card.currentDeckId(), card.ord, CardSide.ANSWER, "en_US")
+
+        mockkObject(TtsVoices) {
+            coEvery { TtsVoices.localesForEngine(any()) } returns listOf(Locale.US)
+            val viewer = getViewer(addCard = false)
+            val nativeTts = assertNotNull(ReadText.textToSpeech)
+            val tts = Shadow.extract<PendingCardTextToSpeech>(nativeTts)
+            shadowOf(nativeTts).onInitListener.onInit(TextToSpeech.SUCCESS)
+            advanceRobolectricLooperUntil { shadowOf(nativeTts).utteranceProgressListener != null }
+            viewer.automaticAnswer.enable()
+            viewer.displayCardAnswer()
+            advanceRobolectricLooperUntil { tts.spokenText == "spoken answer" }
+            assertTrue(nativeTts.isSpeaking)
+
+            val webView = assertNotNull(viewer.webView)
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                webView,
+                mockWebResourceRequest("intent:#Intent;action=android.intent.action.MAIN;package=com.android.settings;end"),
+            )
+            val looper = shadowOf(Looper.getMainLooper())
+            looper.idle()
+            ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+            looper.idle()
+
+            assertThat(viewer.automaticAnswer.isDisabled, equalTo(false))
+            assertThat(viewer.hasAutomaticAnswerQueued(), equalTo(false))
+            tts.finish()
+            looper.idle()
+            assertThat(viewer.hasAutomaticAnswerQueued(), equalTo(true))
+        }
+    }
+
+    @Test
+    fun `a queued blocked launch cannot reopen a warning before its dismissal callback`() {
+        val config = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+        config.secondsToShowQuestion = 60.0
+        col.decks.save(config)
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        val viewer = getViewer(addCard = true)
+        val webView = assertNotNull(viewer.webView)
+        val client = shadowOf(webView).webViewClient
+        val request = mockWebResourceRequest("intent:#Intent;action=android.intent.action.MAIN;package=com.android.settings;end")
+        viewer.automaticAnswer.reEnable(false)
+        client.shouldOverrideUrlLoading(webView, request)
+        ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+        client.shouldOverrideUrlLoading(webView, request)
+        advanceRobolectricLooper()
+
+        ShadowDialog.getShownDialogs().filter { it.isShowing }.forEach { it.cancel() }
+        advanceRobolectricLooper()
+        assertThat(viewer.hasAutomaticAnswerQueued(), equalTo(true))
+    }
+
+    @Implements(TextToSpeech::class)
+    class PendingCardTextToSpeech : ShadowTextToSpeech() {
+        var spokenText: String? = null
+            private set
+        private var speaking = false
+
+        @Implementation
+        fun getDefaultEngine(): String = "test.engine"
+
+        @Implementation
+        fun isSpeaking(): Boolean = speaking
+
+        @Implementation
+        override fun speak(
+            text: CharSequence,
+            queueMode: Int,
+            params: Bundle?,
+            utteranceId: String?,
+        ): Int {
+            spokenText = text.toString()
+            speaking = true
+            return TextToSpeech.SUCCESS
+        }
+
+        fun finish() {
+            speaking = false
+            utteranceProgressListener.onDone("stringId")
+        }
     }
 
     @ParameterizedTest
