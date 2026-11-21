@@ -485,14 +485,13 @@ open class DeckPicker :
     }
 
     private suspend fun showDeckPickerContextMenu(deckId: DeckId) {
-        val menu = DeckPickerContextMenu.newInstance(deckId)
+        val menu = DeckPickerContextMenu.createOrShowError(deckId) ?: return
         CardBrowser.clearLastDeckId()
         showDialogFragment(menu)
     }
 
     private suspend fun showDeckPickerRightClickContextMenu(request: DeckPickerViewModel.RightClickMenuRequest) {
         DeckPickerMenuContentProvider.show(
-            deckPicker = this@DeckPicker,
             deckId = request.deckId,
             x = request.x,
             y = request.y,
