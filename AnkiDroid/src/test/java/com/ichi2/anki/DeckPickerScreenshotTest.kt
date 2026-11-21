@@ -21,6 +21,7 @@ import com.ichi2.testutils.lastItemView
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateKeyboard
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -141,6 +142,21 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
             check(bottomNavigation.selectedItemId == R.id.nav_stats)
 
             captureScreen("bottom_navigation_statistics_selected")
+        }
+    }
+
+    @Test
+    fun bottom_navigation_more_tab() {
+        enableBottomNavigation()
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            checkNotNull(deckPicker.binding.bottomNavigation).selectedItemId = R.id.nav_more
+            advanceRobolectricLooper()
+            captureScreen("bottom_navigation_more_tab")
+
+            val more = deckPicker.supportFragmentManager.findFragmentByTag(BottomNavController.NavigationItem.MORE.tag) as MoreFragment
+            runBlocking { more.scrollState.scrollTo(more.scrollState.maxValue) }
+            advanceRobolectricLooper()
+            captureScreen("bottom_navigation_more_tab_scrolled_to_end")
         }
     }
 
