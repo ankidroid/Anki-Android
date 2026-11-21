@@ -44,7 +44,7 @@ import timber.log.Timber
 // The sub-fragments (StandardSearchFragment etc...) need to be able to modify/close the
 // EditText, but should not be coupled directly to the parent SearchView.
 class CardBrowserSearchViewModel(
-    private val savedStateHandle: ViewModelSavedStateHandle,
+    savedStateHandle: ViewModelSavedStateHandle,
 ) : ViewModel() {
     private val searchHistoryManager = SearchHistory()
 
