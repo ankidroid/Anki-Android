@@ -247,17 +247,33 @@ class ManageTagsViewModel :
 
     /**
      * Renames [oldName] to [newName] on notes, including matching child tags.
+     * When [allowMerge] is false, reject occupied destinations and unchanged names at execution.
      * @param onRenamed Called when the rename changes at least one note.
      * @see Tags.rename
      */
     internal fun renameTag(
         oldName: TagName,
         newName: TagName,
+        allowMerge: Boolean = true,
         onRenamed: () -> Unit = {},
     ) = launchTagOpAndRefresh {
-        val result = tagUndoableOp { renameTagTree(oldName, newName) }
+        var validation = TagInputValidation.VALID
+        val result =
+            tagUndoableOp {
+                // Check inside the operation to account for changes since dialog validation
+                // and the spelling the backend will actually apply.
+                if (!allowMerge) validation = validateStoredRename(oldName, newName)
+                if (validation == TagInputValidation.VALID) renameTagTree(oldName, newName) else OpChangesWithCount.getDefaultInstance()
+            }
         if (result.count > 0) onRenamed()
-        messageQueue.enqueue(TagRenamed(result.count))
+        messageQueue.enqueue(
+            when (validation) {
+                TagInputValidation.ALREADY_EXISTS -> UserMessage.TagAlreadyExists
+                TagInputValidation.UNCHANGED -> UserMessage.TagNameUnchanged
+                TagInputValidation.VALID -> TagRenamed(result.count)
+                else -> UserMessage.UnexpectedError
+            },
+        )
     }
 
     /**
@@ -633,6 +649,10 @@ sealed interface UserMessage {
 
     /** The selected tag subtree has no notes, so rename is unavailable. */
     data object NoNotesToRename : UserMessage
+
+    data object TagAlreadyExists : UserMessage
+
+    data object TagNameUnchanged : UserMessage
 
     /** @param notesAffected number of notes whose tags were reparented */
     data class TagMoved(

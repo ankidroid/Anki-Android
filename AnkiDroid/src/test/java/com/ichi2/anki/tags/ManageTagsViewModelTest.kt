@@ -1586,6 +1586,24 @@ class ManageTagsViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `rename preserves both tags when the destination exists and merging is disabled`() =
+        runTest {
+            val source = addTags("source")
+            val destination = addTags("destination")
+            withViewModel {
+                var renamed = false
+                renameTag(TagName.asValid("source"), TagName.asValid("destination"), allowMerge = false) {
+                    renamed = true
+                }.job.join()
+
+                assertEquals(listOf("source"), col.getNote(source.id).tags)
+                assertEquals(listOf("destination"), col.getNote(destination.id).tags)
+                assertFalse(renamed)
+                assertEquals(UserMessage.TagAlreadyExists, pendingMessages.value.single().message)
+            }
+        }
+
+    @Test
     fun `renameTag updates tag name`() =
         runTest {
             addTags("science")
