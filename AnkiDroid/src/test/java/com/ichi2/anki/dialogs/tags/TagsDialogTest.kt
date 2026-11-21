@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
@@ -361,6 +362,36 @@ class TagsDialogTest : RobolectricTest() {
                 actual = addTagDialog.positiveButton.isEnabled,
                 message = "OK should be enabled for a valid tag",
             )
+        }
+    }
+
+    @Test
+    fun `typing an ideographic space in a tag creates a hierarchy separator`() {
+        withAddTagDialog(emptyList()) { dialog ->
+            val input = dialog.getInputField()
+            input.setText("parent\u3000child")
+            assertEquals("parent::child", input.text.toString())
+        }
+    }
+
+    /**
+     * When a Japanese IME updates a phrase containing an ideographic space, committing it must
+     * replace the composing phrase after the tag filter changes the space into a separator.
+     */
+    @Test
+    fun `committing an ideographic tag phrase replaces the composing text`() {
+        withAddTagDialog(emptyList()) { dialog ->
+            val input = dialog.getInputField()
+            val connection = requireNotNull(input.onCreateInputConnection(EditorInfo()))
+
+            // Begin composing an incomplete reading. The input filter makes the phrase longer.
+            connection.setComposingText("親\u3000こ", 1)
+            assertEquals("親::こ", input.text.toString())
+
+            // The IME replaces the composing range with the chosen characters. On the buggy
+            // revision, the filter lost that range, so the committed phrase is appended instead.
+            connection.commitText("親\u3000子", 1)
+            assertEquals("親::子", input.text.toString())
         }
     }
 

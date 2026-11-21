@@ -4,13 +4,14 @@
 package com.ichi2.anki.tags
 
 import android.text.InputFilter
+import android.text.SpannableString
 import android.text.Spanned
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 
 /**
  * The filter that constrains the inputted tag.
- * Space is not allowed in a tag. For UX of hierarchical tag, inputting a space will instead
+ * ASCII and Japanese spaces are not allowed in a tag. Inputting either will instead
  * insert "::" at the cursor. If there are already some colons in front of the cursor,
  * complete to 2 colons. For example:
  *   "tag"   -- input a space --> "tag::"
@@ -19,7 +20,8 @@ import androidx.compose.ui.text.input.TextFieldValue
  */
 internal val tagNameInputFilter =
     InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-        if (!source.subSequence(start, end).contains(' ')) {
+        val input = source.subSequence(start, end)
+        if (input.none { it == ' ' || it == '\u3000' }) {
             return@InputFilter null
         }
         var previousColonsCnt = 0
@@ -32,8 +34,9 @@ internal val tagNameInputFilter =
             }
         }
         val sb = StringBuilder()
-        for (char in source.subSequence(start, end)) {
-            if (char == ' ') {
+        val offsets = if (source is Spanned) IntArray(input.length + 1) else null
+        for ((index, char) in input.withIndex()) {
+            if (char == ' ' || char == '\u3000') {
                 if (previousColonsCnt == 0) {
                     sb.append("::")
                 } else if (previousColonsCnt == 1) {
@@ -48,8 +51,18 @@ internal val tagNameInputFilter =
                 } else {
                     0
                 }
+            offsets?.set(index + 1, sb.length)
         }
-        sb
+        if (source !is Spanned || offsets == null) return@InputFilter sb
+
+        // The IME needs its composing span to replace the current phrase on the next edit.
+        SpannableString(sb).apply {
+            for (span in source.getSpans(start, end, Any::class.java)) {
+                val spanStart = source.getSpanStart(span).coerceIn(start, end) - start
+                val spanEnd = source.getSpanEnd(span).coerceIn(start, end) - start
+                setSpan(span, offsets[spanStart], offsets[spanEnd], source.getSpanFlags(span))
+            }
+        }
     }
 
 /** Applies the shared tag separator filter while retaining selection and IME composition. */
