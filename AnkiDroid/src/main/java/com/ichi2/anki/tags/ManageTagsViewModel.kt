@@ -208,13 +208,16 @@ class ManageTagsViewModel :
 
     /**
      * Renames [oldName] to [newName] on notes, including matching child tags.
+     * @param onRenamed Called when the rename changes at least one note.
      * @see Tags.rename
      */
     internal fun renameTag(
         oldName: TagName,
         newName: TagName,
+        onRenamed: () -> Unit = {},
     ) = launchTagOpAndRefresh {
         val result = tagUndoableOp { renameTagTree(oldName, newName) }
+        if (result.count > 0) onRenamed()
         messageQueue.enqueue(TagRenamed(result.count))
     }
 
