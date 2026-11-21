@@ -39,6 +39,7 @@ class TagsDialogScreenshotTest : DialogScreenshotTest() {
                 type,
                 noteIds = if (type == DialogType.CUSTOM_STUDY) listOf(note.id) else emptyList(),
                 checkedTags = arrayListOf("biology::plants", "chemistry"),
+                filterQuery = if (type == DialogType.CUSTOM_STUDY) "is:new" else null,
             )
         withDialog(dialog) {
             dialog.viewModel.tags.await()
