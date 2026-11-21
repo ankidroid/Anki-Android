@@ -3,6 +3,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -66,15 +67,14 @@ fun AnswerArea(
                 Modifier
                     .height(IntrinsicSize.Min)
                     .invisibleIf(!isAnswerShown),
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.answer_button_margin_horizontal) * 2),
         ) {
-            val margin = dimensionResource(R.dimen.answer_button_margin_horizontal)
             RatingButton(
                 easeName = CommonR.string.ease_button_again,
                 nextTime = nextTimes?.again,
                 textColor = content(colors.onAgainButton),
                 backgroundColor = background(colors.againButton),
                 onClick = { onRatingClicked(Rating.AGAIN) },
-                modifier = Modifier.padding(end = margin),
             )
             if (showHardAndEasyButtons) {
                 RatingButton(
@@ -83,7 +83,6 @@ fun AnswerArea(
                     textColor = content(colors.onHardButton),
                     backgroundColor = background(colors.hardButton),
                     onClick = { onRatingClicked(Rating.HARD) },
-                    modifier = Modifier.padding(horizontal = margin),
                 )
             }
             RatingButton(
@@ -92,7 +91,6 @@ fun AnswerArea(
                 textColor = content(colors.onGoodButton),
                 backgroundColor = background(colors.goodButton),
                 onClick = { onRatingClicked(Rating.GOOD) },
-                modifier = Modifier.padding(horizontal = margin),
             )
             if (showHardAndEasyButtons) {
                 RatingButton(
@@ -101,7 +99,6 @@ fun AnswerArea(
                     textColor = content(colors.onEasyButton),
                     backgroundColor = background(colors.easyButton),
                     onClick = { onRatingClicked(Rating.EASY) },
-                    modifier = Modifier.padding(start = margin),
                 )
             }
         }
@@ -122,7 +119,6 @@ private fun RowScope.RatingButton(
     textColor: Color,
     backgroundColor: Color,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val name = stringResource(easeName)
     val text =
@@ -140,7 +136,7 @@ private fun RowScope.RatingButton(
         textColor = textColor,
         backgroundColor = backgroundColor,
         onClick = onClick,
-        modifier = modifier.weight(1f).fillMaxHeight(),
+        modifier = Modifier.weight(1f).fillMaxHeight(),
     )
 }
 
