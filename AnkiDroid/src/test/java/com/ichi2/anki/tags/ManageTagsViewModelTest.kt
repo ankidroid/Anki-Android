@@ -1109,6 +1109,25 @@ class ManageTagsViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `rename reports completion only when notes changed`() =
+        runTest {
+            addUnusedTags("unused")
+            val note = addTags("source")
+            withViewModel {
+                var completions = 0
+                val onRenamed = { completions += 1 }
+
+                renameTag(TagName.asValid("unused"), TagName.asValid("destination"), onRenamed = onRenamed).job.join()
+                assertEquals(UserMessage.TagRenamed(0), pendingMessages.value.single().message)
+                assertEquals(0, completions)
+
+                renameTag(TagName.asValid("source"), TagName.asValid("destination"), onRenamed = onRenamed).job.join()
+                assertEquals(listOf("destination"), col.getNote(note.id).tags)
+                assertEquals(1, completions)
+            }
+        }
+
+    @Test
     fun `renameTag updates tag name`() =
         runTest {
             addTags("science")
