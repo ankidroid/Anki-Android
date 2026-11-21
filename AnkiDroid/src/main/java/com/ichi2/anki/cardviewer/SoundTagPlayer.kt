@@ -29,7 +29,7 @@ import kotlin.coroutines.resumeWithException
 
 /** Player for (`[sound:...]`): [SoundOrVideoTag]  */
 @OptIn(UnstableApi::class)
-@NeedsTest("CardSoundConfig.autoplay should mean that video also isn't played automatically")
+@NeedsTest("Card.autoplay should mean that video also isn't played automatically")
 class SoundTagPlayer(
     private val soundUriBase: String,
     val videoPlayer: VideoPlayer,
@@ -135,8 +135,8 @@ class SoundTagPlayer(
                 Timber.d("starting sound tag")
                 start()
             } else {
-                Timber.d("unable to get audio focus, cancelling work")
-                continuation.cancel()
+                Timber.d("unable to get audio focus, stopping media")
+                continuation.resumeWithException(MediaException(MediaErrorBehavior.STOP_MEDIA))
             }
         }
     }

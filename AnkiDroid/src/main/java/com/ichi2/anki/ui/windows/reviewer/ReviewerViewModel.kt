@@ -222,9 +222,10 @@ class ReviewerViewModel(
         } ?: ""
 
         updateNextTimes()
+        cardMediaPlayer.cancel()
         showAnswer()
-        loadAndPlayMedia(CardSide.ANSWER)
-        if (!autoAdvance.shouldWaitForAudio()) {
+        val isPlayingMedia = loadAndPlayMedia(CardSide.ANSWER)
+        if (!isPlayingMedia || !autoAdvance.shouldWaitForAudio()) {
             autoAdvance.onShowAnswer()
         } // else wait for onMediaGroupCompleted
 
@@ -560,10 +561,9 @@ class ReviewerViewModel(
         actionFeedbackFlow.emit(message.toString())
     }
 
-    private suspend fun loadAndPlayMedia(side: CardSide) {
+    private suspend fun loadAndPlayMedia(side: CardSide): Boolean {
         Timber.v("ReviewerViewModel::loadAndPlaySounds")
-        cardMediaPlayer.loadCardAvTags(currentCard.await())
-        cardMediaPlayer.autoplayAllForSide(side)
+        return cardMediaPlayer.autoplayAllForSide(currentCard.await(), side)
     }
 
     private suspend fun updateMarkIcon() {
@@ -603,7 +603,9 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         onCardUpdatedFlow.emit(Unit) // must be before showQuestion()
         showQuestion()
-        loadAndPlayMedia(CardSide.QUESTION)
+        if (!loadAndPlayMedia(CardSide.QUESTION) && autoAdvance.shouldWaitForAudio()) {
+            autoAdvance.onShowQuestion()
+        }
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(StudyCounts(state))
@@ -700,7 +702,7 @@ class ReviewerViewModel(
 
     private suspend fun replayMedia() {
         val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
-        cardMediaPlayer.replayAll(side)
+        cardMediaPlayer.replayAll(currentCard.await(), side)
     }
 
     private fun toggleWhiteboard() {
@@ -825,9 +827,9 @@ class ReviewerViewModel(
             when {
                 changes.studyQueues -> updateCurrentCard()
                 changes.noteText -> {
+                    cardMediaPlayer.stop()
                     val card = currentCard.await()
                     withCol { card.load(this) }
-                    cardMediaPlayer.loadCardAvTags(card)
                     updateMarkIcon()
                     if (showingAnswer.value) {
                         showAnswer()
