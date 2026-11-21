@@ -49,6 +49,48 @@ class ManageTagsViewModelTest : JvmTest() {
     @get:Rule
     val caseFolding = IcuCaseFoldingRule()
 
+    /**
+     * Pasting a tab between colons can hide a hierarchy separator until backend normalization.
+     * Reject the empty component before the backend can turn it into a `blank` subtag.
+     */
+    @Test
+    fun `rename validation rejects empty components exposed by normalization`() =
+        runTest {
+            // An existing normalized destination makes accepting this name an unintended merge.
+            addTags("source", "target::blank")
+            withViewModel {
+                val source = TagName.asValid("source")
+                val pastedName = "target:\t:"
+                assertTrue(tagExists(TagName.asValid("target::blank")))
+
+                // Fails on the buggy revision: splitting the pasted name before removing its tab
+                // misses the trailing separator, so the dialog would accept the rename.
+                assertEquals(TagInputValidation.EMPTY_COMPONENT, validateTagRename(source, pastedName, ::tagExists))
+            }
+        }
+
+    /**
+     * Removing a pasted tab can bring a letter and combining accent together. The backend
+     * composes them when registering the renamed tag, so validation must use that spelling.
+     */
+    @Test
+    fun `rename validation uses the destination registered by the backend`() =
+        runTest {
+            // Store the composed spelling first, so accepting the paste would merge into it.
+            addTags("source", "Café")
+            withViewModel {
+                val existing = TagName.asValid("Café")
+                val pastedName = "Cafe\t\u0301"
+                assertTrue(tagExists(existing))
+
+                // Fails on the buggy revision: removing the tab leaves an uncomposed spelling
+                // that validation treats as a new tag, even though the backend composes it again.
+                assertEquals(TagInputValidation.ALREADY_EXISTS, validateTagRename(TagName.asValid("source"), pastedName, ::tagExists))
+                // Renaming the existing tag to the same pasted text would leave its spelling unchanged.
+                assertEquals(TagInputValidation.UNCHANGED, validateTagRename(existing, pastedName, ::tagExists))
+            }
+        }
+
     @Test
     fun `rename can be repeatedly undone and redone without losing tags`() =
         runTest {
