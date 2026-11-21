@@ -192,10 +192,6 @@ class CongratsViewModel :
         ChangeManager.subscribe(this)
     }
 
-    override fun onCleared() {
-        ChangeManager.unsubscribe(this)
-    }
-
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,

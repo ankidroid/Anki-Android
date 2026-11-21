@@ -4,6 +4,8 @@ package com.ichi2.anki.observability
 
 import android.app.Activity
 import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelStore
 import anki.collection.OpChanges
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
@@ -154,6 +156,40 @@ class ChangeManagerDuplicateSubscriptionTest {
         ChangeManager.subscribe(counter)
 
         assertFailsWith<IllegalStateException> { ChangeManager.subscribe(counter) }
+    }
+}
+
+class ChangeManagerViewModelSubscriptionTest {
+    @Before
+    fun setUp() {
+        ChangeManager.resetForTesting()
+    }
+
+    @Test
+    fun `clearing a view model ends its subscription`() {
+        val viewModel = SubscriberViewModel()
+        val store = ViewModelStore().apply { put("subscriber", viewModel) }
+        ChangeManager.subscribe(viewModel)
+        ChangeManager.notifySubscribersAllValuesChanged()
+        assertThat(viewModel.changeCount, equalTo(1))
+
+        store.clear()
+
+        ChangeManager.notifySubscribersAllValuesChanged()
+        assertThat(viewModel.changeCount, equalTo(1))
+    }
+
+    private class SubscriberViewModel :
+        ViewModel(),
+        ChangeManager.Subscriber {
+        var changeCount = 0
+
+        override fun opExecuted(
+            changes: OpChanges,
+            handler: Any?,
+        ) {
+            changeCount++
+        }
     }
 }
 

@@ -80,7 +80,6 @@ class ManageTagsViewModel :
 
     init {
         ChangeManager.subscribe(this)
-        addCloseable { ChangeManager.unsubscribe(this) }
         refreshTags()
     }
 
