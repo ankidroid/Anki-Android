@@ -20,8 +20,7 @@ fi
 
 for report in AnkiDroid/build/reports/codecov/*-test.xml; do
   flag=$(basename "$report" .xml)
-  # The CLI's native parser supports up to Python 3.14. macos-15 defaults to 3.15.
-  pipx run --python 3.13 --fetch-python=missing --spec codecov-cli==11.3.2 \
+  pipx run --python "${CODECOV_PYTHON:?Python 3.13 executable required}" --spec codecov-cli==11.3.2 \
     codecovcli upload-coverage --fail-on-error \
     --disable-search --plugin noop --file "$report" --flag "$flag" "${args[@]}"
 done
