@@ -89,6 +89,12 @@ interface Compat {
     fun hideStatusBar(window: Window)
 
     /**
+     * Enable IME inset delivery to an edge-to-edge window on older Android versions.
+     * The window's content applies the insets to its own layout.
+     */
+    fun configureEdgeToEdgeImeInsets(window: Window)
+
+    /**
      * Fit a floating dialog above the keyboard, or pan to its focused input when [resize] is false.
      *
      * On API 30+, fit the whole window to IME insets so its background and buttons stay above the
