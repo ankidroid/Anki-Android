@@ -108,11 +108,11 @@ class StudyOptionsFragment :
         View.OnClickListener { v: View ->
             if (v.id == R.id.studyoptions_start) {
                 Timber.i("StudyOptionsFragment:: start study button pressed")
-                val state = viewModel.state
+                val state = shownState
                 if (state !is StudyOptionsState.Congrats) {
                     parentFragmentManager.setStudyOptionsStudyResult()
                 } else {
-                    showCustomStudyContextMenu()
+                    showCustomStudyContextMenu(state.deckId)
                 }
             }
         }
@@ -257,17 +257,18 @@ class StudyOptionsFragment :
         totalCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_count)
     }
 
-    private fun showCustomStudyContextMenu() {
-        val dialog = CustomStudyDialog.createInstance(deckId = viewModel.selectedDeckId)
+    private fun showCustomStudyContextMenu(deckId: DeckId) {
+        val dialog = CustomStudyDialog.createInstance(deckId = deckId)
         requireActivity().showDialogFragment(dialog)
     }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
+        val state = shownState
+        val deckId = state.deckIdOrNull() ?: return false
         when (item.itemId) {
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                val deckId = viewModel.selectedDeckId
-                if (viewModel.isFilteredDeck) {
+                if (state.isFiltered()) {
                     val i = FilteredDeckOptionsFragment.getIntent(requireActivity(), did = deckId)
                     Timber.i("Opening filtered deck options")
                     onDeckOptionsActivityResult.launch(i)
@@ -282,30 +283,29 @@ class StudyOptionsFragment :
             }
             R.id.action_custom_study -> {
                 Timber.i("StudyOptionsFragment:: custom study button pressed")
-                showCustomStudyContextMenu()
+                showCustomStudyContextMenu(deckId)
                 return true
             }
             R.id.action_schedule_reminders -> {
                 Timber.i("StudyOptionsFragment:: schedule reminders button pressed")
-                parentFragmentManager.setStudyOptionsAddEditReminderResult(viewModel.selectedDeckId)
+                parentFragmentManager.setStudyOptionsAddEditReminderResult(deckId)
                 return true
             }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
-                val deckId = shownDeckId ?: return false
                 viewModel.unbury(deckId)
                 item.isVisible = false
                 return true
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                val deckId = shownDeckId?.takeIf { shownState.isFiltered() } ?: return false
+                if (!state.isFiltered()) return false
                 launchCatchingTask { viewModel.rebuildCram(deckId) }
                 return true
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
-                val deckId = shownDeckId?.takeIf { shownState.isFiltered() } ?: return false
+                if (!state.isFiltered()) return false
                 launchCatchingTask { viewModel.emptyCram(deckId) }
                 return true
             }
@@ -316,13 +316,13 @@ class StudyOptionsFragment :
     override fun onPrepareMenu(menu: Menu) {
         super.onPrepareMenu(menu)
         Timber.i("configureToolbarInternal()")
-        val state = viewModel.state
+        val state = shownState
         if (state is StudyOptionsState.Loading) return
 
-        val showsFilteredDeck = shownState.isFiltered()
+        val showsFilteredDeck = state.isFiltered()
         menu.findItem(R.id.action_rebuild)?.isVisible = showsFilteredDeck
         menu.findItem(R.id.action_empty)?.isVisible = showsFilteredDeck
-        if (viewModel.isFilteredDeck) {
+        if (showsFilteredDeck) {
             menu.findItem(R.id.action_custom_study)?.isVisible = false
             menu.findItem(R.id.action_deck_or_study_options)?.setTitle(CommonString.menu__study_options)
         } else {
