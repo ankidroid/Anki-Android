@@ -685,7 +685,6 @@ class DeckPickerTest : RobolectricTest() {
             assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", deckOptionsDynamic.component!!.className)
             onBackPressedDispatcher.onBackPressed()
 
-            Prefs.newReviewRemindersEnabled = true
             val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
             assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", scheduleReminders.component!!.className)
             onBackPressedDispatcher.onBackPressed()
@@ -1090,7 +1089,6 @@ class DeckPickerTest : RobolectricTest() {
     fun `returning from reminders does not accumulate study options subscriptions`() {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
         addBasicNote()
-        Prefs.newReviewRemindersEnabled = true
 
         deckPicker {
             val studyOptions = assertNotNull(fragment)
@@ -1119,7 +1117,6 @@ class DeckPickerTest : RobolectricTest() {
         addBasicNote()
         val anotherDeck = addDeck("Another deck")
         addNoteToDeck(anotherDeck, count = 2)
-        Prefs.newReviewRemindersEnabled = true
 
         deckPicker {
             makeStudyOptionsScrollable()
@@ -1204,7 +1201,6 @@ class DeckPickerTest : RobolectricTest() {
     private fun withReminderPanel(test: suspend DeckPicker.(ScheduleRemindersFragment) -> Unit) {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
         addBasicNote()
-        Prefs.newReviewRemindersEnabled = true
         deckPicker {
             selectContextMenuOption(ContextMenuOption.SCHEDULE_REMINDERS, getColUnsafe.decks.selected())
             advanceRobolectricLooper()

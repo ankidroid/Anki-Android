@@ -10,9 +10,7 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
-import com.ichi2.anki.settings.Prefs
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -30,72 +28,34 @@ import kotlin.test.assertFalse
 @RunWith(AndroidJUnit4::class)
 @OptIn(DelicateCoroutinesApi::class)
 class WidgetStatusTest : RobolectricTest() {
-    private val preferences =
-        object : NotificationPreferences {
-            override var newReviewRemindersEnabled = false
-            override var legacyNotificationsEnabled = false
-        }
     private val repository = mockk<WidgetRepository>(relaxed = true)
-    private val scheduler = mockk<WidgetNotificationScheduler>(relaxed = true)
     private val updater = mockk<(Context) -> Unit>(relaxed = true)
 
     @Test
-    fun `disabled widgets and notifications do not open the collection`() =
+    fun `disabled widgets do not open the collection`() =
         withWidgetStatus {
             WidgetStatus.updateInBackground(targetContext)
             advanceUntilIdle()
 
             assertFalse(CollectionManager.isOpenUnsafe())
             verify(exactly = 0) { repository.storeSmallWidgetStatus(any()) }
-            verify(exactly = 0) { scheduler.scheduleNotification() }
             verify(exactly = 0) { updater(any()) }
         }
 
     @Test
-    fun `legacy notifications follow changes to the registered preferences`() =
+    fun `enabled widgets invoke the registered updater`() =
         withWidgetStatus {
             addBasicNote("front", "back")
-            preferences.legacyNotificationsEnabled = true
+            targetContext.sharedPrefs().edit { putBoolean("widgetSmallEnabled", true) }
             WidgetStatus.updateInBackground(targetContext)
             advanceUntilIdle()
             verify(exactly = 1) { repository.storeSmallWidgetStatus(match { it.dueCardsCount == 1 }) }
-            verify(exactly = 1) { scheduler.scheduleNotification() }
-
-            preferences.legacyNotificationsEnabled = false
-            WidgetStatus.updateInBackground(targetContext)
-            advanceUntilIdle()
-            preferences.legacyNotificationsEnabled = true
-            preferences.newReviewRemindersEnabled = true
-            WidgetStatus.updateInBackground(targetContext)
-            advanceUntilIdle()
-            verify(exactly = 1) { repository.storeSmallWidgetStatus(any()) }
-            verify(exactly = 1) { scheduler.scheduleNotification() }
-            verify(exactly = 0) { updater(any()) }
-        }
-
-    @Test
-    fun `enabled widgets invoke the registered updater with either reminder system`() =
-        withWidgetStatus {
-            targetContext.sharedPrefs().edit { putBoolean("widgetSmallEnabled", true) }
-            preferences.newReviewRemindersEnabled = true
-            WidgetStatus.updateInBackground(targetContext)
-            advanceUntilIdle()
-            verify(exactly = 1) { repository.storeSmallWidgetStatus(any()) }
             verify(exactly = 1) { updater(targetContext) }
-            verify(exactly = 0) { scheduler.scheduleNotification() }
-
-            preferences.newReviewRemindersEnabled = false
-            WidgetStatus.updateInBackground(targetContext)
-            advanceUntilIdle()
-            verify(exactly = 2) { repository.storeSmallWidgetStatus(any()) }
-            verify(exactly = 2) { updater(targetContext) }
-            verify(exactly = 1) { scheduler.scheduleNotification() }
         }
 
     private fun withWidgetStatus(block: suspend TestScope.() -> Unit) =
         runTest {
             val originalRepository = widgetRepository
-            val originalScheduler = widgetNotificationScheduler
             val application = getApplicationContext<Application>()
             val originalStorageState = Environment.getExternalStorageState()
             ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED)
@@ -104,8 +64,7 @@ class WidgetStatusTest : RobolectricTest() {
             // Run the real background job on this test's scheduler, and await it before cleanup.
             every { GlobalScope.coroutineContext } returns coroutineContext
             WidgetRepository.register(repository)
-            WidgetNotificationScheduler.register(scheduler)
-            with(application) { WidgetStatus.register(preferences, updater) }
+            with(application) { WidgetStatus.register(updater) }
             try {
                 block()
             } finally {
@@ -113,9 +72,8 @@ class WidgetStatusTest : RobolectricTest() {
                 ShadowEnvironment.setExternalStorageState(originalStorageState)
                 unmockkObject(GlobalScope)
                 WidgetRepository.register(originalRepository)
-                WidgetNotificationScheduler.register(originalScheduler)
                 with(application) {
-                    WidgetStatus.register(Prefs) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
+                    WidgetStatus.register { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
                 }
             }
         }

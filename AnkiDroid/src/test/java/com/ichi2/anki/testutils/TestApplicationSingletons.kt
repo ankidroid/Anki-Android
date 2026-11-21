@@ -24,7 +24,7 @@ fun registerTestApplicationSingletons() {
     initializeWidgetRepository()
     initializeDatabaseErrorDialogs()
     initializeActivitySetup()
-    WidgetStatus.register(PrefsRepository(application)) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
+    WidgetStatus.register { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
     Animations.setPreferencesProvider { context -> PrefsRepository(context) }
     maybeSetDefaultCollectionPath(application)
 }

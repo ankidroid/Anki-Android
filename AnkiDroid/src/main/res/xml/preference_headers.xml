@@ -50,15 +50,6 @@
         app:summaryEntries="@array/sync_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
-    <!-- Notifications -->
-    <com.ichi2.preferences.HeaderPreference
-        android:fragment="com.ichi2.anki.preferences.NotificationsSettingsFragment"
-        android:key="@string/pref_notifications_screen_key"
-        android:title="@string/notification_pref"
-        android:icon="@drawable/ic_notifications"
-        app:summaryEntries="@array/notifications_summary_entries">
-    </com.ichi2.preferences.HeaderPreference>
-
     <!-- Review Reminders -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.reviewreminders.ScheduleRemindersFragment"

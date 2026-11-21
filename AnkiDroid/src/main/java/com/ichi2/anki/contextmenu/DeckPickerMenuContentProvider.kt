@@ -11,7 +11,6 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.settings.Prefs
 
 /**
  * MenuContentProvider implementation for DeckPicker for providing deck specific context menu items.
@@ -102,9 +101,7 @@ class DeckPickerMenuContentProvider(
                 if (!isDynamic) {
                     add(DeckPickerContextMenu.DeckPickerContextMenuOption.EDIT_DESCRIPTION)
                 }
-                if (Prefs.newReviewRemindersEnabled) {
-                    add(DeckPickerContextMenu.DeckPickerContextMenuOption.SCHEDULE_REMINDERS)
-                }
+                add(DeckPickerContextMenu.DeckPickerContextMenuOption.SCHEDULE_REMINDERS)
                 add(DeckPickerContextMenu.DeckPickerContextMenuOption.DELETE_DECK)
             }
     }

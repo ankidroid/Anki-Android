@@ -30,7 +30,6 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope.Global
 import com.ichi2.anki.reviewreminders.ReviewReminderThresholdFilter
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
-import com.ichi2.anki.settings.Prefs
 import io.mockk.CapturingSlot
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -80,7 +79,6 @@ class NotificationServiceTest : RobolectricTest() {
         every { context.getSystemService(Context.NOTIFICATION_SERVICE) } returns notificationManager
         mockkObject(ReviewReminderAlarmManager)
         every { ReviewReminderAlarmManager.scheduleReviewReminderNotification(any(), any(), any()) } returns Unit
-        Prefs.newReviewRemindersEnabled = true
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
 
         // Keep the native scheduler aligned with the mock review timestamps
