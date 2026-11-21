@@ -62,6 +62,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
@@ -77,6 +78,7 @@ class DeckPickerViewModel :
     OnErrorListener,
     HasProgress<DeckPickerProgress> {
     override val progressManager = ProgressManager<DeckPickerProgress>()
+    override val onError = Channel<Exception>(Channel.BUFFERED)
 
     val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
 
@@ -133,7 +135,14 @@ class DeckPickerViewModel :
 
             // TODO: use flowOfFocusedDeck once it's set on all instances
             // This flow can outlive the visible screen. Do not reopen the collection just to redraw it.
-            val currentDeckId = withOpenColOrNull { decks.current().id }
+            val currentDeckId =
+                try {
+                    withOpenColOrNull { decks.current().id }
+                } catch (e: BackendException) {
+                    onError.send(e)
+                    // Keep the previous deck list and retry on the next update.
+                    return@combineTransform
+                }
             if (currentDeckId == null) {
                 emit(FlattenedDeckList.empty)
                 return@combineTransform
@@ -159,7 +168,6 @@ class DeckPickerViewModel :
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
-    override val onError = Channel<Exception>(Channel.BUFFERED)
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
