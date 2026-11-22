@@ -3,6 +3,7 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.view.View
 import androidx.core.content.edit
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.ext.menu
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -102,6 +104,40 @@ class DeckPickerPaneBackPriorityTest : RobolectricTest() {
         assertFalse(activity.floatingActionMenu.isFABOpen)
         assertSame(reminders, reminders(activity))
         assertBackReturnsToStudyOptions(activity)
+    }
+
+    @Test
+    fun `back closes the restored add menu after expanding to tablet reminders`() {
+        RuntimeEnvironment.setQualifiers("sw400dp-w400dp-h800dp-port")
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        val phone = controller.get()
+        phone.viewModel.awaitStartup()
+        advanceRobolectricLooper()
+        assertFalse(phone.fragmented)
+        phone.findViewById<View>(R.id.fab_main).performClick()
+        assertTrue(phone.floatingActionMenu.isFABOpen)
+
+        RuntimeEnvironment.setQualifiers("sw800dp-w800dp-h1200dp-port")
+        controller.recreate()
+        val tablet = controller.get()
+        tablet.viewModel.awaitStartup()
+        advanceRobolectricLooper()
+        assertTrue(tablet.fragmented)
+        assertNotNull(tablet.fragment)
+        assertTrue(tablet.floatingActionMenu.isFABOpen)
+
+        assertTrue(tablet.menu().performIdentifierAction(R.id.action_schedule_reminders, 0))
+        advanceRobolectricLooper()
+        val reminders = assertNotNull(reminders(tablet))
+        assertTrue(tablet.floatingActionMenu.isFABOpen)
+
+        tablet.onBackPressedDispatcher.onBackPressed()
+        advanceRobolectricLooper()
+
+        assertFalse(tablet.floatingActionMenu.isFABOpen, "Back must close the restored Add menu first")
+        assertSame(reminders, reminders(tablet))
+        assertFalse(tablet.isFinishing)
+        assertBackReturnsToStudyOptions(tablet)
     }
 
     private fun assertBackReturnsToStudyOptions(activity: DeckPicker) {

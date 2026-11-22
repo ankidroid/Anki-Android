@@ -613,12 +613,7 @@ open class DeckPicker :
                 toggleListener =
                     FloatingActionBarToggleListener { isOpening ->
                         closeFloatingActionBarBackPressCallback.isEnabled = isOpening
-                        if (isOpening) {
-                            // The pane can register its Back callback after activity startup.
-                            closeFloatingActionBarBackPressCallback.remove()
-                            onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
-                            prioritizeDrawerBackCallback()
-                        }
+                        if (isOpening) prioritizeOverlayBackCallbacks()
                     },
                 initiallyOpen = savedInstanceState?.getBoolean("mIsFABOpen") == true,
             )
@@ -703,6 +698,12 @@ open class DeckPicker :
         onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback())
         onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
         super.setupBackPressedCallbacks()
+    }
+
+    private fun prioritizeOverlayBackCallbacks() {
+        closeFloatingActionBarBackPressCallback.remove()
+        onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
+        prioritizeDrawerBackCallback()
     }
 
     override fun fitsSystemWindows(): Boolean = false
@@ -2193,6 +2194,8 @@ open class DeckPicker :
                     replace(containerId, it)
                     setPrimaryNavigationFragment(it)
                 }
+                // A restored Add menu may already be open before the pane registers its Back callback.
+                prioritizeOverlayBackCallbacks()
             }
         val paneManager = pane.childFragmentManager
         // Only the pane's navigation is cleared; activity-level dialogs have their own history.
