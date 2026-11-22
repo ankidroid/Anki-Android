@@ -256,9 +256,7 @@ class IntentHandler : AbstractIntentHandler() {
             val importResult = withContext(ioDispatcher) { prepareImport(this@IntentHandler, intent) }
             // finish() may precede onDestroy(), which cancels the import scope.
             if (isFinishing) return@launch
-            if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
-                deleteDownloadedDeck(intent.data)
-            }
+            deleteDownloadedDeckIfShared(intent)
             when (importResult) {
                 is ImportResult.Success -> {
                     openImport(importResult)
@@ -329,7 +327,9 @@ class IntentHandler : AbstractIntentHandler() {
         navigate(destination)
     }
 
-    private fun deleteDownloadedDeck(sharedDeckUri: Uri?) {
+    private fun deleteDownloadedDeckIfShared(intent: Intent) {
+        if (!intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) return
+        val sharedDeckUri = intent.data
         if (sharedDeckUri == null) {
             Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
             return
