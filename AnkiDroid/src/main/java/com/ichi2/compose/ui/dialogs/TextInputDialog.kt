@@ -174,98 +174,93 @@ fun TextInputDialog(
             shadowElevation = elevation,
             border = border,
         ) {
-            Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
-                // Match the custom input panel in dialog_versatile_text_preference.xml.
-                Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = fieldMetrics.panelBottomPadding)) {
-                    Text(
-                        title,
-                        style =
-                            MaterialTheme.typography.headlineSmall.copy(
-                                // Match the XML TextView's font metrics, including after shrinking.
-                                lineHeight = TextUnit.Unspecified,
-                                platformStyle = PlatformTextStyle(includeFontPadding = true),
-                            ),
-                        color = AlertDialogDefaults.titleContentColor,
-                        modifier = Modifier.padding(bottom = if (description == null) 16.dp else 8.dp),
-                        autoSize = titleAutoSize,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    if (description != null) {
+            AnkiDroidDialogLayout(
+                minimumBodyHeight = fieldMetrics.minHeight + fieldMetrics.labelInset,
+                body = {
+                    // Match the custom input panel in dialog_versatile_text_preference.xml.
+                    Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = fieldMetrics.panelBottomPadding)) {
                         Text(
-                            description,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = AlertDialogDefaults.textContentColor,
+                            title,
+                            style =
+                                MaterialTheme.typography.headlineSmall.copy(
+                                    // Match the XML TextView's font metrics, including after shrinking.
+                                    lineHeight = TextUnit.Unspecified,
+                                    platformStyle = PlatformTextStyle(includeFontPadding = true),
+                                ),
+                            color = AlertDialogDefaults.titleContentColor,
+                            modifier = Modifier.padding(bottom = if (description == null) 16.dp else 8.dp),
+                            autoSize = titleAutoSize,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(bottom = 16.dp),
                         )
-                    }
-                    DialogTextField(
-                        value = composingInput ?: input,
-                        onValueChange = { proposed ->
-                            val previous = composingInput ?: input
-                            val textChanged = previous.text != proposed.text
-                            val compositionFinished = previous.composition != null && proposed.composition == null
-                            val composingSelectionChanged = proposed.composition != null && previous.selection != proposed.selection
-                            composingInput = proposed.takeIf { it.composition != null }
-                            if (textChanged || compositionFinished || composingSelectionChanged) {
-                                val transformed = transformInput(proposed.copy(composition = null))
-                                val validationTextChanged = input.text != transformed.text
-                                input = transformed
-                                if (textChanged || validationTextChanged) validationState.onTextChanged()
-                            } else if (proposed.composition == null) {
-                                input = proposed
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-                        label = { Text(label, Modifier.testTag("text_input_label")) },
-                        errorMessage = displayedError,
-                        metrics = fieldMetrics,
-                        supportingText =
-                            if (!hasSupportingText) {
-                                null
-                            } else {
-                                {
-                                    Row(Modifier.fillMaxWidth()) {
-                                        if (supportingMessage != null || !validateOnInput) {
-                                            Text(supportingMessage ?: AnnotatedString(""), Modifier.weight(1f))
-                                        } else {
-                                            Spacer(Modifier.weight(1f))
-                                        }
-                                        if (maxLengthCounter != null) Text("${lengthOf(input.text)}/$maxLengthCounter")
-                                    }
+                        if (description != null) {
+                            Text(
+                                description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = AlertDialogDefaults.textContentColor,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.padding(bottom = 16.dp),
+                            )
+                        }
+                        DialogTextField(
+                            value = composingInput ?: input,
+                            onValueChange = { proposed ->
+                                val previous = composingInput ?: input
+                                val textChanged = previous.text != proposed.text
+                                val compositionFinished = previous.composition != null && proposed.composition == null
+                                val composingSelectionChanged = proposed.composition != null && previous.selection != proposed.selection
+                                composingInput = proposed.takeIf { it.composition != null }
+                                if (textChanged || compositionFinished || composingSelectionChanged) {
+                                    val transformed = transformInput(proposed.copy(composition = null))
+                                    val validationTextChanged = input.text != transformed.text
+                                    input = transformed
+                                    if (textChanged || validationTextChanged) validationState.onTextChanged()
+                                } else if (proposed.composition == null) {
+                                    input = proposed
                                 }
                             },
-                        singleLine = singleLine,
-                        minLines = if (singleLine) 1 else 4,
-                        maxLines = if (singleLine) 1 else 8,
-                        keyboardOptions =
-                            KeyboardOptions(
-                                capitalization = capitalization,
-                                imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
-                            ),
-                        keyboardActions = KeyboardActions(onDone = { validationState.onConfirm() }),
+                            modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                            label = { Text(label, Modifier.testTag("text_input_label")) },
+                            errorMessage = displayedError,
+                            metrics = fieldMetrics,
+                            supportingText =
+                                if (!hasSupportingText) {
+                                    null
+                                } else {
+                                    {
+                                        Row(Modifier.fillMaxWidth()) {
+                                            if (supportingMessage != null || !validateOnInput) {
+                                                Text(supportingMessage ?: AnnotatedString(""), Modifier.weight(1f))
+                                            } else {
+                                                Spacer(Modifier.weight(1f))
+                                            }
+                                            if (maxLengthCounter != null) Text("${lengthOf(input.text)}/$maxLengthCounter")
+                                        }
+                                    }
+                                },
+                            singleLine = singleLine,
+                            minLines = if (singleLine) 1 else 4,
+                            maxLines = if (singleLine) 1 else 8,
+                            keyboardOptions =
+                                KeyboardOptions(
+                                    capitalization = capitalization,
+                                    imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
+                                ),
+                            keyboardActions = KeyboardActions(onDone = { validationState.onConfirm() }),
+                        )
+                    }
+                },
+                actions = {
+                    AnkiDroidDialogButtons(
+                        confirmText = confirmText,
+                        dismissText = dismissText,
+                        onConfirm = validationState.onConfirm,
+                        onDismissRequest = dismiss,
+                        confirmEnabled = validationState.canConfirm,
                     )
-                }
-                AnkiDroidDialogButtons(
-                    confirmText = confirmText,
-                    dismissText = dismissText,
-                    onConfirm = validationState.onConfirm,
-                    onDismissRequest = dismiss,
-                    confirmEnabled = validationState.canConfirm,
-                )
-            }) { children, constraints ->
-                val actions = children[1].measure(constraints.copy(minHeight = 0))
-                val body =
-                    children[0].measure(
-                        constraints.copy(minHeight = 0, maxHeight = (constraints.maxHeight - actions.height).coerceAtLeast(0)),
-                    )
-                layout(constraints.maxWidth, body.height + actions.height) {
-                    body.placeRelative(0, 0)
-                    actions.placeRelative(0, body.height)
-                }
-            }
+                },
+            )
             LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
         }
     }
