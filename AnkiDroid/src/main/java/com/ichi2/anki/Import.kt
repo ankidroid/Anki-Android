@@ -45,17 +45,32 @@ fun interface ImportColpkgListener {
 /** Shared by the file pickers and drag-and-drop. File I/O completes before displaying any UI. */
 fun AnkiActivity.onSelectedFileToImport(data: Intent): Job =
     lifecycleScope.launch {
-        val result =
+        prepareAndOpenImport(exitActivityOnFailure = false) {
             withProgress(message = getString(CommonString.import_preparing_file)) {
                 withContext(ioDispatcher) { ImportUtils.prepareImport(this@onSelectedFileToImport, data) }
             }
-        // finish() may precede onDestroy(), which cancels the lifecycle scope.
-        if (isFinishing) return@launch
-        when (result) {
-            is ImportResult.Failure -> ImportUtils.showImportUnsuccessfulDialog(this@onSelectedFileToImport, result, exitActivity = false)
-            is ImportResult.Success -> openImport(result)
         }
     }
+
+/** Prepares the selected file and returns it after opening its import UI. */
+internal suspend fun Activity.prepareAndOpenImport(
+    exitActivityOnFailure: Boolean,
+    prepare: suspend () -> ImportResult,
+): ImportResult.Success? {
+    val result = prepare()
+    // finish() may precede onDestroy(), which cancels preparation.
+    if (isFinishing) return null
+    return when (result) {
+        is ImportResult.Failure -> {
+            ImportUtils.showImportUnsuccessfulDialog(this, result, exitActivity = exitActivityOnFailure)
+            null
+        }
+        is ImportResult.Success -> {
+            openImport(result)
+            result
+        }
+    }
+}
 
 fun Activity.openCsvImporter(path: String) {
     val stackBuilder = TaskStackBuilder.create(this)
