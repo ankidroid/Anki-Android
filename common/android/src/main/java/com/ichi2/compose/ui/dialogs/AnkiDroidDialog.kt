@@ -5,10 +5,13 @@ package com.ichi2.compose.ui.dialogs
 import android.os.Build
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
@@ -97,6 +100,38 @@ fun ankiDroidDialogContentPadding(): PaddingValues =
         end = 24.dp,
         bottom = dimensionResource(MaterialR.dimen.m3_alert_dialog_action_bottom_padding),
     )
+
+/**
+ * Measures the title and actions at full height and lets the card scroll if they exceed the viewport.
+ * Each slot emits one layout child, or no child for an omitted title.
+ */
+@Composable
+fun AnkiDroidDialogLayout(
+    body: @Composable () -> Unit,
+    actions: @Composable () -> Unit,
+    title: @Composable () -> Unit = {},
+) {
+    BoxWithConstraints(Modifier.padding(ankiDroidDialogContentPadding()), propagateMinConstraints = true) {
+        val viewportHeight = constraints.maxHeight
+        val scroll = rememberScrollState()
+        Layout(
+            contents = listOf(title, body, actions),
+            modifier = Modifier.verticalScroll(scroll, enabled = scroll.maxValue > 0),
+        ) { (titles, bodies, actionRows), constraints ->
+            val childConstraints = constraints.copy(minHeight = 0)
+            val actions = actionRows.single().measure(childConstraints)
+            val title = titles.singleOrNull()?.measure(childConstraints)
+            val titleHeight = title?.height ?: 0
+            val remainingHeight = (viewportHeight - actions.height - titleHeight).coerceAtLeast(0)
+            val body = bodies.single().measure(childConstraints.copy(maxHeight = remainingHeight))
+            layout(constraints.maxWidth, titleHeight + body.height + actions.height) {
+                title?.placeRelative(0, 0)
+                body.placeRelative(0, titleHeight)
+                actions.placeRelative(0, titleHeight + body.height)
+            }
+        }
+    }
+}
 
 /** View dialog actions: end aligned, with confirmation above dismissal when stacked. */
 @Composable
