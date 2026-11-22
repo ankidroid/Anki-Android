@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
@@ -102,7 +103,9 @@ fun ankiDroidDialogContentPadding(): PaddingValues =
     )
 
 /**
- * Measures the title and actions at full height and lets the card scroll if they exceed the viewport.
+ * Keeps the title and actions visible while the body scrolls when there is enough space.
+ * If the body would be shorter than [minimumBodyHeight], the whole card can scroll.
+ * The [preferredMinimumBodyHeight] can shrink if the body fits in the available space.
  * Each slot emits one layout child, or no child for an omitted title.
  */
 @Composable
@@ -110,6 +113,8 @@ fun AnkiDroidDialogLayout(
     body: @Composable () -> Unit,
     actions: @Composable () -> Unit,
     title: @Composable () -> Unit = {},
+    minimumBodyHeight: Dp = 0.dp,
+    preferredMinimumBodyHeight: Dp = 0.dp,
 ) {
     BoxWithConstraints(Modifier.padding(ankiDroidDialogContentPadding()), propagateMinConstraints = true) {
         val viewportHeight = constraints.maxHeight
@@ -123,7 +128,13 @@ fun AnkiDroidDialogLayout(
             val title = titles.singleOrNull()?.measure(childConstraints)
             val titleHeight = title?.height ?: 0
             val remainingHeight = (viewportHeight - actions.height - titleHeight).coerceAtLeast(0)
-            val body = bodies.single().measure(childConstraints.copy(maxHeight = remainingHeight))
+            val bodyContent = bodies.single()
+            val preferredHeight = preferredMinimumBodyHeight.roundToPx()
+            val bodyNeedsMoreSpace =
+                remainingHeight < preferredHeight && bodyContent.minIntrinsicHeight(childConstraints.maxWidth) > remainingHeight
+            val bodyHeight =
+                if (remainingHeight < minimumBodyHeight.roundToPx() || bodyNeedsMoreSpace) viewportHeight else remainingHeight
+            val body = bodyContent.measure(childConstraints.copy(minHeight = minOf(preferredHeight, bodyHeight), maxHeight = bodyHeight))
             layout(constraints.maxWidth, titleHeight + body.height + actions.height) {
                 title?.placeRelative(0, 0)
                 body.placeRelative(0, titleHeight)
