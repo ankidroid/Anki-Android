@@ -125,6 +125,22 @@ class MessageDialogTest {
     }
 
     @Test
+    @Config(qualifiers = "w891dp-h200dp-land-mdpi")
+    fun `a short message does not push the actions off screen`() {
+        val message = "This cannot be undone."
+        compose.setContent {
+            AnkiDroidPreview {
+                MessageDialog("Delete item", message, "Delete", {}, {})
+            }
+        }
+        compose.onNodeWithText(message).assertIsDisplayed()
+        for (action in listOf("Delete", "Cancel")) {
+            val node = compose.onNodeWithText(action).assertIsDisplayed().fetchSemanticsNode()
+            assertEquals(node.size.height.toFloat(), node.boundsInRoot.height, absoluteTolerance = 1f, "$action should be fully visible")
+        }
+    }
+
+    @Test
     fun `short messages use the AnkiDroid dialog animation`() {
         compose.setContent {
             AnkiDroidPreview {

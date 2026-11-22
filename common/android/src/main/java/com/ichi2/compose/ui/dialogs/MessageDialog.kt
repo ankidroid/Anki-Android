@@ -3,7 +3,6 @@
 package com.ichi2.compose.ui.dialogs
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -48,6 +47,8 @@ fun MessageDialog(
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
     val titleBottomPadding = dimensionResource(MaterialR.dimen.m3_alert_dialog_title_bottom_margin)
+    // Match the View dialog's minimum message panel height.
+    val minimumMessageHeight = 48.dp
     // The dialog window has its own LocalContext, which can differ from the themed preview context.
     val border = MaterialTheme.widgetBorder
     val elevation = ankiDroidDialogElevation()
@@ -66,6 +67,7 @@ fun MessageDialog(
             border = border,
         ) {
             AnkiDroidDialogLayout(
+                preferredMinimumBodyHeight = minimumMessageHeight,
                 title = {
                     Text(
                         title,
@@ -75,8 +77,7 @@ fun MessageDialog(
                     )
                 },
                 body = {
-                    // The View dialog's message panel also has a 48dp minimum height.
-                    Box(Modifier.heightIn(min = 48.dp)) {
+                    Box {
                         Text(
                             message,
                             style = MaterialTheme.typography.bodyMedium,

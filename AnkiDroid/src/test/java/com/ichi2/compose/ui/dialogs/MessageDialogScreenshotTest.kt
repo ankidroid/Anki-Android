@@ -7,8 +7,10 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.ComposeScreenshotTest
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
 class MessageDialogScreenshotTest : ComposeScreenshotTest() {
@@ -45,5 +47,25 @@ class MessageDialogScreenshotTest : ComposeScreenshotTest() {
                 onDismissRequest = {},
             )
         }
+    }
+
+    @Test
+    @Config(qualifiers = "en-w374dp-h220dp-land-mdpi")
+    fun switchProfileInShortLandscape() {
+        val resources = RuntimeEnvironment.getApplication().resources
+        val title = resources.getString(CommonString.switch_profile_title, "Work")
+        val warning = resources.getString(CommonString.switch_profile_message, resources.getString(CommonString.app_name))
+        val confirm = resources.getString(CommonString.switch_profile_confirm)
+        capture(name = "switch_profile_short_landscape", node = isDialog()) {
+            MessageDialog(
+                title = title,
+                message = warning,
+                confirmText = confirm,
+                onConfirm = {},
+                onDismissRequest = {},
+            )
+        }
+        composeRule.onNodeWithText(title).assertIsDisplayed()
+        composeRule.onNodeWithText(warning).assertIsDisplayed().assertHeightIsAtLeast(16.dp)
     }
 }
