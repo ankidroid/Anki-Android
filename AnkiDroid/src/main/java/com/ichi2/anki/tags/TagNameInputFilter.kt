@@ -67,12 +67,12 @@ private fun createTagNameInputFilter(ignoreLeadingSpaces: Boolean = false): Inpu
         }
     }
 
-/** Applies the shared tag separator filter while retaining selection and IME composition. */
+/** Applies the shared tag separator filter after the IME commits text, preserving selection. */
 internal fun TextFieldValue.filterTagInput(): TextFieldValue {
+    if (composition != null) return this
     val filtered = tagNameInputFilter.filter(text, 0, text.length, null, 0, 0)?.toString() ?: return this
 
     fun mapOffset(offset: Int): Int = tagNameInputFilter.filter(text, 0, offset, null, 0, 0)?.length ?: offset
 
-    fun mapRange(range: TextRange): TextRange = TextRange(mapOffset(range.start), mapOffset(range.end))
-    return copy(text = filtered, selection = mapRange(selection), composition = composition?.let(::mapRange))
+    return copy(text = filtered, selection = TextRange(mapOffset(selection.start), mapOffset(selection.end)))
 }

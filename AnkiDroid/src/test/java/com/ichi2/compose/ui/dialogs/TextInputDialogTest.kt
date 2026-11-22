@@ -5,6 +5,7 @@ package com.ichi2.compose.ui.dialogs
 
 import android.view.animation.AnimationUtils
 import android.view.animation.Transformation
+import android.view.inputmethod.EditorInfo
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.profiles.RenameProfileDialog
+import com.ichi2.anki.tags.filterTagInput
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.testutils.ShadowLowerPaneView
 import kotlinx.coroutines.CompletableDeferred
@@ -450,6 +452,65 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
         assertEquals(1, transformations)
     }
 
+    /**
+     * The Compose field must keep a Japanese IME's composing text until it is committed.
+     * Replacing its ideographic space during composition can make the IME append the final phrase.
+     */
+    @Test
+    fun `tag input transforms the committed IME phrase without duplicating it`() {
+        var submitted: String? = null
+        compose.setContent {
+            AnkiDroidTheme {
+                TextInputDialog(
+                    title = "Rename tag",
+                    label = "Tag name",
+                    confirmText = "Rename",
+                    validation = InputValidation.Immediate { if ('\u3000' in it) "Use a hierarchy separator" else null },
+                    transformInput = { it.filterTagInput() },
+                    onConfirm = { submitted = it },
+                    onDismissRequest = {},
+                )
+            }
+        }
+        val field = compose.onNode(hasSetTextAction()).performClick()
+
+        fun inputConnection() =
+            compose.runOnIdle {
+                val editor =
+                    requireNotNull(
+                        ShadowDialog
+                            .getLatestDialog()
+                            .window
+                            ?.decorView
+                            ?.findFocus(),
+                    )
+                requireNotNull(editor.onCreateInputConnection(EditorInfo()))
+            }
+
+        // Wait through recomposition so the field feeds its latest value back to Compose's editor.
+        val connection = inputConnection()
+        compose.runOnIdle { connection.setComposingText("親\u3000こ", 1) }
+        compose.waitForIdle()
+        compose.runOnIdle { connection.commitText("親\u3000子", 1) }
+
+        // Fails on the buggy revision, which commits `親::こ` during recomposition and appends
+        // `親::子` at the cursor instead of replacing the composing phrase.
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("親::子")))
+
+        field.performTextReplacement("")
+        val nextConnection = inputConnection()
+        compose.runOnIdle { nextConnection.setComposingText("親\u3000子", 1) }
+        field.assertTextContains("親\u3000子")
+
+        // Confirmation uses the normalized spelling even while the IME is showing the raw text.
+        field.performImeAction()
+        assertEquals("親::子", submitted)
+
+        // The IME can commit the existing candidate without sending any new characters.
+        compose.runOnIdle { nextConnection.finishComposingText() }
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("親::子")))
+    }
+
     @Test
     fun `a deferred async error survives state restoration`() {
         val restoration = StateRestorationTester(compose)
@@ -680,6 +741,46 @@ class TextInputDialogTest : RobolectricTest(loadBackend = false) {
             }
         }
         compose.onNode(hasSetTextAction()).assert(SemanticsMatcher.expectValue(SemanticsProperties.TextSelectionRange, selection))
+    }
+
+    /**
+     * Moving the selection inside a composing phrase does not edit its text. The dialog must
+     * still save the new selection so recreation restores the cursor at the edited location.
+     */
+    @Test
+    fun `selection-only IME edits survive dialog recreation during composition`() {
+        val restoration = StateRestorationTester(compose)
+        restoration.setContent {
+            AnkiDroidTheme {
+                TextInputDialog("Rename", "Name", "Save", {}, {})
+            }
+        }
+        val field = compose.onNode(hasSetTextAction()).performClick()
+        val connection =
+            compose.runOnIdle {
+                val editor =
+                    requireNotNull(
+                        ShadowDialog
+                            .getLatestDialog()
+                            .window
+                            ?.decorView
+                            ?.findFocus(),
+                    )
+                requireNotNull(editor.onCreateInputConnection(EditorInfo()))
+            }
+
+        // Use the real connection to leave composition active when only the selection changes.
+        compose.runOnIdle { connection.setComposingText("Personal", 1) }
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.TextSelectionRange, TextRange(8)))
+        val selection = TextRange(1, 5)
+        compose.runOnIdle { connection.setSelection(selection.start, selection.end) }
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.TextSelectionRange, selection))
+
+        restoration.emulateSavedInstanceStateRestore()
+
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("Personal")))
+        // Fails on the buggy revision, which saves the previous selection at the end of the text.
+        field.assert(SemanticsMatcher.expectValue(SemanticsProperties.TextSelectionRange, selection))
     }
 
     private fun assertSelectionRestored(selection: TextRange) {
