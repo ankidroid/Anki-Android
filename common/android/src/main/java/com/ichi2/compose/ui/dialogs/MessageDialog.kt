@@ -14,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +32,7 @@ import com.google.android.material.R as MaterialR
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * The View dialog title, body and action panel spacing.
  * * fade-only animations allow an IME to open when the dialog opens.
- * * The title and actions are always visible in short windows.
+ * * Short windows can scroll to reveal the full title and actions.
  *
  * @param enabled whether the confirm action is enabled; dismissal remains available
  */
@@ -66,15 +65,16 @@ fun MessageDialog(
             shadowElevation = elevation,
             border = border,
         ) {
-            Layout(
-                modifier = Modifier.padding(ankiDroidDialogContentPadding()),
-                content = {
+            AnkiDroidDialogLayout(
+                title = {
                     Text(
                         title,
                         style = MaterialTheme.typography.headlineSmall,
                         color = AlertDialogDefaults.titleContentColor,
                         modifier = Modifier.padding(bottom = titleBottomPadding),
                     )
+                },
+                body = {
                     // The View dialog's message panel also has a 48dp minimum height.
                     Box(Modifier.heightIn(min = 48.dp)) {
                         Text(
@@ -84,6 +84,8 @@ fun MessageDialog(
                             modifier = Modifier.verticalScroll(rememberScrollState()),
                         )
                     }
+                },
+                actions = {
                     AnkiDroidDialogButtons(
                         confirmText = confirmText,
                         dismissText = dismissText,
@@ -92,26 +94,7 @@ fun MessageDialog(
                         confirmEnabled = enabled,
                     )
                 },
-            ) { children, constraints ->
-                // Reserve actions first so a long title or message cannot push them off-screen.
-                val actions = children[2].measure(constraints.copy(minHeight = 0))
-                val title =
-                    children[0].measure(
-                        constraints.copy(minHeight = 0, maxHeight = (constraints.maxHeight - actions.height).coerceAtLeast(0)),
-                    )
-                val body =
-                    children[1].measure(
-                        constraints.copy(
-                            minHeight = 0,
-                            maxHeight = (constraints.maxHeight - actions.height - title.height).coerceAtLeast(0),
-                        ),
-                    )
-                layout(constraints.maxWidth, title.height + body.height + actions.height) {
-                    title.placeRelative(0, 0)
-                    body.placeRelative(0, title.height)
-                    actions.placeRelative(0, title.height + body.height)
-                }
-            }
+            )
         }
     }
 }
