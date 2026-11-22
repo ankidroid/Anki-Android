@@ -8,12 +8,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.AccessibilityManager
 import androidx.compose.ui.platform.LocalAccessibilityManager
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.unit.dp
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -99,6 +101,22 @@ class SnackbarHostTest {
         compose.mainClock.advanceTimeBy(2_500)
         assertEquals("Cancel touch", host.currentSnackbarData?.visuals?.message)
         compose.mainClock.advanceTimeBy(350)
+        assertNull(host.currentSnackbarData)
+    }
+
+    @Test
+    fun `slight inward drift does not undo a swipe past halfway`() {
+        show(swipeable = true) { showSnackbar("Swipe me", duration = SnackbarDuration.Indefinite) }
+        compose.mainClock.advanceTimeBy(500)
+        compose.onNodeWithText("Swipe me").performTouchInput {
+            down(center)
+            repeat(10) { moveBy(Offset(24.dp.toPx(), 0f), delayMillis = 50) }
+            repeat(8) { moveBy(Offset(-0.4.dp.toPx(), 0f), delayMillis = 16) }
+            up()
+        }
+        compose.mainClock.advanceTimeBy(1_000)
+        compose.waitForIdle()
+
         assertNull(host.currentSnackbarData)
     }
 
