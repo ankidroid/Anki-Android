@@ -375,6 +375,24 @@ class TagsDialogTest : RobolectricTest() {
     }
 
     /**
+     * Pasting consecutive spaces in an Add Tag dialog should create one hierarchy separator,
+     * like typing the spaces individually. An extra separator creates an unwanted `blank` subtag.
+     */
+    @Test
+    fun `pasting consecutive tag spaces creates one hierarchy separator`() {
+        withAddTagDialog(emptyList()) { dialog ->
+            val input = dialog.getInputField()
+            for (spaces in listOf("\u3000\u3000", " \u3000")) {
+                input.setText("parent")
+                // Insert the clipboard contents in one edit so the filter sees both spaces together.
+                input.text.insert(input.text.length, "${spaces}child")
+                // Fails on the buggy revision because the second space adds another pair of colons.
+                assertEquals("parent::child", input.text.toString())
+            }
+        }
+    }
+
+    /**
      * When a Japanese IME updates a phrase containing an ideographic space, committing it must
      * replace the composing phrase after the tag filter changes the space into a separator.
      */

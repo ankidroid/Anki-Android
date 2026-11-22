@@ -42,15 +42,11 @@ internal val tagNameInputFilter =
                 } else if (previousColonsCnt == 1) {
                     sb.append(":")
                 }
+                previousColonsCnt = 2
             } else {
                 sb.append(char)
+                previousColonsCnt = if (char == ':') previousColonsCnt + 1 else 0
             }
-            previousColonsCnt =
-                if (char == ':') {
-                    previousColonsCnt + 1
-                } else {
-                    0
-                }
             offsets?.set(index + 1, sb.length)
         }
         if (source !is Spanned || offsets == null) return@InputFilter sb
