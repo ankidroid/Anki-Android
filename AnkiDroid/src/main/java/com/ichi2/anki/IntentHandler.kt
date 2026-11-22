@@ -38,10 +38,8 @@ import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportResolution
-import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.prepareImport
-import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.TruncatedString
@@ -253,26 +251,21 @@ class IntentHandler : AbstractIntentHandler() {
             return
         }
         importScope.launch {
-            val importResult = withContext(ioDispatcher) { prepareImport(this@IntentHandler, intent) }
-            // finish() may precede onDestroy(), which cancels the import scope.
-            if (isFinishing) return@launch
-            deleteDownloadedDeckIfShared(intent)
-            when (importResult) {
-                is ImportResult.Success -> {
-                    openImport(importResult)
-                    if (importResult.file !is ImportResolution.Text) {
-                        deleteImportedDeck(intent.data?.path)
-                        reloadIntent.action = action
-                        reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(reloadIntent)
-                    }
-                    finish()
-                }
-                is ImportResult.Failure -> {
-                    Timber.i("File import failed")
-                    showImportUnsuccessfulDialog(this@IntentHandler, importResult, true)
-                }
+            val result =
+                prepareAndOpenImport(
+                    exitActivityOnFailure = true,
+                    onPrepared = { deleteDownloadedDeckIfShared(intent) },
+                ) {
+                    withContext(ioDispatcher) { prepareImport(this@IntentHandler, intent) }
+                } ?: return@launch
+
+            if (result.file !is ImportResolution.Text) {
+                deleteImportedDeck(intent.data?.path)
+                reloadIntent.action = action
+                reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(reloadIntent)
             }
+            finish()
         }
     }
 

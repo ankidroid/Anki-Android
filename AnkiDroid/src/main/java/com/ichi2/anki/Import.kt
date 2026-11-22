@@ -55,13 +55,16 @@ fun AnkiActivity.onSelectedFileToImport(data: Intent): Job =
 /** Prepares the selected file and returns it after opening its import UI. */
 internal suspend fun Activity.prepareAndOpenImport(
     exitActivityOnFailure: Boolean,
+    onPrepared: () -> Unit = {},
     prepare: suspend () -> ImportResult,
 ): ImportResult.Success? {
     val result = prepare()
     // finish() may precede onDestroy(), which cancels preparation.
     if (isFinishing) return null
+    onPrepared()
     return when (result) {
         is ImportResult.Failure -> {
+            Timber.w("File import failed")
             ImportUtils.showImportUnsuccessfulDialog(this, result, exitActivity = exitActivityOnFailure)
             null
         }
