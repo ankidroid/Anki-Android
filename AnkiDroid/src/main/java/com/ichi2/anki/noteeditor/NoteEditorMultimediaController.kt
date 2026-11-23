@@ -11,11 +11,18 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
+import androidx.core.util.component1
+import androidx.core.util.component2
+import androidx.core.view.OnReceiveContentListener
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.MediaRegistration
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.launchCatchingTask
@@ -30,16 +37,19 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
+import com.ichi2.utils.ClipboardUtil.hasMedia
+import com.ichi2.utils.ClipboardUtil.items
 import com.ichi2.utils.ContentResolverUtil
 import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
 /**
- * Owns the multimedia capture lifecycle for a [NoteEditorFragment].
+ * Handles multimedia capture and paste for a [NoteEditorFragment].
  *
  * Must be created during fragment initialization to register the Gallery picker.
  * The [launcher] must already be registered; its callback forwards to [handleActions] / [handleResult].
@@ -232,11 +242,57 @@ internal class NoteEditorMultimediaController(
         galleryPicker.onRestoreInstanceState(state)
     }
 
+    fun registerPasteListener(field: FieldEditText) {
+        fragment.lifecycleScope.launch {
+            val pasteAsPng = shouldPasteAsPng()
+            field.setPasteListener { editText, uri, description ->
+                onPaste(editText, uri!!, description!!, pasteAsPng)
+            }
+        }
+    }
+
+    /** Determines whether pasted images should be handled as PNG format. **/
+    private suspend fun shouldPasteAsPng() = withCol { config.pasteImagesAsPng }
+
+    /**
+     * Listener for handling content received via drag and drop or copy and paste.
+     * This listener processes URIs contained in the payload and attempts to paste the content into the target EditText view.
+     */
+    val onReceiveContentListener =
+        OnReceiveContentListener { view, payload ->
+            val (uriContent, remaining) = payload.partition { item -> item.uri != null }
+
+            if (uriContent == null) {
+                return@OnReceiveContentListener remaining
+            }
+
+            val clip = uriContent.clip
+            val description = clip.description
+
+            if (!hasMedia(description)) {
+                return@OnReceiveContentListener remaining
+            }
+
+            for (uri in clip.items().map { it.uri }) {
+                fragment.lifecycleScope.launch {
+                    try {
+                        val pasteAsPng = shouldPasteAsPng()
+                        onPaste(view as EditText, uri, description, pasteAsPng)
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
+                    }
+                }
+            }
+
+            return@OnReceiveContentListener remaining
+        }
+
     /**
      * Handles clipboard/drag-and-drop paste of a media [uri] into [editText].
      * Returns `true` if the paste produced a media tag, `false` otherwise.
      */
-    fun onPaste(
+    private fun onPaste(
         editText: EditText,
         uri: Uri,
         description: ClipDescription,
