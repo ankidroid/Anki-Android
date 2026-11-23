@@ -25,7 +25,9 @@ import androidx.core.view.ViewCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import anki.generic.Empty
+import anki.import_export.CsvMetadata
 import anki.import_export.ImportAnkiPackageOptions
+import anki.import_export.csvMetadataRequest
 import anki.import_export.exportAnkiPackageOptions
 import anki.import_export.exportLimit
 import anki.import_export.importAnkiPackageRequest
@@ -34,9 +36,12 @@ import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.anki.pages.PageFragment
 import com.ichi2.anki.pages.PostRequestUri
+import com.ichi2.testutils.withNullCollection
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
@@ -515,6 +520,157 @@ class ImportRoutingTest : RobolectricTest() {
             page.onWebViewRecreated()
             assertTrue(importer.get().isFinishing)
         }
+
+    @Test
+    fun `a terminal CSV preview error releases the reservation before its screen closes`() =
+        runTest {
+            // An empty CSV is copied successfully. Loading its initial preview
+            // fails before the user can reach or submit the import form.
+            val empty = tempFolder.newFile("empty.csv")
+            val entry = launchTextImport(empty)
+            val intent = assertNotNull(shadowOf(entry).nextStartedActivity)
+            // The first CSV importer adds a DeckPicker beneath it. Consume that
+            // intent so only an actual launch for the second file satisfies the check.
+            assertEquals(DeckPicker::class.java.name, shadowOf(entry).nextStartedActivity?.component?.className)
+            val importer = Robolectric.buildActivity(SingleFragmentActivity::class.java, intent).setup().visible()
+            saveControllerForCleanup(importer)
+            advanceRobolectricLooper()
+            val page = assertIs<CsvImporter>(importer.get().fragment)
+            val request = csvMetadataRequest { path = File(targetContext.cacheDir, empty.name).absolutePath }
+            assertFailsWith<BackendException> {
+                page.handlePostRequest(PostRequestUri("/_anki/getCsvMetadata"), request.toByteArray())
+            }
+
+            // The route displays a terminal error with Close as its only action.
+            // Leaving it open must not keep a reservation for a read that failed.
+            importer.pause().stop()
+            val next = tempFolder.newFile("next.csv").apply { writeText("front,back\n") }
+            val retry = launchTextImport(next)
+            // The buggy reservation rejects this request with the busy toast.
+            val nextIntent = assertNotNull(shadowOf(retry).nextStartedActivity, "A terminal preview error must allow another file")
+            assertEquals(CsvImporter::class.java.name, nextIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+        }
+
+    @Test
+    fun `a failed CSV options refresh keeps the import open`() =
+        runTest {
+            // A valid CSV shows its import form. If a note type used by the
+            // options is unavailable, the preview refresh can fail without closing it.
+            val source = tempFolder.newFile("notes.csv").apply { writeText("front,back\n") }
+            val importIntent = CsvImporter.getIntent(targetContext, source.absolutePath)
+            val importer = startActivityNormallyOpenCollectionWithIntent(SingleFragmentActivity::class.java, importIntent)
+            val page = assertIs<CsvImporter>(importer.fragment)
+            val previewUri = PostRequestUri("/_anki/getCsvMetadata")
+            page.handlePostRequest(previewUri, csvMetadataRequest { path = source.absolutePath }.toByteArray())
+
+            // The options request includes explicit settings, unlike the
+            // initial path-only request that can show a terminal error.
+            val refresh =
+                csvMetadataRequest {
+                    path = source.absolutePath
+                    delimiter = CsvMetadata.Delimiter.COMMA
+                    notetypeId = Long.MAX_VALUE
+                }
+            assertFailsWith<BackendException> { page.handlePostRequest(previewUri, refresh.toByteArray()) }
+
+            // A refresh error must keep the original file reserved while the
+            // user's form is still open and can be corrected and submitted.
+            val next = tempFolder.newFile("next.csv").apply { writeText("other,source\n") }
+            val retry = launchTextImport(next)
+            assertNull(shadowOf(retry).nextStartedActivity)
+            assertFalse(importer.isFinishing)
+        }
+
+    @Test
+    fun `terminal importer setup failure loading package presets releases the import`() =
+        runTest {
+            // A valid package reaches the options screen, but its initial presets request
+            // cannot open the collection. The user can only close the resulting error.
+            val source = exportPackage()
+            val intent = AnkiPackageImporterFragment.getIntent(targetContext, source.absolutePath)
+            assertImportCanRetryAfterSetupFailure(intent, "getImportAnkiPackagePresets")
+        }
+
+    @Test
+    fun `terminal importer setup failure loading CSV decks releases the import`() =
+        runTest {
+            // The CSV file itself is readable. A failed deck-name request still prevents
+            // the initial options form from appearing, so another file should be allowed.
+            val source = tempFolder.newFile("first.csv").apply { writeText("front,back\n") }
+            val intent = CsvImporter.getIntent(targetContext, source.absolutePath)
+            assertImportCanRetryAfterSetupFailure(intent, "getDeckNames")
+        }
+
+    @Test
+    fun `terminal importer setup failure loading CSV note types releases the import`() =
+        runTest {
+            // Note-type names are another prerequisite of the initial CSV form. A failed
+            // lookup ends this attempt even though the file itself was copied successfully.
+            val source = tempFolder.newFile("first.csv").apply { writeText("front,back\n") }
+            val intent = CsvImporter.getIntent(targetContext, source.absolutePath)
+            assertImportCanRetryAfterSetupFailure(intent, "getNotetypeNames")
+        }
+
+    @Test
+    fun `a failed importDone response releases the completed import`() =
+        runTest {
+            // The import can succeed before the shared result-page request loses
+            // collection access. Its terminal error must allow another file to open.
+            val source = exportPackage()
+            val intent = AnkiPackageImporterFragment.getIntent(targetContext, source.absolutePath)
+            val importer = Robolectric.buildActivity(SingleFragmentActivity::class.java, intent).setup().visible()
+            saveControllerForCleanup(importer)
+            advanceRobolectricLooper()
+            val page = assertIs<AnkiPackageImporterFragment>(importer.get().fragment)
+            val request =
+                importAnkiPackageRequest {
+                    packagePath = source.absolutePath
+                    options = ImportAnkiPackageOptions.getDefaultInstance()
+                }
+            // Execute the real import before interrupting result display. The next
+            // request is still inside the frontend task that can show a terminal error.
+            page.handlePostRequest(PostRequestUri("/_anki/importAnkiPackage"), request.toByteArray())
+            withNullCollection {
+                assertFailsWith<CollectionLockedException> {
+                    page.handlePostRequest(PostRequestUri("/_anki/importDone"), byteArrayOf())
+                }
+            }
+            assertFalse(importer.get().isFinishing, "The original error stays visible")
+            importer.pause().stop()
+            val next = tempFolder.newFile("next.csv").apply { writeText("new,back\n") }
+            val retry = launchTextImport(next)
+            // The buggy implementation retains the successful operation's session even
+            // though result display failed, so it launches no importer for this file.
+            val retryIntent = assertNotNull(shadowOf(retry).nextStartedActivity)
+            assertEquals(CsvImporter::class.java.name, retryIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+        }
+
+    private suspend fun assertImportCanRetryAfterSetupFailure(
+        intent: Intent,
+        method: String,
+    ) {
+        val importer = Robolectric.buildActivity(SingleFragmentActivity::class.java, intent).setup().visible()
+        saveControllerForCleanup(importer)
+        advanceRobolectricLooper()
+        val page = assertIs<PageFragment>(importer.get().fragment)
+
+        // Lock the collection after the host attaches. This fails the real prerequisite
+        // request without triggering Android's separate storage startup redirect.
+        withNullCollection {
+            assertFailsWith<CollectionLockedException> {
+                page.handlePostRequest(PostRequestUri("/_anki/$method"), byteArrayOf())
+            }
+        }
+
+        // Keep the old error available and restore collection access before opening a new
+        // file. The buggy guard retains the old session and never launches the next importer.
+        assertFalse(importer.get().isFinishing)
+        importer.pause().stop()
+        val next = tempFolder.newFile("next.csv").apply { writeText("new,back\n") }
+        val retry = launchTextImport(next)
+        val retryIntent = assertNotNull(shadowOf(retry).nextStartedActivity, "A terminal setup error must allow another file")
+        assertEquals(CsvImporter::class.java.name, retryIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+    }
 
     private fun selectTextFile(
         activity: DeckPicker,
