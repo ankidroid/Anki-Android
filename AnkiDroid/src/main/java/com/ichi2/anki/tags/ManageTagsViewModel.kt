@@ -88,7 +88,9 @@ class ManageTagsViewModel :
         changes: OpChanges,
         handler: Any?,
     ) {
-        if (handler !== this) refreshTags()
+        if (handler !== this) {
+            viewModelScope.launch { refreshTags() }
+        }
     }
 
     /** Reloads the tag tree from the backend. Preserves the current search query if any */

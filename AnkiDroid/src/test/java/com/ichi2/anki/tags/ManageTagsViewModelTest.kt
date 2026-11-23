@@ -4,6 +4,7 @@ package com.ichi2.anki.tags
 
 import androidx.lifecycle.ViewModelStore
 import androidx.test.filters.MediumTest
+import anki.collection.opChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.exception.CollectionLockedException
@@ -13,6 +14,7 @@ import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
+import com.ichi2.testutils.withCollectionAccessOn
 import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +26,7 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withContext
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
@@ -148,7 +151,8 @@ class ManageTagsViewModelTest : JvmTest() {
                 // while the follow-up collection read is still waiting.
                 val backendScheduler = TestCoroutineScheduler()
                 val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(backendScheduler), useReentrantLock = false)
-                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                val mainDispatcher = StandardTestDispatcher(testScheduler)
+                Dispatchers.setMain(mainDispatcher)
                 try {
                     val refresh = refreshTags()
                     runCurrent()
@@ -160,7 +164,10 @@ class ManageTagsViewModelTest : JvmTest() {
                         it.addTag("destination")
                         assertTrue(collection.updateNote(it).note)
                     }
+                    // The callback is already on Main, so the viewModelScope launch starts immediately.
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
                     ChangeManager.notifySubscribersAllValuesChanged()
+                    Dispatchers.setMain(mainDispatcher)
                     runCurrent()
 
                     assertFalse(refresh.isCompleted)
@@ -2034,6 +2041,35 @@ class ManageTagsViewModelTest : JvmTest() {
                         .single()
                         .message,
                 )
+            }
+        }
+
+    /** [com.ichi2.widget.DayRolloverAlarm] notifies subscribers synchronously from Dispatchers.IO. */
+    @Test
+    fun `day rollover on IO does not block a tag action on Main`() =
+        runTest {
+            val tag = TagName.asValid("source")
+            addTags(tag.value)
+            withViewModel {
+                val mainScheduler = TestCoroutineScheduler()
+                val mainDispatcher = StandardTestDispatcher(mainScheduler)
+                Dispatchers.setMain(mainDispatcher)
+                try {
+                    withCollectionAccessOn(mainDispatcher) {
+                        withContext(Dispatchers.IO) {
+                            ChangeManager.notifySubscribers(opChanges { studyQueues = true }, initiator = null)
+                        }
+
+                        // Main has yet to process the notification. The worker must not claim the tag operation.
+                        val deletion = removeTag(tag)
+                        assertTrue(deletion.accepted, "The rollover notification must not start a tag operation from IO")
+
+                        mainScheduler.runCurrent()
+                        assertFalse(tagExists(tag))
+                    }
+                } finally {
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
             }
         }
 
