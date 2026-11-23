@@ -3,16 +3,29 @@
 
 package com.ichi2.anki.dialogs.tags
 
+import android.annotation.SuppressLint
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.withCollectionAccessOn
+import io.mockk.every
+import io.mockk.spyk
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -50,6 +63,15 @@ class TagsDialogViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `restored custom study picker only offers the supplied notes tags unchecked`() =
+        runTest(testDispatcher) {
+            val tags = TagsDialogViewModel(noteIds = listOf(note1), isCustomStudying = true).tags.await()
+
+            assertEquals(listOf("a", "b", "c"), tags.copyOfAllTagList().sorted())
+            assertTrue(tags.copyOfCheckedTagList().isEmpty())
+        }
+
+    @Test
     fun `single note produces correct checked, indeterminate and all sets`() =
         runTest(testDispatcher) {
             val vm =
@@ -66,6 +88,78 @@ class TagsDialogViewModelTest : JvmTest() {
             assertEquals(listOf("a", "b", "c"), tags.copyOfCheckedTagList().sorted())
             assertTrue(tags.copyOfIndeterminateTagList().isEmpty())
             assertEquals(listOf("a", "b", "c", "d", "e", "f"), tags.copyOfAllTagList().sorted())
+        }
+
+    @SuppressLint("CheckResult")
+    @Test
+    fun `a sparse tagged deck does not load the fields of untagged notes`() =
+        runTest(testDispatcher) {
+            val untagged = col.newNote()
+            col.addNote(untagged, 0)
+            val original = col
+            val tracked = io.mockk.spyk(original)
+            com.ichi2.anki.CollectionManager
+                .setColForTests(tracked)
+            try {
+                val tags =
+                    TagsDialogViewModel(
+                        noteIds = original.findNotes("-tag:none"),
+                        isCustomStudying = true,
+                        filterQuery = "is:new",
+                    ).tags.await()
+
+                assertTrue(tags.copyOfAllTagList().contains("a"))
+                io.mockk.verify(exactly = 0) { tracked.getNote(untagged.id) }
+            } finally {
+                com.ichi2.anki.CollectionManager
+                    .setColForTests(original)
+            }
+        }
+
+    @Test
+    fun `cancelling custom study tag loading stops further note reads`() =
+        runTest(testDispatcher) {
+            val original = col
+            val noteIds = original.findNotes("is:new -tag:none")
+            assertTrue(noteIds.size > 1)
+            val tracked = spyk(original)
+            val firstRead = CompletableDeferred<Unit>()
+            val releaseRead = CountDownLatch(1)
+            val reads = AtomicInteger()
+            every { tracked.getNote(any()) } answers {
+                if (reads.incrementAndGet() == 1) {
+                    firstRead.complete(Unit)
+                    check(releaseRead.await(10, TimeUnit.SECONDS))
+                }
+                callOriginal()
+            }
+            CollectionManager.setColForTests(tracked)
+            try {
+                Executors.newSingleThreadExecutor().asCoroutineDispatcher().use { worker ->
+                    withCollectionAccessOn(worker) {
+                        val picker =
+                            TagsDialogViewModel(
+                                noteIds = noteIds,
+                                isCustomStudying = true,
+                                filterQuery = "is:new",
+                            )
+                        try {
+                            firstRead.await()
+                            picker.tags.cancel()
+                        } finally {
+                            releaseRead.countDown()
+                            picker.tags.join()
+                        }
+                        assertEquals(
+                            "The remaining tagged notes must be skipped",
+                            1,
+                            reads.get(),
+                        )
+                    }
+                }
+            } finally {
+                CollectionManager.setColForTests(original)
+            }
         }
 
     @Test
@@ -124,25 +218,76 @@ class TagsDialogViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `custom study mode makes all tags unchecked`() =
+    fun `custom study mode pre-checks previously selected tags`() =
         runTest(testDispatcher) {
             val vm =
                 TagsDialogViewModel(
                     noteIds = listOf(note1, note2),
                     checkedTags = listOf("a"),
                     isCustomStudying = true,
+                    filterQuery = "nid:$note1,$note2",
                 )
             val tags = vm.tags.await()
             // tags from both notes = {a,b,c,d}
             val all = tags.copyOfAllTagList().sorted()
             assertEquals(listOf("a", "b", "c", "d"), all)
-            // custom study: checked = empty
-            assertTrue(tags.copyOfCheckedTagList().isEmpty())
+            // "a" was previously selected, so it should be pre-checked on re-open
+            assertEquals(listOf("a"), tags.copyOfCheckedTagList())
             // custom study: indeterminate = empty
             assertTrue(tags.copyOfIndeterminateTagList().isEmpty())
-            // custom study:
-            // checked - empty, unchecked - empty, all - not empty
-            // implies unchecked = allTags
+            // all tags are still present in the list
             assertTrue(tags.copyOfAllTagList().isNotEmpty())
+        }
+
+    @Test
+    fun `reopening custom study picker preserves a selected parent tag`() =
+        runTest(testDispatcher) {
+            val note = col.newNote()
+            col.addNote(note, 0)
+            col.tags.bulkAdd(listOf(note.id), "Parent::Child")
+
+            val original = TagsDialogViewModel(isCustomStudying = true, filterQuery = "is:new").tags.await()
+            // The picker offers this ancestor even though no note has the literal tag "Parent".
+            assertTrue(original.check("Parent"))
+            assertEquals(listOf("Parent"), original.copyOfCheckedTagList())
+
+            val reopened =
+                TagsDialogViewModel(
+                    checkedTags = original.copyOfCheckedTagList(),
+                    isCustomStudying = true,
+                    filterQuery = "is:new",
+                ).tags.await()
+
+            assertEquals(listOf("Parent"), reopened.copyOfCheckedTagList())
+        }
+
+    @Test
+    fun `selected ancestor remains checked when another state adds a differently cased literal tag`() =
+        runTest(testDispatcher) {
+            val newNote = col.newNote()
+            col.addNote(newNote, 0)
+            col.tags.bulkAdd(listOf(newNote.id), "Parent::Child")
+
+            val reviewNote = col.newNote()
+            col.addNote(reviewNote, 0)
+            col.tags.bulkAdd(listOf(reviewNote.id), "parent")
+            reviewNote.firstCard().update {
+                type = CardType.Rev
+                queue = QueueType.Rev
+                due = col.sched.today
+            }
+
+            val original = TagsDialogViewModel(isCustomStudying = true, filterQuery = "is:new").tags.await()
+            assertTrue(original.check("Parent"))
+            assertEquals(listOf("Parent"), original.copyOfCheckedTagList())
+
+            val reopened =
+                TagsDialogViewModel(
+                    checkedTags = original.copyOfCheckedTagList(),
+                    isCustomStudying = true,
+                    filterQuery = "",
+                ).tags.await()
+
+            assertEquals(listOf("Parent"), reopened.copyOfCheckedTagList())
         }
 }

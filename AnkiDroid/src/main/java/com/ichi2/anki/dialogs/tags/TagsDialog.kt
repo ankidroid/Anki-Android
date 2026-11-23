@@ -112,10 +112,12 @@ class TagsDialog : AnalyticsDialogFragment {
                     }
                 val type = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java)
                 val isCustomStudying = type != null && type == DialogType.CUSTOM_STUDY
+                val filterQuery = requireArguments().getString(ARG_FILTER_QUERY)
                 TagsDialogViewModel(
                     noteIds = noteIds,
                     checkedTags = checkedTags,
                     isCustomStudying = isCustomStudying,
+                    filterQuery = filterQuery,
                 )
             }
         }
@@ -148,6 +150,7 @@ class TagsDialog : AnalyticsDialogFragment {
         type: DialogType,
         noteIds: List<NoteId> = emptyList(),
         checkedTags: ArrayList<String> = arrayListOf(),
+        filterQuery: String? = null,
     ): TagsDialog {
         // TODO: checkedTags is unbounded and could exceed the bundle size
         val file = IdsFile(IdsFile.getDirectory(), noteIds, IdsFile.Purpose.TAGS)
@@ -155,6 +158,7 @@ class TagsDialog : AnalyticsDialogFragment {
             putParcelable(ARG_TAGS_FILE, file)
             putParcelable(ARG_DIALOG_TYPE, type)
             putStringArrayList(ARG_CHECKED_TAGS, checkedTags)
+            putString(ARG_FILTER_QUERY, filterQuery)
         }
         return this
     }
@@ -184,10 +188,11 @@ class TagsDialog : AnalyticsDialogFragment {
         binding = DialogTagsBinding.inflate(layoutInflater)
 
         val positiveText =
-            if (type == DialogType.EDIT_TAGS) {
-                getString(CommonString.dialog_confirm)
-            } else {
-                getString(CommonString.select)
+            when (type) {
+                DialogType.EDIT_TAGS,
+                DialogType.CUSTOM_STUDY,
+                -> getString(CommonString.dialog_confirm)
+                else -> getString(CommonString.select)
             }
 
         val tagsListLayout: RecyclerView.LayoutManager = StableScrollbarLayoutManager(requireContext())
@@ -217,6 +222,11 @@ class TagsDialog : AnalyticsDialogFragment {
                 .customView(view = binding.root)
                 .create()
 
+        var loadedTags: TagsList? = null
+        dialog.setOnShowListener {
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).isEnabled =
+                loadedTags?.let { canConfirmTagSelection(it) } ?: false
+        }
         lifecycleScope.launch {
             val showProgressJob =
                 launch {
@@ -237,12 +247,14 @@ class TagsDialog : AnalyticsDialogFragment {
                             }.launchIn(lifecycleScope)
                     }
                 }
-            val positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            positiveButton?.isEnabled = false
-
             val tags = viewModel.tags.await()
-
-            tagsArrayAdapter = TagsArrayAdapter(tags) { binding.root.showMaxTagSelectedNotice(tags) }
+            tagsArrayAdapter =
+                TagsArrayAdapter(tags) {
+                    binding.root.showMaxTagSelectedNotice(tags)
+                    dialog
+                        .getButton(DialogInterface.BUTTON_POSITIVE)
+                        ?.isEnabled = canConfirmTagSelection(tags)
+                }
             binding.tagsList.adapter = tagsArrayAdapter
             if (tags.isEmpty) {
                 binding.noTagsTextView.visibility = View.VISIBLE
@@ -258,7 +270,10 @@ class TagsDialog : AnalyticsDialogFragment {
                 }
             showProgressJob.cancel()
             binding.loadingContainer.isVisible = false
-            positiveButton?.isEnabled = true
+            loadedTags = tags
+            dialog
+                .getButton(DialogInterface.BUTTON_POSITIVE)
+                ?.isEnabled = canConfirmTagSelection(tags)
         }
 
         dialog.updateSoftInputMode(resources.configuration)
@@ -284,9 +299,17 @@ class TagsDialog : AnalyticsDialogFragment {
         }
     }
 
+    private fun canConfirmTagSelection(tags: TagsList): Boolean =
+        type != DialogType.CUSTOM_STUDY ||
+            tags.copyOfCheckedTagList().size <= 100
+
     private fun onPositiveButton() {
         lifecycleScope.launch {
             val tags = viewModel.tags.await()
+            if (!canConfirmTagSelection(tags)) {
+                binding.root.showMaxTagSelectedNotice(tags)
+                return@launch
+            }
             tagsDialogListener.onSelectedTags(
                 tags.copyOfCheckedTagList(),
                 tags.copyOfPartiallySelectedTagList(),
@@ -365,7 +388,10 @@ class TagsDialog : AnalyticsDialogFragment {
                 val didChange = tags.toggleAllCheckedStatuses()
                 if (didChange) {
                     tagsArrayAdapter?.notifyCheckedStatusesChanged()
-                    view?.showMaxTagSelectedNotice(tags)
+                    binding.root.showMaxTagSelectedNotice(tags)
+                    (dialog as? AlertDialog)
+                        ?.getButton(DialogInterface.BUTTON_POSITIVE)
+                        ?.isEnabled = canConfirmTagSelection(tags)
                 }
             }
             true
@@ -482,6 +508,7 @@ class TagsDialog : AnalyticsDialogFragment {
         const val ARG_TAGS_FILE = "tagsFile"
         private const val ARG_DIALOG_TYPE = "dialogType"
         private const val ARG_CHECKED_TAGS = "checkedTags"
+        private const val ARG_FILTER_QUERY = "filterQuery"
         private const val COMPACT_HEIGHT_DP = 480
     }
 }
