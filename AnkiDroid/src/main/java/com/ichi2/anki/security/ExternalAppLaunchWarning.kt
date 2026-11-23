@@ -27,12 +27,13 @@ class ExternalAppLaunchWarning(
     private val activity: Activity,
     private val onDialogShown: () -> Unit = {},
     private val onDialogDismissed: () -> Unit = {},
+    initiallySuppressed: Boolean = false,
 ) {
     private var dialog: AlertDialog? = null
     private var dismissalHandled = false
 
     /** True after the user dismisses a warning. Reset by [onCardChanged]. */
-    private var suppressUntilCardChange = false
+    private var suppressUntilCardChange = initiallySuppressed
 
     fun show() {
         if (dialog != null) return

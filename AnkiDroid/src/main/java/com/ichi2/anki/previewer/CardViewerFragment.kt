@@ -66,6 +66,8 @@ abstract class CardViewerFragment(
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
 
+    private var launchWarningSuppressed = false
+
     private val appPermission
         by lazy {
             AppPermissions(
@@ -80,7 +82,11 @@ abstract class CardViewerFragment(
             ExternalAppLaunchWarning(
                 requireActivity(),
                 onDialogShown = { onLaunchWarningShown() },
-                onDialogDismissed = { onLaunchWarningDismissed() },
+                onDialogDismissed = {
+                    launchWarningSuppressed = true
+                    onLaunchWarningDismissed()
+                },
+                initiallySuppressed = launchWarningSuppressed,
             )
         }
 
@@ -131,6 +137,16 @@ abstract class CardViewerFragment(
             positiveButton(CommonString.dialog_ok) { openAppSettingsScreen() }
             negativeButton(CommonString.dialog_cancel)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        launchWarningSuppressed = savedInstanceState?.getBoolean(STATE_LAUNCH_WARNING_SUPPRESSED) == true
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(STATE_LAUNCH_WARNING_SUPPRESSED, launchWarningSuppressed)
+        super.onSaveInstanceState(outState)
     }
 
     /**
@@ -185,7 +201,12 @@ abstract class CardViewerFragment(
 
     /** Allows a new warning when the displayed card, rather than merely its side, changes. */
     protected fun onCardChanged() {
+        launchWarningSuppressed = false
         launchWarning.onCardChanged()
+    }
+
+    private companion object {
+        const val STATE_LAUNCH_WARNING_SUPPRESSED = "launchWarningSuppressed"
     }
 
     override fun onStart() {

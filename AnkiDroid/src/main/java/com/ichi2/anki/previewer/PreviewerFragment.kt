@@ -102,7 +102,12 @@ class PreviewerFragment :
         super.onViewCreated(view, savedInstanceState)
         val cardsCount = viewModel.cardsCount()
 
+        var displayedCardIndex: Int? = null
         viewModel.currentIndex.collectInViewLifecycle { currentIndex ->
+            // Reset suppression only after the initially restored card changes. Resetting on the
+            // first emission would undo suppression restored after an activity recreation.
+            if (displayedCardIndex != null && displayedCardIndex != currentIndex) onCardChanged()
+            displayedCardIndex = currentIndex
             val displayIndex = currentIndex + 1
             binding.slider.value = displayIndex.toFloat()
             binding.progressIndicator.text =
