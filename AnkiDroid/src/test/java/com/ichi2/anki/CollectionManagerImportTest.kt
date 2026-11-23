@@ -20,7 +20,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CollectionManagerImportTest : RobolectricTest() {
@@ -69,26 +68,6 @@ class CollectionManagerImportTest : RobolectricTest() {
                 assertIs<CollectionLockedException>(failure.suppressed.single())
             } finally {
                 CollectionManager.emulatedOpenFailure = null
-            }
-        }
-
-    @Test
-    fun `valid backup replaces the collection`() =
-        runTest {
-            val note = addBasicNote("backed up", "answer")
-            val backupDirectory = tempFolder.newFolder("backups")
-            assertTrue(col.createBackup(backupDirectory.path, force = true, waitForCompletion = true))
-            val files = assertNotNull(backupDirectory.listFiles(), "Unable to list backup directory: $backupDirectory")
-            val backups = files.filter { it.extension == "colpkg" }
-            assertEquals(1, backups.size, "Expected one collection backup in $backupDirectory; found ${files.map { it.name }}")
-            val backup = backups.single()
-            addBasicNote("added after backup", "answer")
-
-            CollectionManager.importColpkg(backup.path)
-
-            CollectionManager.withCol {
-                assertEquals(1, noteCount())
-                assertEquals("backed up", getNote(note.id).fields[0])
             }
         }
 

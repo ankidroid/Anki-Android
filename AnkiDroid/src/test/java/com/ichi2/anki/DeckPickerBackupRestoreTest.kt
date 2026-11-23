@@ -19,6 +19,7 @@ import java.io.File
 import java.util.zip.ZipOutputStream
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -58,6 +59,26 @@ class DeckPickerBackupRestoreTest : RobolectricTest() {
             assertEquals(listOf("original", "answer"), col.getNote(note.id).fields.toList())
         }
     }
+
+    @Test
+    fun `valid backup replaces the collection`() =
+        runTest {
+            val note = addBasicNote("backed up", "answer")
+            val backupDirectory = tempFolder.newFolder("backups")
+            assertTrue(col.createBackup(backupDirectory.path, force = true, waitForCompletion = true))
+            val files = assertNotNull(backupDirectory.listFiles(), "Unable to list backup directory: $backupDirectory")
+            val backups = files.filter { it.extension == "colpkg" }
+            assertEquals(1, backups.size, "Expected one collection backup in $backupDirectory; found ${files.map { it.name }}")
+            val backup = backups.single()
+            addBasicNote("added after backup", "answer")
+
+            CollectionManager.importColpkg(backup.path)
+
+            CollectionManager.withCol {
+                assertEquals(1, noteCount())
+                assertEquals("backed up", getNote(note.id).fields[0])
+            }
+        }
 
     private fun createInvalidBackup(): File {
         val backupDirectory = BackupManager.getBackupDirectory(CollectionManager.getCollectionDirectory())
