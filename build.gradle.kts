@@ -4,7 +4,7 @@ import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
 import com.ichi2.anki.gradle.BackendTempLibraryService
 import com.ichi2.anki.gradle.GitHubActionsTestListener
 import com.ichi2.anki.gradle.TestSummaryService
-import com.ichi2.anki.gradle.configureRobolectricJvm
+import com.ichi2.anki.gradle.configureRobolectricUnitTests
 import com.ichi2.anki.gradle.registerJacocoLibraryVariants
 import com.ichi2.anki.gradle.reportBackendTempLibraries
 import com.slack.keeper.optInToKeeper
@@ -114,22 +114,9 @@ subprojects {
             // com.android.lint [BasePlugin] has no `android` extension
             // as it can be applied to java-library
             val androidExtension = extensions.findByName("android") as? CommonExtension ?: return@withType
-            androidExtension.testOptions.unitTests {
-                isIncludeAndroidResources = true
-            }
-            androidExtension.testOptions.unitTests.all {
-                // Resolve SDKs before forking tests: Robolectric's shared download lock races on Windows (Issue 22069).
-                it.dependsOn(":AnkiDroid:robolectricSdkDownload")
-                val robolectricDependencies = project(":AnkiDroid").layout.buildDirectory.file("robolectric-deps.properties")
-                it.inputs.file(robolectricDependencies)
-                it.systemProperty(
-                    "robolectric-deps.properties",
-                    robolectricDependencies.get().asFile.absolutePath,
-                )
-
-                it.minHeapSize = "1g"
-                it.configureRobolectricJvm()
-
+            val unitTests = androidExtension.testOptions.unitTests
+            configureRobolectricUnitTests(unitTests)
+            unitTests.all {
                 it.maxParallelForks = gradleTestMaxParallelForks
                 it.forkEvery = 40
                 it.systemProperties["junit.jupiter.execution.parallel.enabled"] = true
