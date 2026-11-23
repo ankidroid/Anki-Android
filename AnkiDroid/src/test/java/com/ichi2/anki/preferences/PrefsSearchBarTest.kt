@@ -10,7 +10,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.requireAccessibleJavaField
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -19,21 +18,15 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.robolectric.Robolectric
-import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class PrefsSearchBarTest : RobolectricTest() {
-    @Test
-    fun `indexed resources resolve with legacy reminders`() = assertIndexedResources(newReviewRemindersEnabled = false)
-
-    @Test
-    fun `indexed resources resolve with new reminders`() = assertIndexedResources(newReviewRemindersEnabled = true)
-
     @Suppress("UNCHECKED_CAST")
-    private fun assertIndexedResources(newReviewRemindersEnabled: Boolean) {
-        Prefs.newReviewRemindersEnabled = newReviewRemindersEnabled
+    @Test
+    fun `indexed resources resolve`() {
         // TODO try mocking the activity
         val preferencesActivity = getPreferencesActivity()
         val searchConfig = SearchConfiguration(preferencesActivity)
@@ -65,8 +58,7 @@ class PrefsSearchBarTest : RobolectricTest() {
                 .plus(prefItemsResIds)
                 .distinct() as List<Int>
 
-        assertEquals(newReviewRemindersEnabled, R.xml.preferences_review_reminders in allResIds)
-        assertEquals(!newReviewRemindersEnabled, R.xml.preferences_notifications in allResIds)
+        assertTrue(R.xml.preferences_review_reminders in allResIds)
 
         // Check both the normal settings mapping and the custom review reminders destination.
         for (resId in allResIds) {
