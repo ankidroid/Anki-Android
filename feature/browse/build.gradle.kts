@@ -21,6 +21,7 @@ dependencies {
     implementation(project(":common:android"))
     implementation(project(":libanki"))
 
+    implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewmodel.core)
 
     addAnkiBackendDependencies(project)
