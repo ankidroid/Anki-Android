@@ -41,6 +41,10 @@ abstract class ImportPageFragment : PageFragment() {
         }
     }
 
+    override fun onWebViewUnsupported() {
+        session.markFailed()
+    }
+
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
         bytes: ByteArray,

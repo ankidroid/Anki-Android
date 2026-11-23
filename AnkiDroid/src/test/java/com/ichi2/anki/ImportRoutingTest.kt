@@ -7,6 +7,7 @@ import android.content.ClipData
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.ProviderInfo
 import android.database.MatrixCursor
 import android.net.Uri
@@ -24,6 +25,7 @@ import androidx.core.view.ContentInfoCompat
 import androidx.core.view.ViewCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
+import androidx.webkit.WebViewCompat
 import anki.generic.Empty
 import anki.import_export.CsvMetadata
 import anki.import_export.ImportAnkiPackageOptions
@@ -40,11 +42,17 @@ import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.pages.PageFragment
+import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.testutils.withNullCollection
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.mockkStatic
+import io.mockk.unmockkObject
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import net.ankiweb.rsdroid.BackendException
@@ -671,6 +679,52 @@ class ImportRoutingTest : RobolectricTest() {
         val retryIntent = assertNotNull(shadowOf(retry).nextStartedActivity, "A terminal setup error must allow another file")
         assertEquals(CsvImporter::class.java.name, retryIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
     }
+
+    @Test
+    fun `an unsupported importer WebView allows a native collection import`() =
+        runTest {
+            // An installed provider can lack the bridge APIs. The importer then shows
+            // update guidance and cannot read its source. Leaving that warning open must
+            // still allow a native collection replacement that does not need a WebView.
+            addBasicNote()
+            val backups = tempFolder.newFolder("backups")
+            assertTrue(col.createBackup(backups.path, force = true, waitForCompletion = true))
+            val backup = assertNotNull(backups.listFiles()).single()
+            val source = tempFolder.newFile("notes.csv").apply { writeText("front,back\n") }
+            val intent = CsvImporter.getIntent(targetContext, source.absolutePath)
+            val importer = Robolectric.buildActivity(SingleFragmentActivity::class.java, intent)
+            saveControllerForCleanup(importer)
+
+            // Report a real provider package so the production compatibility check runs.
+            // Its version is current, but the bridge capabilities are unavailable.
+            mockkStatic(WebViewCompat::class)
+            mockkObject(PostRequestBridge)
+            try {
+                every { WebViewCompat.getCurrentWebViewPackage(any()) } returns
+                    PackageInfo().apply {
+                        packageName = "com.android.webview"
+                        versionName = "999.0.0.0"
+                        @Suppress("DEPRECATION")
+                        versionCode = Int.MAX_VALUE
+                    }
+                every { PostRequestBridge.isSupported() } returns false
+                importer.setup().visible()
+                advanceRobolectricLooper()
+                assertTrue(ShadowDialog.getLatestDialog().isShowing, "Keep the update warning open")
+                assertFalse(importer.get().isFinishing)
+                importer.pause().stop()
+
+                // Native collection replacement is independent of the unavailable page.
+                // The buggy importer retains its session and suppresses this confirmation.
+                launchImport(provideFile(backup, "application/colpkg"))
+                val confirmation = packageConfirmation()
+                assertIs<ImportUtils.CollectionImportReplace>(DialogHandlerMessage.fromMessage(confirmation))
+                assertContentEquals(backup.readBytes(), File(assertNotNull(confirmation.data.getString("importPath"))).readBytes())
+            } finally {
+                unmockkObject(PostRequestBridge)
+                unmockkStatic(WebViewCompat::class)
+            }
+        }
 
     private fun selectTextFile(
         activity: DeckPicker,
