@@ -23,9 +23,6 @@ class CsvImporter : ImportPageFragment() {
         "import-csv$filePath"
     }
 
-    /** Replaced on each page load: a recreated WebView reloads the page, which may start another import */
-    private var backCallback: ImportBackCallback? = null
-
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         backCallback?.remove()
         backCallback = ImportBackCallback().also { requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it) }
@@ -39,14 +36,6 @@ class CsvImporter : ImportPageFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.title = TR.actionsImport()
-    }
-
-    override suspend fun handlePostRequest(
-        uri: PostRequestUri,
-        bytes: ByteArray,
-    ): ByteArray {
-        backCallback?.onPostRequest(uri)
-        return super.handlePostRequest(uri, bytes)
     }
 
     inner class CsvImporterWebViewClient : PageWebViewClient() {

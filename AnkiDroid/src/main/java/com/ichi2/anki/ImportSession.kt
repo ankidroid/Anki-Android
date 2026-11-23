@@ -4,6 +4,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.ichi2.anki.common.utils.android.showThemedToast
 import java.util.UUID
@@ -89,13 +90,18 @@ class ImportSession private constructor(
 }
 
 /** Keeps ownership across recreation, but releases it when the owning screen is removed. */
-class ImportSessionViewModel : ViewModel() {
+class ImportSessionViewModel(
+    private val savedState: SavedStateHandle,
+) : ViewModel() {
     private var session: ImportSession? = null
+    val hasFailed: Boolean
+        get() = savedState[STATE_FAILED] ?: false
 
     fun attach(
         context: Context,
         id: ImportSessionId?,
     ): Boolean {
+        if (hasFailed) return false
         if (session == null) session = ImportSession.acquire(context, id)
         return session != null
     }
@@ -106,7 +112,16 @@ class ImportSessionViewModel : ViewModel() {
         return id
     }
 
+    fun markFailed() {
+        savedState[STATE_FAILED] = true
+        session?.finish()
+    }
+
     override fun onCleared() {
         session?.finish()
+    }
+
+    private companion object {
+        const val STATE_FAILED = "importFailed"
     }
 }

@@ -34,7 +34,9 @@ import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
@@ -464,6 +466,54 @@ class ImportRoutingTest : RobolectricTest() {
             assertTrue(dialog.isShowing)
             assertFalse(activity.isFinishing)
             assertNull(shadowOf(activity).nextStartedActivity)
+        }
+
+    @Test
+    fun `a terminal package import error releases the reservation before its screen closes`() =
+        runTest {
+            // Preparation succeeds for a named package, but the backend fails
+            // once it tries to open the invalid archive after confirmation.
+            val broken = tempFolder.newFile("broken.apkg").apply { writeText("not a valid package") }
+            val entry = launchImport(provideFile(broken, "application/apkg"))
+            val pickerIntent = assertNotNull(shadowOf(entry).nextStartedActivity)
+            val picker = startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, pickerIntent)
+            val confirmation =
+                picker.supportFragmentManager.fragments
+                    .filterIsInstance<ImportDialog>()
+                    .single()
+            val path = assertNotNull(confirmation.requireArguments().getString(ImportDialog.ARG_PACKAGE_PATH))
+            val dialog = assertIs<AlertDialog>(confirmation.requireDialog())
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+            advanceRobolectricLooper()
+            val intent = assertNotNull(shadowOf(picker).nextStartedActivity)
+            val importer = Robolectric.buildActivity(SingleFragmentActivity::class.java, intent).setup().visible()
+            saveControllerForCleanup(importer)
+            advanceRobolectricLooper()
+            val page = assertIs<AnkiPackageImporterFragment>(importer.get().fragment)
+            val request =
+                importAnkiPackageRequest {
+                    packagePath = Uri.decode(path)
+                    options = ImportAnkiPackageOptions.getDefaultInstance()
+                }
+            assertFailsWith<BackendException> {
+                page.handlePostRequest(PostRequestUri("/_anki/importAnkiPackage"), request.toByteArray())
+            }
+
+            // Leave the terminal WebView error open. Its only action closes the
+            // screen and the backend is no longer reading the archive.
+            assertFalse(importer.get().isFinishing, "The user can still see the original error")
+            importer.pause().stop()
+            val next = tempFolder.newFile("next.csv").apply { writeText("front,back\n") }
+            val retry = launchTextImport(next)
+            // The old ownership guard treats this second file as overlapping
+            // and finishes the intent handler without starting the CSV page.
+            val nextIntent = assertNotNull(shadowOf(retry).nextStartedActivity, "A terminal backend error must allow another file")
+            assertEquals(CsvImporter::class.java.name, nextIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+
+            // The old WebView reloads the initial route after renderer loss.
+            // Close the failed screen so it cannot use the source after its reservation ended.
+            page.onWebViewRecreated()
+            assertTrue(importer.get().isFinishing)
         }
 
     private fun selectTextFile(
