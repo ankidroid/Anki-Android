@@ -54,6 +54,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
+import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
@@ -545,7 +546,7 @@ class CardBrowserTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         val launchDeck = addDeck("Launch deck")
         val selectedDeck = addDeck("User selection")
-        val intent = Intent(targetContext, CardBrowser::class.java).putExtra(CardBrowserViewModel.EXTRA_DECK_ID, launchDeck)
+        val intent = Intent(targetContext, CardBrowser::class.java).putExtra(CardBrowserLaunchOptions.EXTRA_DECK_ID, launchDeck)
         lateinit var original: CardBrowserViewModel
         val savedState =
             Robolectric.buildActivity(CardBrowser::class.java, intent).use { controller ->
