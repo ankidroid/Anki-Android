@@ -37,10 +37,11 @@ val robolectricAndroidSdkVersions =
         mapOf("androidVersion" to "12.1", "frameworkSdkBuildVersion" to "8229987"),
         mapOf("androidVersion" to "13", "frameworkSdkBuildVersion" to "9030017"),
         mapOf("androidVersion" to "14", "frameworkSdkBuildVersion" to "10818077"),
-        mapOf("androidVersion" to "15", "frameworkSdkBuildVersion" to "13954326"),
+        // https://github.com/robolectric/robolectric/blob/276b95bb8d65f5258781eb9e746a5c754b515c17/robolectric/src/main/java/org/robolectric/plugins/DefaultSdkProvider.java#L76-L79
+        mapOf("androidVersion" to "15", "frameworkSdkBuildVersion" to "14663667-2"),
         // TODO: check TarArchiveInputStream.forEachEntry when this is updated
-        mapOf("androidVersion" to "16", "frameworkSdkBuildVersion" to "13921718"), // current targetSdk
-        mapOf("androidVersion" to "17", "frameworkSdkBuildVersion" to "15733970"),
+        mapOf("androidVersion" to "16", "frameworkSdkBuildVersion" to "13921718-2"), // current targetSdk
+        mapOf("androidVersion" to "17", "frameworkSdkBuildVersion" to "16653203"),
     )
 
 val robolectricSdkDownload =
