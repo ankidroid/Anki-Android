@@ -13,16 +13,16 @@ fun BrowserDestination.toIntent(context: Context): Intent =
         is BrowserDestination.Open -> Intent(context, CardBrowser::class.java)
         is BrowserDestination.ToDeck ->
             Intent(context, CardBrowser::class.java).apply {
-                putExtra(CardBrowserViewModel.EXTRA_DECK_ID, deckId)
+                putExtra(CardBrowserLaunchOptions.EXTRA_DECK_ID, deckId)
             }
         is BrowserDestination.ScrollToCard ->
             Intent(context, CardBrowser::class.java).apply {
-                putExtra(CardBrowserViewModel.EXTRA_DECK_ID, deckId)
-                putExtra(CardBrowserViewModel.EXTRA_CARD_ID_KEY, cardId)
+                putExtra(CardBrowserLaunchOptions.EXTRA_DECK_ID, deckId)
+                putExtra(CardBrowserLaunchOptions.EXTRA_CARD_ID_KEY, cardId)
             }
         is BrowserDestination.Search ->
             Intent(context, CardBrowser::class.java).apply {
-                putExtra(CardBrowserViewModel.EXTRA_SEARCH_QUERY, query)
-                putExtra(CardBrowserViewModel.EXTRA_ALL_DECKS, allDecks)
+                putExtra(CardBrowserLaunchOptions.EXTRA_SEARCH_QUERY, query)
+                putExtra(CardBrowserLaunchOptions.EXTRA_ALL_DECKS, allDecks)
             }
     }

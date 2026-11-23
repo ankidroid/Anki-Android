@@ -33,8 +33,8 @@ class CardBrowserLaunchOptionsTest {
     fun `search_query extra maps to SearchQueryJs`() {
         val intent =
             Intent().apply {
-                putExtra(CardBrowserViewModel.EXTRA_SEARCH_QUERY, "dog")
-                putExtra(CardBrowserViewModel.EXTRA_ALL_DECKS, true)
+                putExtra(CardBrowserLaunchOptions.EXTRA_SEARCH_QUERY, "dog")
+                putExtra(CardBrowserLaunchOptions.EXTRA_ALL_DECKS, true)
             }
 
         assertEquals(SearchQueryJs("dog", allDecks = true), intent.toCardBrowserLaunchOptions())
@@ -42,7 +42,7 @@ class CardBrowserLaunchOptionsTest {
 
     @Test
     fun `card id extra maps to ScrollToCard`() {
-        val intent = Intent().putExtra(CardBrowserViewModel.EXTRA_CARD_ID_KEY, 123L)
+        val intent = Intent().putExtra(CardBrowserLaunchOptions.EXTRA_CARD_ID_KEY, 123L)
 
         assertEquals(ScrollToCard(123L), intent.toCardBrowserLaunchOptions())
     }

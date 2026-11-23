@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleDestroyedException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.searchNode
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.EXTRA_ALL_DECKS
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.EXTRA_SEARCH_QUERY
+import com.ichi2.anki.browser.CardBrowserLaunchOptions.Companion.EXTRA_ALL_DECKS
+import com.ichi2.anki.browser.CardBrowserLaunchOptions.Companion.EXTRA_SEARCH_QUERY
 import com.ichi2.testutils.withCollectionAccessOn
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async

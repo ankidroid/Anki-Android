@@ -652,7 +652,7 @@ open class CardBrowser :
             idsFileDirectory = IdsFile.getDirectory(),
             options = launchOptions,
             isFragmented = fragmented,
-            initialDeckId = intent?.getLongExtra(CardBrowserViewModel.EXTRA_DECK_ID),
+            initialDeckId = intent?.getLongExtra(CardBrowserLaunchOptions.EXTRA_DECK_ID),
         ),
         defaultViewModelCreationExtras,
     )[CardBrowserViewModel::class.java]
