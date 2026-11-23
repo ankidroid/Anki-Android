@@ -4,7 +4,6 @@ package com.ichi2.anki.browser
 
 import androidx.annotation.StringRes
 import anki.search.BrowserColumns
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -47,7 +46,7 @@ enum class ColumnType {
 }
 
 /**
- * A column available in the [browser][CardBrowser]
+ * A column available in the [browser][com.ichi2.anki.CardBrowser]
  *
  * @see [anki.search.BrowserRow] for data associated with a column
  *
