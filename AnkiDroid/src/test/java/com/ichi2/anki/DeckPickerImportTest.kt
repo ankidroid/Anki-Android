@@ -233,6 +233,7 @@ class DeckPickerImportTest : RobolectricTest() {
     fun `finishing picker before text preparation completes suppresses navigation`() =
         runTest {
             val activity = startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+            advanceRobolectricLooperUntil { activity.viewModel.loadDeckCounts?.isCompleted == true }
             val fileName = "queued-notes.csv"
             val uri = "content://import/document/123".toUri()
             val provider = mock<ContentProvider>()
