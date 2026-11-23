@@ -16,8 +16,9 @@ import java.util.AbstractSet
 
 /**
  * Anki maintains a cache of used tags so it can quickly present a list of tags
- * for autocomplete and in the browser. For efficiency, deletions are not
- * tracked, so unused tags can only be removed from the list with a DB check.
+ * for autocomplete and in the browser. Normal sync registers incoming tag names
+ * and syncs each note's tags. Removing a name from the cache is local to the device.
+ * [clearUnusedTags] and Check Database both clear unused names from the local cache.
  *
  * This module manages the tag cache and tags for notes.
  *
