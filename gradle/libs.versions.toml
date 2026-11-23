@@ -121,7 +121,7 @@ processPhoenix = "3.0.0"
 # https://github.com/protocolbuffers/protobuf/releases
 protobufKotlinLite = "4.36.2"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
-robolectric = "4.18"
+robolectric = "4.18.1"
 # https://github.com/takahirom/roborazzi/releases
 roborazzi = "1.79.0"
 searchpreference = "2.7.3"
