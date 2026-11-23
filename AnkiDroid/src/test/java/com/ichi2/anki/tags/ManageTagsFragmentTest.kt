@@ -35,6 +35,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.dispatchInsets
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -645,12 +646,115 @@ class ManageTagsFragmentTest : RobolectricTest() {
     fun `landscape confirmation keeps actions visible`() = checkConfirmationActions()
 
     private fun checkConfirmationActions() {
+        Prefs.hkey = "test-key"
         addTags("used")
         screen.open()
         screen.clearUnused()
+        val disclosure = compose.onNodeWithTag("tag_sync_warning").assertIsDisplayed()
+        val instructions =
+            compose.onNodeWithText(
+                with(targetContext) {
+                    getString(CommonString.manage_tags_dialog_sync_instructions, CollectionManager.TR.sentenceCase.clearUnusedTags)
+                },
+            )
+        instructions.assertDoesNotExist()
         screen.confirm(TagAction.CLEAR_UNUSED).assertIsDisplayed()
+        disclosure.performClick()
+        instructions.assertIsDisplayed()
+        screen.confirm(TagAction.CLEAR_UNUSED).assertIsDisplayed()
+        disclosure.performClick()
+        instructions.assertDoesNotExist()
         compose.onNodeWithText(targetContext.getString(CommonString.dialog_cancel)).assertIsDisplayed().performClick()
         compose.onNode(isDialog()).assertDoesNotExist()
+    }
+
+    @Test
+    fun `AnkiWeb tag warning follows deletions and survives a partial undo`() {
+        Prefs.hkey = "test-key"
+        addTags("first", "second")
+        screen.open()
+        val banner = compose.onNode(hasTestTag("tag_sync_warning") and !hasAnyAncestor(isDialog()))
+        banner.assertDoesNotExist()
+        screen.clearUnused()
+        val callout = hasTestTag("tag_sync_warning") and hasAnyAncestor(isDialog())
+        compose.onNode(callout).assertIsDisplayed()
+        screen.confirm(TagAction.CLEAR_UNUSED).performClick()
+        banner.assertDoesNotExist()
+
+        screen.action(TagAction.DELETE, "first")
+        compose.onNode(hasTestTag("tag_sync_warning") and hasAnyAncestor(isDialog())).assertIsDisplayed()
+        screen.confirm(TagAction.DELETE).performClick()
+        banner.assertIsDisplayed()
+        screen.action(TagAction.DELETE, "second")
+        screen.confirm(TagAction.DELETE).performClick()
+        banner.assertIsDisplayed()
+
+        compose.onNodeWithTag("tag_undo").assertIsEnabled().performClick()
+        banner.assertIsDisplayed()
+        compose.onNodeWithTag("tag_undo").assertIsEnabled().performClick()
+        banner.assertDoesNotExist()
+        compose.onNodeWithTag("tag_redo").assertIsEnabled().performClick()
+        banner.assertIsDisplayed()
+    }
+
+    @Test
+    fun `dismissing the AnkiWeb tag warning takes precedence over deletion history`() {
+        Prefs.hkey = "test-key"
+        addTags("first", "second", "unused").update { removeTag("unused") }
+        screen.open()
+        val banner = compose.onNode(hasTestTag("tag_sync_warning") and !hasAnyAncestor(isDialog()))
+        screen.clearUnused()
+        screen.confirm(TagAction.CLEAR_UNUSED).performClick()
+        banner.assertIsDisplayed()
+        compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_dismiss_sync_warning)).performClick()
+        banner.assertDoesNotExist()
+        compose.onNodeWithTag("tag_undo").assertIsEnabled().performClick()
+        compose.waitForIdle()
+        assertTrue("unused" in col.tags.all())
+        banner.assertDoesNotExist()
+        compose.onNodeWithTag("tag_redo").assertIsEnabled().performClick()
+        compose.waitForIdle()
+        assertTrue("unused" !in col.tags.all())
+        banner.assertDoesNotExist()
+        screen.recreate()
+        banner.assertDoesNotExist()
+        screen.action(TagAction.DELETE, "first")
+        screen.confirm(TagAction.DELETE).performClick()
+        banner.assertDoesNotExist()
+
+        screen.close()
+        screen.open()
+        banner.assertDoesNotExist()
+        screen.action(TagAction.DELETE, "second")
+        screen.confirm(TagAction.DELETE).performClick()
+        banner.assertIsDisplayed()
+    }
+
+    @Test
+    fun `signed out tag management omits the sync warning`() {
+        Prefs.hkey = null
+        checkSyncWarningAbsent()
+    }
+
+    @Test
+    fun `custom sync server tag management omits the AnkiWeb warning`() {
+        Prefs.hkey = "custom-key"
+        editPreferences { putBoolean(targetContext.getString(R.string.custom_sync_server_enabled_key), true) }
+        checkSyncWarningAbsent()
+    }
+
+    private fun checkSyncWarningAbsent() {
+        addTags("used")
+        screen.open()
+        compose.onNodeWithTag("tag_sync_warning").assertDoesNotExist()
+        screen.clearUnused()
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_clear_unused_confirm)).assertIsDisplayed()
+        compose.onNodeWithTag("tag_sync_warning").assertDoesNotExist()
+        screen.cancel()
+        screen.action(TagAction.DELETE, "used")
+        compose.onNodeWithTag("tag_sync_warning").assertDoesNotExist()
+        screen.confirm(TagAction.DELETE).performClick()
+        compose.onNodeWithTag("tag_sync_warning").assertDoesNotExist()
     }
 
     @Test

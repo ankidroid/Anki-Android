@@ -47,6 +47,7 @@ internal fun ManageTagsContent(
     onSelectTag: (TagName) -> Unit,
     onTagFocusChanged: (TagName, FocusRequester?) -> Unit,
     onTagShortcut: (TagAction, TagName, FocusRequester) -> Boolean,
+    onDismissSyncWarning: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     val content = state as? ManageTagsState.Content
@@ -87,6 +88,13 @@ internal fun ManageTagsContent(
             onQueryChange = onSearch,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         )
+        if (content != null && onDismissSyncWarning != null) {
+            TagSyncWarning(
+                message = tagSyncMessage(CommonString.manage_tags_deleted_sync_warning),
+                modifier = Modifier.padding(horizontal = 16.dp),
+                onDismiss = onDismissSyncWarning,
+            )
+        }
         when {
             state is ManageTagsState.Loading ->
                 Box(

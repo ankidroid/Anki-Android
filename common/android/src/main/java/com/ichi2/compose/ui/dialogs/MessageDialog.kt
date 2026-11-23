@@ -2,7 +2,6 @@
 
 package com.ichi2.compose.ui.dialogs
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -34,6 +33,7 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
  * * The title and actions are always visible in short windows.
  *
  * @param enabled whether the confirm action is enabled; dismissal remains available
+ * @param beforeMessage content placed above the message in the scrollable body
  */
 @Composable
 fun MessageDialog(
@@ -45,6 +45,7 @@ fun MessageDialog(
     dismissText: String = stringResource(R.string.dialog_cancel),
     enabled: Boolean = true,
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
+    beforeMessage: @Composable () -> Unit = {},
 ) {
     val titleBottomPadding = 16.dp
     val border = MaterialTheme.widgetBorder
@@ -69,12 +70,12 @@ fun MessageDialog(
                     color = AlertDialogDefaults.titleContentColor,
                     modifier = Modifier.padding(bottom = titleBottomPadding),
                 )
-                Box(Modifier.weight(1f, fill = false)) {
+                Column(Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())) {
+                    beforeMessage()
                     Text(
                         message,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.verticalScroll(rememberScrollState()),
                     )
                 }
                 AnkiDroidDialogButtons(

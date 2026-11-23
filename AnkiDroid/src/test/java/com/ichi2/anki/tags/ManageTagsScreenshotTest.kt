@@ -4,6 +4,8 @@ package com.ichi2.anki.tags
 
 import android.os.Looper
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
@@ -26,10 +28,12 @@ import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.simulateKeyboard
 import com.ichi2.testutils.simulateSystemBars
@@ -199,6 +203,65 @@ class ManageTagsScreenshotTest : ScreenshotTest() {
         openScreen()
         compose.onNodeWithContentDescription(with(targetContext) { TR.sentenceCase.clearUnusedTags }).assertIsDisplayed()
         captureSettled("clear_unused_action")
+    }
+
+    @Test
+    fun ankiweb_sync_warning() {
+        Prefs.hkey = "test-key"
+        addBasicNote().update { listOf("Science", "History").forEach(::addTag) }.update { removeTag("History") }
+        openScreen()
+        val banner =
+            compose.onNodeWithText(
+                with(targetContext) { getString(CommonString.manage_tags_deleted_sync_warning, TR.sentenceCase.clearUnusedTags) },
+            )
+        banner.assertDoesNotExist()
+        screen.clearUnused()
+        screen.confirm(TagAction.CLEAR_UNUSED).performClick()
+        banner.assertIsDisplayed()
+        assertActionIsBold(banner)
+        captureSettled("sync_warning")
+        compose.mainClock.autoAdvance = true
+        compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_dismiss_sync_warning)).performClick()
+        banner.assertDoesNotExist()
+        screen.clearUnused()
+        screen.confirm(TagAction.CLEAR_UNUSED).assertIsDisplayed()
+        captureDialogSyncDetails("sync_warning_confirmation")
+    }
+
+    @Test
+    fun ankiweb_delete_tag_warning() {
+        Prefs.hkey = "test-key"
+        addBasicNote().update { addTag("Science") }
+        openScreen()
+        screen.action(TagAction.DELETE, "Science")
+        screen.confirm(TagAction.DELETE).assertIsDisplayed()
+        captureDialogSyncDetails("sync_warning_delete_confirmation")
+    }
+
+    private fun captureDialogSyncDetails(name: String) {
+        val summary = compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_dialog_sync_summary))
+        val instructions =
+            compose.onNodeWithText(
+                with(targetContext) { getString(CommonString.manage_tags_dialog_sync_instructions, TR.sentenceCase.clearUnusedTags) },
+            )
+        summary.assertIsDisplayed()
+        instructions.assertDoesNotExist()
+        captureSettled(name)
+        compose.mainClock.autoAdvance = true
+        summary.performClick()
+        instructions.assertIsDisplayed()
+        assertActionIsBold(instructions)
+        captureSettled("${name}_details")
+    }
+
+    private fun assertActionIsBold(node: SemanticsNodeInteraction) {
+        val action = with(targetContext) { TR.sentenceCase.clearUnusedTags }
+        val text = node.fetchSemanticsNode().config[SemanticsProperties.Text].single()
+        assertTrue(
+            text.spanStyles.any { span ->
+                span.item.fontWeight == FontWeight.Bold && text.text.substring(span.start, span.end) == action
+            },
+        )
     }
 
     @Test

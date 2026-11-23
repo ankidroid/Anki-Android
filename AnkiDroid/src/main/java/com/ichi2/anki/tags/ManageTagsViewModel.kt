@@ -262,17 +262,17 @@ class ManageTagsViewModel(
                 try {
                     // Queue every tap before a reopened screen can load the tree. These small
                     // preference writes must finish even when closing clears this ViewModel.
-                    val undoLabels =
+                    val history =
                         withContext(NonCancellable) {
                             withCol {
                                 undoHistory.trackNonUndoableChange(this) {
                                     tags.setCollapsed(node.fullTag, newCollapsed)
                                 }
-                                undoHistory.labels(this)
+                                undoHistory.state(this)
                             }
                         }
                     updateState {
-                        it.copy(undoLabel = undoLabels.undoLabel, redoLabel = undoLabels.redoLabel)
+                        it.copy(undoLabel = history.undoLabel, redoLabel = history.redoLabel)
                     }
                 } catch (e: CancellationException) {
                     throw e
@@ -292,7 +292,7 @@ class ManageTagsViewModel(
      */
     internal fun removeTag(tag: TagName) =
         launchTagOpAndRefresh {
-            val result = tagUndoableOp { tags.remove(tag) }
+            val result = tagUndoableOp(deletesTags = true) { tags.remove(tag) }
             messageQueue.enqueue(TagRemoved(result.count))
         }
 
@@ -333,7 +333,7 @@ class ManageTagsViewModel(
      */
     internal fun clearUnusedTags() =
         launchTagOpAndRefresh {
-            val result = tagUndoableOp { tags.clearUnusedTags() }
+            val result = tagUndoableOp(deletesTags = true) { tags.clearUnusedTags() }
             Timber.i("Deleted %d unused tags", result.count)
             messageQueue.enqueue(ClearedUnusedTags(result.count))
         }
@@ -387,16 +387,19 @@ class ManageTagsViewModel(
             messageQueue.enqueue(UserMessage.Redone(result.operation))
         }.job
 
-    private suspend fun tagUndoableOp(block: Collection.() -> OpChangesWithCount): OpChangesWithCount =
+    private suspend fun tagUndoableOp(
+        deletesTags: Boolean = false,
+        block: Collection.() -> OpChangesWithCount,
+    ): OpChangesWithCount =
         undoableOp(handler = this@ManageTagsViewModel) {
-            undoHistory.trackTagChange(this, block)
+            undoHistory.trackTagChange(this, deletesTags, block)
         }
 
     private suspend fun loadTags(error: Throwable? = null) {
         Timber.i("Loading tags from collection")
         refreshes.trackLoad {
-            val (tree, undoLabels) =
-                withCol { tags.tree() to undoHistory.labels(this) }
+            val (tree, history) =
+                withCol { tags.tree() to undoHistory.state(this) }
             tagList = flattenTree(tree)
             state.value =
                 ManageTagsState.Content(
@@ -404,8 +407,9 @@ class ManageTagsViewModel(
                     isWorking = true,
                     error = error,
                     totalTagCount = tagList.size,
-                    undoLabel = undoLabels.undoLabel,
-                    redoLabel = undoLabels.redoLabel,
+                    undoLabel = history.undoLabel,
+                    redoLabel = history.redoLabel,
+                    hasAppliedTagDeletion = history.hasAppliedTagDeletion,
                     tagRevision = ++tagRevision,
                 )
         }
@@ -677,6 +681,8 @@ sealed class ManageTagsState {
         val redoLabel: String? = null,
         /** Invalidates selected-tag checks even when a note update leaves the tag tree unchanged. */
         val tagRevision: Long = 0,
+        /** A tag deletion from this screen is still applied. */
+        val hasAppliedTagDeletion: Boolean = false,
     ) : ManageTagsState()
 
     data class Error(

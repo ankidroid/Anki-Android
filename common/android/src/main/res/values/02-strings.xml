@@ -480,6 +480,10 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="manage_tags" maxLength="28">Manage tags</string>
     <string name="manage_tags_search_hint">Search tags</string>
     <string name="manage_tags_clear_unused_confirm">Remove all tags with no associated notes.</string>
+    <string name="manage_tags_dialog_sync_summary">Tag list removals don’t sync</string>
+    <string name="manage_tags_dialog_sync_instructions" comment="%1$s is the localized name of the Clear unused tags action">After syncing, use %1$s on other devices to remove unused tags.</string>
+    <string name="manage_tags_deleted_sync_warning" comment="%1$s is the localized name of the Clear unused tags action">Use %1$s on other devices after syncing.</string>
+    <string name="manage_tags_dismiss_sync_warning" comment="Accessibility label for dismissing the sync warning on the Manage tags screen">Dismiss sync warning</string>
     <string name="manage_tags_clear_unused_action">Clear</string>
     <string name="manage_tags_rename_invalid">Enter a different tag name</string>
     <string name="manage_tags_rename_empty">Enter a tag name</string>

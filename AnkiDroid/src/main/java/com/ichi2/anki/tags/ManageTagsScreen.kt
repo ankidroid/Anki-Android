@@ -70,12 +70,16 @@ internal fun ManageTagsScreen(
     onDismissError: (Throwable) -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     validateRenameInput: (suspend (TagName, String) -> TagInputValidation?)? = null,
+    hasAnkiWebAccount: Boolean = false,
 ) {
     var selectedTag by rememberSaveable { mutableStateOf<String?>(null) }
     var dialogAction by rememberSaveable { mutableStateOf<TagAction?>(null) }
+    // TODO: Reconsider persisting the dismissal across visits to Manage tags.
+    var syncWarningDismissed by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val content = state as? ManageTagsState.Content
     val actionsEnabled = content != null && !content.isWorking
+    val showSyncWarning = hasAnkiWebAccount && content?.hasAppliedTagDeletion == true && !syncWarningDismissed
     val focusRequester = remember { FocusRequester() }
     var hasFocusedChild by remember { mutableStateOf(false) }
     var focusedTag by remember { mutableStateOf<Pair<TagName, FocusRequester>?>(null) }
@@ -135,6 +139,7 @@ internal fun ManageTagsScreen(
     ) { padding ->
         ManageTagsContent(
             state = state,
+            onDismissSyncWarning = { syncWarningDismissed = true }.takeIf { showSyncWarning },
             searchQuery = searchQuery,
             onSearch = onSearch,
             onToggleCollapsed = onToggleCollapsed,
@@ -169,6 +174,7 @@ internal fun ManageTagsScreen(
     }
 
     ManageTagsDialogs(
+        hasAnkiWebAccount = hasAnkiWebAccount,
         selectedTag = selectedTag,
         dialogAction = dialogAction,
         tagRevision = content?.tagRevision,

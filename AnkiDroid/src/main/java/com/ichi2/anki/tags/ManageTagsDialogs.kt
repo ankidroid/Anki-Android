@@ -18,6 +18,7 @@ import com.ichi2.compose.ui.preview.DialogPreviews
 /** Shows the selected tag's actions or confirmation dialog and refreshes rename eligibility. */
 @Composable
 internal fun ManageTagsDialogs(
+    hasAnkiWebAccount: Boolean,
     selectedTag: String?,
     dialogAction: TagAction?,
     tagRevision: Long?,
@@ -49,6 +50,7 @@ internal fun ManageTagsDialogs(
     if (action != null) {
         ManageTagDialog(
             action = action,
+            hasAnkiWebAccount = hasAnkiWebAccount,
             tag = tag,
             enabled = actionsEnabled,
             tagExists = tagExists,

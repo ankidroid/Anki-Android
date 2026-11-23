@@ -2,9 +2,11 @@
 
 package com.ichi2.anki.tags
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -12,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.ext.isAscii
 import com.ichi2.anki.ui.internationalization.tr
@@ -32,13 +35,15 @@ internal fun ManageTagDialog(
     onDismissRequest: () -> Unit,
     validateRenameInput: (suspend (TagName, String) -> TagInputValidation?)? = null,
     tagRevision: Long? = null,
+    hasAnkiWebAccount: Boolean = false,
 ) {
     val title = action.dialogTitle()
-    if (action == TagAction.DELETE || action == TagAction.CLEAR_UNUSED) {
+    val isDelete = action == TagAction.DELETE
+    if (isDelete || action == TagAction.CLEAR_UNUSED) {
         MessageDialog(
             title = title,
             message =
-                if (action == TagAction.DELETE) {
+                if (isDelete) {
                     stringResource(CommonString.manage_tags_delete_confirm, requireNotNull(tag).value)
                 } else {
                     // TODO: List the unused tags that will be removed before the user confirms.
@@ -48,6 +53,11 @@ internal fun ManageTagDialog(
             onConfirm = { if (enabled) onConfirm("") },
             onDismissRequest = onDismissRequest,
             enabled = enabled,
+            beforeMessage = {
+                if (hasAnkiWebAccount) {
+                    TagSyncDetails(modifier = Modifier.padding(bottom = 12.dp))
+                }
+            },
         )
         return
     }
