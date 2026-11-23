@@ -1807,11 +1807,11 @@ class NoteEditorFragment :
         requestTemplateEditLauncher.launch(intent)
     }
 
-    /** Appends a string at the selection point, or appends to the end if not in focus  */
+    /** Inserts text at the selection, or appends it when the field lacks focus. */
     @VisibleForTesting
     fun insertStringInField(
         fieldEditText: EditText?,
-        formattedValue: String?,
+        formattedValue: CharSequence?,
     ) {
         if (fieldEditText!!.hasFocus()) {
             // Crashes if start > end, although this is fine for a selection via keyboard.
