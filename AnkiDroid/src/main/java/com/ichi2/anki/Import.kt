@@ -57,8 +57,13 @@ internal suspend fun Activity.prepareAndOpenImport(
     exitActivityOnFailure: Boolean,
     onPrepared: () -> Unit = {},
     prepare: suspend () -> ImportResult,
+): ImportResult.Success? = openPreparedImport(prepare(), exitActivityOnFailure, onPrepared)
+
+private fun Activity.openPreparedImport(
+    result: ImportResult,
+    exitActivityOnFailure: Boolean,
+    onPrepared: () -> Unit,
 ): ImportResult.Success? {
-    val result = prepare()
     // finish() may precede onDestroy(), which cancels preparation.
     if (isFinishing) return null
     onPrepared()
