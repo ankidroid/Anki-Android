@@ -4,6 +4,7 @@
 package com.ichi2.anki.noteeditor
 
 import android.content.ClipDescription
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -288,19 +289,25 @@ internal class NoteEditorMultimediaController(
         description: ClipDescription,
         pasteAsPng: Boolean,
     ): Boolean {
-        val context = fragment.requireContext()
-        val mediaTag =
-            MediaRegistration.onPaste(
-                context,
-                uri,
-                description,
-                pasteAsPng,
-                showError = { type -> fragment.showSnackbar(type.toHumanReadableString(context)) },
-            ) ?: return false
+        val mediaTag = importPastedMedia(fragment.requireContext(), uri, description, pasteAsPng) ?: return false
 
         fragment.insertStringInField(editText, mediaTag)
         return true
     }
+
+    private fun importPastedMedia(
+        context: Context,
+        uri: Uri,
+        description: ClipDescription,
+        pasteAsPng: Boolean,
+    ): String? =
+        MediaRegistration.onPaste(
+            context,
+            uri,
+            description,
+            pasteAsPng,
+            showError = { error -> fragment.showSnackbar(error.toHumanReadableString(context)) },
+        )
 
     /** Imports the captured media into the collection if the result carries any. */
     fun handleResult(result: MultimediaResult.Success) {
