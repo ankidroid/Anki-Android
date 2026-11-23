@@ -49,7 +49,6 @@ import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
-import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.findCards
 import com.ichi2.anki.browser.search.findNotes
@@ -77,7 +76,6 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.uiConfigPrefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -265,15 +263,8 @@ open class CardBrowser :
         startLoadingCollection()
 
         setupFlows()
-        registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
         registerSaveSearchHandler()
         registerDeckSelectedHandler(action = ::onDeckSelected)
-        registerFindReplaceHandler { result ->
-            launchCatchingTask {
-                val count = viewModel.findAndReplace(result).await()
-                showSnackbar(TR.browsingNotesUpdated(count))
-            }
-        }
         registerSavedSearchActionHandler { type, searchName ->
             if (searchName == null) return@registerSavedSearchActionHandler
             when (type) {
