@@ -38,18 +38,20 @@ import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportResolution
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.prepareImport
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import kotlin.math.max
@@ -66,8 +68,10 @@ class IntentHandler : AbstractIntentHandler() {
     // A delayed work query must not reopen DeckPicker after this activity is dismissed.
     private val syncIntentScope = MainScope()
     private val importScope = MainScope()
+    private var pendingImport: PendingImport? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        pendingImport = lastNonConfigurationInstance as? PendingImport
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -123,9 +127,14 @@ class IntentHandler : AbstractIntentHandler() {
 
     override fun onDestroy() {
         importScope.cancel()
+        if (!isChangingConfigurations) pendingImport?.cancel()
         syncIntentScope.cancel()
         super.onDestroy()
     }
+
+    // Only the result consumer belongs to this activity instance. The copy and its
+    // reservation pass to the replacement activity during a configuration change.
+    override fun onRetainNonConfigurationInstance(): Any? = pendingImport
 
     private fun copyDebugInfoToClipboard(intent: Intent) {
         Timber.i("Copying debug info to clipboard")
@@ -250,20 +259,25 @@ class IntentHandler : AbstractIntentHandler() {
             finish()
             return
         }
-        importScope.launch {
-            val session = ImportSession.acquire(this@IntentHandler)
-            if (session == null) {
-                finish()
-                return@launch
+        val pending =
+            pendingImport ?: run {
+                val session = ImportSession.acquire(this)
+                if (session == null) {
+                    finish()
+                    return
+                }
+                PendingImport(session, applicationScope.async(ioDispatcher) { prepareImport(this@IntentHandler, intent) })
             }
+        pendingImport = pending
+        importScope.launch {
+            val prepared = pending.preparation.await()
+            pendingImport = null
             val result =
                 prepareAndOpenImport(
                     exitActivityOnFailure = true,
-                    existingSession = session,
+                    existingSession = pending.session,
                     onPrepared = { deleteDownloadedDeckIfShared(intent) },
-                ) {
-                    withContext(ioDispatcher) { prepareImport(this@IntentHandler, intent) }
-                } ?: return@launch
+                ) { prepared } ?: return@launch
 
             if (result.file !is ImportResolution.Text) {
                 deleteImportedDeck(intent.data?.path)
@@ -272,6 +286,16 @@ class IntentHandler : AbstractIntentHandler() {
                 startActivity(reloadIntent)
             }
             finish()
+        }
+    }
+
+    private class PendingImport(
+        val session: ImportSession,
+        val preparation: Deferred<ImportResult>,
+    ) {
+        fun cancel() {
+            preparation.invokeOnCompletion { session.finish() }
+            preparation.cancel()
         }
     }
 
