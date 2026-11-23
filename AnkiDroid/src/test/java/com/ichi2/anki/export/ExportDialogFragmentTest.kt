@@ -28,11 +28,11 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.deckAdapter
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.utils.ext.requireParcelable
-import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.parcelSize
 import com.ichi2.testutils.parcelledCopy
@@ -288,7 +288,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             (export.requireDialog() as AlertDialog).negativeButton.performClick()
             advanceRobolectricLooper()
-            val adapter = deckPicker.deckPickerBinding.decks.adapter as DeckAdapter
+            val adapter = deckPicker.deckAdapter
             advanceRobolectricLooperUntil(
                 lazyMessage = { "Deck created through export was saved but never appeared in the deck list" },
             ) {
