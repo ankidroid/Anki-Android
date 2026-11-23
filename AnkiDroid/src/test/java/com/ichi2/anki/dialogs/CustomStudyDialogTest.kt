@@ -2,9 +2,12 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
@@ -46,6 +49,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
+import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.REQUEST_SELECT_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.RESULT_SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
@@ -78,6 +82,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
@@ -668,7 +673,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             ContextMenuOption.EXTEND_REV to { defaultsOfDefaultDeck.labelForReviewQueueAvailable() },
         ).forEach { (option, expectedLabel) ->
             withExtendLimitsDialog(option) {
-                val root = binding.root
+                val root = binding.root.getChildAt(0) as ViewGroup
                 val availableCards =
                     assertNotNull(
                         root.children.firstOrNull { it is TextView && it.isVisible && it.text.toString() == expectedLabel() },
@@ -723,6 +728,167 @@ class CustomStudyDialogTest : RobolectricTest() {
                 .check(doesNotExist())
         }
     }
+
+    @Test
+    fun `cancelled card state validation preserves a visibly selected tag`() =
+        runTest {
+            val selected = addBasicNote().update { addTag("selected") }
+            val unrelated = addBasicNote()
+            addBasicNote().update { addTag("due-only") }.firstCard().update {
+                type = CardType.Rev
+                queue = QueueType.Rev
+                due = col.sched.today
+            }
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("selected"))
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("selected"), fragment.viewModel.selectedTags)
+
+                val collectionScheduler = TestCoroutineScheduler()
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                val previous =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(collectionScheduler),
+                        useReentrantLock = false,
+                    )
+                try {
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                    runCurrent()
+
+                    // Let tag pruning finish while the separate tag-availability check is still queued.
+                    repeat(3) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+
+                    assertEquals(
+                        "selected",
+                        (fragment.binding.tagsChipGroup.getChildAt(0) as TextView).text.toString(),
+                    )
+
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.NewCardsOnly)
+                    runCurrent()
+
+                    repeat(4) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+
+                    assertEquals(listOf("selected"), fragment.viewModel.selectedTags)
+                } finally {
+                    collectionScheduler.advanceUntilIdle()
+                    runCurrent()
+                    CollectionManager.setTestDispatcher(previous)
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
+
+                fragment.submitSubscreenData()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(
+                    assertNotNull(col.decks.customStudySession).id,
+                    selected.firstCard().did,
+                )
+                assertEquals(Consts.DEFAULT_DECK_ID, unrelated.firstCard().did)
+            }
+        }
+
+    @Test
+    fun `confirming an unavailable tag does not silently create an unfiltered session`() =
+        runTest {
+            val source = addDeck("A")
+            val selected = addNoteToDeckA { addTag("selected") }
+            val unrelated = addNoteToDeckA {}
+
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, source),
+            ) { fragment ->
+                fragment.binding.tagsDummyEdittext.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                val picker =
+                    fragment.parentFragmentManager.fragments
+                        .filterIsInstance<TagsDialog>()
+                        .single()
+
+                assertTrue(
+                    picker.viewModel.tags
+                        .getCompleted()
+                        .check("selected"),
+                )
+
+                selected.firstCard().update {
+                    queue = QueueType.Suspended
+                }
+
+                (picker.requireDialog() as AlertDialog).positiveButton.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(
+                    listOf("selected"),
+                    fragment.viewModel.selectedTags,
+                    "Confirming a tag must not silently discard the user's filter",
+                )
+                assertFalse(
+                    (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                )
+                assertEquals(source, unrelated.firstCard().did)
+            }
+        }
+
+    @Test
+    @Config(sdk = [24])
+    fun `tags picker is reachable using keyboard focus`() =
+        runTest {
+            addBasicNote().update { addTag("selectable") }
+
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS),
+            ) { fragment ->
+                assertTrue(fragment.binding.tagsSelectionLayout.isEnabled)
+
+                val field = fragment.binding.tagsDummyEdittext
+                val group = fragment.binding.tagsChipGroup
+                val focusable = arrayListOf<View>()
+
+                fragment
+                    .requireDialog()
+                    .window!!
+                    .decorView
+                    .addFocusables(focusable, View.FOCUS_FORWARD)
+
+                assertTrue(
+                    field in focusable || group in focusable,
+                    "Keyboard users must be able to reach the Tags picker",
+                )
+
+                val control = if (field in focusable) field else group
+                assertTrue(control.requestFocus())
+
+                assertTrue(
+                    control.dispatchKeyEvent(
+                        KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER),
+                    ),
+                )
+                assertTrue(
+                    control.dispatchKeyEvent(
+                        KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER),
+                    ),
+                )
+
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertNotNull(
+                    fragment.parentFragmentManager.findFragmentByTag("TagsDialog"),
+                )
+            }
+        }
 
     @Test
     fun `unsuspending a forgotten card enables confirmation in the open dialog`() =
@@ -839,6 +1005,271 @@ class CustomStudyDialogTest : RobolectricTest() {
             }
         }
 
+    @SuppressLint("CheckResult")
+    @Test
+    fun `due only can rebuild a preview session containing a waiting due card`() =
+        runTest {
+            val source = addDeck("A")
+            val note = addNoteToDeckA {}
+            note.firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today - 1
+            }
+            col.config.set("collapseTime", 0)
+            col.sched.customStudy(
+                anki.scheduler.CustomStudyRequest
+                    .newBuilder()
+                    .setDeckId(source)
+                    .setCram(
+                        anki.scheduler.CustomStudyRequest.Cram
+                            .newBuilder()
+                            .setKind(CramKind.CRAM_KIND_ALL)
+                            .setCardLimit(100),
+                    ).build(),
+            )
+            val card = note.firstCard()
+            assertEquals(source, card.oDid)
+            card.startTimer()
+            col.sched.answerCard(card, anki.scheduler.CardAnswer.Rating.AGAIN)
+            assertTrue(
+                col.findCards("deck:A is:due").isEmpty(),
+                "The preview repeat delay has not elapsed",
+            )
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, source),
+            ) { fragment ->
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue(
+                    (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                    "Create should be enabled for the reusable due card",
+                )
+                fragment.submitSubscreenData()
+                shadowOf(Looper.getMainLooper()).idle()
+                val rebuilt = note.firstCard()
+                val session = assertNotNull(col.decks.customStudySession)
+                assertEquals(session.id, rebuilt.did)
+                assertEquals(QueueType.Rev, rebuilt.queue)
+            }
+        }
+
+    @SuppressLint("CheckResult")
+    @Test
+    fun `due only ignores reusable cards belonging to another deck`() =
+        runTest {
+            val source = addDeck("A")
+            addNoteToDeckA {}
+            val other = addBasicNote()
+            other.firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today - 1
+            }
+            col.sched.customStudy(
+                anki.scheduler.CustomStudyRequest
+                    .newBuilder()
+                    .setDeckId(Consts.DEFAULT_DECK_ID)
+                    .setCram(
+                        anki.scheduler.CustomStudyRequest.Cram
+                            .newBuilder()
+                            .setKind(CramKind.CRAM_KIND_ALL)
+                            .setCardLimit(100),
+                    ).build(),
+            )
+            assertEquals(Consts.DEFAULT_DECK_ID, other.firstCard().oDid)
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, source),
+            ) { fragment ->
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertFalse(
+                    (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                    "Cards borrowed from another deck must not enable Create",
+                )
+            }
+        }
+
+    @Test
+    fun `custom study rejects oversized tag picker results`() =
+        runTest {
+            val note = addBasicNote()
+            val oversizedTags = ArrayList((1..101).map { "tag$it" })
+            col.tags.bulkAdd(
+                listOf(note.id),
+                oversizedTags.joinToString(" "),
+            )
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS),
+            ) { fragment ->
+                assertTrue(fragment.viewModel.selectedTags.isEmpty())
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(
+                            RESULT_SELECTED_TAGS,
+                            oversizedTags,
+                        )
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue(
+                    fragment.viewModel.selectedTags.isEmpty(),
+                    "Oversized tag results must not enter SavedStateHandle",
+                )
+            }
+        }
+
+    @Test
+    fun `Create revalidates when a learning card becomes due`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            val now = (System.currentTimeMillis() / 1000L).toInt()
+            col.config.set("collapseTime", 0)
+            card.update {
+                type = CardType.Lrn
+                queue = QueueType.Lrn
+                due = now + 3600
+            }
+            assertTrue(
+                col.findCards("is:due").isEmpty(),
+                "Learning card should not be due initially",
+            )
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS),
+            ) { fragment ->
+                val dialog = fragment.requireDialog() as AlertDialog
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertFalse(
+                    dialog.positiveButton.isEnabled,
+                    "Create should initially be disabled",
+                )
+                card.update {
+                    due = now - 1
+                }
+                assertTrue(
+                    col.findCards("is:due").contains(card.id),
+                    "The learning card should now be due",
+                )
+                onSubscreenEditText().perform(replaceText("99"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue(
+                    dialog.positiveButton.isEnabled,
+                    "Create should be enabled after revalidating due cards",
+                )
+            }
+        }
+
+    @Test
+    fun `changing card state preserves a parent tag that matches Greek final sigma`() =
+        runTest {
+            val source = addDeck("A")
+            addNoteToDeckA { addTag("Σ::new") }
+            val matching = addNoteToDeckA { addTag("ς::due") }
+            val unrelated = addNoteToDeckA {}
+
+            for (note in listOf(matching, unrelated)) {
+                note.firstCard().update {
+                    type = CardType.Rev
+                    queue = QueueType.Rev
+                    due = col.sched.today
+                }
+            }
+
+            assertEquals(listOf(matching.id), col.findNotes("deck:A is:due tag:Σ"))
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, source)) { fragment ->
+                fragment.binding.tagsDummyEdittext.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                val picker =
+                    fragment.parentFragmentManager.fragments
+                        .filterIsInstance<TagsDialog>()
+                        .single()
+                assertTrue(
+                    picker.viewModel.tags
+                        .getCompleted()
+                        .check("Σ"),
+                )
+                (picker.requireDialog() as AlertDialog).positiveButton.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(listOf("Σ"), fragment.viewModel.selectedTags)
+
+                fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(listOf("Σ"), fragment.viewModel.selectedTags)
+
+                fragment.submitSubscreenData()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(assertNotNull(col.decks.customStudySession).id, matching.firstCard().did)
+                assertEquals(source, unrelated.firstCard().did)
+            }
+        }
+
+    @SuppressLint("CheckResult")
+    @Test
+    fun `due only can rebuild a preview session containing a waiting learning card`() =
+        runTest {
+            val source = addDeck("A")
+            val note = addNoteToDeckA {}
+            col.config.set("collapseTime", 0)
+
+            note.firstCard().update {
+                type = CardType.Lrn
+                queue = QueueType.Lrn
+                due = TimeManager.time.intTime().toInt() - 60
+            }
+
+            col.sched.customStudy(
+                anki.scheduler.CustomStudyRequest
+                    .newBuilder()
+                    .setDeckId(source)
+                    .setCram(
+                        anki.scheduler.CustomStudyRequest.Cram
+                            .newBuilder()
+                            .setKind(CramKind.CRAM_KIND_ALL)
+                            .setCardLimit(100),
+                    ).build(),
+            )
+
+            val previewed = note.firstCard()
+            assertEquals(source, previewed.oDid)
+
+            previewed.startTimer()
+            col.sched.answerCard(previewed, anki.scheduler.CardAnswer.Rating.AGAIN)
+
+            assertTrue(col.findCards("deck:A is:due").isEmpty())
+
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, source),
+            ) { fragment ->
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertTrue(
+                    (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                    "Rebuilding should restore the learning card's original due time",
+                )
+
+                fragment.submitSubscreenData()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(QueueType.Lrn, note.firstCard().queue)
+            }
+        }
+
     @Test
     fun `creating a tags custom session uses selected card state`() =
         runTest {
@@ -876,6 +1307,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     REQUEST_SELECT_TAGS,
                     Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, selectedTags) },
                 )
+                studyDialog.submitSubscreenData()
                 val customStudyDeck = col.decks.customStudySession
                 assertNotNull(customStudyDeck)
                 assertThat(col.decks.cardCount(customStudyDeck.id), equalTo(1))
@@ -883,6 +1315,223 @@ class CustomStudyDialogTest : RobolectricTest() {
                 assertThat(n2.firstCard().did, equalTo(testDeckId))
                 assertThat(n3.firstCard().did, equalTo(customStudyDeck.id))
                 assertThat(n3.firstCard().oDid, equalTo(testDeckId))
+            }
+        }
+
+    @Test
+    fun `choosing a tag named none never includes unrelated cards`() =
+        runTest {
+            val deck = addDeck("A")
+            val chosen = addNoteToDeckA { addTag("none") }
+            val other = addNoteToDeckA { addTag("other") }
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, deck)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("none")) },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("none"), fragment.viewModel.selectedTags)
+                assertNull(fragment.binding.tagsSelectionLayout.error)
+                assertTrue((fragment.requireDialog() as AlertDialog).positiveButton.isEnabled)
+                fragment.submitSubscreenData()
+                shadowOf(Looper.getMainLooper()).idle()
+                val customStudyDeck = assertNotNull(col.decks.customStudySession)
+                assertEquals(customStudyDeck.id, chosen.firstCard().did)
+                assertEquals(deck, other.firstCard().did)
+            }
+        }
+
+    @SuppressLint("CheckResult")
+    @Test
+    fun `confirming one tag does not load unrelated tagged note bodies`() =
+        runTest {
+            addBasicNote().update { addTag("selected") }
+            val unrelated = addBasicNote().update { addTag("unrelated") }
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val original = col
+                val tracked = io.mockk.spyk(original)
+                CollectionManager.setColForTests(tracked)
+                try {
+                    fragment.parentFragmentManager.setFragmentResult(
+                        REQUEST_SELECT_TAGS,
+                        Bundle().apply {
+                            putStringArrayList(
+                                RESULT_SELECTED_TAGS,
+                                arrayListOf("selected"),
+                            )
+                        },
+                    )
+                    shadowOf(Looper.getMainLooper()).idle()
+                    assertEquals(
+                        listOf("selected"),
+                        fragment.viewModel.selectedTags,
+                    )
+                    verify(exactly = 0) { tracked.getNote(unrelated.id) }
+                } finally {
+                    CollectionManager.setColForTests(original)
+                }
+            }
+        }
+
+    @Test
+    fun `a nonbreaking space in a tag survives validation`() =
+        runTest {
+            val tag = "French\u00A0exam"
+            val note = addBasicNote().update { addTag(tag) }
+            assertEquals(listOf(tag), col.getNote(note.id).tags)
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS),
+            ) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(
+                            RESULT_SELECTED_TAGS,
+                            arrayListOf(tag),
+                        )
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf(tag), fragment.viewModel.selectedTags)
+                assertTrue(
+                    (fragment.requireDialog() as AlertDialog)
+                        .positiveButton.isEnabled,
+                )
+            }
+        }
+
+    @Test
+    fun `changing state preserves a parent tag with matching child tags`() =
+        runTest {
+            addBasicNote().update { addTag("Science::Physics") }
+            addBasicNote()
+                .update {
+                    addTag("Science::Biology")
+                }.firstCard()
+                .update {
+                    queue = QueueType.Rev
+                    type = CardType.Rev
+                    due = col.sched.today
+                }
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS),
+            ) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(
+                            RESULT_SELECTED_TAGS,
+                            arrayListOf("Science"),
+                        )
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("Science"), fragment.viewModel.selectedTags)
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("Science"), fragment.viewModel.selectedTags)
+                assertTrue(
+                    (fragment.requireDialog() as AlertDialog)
+                        .positiveButton.isEnabled,
+                )
+            }
+        }
+
+    @Test
+    fun `changing card state removes unavailable none while preserving available tags`() =
+        runTest {
+            addBasicNote().update {
+                addTag("none")
+                addTag("keep")
+            }
+            addBasicNote().update { addTag("keep") }.firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today
+            }
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val dialog = fragment.requireDialog() as AlertDialog
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(
+                            RESULT_SELECTED_TAGS,
+                            arrayListOf("none", "keep"),
+                        )
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("none", "keep"), fragment.viewModel.selectedTags)
+                assertTrue(dialog.positiveButton.isEnabled)
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("keep"), fragment.viewModel.selectedTags)
+                assertTrue(dialog.positiveButton.isEnabled)
+            }
+        }
+
+    @Test
+    fun `a capitalized None tag can create a session for tagged cards`() =
+        runTest {
+            val deck = addDeck("A")
+            val tagged = addNoteToDeckA { addTag("None") }
+            val untagged = addNoteToDeckA {}
+            assertEquals(listOf(tagged.id), col.findNotes("tag:None"))
+            assertEquals(listOf(untagged.id), col.findNotes("tag:none deck:A"))
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS, deck)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("None"))
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue((fragment.requireDialog() as AlertDialog).positiveButton.isEnabled)
+                fragment.submitSubscreenData()
+                shadowOf(Looper.getMainLooper()).idle()
+                val session = assertNotNull(col.decks.customStudySession)
+                assertEquals(session.id, tagged.firstCard().did)
+                assertEquals(deck, untagged.firstCard().did)
+            }
+        }
+
+    @Test
+    fun `switching state drops a Turkish tag that has no matches in the new state`() =
+        runTest {
+            val newNote = addBasicNote().update { addTag("Kil") }
+            val dueNote = addBasicNote().update { addTag("Kıl") }
+            dueNote.firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today
+            }
+            assertEquals(listOf(newNote.id), col.findNotes("tag:Kil"))
+            assertEquals(listOf(dueNote.id), col.findNotes("tag:Kıl"))
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(
+                            RESULT_SELECTED_TAGS,
+                            arrayListOf("Kil"),
+                        )
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("Kil"), fragment.viewModel.selectedTags)
+                fragment.setCardStateSelectionTo(
+                    CustomStudyDialog.CustomStudyCardState.DueCardsOnly,
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue(
+                    fragment.viewModel.selectedTags.isEmpty(),
+                    "The due card only has the tag Kıl",
+                )
             }
         }
 
@@ -980,6 +1629,9 @@ class CustomStudyDialogTest : RobolectricTest() {
                         Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("testTag")) },
                     )
                 }
+                onView(withId(android.R.id.button1))
+                    .inRoot(isDialog())
+                    .perform(click())
                 assertNotNull(col.decks.customStudySession)
             }
         }
@@ -1001,6 +1653,373 @@ class CustomStudyDialogTest : RobolectricTest() {
         viewModel.selectedCardStateIndex = AdapterView.INVALID_POSITION
 
         assertThat(viewModel.selectedKind, equalTo(CramKind.CRAM_KIND_NEW))
+    }
+
+    @Test
+    fun `suspended new cards do not enable Create`() =
+        runTest {
+            addBasicNote().firstCard().update { queue = QueueType.Suspended }
+            assertEquals(1, col.findCards("is:new").size)
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                assertFalse(
+                    (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                    "Suspended cards cannot be added to a custom study session",
+                )
+                assertEquals(
+                    TR.customStudyNoCardsMatchedTheCriteriaYou(),
+                    fragment.binding.cardsStateSelectorLayout.error
+                        ?.toString(),
+                )
+            }
+        }
+
+    @Test
+    fun `changing state removes an unavailable tag named underscore asterisk`() =
+        runTest {
+            addBasicNote().update { addTag("_*") }
+            addBasicNote().update { addTag("other") }.firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today
+            }
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("_*")) },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertEquals(listOf("_*"), fragment.viewModel.selectedTags)
+
+                fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertTrue(fragment.viewModel.selectedTags.isEmpty(), "The due card only has the tag other")
+            }
+        }
+
+    @Test
+    fun `Create is disabled while a changed card state is being validated`() =
+        runTest {
+            addBasicNote()
+            assertTrue(col.findCards("is:due").isEmpty())
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val positiveButton = (fragment.requireDialog() as AlertDialog).positiveButton
+                assertTrue(positiveButton.isEnabled, "The initial new-card selection is valid")
+
+                val collectionScheduler = TestCoroutineScheduler()
+                val previousDispatcher =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(collectionScheduler),
+                        useReentrantLock = false,
+                    )
+                try {
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                    runCurrent()
+
+                    assertFalse(
+                        positiveButton.isEnabled,
+                        "Create must be disabled while the newly selected state is still being checked",
+                    )
+                } finally {
+                    try {
+                        fragment.dismissNow()
+                        collectionScheduler.advanceUntilIdle()
+                        runCurrent()
+                    } finally {
+                        CollectionManager.setTestDispatcher(previousDispatcher)
+                    }
+                }
+            }
+        }
+
+    @Test
+    fun `learning cards enable Create for all review cards in random order`() =
+        runTest {
+            addBasicNote().firstCard().update {
+                type = CardType.Lrn
+                queue = QueueType.Lrn
+            }
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.ReviewCardsRandom)
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertTrue((fragment.requireDialog() as AlertDialog).positiveButton.isEnabled)
+                assertNull(fragment.binding.cardsStateSelectorLayout.error)
+            }
+        }
+
+    @Test
+    fun `manually buried new cards show an inline error and disable Create`() =
+        runTest {
+            assertBuriedCardsCannotCreate(QueueType.ManuallyBuried)
+        }
+
+    @Test
+    fun `sibling buried new cards show an inline error and disable Create`() =
+        runTest {
+            assertBuriedCardsCannotCreate(QueueType.SiblingBuried)
+        }
+
+    @Test
+    fun `rapid taps on the tags field open only one picker`() =
+        runTest {
+            val note = addBasicNote()
+            col.tags.bulkAdd(listOf(note.id), "selected")
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val tagsField = fragment.binding.tagsDummyEdittext
+                assertTrue(tagsField.isEnabled)
+
+                tagsField.performClick()
+                tagsField.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(
+                    1,
+                    fragment.parentFragmentManager.fragments.count { it is TagsDialog && it.dialog?.isShowing == true },
+                    "Repeated taps must not stack duplicate tag pickers",
+                )
+            }
+        }
+
+    @Test
+    fun `tag picker does not open when selected card state has no matching cards`() =
+        runTest {
+            val note = addBasicNote()
+            col.tags.bulkAdd(listOf(note.id), "selected")
+            assertTrue(col.findCards("is:due").isEmpty())
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertFalse(fragment.binding.tagsSelectionLayout.isEnabled)
+
+                fragment.binding.tagsDummyEdittext.performClick()
+                fragment.binding.tagsChipGroup.performClick()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertEquals(
+                    0,
+                    fragment.parentFragmentManager.fragments.count {
+                        it is TagsDialog && it.dialog?.isShowing == true
+                    },
+                    "The tag picker must not open when no cards match the selected state",
+                )
+            }
+        }
+
+    @Test
+    fun `submitting custom study discards its pending tag picker`() =
+        runTest {
+            val note = addBasicNote()
+            col.tags.bulkAdd(listOf(note.id), "selected")
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val manager = fragment.parentFragmentManager
+                val scheduler = TestCoroutineScheduler()
+                val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(scheduler), useReentrantLock = false)
+                try {
+                    fragment.binding.tagsDummyEdittext.performClick()
+                    runCurrent()
+                    fragment.submitSubscreenData()
+                    repeat(6) {
+                        scheduler.runCurrent()
+                        runCurrent()
+                    }
+                    shadowOf(Looper.getMainLooper()).idle()
+                } finally {
+                    CollectionManager.setTestDispatcher(previous)
+                }
+                assertNotNull(col.decks.customStudySession)
+                assertFalse(manager.fragments.filterIsInstance<TagsDialog>().any { it.dialog?.isShowing == true })
+            }
+        }
+
+    @Test
+    fun `tapping Tags after submitting does not reopen the tag picker`() =
+        runTest {
+            val note = addBasicNote()
+            col.tags.bulkAdd(listOf(note.id), "selected")
+            withCustomStudyFragment(
+                argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS),
+            ) { fragment ->
+                val manager = fragment.parentFragmentManager
+                val scheduler = TestCoroutineScheduler()
+                val previous =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(scheduler),
+                        useReentrantLock = false,
+                    )
+                try {
+                    fragment.submitSubscreenData()
+                    runCurrent()
+                    val tagsField = fragment.binding.tagsDummyEdittext
+                    assertTrue(tagsField.isEnabled)
+                    tagsField.performClick()
+                    runCurrent()
+                    assertNull(manager.findFragmentByTag("TagsDialog"))
+                    runCurrent()
+                    repeat(8) {
+                        scheduler.runCurrent()
+                        runCurrent()
+                    }
+                    shadowOf(Looper.getMainLooper()).idle()
+                } finally {
+                    CollectionManager.setTestDispatcher(previous)
+                }
+                assertNotNull(col.decks.customStudySession)
+                assertFalse(
+                    manager.fragments
+                        .filterIsInstance<TagsDialog>()
+                        .any { it.dialog?.isShowing == true },
+                )
+            }
+        }
+
+    @Test
+    fun `pending tag picker does not open after card state becomes invalid`() =
+        runTest {
+            val note = addBasicNote()
+            col.tags.bulkAdd(listOf(note.id), "selected")
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                assertTrue(fragment.binding.tagsSelectionLayout.isEnabled)
+
+                val collectionScheduler = TestCoroutineScheduler()
+                val previousDispatcher =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(collectionScheduler),
+                        useReentrantLock = false,
+                    )
+
+                try {
+                    fragment.binding.tagsDummyEdittext.performClick()
+                    runCurrent()
+                    assertNull(fragment.parentFragmentManager.findFragmentByTag("TagsDialog"))
+
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                    assertFalse(fragment.binding.tagsSelectionLayout.isEnabled)
+
+                    repeat(6) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+                    shadowOf(Looper.getMainLooper()).idle()
+
+                    assertNull(
+                        fragment.parentFragmentManager.findFragmentByTag("TagsDialog"),
+                        "A pending tag lookup must not open the picker after the state changes",
+                    )
+                } finally {
+                    try {
+                        fragment.dismissNow()
+                        collectionScheduler.advanceUntilIdle()
+                        runCurrent()
+                    } finally {
+                        CollectionManager.setTestDispatcher(previousDispatcher)
+                    }
+                }
+            }
+        }
+
+    @Test
+    fun `editing the count does not enable Create while stale tags are being pruned`() =
+        runTest {
+            val newNote = addBasicNote()
+            col.tags.bulkAdd(listOf(newNote.id), "new-only")
+            val dueNote = addBasicNote()
+            col.tags.bulkAdd(listOf(dueNote.id), "due-only")
+            dueNote.firstCard().update {
+                type = CardType.Rev
+                queue = QueueType.Rev
+                due = col.sched.today
+            }
+
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                fragment.parentFragmentManager.setFragmentResult(
+                    REQUEST_SELECT_TAGS,
+                    Bundle().apply {
+                        putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("new-only"))
+                    },
+                )
+                shadowOf(Looper.getMainLooper()).idle()
+                assertTrue(col.findCards("is:due tag:new-only").isEmpty())
+                val positiveButton = (fragment.requireDialog() as AlertDialog).positiveButton
+                assertTrue(positiveButton.isEnabled)
+
+                val collectionScheduler = TestCoroutineScheduler()
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                val previousDispatcher =
+                    CollectionManager.setTestDispatcher(
+                        StandardTestDispatcher(collectionScheduler),
+                        useReentrantLock = false,
+                    )
+                try {
+                    fragment.setCardStateSelectionTo(CustomStudyDialog.CustomStudyCardState.DueCardsOnly)
+                    runCurrent()
+                    // Complete query construction and the card lookup, leaving tag pruning queued.
+                    repeat(2) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+
+                    assertEquals("new-only", (fragment.binding.tagsChipGroup.getChildAt(0) as TextView).text.toString())
+                    fragment.binding.detailsEditText2.setText("99")
+
+                    assertFalse(
+                        positiveButton.isEnabled,
+                        "Create must wait until the selected tags have been validated for the new card state",
+                    )
+                    repeat(2) {
+                        collectionScheduler.runCurrent()
+                        runCurrent()
+                    }
+                    assertTrue(positiveButton.isEnabled, "The eligible Due selection is enabled once stale tags are removed")
+                    assertEquals(0, fragment.binding.tagsChipGroup.childCount)
+                } finally {
+                    try {
+                        fragment.dismissNow()
+                        collectionScheduler.advanceUntilIdle()
+                        runCurrent()
+                    } finally {
+                        CollectionManager.setTestDispatcher(previousDispatcher)
+                        Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                    }
+                }
+            }
+        }
+
+    private fun assertBuriedCardsCannotCreate(queue: QueueType) {
+        val card = addBasicNote().firstCard()
+
+        // Initialize Custom Study before burying the card.
+        val args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)
+
+        card.update { this.queue = queue }
+
+        assertEquals(1, col.findCards("is:new").size)
+        assertEquals(1, col.findCards("is:buried").size)
+
+        assertTrue(
+            col.findCards("is:new -is:buried -is:suspended").isEmpty(),
+            "Buried cards should not match the eligibility query",
+        )
+
+        withCustomStudyFragment(args) { fragment ->
+            assertFalse(
+                (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                "The backend cannot create a session from buried cards",
+            )
+
+            assertEquals(
+                TR.customStudyNoCardsMatchedTheCriteriaYou(),
+                fragment.binding.cardsStateSelectorLayout.error
+                    ?.toString(),
+            )
+        }
     }
 
     @Test
@@ -1373,6 +2392,34 @@ class CustomStudyDialogTest : RobolectricTest() {
     private fun onSubscreenEditText() =
         onView(withId(R.id.details_edit_text_2))
             .inRoot(isDialog())
+
+    @Test
+    fun `confirming many tags uses a bounded number of collection searches`() =
+        runTest {
+            val selection = (1..12).map { "topic$it" }
+            addBasicNote().update { selection.forEach { addTag(it) } }
+            withCustomStudyFragment(argumentsDisplayingSubscreen(ContextMenuOption.STUDY_TAGS)) { fragment ->
+                val original = col
+                val tracked = io.mockk.spyk(original)
+                var searches = 0
+                every { tracked.findNotes(any(), any()) } answers {
+                    searches++
+                    callOriginal()
+                }
+                CollectionManager.setColForTests(tracked)
+                try {
+                    fragment.parentFragmentManager.setFragmentResult(
+                        REQUEST_SELECT_TAGS,
+                        Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, ArrayList(selection)) },
+                    )
+                    shadowOf(Looper.getMainLooper()).idle()
+                    assertEquals(selection, fragment.viewModel.selectedTags)
+                    assertTrue(searches <= 2, "Confirming the selection ran $searches full note searches")
+                } finally {
+                    CollectionManager.setColForTests(original)
+                }
+            }
+        }
 
     private fun createHostActivity() =
         Robolectric.buildActivity(EmptyAnkiActivity::class.java).setup().apply {

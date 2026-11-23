@@ -24,6 +24,12 @@ class CustomStudyDialogScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun studyByCardStateOrTag() =
+        withSubDialog(ContextMenuOption.STUDY_TAGS) {
+            captureScreen("study_by_card_state_or_tag")
+        }
+
+    @Test
     fun previewWithCards() =
         withSubDialog(ContextMenuOption.STUDY_PREVIEW) {
             captureScreen("preview_with_cards")
