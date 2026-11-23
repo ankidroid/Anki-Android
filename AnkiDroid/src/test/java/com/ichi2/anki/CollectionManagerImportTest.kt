@@ -2,17 +2,13 @@
 
 package com.ichi2.anki
 
-import androidx.core.content.edit
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.exception.CollectionLockedException
+import com.ichi2.testutils.OnDiskJvmTest
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendException.BackendImportException
 import net.ankiweb.rsdroid.exceptions.BackendIoException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
-import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
@@ -21,21 +17,11 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
-@RunWith(AndroidJUnit4::class)
-class CollectionManagerImportTest : RobolectricTest() {
-    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
-
-    @Before
-    fun setCollectionPath() {
-        getPreferences().edit {
-            putString(CollectionHelper.PREF_COLLECTION_PATH, tempFolder.newFolder("collection").absolutePath)
-        }
-    }
-
+class CollectionManagerImportTest : OnDiskJvmTest() {
     @Test
     fun `invalid backup leaves the original collection open`() =
         runTest {
-            val backup = tempFolder.newFile("invalid.colpkg").apply { writeText("invalid backup") }
+            val backup = collectionDirectory.newFile("invalid.colpkg").apply { writeText("invalid backup") }
 
             assertFailedImportKeepsCollectionOpen<BackendSyncException>(backup)
         }
@@ -43,7 +29,7 @@ class CollectionManagerImportTest : RobolectricTest() {
     @Test
     fun `missing backup leaves the original collection open`() =
         runTest {
-            assertFailedImportKeepsCollectionOpen<BackendIoException>(File(tempFolder.root, "missing.colpkg"))
+            assertFailedImportKeepsCollectionOpen<BackendIoException>(File(collectionDirectory.root, "missing.colpkg"))
         }
 
     @Test
@@ -72,7 +58,7 @@ class CollectionManagerImportTest : RobolectricTest() {
         }
 
     private fun corruptDatabaseBackup(): File =
-        tempFolder.newFile("corrupt.colpkg").apply {
+        collectionDirectory.newFile("corrupt.colpkg").apply {
             ZipOutputStream(outputStream()).use { archive ->
                 archive.putNextEntry(ZipEntry("collection.anki2"))
                 archive.write("not a SQLite database".toByteArray())
