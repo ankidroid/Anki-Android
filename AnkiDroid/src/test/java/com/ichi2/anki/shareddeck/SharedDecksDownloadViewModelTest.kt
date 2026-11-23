@@ -3,10 +3,12 @@
 
 package com.ichi2.anki.shareddeck
 
+import android.net.Uri
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
+import org.mockito.kotlin.mock
 import java.util.Locale
 
 /** Tests for [SharedDecksDownloadViewModel] */
@@ -85,11 +87,13 @@ class SharedDecksDownloadViewModelTest {
 
     @Test
     fun `onDownloadComplete finishes at 100 percent`() {
+        val download = mock<Uri>()
         viewModel.onProgress(downloadedBytes = 90, totalBytes = 100, timeMillis = 0)
-        viewModel.onDownloadComplete()
+        viewModel.onDownloadComplete(download)
         assertThat(state.phase, equalTo(DownloadPhase.Complete))
         assertThat(state.percent, equalTo(100f))
         assertThat(state.secondsRemaining, equalTo(0L))
+        assertThat(viewModel.completedDeck, equalTo(download))
     }
 
     @Test
