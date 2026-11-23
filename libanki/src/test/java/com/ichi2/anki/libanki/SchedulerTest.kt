@@ -650,6 +650,22 @@ open class SchedulerTest : InMemoryAnkiTest() {
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
     }
 
+    // A new test collection started years past its last unbury day, so the first day read after
+    // a bury unburied every card. This made CongratsPageTest flaky (#23651).
+    @Test
+    fun `reading the day keeps a buried card buried`() {
+        val note = col.newNote()
+        note.setItem("Front", "one")
+        col.addNote(note)
+        val card = note.cards()[0]
+        col.sched.buryCards(listOf(card.id), true)
+
+        val today = col.sched.today
+
+        card.load()
+        Assert.assertEquals("unburied on day $today", QueueType.ManuallyBuried, card.queue)
+    }
+
     @Test
     @Throws(Exception::class)
     fun test_suspendv2() {

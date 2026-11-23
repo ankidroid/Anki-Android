@@ -49,17 +49,21 @@ object Storage {
 
         // initialize
         if (create) {
-            createDB(db, time)
+            createDB(db, backend, time)
         }
         return Pair(db, create)
     }
 
     private fun createDB(
         db: DB,
+        backend: Backend,
         time: Time,
     ) {
         // This line is required for testing - otherwise Rust will override a mocked time.
         db.execute("update col set crt = ?", getDayStart(time) / 1000)
+        // Rust uses the real clock, so a mocked crt puts a test collection years past its last
+        // unbury day. Read the day now so the next read doesn't unbury cards a test just buried.
+        backend.schedTimingToday()
     }
 
     sealed class OpenDbArgs {
