@@ -23,6 +23,7 @@ fun Project.registerTestModuleSelection() {
             description = "Selects affected unit-test modules relative to -PciTestBase=<commit>."
             repositoryDirectory.set(selectionRoot.layout.projectDirectory)
             comparisonBase.convention(providers.gradleProperty("ciTestBase").orElse(""))
+            pullRequestHead.convention(providers.gradleProperty("ciTestPrHead").orElse(""))
             outputFile.convention(selectionRoot.layout.buildDirectory.file("ci/affected-test-modules.properties"))
         }
 

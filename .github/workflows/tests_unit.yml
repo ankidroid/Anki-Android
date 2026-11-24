@@ -200,6 +200,7 @@ jobs:
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         env:
           ORG_GRADLE_PROJECT_ciTestBase: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          ORG_GRADLE_PROJECT_ciTestPrHead: ${{ github.event.pull_request.head.sha }}
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60

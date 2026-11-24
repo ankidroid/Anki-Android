@@ -45,6 +45,10 @@ abstract class SelectAffectedTestModules : DefaultTask() {
     @get:Input
     abstract val comparisonBase: Property<String>
 
+    /** Source commit used to build the checked-out PR merge commit, when running on a pull request. */
+    @get:Input
+    abstract val pullRequestHead: Property<String>
+
     /** Project paths and their directories relative to the repository root. */
     @get:Nested
     abstract val moduleDirectories: ListProperty<ModuleDirectory>
@@ -81,7 +85,8 @@ abstract class SelectAffectedTestModules : DefaultTask() {
     }
 
     /**
-     * Compares [comparisonBase] with the checked-out commit and includes both paths of a rename.
+     * Compares [comparisonBase] with the checked-out commit, including both paths of a rename.
+     * On PRs, also includes test changes that can affect coverage carried from earlier revisions.
      * Returns `null` if the comparison is unavailable. An empty list means Git found no changes.
      */
     @Suppress("ktlint:standard:comment-spacing")
@@ -89,25 +94,54 @@ abstract class SelectAffectedTestModules : DefaultTask() {
         //DEFECT: Reverting a target-only test dependency can leave stale hits if no test files changed.
         val base = comparisonBase.get()
         if (base.isEmpty()) return null
-        if (!base.matches(Regex("[0-9a-fA-F]{40}"))) {
-            logger.warn("Invalid comparison base; running all tests")
+        val head = pullRequestHead.get()
+        val sha = Regex("[0-9a-fA-F]{40}")
+        if (!base.matches(sha) || (head.isNotEmpty() && !head.matches(sha))) {
+            logger.warn("Invalid CI revision; running all tests")
             return null
         }
+        val changes = git("diff", "--name-only", "--no-renames", "-z", base, "HEAD", "--")?.split('\u0000') ?: return null
+        val history = if (head.isEmpty()) emptyList() else historicalTestChanges(base, head) ?: return null
+        return (changes + history).filter { it.isNotEmpty() }.distinct()
+    }
+
+    private fun historicalTestChanges(
+        base: String,
+        head: String,
+    ): List<String>? {
+        // An earlier PR revision may have measured tests that the current tree diff has lost.
+        // Include edits and deletions from the PR branch so fresh reports replace those hits.
+        return git(
+            "log",
+            "--format=",
+            "--name-only",
+            "--no-renames",
+            "-z",
+            "--full-history",
+            "--diff-merges=first-parent",
+            "--diff-filter=a",
+            "$base..$head",
+            "--",
+            ":(glob)**/src/test*/**",
+        )?.split('\u0000')
+    }
+
+    private fun git(vararg arguments: String): String? {
         val output = ByteArrayOutputStream()
         val errors = ByteArrayOutputStream()
         val result =
             execOperations.exec {
                 workingDir(repositoryDirectory.get().asFile)
-                commandLine("git", "diff", "--name-only", "--no-renames", "-z", base, "HEAD", "--")
+                commandLine("git", *arguments)
                 standardOutput = output
                 errorOutput = errors
                 isIgnoreExitValue = true
             }
         if (result.exitValue != 0) {
-            logger.warn("Could not compare Git revisions; running all tests: $errors")
+            logger.warn("Could not read Git changes; running all tests: $errors")
             return null
         }
-        return output.toString(Charsets.UTF_8).split('\u0000').filter { it.isNotEmpty() }
+        return output.toString(Charsets.UTF_8)
     }
 }
 
