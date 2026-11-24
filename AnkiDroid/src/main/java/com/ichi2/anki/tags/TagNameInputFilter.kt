@@ -18,7 +18,12 @@ import androidx.compose.ui.text.input.TextFieldValue
  *   "tag:"  -- input a space --> "tag::"
  *   "tag::" -- input a space --> "tag::"
  */
-internal val tagNameInputFilter =
+internal val tagNameInputFilter = createTagNameInputFilter()
+
+/** In Add Tag, pasted indentation should not create an empty first component. */
+internal val addTagNameInputFilter = createTagNameInputFilter(ignoreLeadingSpaces = true)
+
+private fun createTagNameInputFilter(ignoreLeadingSpaces: Boolean = false): InputFilter =
     InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
         val input = source.subSequence(start, end)
         if (input.none { it == ' ' || it == '\u3000' }) {
@@ -37,6 +42,7 @@ internal val tagNameInputFilter =
         val offsets = if (source is Spanned) IntArray(input.length + 1) else null
         for ((index, char) in input.withIndex()) {
             if (char == ' ' || char == '\u3000') {
+                if (ignoreLeadingSpaces && destStart == 0 && sb.isEmpty()) continue
                 if (previousColonsCnt == 0) {
                     sb.append("::")
                 } else if (previousColonsCnt == 1) {
