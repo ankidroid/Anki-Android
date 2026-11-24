@@ -3,10 +3,13 @@
 package com.ichi2.anki.tags
 
 import android.icu.lang.UCharacter
+import android.os.Bundle
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
+import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesWithCount
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.isAscii
@@ -16,9 +19,9 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
-import com.ichi2.anki.tags.UserMessage.TagMoved
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
+import com.ichi2.anki.tags.UserMessage.UnusedTagMoved
 import com.ichi2.anki.utils.MessageQueue
 import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
@@ -47,15 +50,16 @@ import anki.tags.TagTreeNode as BackendTagTreeNode
  * @see ManageTagsState for UI state.
  * @see pendingMessages for messages awaiting display.
  */
-class ManageTagsViewModel :
-    ViewModel(),
+class ManageTagsViewModel(
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel(),
     ChangeManager.Subscriber {
     val state: StateFlow<ManageTagsState>
         field = MutableStateFlow<ManageTagsState>(ManageTagsState.Loading)
 
-    /** Search field contents, available even while tags are loading or failed to load. */
+    /** Saved search field contents, available even while tags are loading or failed to load. */
     val searchQuery: StateFlow<String>
-        field = MutableStateFlow("")
+        field = savedStateHandle.getMutableStateFlow(STATE_SEARCH_QUERY, "")
 
     private val messageQueue = MessageQueue<UserMessage>()
 
@@ -66,14 +70,33 @@ class ManageTagsViewModel :
     private var tagList: List<TagListItemState> = emptyList()
 
     /** Explicit collapses override search expansion until the query changes. */
-    private val searchCollapsedTags = mutableSetOf<TagName>()
+    private val searchCollapsedTags =
+        savedStateHandle
+            .get<Bundle>(STATE_SEARCH_COLLAPSED_TAGS)
+            ?.getStringArrayList(STATE_SEARCH_COLLAPSED_TAGS)
+            .orEmpty()
+            .mapNotNullTo(mutableSetOf(), TagName::build)
 
     private var tagOperation: Job? = null
+
+    // A collection refresh can require another check without replacing the latest user action.
+    private var lastTagAction: Job? = null
     private var expansionSave: Job? = null
+    private var tagRevision = 0L
+
+    private val refreshes = TagRefreshTracker()
 
     private val undoHistory = ManageTagsUndoHistory()
 
+    // A restored visit can still have deletions applied even though its undo history was lost.
+    private val restoredTagDeletion = savedStateHandle.get<Boolean>(STATE_HAS_APPLIED_TAG_DELETION) ?: false
+
     init {
+        savedStateHandle.setSavedStateProvider(STATE_SEARCH_COLLAPSED_TAGS) {
+            Bundle().apply {
+                putStringArrayList(STATE_SEARCH_COLLAPSED_TAGS, searchCollapsedTags.mapTo(ArrayList(), TagName::value))
+            }
+        }
         ChangeManager.subscribe(this)
         addCloseable { ChangeManager.unsubscribe(this) }
         refreshTags()
@@ -86,14 +109,30 @@ class ManageTagsViewModel :
         if (handler !== this) refreshTags()
     }
 
-    /** Reloads the tag tree from the backend. Preserves the current search query if any */
-    fun refreshTags() =
-        launchTagOpAndRefresh {
-            Timber.i("Refreshing tags")
+    override fun undoOrRedoExecuted(
+        changes: OpChangesAfterUndo,
+        handler: Any?,
+    ) {
+        if (handler !== this) {
+            undoHistory.recordExternalUndoOrRedo(changes)
+            refreshTags()
         }
+    }
+
+    /** Reloads the tag tree from the backend. Preserves the current search query if any */
+    fun refreshTags(): Job {
+        // An unfinished operation may not reload, so it reloads on completion instead.
+        refreshes.requestRefresh()
+        return launchTagOperation(refreshOnly = true) {
+            Timber.i("Refreshing tags")
+            loadTags()
+        }.job
+    }
 
     /**
      * Filters visible tags by [query]. Ancestors of matches are shown to preserve hierarchy.
+     *
+     * TODO: Highlight matching text in tag search results.
      *
      * WARN: Mutliselect was not implemented on this screen due to the confusing combination
      * of having a filtered tag selected.
@@ -111,8 +150,43 @@ class ManageTagsViewModel :
     /** Acknowledges that the UI has finished displaying a message. */
     fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
 
+    /** Clears a dismissed operation error if it is still current. */
+    fun errorDismissed(error: Throwable) {
+        updateState { current ->
+            if (current.error === error) current.copy(error = null) else current
+        }
+    }
+
     /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
     fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
+
+    /** Checks the latest rename input against the loaded tags and the collection. */
+    internal suspend fun validateRenameInput(
+        source: TagName,
+        text: String,
+    ): TagInputValidation? {
+        val loadedTags = tagList
+        fun exists(tag: TagName) = loadedTags.any { it.fullTag == tag }
+        return try {
+            val localResult = validateTagRename(source, text, ::exists)
+            withCol {
+                val result = this.validateTagRename(source, text, ::exists)
+                // The registry is authoritative when Android's case folding suggests a collision.
+                if (localResult == TagInputValidation.ALREADY_EXISTS && result == TagInputValidation.ALREADY_EXISTS &&
+                    !text.isAscii() && !text.trimEnd().endsWith(':')
+                ) {
+                    validateStoredRename(source, requireNotNull(TagName.build(text.trim())))
+                } else {
+                    result
+                }
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Validating a tag rename failed")
+            null
+        }
+    }
 
     /** Checks only the selected subtree, rather than searching notes for every row in the tree. */
     suspend fun canRenameTag(tag: TagName): Boolean? =
@@ -127,6 +201,36 @@ class ManageTagsViewModel :
             updateState { it.copy(error = e) }
             null
         }
+
+    /** Checks a direct rename request while keeping other tag actions disabled. */
+    suspend fun prepareRename(tag: TagName): Boolean? {
+        while (true) {
+            var canRename: Boolean? = null
+            var checkedRevision = refreshes.revision
+            val operation =
+                launchTagOperation {
+                    do {
+                        if (refreshes.needsReload) {
+                            // The dialog also needs the updated tree for destination validation.
+                            canRename = null
+                            loadTags()
+                        }
+                        checkedRevision = refreshes.revision
+                        canRename = canRenameTag(tag)
+                    } while (refreshes.isRefreshRequested)
+                }
+            operation.job.join()
+            if (!operation.accepted || lastTagAction !== operation.job) return null
+            if (checkedRevision == refreshes.revision) {
+                if (canRename == false) messageQueue.enqueue(UserMessage.NoNotesToRename)
+                return canRename
+            }
+
+            // A newer refresh arrived before the shortcut resumed, even if it already finished.
+            tagOperation?.join()
+            if (lastTagAction !== operation.job) return null
+        }
+    }
 
     /** Finds a tag using its displayed expansion state when visible. */
     private fun findTagNode(tag: TagName): TagListItemState? {
@@ -172,17 +276,17 @@ class ManageTagsViewModel :
                 try {
                     // Queue every tap before a reopened screen can load the tree. These small
                     // preference writes must finish even when closing clears this ViewModel.
-                    val undoLabels =
+                    val history =
                         withContext(NonCancellable) {
                             withCol {
                                 undoHistory.trackNonUndoableChange(this) {
                                     tags.setCollapsed(node.fullTag, newCollapsed)
                                 }
-                                undoHistory.labels(this)
+                                undoHistory.state(this)
                             }
                         }
                     updateState {
-                        it.copy(undoLabel = undoLabels.undoLabel, redoLabel = undoLabels.redoLabel)
+                        it.copy(undoLabel = history.undoLabel, redoLabel = history.redoLabel)
                     }
                 } catch (e: CancellationException) {
                     throw e
@@ -200,31 +304,50 @@ class ManageTagsViewModel :
      * Deletes [tag] and its children from all notes.
      * @see Tags.remove
      */
-    fun removeTag(tag: TagName) =
+    internal fun removeTag(tag: TagName) =
         launchTagOpAndRefresh {
-            val result = tagUndoableOp { tags.remove(tag) }
+            val result = tagUndoableOp(deletesTags = true) { tags.remove(tag) }
             messageQueue.enqueue(TagRemoved(result.count))
         }
 
     /**
      * Renames [oldName] to [newName] on notes, including matching child tags.
+     * When [allowMerge] is false, reject occupied destinations and unchanged names at execution.
+     * @param onRenamed Called when the rename changes at least one note.
      * @see Tags.rename
      */
-    fun renameTag(
+    internal fun renameTag(
         oldName: TagName,
         newName: TagName,
+        allowMerge: Boolean = true,
+        onRenamed: () -> Unit = {},
     ) = launchTagOpAndRefresh {
-        val result = tagUndoableOp { renameTagTree(oldName, newName) }
-        messageQueue.enqueue(TagRenamed(result.count))
+        var validation = TagInputValidation.VALID
+        val result =
+            tagUndoableOp {
+                // Check inside the operation to account for changes since dialog validation
+                // and the spelling the backend will actually apply.
+                if (!allowMerge) validation = validateStoredRename(oldName, newName)
+                if (validation == TagInputValidation.VALID) renameTagTree(oldName, newName) else OpChangesWithCount.getDefaultInstance()
+            }
+        if (result.count > 0) onRenamed()
+        messageQueue.enqueue(
+            when (validation) {
+                TagInputValidation.ALREADY_EXISTS -> UserMessage.TagAlreadyExists
+                TagInputValidation.UNCHANGED -> UserMessage.TagNameUnchanged
+                TagInputValidation.VALID -> TagRenamed(result.count)
+                else -> UserMessage.UnexpectedError
+            },
+        )
     }
 
     /**
      * Removes tags not present on any note. Queues a [ClearedUnusedTags] message with the count.
      * @see Tags.clearUnusedTags
      */
-    fun clearUnusedTags() =
+    internal fun clearUnusedTags() =
         launchTagOpAndRefresh {
-            val result = tagUndoableOp { tags.clearUnusedTags() }
+            val result = tagUndoableOp(deletesTags = true) { tags.clearUnusedTags() }
             Timber.i("Deleted %d unused tags", result.count)
             messageQueue.enqueue(ClearedUnusedTags(result.count))
         }
@@ -245,10 +368,10 @@ class ManageTagsViewModel :
             if (result.count == 0 && currentParent != newParent) {
                 UserMessage.UnusedTagNotMoved
             } else {
-                TagMoved(result.count)
+                UnusedTagMoved(result.count)
             },
         )
-    }
+    }.job
 
     /**
      * Undoes the last change, respecting this screen's history boundary when possible.
@@ -262,7 +385,7 @@ class ManageTagsViewModel :
                 }
             pendingMessages.value.forEach { messageShown(it.id) }
             messageQueue.enqueue(UserMessage.Undone(result.operation))
-        }
+        }.job
 
     /**
      * Redoes the last undone change, respecting this screen's history boundary when possible.
@@ -276,41 +399,67 @@ class ManageTagsViewModel :
                 }
             pendingMessages.value.forEach { messageShown(it.id) }
             messageQueue.enqueue(UserMessage.Redone(result.operation))
-        }
+        }.job
 
-    private suspend fun tagUndoableOp(block: Collection.() -> OpChangesWithCount): OpChangesWithCount =
+    private suspend fun tagUndoableOp(
+        deletesTags: Boolean = false,
+        block: Collection.() -> OpChangesWithCount,
+    ): OpChangesWithCount =
         undoableOp(handler = this@ManageTagsViewModel) {
-            undoHistory.trackTagChange(this, block)
+            undoHistory.trackTagChange(this, deletesTags, block)
         }
 
-    private suspend fun loadTags() {
+    private suspend fun loadTags(error: Throwable? = null) {
         Timber.i("Loading tags from collection")
-        val (tree, undoLabels) =
-            withCol { tags.tree() to undoHistory.labels(this) }
-        tagList = flattenTree(tree)
-        state.value =
-            ManageTagsState.Content(
-                visibleNodes = computeVisibleNodes(searchQuery.value),
-                totalTagCount = tagList.size,
-                undoLabel = undoLabels.undoLabel,
-                redoLabel = undoLabels.redoLabel,
-            )
+        refreshes.trackLoad {
+            val (tree, history) =
+                withCol { tags.tree() to undoHistory.state(this) }
+            tagList = flattenTree(tree)
+            val hasAppliedTagDeletion = restoredTagDeletion || history.hasAppliedTagDeletion
+            savedStateHandle[STATE_HAS_APPLIED_TAG_DELETION] = hasAppliedTagDeletion
+            state.value =
+                ManageTagsState.Content(
+                    visibleNodes = computeVisibleNodes(searchQuery.value),
+                    isWorking = true,
+                    error = error,
+                    totalTagCount = tagList.size,
+                    undoLabel = history.undoLabel,
+                    redoLabel = history.redoLabel,
+                    hasAppliedTagDeletion = hasAppliedTagDeletion,
+                    tagRevision = ++tagRevision,
+                )
+        }
     }
 
     /**
      * Runs [block], then [reloads][loadTags], keeping any existing content visible.
      */
-    private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job =
+    private fun launchTagOpAndRefresh(block: suspend () -> Unit): TagOperation =
         launchTagOperation {
             block()
             loadTags()
         }
 
-    /** Starts an operation, or returns the unfinished operation's job without starting another. */
-    private fun launchTagOperation(block: suspend () -> Unit): Job {
+    /**
+     * Result of requesting a tag operation.
+     *
+     * @property job The job for this request, or the active job if another tag operation was
+     * already running. Join it to wait for that work to complete.
+     * @property accepted Whether this request started a new operation. An accepted request can
+     * still encounter a validation or execution error.
+     */
+    internal class TagOperation(
+        val job: Job,
+        val accepted: Boolean,
+    )
+
+    private fun launchTagOperation(
+        refreshOnly: Boolean = false,
+        block: suspend () -> Unit,
+    ): TagOperation {
         val currentOperation = tagOperation
         if (currentOperation != null && !currentOperation.isCompleted) {
-            return currentOperation
+            return TagOperation(currentOperation, accepted = false)
         }
 
         // set 'tagOperation' before executing
@@ -323,9 +472,9 @@ class ManageTagsViewModel :
                 }
             }
         tagOperation = operation
+        if (!refreshOnly) lastTagAction = operation
         // calls from observers will now find this job
-        operation.start()
-        return operation
+        return TagOperation(operation, accepted = operation.start())
     }
 
     /**
@@ -340,6 +489,25 @@ class ManageTagsViewModel :
             }
         }
         try {
+            runTagOperationStep(block)
+            // A queued refresh belongs to a separate collection change, so reload even after a failure.
+            while (refreshes.isRefreshRequested) {
+                val current = state.value
+                val error =
+                    when (current) {
+                        is ManageTagsState.Content -> current.error
+                        is Error -> current.error
+                        ManageTagsState.Loading -> null
+                    }
+                runTagOperationStep { loadTags(error) }
+            }
+        } finally {
+            updateState { it.copy(isWorking = false) }
+        }
+    }
+
+    private suspend fun runTagOperationStep(block: suspend () -> Unit) {
+        try {
             block()
         } catch (e: CancellationException) {
             throw e
@@ -347,12 +515,10 @@ class ManageTagsViewModel :
             Timber.w(e, "Tag operation failed")
             state.update { current ->
                 when (current) {
-                    is ManageTagsState.Content -> current.copy(isWorking = false, error = e)
+                    is ManageTagsState.Content -> current.copy(error = e)
                     is ManageTagsState.Loading, is Error -> Error(e)
                 }
             }
-        } finally {
-            updateState { it.copy(isWorking = false) }
         }
     }
 
@@ -376,6 +542,10 @@ class ManageTagsViewModel :
     }
 
     companion object {
+        private const val STATE_SEARCH_QUERY = "search_query"
+        private const val STATE_SEARCH_COLLAPSED_TAGS = "search_collapsed_tags"
+        private const val STATE_HAS_APPLIED_TAG_DELETION = "has_applied_tag_deletion"
+
         /**
          * Converts the backend's recursive [BackendTagTreeNode] into a flat list of all
          * [TagListItemState]s in pre-order. Always recurses into all children regardless of
@@ -520,12 +690,16 @@ sealed class ManageTagsState {
         val visibleNodes: List<TagListItemState>,
         /** `true` while a tag operation runs, allowing the UI to show progress without hiding the list. */
         val isWorking: Boolean = false,
-        /** Most recent operation failure, cleared when the next operation starts. */
+        /** Most recent operation failure, cleared on dismissal or when the next operation starts. */
         val error: Throwable? = null,
         val totalTagCount: Int = 0,
         /** Localized labels, limited to this screen's history until another caller changes it. */
         val undoLabel: String? = null,
         val redoLabel: String? = null,
+        /** Invalidates selected-tag checks even when a note update leaves the tag tree unchanged. */
+        val tagRevision: Long = 0,
+        /** A tag deletion from this screen is still applied. */
+        val hasAppliedTagDeletion: Boolean = false,
     ) : ManageTagsState()
 
     data class Error(
@@ -553,8 +727,18 @@ sealed interface UserMessage {
         val notesAffected: Int,
     ) : UserMessage
 
-    /** @param notesAffected number of notes whose tags were reparented */
-    data class TagMoved(
+    /** The selected tag subtree has no notes, so rename is unavailable. */
+    data object NoNotesToRename : UserMessage
+
+    data object TagAlreadyExists : UserMessage
+
+    data object TagNameUnchanged : UserMessage
+
+    /**
+     * Retained for move-operation tests; the Manage Tags UI does not offer moving tags.
+     * @param notesAffected number of notes whose tags were reparented
+     */
+    data class UnusedTagMoved(
         val notesAffected: Int,
     ) : UserMessage
 

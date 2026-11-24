@@ -16,11 +16,14 @@ import java.util.AbstractSet
 
 /**
  * Anki maintains a cache of used tags so it can quickly present a list of tags
- * for autocomplete and in the browser. For efficiency, deletions are not
- * tracked, so unused tags can only be removed from the list with a DB check.
+ * for autocomplete and in the browser. Normal sync registers incoming tag names
+ * and syncs each note's tags. Removing a name from the cache is local to the device.
+ * [clearUnusedTags] and Check Database both clear unused names from the local cache.
  *
  * This module manages the tag cache and tags for notes.
  *
+ * Note tags are stored as an ASCII-space-separated string. Parsing also accepts U+3000
+ * (Japanese ideographic space) as a separator. Tags are hierarchical using `::`.
  */
 @WorkerThread
 class Tags(
@@ -52,13 +55,13 @@ class Tags(
      * ***********************************************************
      */
 
-    /** Add space-separate tags to provided notes. */
+    /** Add space-separated tags to provided notes. */
     fun bulkAdd(
         noteIds: List<NoteId>,
         tags: String,
     ): OpChangesWithCount = col.backend.addNoteTags(noteIds = noteIds, tags = tags)
 
-    // Remove space-separated tags from provided notes.
+    /** Remove space-separated tags from provided notes. */
     fun bulkRemove(
         noteIds: List<Long>,
         tags: String,
@@ -75,6 +78,9 @@ class Tags(
 
     /**
      * Rename a given tag and its children on all notes that reference it.
+     *
+     * The backend rejects ASCII spaces (U+0020) and ideographic spaces (U+3000) in [new].
+     * The tag management UI converts these spaces to `::` before calling this method.
      *
      * @return [OpChangesWithCount] containing the number of affected notes.
      */
@@ -104,7 +110,7 @@ class Tags(
      * ***********************************************************
      */
 
-    /** Parse a string and return a list of tags. */
+    /** Parse space-separated tags, including those separated by ideographic spaces (U+3000). */
     fun split(tags: String): MutableList<String> =
         tags
             .replace('\u3000', ' ')

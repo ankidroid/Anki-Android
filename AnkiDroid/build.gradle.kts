@@ -309,6 +309,10 @@ android {
             all { test ->
                 // Profile coverage checks must rerun when the generated profiles change.
                 test.inputs.dir("src/main/generated/baselineProfiles")
+                test.systemProperty(
+                    "ankidroid.runExistingIssueTests",
+                    providers.gradleProperty("runExistingIssueTests").getOrElse("false"),
+                )
                 test.useJUnitPlatform {
                     // ./gradlew testFullDebugUnitTest -Pscreenshot
                     if (project.hasProperty("screenshot")) {

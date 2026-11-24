@@ -7,9 +7,11 @@ import anki.collection.OpChangesWithCount
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.UndoStatus
+import com.ichi2.anki.libanki.UndoStepCounter
 import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.undoLabel
 import timber.log.Timber
+import java.util.concurrent.ConcurrentLinkedQueue
 
 /**
  * Limits undo/redo to this screen's changes until another caller changes shared history.
@@ -19,6 +21,9 @@ internal class ManageTagsUndoHistory {
     private var undoCount = 0
     private var redoCount = 0
     private var expectedUndoStatus: UndoStatus? = null
+    private val appliedTagDeletions = mutableSetOf<UndoStepCounter>()
+    private val undoneTagDeletions = mutableSetOf<UndoStepCounter>()
+    private val externalUndoResults = ConcurrentLinkedQueue<OpChangesAfterUndo>()
 
     /**
      * Allows undo/redo to reach history from before this Manage Tags screen opened.
@@ -31,6 +36,11 @@ internal class ManageTagsUndoHistory {
      * TODO: Preserve the opening boundary even with interleaved API actions.
      */
     private var allowEarlierHistory = false
+
+    /** Queues results from change observers, which run outside the collection lock. */
+    fun recordExternalUndoOrRedo(result: OpChangesAfterUndo) {
+        if (result.changes.tag) externalUndoResults.add(result)
+    }
 
     /**
      * Undoes the last change, respecting this screen's history boundary when possible.
@@ -46,6 +56,7 @@ internal class ManageTagsUndoHistory {
                 undoCount--
                 redoCount++
             }
+            recordUndoOrRedo(it)
             expectedUndoStatus = col.undoStatus()
         }
     }
@@ -64,7 +75,18 @@ internal class ManageTagsUndoHistory {
                 redoCount--
                 undoCount++
             }
+            recordUndoOrRedo(it)
             expectedUndoStatus = col.undoStatus()
+        }
+    }
+
+    private fun recordUndoOrRedo(result: OpChangesAfterUndo) {
+        // The inverse has its own step number. A later edit to the same tag is unrelated.
+        val inverse = result.newStatus.lastStep
+        if (appliedTagDeletions.remove(result.counter)) {
+            undoneTagDeletions.add(inverse)
+        } else if (undoneTagDeletions.remove(result.counter)) {
+            appliedTagDeletions.add(inverse)
         }
     }
 
@@ -79,6 +101,7 @@ internal class ManageTagsUndoHistory {
      */
     fun trackTagChange(
         col: Collection,
+        deletesTags: Boolean,
         block: Collection.() -> OpChangesWithCount,
     ): OpChangesWithCount {
         checkHistory(col)
@@ -88,7 +111,9 @@ internal class ManageTagsUndoHistory {
                 redoCount = 0
             }
             // No-op tag operations can advance lastStep without creating an undo entry.
-            expectedUndoStatus = col.undoStatus()
+            val newStatus = col.undoStatus()
+            if (deletesTags && it.changes.tag) appliedTagDeletions.add(newStatus.lastStep)
+            expectedUndoStatus = newStatus
         }
     }
 
@@ -111,14 +136,14 @@ internal class ManageTagsUndoHistory {
     }
 
     /**
-     * Localized undo/redo labels, or null when the corresponding action is unavailable.
-     * @see UndoRedoLabels
+     * Returns the available undo/redo actions and whether a deletion from this screen is still applied.
      */
-    fun labels(col: Collection): UndoRedoLabels {
+    fun state(col: Collection): ManageTagsHistoryState {
         checkHistory(col)
-        return UndoRedoLabels(
+        return ManageTagsHistoryState(
             undoLabel = col.undoLabel().takeIf { allowEarlierHistory || undoCount > 0 },
             redoLabel = col.redoLabel().takeIf { allowEarlierHistory || redoCount > 0 },
+            hasAppliedTagDeletion = appliedTagDeletions.isNotEmpty(),
         )
     }
 
@@ -129,6 +154,10 @@ internal class ManageTagsUndoHistory {
      * interleaved changes (for example, API note updates) make the opening boundary unreliable.
      */
     private fun checkHistory(col: Collection): UndoStatus {
+        while (true) {
+            val result = externalUndoResults.poll() ?: break
+            recordUndoOrRedo(result)
+        }
         val current = col.undoStatus()
         if (!allowEarlierHistory && expectedUndoStatus != null && current != expectedUndoStatus) {
             allowEarlierHistory = true
@@ -145,8 +174,9 @@ internal class ManageTagsUndoHistory {
     }
 }
 
-/** Localized action labels; null means the corresponding action is unavailable. */
-internal data class UndoRedoLabels(
+/** Localized action labels and deletion status for the current Manage Tags visit. */
+internal data class ManageTagsHistoryState(
     val undoLabel: String?,
     val redoLabel: String?,
+    val hasAppliedTagDeletion: Boolean,
 )

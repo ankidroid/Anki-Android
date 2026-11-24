@@ -2,7 +2,6 @@
 
 package com.ichi2.compose.ui.dialogs
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.ichi2.anki.common.android.R
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 
 /**
@@ -28,10 +28,12 @@ import com.ichi2.compose.ui.preview.AnkiDroidPreview
  * * Primary body text, matching AnkiDroid's View dialogs.
  * * The View dialog theme's width, including its phone/tablet and orientation variants.
  * * 16dp vertical padding.
+ * * The theme's widget outline distinguishes e-ink surfaces.
  * * fade-only animations allow an IME to open when the dialog opens.
  * * The title and actions are always visible in short windows.
  *
  * @param enabled whether the confirm action is enabled; dismissal remains available
+ * @param beforeMessage content placed above the message in the scrollable body
  */
 @Composable
 fun MessageDialog(
@@ -43,8 +45,10 @@ fun MessageDialog(
     dismissText: String = stringResource(R.string.dialog_cancel),
     enabled: Boolean = true,
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
+    beforeMessage: @Composable () -> Unit = {},
 ) {
     val titleBottomPadding = 16.dp
+    val border = MaterialTheme.widgetBorder
     AnkiDroidDialog(
         onDismissRequest = onDismissRequest,
         // Keep the View dialog's device width for long messages (verified on API 34/36).
@@ -57,6 +61,7 @@ fun MessageDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             shadowElevation = ankiDroidDialogElevation(),
+            border = border,
         ) {
             Column(Modifier.padding(ankiDroidDialogContentPadding())) {
                 Text(
@@ -65,12 +70,12 @@ fun MessageDialog(
                     color = AlertDialogDefaults.titleContentColor,
                     modifier = Modifier.padding(bottom = titleBottomPadding),
                 )
-                Box(Modifier.weight(1f, fill = false)) {
+                Column(Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())) {
+                    beforeMessage()
                     Text(
                         message,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.verticalScroll(rememberScrollState()),
                     )
                 }
                 AnkiDroidDialogButtons(

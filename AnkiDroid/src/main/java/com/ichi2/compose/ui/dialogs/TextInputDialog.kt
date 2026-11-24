@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.res.use
 import com.ichi2.anki.CommonString
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.DialogPreviews
 import com.ichi2.compose.utils.toAnnotatedString
@@ -67,7 +68,7 @@ import com.ichi2.compose.utils.toAnnotatedString
  * @param validation validation rules and when to run them; defaults to accepting any input
  * @param helperText shown when no error is displayed; an empty string reserves feedback space
  * @param description optional context below the title
- * @param transformInput applied to text edits, not cursor-only changes
+ * @param transformInput applied to text edits for validation and submission, and to save the selection during IME composition
  * @param enabled whether confirmation is allowed from the button or keyboard
  * @param singleLine whether the field is restricted to one line; multiline input uses the Enter key for newlines
  */
@@ -95,6 +96,8 @@ fun TextInputDialog(
     var input by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(initialText, selection = initialSelection))
     }
+    // Keep the IME's unmodified text in the editor while saving and validating the filtered value.
+    var composingInput by remember { mutableStateOf<TextFieldValue?>(null) }
     val validationState =
         rememberTextInputValidation(
             text = { input.text },
@@ -130,6 +133,7 @@ fun TextInputDialog(
         onDismissRequest()
     }
 
+    val border = MaterialTheme.widgetBorder
     AnkiDroidDialog(
         onDismissRequest = dismiss,
         modifier = Modifier.width(alertDialogWidth()),
@@ -141,6 +145,7 @@ fun TextInputDialog(
             color = AlertDialogDefaults.containerColor,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             shadowElevation = ankiDroidDialogElevation(),
+            border = border,
         ) {
             Layout(modifier = Modifier.padding(ankiDroidDialogContentPadding()), content = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
@@ -169,12 +174,19 @@ fun TextInputDialog(
                         )
                     }
                     OutlinedTextField(
-                        value = input,
+                        value = composingInput ?: input,
                         onValueChange = { proposed ->
-                            if (input.text != proposed.text) {
-                                input = transformInput(proposed)
-                                validationState.onTextChanged()
-                            } else {
+                            val previous = composingInput ?: input
+                            val textChanged = previous.text != proposed.text
+                            val compositionFinished = previous.composition != null && proposed.composition == null
+                            val composingSelectionChanged = proposed.composition != null && previous.selection != proposed.selection
+                            composingInput = proposed.takeIf { it.composition != null }
+                            if (textChanged || compositionFinished || composingSelectionChanged) {
+                                val transformed = transformInput(proposed.copy(composition = null))
+                                val validationTextChanged = input.text != transformed.text
+                                input = transformed
+                                if (textChanged || validationTextChanged) validationState.onTextChanged()
+                            } else if (proposed.composition == null) {
                                 input = proposed
                             }
                         },

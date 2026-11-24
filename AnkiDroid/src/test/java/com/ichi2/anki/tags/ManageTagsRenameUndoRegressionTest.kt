@@ -19,10 +19,10 @@ class ManageTagsRenameUndoRegressionTest : JvmTest() {
             val source = requireNotNull(TagName.build("source"))
             val destination = requireNotNull(TagName.build("destination"))
             val note = addBasicNote().update { addTag("source::child") }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed(source).join()
                 val originalTags = col.tags.all().sorted()
-                renameTag(source, destination).join()
+                renameTag(source, destination).job.join()
                 assertEquals(listOf("destination::child"), col.getNote(note.id).tags)
 
                 col.undo()

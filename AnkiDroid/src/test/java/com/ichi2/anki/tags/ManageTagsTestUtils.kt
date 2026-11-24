@@ -2,17 +2,21 @@
 
 package com.ichi2.anki.tags
 
+import androidx.lifecycle.SavedStateHandle
+
+internal fun createManageTagsViewModel(savedStateHandle: SavedStateHandle = SavedStateHandle()) = ManageTagsViewModel(savedStateHandle)
+
 internal val ManageTagsState.Content.visibleTagNames: List<String>
     get() = visibleNodes.map { it.fullTagName }
 
 internal fun ManageTagsViewModel.toggleCollapsed(tag: String) = toggleCollapsed(TagName.asValid(tag))
 
-internal fun ManageTagsViewModel.removeTag(tag: String) = removeTag(TagName.asValid(tag))
+internal fun ManageTagsViewModel.removeTag(tag: String) = removeTag(TagName.asValid(tag)).job
 
 internal fun ManageTagsViewModel.renameTag(
     oldName: String,
     newName: String,
-) = renameTag(TagName.asValid(oldName), TagName.asValid(newName))
+) = renameTag(TagName.asValid(oldName), TagName.asValid(newName)).job
 
 internal fun ManageTagsViewModel.moveTag(
     tag: String,

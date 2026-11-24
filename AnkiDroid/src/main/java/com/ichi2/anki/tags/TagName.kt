@@ -18,12 +18,18 @@ import java.text.Normalizer
  * and the case-folding bug in Anki's pinned unicase version. [value] retains the name's spelling
  * for display and case-only renames; compare it explicitly when checking whether the spelling changed.
  *
+ * Spaces and Japanese ideographic spaces are converted to `::` with [tagNameInputFilter].
+ * The backend uses these spaces to separate tags.
+ *
  * Tag names should not be logged using `Timber.i` or above to avoid leaking PII to crash reports.
  */
 class TagName private constructor(
     val value: String,
 ) {
     private val identity = foldCase(normalize(value))
+
+    /** The spelling stored by the backend after normalization, with letter case preserved. */
+    internal fun normalizedSpelling(): String = normalize(value)
 
     /** Includes [root] itself; `a::b` is a descendant of `a`, but `ab` is not. */
     fun isSameOrDescendantOf(root: TagName): Boolean = identity == root.identity || identity.startsWith("${root.identity}::")
@@ -51,10 +57,12 @@ class TagName private constructor(
     override fun toString(): String = value
 
     companion object {
+        /**
+         * Builds a name, replacing ASCII spaces with underscores. Ideographic spaces remain in [value].
+         */
         fun build(tagName: String): TagName? {
             if (tagName.isBlank()) return null
-            // in upstream, a space is converted to "::" in the UI
-            // But "_" is converted to " " in some visual displays
+            // Some views display underscores as spaces.
             return TagName(tagName.replace(" ", "_"))
         }
 
@@ -93,12 +101,18 @@ class TagName private constructor(
         // and leave mutation validation (e.g. forbidden separators) to the backend.
         private fun normalize(spelling: String): String =
             spelling.split("::").joinToString("::") { component ->
-                Normalizer
-                    .normalize(component, Normalizer.Form.NFC)
-                    .filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }
-                    .trim(RustCompat::isWhitespace)
-                    .ifEmpty { "blank" }
+                normalizeComponent(component).ifEmpty { "blank" }
             }
+
+        /**
+         * Normalizes a component for identity and input validation, before the fallback to "blank".
+         * Drops ASCII control characters and U+3000 before NFC so the result matches the
+         * eventual registry spelling, including accents initially separated by discarded input.
+         */
+        internal fun normalizeComponent(component: String): String =
+            Normalizer
+                .normalize(component.filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }, Normalizer.Form.NFC)
+                .trim(RustCompat::isWhitespace)
     }
 }
 

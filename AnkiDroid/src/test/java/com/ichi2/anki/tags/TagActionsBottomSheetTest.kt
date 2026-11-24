@@ -1,0 +1,149 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+package com.ichi2.anki.tags
+
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.themedContext
+import com.ichi2.compose.theme.AnkiDroidTheme
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
+@RunWith(AndroidJUnit4::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+class TagActionsBottomSheetTest : RobolectricTest(loadBackend = false) {
+    @get:Rule
+    val compose = createComposeRule()
+
+    @Test
+    fun `e-ink actions sheet has an outline`() {
+        val context = DayTheme.EINK.themedContext(targetContext)
+        compose.setContent {
+            CompositionLocalProvider(LocalContext provides context, LocalInspectionMode provides true) {
+                AnkiDroidTheme {
+                    TagActionsBottomSheet(requireNotNull(TagName.build("Science")), true, {}, {})
+                }
+            }
+        }
+        val pixels = compose.onRoot().captureToImage().toPixelMap()
+        assertEquals(Color.Black, pixels[pixels.width / 2, 1])
+    }
+
+    @Test
+    fun `disabled rename summary uses the same disabled color as the action`() {
+        compose.setContent {
+            AnkiDroidTheme {
+                TagActionsBottomSheet(requireNotNull(TagName.build("Unused")), true, {}, {}, canRename = false)
+            }
+        }
+
+        fun textColor(id: Int): Color {
+            val layouts = mutableListOf<TextLayoutResult>()
+            compose
+                .onNodeWithText(targetContext.getString(id), useUnmergedTree = true)
+                .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            return layouts
+                .single()
+                .layoutInput.style.color
+        }
+        assertEquals(textColor(CommonString.rename), textColor(CommonString.manage_tags_rename_no_notes))
+    }
+
+    @Test
+    @Config(qualifiers = "w320dp-h480dp-port")
+    fun `selection icon stays centered beside wrapped and single-line paths`() {
+        val name = mutableStateOf("Science::Biology::Molecular_biology")
+        compose.setContent {
+            AnkiDroidTheme {
+                TagActionsBottomSheet(requireNotNull(TagName.build(name.value)), true, {}, {})
+            }
+        }
+        compose.onNodeWithText(targetContext.getString(CommonString.manage_tags_actions_title)).assertIsDisplayed()
+        for (text in listOf("Science::Biology::Molecular_biology", "Short")) {
+            compose.runOnIdle { name.value = text }
+            val path = compose.onNodeWithTag("selected_tag_name").assertIsDisplayed().assertTextEquals(text)
+            val layouts = mutableListOf<TextLayoutResult>()
+            path.performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            assertEquals(text == "Short", layouts.single().lineCount == 1)
+            val iconBounds = compose.onNodeWithTag("selected_tag_icon").fetchSemanticsNode().boundsInRoot
+            val textBounds = path.fetchSemanticsNode().boundsInRoot
+            assertEquals(textBounds.center.y, iconBounds.center.y, absoluteTolerance = 1f)
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "w320dp-h480dp-port")
+    fun `long names truncate to two lines and leave actions reachable at large font sizes`() {
+        RuntimeEnvironment.setFontScale(2f)
+        val cases =
+            listOf(
+                "prefix_${"a".repeat(2_000)}_suffix" to true,
+                (List(100) { "Parent$it" } + "Leaf").joinToString("::") to true,
+                "prefix::${"📚".repeat(1_000)}::Leaf" to true,
+                "Short" to false,
+            )
+        val name = mutableStateOf(cases.first().first)
+        val selected = mutableListOf<TagAction>()
+        compose.setContent {
+            AnkiDroidTheme {
+                TagActionsBottomSheet(
+                    tag = requireNotNull(TagName.build(name.value)),
+                    enabled = true,
+                    onAction = { selected.add(it) },
+                    onDismissRequest = {},
+                )
+            }
+        }
+
+        for ((text, ellipsized) in cases) {
+            compose.runOnIdle { name.value = text }
+            val rename = compose.onNodeWithText(targetContext.getString(CommonString.rename)).assertIsDisplayed()
+            val delete = compose.onNodeWithText(targetContext.getString(CommonString.dialog_positive_delete)).assertIsDisplayed()
+            val title = compose.onNodeWithText(text).assertIsDisplayed().assertTextEquals(text)
+            val layouts = mutableListOf<TextLayoutResult>()
+            title.performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            val layout = layouts.single()
+            assertEquals(if (ellipsized) 2 else 1, layout.lineCount)
+            val rendered =
+                layout.layoutInput.text.text
+                    .replace("\u200B", "")
+            assertEquals(ellipsized, rendered.contains('…'), "Tag length: ${text.length}")
+            assertTrue(
+                !layout.hasVisualOverflow,
+                "Rendered $rendered; size=${layout.size}; constraints=${layout.layoutInput.constraints}; widthOverflow=${layout.didOverflowWidth}; heightOverflow=${layout.didOverflowHeight}",
+            )
+            assertTrue(rendered.startsWith(text.take(1)))
+            assertTrue(rendered.endsWith(text.takeLast(1)))
+
+            selected.clear()
+            rename.performClick()
+            delete.performClick()
+            assertEquals(listOf(TagAction.RENAME, TagAction.DELETE), selected)
+        }
+    }
+}

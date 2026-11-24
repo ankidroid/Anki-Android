@@ -8,9 +8,7 @@ import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.InputFilter
 import android.text.InputType
-import android.text.Spanned
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -43,6 +41,9 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.tags.ManageTagsFragment
+import com.ichi2.anki.tags.addTagNameInputFilter
+import com.ichi2.anki.tags.tagNameInputFilter
 import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
@@ -325,6 +326,18 @@ class TagsDialog : AnalyticsDialogFragment {
         val titleRes = if (type == DialogType.EDIT_TAGS) CommonString.card_details_tags else CommonString.studyoptions_limit_select_tags
         toolbar.setTitle(titleRes)
 
+        toolbar.menu.findItem(R.id.action_manage_tags).apply {
+            // Only the Card Browser opens FILTER_BY_TAG; editors and Custom Study share this dialog.
+            isVisible = type == DialogType.FILTER_BY_TAG
+            icon?.setTint(getColorFromAttr(toolbar.context, CommonR.attr.actionBarTextColor))
+            setOnMenuItemClickListener {
+                startActivity(ManageTagsFragment.getIntent(requireContext()))
+                // Cancel the pending selection and discard the tree that management can change.
+                dismiss()
+                true
+            }
+        }
+
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         toolbarAddItem.icon?.mutate()?.setTint(getColorFromAttr(toolbar.context, CommonR.attr.actionBarTextColor))
 
@@ -342,7 +355,8 @@ class TagsDialog : AnalyticsDialogFragment {
         val toolbarSearchItem: MenuItem? = toolbarSearchItem
         toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
         val queryET = toolbarSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-        queryET.filters = arrayOf(addTagFilter)
+        val queryFilter = if (type == DialogType.EDIT_TAGS) addTagNameInputFilter else tagNameInputFilter
+        queryET.filters = arrayOf(queryFilter)
         toolbarSearchView!!.queryHint = getString(CommonString.filter_tags)
         toolbarSearchView!!.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
@@ -399,9 +413,9 @@ class TagsDialog : AnalyticsDialogFragment {
                     d?.dismiss()
                 }
         val inputET = addTagDialog.getInputField()
-        inputET.filters = arrayOf(addTagFilter)
+        inputET.filters = arrayOf(addTagNameInputFilter)
         if (!prefixTag.isNullOrEmpty()) {
-            // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
+            // Append the hierarchy separator using the same rule as typed input.
             inputET.setText("$prefixTag ")
         }
         inputET.moveCursorToEnd()
@@ -482,49 +496,5 @@ class TagsDialog : AnalyticsDialogFragment {
         private const val ARG_DIALOG_TYPE = "dialogType"
         private const val ARG_CHECKED_TAGS = "checkedTags"
         private const val COMPACT_HEIGHT_DP = 480
-
-        /**
-         * The filter that constrains the inputted tag.
-         * Space is not allowed in a tag. For UX of hierarchical tag, inputting a space will instead
-         * insert "::" at the cursor. If there are already some colons in front of the cursor,
-         * complete to 2 colons. For example:
-         *   "tag"   -- input a space --> "tag::"
-         *   "tag:"  -- input a space --> "tag::"
-         *   "tag::" -- input a space --> "tag::"
-         */
-        private val addTagFilter =
-            InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-                if (!source.subSequence(start, end).contains(' ')) {
-                    return@InputFilter null
-                }
-                var previousColonsCnt = 0
-                if (dest != null) {
-                    val previousPart = dest.take(destStart)
-                    if (previousPart.endsWith("::")) {
-                        previousColonsCnt = 2
-                    } else if (previousPart.endsWith(":")) {
-                        previousColonsCnt = 1
-                    }
-                }
-                val sb = StringBuilder()
-                for (char in source.subSequence(start, end)) {
-                    if (char == ' ') {
-                        if (previousColonsCnt == 0) {
-                            sb.append("::")
-                        } else if (previousColonsCnt == 1) {
-                            sb.append(":")
-                        }
-                    } else {
-                        sb.append(char)
-                    }
-                    previousColonsCnt =
-                        if (char == ':') {
-                            previousColonsCnt + 1
-                        } else {
-                            0
-                        }
-                }
-                sb
-            }
     }
 }

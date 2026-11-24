@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.observability
 
-import anki.collection.OpChanges
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -11,7 +10,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 
 /**
- * Provides non-blocking delivery of [OpChanges] to the [ChangeManager] subscriber registry.
+ * Provides non-blocking delivery of collection changes to the [ChangeManager] subscriber registry.
  *
  * Use this when `suspend` is not feasible (e.g. `ContentProvider`).
  *
@@ -19,18 +18,18 @@ import kotlinx.coroutines.launch
  *
  * @param deliver forwards a change to subscribers; invoked on [Dispatchers.Main].
  */
-internal class OpChangesPublisher(
-    private val deliver: (changes: OpChanges, handler: Any?) -> Unit,
+internal class OpChangesPublisher<T : Any>(
+    private val deliver: (changes: T, handler: Any?) -> Unit,
 ) {
-    private data class ChangeEvent(
-        val changes: OpChanges,
+    private data class ChangeEvent<T>(
+        val changes: T,
         val handler: Any?,
     )
 
     /** CoroutineScope which handles the coroutine consuming [changeChannel]. */
     private var scope: CoroutineScope? = null
     private val changeChannel =
-        Channel<ChangeEvent>(
+        Channel<ChangeEvent<T>>(
             capacity = Channel.UNLIMITED,
         )
 
@@ -56,7 +55,7 @@ internal class OpChangesPublisher(
      * @see ChangeManager.publish
      */
     fun publish(
-        changes: OpChanges,
+        changes: T,
         handler: Any?,
     ) {
         ensureCollector()

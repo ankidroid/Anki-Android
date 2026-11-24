@@ -12,9 +12,12 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.rules.ExistingIssue
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -48,6 +51,398 @@ import kotlin.time.Duration.Companion.seconds
 class ManageTagsViewModelTest : JvmTest() {
     @get:Rule
     val caseFolding = IcuCaseFoldingRule()
+
+    @Test
+    fun `preparing rename blocks overlapping requests and mutations until eligibility is known`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val tag = TagName.asValid("source")
+                    val request = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    assertFalse(request.isCompleted)
+                    assertTrue(loadedState.isWorking)
+                    val repeatedRequest = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(tag) }
+                    val deletion = removeTag(tag)
+
+                    assertEquals(true, request.await())
+                    assertNull(repeatedRequest.await())
+                    assertFalse(deletion.accepted)
+                    deletion.job.join()
+                    assertFalse(loadedState.isWorking)
+                }
+                assertEquals(listOf("source"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
+    fun `preparing rename distinguishes unused tags from failed checks`() =
+        runTest {
+            addUnusedTags("unused")
+            withViewModel {
+                val tag = TagName.asValid("unused")
+                assertEquals(false, prepareRename(tag))
+                assertNull(loadedState.error)
+                val warning = pendingMessages.value.single()
+                assertEquals(UserMessage.NoNotesToRename, warning.message)
+                messageShown(warning.id)
+                withLockedCollection { assertNull(prepareRename(tag)) }
+                assertIs<CollectionLockedException>(loadedState.error)
+                assertFalse(loadedState.isWorking)
+                assertTrue(pendingMessages.value.isEmpty())
+            }
+        }
+
+    /**
+     * Pressing R checks whether the tag can be renamed before the rename dialog opens. The check
+     * is a tag operation, and unlike the others, it does not reload the tags when it finishes.
+     *
+     * Bug: if the collection changes elsewhere during the check (an API client adds a tag, for
+     * example), the refresh requested by [ManageTagsViewModel.opExecuted] is merged into the running
+     * check and lost. The dialog then validates against the old tags: renaming to the added tag's
+     * name is accepted, rather than reported as existing, and merges the two tags.
+     *
+     * Correct behavior: when the check finishes, the screen knows about the added tag.
+     */
+    @Test
+    fun `a tag added while preparing a rename is known when the rename dialog opens`() =
+        runTest {
+            val note = addTags("source")
+            withViewModel {
+                val source = TagName.asValid("source")
+                // Obtained before queueing: reading `col` would wait for the queue, blocking the test
+                val collection = col
+                // Collection access waits for the test scheduler, so the check stays in progress
+                withQueuedCollectionAccess {
+                    val preparation = async(start = CoroutineStart.UNDISPATCHED) { prepareRename(source) }
+                    assertTrue(loadedState.isWorking)
+
+                    // Another component adds 'destination' and notifies subscribers during the check.
+                    // This bypasses the queue, as the change does not come from this screen.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+
+                    // The tag is used, so the rename dialog opens as soon as the check returns
+                    assertEquals(true, preparation.await())
+                    // Fails on the buggy revision (expected ALREADY_EXISTS, was VALID):
+                    // the dialog checked the tags loaded before 'destination' was added
+                    assertEquals(TagInputValidation.ALREADY_EXISTS, collection.validateTagRename(source, "destination", ::tagExists))
+                }
+            }
+        }
+
+    /**
+     * A second collection notification can arrive after the first tag read, while that read's
+     * result is still queued on Main. Keep destructive controls disabled through the follow-up
+     * read so the UI cannot submit a confirmation that the in-flight operation will drop.
+     */
+    @Test
+    fun `tag actions remain disabled between coalesced refresh reads`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            withViewModel {
+                // Pause collection and UI work independently so Main can publish the first tree
+                // while the follow-up collection read is still waiting.
+                val backendScheduler = TestCoroutineScheduler()
+                val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(backendScheduler), useReentrantLock = false)
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                try {
+                    val refresh = refreshTags()
+                    runCurrent()
+                    backendScheduler.runCurrent()
+
+                    // The completed read cannot contain this edit. The existing refresh job must
+                    // absorb the notification and read the tree again before becoming idle.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    runCurrent()
+
+                    assertFalse(refresh.isCompleted)
+                    // Fails on the buggy head: publishing the first tree re-enables actions even
+                    // though the refresh is still running and will reject a Delete confirmation.
+                    assertTrue(loadedState.isWorking)
+
+                    backendScheduler.runCurrent()
+                    runCurrent()
+                    assertTrue(refresh.isCompleted)
+                    assertFalse(loadedState.isWorking)
+                    assertTrue(tagExists(TagName.asValid("destination")))
+                } finally {
+                    CollectionManager.setTestDispatcher(previousQueue)
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
+            }
+        }
+
+    /**
+     * The last note carrying a tag can change while the result of the shortcut's eligibility
+     * check is still waiting on Main. The shortcut must use eligibility from the updated tree.
+     */
+    @Test
+    fun `preparing a rename rechecks eligibility after a coalesced collection change`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val source = TagName.asValid("source")
+            withViewModel {
+                // Finish the old eligibility read before Main can consume its result.
+                val backendScheduler = TestCoroutineScheduler()
+                val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(backendScheduler), useReentrantLock = false)
+                Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+                try {
+                    val preparation = async { prepareRename(source) }
+                    runCurrent()
+                    backendScheduler.runCurrent()
+                    assertFalse(preparation.isCompleted)
+
+                    // A background edit removes the last use; its cached tag remains visible.
+                    collection.getNote(note.id).also {
+                        it.removeTag("source")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    repeat(4) {
+                        runCurrent()
+                        backendScheduler.runCurrent()
+                    }
+                    runCurrent()
+
+                    assertTrue(tagExists(source))
+                    // Fails on the buggy head: stale true opens a dialog for a tag with no notes.
+                    assertEquals(false, preparation.await())
+                    assertEquals(UserMessage.NoNotesToRename, pendingMessages.value.single().message)
+                } finally {
+                    CollectionManager.setTestDispatcher(previousQueue)
+                    Dispatchers.setMain(UnconfinedTestDispatcher(testScheduler))
+                }
+            }
+        }
+
+    /**
+     * A collection change can invalidate rename eligibility after the ViewModel check finishes
+     * and before the keyboard shortcut resumes. The shortcut must use the latest eligibility.
+     */
+    @Test
+    fun `preparing a rename checks changes before the shortcut resumes`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val source = TagName.asValid("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Drive the shortcut coroutine separately to model the Compose dispatcher.
+                    val shortcutScheduler = TestCoroutineScheduler()
+                    val preparation = async(shortcutScheduler + StandardTestDispatcher(shortcutScheduler)) { prepareRename(source) }
+                    shortcutScheduler.runCurrent()
+                    assertTrue(loadedState.isWorking)
+                    // Finish the check on Main while the shortcut is still waiting to resume.
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    assertFalse(preparation.isCompleted)
+
+                    // Remove the tag from its only note and let the new refresh finish before
+                    // resuming the shortcut. A pending-refresh flag alone misses this change.
+                    collection.getNote(note.id).also {
+                        it.removeTag("source")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    shortcutScheduler.runCurrent()
+                    runCurrent()
+                    shortcutScheduler.runCurrent()
+
+                    assertTrue(preparation.isCompleted)
+                    // Fails on the buggy revision: the shortcut receives the old true result.
+                    assertEquals(false, preparation.await())
+                    assertEquals(UserMessage.NoNotesToRename, pendingMessages.value.single().message)
+                }
+            }
+        }
+
+    /**
+     * A newer rename shortcut should supersede a completed check whose caller is still
+     * suspended, even if a collection refresh arrived between the two shortcuts.
+     */
+    @Test
+    fun `a refresh does not let an older rename shortcut supersede a newer one`() =
+        runTest {
+            addTags("first", "second")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Keep the first shortcut's caller paused after the ViewModel finishes its check.
+                    val firstScheduler = TestCoroutineScheduler()
+                    val first = async(firstScheduler + StandardTestDispatcher(firstScheduler)) { prepareRename(TagName.asValid("first")) }
+                    firstScheduler.runCurrent()
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    assertFalse(first.isCompleted)
+
+                    // A completed refresh changes the revision before a newer shortcut is accepted.
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    runCurrent()
+                    val second = async { prepareRename(TagName.asValid("second")) }
+                    runCurrent()
+                    assertTrue(second.isCompleted)
+                    assertEquals(true, second.await())
+
+                    // Let the older caller resume after the newer dialog can already be shown.
+                    firstScheduler.runCurrent()
+                    runCurrent()
+                    firstScheduler.runCurrent()
+                    assertTrue(first.isCompleted)
+                    // Fails before the fix because the new refresh revision makes the older shortcut retry and return true.
+                    assertNull(first.await())
+                }
+            }
+        }
+
+    /**
+     * A refresh that cannot read the collection leaves the tag list stale. A shortcut whose
+     * check was paused must reload after the lock clears before it opens the rename dialog.
+     */
+    @Test
+    fun `preparing a rename reloads the tag list after a failed intervening refresh`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            val source = TagName.asValid("source")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Let the eligibility check finish, but keep the shortcut continuation paused.
+                    val shortcutScheduler = TestCoroutineScheduler()
+                    val preparation = async(shortcutScheduler + StandardTestDispatcher(shortcutScheduler)) { prepareRename(source) }
+                    shortcutScheduler.runCurrent()
+                    runCurrent()
+                    assertFalse(loadedState.isWorking)
+                    assertFalse(preparation.isCompleted)
+
+                    // Add a conflicting destination and make its notification's reload fail.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    withLockedCollection {
+                        ChangeManager.notifySubscribersAllValuesChanged()
+                        runCurrent()
+                    }
+                    assertIs<CollectionLockedException>(loadedState.error)
+
+                    // The lock has cleared, so the shortcut can reload before it returns true.
+                    shortcutScheduler.runCurrent()
+                    runCurrent()
+                    shortcutScheduler.runCurrent()
+                    assertTrue(preparation.isCompleted)
+                    assertEquals(true, preparation.await())
+                    // Fails on the buggy revision: only eligibility is checked again, leaving
+                    // destination validation unaware of the newly added tag.
+                    assertEquals(TagInputValidation.ALREADY_EXISTS, collection.validateTagRename(source, "destination", ::tagExists))
+                }
+            }
+        }
+
+    /**
+     * Pasting a tab between colons can hide a hierarchy separator until backend normalization.
+     * Reject the empty component before the backend can turn it into a `blank` subtag.
+     */
+    @Test
+    fun `rename validation rejects empty components exposed by normalization`() =
+        runTest {
+            // An existing normalized destination makes accepting this name an unintended merge.
+            addTags("source", "target::blank")
+            withViewModel {
+                val source = TagName.asValid("source")
+                val pastedName = "target:\t:"
+                assertTrue(tagExists(TagName.asValid("target::blank")))
+
+                // Fails on the buggy revision: splitting the pasted name before removing its tab
+                // misses the trailing separator, so the dialog would accept the rename.
+                assertEquals(TagInputValidation.EMPTY_COMPONENT, col.validateTagRename(source, pastedName, ::tagExists))
+            }
+        }
+
+    /**
+     * Removing a pasted tab can bring a letter and combining accent together. The backend
+     * composes them when registering the renamed tag, so validation must use that spelling.
+     */
+    @Test
+    fun `rename validation uses the destination registered by the backend`() =
+        runTest {
+            // Store the composed spelling first, so accepting the paste would merge into it.
+            addTags("source", "Café")
+            withViewModel {
+                val existing = TagName.asValid("Café")
+                val pastedName = "Cafe\t\u0301"
+                assertTrue(tagExists(existing))
+
+                // Fails on the buggy revision: removing the tab leaves an uncomposed spelling
+                // that validation treats as a new tag, even though the backend composes it again.
+                assertEquals(TagInputValidation.ALREADY_EXISTS, col.validateTagRename(TagName.asValid("source"), pastedName, ::tagExists))
+                // Renaming the existing tag to the same pasted text would leave its spelling unchanged.
+                assertEquals(TagInputValidation.UNCHANGED, col.validateTagRename(existing, pastedName, ::tagExists))
+            }
+        }
+
+    /**
+     * Changing only the case of a registered parent cannot rename a child. Anki restores
+     * the parent's saved spelling, so validation should reject this as an unchanged name.
+     */
+    @Test
+    fun `rename validation rejects changing only a registered parent spelling`() =
+        runTest {
+            // Register one parent explicitly and leave the other implicit in the tree.
+            val note = addTags("Parent", "Parent::child", "Implicit::child")
+            val source = TagName.asValid("Parent::child")
+            val requestedName = "parent::child"
+            assertTrue("Parent" in col.tags.all())
+            assertFalse("Implicit" in col.tags.all())
+            withViewModel {
+                val result = col.validateTagRename(source, requestedName, ::tagExists)
+                // The backend reports an affected note even though it restores the original parent spelling.
+                assertEquals(1, col.tags.rename(source.value, requestedName).count)
+                assertTrue(source.value in col.getNote(note.id).tags)
+
+                // Fails before the fix because validation compares the edited parent spelling verbatim.
+                assertEquals(TagInputValidation.UNCHANGED, result)
+                // The child's own case and the spelling of an implicit parent can both change.
+                assertEquals(TagInputValidation.VALID, col.validateTagRename(source, "parent::Child", ::tagExists))
+                val implicit = TagName.asValid("Implicit::child")
+                assertEquals(TagInputValidation.VALID, col.validateTagRename(implicit, "implicit::child", ::tagExists))
+            }
+        }
+
+    /**
+     * A child with a leading colon can merge into an existing child even when the
+     * backend's tree assigns the stored paths to different parents than its rename matcher.
+     */
+    @Test
+    fun `rename validation rejects a destination hiding an overlapping child`() =
+        runTest {
+            // Register the actual source tag so the UI can select it even if its child is hidden.
+            val sourceNote = addTags("source", "source:::child")
+            val existingNote = addTags("target:::child")
+            val source = TagName.asValid("source")
+            withViewModel {
+                assertTrue(tagExists(source))
+                val result = col.validateTagRename(source, "target", ::tagExists)
+
+                // The rename matcher sees the first two colons as the source subtree separator.
+                assertEquals(1, col.tags.rename(source.value, "target").count)
+                assertTrue(col.getNote(existingNote.id).tags.single() in col.getNote(sourceNote.id).tags)
+
+                // Fails before the fix because the tree does not show that `target` has an existing child.
+                assertEquals(TagInputValidation.ALREADY_EXISTS, result)
+                assertEquals(TagInputValidation.VALID, col.validateTagRename(source, "targ", ::tagExists))
+            }
+        }
 
     @Test
     fun `rename can be repeatedly undone and redone without losing tags`() =
@@ -127,7 +522,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertTrue(tagExists(TagName.asValid("unused::child")))
                 assertNull(loadedState.undoLabel)
 
-                clearUnusedTags().join()
+                clearUnusedTags().job.join()
                 assertEquals(0, loadedState.totalTagCount)
                 assertNotNull(loadedState.undoLabel)
                 undo().join()
@@ -460,7 +855,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertEquals(null, loadedState.error)
                 assertEquals(listOf("Straße::child"), col.getNote(note.id).tags)
                 assertEquals(undoBefore, col.undoStatus())
-                assertEquals(UserMessage.TagMoved(0), pendingMessages.value.single().message)
+                assertEquals(UserMessage.UnusedTagMoved(0), pendingMessages.value.single().message)
             }
         }
 
@@ -600,9 +995,15 @@ class ManageTagsViewModelTest : JvmTest() {
                     val refresh = refreshTags()
                     assertThat(refresh.isCompleted, equalTo(false))
 
-                    assertThat(removeTag("science"), sameInstance(refresh))
-                    assertThat(renameTag("history", "past"), sameInstance(refresh))
-                    assertThat(clearUnusedTags(), sameInstance(refresh))
+                    val deletion = removeTag(TagName.asValid("science"))
+                    val rename = renameTag(TagName.asValid("history"), TagName.asValid("past"))
+                    val clear = clearUnusedTags()
+                    for (operation in listOf(deletion, rename, clear)) {
+                        assertFalse(operation.accepted)
+                        assertThat(operation.job, sameInstance(refresh))
+                    }
+                    assertThat(undo(), sameInstance(refresh))
+                    assertThat(redo(), sameInstance(refresh))
                     assertThat(toggleCollapsed("science"), sameInstance(refresh))
                     assertThat(moveTag("history", "science"), sameInstance(refresh))
                     assertThat(refreshTags(), sameInstance(refresh))
@@ -612,7 +1013,9 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("science", "history", "unused"))
                 assertThat(loadedState.visibleNodes.single { it.fullTagName == "science" }.collapsed, equalTo(true))
 
-                removeTag("science").join()
+                val deletion = removeTag(TagName.asValid("science"))
+                assertTrue(deletion.accepted)
+                deletion.job.join()
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("history", "unused"))
             }
         }
@@ -661,11 +1064,44 @@ class ManageTagsViewModelTest : JvmTest() {
             }
         }
 
+    /**
+     * An external collection change can queue a refresh while a tag operation is running.
+     * If the operation fails, the screen must show the updated tree and the operation error.
+     */
+    @Test
+    fun `failed tag operation still refreshes tags changed elsewhere`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // An ideographic space makes the backend reject the rename. Queue collection
+                    // access so the change notification can arrive before that failure.
+                    val rename = renameTag("source", "invalid\u3000target")
+                    assertTrue(loadedState.isWorking)
+
+                    // An external edit bypasses the ViewModel's pending rename and asks it to reload.
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+                    rename.join()
+
+                    assertNotNull(loadedState.error)
+                    assertFalse(loadedState.isWorking)
+                    // Fails on the buggy revision: the exception skips the queued refresh,
+                    // so name validation still uses the tag tree from before the external edit.
+                    assertTrue(tagExists(TagName.asValid("destination")))
+                }
+            }
+        }
+
     @Test
     fun `initial load failure allows search input and retry`() =
         runTest {
             addTags("science", "history")
-            withViewModel(withLockedCollection { ManageTagsViewModel() }) {
+            withViewModel(withLockedCollection { createManageTagsViewModel() }) {
                 val failure = state.value
                 assertThat(failure, instanceOf(ManageTagsState.Error::class.java))
                 assertThat((failure as ManageTagsState.Error).error, instanceOf(CollectionLockedException::class.java))
@@ -679,6 +1115,36 @@ class ManageTagsViewModelTest : JvmTest() {
                     retry.join()
                 }
                 assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+            }
+        }
+
+    /**
+     * An external collection edit can request a refresh while a deletion is waiting for
+     * collection access. Cancelling the deletion must still load the independent edit.
+     */
+    @Test
+    @ExistingIssue
+    fun `cancelling a tag operation still loads an external edit`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Suspend the deletion before it touches the note so the refresh is coalesced.
+                    val deletion = removeTag("source")
+                    assertTrue(loadedState.isWorking)
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+
+                    deletion.cancelAndJoin()
+                    runCurrent()
+                    assertTrue("source" in collection.getNote(note.id).tags)
+                    // Fails on the buggy version because cancellation abandons the queued refresh.
+                    assertTrue(tagExists(TagName.asValid("destination")))
+                }
             }
         }
 
@@ -698,7 +1164,7 @@ class ManageTagsViewModelTest : JvmTest() {
                     val refresh = refreshTags()
                     assertThat(loadedState.isWorking, equalTo(true))
                     refresh.join()
-                    assertThat(loadedState, equalTo(previous))
+                    assertThat(loadedState.copy(tagRevision = previous.tagRevision), equalTo(previous))
                 }
             }
         }
@@ -708,7 +1174,7 @@ class ManageTagsViewModelTest : JvmTest() {
         runTest {
             val note = addTags("source")
             val collection = col
-            val model = ManageTagsViewModel()
+            val model = createManageTagsViewModel()
             val store = ViewModelStore().apply { put("tags", model) }
             val observer = ChangeCounter()
             ChangeManager.subscribe(observer)
@@ -961,7 +1427,7 @@ class ManageTagsViewModelTest : JvmTest() {
     fun `closing the screen keeps queued expansion saves ahead of a reopened screen`() =
         runTest {
             addTags("science::biology", "history::ancient")
-            val closing = ManageTagsViewModel()
+            val closing = createManageTagsViewModel()
             withQueuedCollectionAccess {
                 withViewModel(closing) {
                     toggleCollapsed("science")
@@ -1103,6 +1569,83 @@ class ManageTagsViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `rename reports completion only when notes changed`() =
+        runTest {
+            addUnusedTags("unused")
+            val note = addTags("source")
+            withViewModel {
+                var completions = 0
+                val onRenamed = { completions += 1 }
+
+                renameTag(TagName.asValid("unused"), TagName.asValid("destination"), onRenamed = onRenamed).job.join()
+                assertEquals(UserMessage.TagRenamed(0), pendingMessages.value.single().message)
+                assertEquals(0, completions)
+
+                renameTag(TagName.asValid("source"), TagName.asValid("destination"), onRenamed = onRenamed).job.join()
+                assertEquals(listOf("destination"), col.getNote(note.id).tags)
+                assertEquals(1, completions)
+            }
+        }
+
+    @Test
+    fun `rename preserves both tags when the destination exists and merging is disabled`() =
+        runTest {
+            val source = addTags("source")
+            val destination = addTags("destination")
+            withViewModel {
+                var renamed = false
+                renameTag(TagName.asValid("source"), TagName.asValid("destination"), allowMerge = false) {
+                    renamed = true
+                }.job.join()
+
+                assertEquals(listOf("source"), col.getNote(source.id).tags)
+                assertEquals(listOf("destination"), col.getNote(destination.id).tags)
+                assertFalse(renamed)
+                assertEquals(UserMessage.TagAlreadyExists, pendingMessages.value.single().message)
+            }
+        }
+
+    /** A pasted control can hide a composed collision until the registry normalizes the new tag. */
+    @Test
+    fun `rename rejects a collision created by repeated normalization`() =
+        runTest {
+            val source = addTags("source")
+            val destination = addTags("Caf\u00e9")
+            withViewModel {
+                // The tab keeps the accent apart during the first NFC pass. After filtering
+                // controls, another normalization can compose the character as in the registry.
+                renameTag(TagName.asValid("source"), TagName.asValid("Cafe\t\u0301"), allowMerge = false).job.join()
+
+                // Before the fix the check misses the registry entry and this note is renamed.
+                assertEquals(listOf("source"), col.getNote(source.id).tags)
+                assertEquals(listOf("Caf\u00e9"), col.getNote(destination.id).tags)
+                assertEquals(setOf("source", "Caf\u00e9"), col.tags.all().toSet())
+                assertEquals(UserMessage.TagAlreadyExists, pendingMessages.value.single().message)
+            }
+        }
+
+    /** Applying a registered parent's spelling must not silently merge into another hierarchy. */
+    @Test
+    fun `rename rejects a collision after applying stored parent spelling`() =
+        runTest {
+            val source = addTags("source")
+            // The backend finds A: by splitting from the right, then rebuilds the new name
+            // with the child component :b. The resulting empty component becomes 'blank'.
+            val parent = addTags("A:")
+            val destination = addTags("A::blank::b")
+            withViewModel {
+                renameTag(TagName.asValid("source"), TagName.asValid("a:::b"), allowMerge = false).job.join()
+
+                // Comparing the textual suffix misses the collision and changes this note.
+                assertEquals(listOf("source"), col.getNote(source.id).tags)
+                assertEquals(listOf("A:"), col.getNote(parent.id).tags)
+                assertEquals(listOf("A::blank::b"), col.getNote(destination.id).tags)
+                assertEquals(setOf("source", "A:", "A::blank::b"), col.tags.all().toSet())
+                assertEquals(UserMessage.TagAlreadyExists, pendingMessages.value.single().message)
+            }
+        }
+
+    @Test
     fun `renameTag updates tag name`() =
         runTest {
             addTags("science")
@@ -1204,7 +1747,7 @@ class ManageTagsViewModelTest : JvmTest() {
 
                 assertThat(col.getNote(first.id).tags, containsInAnyOrder("target::source::child", "unrelated"))
                 assertThat(col.getNote(second.id).tags, containsInAnyOrder("target::source", "target::source::other"))
-                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(2)))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.UnusedTagMoved(2)))
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("target", "unrelated"))
                 assertThat(loadedState.totalTagCount, equalTo(5))
             }
@@ -1459,7 +2002,7 @@ class ManageTagsViewModelTest : JvmTest() {
             withViewModel {
                 ensureOpsExecuted(1) { moveTag("source", "target").join() }
                 assertThat(col.getNote(note.id).tags, containsInAnyOrder("target::source", "target::source::child", "unrelated"))
-                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(1)))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.UnusedTagMoved(1)))
                 col.undo()
                 assertThat(col.getNote(note.id).tags, containsInAnyOrder(*original.toTypedArray()))
                 col.redo()
@@ -1630,7 +2173,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertFalse(tagExists(TagName.asValid("source")))
                 assertTrue(tagExists(TagName.asValid("target::source::child")))
                 assertEquals(
-                    UserMessage.TagMoved(1),
+                    UserMessage.UnusedTagMoved(1),
                     pendingMessages.value
                         .single()
                         .message,
@@ -1660,7 +2203,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertEquals(undoBefore, col.undoStatus())
                 assertEquals(2, loadedState.totalTagCount)
                 assertEquals(
-                    UserMessage.TagMoved(0),
+                    UserMessage.UnusedTagMoved(0),
                     pendingMessages.value
                         .single()
                         .message,
@@ -1679,7 +2222,7 @@ class ManageTagsViewModelTest : JvmTest() {
                 assertEquals(4, loadedState.totalTagCount)
                 assertTrue(tagExists(TagName.asValid("unused::leaf")))
 
-                clearUnusedTags().join()
+                clearUnusedTags().job.join()
 
                 assertNull(loadedState.error)
                 assertEquals(2, loadedState.totalTagCount)
@@ -1725,6 +2268,26 @@ class ManageTagsViewModelTest : JvmTest() {
             }
         }
 
+    /**
+     * The tree groups parents whose case-folded spelling matches. A child displayed under
+     * that shared spelling must remain renameable even when its stored parent is spelled differently.
+     */
+    @Test
+    @ExistingIssue
+    fun `a displayed child is renameable under the shared parent spelling`() =
+        runTest {
+            // Leave the parent unregistered so the two notes retain different stored spellings.
+            addTags("Straße::a")
+            val note = addTags("STRASSE::b")
+            assertEquals(listOf("STRASSE::b"), col.getNote(note.id).tags)
+            withViewModel {
+                val child = TagName.asValid("Straße::b")
+                assertTrue(tagExists(child))
+                // Fails on the buggy revision because a simple regex cannot match `ß` to `SS`.
+                assertEquals(true, canRenameTag(child))
+            }
+        }
+
     @Test
     fun `lookup recognizes backend-equivalent spelling`() =
         runTest {
@@ -1754,7 +2317,7 @@ class ManageTagsViewModelTest : JvmTest() {
         }
     }
 
-    private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = withViewModel(ManageTagsViewModel(), block)
+    private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = withViewModel(createManageTagsViewModel(), block)
 
     /** Helper abstracting [com.ichi2.anki.libanki.Tags.all] */
     private fun checkCollectionTags(block: (List<String>) -> Unit) = block(col.tags.all())

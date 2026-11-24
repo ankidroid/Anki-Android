@@ -21,6 +21,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,21 +34,21 @@ import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.AnkiDroidThemeProvider
 
-/** Uses Material's snackbar styling with the theme's outline for E-ink. */
+/** Uses the View snackbar's corner radius and shadow, with an outline for E-ink. */
 @Composable
 internal fun AnkiDroidSnackbar(
     data: SnackbarData,
     modifier: Modifier = Modifier,
 ) {
     val border = MaterialTheme.widgetBorder
-    val shape =
+    val shape = RoundedCornerShape(dimensionResource(R.dimen.mtrl_snackbar_background_corner_radius))
+    // Clip Material's built-in shadow and use the View shadow or the E-ink outline.
+    val snackbarModifier =
         if (border == null) {
-            SnackbarDefaults.shape
+            modifier.shadow(2.dp, shape).clip(shape)
         } else {
-            RoundedCornerShape(dimensionResource(R.dimen.mtrl_snackbar_background_corner_radius))
+            modifier.clip(shape).border(border, shape)
         }
-    // The outline takes the place of Material's shadow on E-ink.
-    val snackbarModifier = if (border != null) modifier.clip(shape).border(border, shape) else modifier
     Snackbar(
         modifier = snackbarModifier,
         shape = shape,

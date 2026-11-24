@@ -44,7 +44,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
                 addTag("source")
                 addTag("source::child")
             }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed("source").join()
                 renameTag("source", "destination").join()
                 col.tags.setCollapsed("destination", false)
@@ -65,7 +65,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `undoing a second rename restores the revealed ancestor`() =
         runTest {
             addBasicNote().update { addTag("source") }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 renameTag("source", "source::child").join()
                 assertEquals(listOf("source", "source::child"), content.visibleTagNames)
                 renameTag("source", "destination").join()
@@ -81,7 +81,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `undoing a rename restores manually collapsed search results`() =
         runTest {
             addBasicNote().update { addTag("source::branch::leaf") }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 filter("leaf")
                 toggleCollapsed("source::branch").join()
                 assertEquals(listOf("source", "source::branch"), content.visibleTagNames)
@@ -99,7 +99,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
         runTest {
             addBasicNote().update { addTag("source") }
             addBasicNote().update { addTag("target") }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 renameTag("source", "source::child").join()
                 toggleCollapsed("target").join()
                 moveTag("source", "target").join()
@@ -113,7 +113,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `renaming an expanded branch beneath new ancestors keeps its children visible`() =
         runTest {
             addTags("parent::source::open::leaf", "parent::source::closed::leaf")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed("parent").join()
                 toggleCollapsed("parent::source").join()
                 toggleCollapsed("parent::source::open").join()
@@ -140,7 +140,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
         runTest {
             val note = addTags("parent::of::open::leaf", "parent::of::closed::leaf")
             val renamed = listOf("parent", "parent::ofh", "parent::ofh::closed", "parent::ofh::open", "parent::ofh::open::leaf")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed("parent").join()
                 toggleCollapsed("parent::of").join()
                 toggleCollapsed("parent::of::open").join()
@@ -153,7 +153,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
                 col.redo()
                 assertEquals(setOf("parent::ofh::open::leaf", "parent::ofh::closed::leaf"), col.getNote(note.id).tags.toSet())
             }
-            withViewModel(ManageTagsViewModel()) { assertEquals(renamed, content.visibleTagNames) }
+            withViewModel(createManageTagsViewModel()) { assertEquals(renamed, content.visibleTagNames) }
         }
 
     @Test
@@ -162,7 +162,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
         runTest {
             addTags("Straße::open::leaf")
             addUnusedTags("Straße::unused::leaf")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed("Straße").join()
                 toggleCollapsed("Straße::open").join()
                 toggleCollapsed("Straße::unused").join()
@@ -178,7 +178,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `renaming a branch retains explicit collapses within search results`() =
         runTest {
             addTags("parent::of::open::leaf", "parent::of::closed::leaf")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 filter("leaf")
                 toggleCollapsed("parent::of::closed").join()
                 renameTag("parent::of", "parent::ofh").join()
@@ -194,7 +194,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `rename preserves expansion changed since the screen was loaded`() =
         runTest {
             addTags("source::leaf")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 col.tags.setCollapsed("source", false)
                 renameTag("source", "renamed").join()
                 assertEquals(listOf("renamed", "renamed::leaf"), content.visibleTagNames)
@@ -207,7 +207,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
         runTest {
             val note = addTags("parent::source")
             val renamed = listOf("parent", "parent::source", "parent::source::of")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed("parent").join()
                 ensureOpsExecuted(1) { renameTag("parent::source", "parent::source::of").join() }
                 assertNull(content.error)
@@ -230,7 +230,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `new rename ancestors can be collapsed without reopening on refresh`() =
         runTest {
             addTags("source")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 renameTag("source", "source::of").join()
                 assertEquals(listOf("source", "source::of"), content.visibleTagNames)
                 toggleCollapsed("source").join()
@@ -238,7 +238,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
                 refreshTags().join()
                 assertEquals(listOf("source"), content.visibleTagNames)
             }
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 assertEquals(listOf("source"), content.visibleTagNames)
                 assertTrue(content.visibleNodes.single().collapsed)
             }
@@ -248,7 +248,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `merging an expanded source preserves a collapsed destination`() =
         runTest {
             addTags("source::child", "destination::existing")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 toggleCollapsed("source").join()
                 renameTag("source", "destination").join()
                 assertEquals(listOf("destination"), content.visibleTagNames)
@@ -260,7 +260,7 @@ class ManageTagsExpansionStateRegressionTest : JvmTest() {
     fun `merging a collapsed search result preserves an expanded destination`() =
         runTest {
             addTags("source::leaf", "target::leaf")
-            withViewModel(ManageTagsViewModel()) {
+            withViewModel(createManageTagsViewModel()) {
                 filter("leaf")
                 toggleCollapsed("source").join()
                 renameTag("source", "target").join()

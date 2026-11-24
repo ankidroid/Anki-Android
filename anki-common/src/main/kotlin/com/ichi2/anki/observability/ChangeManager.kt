@@ -52,6 +52,12 @@ object ChangeManager {
             changes: OpChanges,
             handler: Any?,
         )
+
+        /** Receives the undo or redo step and its inverse when a subscriber needs history details. */
+        fun undoOrRedoExecuted(
+            changes: OpChangesAfterUndo,
+            handler: Any?,
+        ) = opExecuted(changes.changes, handler)
     }
 
     // Maybe fixes #16217 - CopyOnWriteArrayList makes this object thread-safe
@@ -66,7 +72,7 @@ object ChangeManager {
      *
      * @see publish
      */
-    private val publisher = OpChangesPublisher { changes, handler -> notifySubscribers(changes, handler) }
+    private val publisher = OpChangesPublisher<Any>(::dispatchChanges)
 
     /**
      * Notifies `subscribers` of `changes` without blocking the caller.
@@ -82,7 +88,7 @@ object ChangeManager {
         changes: T,
         handler: Any? = null,
     ) {
-        publisher.publish(changes.toOpChanges(), handler)
+        publisher.publish(if (changes is OpChangesAfterUndo) changes else changes.toOpChanges(), handler)
     }
 
     /**
@@ -135,10 +141,11 @@ object ChangeManager {
         subscribers.removeWeakReferences { it == null || it === subscriber }
     }
 
-    private fun notifySubscribers(
-        changes: OpChanges,
+    private fun dispatchChanges(
+        result: Any,
         handler: Any?,
     ) {
+        val changes = result.toOpChanges()
         val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
             val ref =
@@ -152,7 +159,11 @@ object ChangeManager {
                 expired.add(subscriber)
             } else {
                 try {
-                    ref.opExecuted(changes, handler)
+                    if (result is OpChangesAfterUndo) {
+                        ref.undoOrRedoExecuted(result, handler)
+                    } else {
+                        ref.opExecuted(changes, handler)
+                    }
                 } catch (e: Exception) {
                     CrashReportService.sendExceptionReport(e, "notifySubscribers", "opExecuted failed")
                 }
@@ -176,7 +187,7 @@ object ChangeManager {
         changes: T,
         initiator: Any?,
     ) {
-        notifySubscribers(changes.toOpChanges(), initiator)
+        dispatchChanges(changes, initiator)
     }
 
     /**
