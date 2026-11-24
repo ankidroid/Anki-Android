@@ -6,11 +6,11 @@ import android.content.Intent
 import android.view.KeyEvent
 import androidx.core.content.edit
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NavigationDrawerActivity.Companion.EXTRA_STARTED_WITH_SHORTCUT
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.pages.CongratsPage
+import com.ichi2.anki.study.ReviewerResult.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.testutils.ext.snackbarText
 import org.json.JSONArray
 import org.junit.Before

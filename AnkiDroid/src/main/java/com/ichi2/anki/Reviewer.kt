@@ -130,6 +130,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.study.ReviewerResult
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
@@ -774,7 +775,7 @@ open class Reviewer :
         when (item.itemId) {
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
-                closeReviewer(RESULT_OK)
+                closeReviewer(ReviewerResult.NavigateUp)
             }
             R.id.action_undo -> {
                 Timber.i("Reviewer:: Undo button pressed")
@@ -1038,7 +1039,7 @@ open class Reviewer :
         super.unblockControls()
     }
 
-    override fun closeReviewer(result: Int) {
+    override fun closeReviewer(result: ReviewerResult) {
         // Stop the mic recording if still pending
         if (isRecording) audioRecordingController?.stopAndSaveRecording()
 

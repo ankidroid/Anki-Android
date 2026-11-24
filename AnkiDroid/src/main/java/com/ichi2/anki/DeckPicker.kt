@@ -191,6 +191,7 @@ import com.ichi2.anki.shareddeck.SharedDecksActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.study.ReviewerResult
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.study.currentDeckStudyState
@@ -1614,7 +1615,7 @@ open class DeckPicker :
     }
 
     private fun processReviewResults(resultCode: Int) {
-        if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
+        if (resultCode == ReviewerResult.RESULT_NO_MORE_CARDS) {
             launchCatchingTask {
                 val state = withCol { currentDeckStudyState() }
                 StudyCompletionUi.onReviewsCompleted(this@DeckPicker, state)

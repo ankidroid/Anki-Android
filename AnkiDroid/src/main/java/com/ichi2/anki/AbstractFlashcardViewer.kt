@@ -150,6 +150,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.study.ReviewerResult
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
@@ -341,7 +342,7 @@ abstract class AbstractFlashcardViewer :
         object : OnBackPressedCallback(enabled = true) {
             override fun handleOnBackPressed() {
                 // TODO: This should be improved now we're using callbacks
-                closeReviewer(RESULT_DEFAULT)
+                closeReviewer(ReviewerResult.Exit)
             }
         }
 
@@ -520,7 +521,7 @@ abstract class AbstractFlashcardViewer :
         updateCurrentCard()
 
         if (currentCard == null) {
-            closeReviewer(RESULT_NO_MORE_CARDS)
+            closeReviewer(ReviewerResult.NoMoreCards)
             // When launched with a shortcut, we want to display a message when finishing
             if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
                 StudyCompletionUi.displayFromShortcut(this)
@@ -1695,7 +1696,7 @@ abstract class AbstractFlashcardViewer :
             }
 
             ViewerCommand.EXIT -> {
-                closeReviewer(RESULT_DEFAULT)
+                closeReviewer(ReviewerResult.Exit)
                 true
             }
 
@@ -1962,7 +1963,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Stops automatic answer actions and closes the legacy Reviewer with [result]. See [StudyCompletionUi.finishReview]. */
-    protected open fun closeReviewer(result: Int) {
+    protected open fun closeReviewer(result: ReviewerResult) {
         automaticAnswer.disable()
         previousAnswerIndicator!!.stopAutomaticHide()
         StudyCompletionUi.finishReview(this, result)
@@ -2777,12 +2778,6 @@ abstract class AbstractFlashcardViewer :
         } ?: throw IllegalArgumentException("unhandled request: $uri")
 
     companion object {
-        /** Returned for the Reviewer's Exit command and the legacy Reviewer's Back action. */
-        const val RESULT_DEFAULT = 50
-
-        /** Returned when the scheduler has no card available for the current study session. */
-        const val RESULT_NO_MORE_CARDS = 52
-
         /**
          * Time to wait in milliseconds before resuming fullscreen mode
          *
