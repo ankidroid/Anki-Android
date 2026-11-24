@@ -158,6 +158,52 @@ class TestModuleSelectionPluginTest {
         assertEquals(":AnkiDroid,:common", selection()["modules"])
     }
 
+    @Test
+    fun `refreshes coverage when the target removed a test`() {
+        val libraryTest = "common/src/test/java/LibraryTest.java"
+        writeFile(libraryTest, "class LibraryTest {}")
+        commit()
+        git("branch", "target")
+
+        git("switch", "-c", "feature")
+        writeFile("AnkiDroid/src/test/java/AppTest.java", "class AppTest {}")
+        commit()
+
+        git("switch", "target")
+        git("rm", libraryTest)
+        commit()
+        val target = git("rev-parse", "HEAD")
+
+        git("switch", "feature")
+        writeFile("AnkiDroid/src/test/java/AppTest.java", "class AppTest { int value; }")
+        commit()
+        runPullRequestSelection(target)
+
+        assertEquals(":AnkiDroid,:common", selection()["modules"])
+    }
+
+    @Test
+    fun `refreshes coverage after merging a target that reverted a target-only test`() {
+        git("branch", "target")
+        git("switch", "-c", "feature")
+        writeFile("AnkiDroid/src/test/java/AppTest.java", "class AppTest {}")
+        commit()
+
+        git("switch", "target")
+        val libraryTest = "common/src/test/java/LibraryTest.java"
+        writeFile(libraryTest, "class LibraryTest {}")
+        commit()
+        val earlierTarget = git("rev-parse", "HEAD")
+        git("revert", "--no-edit", earlierTarget)
+        val target = git("rev-parse", "HEAD")
+
+        git("switch", "feature")
+        git("merge", "--quiet", "--no-ff", "-m", "Merge target into feature", "target")
+        runPullRequestSelection(target)
+
+        assertEquals(":AnkiDroid,:common", selection()["modules"])
+    }
+
     @ParameterizedTest
     @ValueSource(strings = ["", "invalid", "0000000000000000000000000000000000000000"])
     fun `missing or invalid comparison bases select the full suite`(comparisonBase: String) {
