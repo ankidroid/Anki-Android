@@ -86,7 +86,7 @@ abstract class SelectAffectedTestModules : DefaultTask() {
 
     /**
      * Compares [comparisonBase] with the checked-out commit, including both paths of a rename.
-     * On PRs, also includes test changes that can affect coverage carried from earlier revisions.
+     * On PRs, also includes paths that can affect coverage carried from earlier revisions.
      * Returns `null` if the comparison is unavailable. An empty list means Git found no changes.
      */
     @Suppress("ktlint:standard:comment-spacing")
@@ -101,9 +101,34 @@ abstract class SelectAffectedTestModules : DefaultTask() {
             return null
         }
         val changes = git("diff", "--name-only", "--no-renames", "-z", base, "HEAD", "--")?.split('\u0000') ?: return null
-        val history = if (head.isEmpty()) emptyList() else historicalTestChanges(base, head) ?: return null
+        val history =
+            if (head.isEmpty()) {
+                emptyList()
+            } else {
+                val pullRequestChanges = historicalPullRequestChanges(base, head) ?: return null
+                val testChanges = historicalTestChanges(base, head) ?: return null
+                pullRequestChanges + testChanges
+            }
         return (changes + history).filter { it.isNotEmpty() }.distinct()
     }
+
+    /**
+     * Finds paths changed in commits reachable from [head] but not from [base].
+     *
+     * A PR can change production code, upload coverage, then revert the change. The final diff
+     * no longer includes that path, but Codecov may carry forward coverage from the earlier PR
+     * revision. Selecting the affected suites again refreshes their coverage.
+     *
+     * [base] is the current target commit and [head] is the PR head. Returns `null` if Git cannot
+     * read the history, so the caller can select the full suite.
+     */
+    private fun historicalPullRequestChanges(
+        base: String,
+        head: String,
+    ): List<String>? =
+        // Combined merge diffs report paths changed relative to every parent, so merging the target
+        // into the PR does not select suites for changes inherited from the target.
+        git("log", "--format=", "--name-only", "--no-renames", "-z", "--diff-merges=combined", "$base..$head", "--")?.split('\u0000')
 
     /**
      * Finds tests edited or deleted in the PR and in target branch updates made during the PR.
