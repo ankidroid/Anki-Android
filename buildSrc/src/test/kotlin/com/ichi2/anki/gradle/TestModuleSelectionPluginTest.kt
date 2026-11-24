@@ -159,6 +159,43 @@ class TestModuleSelectionPluginTest {
     }
 
     @Test
+    fun `refreshes coverage after a PR reverts a production change`() {
+        git("switch", "-c", "feature")
+        writeFile("components/widgets/src/main/Widget.java", "class Widget {}")
+        commit()
+        val productionChange = git("rev-parse", "HEAD")
+        runPullRequestSelection(base)
+        assertEquals(":AnkiDroid,:widgets", selection()["modules"])
+
+        git("switch", "feature")
+        git("revert", "--no-edit", productionChange)
+        writeFile("AnkiDroid/src/test/java/AppTest.java", "class AppTest {}")
+        commit()
+        runPullRequestSelection(base)
+
+        assertEquals(":AnkiDroid,:widgets", selection()["modules"])
+    }
+
+    @Test
+    fun `merging target production changes into a PR does not broaden selection`() {
+        git("branch", "target")
+        git("switch", "-c", "feature")
+        writeFile("AnkiDroid/src/test/java/AppTest.java", "class AppTest {}")
+        commit()
+
+        git("switch", "target")
+        writeFile("components/widgets/src/main/Widget.java", "class Widget {}")
+        commit()
+        val target = git("rev-parse", "HEAD")
+
+        git("switch", "feature")
+        git("merge", "--quiet", "--no-ff", "-m", "Merge target into feature", "target")
+        runPullRequestSelection(target)
+
+        assertEquals(":AnkiDroid", selection()["modules"])
+    }
+
+    @Test
     fun `refreshes coverage when the target removed a test`() {
         val libraryTest = "common/src/test/java/LibraryTest.java"
         writeFile(libraryTest, "class LibraryTest {}")
