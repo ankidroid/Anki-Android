@@ -41,8 +41,10 @@ on:
     types:
       - completed
 
+# Per attempt: a rerun of the emulator run must not cancel the comparison of an
+# earlier attempt, which may be the only one that measured an APK.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}-${{ github.event.workflow_run.run_attempt }}
   cancel-in-progress: true
 
 permissions: {}
@@ -101,29 +103,31 @@ jobs:
             const pullRequests = await github.paginate(github.rest.pulls.list, {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              // A closed PR can share this head (e.g. the branch was reopened against
-              // another base), so only open PRs may receive the comparison.
-              state: 'open',
+              // Closed PRs are included: one that was open when the run started may be
+              // the run's own PR, and must not let its result go to another PR.
+              state: 'all',
               head: `${headOwner}:${headBranch}`,
               per_page: 100,
             });
-            // A run can only belong to a PR that existed when it started. When GitHub
+            // A run belongs to a PR that was open when it started. When GitHub
             // associates the run with PRs (it does not for fork runs), only those count.
             const workflowRun = context.payload.workflow_run;
             const runCreatedAt = Date.parse(workflowRun.created_at);
             const associated = new Set((workflowRun.pull_requests ?? []).map(pullRequest => pullRequest.number));
+            const openAtRunStart = pullRequest =>
+              Date.parse(pullRequest.created_at) <= runCreatedAt &&
+              (!pullRequest.closed_at || Date.parse(pullRequest.closed_at) > runCreatedAt);
             const matches = pullRequests.filter(pullRequest =>
-              pullRequest.state === 'open' &&
               pullRequest.head.repo?.full_name === headRepository &&
               pullRequest.head.ref === headBranch &&
               pullRequest.head.sha === headSha &&
               pullRequest.base.repo?.full_name === `${context.repo.owner}/${context.repo.repo}` &&
-              Date.parse(pullRequest.created_at) <= runCreatedAt &&
+              openAtRunStart(pullRequest) &&
               (associated.size === 0 || associated.has(pullRequest.number))
             );
-            // Two open fork PRs from one branch cannot be told apart reliably, so skip
-            // rather than guess; a closed or replaced PR also lands here.
-            if (matches.length !== 1) {
+            // Two fork PRs from one branch cannot be told apart reliably, so skip rather
+            // than guess. A run whose PR has closed since is skipped too.
+            if (matches.length !== 1 || matches[0].state !== 'open') {
               core.info(`Expected one open PR for ${headRepository}:${headBranch} at ${headSha}; found ${matches.length}. Skipping.`);
               return;
             }
@@ -135,7 +139,9 @@ jobs:
         if: steps.pull-request.outputs.number != ''
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.repository.default_branch }}
+          # The commit this workflow file came from, so a rerun loads the helper it
+          # shipped with rather than whatever the default branch has now.
+          ref: ${{ github.workflow_sha }}
           fetch-depth: 0
 
       - name: Read APK size notices
@@ -209,6 +215,13 @@ jobs:
             if (!pullRequestNotice.ok) {
               throw new Error(`play-release-apk-build notice is unusable (${pullRequestNotice.reason})`);
             }
+            // A pull_request run builds GitHub's merge commit, never the PR head itself.
+            // If it built the head (e.g. the PR changed the emulator checkout), its first
+            // parent is not the base-branch commit the PR is merged into.
+            if (pullRequestNotice.commitSha === context.payload.workflow_run.head_sha) {
+              core.info('The triggering run built the PR head instead of the merge commit. Skipping.');
+              return;
+            }
             core.setOutput('pr_bytes', String(pullRequestNotice.bytes));
 
             // The PR run built a merge commit; its first parent is the base-branch commit
@@ -233,10 +246,23 @@ jobs:
               head_sha: baseSha,
               per_page: 100,
             });
+            // A run being rerun reports its new, unfinished attempt; its previous attempt
+            // may still have succeeded and measured the baseline.
+            const attempts = await Promise.all(runs.map(async run => {
+              if (run.status === 'completed' || !(run.run_attempt > 1)) return run;
+              const { data } = await github.rest.actions.getWorkflowRunAttempt({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+                attempt_number: run.run_attempt - 1,
+              });
+              return data;
+            }));
             let selected = null;
             let baselineNotice = null;
-            for (const candidate of orderBaselineRuns(runs, baseSha)) {
-              const notice = parsePlayReleaseApkBuild(await annotationsForRun(candidate.id));
+            for (const candidate of orderBaselineRuns(attempts, baseSha)) {
+              // Read the listed attempt, so a rerun that starts meanwhile cannot hide it.
+              const notice = parsePlayReleaseApkBuild(await annotationsForRun(candidate.id, candidate.run_attempt));
               if (!notice.ok) {
                 core.info(`Baseline run ${candidate.id} (${candidate.event}) has no usable size notice (${notice.reason}).`);
                 continue;
@@ -264,15 +290,18 @@ jobs:
             core.setOutput('baseline_bytes', String(baselineNotice.bytes));
             core.setOutput('baseline_run_url', selected.html_url);
 
-      # A separate worktree keeps GITHUB_WORKSPACE on the default branch, so later
+      # A separate checkout keeps GITHUB_WORKSPACE on this workflow's commit, so later
       # steps still load this version of apk-size-notice.js even when the baseline
-      # predates it.
+      # predates it. A shared local clone rather than a worktree: it has a real .git
+      # directory, which older build scripts need (#20952).
       - name: Checkout baseline
         if: steps.sizes.outputs.baseline_source == 'assembled'
         env:
           BASE_SHA: ${{ steps.sizes.outputs.base_sha }}
           BASELINE_DIR: ${{ runner.temp }}/baseline
-        run: git worktree add --detach "$BASELINE_DIR" "$BASE_SHA"
+        run: |
+          git clone --quiet --no-checkout --shared "$GITHUB_WORKSPACE" "$BASELINE_DIR"
+          git -C "$BASELINE_DIR" checkout --quiet --detach "$BASE_SHA"
 
       - name: Configure JDK
         if: steps.sizes.outputs.baseline_source == 'assembled'
@@ -346,6 +375,9 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ needs.sizeCheck.outputs.pr_number }}
       cancel-in-progress: false
+      # Keep every pending job (the default keeps only the newest), so a slow job
+      # for an old revision cannot evict the queued job for the current one.
+      queue: max
     permissions:
       pull-requests: write
     steps:
@@ -416,8 +448,12 @@ jobs:
               String(comment.body ?? '').startsWith(marker)
             );
 
-            const existingRun = String(existing?.body ?? '').match(/<!-- measured-run: (\d+)\.(\d+) -->/);
-            if (hasMeasuredRun && existingRun) {
+            // Only a newer run for the same head wins: after a force-push back to this
+            // commit, a newer comment measured a different revision and is outdated.
+            const existingBody = String(existing?.body ?? '');
+            const existingRun = existingBody.match(/<!-- measured-run: (\d+)\.(\d+) -->/);
+            const sameHead = existingBody.includes(`(measured at ${measuredHead.slice(0, 7)})`);
+            if (hasMeasuredRun && existingRun && sameHead) {
               const [number, attempt] = existingRun.slice(1).map(Number);
               if (number > measuredRun[0] || (number === measuredRun[0] && attempt > measuredRun[1])) {
                 core.info(`The comment already shows newer emulator run ${number}.${attempt}; leaving it.`);
@@ -432,6 +468,10 @@ jobs:
               repo: context.repo.repo,
               pull_number: prNumber,
             });
+            if (pullRequest.state !== 'open') {
+              core.info(`PR #${prNumber} is ${pullRequest.state}; not commenting.`);
+              return;
+            }
             if (pullRequest.head.sha !== measuredHead) {
               core.info(`PR head moved from ${measuredHead} to ${pullRequest.head.sha}; leaving the comment to the newer run.`);
               return;

@@ -27,6 +27,8 @@
 const NOTICE_TITLE = "play-release-apk-build";
 const COMMENT_AUTHOR = "github-actions[bot]";
 const BASELINE_EVENTS = ["merge_group", "push"];
+// Keep in sync with the step name in tests_emulator.yml.
+const SIZE_STEP_NAME = "Post play-release APK size";
 const PLAY_RELEASE_SIZE_JOB_NAME =
     /^Android Emulator Test \(36, x86_64, google_apis, [^,\s]+, 0\)$/;
 const SHA = /^[0-9a-f]{40}$/;
@@ -78,14 +80,26 @@ function isPlayReleaseSizeJob(name) {
     return PLAY_RELEASE_SIZE_JOB_NAME.test(String(name ?? ""));
 }
 
-/** Latest successful size-cell job, or the latest matching job if none succeeded. */
-function selectPlayReleaseSizeJob(jobs) {
-    const matches = (Array.isArray(jobs) ? jobs : []).filter(job =>
-        isPlayReleaseSizeJob(job && job.name),
+/** True when the job's size step ran successfully, so its notice is the measurement. */
+function postedPlayReleaseSize(job) {
+    return (Array.isArray(job?.steps) ? job.steps : []).some(
+        step =>
+            step?.name === SIZE_STEP_NAME && String(step.conclusion).toLowerCase() === "success",
     );
-    if (matches.length === 0) return null;
+}
+
+/**
+ * The job that posted the size: the latest job whose size step succeeded, so a job
+ * rename or matrix change does not hide it. Without step data, falls back to the
+ * size cell's job name: the latest successful match, or the latest match.
+ */
+function selectPlayReleaseSizeJob(jobs) {
+    const all = Array.isArray(jobs) ? jobs : [];
+    const posted = all.filter(postedPlayReleaseSize);
+    const matches = all.filter(job => isPlayReleaseSizeJob(job && job.name));
     const successful = matches.filter(job => String(job.conclusion).toLowerCase() === "success");
-    const candidates = successful.length > 0 ? successful : matches;
+    const candidates = posted.length > 0 ? posted : successful.length > 0 ? successful : matches;
+    if (candidates.length === 0) return null;
     return candidates.slice().sort((left, right) => {
         const completedDelta =
             timestamp(right.completed_at || right.started_at) -

@@ -182,6 +182,7 @@ jobs:
         run: echo "ORG_GRADLE_PROJECT_buildTime=$(date +%s000)" >> "$GITHUB_ENV"
 
       - name: Warm Gradle Cache
+        id: package-play-release
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
@@ -190,8 +191,9 @@ jobs:
           max_attempts: 3
           command: ./gradlew packagePlayRelease packagePlayReleaseAndroidTest :baselineprofile:packageBenchmarkBenchmark --daemon
 
-      # The play-release APK exists after the package step above. always() plus the
-      # file check still posts the size when an earlier step failed, and this step
+      # The play-release APK exists after the package step above. The size is only
+      # posted when that step succeeded, since failed packaging can leave a partial
+      # APK; always() keeps this step independent of other earlier steps, and it
       # runs before emulator, alignment, and upload failures. The later smoke test
       # rebuilds with TEST_RELEASE_BUILD=false, so the notice must stay here.
       # The notice records the commit that was built and its first parent: on
@@ -201,6 +203,7 @@ jobs:
       - name: Post play-release APK size
         if: >-
           always() &&
+          steps.package-play-release.outcome == 'success' &&
           (github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'merge_group') &&
           matrix.iteration == 0 &&
           matrix.api-level == 36 &&
