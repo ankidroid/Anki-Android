@@ -2208,6 +2208,26 @@ class ManageTagsViewModelTest : JvmTest() {
             }
         }
 
+    /**
+     * The tree groups parents whose case-folded spelling matches. A child displayed under
+     * that shared spelling must remain renameable even when its stored parent is spelled differently.
+     */
+    @Test
+    @ExistingIssue
+    fun `a displayed child is renameable under the shared parent spelling`() =
+        runTest {
+            // Leave the parent unregistered so the two notes retain different stored spellings.
+            addTags("Straße::a")
+            val note = addTags("STRASSE::b")
+            assertEquals(listOf("STRASSE::b"), col.getNote(note.id).tags)
+            withViewModel {
+                val child = TagName.asValid("Straße::b")
+                assertTrue(tagExists(child))
+                // Fails on the buggy revision because a simple regex cannot match `ß` to `SS`.
+                assertEquals(true, canRenameTag(child))
+            }
+        }
+
     @Test
     fun `lookup recognizes backend-equivalent spelling`() =
         runTest {
