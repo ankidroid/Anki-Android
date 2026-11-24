@@ -128,7 +128,7 @@ class ManageTagsViewModelTest : JvmTest() {
                     assertEquals(true, preparation.await())
                     // Fails on the buggy revision (expected ALREADY_EXISTS, was VALID):
                     // the dialog checked the tags loaded before 'destination' was added
-                    assertEquals(TagInputValidation.ALREADY_EXISTS, validateTagRename(source, "destination", ::tagExists))
+                    assertEquals(TagInputValidation.ALREADY_EXISTS, collection.validateTagRename(source, "destination", ::tagExists))
                 }
             }
         }
@@ -343,7 +343,7 @@ class ManageTagsViewModelTest : JvmTest() {
                     assertEquals(true, preparation.await())
                     // Fails on the buggy revision: only eligibility is checked again, leaving
                     // destination validation unaware of the newly added tag.
-                    assertEquals(TagInputValidation.ALREADY_EXISTS, validateTagRename(source, "destination", ::tagExists))
+                    assertEquals(TagInputValidation.ALREADY_EXISTS, collection.validateTagRename(source, "destination", ::tagExists))
                 }
             }
         }
@@ -364,7 +364,7 @@ class ManageTagsViewModelTest : JvmTest() {
 
                 // Fails on the buggy revision: splitting the pasted name before removing its tab
                 // misses the trailing separator, so the dialog would accept the rename.
-                assertEquals(TagInputValidation.EMPTY_COMPONENT, validateTagRename(source, pastedName, ::tagExists))
+                assertEquals(TagInputValidation.EMPTY_COMPONENT, col.validateTagRename(source, pastedName, ::tagExists))
             }
         }
 
@@ -384,9 +384,37 @@ class ManageTagsViewModelTest : JvmTest() {
 
                 // Fails on the buggy revision: removing the tab leaves an uncomposed spelling
                 // that validation treats as a new tag, even though the backend composes it again.
-                assertEquals(TagInputValidation.ALREADY_EXISTS, validateTagRename(TagName.asValid("source"), pastedName, ::tagExists))
+                assertEquals(TagInputValidation.ALREADY_EXISTS, col.validateTagRename(TagName.asValid("source"), pastedName, ::tagExists))
                 // Renaming the existing tag to the same pasted text would leave its spelling unchanged.
-                assertEquals(TagInputValidation.UNCHANGED, validateTagRename(existing, pastedName, ::tagExists))
+                assertEquals(TagInputValidation.UNCHANGED, col.validateTagRename(existing, pastedName, ::tagExists))
+            }
+        }
+
+    /**
+     * Changing only the case of a registered parent cannot rename a child. Anki restores
+     * the parent's saved spelling, so validation should reject this as an unchanged name.
+     */
+    @Test
+    fun `rename validation rejects changing only a registered parent spelling`() =
+        runTest {
+            // Register one parent explicitly and leave the other implicit in the tree.
+            val note = addTags("Parent", "Parent::child", "Implicit::child")
+            val source = TagName.asValid("Parent::child")
+            val requestedName = "parent::child"
+            assertTrue("Parent" in col.tags.all())
+            assertFalse("Implicit" in col.tags.all())
+            withViewModel {
+                val result = col.validateTagRename(source, requestedName, ::tagExists)
+                // The backend reports an affected note even though it restores the original parent spelling.
+                assertEquals(1, col.tags.rename(source.value, requestedName).count)
+                assertTrue(source.value in col.getNote(note.id).tags)
+
+                // Fails before the fix because validation compares the edited parent spelling verbatim.
+                assertEquals(TagInputValidation.UNCHANGED, result)
+                // The child's own case and the spelling of an implicit parent can both change.
+                assertEquals(TagInputValidation.VALID, col.validateTagRename(source, "parent::Child", ::tagExists))
+                val implicit = TagName.asValid("Implicit::child")
+                assertEquals(TagInputValidation.VALID, col.validateTagRename(implicit, "implicit::child", ::tagExists))
             }
         }
 
