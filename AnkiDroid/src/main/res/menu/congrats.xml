@@ -12,4 +12,10 @@
         tools:title="Deck options"
         android:icon="@drawable/ic_tune_white"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@id/action_previous_card_info"
+        android:icon="@drawable/ic_outline_info_24"
+        tools:title="Previous card info"
+        app:showAsAction="never"/>
 </menu>

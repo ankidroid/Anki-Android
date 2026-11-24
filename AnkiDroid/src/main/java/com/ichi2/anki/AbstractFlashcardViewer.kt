@@ -523,10 +523,6 @@ abstract class AbstractFlashcardViewer :
 
         if (currentCard == null) {
             closeReviewer(ReviewerResult.NoMoreCards.fromLastShownCard(lastShownCardId))
-            // When launched with a shortcut, we want to display a message when finishing
-            if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                StudyCompletionUi.displayFromShortcut(this)
-            }
             return
         }
 
