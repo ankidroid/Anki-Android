@@ -48,8 +48,7 @@ class ReviewCompletionTest : RobolectricTest() {
         col.setDeck(listOf(addBasicNote().firstCard().id), child)
         col.decks.select(col.decks.id("Parent"))
 
-        completeReview(expectEmpty = false) {
-            col.sched.answerCard(assertNotNull(col.sched.card), Rating.EASY)
+        completeReview(expectEmpty = false, rating = Rating.EASY) {
             assertEquals(0, col.sched.totalCount())
             assertEquals(1, col.decks.cardCount(child, includeSubdecks = true))
         }
@@ -60,8 +59,7 @@ class ReviewCompletionTest : RobolectricTest() {
         addBasicNote()
         val filtered = addDynamicDeck("Filtered", "")
 
-        completeReview(expectEmpty = false) {
-            col.sched.answerCard(assertNotNull(col.sched.card), Rating.EASY)
+        completeReview(expectEmpty = false, rating = Rating.EASY) {
             assertEquals(0, col.decks.cardCount(filtered, includeSubdecks = true))
         }
     }
@@ -76,6 +74,7 @@ class ReviewCompletionTest : RobolectricTest() {
 
         completeReview(
             expectEmpty = false,
+            rating = Rating.AGAIN,
             expectedMessage = {
                 it.getString(
                     CommonString.studyoptions_congrats_next_due_in,
@@ -83,17 +82,17 @@ class ReviewCompletionTest : RobolectricTest() {
                 )
             },
         ) {
-            col.sched.answerCard(assertNotNull(col.sched.card), Rating.AGAIN)
             assertNull(col.sched.card)
         }
     }
 
     private fun completeReview(
         expectEmpty: Boolean,
+        rating: Rating,
         expectedMessage: (Context) -> String = {
             it.getString(if (expectEmpty) CommonString.empty_deck else CommonString.studyoptions_congrats_finished)
         },
-        finishCards: () -> Unit,
+        assertFinished: () -> Unit,
     ) {
         if (fromShortcut) {
             runTest {
@@ -104,7 +103,8 @@ class ReviewCompletionTest : RobolectricTest() {
                     )
                 advanceRobolectricLooper()
                 assertNotNull(reviewer.currentCardId)
-                finishCards()
+                reviewer.answerCardInner(rating)
+                assertFinished()
                 val selected = col.decks.selected()
                 val undoStatus = col.undoStatus()
 
@@ -132,11 +132,18 @@ class ReviewCompletionTest : RobolectricTest() {
                 val review = assertNotNull(shadow.nextStartedActivityForResult)
                 assertEquals(Reviewer::class.java.name, review.intent.component?.className)
                 shadow.clearNextStartedActivities()
-                finishCards()
+                val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, review.intent)
+                advanceRobolectricLooper()
+                assertNotNull(reviewer.currentCardId)
+                reviewer.answerCardInner(rating)
+                assertFinished()
                 val selected = col.decks.selected()
                 val undoStatus = col.undoStatus()
 
-                activityResultRegistry.dispatchResult(review.requestCode, RESULT_NO_MORE_CARDS, null)
+                reviewer.updateCardAndRedraw()
+                val reviewResult = shadowOf(reviewer)
+                assertEquals(RESULT_NO_MORE_CARDS, reviewResult.resultCode)
+                activityResultRegistry.dispatchResult(review.requestCode, reviewResult.resultCode, reviewResult.resultIntent)
 
                 if (newCongratsScreen && !expectEmpty) {
                     advanceRobolectricLooperUntil { shadow.peekNextStartedActivity() != null }
