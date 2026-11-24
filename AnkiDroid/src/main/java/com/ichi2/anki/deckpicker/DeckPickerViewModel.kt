@@ -273,7 +273,7 @@ class DeckPickerViewModel :
      */
     @CheckResult
     fun deleteDeck(did: DeckId) =
-        viewModelScope.launch {
+        launchCatching {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
                 val changes =
