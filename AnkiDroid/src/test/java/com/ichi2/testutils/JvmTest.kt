@@ -11,6 +11,7 @@ import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.rules.CollectionStorageRule
+import com.ichi2.testutils.rules.ExistingIssueRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher
 import org.junit.After
@@ -18,6 +19,9 @@ import org.junit.Before
 import org.junit.Rule
 
 open class JvmTest : InMemoryAnkiTest() {
+    @get:Rule(order = Int.MIN_VALUE)
+    val existingIssue = ExistingIssueRule()
+
     /** Allows [com.ichi2.testutils.common.Flaky] to annotate tests in subclasses */
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
