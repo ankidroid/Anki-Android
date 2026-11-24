@@ -12,6 +12,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.rules.ExistingIssue
 import com.ichi2.testutils.rules.IcuCaseFoldingRule
 import com.ichi2.testutils.withViewModel
 import kotlinx.coroutines.CoroutineStart
@@ -1112,6 +1113,36 @@ class ManageTagsViewModelTest : JvmTest() {
                     retry.join()
                 }
                 assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+            }
+        }
+
+    /**
+     * An external collection edit can request a refresh while a deletion is waiting for
+     * collection access. Cancelling the deletion must still load the independent edit.
+     */
+    @Test
+    @ExistingIssue
+    fun `cancelling a tag operation still loads an external edit`() =
+        runTest {
+            val note = addTags("source")
+            val collection = col
+            withViewModel {
+                withQueuedCollectionAccess {
+                    // Suspend the deletion before it touches the note so the refresh is coalesced.
+                    val deletion = removeTag("source")
+                    assertTrue(loadedState.isWorking)
+                    collection.getNote(note.id).also {
+                        it.addTag("destination")
+                        assertTrue(collection.updateNote(it).note)
+                    }
+                    ChangeManager.notifySubscribersAllValuesChanged()
+
+                    deletion.cancelAndJoin()
+                    runCurrent()
+                    assertTrue("source" in collection.getNote(note.id).tags)
+                    // Fails on the buggy version because cancellation abandons the queued refresh.
+                    assertTrue(tagExists(TagName.asValid("destination")))
+                }
             }
         }
 
