@@ -41,6 +41,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.tags.addTagNameInputFilter
 import com.ichi2.anki.tags.tagNameInputFilter
 import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.anki.utils.ext.requireParcelable
@@ -341,7 +342,8 @@ class TagsDialog : AnalyticsDialogFragment {
         val toolbarSearchItem: MenuItem? = toolbarSearchItem
         toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
         val queryET = toolbarSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-        queryET.filters = arrayOf(tagNameInputFilter)
+        val queryFilter = if (type == DialogType.EDIT_TAGS) addTagNameInputFilter else tagNameInputFilter
+        queryET.filters = arrayOf(queryFilter)
         toolbarSearchView!!.queryHint = getString(CommonString.filter_tags)
         toolbarSearchView!!.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
@@ -398,9 +400,9 @@ class TagsDialog : AnalyticsDialogFragment {
                     d?.dismiss()
                 }
         val inputET = addTagDialog.getInputField()
-        inputET.filters = arrayOf(tagNameInputFilter)
+        inputET.filters = arrayOf(addTagNameInputFilter)
         if (!prefixTag.isNullOrEmpty()) {
-            // utilize the tagNameInputFilter to append '::' properly by appending a space to prefixTag
+            // Append the hierarchy separator using the same rule as typed input.
             inputET.setText("$prefixTag ")
         }
         inputET.moveCursorToEnd()
