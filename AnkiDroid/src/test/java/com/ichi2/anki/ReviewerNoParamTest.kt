@@ -32,6 +32,7 @@ import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.themes.Themes.currentTheme
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
@@ -51,6 +52,24 @@ class ReviewerNoParamTest : RobolectricTest() {
         // This doesn't do an upgrade in the correct place
         MetaDB.resetDB(targetContext)
     }
+
+    @Test
+    fun `audio completion after the review queue is empty is ignored`() =
+        runTest {
+            val config = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+            config.autoplay = false
+            col.decks.save(config)
+            addBasicNote()
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
+            advanceRobolectricLooperUntil { reviewer.currentCardId != null }
+            reviewer.answerCardInner(Rating.EASY)
+            reviewer.updateCardAndRedraw()
+            assertThat(reviewer.isFinishing, equalTo(true))
+
+            reviewer.onMediaGroupCompleted()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+        }
 
     @Test
     fun defaultWhiteboardColorIsUsedOnFirstRun() {

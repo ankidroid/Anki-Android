@@ -1329,9 +1329,10 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private suspend fun automaticAnswerShouldWaitForMedia(): Boolean =
+    /** Returns null when the Reviewer has no current card. */
+    private suspend fun automaticAnswerShouldWaitForMedia(): Boolean? =
         withCol {
-            decks.configDictForDeckId(currentCard!!.did).waitForAudio
+            currentCard?.let { decks.configDictForDeckId(it.did).waitForAudio }
         }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
@@ -1359,7 +1360,7 @@ abstract class AbstractFlashcardViewer :
         val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
-            if (!automaticAnswerShouldWaitForMedia()) {
+            if (automaticAnswerShouldWaitForMedia() == false) {
                 automaticAnswer.scheduleAutomaticDisplayAnswer()
             }
         }
@@ -1405,7 +1406,7 @@ abstract class AbstractFlashcardViewer :
         val answerContent = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
-            if (!automaticAnswerShouldWaitForMedia()) {
+            if (automaticAnswerShouldWaitForMedia() == false) {
                 automaticAnswer.scheduleAutomaticDisplayQuestion()
             }
         }
@@ -1529,7 +1530,7 @@ abstract class AbstractFlashcardViewer :
     open fun onMediaGroupCompleted() {
         Timber.v("onMediaGroupCompleted")
         launchCatchingTask {
-            if (automaticAnswerShouldWaitForMedia()) {
+            if (automaticAnswerShouldWaitForMedia() == true) {
                 if (isDisplayingAnswer) {
                     automaticAnswer.scheduleAutomaticDisplayQuestion()
                 } else {
