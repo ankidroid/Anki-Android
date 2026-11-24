@@ -3,6 +3,7 @@
 package com.ichi2.anki.study
 
 import android.content.Context
+import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -18,6 +19,9 @@ import kotlin.math.round
 
 /** Presents the end of a review session in the activity that owns its result. */
 object StudyCompletionUi {
+    /** Result [Intent] extra containing the card ID from [ReviewerResult.NoMoreCards.WithPreviousCard]. */
+    const val EXTRA_PREVIOUS_CARD_ID = "previous_card_id"
+
     /**
      * Sets the activity result and finishes the Reviewer.
      *
@@ -28,7 +32,9 @@ object StudyCompletionUi {
         activity: FragmentActivity,
         result: ReviewerResult,
     ) {
-        activity.setResult(result.resultCode)
+        val previousCardId = (result as? ReviewerResult.NoMoreCards.WithPreviousCard)?.previousCardId
+        val data = previousCardId?.let { Intent().putExtra(EXTRA_PREVIOUS_CARD_ID, it) }
+        activity.setResult(result.resultCode, data)
         activity.finish()
     }
 

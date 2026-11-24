@@ -11,6 +11,8 @@ import com.ichi2.anki.NavigationDrawerActivity.Companion.EXTRA_STARTED_WITH_SHOR
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.study.ReviewerResult.Companion.RESULT_NO_MORE_CARDS
+import com.ichi2.anki.study.StudyCompletionUi.EXTRA_PREVIOUS_CARD_ID
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.testutils.ext.snackbarText
 import org.json.JSONArray
 import org.junit.Before
@@ -63,6 +65,31 @@ class ReviewCompletionTest : RobolectricTest() {
             assertEquals(0, col.decks.cardCount(filtered, includeSubdecks = true))
         }
     }
+
+    @Test
+    fun `suspending the final card returns it for previous card info`() = assertLastShownCardReturned(Reviewer::suspendCard)
+
+    @Test
+    fun `burying the final card returns it for previous card info`() = assertLastShownCardReturned(Reviewer::buryCard)
+
+    private fun assertLastShownCardReturned(removeFromQueue: Reviewer.() -> Boolean) =
+        runTest {
+            addBasicNote("First question", "First answer")
+            addBasicNote("Second question", "Second answer")
+            val intent = Intent().putExtra(EXTRA_STARTED_WITH_SHORTCUT, fromShortcut)
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, intent)
+            advanceRobolectricLooperUntil { reviewer.currentCardId != null }
+            reviewer.answerCardInner(Rating.EASY)
+            reviewer.updateCardAndRedraw()
+
+            val lastCardId = assertNotNull(reviewer.currentCardId)
+            assertTrue(reviewer.removeFromQueue())
+            advanceRobolectricLooperUntil { reviewer.isFinishing }
+
+            val result = shadowOf(reviewer)
+            assertEquals(RESULT_NO_MORE_CARDS, result.resultCode)
+            assertEquals(lastCardId, result.resultIntent?.extras?.getLongOrNull(EXTRA_PREVIOUS_CARD_ID))
+        }
 
     @Test
     fun `learning later still shows completion with the next available time`() {
@@ -134,7 +161,7 @@ class ReviewCompletionTest : RobolectricTest() {
                 shadow.clearNextStartedActivities()
                 val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, review.intent)
                 advanceRobolectricLooper()
-                assertNotNull(reviewer.currentCardId)
+                val cardId = assertNotNull(reviewer.currentCardId)
                 reviewer.answerCardInner(rating)
                 assertFinished()
                 val selected = col.decks.selected()
@@ -143,6 +170,7 @@ class ReviewCompletionTest : RobolectricTest() {
                 reviewer.updateCardAndRedraw()
                 val reviewResult = shadowOf(reviewer)
                 assertEquals(RESULT_NO_MORE_CARDS, reviewResult.resultCode)
+                assertEquals(cardId, reviewResult.resultIntent?.extras?.getLongOrNull(EXTRA_PREVIOUS_CARD_ID))
                 activityResultRegistry.dispatchResult(review.requestCode, reviewResult.resultCode, reviewResult.resultIntent)
 
                 if (newCongratsScreen && !expectEmpty) {

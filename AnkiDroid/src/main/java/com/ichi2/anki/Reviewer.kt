@@ -135,6 +135,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -175,7 +176,6 @@ open class Reviewer :
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
     private var isEraserMode = false
-    private var previousCardId: CardId? = null
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
     // safe to persist in the database when answering a card. This is used to
@@ -1157,17 +1157,21 @@ open class Reviewer :
         startActivityWithAnimation(intent, animation)
     }
 
+    /** Opens the card shown before the current card, including after actions such as burial or suspension. */
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openPreviousCardInfo(fromGesture: Gesture? = null) {
-        if (previousCardId == null) {
-            showSnackbar(TR.cardStatsNoCardClean(), Snackbar.LENGTH_SHORT)
-            return
+        val cardId = previousCardId
+        launchCatchingTask {
+            if (cardId == null || withCol { getCardOrNull(cardId) == null }) {
+                showSnackbar(TR.cardStatsNoCardClean(), Snackbar.LENGTH_SHORT)
+                return@launchCatchingTask
+            }
+            Timber.i("opening previous card info")
+            val intent = CardInfoDestination(cardId, EntryPoint.PREVIOUS_CARD_STUDY).toIntent(this@Reviewer)
+            val animation = getAnimationTransitionFromGesture(fromGesture)
+            intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
+            startActivityWithAnimation(intent, animation)
         }
-        Timber.i("opening previous card info")
-        val intent = CardInfoDestination(previousCardId!!, EntryPoint.PREVIOUS_CARD_STUDY).toIntent(this)
-        val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
-        startActivityWithAnimation(intent, animation)
     }
 
     // Related to https://github.com/ankidroid/Anki-Android/pull/11061#issuecomment-1107868455
@@ -1587,6 +1591,7 @@ open class Reviewer :
                 wasLeech = sched.stateIsLeech(state.states.again)
             }
         }.also {
+            // After an answer the scheduler can show the same card as a new question.
             previousCardId = cardId
             if (rating == Rating.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)

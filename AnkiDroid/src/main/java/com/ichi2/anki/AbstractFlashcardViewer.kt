@@ -154,6 +154,7 @@ import com.ichi2.anki.study.ReviewerResult
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.isTouchWithinBounds
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.themes.Themes
@@ -521,7 +522,7 @@ abstract class AbstractFlashcardViewer :
         updateCurrentCard()
 
         if (currentCard == null) {
-            closeReviewer(ReviewerResult.NoMoreCards)
+            closeReviewer(ReviewerResult.NoMoreCards.fromLastShownCard(lastShownCardId))
             // When launched with a shortcut, we want to display a message when finishing
             if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
                 StudyCompletionUi.displayFromShortcut(this)
@@ -549,6 +550,7 @@ abstract class AbstractFlashcardViewer :
         restorePreferences()
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
+        lastShownCardId = savedInstanceState?.getLongOrNull(STATE_LAST_SHOWN_CARD_ID)
         lifecycle.addObserver(automaticAnswer)
 
         // Issue 14142: The reviewer had a focus highlight after answering using a keyboard.
@@ -566,6 +568,11 @@ abstract class AbstractFlashcardViewer :
         gestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
         NoSuggestFilter.ensureApplied()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        lastShownCardId?.let { outState.putLong(STATE_LAST_SHOWN_CARD_ID, it) }
     }
 
     override fun setupBackPressedCallbacks() {
@@ -707,6 +714,12 @@ abstract class AbstractFlashcardViewer :
     }
 
     open val currentCardId: CardId? get() = currentCard?.id
+
+    /** The card shown before the current card, used by Previous card info during review. */
+    protected var previousCardId: CardId? = null
+
+    /** The most recent card shown. This becomes the previous card when the review finishes. */
+    private var lastShownCardId: CardId? = null
 
     private fun processHardwareButtonScroll(
         keyCode: Int,
@@ -1467,12 +1480,17 @@ abstract class AbstractFlashcardViewer :
 
     private fun updateCard(content: RenderedCard) {
         Timber.d("updateCard()")
+        val card = currentCard!!
         // TODO: This doesn't need to be blocking
         runBlocking {
-            cardMediaPlayer.loadCardAvTags(currentCard!!)
+            cardMediaPlayer.loadCardAvTags(card)
         }
         cardContent = content.html
         fillFlashcard()
+        if (lastShownCardId != card.id) {
+            lastShownCardId?.let { previousCardId = it }
+            lastShownCardId = card.id
+        }
         playMedia(false) // Play media if appropriate
     }
 
@@ -2793,6 +2811,8 @@ abstract class AbstractFlashcardViewer :
 
         // Android design spec for the size of the status bar.
         private const val NO_GESTURE_BORDER_DIP = 24
+
+        private const val STATE_LAST_SHOWN_CARD_ID = "last_shown_card_id"
 
         // maximum screen distance from initial touch where we will consider a click related to the touch
         private const val CLICK_ACTION_THRESHOLD = 200

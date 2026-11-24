@@ -55,6 +55,7 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
@@ -200,6 +201,13 @@ class ReviewerViewModel(
 
     suspend fun getCardId() = currentCard.await().id
 
+    /** The card shown before the current card, used by Previous card info during review. */
+    private var previousCardId: CardId?
+        get() = savedStateHandle.getLongOrNull(KEY_PREVIOUS_CARD_ID)
+        set(value) {
+            savedStateHandle[KEY_PREVIOUS_CARD_ID] = value
+        }
+
     /**
      * Sends an [eval] request to load the card answer, and updates components
      * with behavior specific to the `Answer` card side.
@@ -284,14 +292,14 @@ class ReviewerViewModel(
     }
 
     private suspend fun emitPreviousCardInfoDestination() {
-        val previousCardId: CardId? = savedStateHandle.getLongOrNull(KEY_PREVIOUS_CARD_ID)
-        if (previousCardId == null) {
-            Timber.i("No previous answered card found, ignoring request for 'previous card info'")
+        val cardId = previousCardId
+        if (cardId == null || withCol { getCardOrNull(cardId) == null }) {
+            Timber.i("No previous card available for 'previous card info'")
             actionFeedbackFlow.emit(TR.cardStatsNoCardClean())
             return
         }
-        val destination = CardInfoDestination(previousCardId, EntryPoint.PREVIOUS_CARD_STUDY)
-        Timber.i("Launching 'previous card info' for card %d", previousCardId)
+        val destination = CardInfoDestination(cardId, EntryPoint.PREVIOUS_CARD_STUDY)
+        Timber.i("Launching 'previous card info' for card %d", cardId)
         navigateFlow.emit(destination)
     }
 
@@ -378,18 +386,14 @@ class ReviewerViewModel(
 
     private suspend fun suspendCard() {
         val cardId = currentCard.await().id
-        undoableOp(handler = this) {
-            sched.suspendCards(ids = listOf(cardId))
-        }.count
+        undoableOp(handler = this) { sched.suspendCards(ids = listOf(cardId)) }
         actionFeedbackFlow.emit(TR.studyingCardSuspended())
         updateCurrentCard()
     }
 
     private suspend fun suspendNote() {
         val noteId = currentCard.await().nid
-        undoableOp(handler = this) {
-            sched.suspendNotes(ids = listOf(noteId))
-        }
+        undoableOp(handler = this) { sched.suspendNotes(ids = listOf(noteId)) }
         actionFeedbackFlow.emit(TR.studyingNoteSuspended())
         updateCurrentCard()
     }
@@ -468,7 +472,13 @@ class ReviewerViewModel(
         if (mutationSignal.isCompleted) {
             mutationSignal = CompletableDeferred()
         }
+        val cardId = currentCard.await().id
         super.showQuestion()
+        val lastShownCardId = savedStateHandle.getLongOrNull(KEY_LAST_SHOWN_CARD_ID)
+        if (lastShownCardId != cardId) {
+            lastShownCardId?.let { previousCardId = it }
+            savedStateHandle[KEY_LAST_SHOWN_CARD_ID] = cardId
+        }
         runStateMutationHook()
         updateMarkIcon()
         updateFlagIcon()
@@ -537,7 +547,8 @@ class ReviewerViewModel(
 
         undoableOp(handler = this) { sched.answerCard(answer) }
         answerFeedbackFlow.emit(rating)
-        savedStateHandle[KEY_PREVIOUS_CARD_ID] = card.id
+        // Again can advance to a new presentation with the same card ID.
+        previousCardId = card.id
 
         val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
         if (wasLeech) {
@@ -588,7 +599,8 @@ class ReviewerViewModel(
             }
         val state = queueState.await()
         if (state == null) {
-            finishResultFlow.emit(ReviewerResult.NoMoreCards)
+            val lastShownCardId = savedStateHandle.getLongOrNull(KEY_LAST_SHOWN_CARD_ID)
+            finishResultFlow.emit(ReviewerResult.NoMoreCards.fromLastShownCard(lastShownCardId))
             return
         }
         state.timeboxReached?.let {
@@ -845,6 +857,7 @@ class ReviewerViewModel(
 
     companion object {
         private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
+        private const val KEY_LAST_SHOWN_CARD_ID = "last_shown_card_id"
         private const val KEY_COUNTS = "counts"
     }
 }
