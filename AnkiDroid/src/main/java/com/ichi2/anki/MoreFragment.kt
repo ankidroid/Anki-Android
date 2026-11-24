@@ -86,7 +86,7 @@ class MoreFragment : Fragment() {
                                 else -> {}
                             }
                         },
-                        onKeyboardPaging = { showBottomNav() },
+                        onKeyboardScroll = { showBottomNav() },
                         scrollState = scrollState,
                     )
                 }

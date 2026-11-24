@@ -72,7 +72,7 @@ fun MoreScreen(
     onSettingsClick: () -> Unit,
     onHelpItemClick: (HelpItem) -> Unit,
     onSupportItemClick: (HelpItem) -> Unit,
-    onKeyboardPaging: () -> Unit,
+    onKeyboardScroll: () -> Unit,
     scrollState: ScrollState,
 ) {
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
@@ -90,8 +90,8 @@ fun MoreScreen(
             Column(
                 Modifier
                     .fillMaxSize()
-                    .nestedScroll(rememberTouchNestedScrollConnection())
-                    .keyboardPaging(scrollState, onKeyboardPaging)
+                    .nestedScroll(rememberTouchNestedScrollConnection(onKeyboardScroll))
+                    .keyboardPaging(scrollState, onKeyboardScroll)
                     .verticalScroll(scrollState)
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
             ) {
@@ -139,15 +139,18 @@ private fun GroupedListScope.moreItem(
 }
 
 @Composable
-private fun rememberTouchNestedScrollConnection(): NestedScrollConnection {
+private fun rememberTouchNestedScrollConnection(onKeyboardScroll: () -> Unit): NestedScrollConnection {
     val interop = rememberNestedScrollInteropConnection()
     val inputModeManager = LocalInputModeManager.current
-    return remember(interop, inputModeManager) { TouchNestedScrollConnection(interop, inputModeManager) }
+    return remember(interop, inputModeManager, onKeyboardScroll) {
+        TouchNestedScrollConnection(interop, inputModeManager, onKeyboardScroll)
+    }
 }
 
 private class TouchNestedScrollConnection(
     private val interop: NestedScrollConnection,
     private val inputModeManager: InputModeManager,
+    private val onKeyboardScroll: () -> Unit,
 ) : NestedScrollConnection {
     private val isTouch: Boolean
         get() = inputModeManager.inputMode == InputMode.Touch
@@ -161,7 +164,11 @@ private class TouchNestedScrollConnection(
         consumed: Offset,
         available: Offset,
         source: NestedScrollSource,
-    ): Offset = if (isTouch) interop.onPostScroll(consumed, available, source) else Offset.Zero
+    ): Offset {
+        if (isTouch) return interop.onPostScroll(consumed, available, source)
+        if (consumed.y != 0f) onKeyboardScroll()
+        return Offset.Zero
+    }
 
     override suspend fun onPreFling(available: Velocity): Velocity = interop.onPreFling(available)
 
