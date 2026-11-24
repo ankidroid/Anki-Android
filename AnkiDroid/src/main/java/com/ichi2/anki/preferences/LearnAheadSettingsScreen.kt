@@ -175,6 +175,7 @@ fun LearnAheadLoadedContent(
     Column(
         modifier =
             modifier
+                // DEFECT: Small touch movement while positioning the cursor in the input field can clear focus and commit prematurely.
                 .pointerInput(Unit) {
                     awaitPointerEventScope {
                         while (true) {

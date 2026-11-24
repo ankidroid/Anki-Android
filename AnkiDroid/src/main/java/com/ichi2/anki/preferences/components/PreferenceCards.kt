@@ -182,6 +182,7 @@ fun PreferenceStepperCard(
         }
     }
 
+    // DEFECT: Accessible scrolling or tapping outside may leave an unfocused accessibility edit uncommitted.
     fun commitOrRevert(force: Boolean = false) {
         if (isStepperOperating) return
         val parsedInput = textValue.toIntOrNull()
@@ -242,6 +243,8 @@ fun PreferenceStepperCard(
                     val currentDraft =
                         textValue.toIntOrNull()?.takeIf { it in validRange } ?: value
 
+                    // DEFECT: Stepper buttons miss taps near their inner edges on narrow screens (e.g. w320dp).
+                    // DEFECT: Two rapid stepper taps before Compose recomposes can be coalesced into a single increment.
                     StepperButton(
                         iconRes = CommonR.drawable.ic_remove,
                         contentDescription = stringResource(CommonString.minus_sign),

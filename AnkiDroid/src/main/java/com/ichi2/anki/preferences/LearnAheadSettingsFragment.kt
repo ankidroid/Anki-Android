@@ -23,6 +23,8 @@ import kotlinx.coroutines.launch
  * Screen allowing users to configure the [learn ahead limit][LearnAheadLimit].
  *
  * Hosts the Compose [LearnAheadSettingsScreen].
+ *
+ * // DEFECT: On Android 7, pressing hardware Delete after keyboard dismissal can alter the saved limit.
  */
 class LearnAheadSettingsFragment : Fragment() {
     private val viewModel: LearnAheadSettingsViewModel by viewModels()
