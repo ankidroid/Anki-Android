@@ -105,12 +105,26 @@ abstract class SelectAffectedTestModules : DefaultTask() {
         return (changes + history).filter { it.isNotEmpty() }.distinct()
     }
 
+    /**
+     * Finds tests edited or deleted in the PR and in target branch updates made during the PR.
+     * For example, a test added and then removed in the PR is absent from the current diff, but
+     * Codecov may still count its coverage from an earlier run. Rerunning its suite refreshes that coverage.
+     *
+     * [base] is the current target commit and [head] is the PR head. Returns `null` if Git cannot
+     * read the history, so the caller can select the full suite.
+     */
     private fun historicalTestChanges(
         base: String,
         head: String,
     ): List<String>? {
-        // An earlier PR revision may have measured tests that the current tree diff has lost.
-        // Include edits and deletions from the PR branch so fresh reports replace those hits.
+        // The first parent of the oldest PR commit precedes target merges into the PR. Using
+        // the current merge base could hide tests removed by the target before one of those merges.
+        val commits = git("rev-list", "--first-parent", "$base..$head") ?: return null
+        val oldest = commits.trimEnd().lineSequence().last()
+        if (oldest.isEmpty()) return emptyList()
+
+        // Look at edits and deletions on both branches, including tests that were added and reverted
+        // between revisions. The current tree diff already picks up new tests in the PR.
         return git(
             "log",
             "--format=",
@@ -120,7 +134,7 @@ abstract class SelectAffectedTestModules : DefaultTask() {
             "--full-history",
             "--diff-merges=first-parent",
             "--diff-filter=a",
-            "$base..$head",
+            "$oldest^..HEAD",
             "--",
             ":(glob)**/src/test*/**",
         )?.split('\u0000')
