@@ -70,6 +70,7 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
@@ -182,10 +183,7 @@ class ReviewerFragment :
 
         viewModel.finishResultFlow
             .onEach { result ->
-                requireActivity().run {
-                    setResult(result)
-                    finish()
-                }
+                StudyCompletionUi.finishReview(requireActivity(), result)
             }.launchIn(viewScope)
 
         viewModel.statesMutationEvalFlow

@@ -4,6 +4,7 @@ package com.ichi2.anki.study
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
@@ -18,6 +19,22 @@ import kotlin.math.round
 
 /** Presents the end of a review session in the activity that owns its result. */
 object StudyCompletionUi {
+    /**
+     * Sets the activity result and finishes the Reviewer.
+     *
+     * @param activity The legacy Reviewer activity or the activity hosting the Reviewer fragment.
+     * @param resultCode The code delivered to the launcher in [androidx.activity.result.ActivityResult.resultCode].
+     * See [AbstractFlashcardViewer.Companion.RESULT_DEFAULT] and [AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS].
+     * The legacy Reviewer's Up action uses [android.app.Activity.RESULT_OK].
+     */
+    fun finishReview(
+        activity: FragmentActivity,
+        resultCode: Int,
+    ) {
+        activity.setResult(resultCode)
+        activity.finish()
+    }
+
     fun openCongratsPage(activity: FragmentActivity) {
         activity.startActivity(CongratsPage.getIntent(activity))
     }

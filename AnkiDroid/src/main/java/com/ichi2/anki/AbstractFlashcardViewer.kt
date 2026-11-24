@@ -1961,11 +1961,11 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    /** Stops automatic answer actions and closes the legacy Reviewer with [result]. See [StudyCompletionUi.finishReview]. */
     protected open fun closeReviewer(result: Int) {
         automaticAnswer.disable()
         previousAnswerIndicator!!.stopAutomaticHide()
-        this@AbstractFlashcardViewer.setResult(result)
-        finish()
+        StudyCompletionUi.finishReview(this, result)
     }
 
     protected fun refreshActionBar() {
@@ -2777,10 +2777,10 @@ abstract class AbstractFlashcardViewer :
         } ?: throw IllegalArgumentException("unhandled request: $uri")
 
     companion object {
-        /**
-         * Result codes that are returned when this activity finishes.
-         */
+        /** Returned for the Reviewer's Exit command and the legacy Reviewer's Back action. */
         const val RESULT_DEFAULT = 50
+
+        /** Returned when the scheduler has no card available for the current study session. */
         const val RESULT_NO_MORE_CARDS = 52
 
         /**
