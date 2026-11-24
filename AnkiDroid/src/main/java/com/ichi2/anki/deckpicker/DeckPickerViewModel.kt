@@ -27,6 +27,7 @@ import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.isLoggedIn
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -529,7 +530,7 @@ class DeckPickerViewModel :
     }
 
     fun toggleDeckExpand(deckId: DeckId) =
-        viewModelScope.launch {
+        launchCatching {
             withCol {
                 // update stored state
                 dueTree?.find(deckId)?.run {
