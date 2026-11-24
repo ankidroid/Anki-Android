@@ -8,6 +8,8 @@ import android.view.KeyEvent
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasScrollAction
+import androidx.compose.ui.test.isFocused
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
@@ -24,6 +26,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(qualifiers = "w360dp-h500dp")
@@ -72,6 +75,27 @@ class MoreKeyboardShortcutsTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(0, scroll.value, "Alt+Up scrolls to the top")
             settings.assertIsFocused()
+        }
+
+    @Test
+    fun `Tab during Page Down shows the row it moves to`() =
+        withPref(Prefs::devBottomNavEnabled, true) {
+            val deckPicker = launchMore()
+            val settings = composeRule.onNodeWithText(deckPicker.getString(CommonString.settings))
+            settings.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            settings.assertIsFocused()
+
+            composeRule.mainClock.autoAdvance = false
+            deckPicker.press(KeyEvent.KEYCODE_PAGE_DOWN)
+            deckPicker.press(KeyEvent.KEYCODE_TAB)
+            composeRule.mainClock.autoAdvance = true
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+
+            val list = composeRule.onNode(hasScrollAction()).fetchSemanticsNode().boundsInRoot
+            val row = composeRule.onNode(isFocused()).fetchSemanticsNode()
+            val top = row.positionInRoot.y
+            assertTrue(top >= list.top && top + row.size.height <= list.bottom, "The row Tab moved to must be fully shown")
         }
 
     @Test
