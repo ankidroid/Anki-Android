@@ -106,12 +106,12 @@ class TagName private constructor(
 
         /**
          * Normalizes a component for identity and input validation, before the fallback to "blank".
-         * Applies NFC, removes ASCII control characters and U+3000, and trims Unicode whitespace.
+         * Drops ASCII control characters and U+3000 before NFC so the result matches the
+         * eventual registry spelling, including accents initially separated by discarded input.
          */
         internal fun normalizeComponent(component: String): String =
             Normalizer
-                .normalize(component, Normalizer.Form.NFC)
-                .filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }
+                .normalize(component.filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }, Normalizer.Form.NFC)
                 .trim(RustCompat::isWhitespace)
     }
 }

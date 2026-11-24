@@ -1605,6 +1605,25 @@ class ManageTagsViewModelTest : JvmTest() {
             }
         }
 
+    /** A pasted control can hide a composed collision until the registry normalizes the new tag. */
+    @Test
+    fun `rename rejects a collision created by repeated normalization`() =
+        runTest {
+            val source = addTags("source")
+            val destination = addTags("Caf\u00e9")
+            withViewModel {
+                // The tab keeps the accent apart during the first NFC pass. After filtering
+                // controls, another normalization can compose the character as in the registry.
+                renameTag(TagName.asValid("source"), TagName.asValid("Cafe\t\u0301"), allowMerge = false).job.join()
+
+                // Before the fix the check misses the registry entry and this note is renamed.
+                assertEquals(listOf("source"), col.getNote(source.id).tags)
+                assertEquals(listOf("Caf\u00e9"), col.getNote(destination.id).tags)
+                assertEquals(setOf("source", "Caf\u00e9"), col.tags.all().toSet())
+                assertEquals(UserMessage.TagAlreadyExists, pendingMessages.value.single().message)
+            }
+        }
+
     @Test
     fun `renameTag updates tag name`() =
         runTest {
