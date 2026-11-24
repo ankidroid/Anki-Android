@@ -99,10 +99,9 @@ object DayRolloverHandler : AnkiBroadcastReceiver() {
             // it detects if a change to the cutoff has occurred
             // https://github.com/ankitects/anki/blob/edd38ca06730d7fc16804f52ce10f6bc54c3d145/qt/aqt/main.py#L508-L528
             val cutoff = withOpenColOrNull { DayCutoffTracker.check(this) } ?: return@withLock
-            Timber.i("day cutoff changed %d -> %d", cutoff.previous, cutoff.current)
+            Timber.i("day cutoff check %d -> %d", cutoff.previous, cutoff.current)
             // Re-arm the wall-clock alarm whenever the cutoff changes
             DayRolloverAlarm.scheduleNext(appContext)
-            // we do not want to send a "study queues changes" message initially
             if (cutoff.hasRolledOver) handleDayRollover()
         }
 
