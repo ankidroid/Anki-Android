@@ -37,6 +37,7 @@ import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -45,6 +46,7 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import net.ankiweb.rsdroid.exceptions.BackendIoException
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -442,6 +444,39 @@ class DeckPickerViewModelTest : JvmTest() {
                 assertEquals(y, item.y)
             }
         }
+    }
+
+    @Test
+    fun `a failed selection opens no context menu`() = assertFailedSelectionSkips({ flowOfShowContextMenu }) { requestContextMenu(it) }
+
+    @Test
+    fun `a failed selection opens no right click menu`() =
+        assertFailedSelectionSkips({ flowOfShowRightClickContextMenu }) { requestRightClickContextMenu(it, x = 10f, y = 20f) }
+
+    @Test
+    fun `a created deck whose selection fails skips the update`() =
+        assertFailedSelectionSkips({ flowOfCreatedDeckSelected }) { selectCreatedDeck(it) }
+
+    private fun <T> assertFailedSelectionSkips(
+        followUp: DeckPickerViewModel.() -> Flow<T>,
+        request: DeckPickerViewModel.(DeckId) -> Job,
+    ) = runTest {
+        val failure = BackendIoException(backendError { message = "Operation not permitted (os error 1)" })
+        backendOverride.replaceWith {
+            object : Backend() {
+                override fun setCurrentDeck(did: Long): OpChanges = throw failure
+            }
+        }
+        val deckId = addDeck("Target")
+        val previousSelection = col.decks.selected()
+
+        viewModel.followUp().test {
+            viewModel.request(deckId).join()
+
+            expectNoEvents()
+        }
+        assertSame(failure, viewModel.onError.tryReceive().getOrNull())
+        assertEquals(previousSelection, col.decks.selected())
     }
 
     @Test
