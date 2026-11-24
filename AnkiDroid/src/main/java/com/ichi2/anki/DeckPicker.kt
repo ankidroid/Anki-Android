@@ -16,6 +16,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.SQLException
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
@@ -101,6 +102,7 @@ import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.android.view.locationInWindow
+import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.android.animationDisabled
 import com.ichi2.anki.common.android.appContext
@@ -139,6 +141,7 @@ import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
@@ -153,6 +156,7 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.FatalErrorDialog
+import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportViewModel
@@ -205,6 +209,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
@@ -238,6 +243,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
@@ -1000,6 +1006,34 @@ open class DeckPicker :
             invalidateOptionsMenu()
         }
 
+        fun onViewModelError(exception: Exception) {
+            val isCorruption = exception is BackendDbCorruptException || exception is SQLiteDatabaseCorruptException
+            val dialogsOnBackStack =
+                (0 until supportFragmentManager.backStackEntryCount).count {
+                    supportFragmentManager.getBackStackEntryAt(it).name == DIALOG_FRAGMENT_TAG
+                }
+            val isOverAnotherDialog = dialogsOnBackStack > 1
+            val isRecoveryOpen =
+                when (val openDialog = supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG)) {
+                    is DatabaseErrorDialog ->
+                        when (openDialog.requireDialogType()) {
+                            DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK,
+                            DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP,
+                            -> false
+                            DatabaseErrorDialogType.DIALOG_RESTORE_BACKUP -> isOverAnotherDialog
+                            else -> true
+                        }
+                    is ImportDialog -> isOverAnotherDialog
+                    else -> false
+                }
+            if (isCorruption && isRecoveryOpen) {
+                Timber.w(exception, "Database recovery is already open")
+                DatabaseCorruption.isDetected = true
+                return
+            }
+            showException(exception)
+        }
+
         fun onStartupResponse(response: StartupResponse) {
             Timber.d("onStartupResponse: %s", response)
             when (response) {
@@ -1060,7 +1094,7 @@ open class DeckPicker :
         viewModel.flowOfExportDeck.collectInLifecycle(::onExportDeck)
         viewModel.flowOfCreateShortcut.collectInLifecycle(::createIcon)
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
-        viewModel.onError.receiveAsFlow().collectInLifecycle { showException(it) }
+        viewModel.onError.receiveAsFlow().collectInLifecycle(::onViewModelError)
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.collectInLifecycle(::onStudiedTodayChanged)
@@ -1072,6 +1106,7 @@ open class DeckPicker :
         viewModel.flowOfResizingDividerVisible.collectInLifecycle(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.collectInLifecycle(::onDecksReloaded)
         viewModel.flowOfCreatedDeckSelected.collectInLifecycle(::onCreatedDeckSelected)
+        viewModel.flowOfDeckListLoadFailed.collectInLifecycle { hideProgressBar() }
         viewModel.flowOfStartupResponse.filterNotNull().collectInLifecycle(::onStartupResponse)
         viewModel.flowOfShowContextMenu.collectInLifecycle(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.collectInLifecycle(::showDeckPickerRightClickContextMenu)
