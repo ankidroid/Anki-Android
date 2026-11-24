@@ -418,6 +418,31 @@ class ManageTagsViewModelTest : JvmTest() {
             }
         }
 
+    /**
+     * A child with a leading colon can merge into an existing child even when the
+     * backend's tree assigns the stored paths to different parents than its rename matcher.
+     */
+    @Test
+    fun `rename validation rejects a destination hiding an overlapping child`() =
+        runTest {
+            // Register the actual source tag so the UI can select it even if its child is hidden.
+            val sourceNote = addTags("source", "source:::child")
+            val existingNote = addTags("target:::child")
+            val source = TagName.asValid("source")
+            withViewModel {
+                assertTrue(tagExists(source))
+                val result = col.validateTagRename(source, "target", ::tagExists)
+
+                // The rename matcher sees the first two colons as the source subtree separator.
+                assertEquals(1, col.tags.rename(source.value, "target").count)
+                assertTrue(col.getNote(existingNote.id).tags.single() in col.getNote(sourceNote.id).tags)
+
+                // Fails before the fix because the tree does not show that `target` has an existing child.
+                assertEquals(TagInputValidation.ALREADY_EXISTS, result)
+                assertEquals(TagInputValidation.VALID, col.validateTagRename(source, "targ", ::tagExists))
+            }
+        }
+
     @Test
     fun `rename can be repeatedly undone and redone without losing tags`() =
         runTest {

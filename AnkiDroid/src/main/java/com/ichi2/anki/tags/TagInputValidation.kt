@@ -31,10 +31,25 @@ internal fun Collection.validateTagRename(
         normalized == source && spellingWithRegisteredParent(spelling) == source.value -> TagInputValidation.UNCHANGED
         // DEFECT Android and Anki can fold Unicode differently, so this check can reject a free
         // destination or allow an occupied one.
-        normalized != source && tagExists(normalized) -> TagInputValidation.ALREADY_EXISTS
+        normalized != source && (
+            tagExists(
+                normalized,
+            ) || hasStoredTagWithOverlappingSeparator(normalized)
+        ) -> TagInputValidation.ALREADY_EXISTS
         else -> TagInputValidation.VALID
     }
 }
+
+/** The tag tree and rename matcher can use different separator positions in a run of colons. */
+private fun Collection.hasStoredTagWithOverlappingSeparator(destination: TagName): Boolean =
+    db.query("SELECT tag FROM tags WHERE instr(tag, ':::') > 0").use { rows ->
+        while (rows.moveToNext()) {
+            val name = rows.getString(0) ?: continue
+            val storedTag = TagName.build(name)
+            if (storedTag?.isSameOrDescendantOf(destination) == true) return true
+        }
+        false
+    }
 
 /** Mirror the backend's preference for the closest parent that is registered in the collection. */
 private fun Collection.spellingWithRegisteredParent(spelling: String): String {
