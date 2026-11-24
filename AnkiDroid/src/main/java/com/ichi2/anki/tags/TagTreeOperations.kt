@@ -51,7 +51,13 @@ private fun Collection.renameDestinationSpelling(name: String): String {
             db.query("SELECT tag FROM tags WHERE tag = ? COLLATE unicase", parent).use {
                 if (it.moveToNext()) it.getString(0) else null
             }
-        if (stored != null) return stored + name.substring(parent.length)
+        if (stored != null) {
+            // Anki finds a parent from the right but rebuilds its child from components
+            // split from the left. These boundaries can differ around consecutive colons.
+            val suffix = name.split("::").drop(stored.split("::").size).joinToString("::")
+            val adjusted = requireNotNull(TagName.build("$stored::$suffix"))
+            return adjusted.normalizedSpelling()
+        }
         parent = parent.substringBeforeLast("::", "")
     }
     return name

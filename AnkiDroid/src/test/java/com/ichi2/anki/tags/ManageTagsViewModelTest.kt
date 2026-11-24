@@ -1624,6 +1624,27 @@ class ManageTagsViewModelTest : JvmTest() {
             }
         }
 
+    /** Applying a registered parent's spelling must not silently merge into another hierarchy. */
+    @Test
+    fun `rename rejects a collision after applying stored parent spelling`() =
+        runTest {
+            val source = addTags("source")
+            // The backend finds A: by splitting from the right, then rebuilds the new name
+            // with the child component :b. The resulting empty component becomes 'blank'.
+            val parent = addTags("A:")
+            val destination = addTags("A::blank::b")
+            withViewModel {
+                renameTag(TagName.asValid("source"), TagName.asValid("a:::b"), allowMerge = false).job.join()
+
+                // Comparing the textual suffix misses the collision and changes this note.
+                assertEquals(listOf("source"), col.getNote(source.id).tags)
+                assertEquals(listOf("A:"), col.getNote(parent.id).tags)
+                assertEquals(listOf("A::blank::b"), col.getNote(destination.id).tags)
+                assertEquals(setOf("source", "A:", "A::blank::b"), col.tags.all().toSet())
+                assertEquals(UserMessage.TagAlreadyExists, pendingMessages.value.single().message)
+            }
+        }
+
     @Test
     fun `renameTag updates tag name`() =
         runTest {
