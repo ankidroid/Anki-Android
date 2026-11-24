@@ -973,6 +973,31 @@ class ManageTagsFragmentTest : RobolectricTest() {
             banner.assertIsDisplayed()
         }
 
+    /** Process recreation restores the same Manage Tags visit, including an active sync warning. */
+    @Test
+    fun `a restored Manage Tags visit retains its sync warning and dismissal`() {
+        Prefs.hkey = "test-key"
+        addTags("deleted")
+        screen.open()
+        screen.action(TagAction.DELETE, "deleted")
+        screen.confirm(TagAction.DELETE).performClick()
+        val banner = compose.onNode(hasTestTag("tag_sync_warning") and !hasAnyAncestor(isDialog()))
+        banner.assertIsDisplayed()
+
+        // Restore the activity's saved state with a new ViewModel, as after process death.
+        // The deletion still exists and this ViewModel no longer offers undo for it.
+        screen.recreateAfterProcessDeath()
+        assertTrue("deleted" !in col.tags.all())
+        compose.onNodeWithTag("tag_undo").assertIsNotEnabled()
+        // Fails on the original head, where the warning only tracks live undo steps.
+        banner.assertIsDisplayed()
+
+        // A restored deletion should still respect the dismissal saved for this visit.
+        compose.onNodeWithContentDescription(targetContext.getString(CommonString.manage_tags_dismiss_sync_warning)).performClick()
+        screen.recreateAfterProcessDeath()
+        banner.assertDoesNotExist()
+    }
+
     @Test
     fun `dismissing the AnkiWeb tag warning takes precedence over deletion history`() {
         Prefs.hkey = "test-key"

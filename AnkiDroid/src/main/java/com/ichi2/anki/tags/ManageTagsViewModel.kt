@@ -51,7 +51,7 @@ import anki.tags.TagTreeNode as BackendTagTreeNode
  * @see pendingMessages for messages awaiting display.
  */
 class ManageTagsViewModel(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(),
     ChangeManager.Subscriber {
     val state: StateFlow<ManageTagsState>
@@ -87,6 +87,9 @@ class ManageTagsViewModel(
     private val refreshes = TagRefreshTracker()
 
     private val undoHistory = ManageTagsUndoHistory()
+
+    // A restored visit can still have deletions applied even though its undo history was lost.
+    private val restoredTagDeletion = savedStateHandle.get<Boolean>(STATE_HAS_APPLIED_TAG_DELETION) ?: false
 
     init {
         savedStateHandle.setSavedStateProvider(STATE_SEARCH_COLLAPSED_TAGS) {
@@ -412,6 +415,8 @@ class ManageTagsViewModel(
             val (tree, history) =
                 withCol { tags.tree() to undoHistory.state(this) }
             tagList = flattenTree(tree)
+            val hasAppliedTagDeletion = restoredTagDeletion || history.hasAppliedTagDeletion
+            savedStateHandle[STATE_HAS_APPLIED_TAG_DELETION] = hasAppliedTagDeletion
             state.value =
                 ManageTagsState.Content(
                     visibleNodes = computeVisibleNodes(searchQuery.value),
@@ -420,7 +425,7 @@ class ManageTagsViewModel(
                     totalTagCount = tagList.size,
                     undoLabel = history.undoLabel,
                     redoLabel = history.redoLabel,
-                    hasAppliedTagDeletion = history.hasAppliedTagDeletion,
+                    hasAppliedTagDeletion = hasAppliedTagDeletion,
                     tagRevision = ++tagRevision,
                 )
         }
@@ -539,6 +544,7 @@ class ManageTagsViewModel(
     companion object {
         private const val STATE_SEARCH_QUERY = "search_query"
         private const val STATE_SEARCH_COLLAPSED_TAGS = "search_collapsed_tags"
+        private const val STATE_HAS_APPLIED_TAG_DELETION = "has_applied_tag_deletion"
 
         /**
          * Converts the backend's recursive [BackendTagTreeNode] into a flat list of all
