@@ -38,8 +38,6 @@ import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.exception.ManuallyReportedException
-import com.ichi2.anki.libanki.EpochSeconds
-import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetStatus
@@ -63,9 +61,6 @@ import timber.log.Timber
  */
 object DayRolloverHandler : AnkiBroadcastReceiver() {
     private val timeChangeMutex = Mutex()
-
-    /** @see Scheduler.dayCutoff */
-    private var lastCutoff: EpochSeconds? = null
 
     /** Receive an event each minute AND for time/timezone changes */
     fun listenForRolloverEvents(context: Context) {
@@ -100,27 +95,15 @@ object DayRolloverHandler : AnkiBroadcastReceiver() {
     internal suspend fun handleTimeChange() =
         // Concurrent initial events must not mistake another event's initialization for a rollover.
         timeChangeMutex.withLock {
-            val currentCutoff = withOpenColOrNull { sched.dayCutoff }
-            if (currentCutoff == null) {
-                // assumption: if the collection is not open, queue status will be updated
-                // by the act of opening the collection, missing an event is acceptable
-                Timber.w("could not check/update day rollover: collection not open")
-                return@withLock
-            }
-
             // Anki Desktop: instead of comparing the current time to the cutoff,
             // it detects if a change to the cutoff has occurred
             // https://github.com/ankitects/anki/blob/edd38ca06730d7fc16804f52ce10f6bc54c3d145/qt/aqt/main.py#L508-L528
-            if (lastCutoff == currentCutoff) return@withLock
-
-            Timber.i("day cutoff changed %d -> %d", lastCutoff, currentCutoff)
+            val cutoff = withOpenColOrNull { DayCutoffTracker.check(this) } ?: return@withLock
+            Timber.i("day cutoff changed %d -> %d", cutoff.previous, cutoff.current)
             // Re-arm the wall-clock alarm whenever the cutoff changes
             DayRolloverAlarm.scheduleNext(appContext)
             // we do not want to send a "study queues changes" message initially
-            if (lastCutoff != null) {
-                handleDayRollover()
-            }
-            this.lastCutoff = currentCutoff
+            if (cutoff.hasRolledOver) handleDayRollover()
         }
 
     private fun handleDayRollover() {
