@@ -359,7 +359,14 @@ class StudyOptionsFragment :
 
     fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
-        launchCatchingViewTask { viewModel.refreshData() }
+        val deckPickerViewModel = (activity as? DeckPicker)?.viewModel
+        launchCatchingViewTask {
+            if (deckPickerViewModel == null) {
+                viewModel.refreshData()
+            } else {
+                deckPickerViewModel.runReportingErrors { viewModel.refreshData() }
+            }
+        }
     }
 
     private fun rebuildUi(state: StudyOptionsState) {

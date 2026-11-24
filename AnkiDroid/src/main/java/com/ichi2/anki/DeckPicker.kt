@@ -61,6 +61,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -69,6 +70,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withStarted
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -139,6 +141,7 @@ import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
@@ -153,12 +156,14 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.FatalErrorDialog
+import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportViewModel
 import com.ichi2.anki.dialogs.MeteredSyncDialog
 import com.ichi2.anki.dialogs.ProfileLoadFailureDialog
 import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
+import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -205,6 +210,8 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
+import com.ichi2.anki.utils.awaitDismissal
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
@@ -213,6 +220,7 @@ import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -236,8 +244,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
@@ -466,6 +477,7 @@ open class DeckPicker :
 
     init {
         ChangeManager.subscribe(this)
+        trackRecoveryDialogs()
     }
 
     // ----------------------------------------------------------------------------
@@ -499,6 +511,67 @@ open class DeckPicker :
             x = request.x,
             y = request.y,
         )
+    }
+
+    private fun trackRecoveryDialogs() {
+        val open = mutableSetOf<Fragment>()
+
+        fun Fragment.holdsErrors() =
+            this is DatabaseErrorDialog ||
+                this is DeckPickerMaintenanceDialog ||
+                this is ImportDialog ||
+                this is SimpleMessageDialog ||
+                this is SyncErrorDialog
+
+        fun onChanged() {
+            viewModel.onRecoveryDialogsChanged(
+                open = open.isNotEmpty(),
+                loadFailedOpen =
+                    open.any {
+                        it is DatabaseErrorDialog &&
+                            it.requireDialogType() == DatabaseErrorDialogType.DIALOG_LOAD_FAILED
+                    },
+            )
+        }
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentAttached(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    context: Context,
+                ) {
+                    if (f.holdsErrors() && open.add(f)) onChanged()
+                }
+
+                override fun onFragmentDestroyed(
+                    fm: FragmentManager,
+                    f: Fragment,
+                ) {
+                    if (isChangingConfigurations && !f.isRemoving) return
+                    if (open.remove(f)) onChanged()
+                }
+            },
+            false,
+        )
+    }
+
+    private fun canShowError() =
+        lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) &&
+            !viewModel.recoveryDialogsOpen.value &&
+            !viewModel.recoveringCollection.value &&
+            viewModel.replacedCollection.value == null
+
+    private suspend fun <T> whenNoDatabaseRecovery(block: () -> T): T {
+        while (!canShowError()) {
+            merge(
+                lifecycle.currentStateFlow,
+                viewModel.recoveryDialogsOpen,
+                viewModel.recoveringCollection,
+                viewModel.replacedCollection,
+            ).first { canShowError() }
+            yield()
+        }
+        return block()
     }
 
     // ----------------------------------------------------------------------------
@@ -585,8 +658,8 @@ open class DeckPicker :
                 onDeckSelected = { onDeckClick(it, DeckSelectionType.DEFAULT) },
                 onDeckCountsSelected = { onDeckClick(it, DeckSelectionType.SHOW_STUDY_OPTIONS) },
                 onDeckChildrenToggled = { deckId ->
-                    viewModel.toggleDeckExpand(deckId)
                     dismissAllDialogFragments()
+                    viewModel.toggleDeckExpand(deckId)
                 },
                 onDeckContextRequested = { deckId -> viewModel.requestContextMenu(deckId) },
                 onDeckRightClick = { deckId, x, y ->
@@ -994,6 +1067,12 @@ open class DeckPicker :
             fragment?.refreshInterface()
         }
 
+        fun onCreatedDeckSelected(param: Unit) {
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
+
         fun onStartupResponse(response: StartupResponse) {
             Timber.d("onStartupResponse: %s", response)
             when (response) {
@@ -1055,6 +1134,9 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.collectInLifecycle(::createIcon)
         viewModel.flowOfDisableShortcuts.collectInLifecycle(::disableDeckAndChildrenShortcuts)
         viewModel.onError.receiveAsFlow().collectInLifecycle { showException(it) }
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { error ->
+            whenNoDatabaseRecovery { showException(error.exception) }?.awaitDismissal()
+        }
         viewModel.flowOfPromptUserToUpdateScheduler.collectInLifecycle(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().collectInLifecycle(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.collectInLifecycle(::onStudiedTodayChanged)
@@ -1065,6 +1147,8 @@ open class DeckPicker :
         viewModel.flowOfFocusedDeck.collectInLifecycle(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.collectInLifecycle(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.collectInLifecycle(::onDecksReloaded)
+        viewModel.flowOfCreatedDeckSelected.collectInLifecycle(::onCreatedDeckSelected)
+        viewModel.replacedCollection.filterNotNull().collectInLifecycle(::onImportColpkg)
         viewModel.flowOfStartupResponse.filterNotNull().collectInLifecycle(::onStartupResponse)
         viewModel.flowOfShowContextMenu.collectInLifecycle(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.collectInLifecycle(::showDeckPickerRightClickContextMenu)
@@ -1134,13 +1218,13 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
                 Timber.i("ContextMenu: Rebuild deck selected")
-                viewModel.rebuildFilteredDeck(deckId)
                 dismissAllDialogFragments()
+                viewModel.rebuildFilteredDeck(deckId)
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {
                 Timber.i("ContextMenu: Empty deck selected")
-                emptyFiltered(deckId)
                 dismissAllDialogFragments()
+                emptyFiltered(deckId)
             }
             DeckPickerContextMenuOption.CREATE_SUBDECK -> {
                 Timber.i("ContextMenu: Create Subdeck selected")
@@ -2124,7 +2208,27 @@ open class DeckPicker :
     }
 
     fun restoreFromBackup(path: String) {
-        importColpkg(path)
+        replaceCollection(path)
+    }
+
+    private fun replaceCollection(colpkgPath: String) {
+        val restoredDirectory = (importColpkgListener as? DatabaseRestorationListener)?.newAnkiDroidDirectory
+        val preferences = sharedPrefs()
+        val replaced =
+            viewModel.replaceCollection(colpkgPath) {
+                restoredDirectory?.let { preferences.saveCollectionDirectory(it) }
+            }
+        launchCatchingTask {
+            withProgress(
+                extractProgress = {
+                    if (progress.hasImporting()) {
+                        text = progress.importing
+                    }
+                },
+            ) {
+                replaced.await()
+            }
+        }
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -2209,7 +2313,7 @@ open class DeckPicker :
     // Callback to import a file -- replacing the existing collection
     fun importReplace(importPath: String) {
         Timber.d("importReplace() for file %s", importPath)
-        importColpkg(importPath)
+        replaceCollection(importPath)
     }
 
     /**
@@ -2226,6 +2330,10 @@ open class DeckPicker :
         // be on the back stack when startup finishes, and must survive panel initialization.
         val sidePanel = supportFragmentManager.findFragmentById(containerId)
         if (sidePanel != null && sidePanel !is StudyOptionsFragment) {
+            if (supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+                showStudyOptionsPanelAfterDialog()
+                return true
+            }
             supportFragmentManager.popBackStackImmediate(
                 null,
                 FragmentManager.POP_BACK_STACK_INCLUSIVE,
@@ -2241,6 +2349,26 @@ open class DeckPicker :
             }
         }
         return true
+    }
+
+    private var studyOptionsPanelWaitsForDialog = false
+
+    private fun showStudyOptionsPanelAfterDialog() {
+        if (studyOptionsPanelWaitsForDialog) return
+        studyOptionsPanelWaitsForDialog = true
+        supportFragmentManager.addOnBackStackChangedListener(
+            object : FragmentManager.OnBackStackChangedListener {
+                override fun onBackStackChanged() {
+                    if (supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) return
+                    supportFragmentManager.removeOnBackStackChangedListener(this)
+                    lifecycleScope.launch {
+                        yield()
+                        studyOptionsPanelWaitsForDialog = false
+                        withStarted { tryShowStudyOptionsPanel() }
+                    }
+                }
+            },
+        )
     }
 
     @NeedsTest("Instrumented tests for review reminders")
@@ -2457,32 +2585,29 @@ open class DeckPicker :
      * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
      * is often the hidden Default deck.
      */
-    private fun onDeckCreated(deckId: DeckId) =
-        launchCatchingTask {
-            viewModel.selectDeck(deckId).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
-        }
+    private fun onDeckCreated(deckId: DeckId) = viewModel.selectCreatedDeck(deckId)
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
      * @param did ID of the deck to delete
      */
-    fun deleteDeck(did: DeckId) =
-        launchCatchingTask {
-            viewModel.deleteDeck(did).join()
-        }
+    fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() =
-        launchCatchingTask {
-            viewModel.deleteSelectedDeck().join()
-        }
+    private fun deleteSelectedDeck() {
+        val sidePanel = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
+        viewModel.deleteSelectedDeck(
+            hasSidePanel = sidePanel != null,
+            shownDeckId =
+                when (sidePanel) {
+                    is StudyOptionsFragment -> sidePanel.shownDeckId
+                    is ScheduleRemindersFragment -> sidePanel.shownDeckId
+                    else -> null
+                },
+        )
+    }
 
     private fun emptyFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.emptyFilteredDeck(did).join()
-        }
+        viewModel.emptyFilteredDeck(did)
     }
 
     override fun onAttachedToWindow() {
@@ -2644,13 +2769,14 @@ open class DeckPicker :
     }
 
     override fun onImportColpkg(colpkgPath: String?) {
+        importColpkgListener?.onImportColpkg(colpkgPath)
+        viewModel.onReplacedCollectionShown()
         launchCatchingTask {
             // as the current collection is closed before importing a new collection, make sure the
             // new collection is open before the code to update the DeckPicker ui runs
             withCol { }
             invalidateOptionsMenu()
             updateDeckList()
-            importColpkgListener?.onImportColpkg(colpkgPath)
         }
     }
 

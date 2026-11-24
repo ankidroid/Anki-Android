@@ -286,7 +286,7 @@ class DeckPickerViewModelTest : JvmTest() {
 
             buildViewModel().run {
                 withQueuedCollectionAccess {
-                    val deletion = deleteSelectedDeck()
+                    val deletion = deleteSelectedDeck(hasSidePanel = false, shownDeckId = null)
                     val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(progressManager.progress.value)
                     assertEquals(DeckPickerProgress.DELETING_DECK, active.message)
                     deletion.join()
@@ -469,7 +469,12 @@ class DeckPickerViewModelTest : JvmTest() {
             viewModel.updateDeckFilter("First")
             runCurrent()
 
-            assertSame(readError, viewModel.onError.tryReceive().getOrNull())
+            assertSame(
+                readError,
+                viewModel.pendingErrors.value
+                    .single()
+                    .message.exception,
+            )
             assertEquals(initialList, viewModel.flowOfDeckList.value)
 
             viewModel.updateDeckFilter("Second")

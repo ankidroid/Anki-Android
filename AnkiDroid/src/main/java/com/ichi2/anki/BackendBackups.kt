@@ -31,22 +31,6 @@ suspend fun performBackupInBackground(force: Boolean = false): Boolean {
     return createBackup(force = force)
 }
 
-fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiActivity, Activity : ImportColpkgListener {
-    launchCatchingTask {
-        withProgress(
-            extractProgress = {
-                if (progress.hasImporting()) {
-                    text = progress.importing
-                }
-            },
-        ) {
-            CollectionManager.importColpkg(colpkgPath)
-        }
-
-        onImportColpkg(colpkgPath)
-    }
-}
-
 /**
  * Held for the whole of a background backup, including the stage the backend
  * finishes after it has released the collection.

@@ -396,6 +396,24 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
+    fun `Shift+Del deletes the selected deck while the reminders pane is open`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        val deckId = addDeck("Deck to delete", setAsSelected = true)
+        addNoteToDeck(deckId)
+        Prefs.newReviewRemindersEnabled = true
+
+        deckPicker {
+            selectContextMenuOption(ContextMenuOption.SCHEDULE_REMINDERS, deckId)
+            advanceRobolectricLooper()
+            assertTrue(sidePanel is ScheduleRemindersFragment)
+
+            onKeyUp(KeyEvent.KEYCODE_DEL, KeyEvent(0, 0, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL, 0, KeyEvent.META_SHIFT_ON))
+
+            advanceRobolectricLooperUntil { col.decks.getLegacy(deckId) == null }
+        }
+    }
+
+    @Test
     fun databaseLockedTest() {
         // don't call .onCreate
         val controller = Robolectric.buildActivity(DeckPickerEx::class.java, Intent())

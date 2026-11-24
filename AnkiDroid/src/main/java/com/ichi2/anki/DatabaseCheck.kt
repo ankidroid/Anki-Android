@@ -5,7 +5,6 @@ package com.ichi2.anki
 
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 
 fun DeckPicker.handleDatabaseCheck() {
     fun Progress.DatabaseCheck.toAmount() =
@@ -15,29 +14,30 @@ fun DeckPicker.handleDatabaseCheck() {
             null
         }
 
+    val check = viewModel.checkDatabase()
     launchCatchingTask {
-        val problems =
-            withProgress(
-                extractProgress = {
-                    if (progress.hasDatabaseCheck()) {
-                        progress.databaseCheck.let {
-                            text = it.stage
-                            amount = it.toAmount()
+        viewModel.holdErrorsDuring {
+            val problems =
+                withProgress(
+                    extractProgress = {
+                        if (progress.hasDatabaseCheck()) {
+                            progress.databaseCheck.let {
+                                text = it.stage
+                                amount = it.toAmount()
+                            }
                         }
-                    }
-                },
-                onCancel = null,
-            ) {
-                withCol {
-                    fixIntegrity()
+                    },
+                    onCancel = null,
+                ) {
+                    check.await()
+                } ?: return@holdErrorsDuring
+            val message =
+                if (problems.isNotEmpty()) {
+                    problems.joinToString("\n")
+                } else {
+                    TR.databaseCheckRebuilt()
                 }
-            }
-        val message =
-            if (problems.isNotEmpty()) {
-                problems.joinToString("\n")
-            } else {
-                TR.databaseCheckRebuilt()
-            }
-        showSimpleMessageDialog(message)
+            showSimpleMessageDialog(message)
+        }
     }
 }

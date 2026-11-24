@@ -4,6 +4,7 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -114,11 +115,14 @@ class DatabaseRestorationListener(
 ) : ImportColpkgListener {
     override fun onImportColpkg(colpkgPath: String?) {
         Timber.i("Database restoration correct")
-        activity.sharedPrefs().edit {
-            putString("deckPath", newAnkiDroidDirectory.absolutePath)
-        }
+        activity.sharedPrefs().saveCollectionDirectory(newAnkiDroidDirectory)
         activity.dismissAllDialogFragments()
         activity.importColpkgListener = null
         CollectionHelper.ankiDroidDirectoryOverride = null
     }
 }
+
+fun SharedPreferences.saveCollectionDirectory(directory: File) =
+    edit {
+        putString(CollectionHelper.PREF_COLLECTION_PATH, directory.absolutePath)
+    }
