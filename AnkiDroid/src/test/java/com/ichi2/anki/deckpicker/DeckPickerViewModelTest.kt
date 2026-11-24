@@ -87,6 +87,28 @@ class DeckPickerViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `delete confirmation keeps its target when a selection is queued`() =
+        runTest {
+            val target = addDeck("Selected deck", setAsSelected = true)
+            val shown = addDeck("Shown deck")
+            val next = addDeck("Next deck")
+
+            buildViewModel().run {
+                withQueuedCollectionAccess {
+                    flowOfDeleteDeckConfirmation.test {
+                        val deletion = deleteSelectedDeck(hasSidePanel = true, shownDeckId = shown)
+                        val selection = selectDeck(next)
+                        deletion.join()
+                        selection.join()
+
+                        assertEquals(next, withCol { decks.selected() })
+                        assertEquals(target, awaitItem().deckId)
+                    }
+                }
+            }
+        }
+
+    @Test
     fun `delete confirmation includes cards in subdecks`() =
         runTest {
             val deckId = addDeck("Parent")
@@ -286,7 +308,7 @@ class DeckPickerViewModelTest : JvmTest() {
 
             buildViewModel().run {
                 withQueuedCollectionAccess {
-                    val deletion = deleteSelectedDeck()
+                    val deletion = deleteSelectedDeck(hasSidePanel = false, shownDeckId = null)
                     val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(progressManager.progress.value)
                     assertEquals(DeckPickerProgress.DELETING_DECK, active.message)
                     deletion.join()

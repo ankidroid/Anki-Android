@@ -150,6 +150,9 @@ class ScheduleRemindersFragment :
             ?: ReviewReminderScope.Global
     }
 
+    val shownDeckId: DeckId?
+        get() = (scheduleRemindersScope as? ReviewReminderScope.DeckSpecific)?.did
+
     /**
      * The [FragmentHost] of this fragment, which determines how certain UI elements are displayed.
      * If no arguments have been passed to this fragment, defaults to [FragmentHost.SETTINGS]. This default is a used

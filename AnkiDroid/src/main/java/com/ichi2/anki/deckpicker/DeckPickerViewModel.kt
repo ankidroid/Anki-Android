@@ -27,6 +27,7 @@ import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.isLoggedIn
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -237,20 +238,21 @@ class DeckPickerViewModel :
     )
 
     /** Prepares a confirmation dialog for deleting the selected deck. */
-    fun requestDeleteDeckConfirmation() =
-        launchCatchingIO {
-            val request =
-                withCol {
-                    val deck = decks.current()
-                    DeleteDeckConfirmationRequest(
-                        deckId = deck.id,
-                        deckName = deck.name,
-                        totalCards = decks.cardCount(deck.id, includeSubdecks = true),
-                        isFilteredDeck = deck.isFiltered,
-                    )
-                }
-            flowOfDeleteDeckConfirmation.emit(request)
-        }
+    fun requestDeleteDeckConfirmation() = launchCatchingIO { emitDeleteDeckConfirmation(withCol { decks.selected() }) }
+
+    private suspend fun emitDeleteDeckConfirmation(deckId: DeckId) {
+        val request =
+            withCol {
+                val deck = decks.getLegacy(deckId) ?: return@withCol null
+                DeleteDeckConfirmationRequest(
+                    deckId = deck.id,
+                    deckName = deck.name,
+                    totalCards = decks.cardCount(deck.id, includeSubdecks = true),
+                    isFilteredDeck = deck.isFiltered,
+                )
+            } ?: return
+        flowOfDeleteDeckConfirmation.emit(request)
+    }
 
     fun requestRenameSelectedDeck() =
         launchCatchingIO {
@@ -291,16 +293,22 @@ class DeckPickerViewModel :
         }
 
     /**
-     * Deletes the currently selected deck
+     * Deletes the currently selected deck, or asks first if the side panel shows another deck or none
      */
     @CheckResult
-    fun deleteSelectedDeck() =
-        viewModelScope.launch {
-            progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
-                val targetDeckId = withCol { decks.selected() }
+    fun deleteSelectedDeck(
+        hasSidePanel: Boolean,
+        shownDeckId: DeckId?,
+    ) = launchCatching {
+        progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
+            val targetDeckId = withCol { decks.selected() }
+            if (!hasSidePanel || shownDeckId == targetDeckId) {
                 deleteDeck(targetDeckId).join()
+            } else {
+                emitDeleteDeckConfirmation(targetDeckId)
             }
         }
+    }
 
     /**
      * Removes cards in [report] from the collection.
