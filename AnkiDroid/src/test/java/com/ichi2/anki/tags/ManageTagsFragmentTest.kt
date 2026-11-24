@@ -42,6 +42,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.dispatchInsets
@@ -920,6 +921,57 @@ class ManageTagsFragmentTest : RobolectricTest() {
         compose.onNodeWithTag("tag_redo").assertIsEnabled().performClick()
         banner.assertIsDisplayed()
     }
+
+    /** Renaming a tag after undoing its deletion must not bring the old deletion warning back. */
+    @Test
+    fun `a rename does not reactivate an undone tag deletion warning`() {
+        Prefs.hkey = "test-key"
+        val note = addTags("alpha")
+        screen.open()
+        screen.action(TagAction.DELETE, "alpha")
+        screen.confirm(TagAction.DELETE).performClick()
+        val banner = compose.onNode(hasTestTag("tag_sync_warning") and !hasAnyAncestor(isDialog()))
+        banner.assertIsDisplayed()
+
+        // This undo restores the tag and leaves the deletion eligible for redo.
+        compose.onNodeWithTag("tag_undo").performClick()
+        banner.assertDoesNotExist()
+
+        // A new rename clears redo and removes the old name without redoing the deletion.
+        screen.action(TagAction.RENAME, "alpha")
+        screen.enterText("beta")
+        screen.confirm(TagAction.RENAME).performClick()
+        compose.onNodeWithTag("tag:beta").assertIsDisplayed()
+        assertEquals(listOf("beta"), col.getNote(note.id).tags)
+        // A history-wide set of absent names wrongly treats this rename as a redo.
+        banner.assertDoesNotExist()
+    }
+
+    /** The warning should follow a deletion undone or redone elsewhere in the shared collection. */
+    @Test
+    fun `the sync warning follows an undo from outside Manage Tags`() =
+        runTest {
+            Prefs.hkey = "test-key"
+            val note = addTags("deleted")
+            screen.open()
+            screen.action(TagAction.DELETE, "deleted")
+            screen.confirm(TagAction.DELETE).performClick()
+            val banner = compose.onNode(hasTestTag("tag_sync_warning") and !hasAnyAncestor(isDialog()))
+            banner.assertIsDisplayed()
+
+            // Use the normal collection operation path for a different screen. It publishes
+            // changes but does not use this screen's undo history object.
+            undoableOp { undo() }
+            compose.onNodeWithTag("tag:deleted").assertIsDisplayed()
+            assertEquals(listOf("deleted"), col.getNote(note.id).tags)
+            // Before the fix, the warning retains the obsolete step after the row has returned.
+            banner.assertDoesNotExist()
+
+            // Reapplying the same deletion externally should bring the warning back.
+            undoableOp { redo() }
+            compose.onNodeWithTag("tag:deleted").assertDoesNotExist()
+            banner.assertIsDisplayed()
+        }
 
     @Test
     fun `dismissing the AnkiWeb tag warning takes precedence over deletion history`() {

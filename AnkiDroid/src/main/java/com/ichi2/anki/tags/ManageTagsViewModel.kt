@@ -9,6 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
+import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesWithCount
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.isAscii
@@ -103,6 +104,16 @@ class ManageTagsViewModel(
         handler: Any?,
     ) {
         if (handler !== this) refreshTags()
+    }
+
+    override fun undoOrRedoExecuted(
+        changes: OpChangesAfterUndo,
+        handler: Any?,
+    ) {
+        if (handler !== this) {
+            undoHistory.recordExternalUndoOrRedo(changes)
+            refreshTags()
+        }
     }
 
     /** Reloads the tag tree from the backend. Preserves the current search query if any */
