@@ -143,6 +143,21 @@ class TestModuleSelectionPluginTest {
         assertEquals(":AnkiDroid,:common,:common:android,:feature:browse,:widgets", selection()["modules"])
     }
 
+    @Test
+    fun `reverted private tests refresh coverage from earlier PR commits`() {
+        git("switch", "-c", "feature")
+        val testPath = "common/src/test/java/AddedTest.java"
+        writeFile(testPath, "class AddedTest {}")
+        commit()
+
+        git("rm", testPath)
+        writeFile("AnkiDroid/src/test/java/AppTest.java", "class AppTest {}")
+        commit()
+        runPullRequestSelection(base)
+
+        assertEquals(":AnkiDroid,:common", selection()["modules"])
+    }
+
     @ParameterizedTest
     @ValueSource(strings = ["", "invalid", "0000000000000000000000000000000000000000"])
     fun `missing or invalid comparison bases select the full suite`(comparisonBase: String) {
@@ -154,7 +169,7 @@ class TestModuleSelectionPluginTest {
     fun `documentation only comparisons skip unit tests`() {
         writeFile("docs/example.md", "Documentation")
         commit()
-        runSelection()
+        runPullRequestSelection(base)
         assertEquals("", selection()["modules"])
     }
 
@@ -166,14 +181,33 @@ class TestModuleSelectionPluginTest {
         assertEquals("*", selection()["modules"])
     }
 
-    private fun runSelection(comparisonBase: String = base): BuildResult =
-        GradleRunner
+    private fun runPullRequestSelection(target: String): BuildResult {
+        val head = git("rev-parse", "HEAD")
+        git("switch", "--detach", target)
+        git("merge", "--quiet", "--no-ff", "-m", "Merge feature into target", head)
+        return runSelection(target, head)
+    }
+
+    private fun runSelection(
+        comparisonBase: String = base,
+        pullRequestHead: String = "",
+    ): BuildResult {
+        val arguments =
+            listOf(
+                "selectAffectedTestModules",
+                "-PciTestBase=$comparisonBase",
+                "-PciTestPrHead=$pullRequestHead",
+                "--configuration-cache",
+                "--stacktrace",
+            )
+        return GradleRunner
             .create()
             .withProjectDir(directory)
             .withTestKitDir(File("build/test-kit").absoluteFile)
             .withPluginClasspath()
-            .withArguments("selectAffectedTestModules", "-PciTestBase=$comparisonBase", "--configuration-cache", "--stacktrace")
+            .withArguments(arguments)
             .build()
+    }
 
     private fun selection(): Properties =
         Properties().apply {
