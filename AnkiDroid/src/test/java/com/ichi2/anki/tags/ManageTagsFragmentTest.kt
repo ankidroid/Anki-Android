@@ -596,6 +596,50 @@ class ManageTagsFragmentTest : RobolectricTest() {
         }
 
     /**
+     * The backend appends a separator to a destination ending in a colon. If another client
+     * creates the resulting path after validation, the rename must still reject the merge.
+     */
+    @Test
+    fun `a queued rename rejects a destination whose separator overlaps a trailing colon`() =
+        runTest {
+            // Renaming this parent to `target:` would turn the child into `target:::child`.
+            val source = addTags("source::child")
+            val other = addTags("other")
+            screen.open()
+            screen.action(TagAction.RENAME, "source")
+            screen.enterText("target:")
+            val confirm = screen.confirm(TagAction.RENAME).assertIsEnabled()
+
+            // Put the concurrent write ahead of the rename. Validation saw a free destination,
+            // but the collection-level check must see the newly registered child.
+            val previous = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+            try {
+                val edit =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        CollectionManager.withCol {
+                            getNote(other.id).also {
+                                it.addTag("target:::child")
+                                updateNote(it)
+                            }
+                        }
+                    }
+                confirm.performClick()
+                compose.waitForIdle()
+                assertTrue(assertIs<ManageTagsState.Content>(screen.viewModel.state.value).isWorking)
+                testScheduler.advanceUntilIdle()
+                edit.join()
+            } finally {
+                CollectionManager.setTestDispatcher(previous)
+            }
+
+            // On the buggy revision, the overlapping separator hides the collision and
+            // this assertion finds the other note's tag on the source note.
+            assertEquals(listOf("source::child"), col.getNote(source.id).tags)
+            assertEquals(setOf("other", "target:::child"), col.getNote(other.id).tags.toSet())
+            compose.onNodeWithText(targetContext.getString(CommonString.tag_already_exists)).assertIsDisplayed()
+        }
+
+    /**
      * A rejected keyboard rename keeps the source. Restore focus there after the operation
      * rather than selecting a destination created by another client.
      */

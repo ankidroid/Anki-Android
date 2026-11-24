@@ -27,7 +27,11 @@ internal fun Collection.validateStoredRename(
         buildJsonArray {
             for (tag in tags.all()) {
                 val components = tag.split("::", limit = depth + 1)
-                if (components.size >= depth) add(components.take(depth).joinToString("::"))
+                if (components.size < depth) continue
+                val prefix = components.take(depth).joinToString("::")
+                add(prefix)
+                // In target:::child, both target and target: precede a subtree separator.
+                if (name.endsWith(':') && components.getOrNull(depth)?.startsWith(':') == true) add("$prefix:")
             }
         }
     val occupied =
