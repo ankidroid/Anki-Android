@@ -26,4 +26,17 @@ dependencies {
     implementation(libs.jakewharton.timber)
 
     addAnkiBackendDependencies(project)
+
+    testImplementation(testFixtures(project(":anki-common")))
+    testImplementation(testFixtures(project(":libanki")))
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.cashapp.turbine)
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.ivanshafran.shared.preferences.mock)
+    testImplementation(libs.json)
+    testImplementation(libs.junit.platform.launcher)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
 }
