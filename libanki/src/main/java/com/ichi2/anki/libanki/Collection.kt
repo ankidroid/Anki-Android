@@ -1612,6 +1612,21 @@ fun Collection.notesOfCards(cids: Iterable<CardId>): List<NoteId> =
     db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
 
 /**
+ * The distinct tags used by the given notes.
+ */
+@CheckResult
+@NotInPyLib
+fun Collection.tagsOfNotes(noteIds: List<NoteId>): List<String> =
+    noteIds
+        .asSequence()
+        .chunked(1000)
+        .flatMap { db.queryStringList("select distinct tags from notes where id in ${ids2str(it)}") }
+        .flatMap { it.split(' ') }
+        .filter { it.isNotEmpty() }
+        .distinctBy { it.lowercase() }
+        .toList()
+
+/**
  * returns the list of cloze ordinals in a note
  *
  * `"{{c1::A}} {{c3::B}}" => [1, 3]`
