@@ -35,7 +35,7 @@ dependencies {
     // testFixtures dependencies
     testFixturesImplementation(project(":common"))
     testFixturesImplementation(libs.slf4j.api)
-    testFixturesImplementation(libs.junit.vintage.engine)
+    testFixturesImplementation(libs.junit4)
     testFixturesImplementation(libs.kotlinx.coroutines.core)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
     testFixturesCompileOnly(libs.json)
