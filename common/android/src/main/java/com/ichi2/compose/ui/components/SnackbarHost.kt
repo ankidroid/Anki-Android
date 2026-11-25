@@ -53,7 +53,10 @@ internal fun SnackbarHost(
                         originalTimeoutMillis = 0L,
                         containsIcons = true,
                         containsText = true,
-                        containsControls = data.visuals.actionLabel != null,
+                        // Material only reports controls for an action label, so a dismiss-only
+                        // snackbar's Close button is invisible to accessibility. Treat the dismiss
+                        // action as a control too, so it gets the longer control timeout.
+                        containsControls = data.visuals.actionLabel != null || data.visuals.withDismissAction,
                     ).milliseconds,
             )
             // A pointer event may have changed the touch state before recomposition runs.
