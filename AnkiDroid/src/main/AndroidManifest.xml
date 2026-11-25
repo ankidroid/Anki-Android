@@ -558,6 +558,10 @@
             tools:ignore="ExportedContentProvider"
             >
             <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
+            <!-- FlashCardsContract.ACTION_FLASHCARDS_PROVIDER: lets API clients find parallel builds -->
+            <intent-filter>
+                <action android:name="com.ichi2.anki.action.FLASHCARDS_PROVIDER" />
+            </intent-filter>
         </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -569,6 +573,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+        <!-- The API library's provider chooser is for its clients. AnkiDroid is a provider -->
+        <activity android:name="com.ichi2.anki.api.ProviderChooserActivity" tools:node="remove" />
     </application>
 
 </manifest>

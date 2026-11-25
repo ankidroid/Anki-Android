@@ -3,6 +3,8 @@
 package com.ichi2.anki.api
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.ProviderInfo
@@ -36,6 +38,7 @@ internal class AnkiDroidProviderTest {
     @Before
     fun setUp() {
         setCaller(Caller.RELEASE)
+        AnkiDroidPackages.request(FlashCardsContract.READ_WRITE_PERMISSION)
     }
 
     @Test
@@ -102,6 +105,7 @@ internal class AnkiDroidProviderTest {
         AnkiDroidPackages.install(ANKIDROID, Signing.Current(UNKNOWN, AnkiDroidPackages.RELEASE))
 
         assertNull(AddContentApi.getAnkiDroidPackageName(context))
+        assertNull(AddContentApi.getSelectedProvider(context))
     }
 
     @Test
@@ -258,9 +262,11 @@ internal sealed interface Signing {
     ) : Signing
 }
 
-/** Installs packages that hold [FlashCardsContract.AUTHORITY] */
+/** Installs packages that offer the [FlashCardsContract] provider */
 @SuppressLint("NewApi") // JVM tests: java.util.Base64 is available, and Robolectric provides SigningInfo
 internal object AnkiDroidPackages {
+    private const val PROVIDER_CLASS = "com.ichi2.anki.provider.CardContentProvider"
+
     /**
      * AnkiDroid's release certificate, from the APK signing block of AnkiDroid-2.25.3-arm64-v8a.apk
      * on GitHub. SHA-256: 2071534F0F4B5E54AE952DD275D70DA6E3459EE69909D2AB1B4843C4C5B21A45
@@ -312,11 +318,20 @@ internal object AnkiDroidPackages {
             ),
         )
 
+    /** Sets the permissions the client app requests in its manifest */
+    fun request(vararg permissions: String) {
+        val manager = shadowOf(RuntimeEnvironment.getApplication().packageManager)
+        manager.getInternalMutablePackageInfo(RuntimeEnvironment.getApplication().packageName).requestedPermissions =
+            arrayOf(*permissions)
+    }
+
     @Suppress("DEPRECATION") // signatures, set only before API 28
     fun install(
         packageName: String,
         signing: Signing,
         metaData: Bundle? = null,
+        authority: String = FlashCardsContract.AUTHORITY,
+        declaresInterface: Boolean = false,
     ) {
         val manager = shadowOf(RuntimeEnvironment.getApplication().packageManager)
 
@@ -335,12 +350,20 @@ internal object AnkiDroidPackages {
         // The provider is added after the package, so it keeps the package's signatures
         val provider =
             ProviderInfo().apply {
-                authority = FlashCardsContract.AUTHORITY
+                this.authority = authority
                 this.packageName = packageName
-                name = "com.ichi2.anki.provider.CardContentProvider"
+                name = PROVIDER_CLASS
                 this.metaData = metaData
             }
         manager.addOrUpdateProvider(provider)
+
+        // Current builds declare FlashCardsContract.ACTION_FLASHCARDS_PROVIDER on the provider
+        if (declaresInterface) {
+            manager.addIntentFilterForProvider(
+                ComponentName(packageName, PROVIDER_CLASS),
+                IntentFilter(FlashCardsContract.ACTION_FLASHCARDS_PROVIDER),
+            )
+        }
     }
 
     private fun current(signing: Signing): Array<Signature> =

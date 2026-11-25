@@ -189,9 +189,11 @@ internal class AddContentApiTest {
     }
 
     private fun installAnkiDroid(metaData: Bundle?) {
+        AnkiDroidPackages.request(FlashCardsContract.READ_WRITE_PERMISSION)
         AnkiDroidPackages.install(BuildConfig.ANKI_PACKAGE_NAME, Signing.Current(AnkiDroidPackages.RELEASE), metaData)
     }
 
+    /** AnkiDroid, signed with its release key, with a fake provider behind its authority */
     private fun installFakeCardProvider(): FakeCardContentProvider {
         installAnkiDroid(metaData = null)
         return Robolectric

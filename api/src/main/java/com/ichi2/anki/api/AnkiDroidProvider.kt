@@ -28,6 +28,7 @@ import java.util.Locale
 internal object AnkiDroidProvider {
     private const val TAG = "AnkiDroidApi"
     private const val DIGEST_ALGORITHM = "SHA-256"
+    private const val SIGNER_SEPARATOR = ","
 
     /**
      * SHA-256 digests of the certificates AnkiDroid's releases are signed with.
@@ -116,18 +117,43 @@ internal object AnkiDroidProvider {
         return Trust.UNKNOWN_CERTIFICATE
     }
 
+    /** The provider holding [authority], whichever app it belongs to */
     @SuppressLint("WrongConstant") // ComponentInfoFlags bug: GET_META_DATA.toLong() was invalid
-    private fun find(
+    fun find(
         manager: PackageManager,
         flags: Int,
+        authority: String = FlashCardsContract.AUTHORITY,
     ): ProviderInfo? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             return manager.resolveContentProvider(
-                FlashCardsContract.AUTHORITY,
+                authority,
                 PackageManager.ComponentInfoFlags.of(flags.toLong()),
             )
         }
-        return manager.resolveContentProvider(FlashCardsContract.AUTHORITY, flags)
+        return manager.resolveContentProvider(authority, flags)
+    }
+
+    /**
+     * Digests of the certificates [packageName] is signed with now, without past ones,
+     * so that a choice pinned to them is dropped when the key changes.
+     * @return null if the package is not installed or unsigned
+     */
+    @Suppress("DEPRECATION") // GET_SIGNATURES and signatures, used only before API 28
+    fun signer(
+        context: Context,
+        packageName: String,
+    ): String? {
+        val manager = context.packageManager
+        val signers =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                packageInfo(manager, packageName, PackageManager.GET_SIGNATURES)?.signatures
+            } else {
+                packageInfo(manager, packageName, PackageManager.GET_SIGNING_CERTIFICATES)?.signingInfo?.apkContentsSigners
+            }
+        if (signers.isNullOrEmpty()) {
+            return null
+        }
+        return signers.map { digest(it) }.sorted().joinToString(SIGNER_SEPARATOR)
     }
 
     /** Official releases have one signer. A rotated key can match through its verified history. */

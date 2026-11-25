@@ -1,6 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"/>
+
+    <!-- Lets AddContentApi.getProviders see AnkiDroid builds and forks on Android 11+ -->
+    <queries>
+        <intent>
+            <action android:name="com.ichi2.anki.action.FLASHCARDS_PROVIDER" />
+        </intent>
+    </queries>
     <application android:allowBackup="true" android:label="@string/app_name">
+        <!-- Lets the user pick an installed provider via AddContentApi.getProviderChooserIntent -->
+        <activity
+            android:name="com.ichi2.anki.api.ProviderChooserActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
