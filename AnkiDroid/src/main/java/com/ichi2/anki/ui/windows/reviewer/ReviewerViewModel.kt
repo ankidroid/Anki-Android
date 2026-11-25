@@ -56,8 +56,8 @@ import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.getCardOrNull
-import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.anki.utils.ext.value
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -202,11 +202,10 @@ class ReviewerViewModel(
     suspend fun getCardId() = currentCard.await().id
 
     /** The card shown before the current card, used by Previous card info during review. */
-    private var previousCardId: CardId?
-        get() = savedStateHandle.getLongOrNull(KEY_PREVIOUS_CARD_ID)
-        set(value) {
-            savedStateHandle[KEY_PREVIOUS_CARD_ID] = value
-        }
+    private var previousCardId by savedStateHandle.value<CardId>(KEY_PREVIOUS_CARD_ID)
+
+    /** The most recent card shown, returned when the review finishes. */
+    private var lastShownCardId by savedStateHandle.value<CardId>(KEY_LAST_SHOWN_CARD_ID)
 
     /**
      * Sends an [eval] request to load the card answer, and updates components
@@ -474,10 +473,10 @@ class ReviewerViewModel(
         }
         val cardId = currentCard.await().id
         super.showQuestion()
-        val lastShownCardId = savedStateHandle.getLongOrNull(KEY_LAST_SHOWN_CARD_ID)
-        if (lastShownCardId != cardId) {
-            lastShownCardId?.let { previousCardId = it }
-            savedStateHandle[KEY_LAST_SHOWN_CARD_ID] = cardId
+        val lastShown = lastShownCardId
+        if (lastShown != cardId) {
+            lastShown?.let { previousCardId = it }
+            lastShownCardId = cardId
         }
         runStateMutationHook()
         updateMarkIcon()
@@ -599,7 +598,6 @@ class ReviewerViewModel(
             }
         val state = queueState.await()
         if (state == null) {
-            val lastShownCardId = savedStateHandle.getLongOrNull(KEY_LAST_SHOWN_CARD_ID)
             finishResultFlow.emit(ReviewerResult.NoMoreCards.fromLastShownCard(lastShownCardId))
             return
         }

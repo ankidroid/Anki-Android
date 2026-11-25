@@ -13,6 +13,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.utils.ext.value
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -27,18 +28,12 @@ class CustomStudyViewModel(
      * The index of the currently selected [CustomStudyDialog.CustomStudyCardState] or
      * [AdapterView.INVALID_POSITION] if there's no selection.
      */
-    var selectedCardStateIndex: Int = AdapterView.INVALID_POSITION
-        get() = savedStateHandle.get<Int>(KEY_CARDS_SELECTION_INDEX) ?: AdapterView.INVALID_POSITION
-        set(value) {
-            field = value
-            savedStateHandle[KEY_CARDS_SELECTION_INDEX] = value
-        }
+    var selectedCardStateIndex by savedStateHandle.value(
+        KEY_CARDS_SELECTION_INDEX,
+        defaultValue = AdapterView.INVALID_POSITION,
+    )
 
-    var userInputText: String?
-        get() = savedStateHandle[KEY_USER_INPUT_TEXT]
-        set(value) {
-            savedStateHandle[KEY_USER_INPUT_TEXT] = value
-        }
+    var userInputText by savedStateHandle.value<String>(KEY_USER_INPUT_TEXT)
 
     /** Required [DeckId] of the [Deck] for which the custom study session is being built. */
     val deckId: DeckId
