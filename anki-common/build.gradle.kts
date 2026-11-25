@@ -51,10 +51,14 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.json)
 
+    testFixturesApi(testFixtures(project(":libanki")))
     testFixturesImplementation(project(":common:android"))
     testFixturesImplementation(project(":libanki"))
     testFixturesImplementation(libs.androidx.core)
     testFixturesImplementation(libs.androidx.test.core)
+    testFixturesImplementation(libs.hamcrest)
     testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.junit4)
     testFixturesImplementation(libs.kotlin.test)
+    testFixturesImplementation(libs.kotlinx.coroutines.test)
 }
