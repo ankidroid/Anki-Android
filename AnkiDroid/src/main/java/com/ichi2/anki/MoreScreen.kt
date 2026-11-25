@@ -52,6 +52,8 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.rotary.RotaryInputModifierNode
+import androidx.compose.ui.input.rotary.RotaryScrollEvent
 import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
 import androidx.compose.ui.node.DelegatingNode
 import androidx.compose.ui.node.LayoutAwareModifierNode
@@ -251,6 +253,7 @@ private class KeyboardPagingNode(
     var onPaging: () -> Unit,
 ) : DelegatingNode(),
     KeyInputModifierNode,
+    RotaryInputModifierNode,
     LayoutAwareModifierNode,
     CompositionLocalConsumerModifierNode {
     private val pageFocus: FocusTargetModifierNode =
@@ -287,6 +290,15 @@ private class KeyboardPagingNode(
     }
 
     override fun onKeyEvent(event: KeyEvent) = false
+
+    override fun onRotaryScrollEvent(event: RotaryScrollEvent): Boolean {
+        finishPaging()
+        val consumed = scrollState.dispatchRawDelta(event.verticalScrollPixels)
+        if (consumed != 0f) onPaging()
+        return consumed != 0f
+    }
+
+    override fun onPreRotaryScrollEvent(event: RotaryScrollEvent) = false
 
     override fun onRemeasured(size: IntSize) {
         val shrunk = size.height < viewportHeight
