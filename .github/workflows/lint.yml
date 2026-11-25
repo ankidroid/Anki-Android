@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,6 +33,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
+
+      - name: Check merge queue result
+        id: already_tested
+        uses: ./.github/actions/already-tested
+        continue-on-error: true
+        timeout-minutes: 1
+        with:
+          workflow: lint.yml
 
       - name: Configure JDK
         uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
@@ -54,6 +63,7 @@ jobs:
 
       # Reject versionCode decreases and increases over 100,000.
       - name: Validate versionCode
+        if: steps.already_tested.outputs.skip != 'true'
         env:
           VERSION_CODE_BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before }}
         run: tools/validate-version-code.sh "$VERSION_CODE_BASE"
@@ -78,6 +88,7 @@ jobs:
             ./gradlew :AnkiDroid:compileFullDebugJavaWithJavac :AnkiDroid:generateFullDebugAndroidTestLintModel generateDebugAndroidTestLintModel compileLint lint-rules:compileTestJava --daemon
 
       - name: Test build logic
+        if: steps.already_tested.outputs.skip != 'true'
         run: ./gradlew -p buildSrc test --daemon
 
       - name: Save TestKit Cache
@@ -88,6 +99,7 @@ jobs:
           key: ${{ steps.testkit-cache.outputs.cache-primary-key }}
 
       - name: Run Lint Debug
+        if: steps.already_tested.outputs.skip != 'true'
         # "lintAll" opts in all modules in 1 flavor to lint, pinning :AnkiDroid to lintFullDebug
         # update workflows/README.md when modifying this line
         run: ./gradlew lintAll ktlintCheck lint-rules:test --daemon
@@ -102,22 +114,34 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Check merge queue result
+        id: already_tested
+        uses: ./.github/actions/already-tested
+        continue-on-error: true
+        timeout-minutes: 1
+        with:
+          workflow: lint.yml
+
         # Handled under the pre-commit hook: ./gradlew installGitHook
 
         # To run manually, run the following inside folder: Anki-Android
         # npm install --location=global prettier
         # prettier --check AnkiDroid/**/*.js
       - name: Prettify AnkiDroid javascript code
+        if: steps.already_tested.outputs.skip != 'true'
         uses: creyD/prettier_action@8c18391fdc98ed0d884c6345f03975edac71b8f0 # v4.6
         with:
           prettier_options: --check AnkiDroid/**/*.js .github/check_alpha_release.js
           dry: True
 
       - name: Install Localization
+        if: steps.already_tested.outputs.skip != 'true'
         run: cd tools/localization && yarn
 
       - name: Lint Localization
+        if: steps.already_tested.outputs.skip != 'true'
         run: cd tools/localization && yarn lint
 
       - name: Format Localization
+        if: steps.already_tested.outputs.skip != 'true'
         run: cd tools/localization && yarn checkformat
