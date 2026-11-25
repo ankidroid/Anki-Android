@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewmodel.core)
     implementation(libs.jakewharton.timber)
+    implementation(libs.slf4j.api)
 
     addAnkiBackendDependencies(project)
 
