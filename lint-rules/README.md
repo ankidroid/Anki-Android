@@ -15,8 +15,8 @@ This module contains custom Android lint checks for AnkiDroid.
    - severity - use constants from Severity class
 4. Add the issue to IssueRegistry.kt
 
-See DirectDateFormatDetector.kt for a small example.
-Link: https://github.com/ankidroid/Anki-Android/blob/main/lint-rules/src/main/java/com/ichi2/anki/lint/DirectDateFormatDetector.kt
+See DirectDateInstantiation.kt for a small example.
+Link: https://github.com/ankidroid/Anki-Android/blob/main/lint-rules/src/main/java/com/ichi2/anki/lint/rules/DirectDateInstantiation.kt
 
 ## How to run checks locally
 
