@@ -9,24 +9,32 @@ import androidx.activity.result.ActivityResult
 import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.ShadowFileProviderPathStrategy
-import kotlinx.coroutines.job
+import com.ichi2.testutils.rules.MainDispatcherRule
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
 import kotlin.test.assertContentEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertIs
 
 @RunWith(AndroidJUnit4::class)
 @Config(shadows = [ShadowFileProviderPathStrategy::class])
 class ExternalImageEditorViewModelTest : RobolectricTest(loadBackend = false) {
     private val editedImage = editorResultImageBytes()
+    private val scheduler = TestCoroutineScheduler()
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule(StandardTestDispatcher(scheduler))
 
     @Before
     fun resetFileProviderRoots() {
@@ -39,12 +47,12 @@ class ExternalImageEditorViewModelTest : RobolectricTest(loadBackend = false) {
         val working = File(targetContext.cacheDir, "working.png").apply { writeBytes(editedImage) }
         val edit = ExternalImageEditorViewModel.Edit.Importing(original.path, working.path, ActivityResult(Activity.RESULT_OK, null))
         withRestoredEditor(edit) { viewModel ->
-            advanceRobolectricLooperUntil { viewModel.state.value is ExternalImageEditorViewModel.Edit.Finished }
-            val finished = viewModel.state.value as ExternalImageEditorViewModel.Edit.Finished
+            val finished = assertIs<ExternalImageEditorViewModel.Edit.Finished>(viewModel.state.value)
             val accepted = File(requireNotNull(finished.acceptedPath))
             assertContentEquals(editedImage, accepted.readBytes())
             viewModel.consumed()
-            advanceRobolectricLooperUntil { !working.exists() }
+            scheduler.runCurrent()
+            assertFalse(working.exists())
             assertThat(original.readText(), equalTo("original"))
             assertContentEquals(editedImage, accepted.readBytes())
         }
@@ -54,15 +62,16 @@ class ExternalImageEditorViewModelTest : RobolectricTest(loadBackend = false) {
     fun `preparation resumes after process state restoration`() {
         val original = File(targetContext.cacheDir, "original.png").apply { writeText("original") }
         withRestoredEditor(ExternalImageEditorViewModel.Edit.Preparing(original.path)) { viewModel ->
-            advanceRobolectricLooperUntil { viewModel.state.value is ExternalImageEditorViewModel.Edit.Ready }
-            val ready = viewModel.state.value as ExternalImageEditorViewModel.Edit.Ready
+            val ready = assertIs<ExternalImageEditorViewModel.Edit.Ready>(viewModel.state.value)
             val working = File(ready.workingPath)
             assertThat(working.readText(), equalTo("original"))
             viewModel.launched()
             viewModel.readResult(ActivityResult(Activity.RESULT_CANCELED, null))
-            advanceRobolectricLooperUntil { viewModel.state.value is ExternalImageEditorViewModel.Edit.Finished }
+            scheduler.runCurrent()
+            assertIs<ExternalImageEditorViewModel.Edit.Finished>(viewModel.state.value)
             viewModel.consumed()
-            advanceRobolectricLooperUntil { !working.exists() }
+            scheduler.runCurrent()
+            assertFalse(working.exists())
             assertThat(original.readText(), equalTo("original"))
         }
     }
@@ -85,14 +94,16 @@ class ExternalImageEditorViewModelTest : RobolectricTest(loadBackend = false) {
             withRestoredEditor(
                 ExternalImageEditorViewModel.Edit.Importing(original.path, working.path, ActivityResult(Activity.RESULT_OK, null)),
             ) { model ->
-                advanceRobolectricLooperUntil { model.state.value is ExternalImageEditorViewModel.Edit.Finished }
-                accepted = File(requireNotNull((model.state.value as ExternalImageEditorViewModel.Edit.Finished).acceptedPath))
+                val finished = assertIs<ExternalImageEditorViewModel.Edit.Finished>(model.state.value)
+                accepted = File(requireNotNull(finished.acceptedPath))
                 model
             }
         assertContentEquals(editedImage, working.readBytes())
         assertContentEquals(editedImage, accepted.readBytes())
         viewModel.discard()
-        advanceRobolectricLooperUntil { !working.exists() && !accepted.exists() }
+        scheduler.runCurrent()
+        assertFalse(working.exists())
+        assertFalse(accepted.exists())
         assertThat(original.readText(), equalTo("original"))
     }
 
@@ -117,14 +128,15 @@ class ExternalImageEditorViewModelTest : RobolectricTest(loadBackend = false) {
         val model =
             ExternalImageEditorViewModel(
                 SavedStateHandle(mapOf("externalEdit" to restored)),
-                ExternalImageEditor(targetContext.applicationContext, targetContext.cacheDir),
+                ExternalImageEditor(targetContext.applicationContext, targetContext.cacheDir, StandardTestDispatcher(scheduler)),
             )
         store.put("editor", model)
         return try {
+            scheduler.runCurrent()
             block(model)
         } finally {
             store.clear()
-            advanceRobolectricLooperUntil { model.viewModelScope.coroutineContext.job.isCompleted }
+            scheduler.runCurrent()
         }
     }
 }

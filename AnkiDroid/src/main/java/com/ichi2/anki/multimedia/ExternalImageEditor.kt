@@ -16,6 +16,7 @@ import androidx.core.content.FileProvider
 import com.ichi2.anki.utils.runWithOOMCheck
 import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
@@ -28,6 +29,7 @@ import java.io.IOException
 internal class ExternalImageEditor(
     private val context: Context,
     private val cacheDirectory: File,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     /** A writable image copy and the chooser intent used to launch its external editor. */
     data class Prepared(
@@ -37,7 +39,7 @@ internal class ExternalImageEditor(
 
     /** Return whether the source can be shared with an available external image editor. */
     suspend fun canEdit(source: File): Boolean =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
                 createEditIntent(source, imageMimeType(source)).resolveActivity(context.packageManager) != null
             } catch (e: IllegalArgumentException) {
@@ -50,7 +52,7 @@ internal class ExternalImageEditor(
     suspend fun prepare(source: File): Prepared {
         var copy: File? = null
         try {
-            return withContext(Dispatchers.IO) {
+            return withContext(ioDispatcher) {
                 val mimeType = imageMimeType(source)
                 val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: source.extension
                 val file = File.createTempFile("img", ".$extension", cacheDirectory)
@@ -62,7 +64,7 @@ internal class ExternalImageEditor(
                 )
             }
         } catch (e: Exception) {
-            withContext(NonCancellable + Dispatchers.IO) { copy?.delete() }
+            withContext(NonCancellable + ioDispatcher) { copy?.delete() }
             if (e is CancellationException) throw e
             throw IOException("Unable to prepare image for external editing", e)
         }
@@ -124,7 +126,7 @@ internal class ExternalImageEditor(
         if (result.resultCode != Activity.RESULT_OK) return null
         var accepted: File? = null
         try {
-            return withContext(Dispatchers.IO) {
+            return withContext(ioDispatcher) {
                 // Some editors modify the supplied URI; others return a new content URI.
                 val returnedUri = result.data?.data?.takeUnless { it == uriForFile(copy) }
                 returnedUri?.let(::validateReturnedUri)
@@ -162,7 +164,7 @@ internal class ExternalImageEditor(
                 }
             }
         } catch (e: Exception) {
-            withContext(NonCancellable + Dispatchers.IO) { accepted?.delete() }
+            withContext(NonCancellable + ioDispatcher) { accepted?.delete() }
             if (e is CancellationException) throw e
             throw IOException("Unable to read externally edited image", e)
         }
@@ -181,7 +183,7 @@ internal class ExternalImageEditor(
 
     /** Revoke access even when the owning screen was closed during an operation. */
     suspend fun clear(file: File?) =
-        withContext(NonCancellable + Dispatchers.IO) {
+        withContext(NonCancellable + ioDispatcher) {
             file?.let {
                 context.revokeUriPermission(uriForFile(it), Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 it.delete()
