@@ -6,7 +6,8 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.text.HtmlCompat
+import androidx.core.text.bold
+import androidx.core.text.buildSpannedString
 import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
@@ -25,12 +26,12 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val message =
             if (isFilteredDeck) {
-                resources.getString(CommonString.delete_cram_deck_message, "<b>$deckName</b>")
+                resources.getString(CommonString.delete_cram_deck_message, DECK_NAME)
             } else {
                 resources.getQuantityString(
                     CommonPlurals.delete_deck_message,
                     totalCards,
-                    "<b>$deckName</b>",
+                    DECK_NAME,
                     totalCards,
                 )
             }
@@ -38,12 +39,8 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
         return AlertDialog
             .Builder(requireActivity())
             .setTitle(CommonString.delete_deck_title)
-            .setMessage(
-                HtmlCompat.fromHtml(
-                    message,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY,
-                ),
-            ).setIcon(R.drawable.ic_warning)
+            .setMessage(withBoldDeckName(message))
+            .setIcon(R.drawable.ic_warning)
             .setPositiveButton(CommonString.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
                 activity?.dismissAllDialogFragments()
@@ -52,7 +49,19 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
             }.create()
     }
 
+    private fun withBoldDeckName(message: String): CharSequence {
+        val parts = message.split(DECK_NAME, limit = 2)
+        if (parts.size < 2) return message
+        return buildSpannedString {
+            append(parts[0])
+            bold { append(deckName.orEmpty()) }
+            append(parts[1])
+        }
+    }
+
     companion object {
+        private const val DECK_NAME = "\uFFFC"
+
         fun newInstance(
             deckName: String,
             deckId: DeckId,
