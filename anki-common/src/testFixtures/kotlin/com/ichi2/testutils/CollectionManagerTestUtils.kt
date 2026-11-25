@@ -20,7 +20,7 @@ suspend fun <T> withCollectionAccessOn(
 }
 
 /** Use one scheduler for Main and collection work, restoring the production queue before teardown. */
-internal fun withCollectionTestDispatcher(
+fun withCollectionTestDispatcher(
     dispatcher: TestDispatcher,
     block: () -> Unit,
 ) {
@@ -39,7 +39,7 @@ internal fun withCollectionTestDispatcher(
 }
 
 /** Exercise callers while opening the collection fails, restoring the previous failure mode. */
-internal inline fun withNullCollection(block: () -> Unit) {
+inline fun withNullCollection(block: () -> Unit) {
     val previousFailure = CollectionManager.emulatedOpenFailure
     CollectionManager.closeCollectionBlocking()
     CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED

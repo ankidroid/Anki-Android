@@ -894,7 +894,6 @@ dependencies {
     implementation(libs.androidx.media3.ui)
 
     // ---- testFixtures setup ----
-    testFixturesImplementation(project(":anki-common"))
     testFixturesImplementation(libs.kotlin.stdlib)
     testFixturesImplementation(libs.jakewharton.timber)
     testFixturesImplementation(libs.hamcrest)
