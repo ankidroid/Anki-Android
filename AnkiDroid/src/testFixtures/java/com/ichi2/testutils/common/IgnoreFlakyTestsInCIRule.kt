@@ -2,7 +2,7 @@
 
 package com.ichi2.testutils.common
 
-import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.ankicommon.BuildConfig
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

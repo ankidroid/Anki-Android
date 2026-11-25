@@ -14,6 +14,9 @@ configure<LibraryExtension> {
     // namespace must be unique for resources generation.
     namespace = "com.ichi2.anki.ankicommon"
     buildFeatures.buildConfig = true
+    defaultConfig {
+        buildConfigField("Boolean", "CI", (System.getenv("CI") == "true").toString())
+    }
     buildFeatures.viewBinding = true
     testFixtures.enable = true
 }
