@@ -27,6 +27,11 @@ plugins {
 }
 
 repositories {
+    // Robolectric from Google's mirror of Maven Central: see settings.gradle.kts
+    maven {
+        url = uri("https://maven-central.storage-download.googleapis.com/maven2")
+        content { includeGroup("org.robolectric") }
+    }
     google()
     mavenCentral()
     maven { url = uri("https://jitpack.io") }

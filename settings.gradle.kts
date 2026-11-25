@@ -20,6 +20,12 @@ dependencyResolutionManagement {
     // TODO enforce repositories declared here
     // repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // Maven Central rate-limits CI on Robolectric's large SDK jars (HTTP 429).
+        // Google's mirror of Maven Central serves the same files; on a 404, Gradle falls back to mavenCentral().
+        // Keep in sync with AnkiDroid/build.gradle.kts
+        maven(url = "https://maven-central.storage-download.googleapis.com/maven2") {
+            content { includeGroup("org.robolectric") }
+        }
         google()
         mavenCentral()
         maven(url = "https://jitpack.io")
