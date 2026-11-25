@@ -46,7 +46,6 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.KeyInputModifierNode
 import androidx.compose.ui.input.key.isAltPressed
-import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
@@ -269,24 +268,22 @@ private class KeyboardPagingNode(
     override fun onPreKeyEvent(event: KeyEvent): Boolean {
         val page =
             when {
-                event.isCtrlPressed -> null
                 event.key == Key.PageUp -> Page.UP
                 event.key == Key.PageDown -> Page.DOWN
                 event.key == Key.Spacebar && event.isShiftPressed -> Page.UP
+                event.key == Key.Spacebar && !event.nativeKeyEvent.hasNoModifiers() -> Page.DOWN
                 event.key == Key.MoveHome -> Page.TOP
                 event.key == Key.MoveEnd -> Page.BOTTOM
                 event.key == Key.DirectionUp && event.isAltPressed -> Page.TOP
                 event.key == Key.DirectionDown && event.isAltPressed -> Page.BOTTOM
                 else -> null
             }
-        if (event.type == KeyEventType.KeyDown) {
-            if (page != null) {
-                scroll(page)
-            } else if (!AndroidKeyEvent.isModifierKey(event.nativeKeyEvent.keyCode)) {
-                finishPaging()
-            }
+        if (page != null) {
+            if (event.type == KeyEventType.KeyDown) scroll(page)
+            return true
         }
-        return page != null
+        if (event.type == KeyEventType.KeyDown && !AndroidKeyEvent.isModifierKey(event.nativeKeyEvent.keyCode)) finishPaging()
+        return event.isConfirmKey && !event.nativeKeyEvent.hasNoModifiers()
     }
 
     override fun onKeyEvent(event: KeyEvent) = false
@@ -385,6 +382,9 @@ private class KeyboardPagingNode(
         return next?.let { PagingDestination(it, nextBounds.top + target, nextBounds.bottom + target) }
     }
 }
+
+private val KeyEvent.isConfirmKey: Boolean
+    get() = key == Key.Enter || key == Key.NumPadEnter || key == Key.DirectionCenter || key == Key.Spacebar
 
 private fun Modifier.keyboardPagingTarget() = this then KeyboardPagingTargetElement
 

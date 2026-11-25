@@ -26,6 +26,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -75,6 +76,28 @@ class MoreKeyboardShortcutsTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(0, scroll.value, "Alt+Up scrolls to the top")
             settings.assertIsFocused()
+        }
+
+    @Test
+    fun `Ctrl+Space and Alt+Space page down`() =
+        withPref(Prefs::devBottomNavEnabled, true) {
+            val deckPicker = launchMore()
+            val scroll = deckPicker.moreScrollState
+            val settings = composeRule.onNodeWithText(deckPicker.getString(CommonString.settings))
+            settings.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            settings.assertIsFocused()
+
+            deckPicker.press(KeyEvent.KEYCODE_SPACE, KeyEvent.META_CTRL_ON or KeyEvent.META_CTRL_LEFT_ON)
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+            val afterCtrl = scroll.value
+            assertTrue(afterCtrl > 0, "Ctrl+Space pages down")
+
+            deckPicker.press(KeyEvent.KEYCODE_SPACE, KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON)
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+            assertTrue(scroll.value > afterCtrl, "Alt+Space pages down")
+            assertNull(shadowOf(deckPicker).nextStartedActivity, "modified Space must not open the focused action")
         }
 
     @Test
