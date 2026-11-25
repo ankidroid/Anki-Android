@@ -33,9 +33,11 @@ dependencies {
     testImplementation(testFixtures(project(":anki-common")))
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.json)
     testImplementation(libs.junit.platform.launcher)
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.robolectric)
 }
