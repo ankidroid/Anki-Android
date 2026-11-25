@@ -17,6 +17,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
+/**
+ * ACRA reflects a single `BuildConfig` class for its `BUILD_CONFIG` report field.
+ * [AcraCrashReporter] selects the app's [BuildConfig].
+ */
 @RunWith(AndroidJUnit4::class)
 @Config(application = Application::class)
 class AcraBuildConfigTest {
@@ -37,7 +41,6 @@ class AcraBuildConfigTest {
                 "BACKEND_VERSION",
                 "BUILD_TIME",
                 "BUILD_TYPE",
-                "CI",
                 "DEBUG",
                 "ENABLE_LEAK_CANARY",
                 "FLAVOR",

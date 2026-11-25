@@ -116,7 +116,6 @@ android {
 
     defaultConfig {
         applicationId = "com.ichi2.anki"
-        buildConfigField("Boolean", "CI", (System.getenv("CI") == "true").toString())
         buildConfigField("String", "ACRA_URL", "\"https://ankidroid.org/acra/report\"")
         buildConfigField("String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\"")
         buildConfigField("Boolean", "ENABLE_LEAK_CANARY", "false")
@@ -900,6 +899,7 @@ dependencies {
     implementation(libs.androidx.media3.ui)
 
     // ---- testFixtures setup ----
+    testFixturesImplementation(project(":anki-common"))
     testFixturesImplementation(libs.kotlin.stdlib)
     testFixturesImplementation(libs.jakewharton.timber)
     testFixturesImplementation(libs.hamcrest)

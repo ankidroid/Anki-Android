@@ -11,6 +11,7 @@ import androidx.test.espresso.ViewAction
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
+import com.ichi2.anki.ankicommon.BuildConfig
 import org.hamcrest.Matcher
 
 object TestUtils {
