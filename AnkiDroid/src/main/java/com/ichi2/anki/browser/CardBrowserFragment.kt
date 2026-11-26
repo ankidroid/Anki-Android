@@ -139,6 +139,7 @@ import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.requireNavigationDrawerActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.RecyclerFastScroller
@@ -1411,6 +1412,13 @@ class CardBrowserFragment :
                 shuffle = bundle.getBoolean(RepositionCardFragment.RESULT_RANDOM),
                 shift = bundle.getBoolean(RepositionCardFragment.RESULT_SHIFT),
             )
+        }
+        registerOnForgetHandler { activityViewModel.queryAllSelectedCardIds() }
+        registerFindReplaceHandler { result ->
+            launchCatchingTask {
+                val count = activityViewModel.findAndReplace(result).await()
+                showSnackbar(TR.browsingNotesUpdated(count))
+            }
         }
     }
 

@@ -12,7 +12,9 @@ import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
@@ -33,7 +35,6 @@ import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.requireParcelable
-import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -200,7 +201,12 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     }
 }
 
-fun CardBrowser.registerFindReplaceHandler(action: (FindReplaceResult) -> Unit) {
+/**
+ * Listen for requests from [FindAndReplaceDialogFragment].
+ *
+ * Note: the fragment result listener is set on [Fragment.getParentFragmentManager]
+ */
+fun Fragment.registerFindReplaceHandler(action: (FindReplaceResult) -> Unit) {
     setFragmentResultListener(REQUEST_FIND_AND_REPLACE) { _, bundle ->
         action(
             FindReplaceResult(
