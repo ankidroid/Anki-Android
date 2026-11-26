@@ -92,18 +92,20 @@ internal fun RecorderBar(
             modifier = Modifier.heightIn(min = 52.dp).padding(start = 16.dp, end = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            StatusDot(isRecording = isRecording, recordingColor = recordingRed, pulse = animated)
-            Text(
-                text = DateUtils.formatElapsedTime(state.elapsedSeconds),
-                modifier = Modifier.padding(start = 8.dp),
-                style = MaterialTheme.typography.titleMedium.copy(fontFeatureSettings = "tnum"),
-                fontWeight = FontWeight.Medium,
-            )
-            RecordingWaveform(
-                history = waveform,
-                color = if (isRecording) recordingRed else MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.weight(1f).height(28.dp).padding(horizontal = 12.dp),
-            )
+            Row(modifier = Modifier.weight(1f).heightIn(min = 52.dp), verticalAlignment = Alignment.CenterVertically) {
+                StatusDot(isRecording = isRecording, recordingColor = recordingRed, pulse = animated)
+                Text(
+                    text = DateUtils.formatElapsedTime(state.elapsedSeconds),
+                    modifier = Modifier.padding(start = 8.dp),
+                    style = MaterialTheme.typography.titleMedium.copy(fontFeatureSettings = "tnum"),
+                    fontWeight = FontWeight.Medium,
+                )
+                RecordingWaveform(
+                    history = waveform,
+                    color = if (isRecording) recordingRed else MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f).height(28.dp).padding(horizontal = 12.dp),
+                )
+            }
             actions()
         }
     }

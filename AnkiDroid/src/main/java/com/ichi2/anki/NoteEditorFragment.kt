@@ -2538,11 +2538,19 @@ class NoteEditorFragment :
 
     private fun WindowInsetsCompat.paneInsets(): Insets {
         val bars = getInsets(systemBars() or displayCutout() or ime())
+        val (paneOnLeft, paneOnRight) = neighbouringPanes()
         return insetsOf(
-            left = if (inCardBrowserActivity) 0 else bars.left,
-            right = if (noteEditorActivity?.isPreviewerVisible == true) 0 else bars.right,
+            left = if (paneOnLeft) 0 else bars.left,
+            right = if (paneOnRight) 0 else bars.right,
             bottom = bars.bottom,
         )
+    }
+
+    private fun neighbouringPanes(): Pair<Boolean, Boolean> {
+        val paneAtStart = inCardBrowserActivity
+        val paneAtEnd = noteEditorActivity?.isPreviewerVisible == true
+        val isRtl = binding.rootLayout.layoutDirection == View.LAYOUT_DIRECTION_RTL
+        return if (isRtl) paneAtEnd to paneAtStart else paneAtStart to paneAtEnd
     }
 
     private fun setupEdgeToEdge() {
@@ -2555,9 +2563,10 @@ class NoteEditorFragment :
             inlineAudioRecorder?.setSideInsets(bars.left, bars.right)
             // move the toolbar as low as possible, without being impacted by rounded corners
             val corners = insets.bottomCornerSideClearance(bars.bottom)
+            val (paneOnLeft, paneOnRight) = neighbouringPanes()
             toolbar.setSideClearance(
-                left = if (inCardBrowserActivity) 0 else (corners.left - bars.left).coerceAtLeast(0),
-                right = if (noteEditorActivity?.isPreviewerVisible == true) 0 else (corners.right - bars.right).coerceAtLeast(0),
+                left = if (paneOnLeft) 0 else (corners.left - bars.left).coerceAtLeast(0),
+                right = if (paneOnRight) 0 else (corners.right - bars.right).coerceAtLeast(0),
             )
             applyBottomInset()
             insets

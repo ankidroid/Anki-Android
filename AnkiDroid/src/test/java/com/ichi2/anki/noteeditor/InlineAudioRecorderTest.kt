@@ -325,6 +325,41 @@ class InlineAudioRecorderTest : RobolectricTest() {
         }
 
     @Test
+    fun `rtl split editor keeps recorder outside a left cutout`() =
+        withSplitPaneUi {
+            ensureCollectionLoadIsSynchronous()
+            setCardBrowserFragmented(true)
+            val browser = getBrowserWithNotes(1)
+            browser.window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            browser.viewModel.setQuery("deck:Default", forceRefresh = true)
+            browser.waitForSearchResults()
+            advanceRobolectricLooper()
+            val editor = requireNotNull(browser.fragment)
+            editor.chooseRecordAudio(fieldIndex = 1)
+            advanceRobolectricLooper()
+            browser.dispatchInsets(cutoutLeft = 100.dp)
+            val content = browser.findViewById<View>(android.R.id.content)
+            content.measure(
+                View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(2400, View.MeasureSpec.EXACTLY),
+            )
+            content.layout(0, 0, 1080, 2400)
+            advanceRobolectricLooper()
+            composeRule.waitForIdle()
+
+            val recorder = requireNotNull(editor.inlineRecorder).requireView()
+            val origin = IntArray(2)
+            recorder.getLocationOnScreen(origin)
+            assertThat("the recorder has a measured width", recorder.width > 100.dp.toPx(browser), equalTo(true))
+            assertThat("the editor uses RTL layout", editor.binding.rootLayout.layoutDirection, equalTo(View.LAYOUT_DIRECTION_RTL))
+            assertThat("the recorder is in the left pane", origin[0], lessThan(100.dp.toPx(browser)))
+            val bounds = recordButton.fetchSemanticsNode().boundsInRoot
+            assertThat("the record control has measured bounds", bounds.width > 0, equalTo(true))
+            val recordLeft = origin[0] + bounds.left
+            assertThat("the record button at $recordLeft clears the cutout", recordLeft >= 100.dp.toPx(browser), equalTo(true))
+        }
+
+    @Test
     fun `record audio opens the inline recorder for the field`() {
         val editor = startNoteEditor().noteEditor
 
