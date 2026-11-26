@@ -6,13 +6,17 @@ import android.content.Intent
 import android.os.SystemClock
 import android.view.KeyEvent
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
+import androidx.core.view.updateLayoutParams
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.settings.Prefs
@@ -102,5 +106,40 @@ class MorePagingTabActivationTest : RobolectricTest() {
                 title,
                 "Tab must advance from the paging destination, not select Settings again",
             )
+        }
+
+    @Test
+    fun `Tab immediately after Alt Up keeps the newly focused action visible`() =
+        withPref(Prefs::devBottomNavEnabled, true) {
+            InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+            setIntroductionSlidesShown(true)
+            val deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+            checkNotNull(deckPicker.binding.bottomNavigation).selectedItemId = R.id.nav_more
+            advanceRobolectricLooper()
+            checkNotNull(deckPicker.binding.bottomNavFragmentContainer).updateLayoutParams { height = 164.dp.toPx(deckPicker) }
+            advanceRobolectricLooper()
+
+            val manual = composeRule.onNodeWithText(deckPicker.getString(CommonString.help_title_using_ankidroid))
+            manual.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+            manual.assertIsFocused()
+            val viewport = composeRule.onNode(hasScrollAction()).fetchSemanticsNode().boundsInRoot
+            val original = manual.fetchSemanticsNode()
+            assertTrue(original.positionInRoot.y >= viewport.top && original.positionInRoot.y + original.size.height <= viewport.bottom)
+
+            composeRule.mainClock.autoAdvance = false
+            val time = SystemClock.uptimeMillis()
+            val alt = KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON
+            deckPicker.dispatchKeyEvent(KeyEvent(time, time, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP, 0, alt))
+            deckPicker.dispatchKeyEvent(KeyEvent(time, time, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_UP, 0, alt))
+            deckPicker.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB))
+            deckPicker.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB))
+            composeRule.mainClock.autoAdvance = true
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+
+            manual.assertIsFocused()
+            manual.assertIsDisplayed()
         }
 }

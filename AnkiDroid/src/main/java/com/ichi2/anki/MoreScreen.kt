@@ -33,7 +33,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusEventModifierNode
 import androidx.compose.ui.focus.FocusRequesterModifierNode
+import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.FocusTargetModifierNode
 import androidx.compose.ui.focus.Focusability
 import androidx.compose.ui.focus.requestFocus
@@ -54,6 +56,8 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.rotary.RotaryInputModifierNode
 import androidx.compose.ui.input.rotary.RotaryScrollEvent
+import androidx.compose.ui.layout.Remeasurement
+import androidx.compose.ui.layout.RemeasurementModifier
 import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
 import androidx.compose.ui.node.DelegatingNode
 import androidx.compose.ui.node.LayoutAwareModifierNode
@@ -113,7 +117,7 @@ fun MoreScreen(
                 Modifier
                     .fillMaxSize()
                     .nestedScroll(rememberTouchNestedScrollConnection(onKeyboardScroll))
-                    .keyboardPaging(scrollState, onKeyboardScroll)
+                    .keyboardPaging(scrollState, remember { PagingRemeasurement() }, onKeyboardScroll)
                     .verticalScroll(scrollState)
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
             ) {
@@ -225,17 +229,29 @@ private class AppAnimationsBringIntoViewSpec(
 
 private fun Modifier.keyboardPaging(
     scrollState: ScrollState,
+    remeasurement: PagingRemeasurement,
     onPaging: () -> Unit,
-) = this then KeyboardPagingElement(scrollState, onPaging)
+) = this then remeasurement then KeyboardPagingElement(scrollState, remeasurement, onPaging)
+
+private class PagingRemeasurement : RemeasurementModifier {
+    var remeasurement: Remeasurement? = null
+        private set
+
+    override fun onRemeasurementAvailable(remeasurement: Remeasurement) {
+        this.remeasurement = remeasurement
+    }
+}
 
 private data class KeyboardPagingElement(
     val scrollState: ScrollState,
+    val remeasurement: PagingRemeasurement,
     val onPaging: () -> Unit,
 ) : ModifierNodeElement<KeyboardPagingNode>() {
-    override fun create() = KeyboardPagingNode(scrollState, onPaging)
+    override fun create() = KeyboardPagingNode(scrollState, remeasurement, onPaging)
 
     override fun update(node: KeyboardPagingNode) {
         node.scrollState = scrollState
+        node.remeasurement = remeasurement
         node.onPaging = onPaging
     }
 }
@@ -250,6 +266,7 @@ private class PagingDestination(
 
 private class KeyboardPagingNode(
     var scrollState: ScrollState,
+    var remeasurement: PagingRemeasurement,
     var onPaging: () -> Unit,
 ) : DelegatingNode(),
     KeyInputModifierNode,
@@ -293,7 +310,7 @@ private class KeyboardPagingNode(
 
     override fun onRotaryScrollEvent(event: RotaryScrollEvent): Boolean {
         finishPaging()
-        val consumed = scrollState.dispatchRawDelta(event.verticalScrollPixels)
+        val consumed = jumpBy(event.verticalScrollPixels)
         if (consumed != 0f) onPaging()
         return consumed != 0f
     }
@@ -305,6 +322,7 @@ private class KeyboardPagingNode(
         viewportHeight = size.height
         val page = page ?: return
         if (!shrunk || (pagingJob?.isActive != true && scrollState.value != pagingTarget)) return
+        if (!(destination?.row?.isFocused ?: pageFocus.focusState.isFocused)) return
         val target = if (page == Page.BOTTOM) scrollState.maxValue else pagingTarget
         scrollTo(destination.shownFrom(target, size.height))
     }
@@ -349,24 +367,26 @@ private class KeyboardPagingNode(
     }
 
     private fun finishPaging() {
-        if (pagingJob?.isActive == true) {
-            pagingJob?.cancel()
-            scrollState.dispatchRawDelta((pagingTarget - scrollState.value).toFloat())
-        }
-        page = null
-        destination = null
+        if (pagingJob?.isActive != true) return
+        pagingJob?.cancel()
+        jumpBy((pagingTarget - scrollState.value).toFloat())
+    }
+
+    private fun jumpBy(delta: Float): Float {
+        val consumed = scrollState.dispatchRawDelta(delta)
+        remeasurement.remeasurement?.forceRemeasure()
+        return consumed
     }
 
     private fun PagingDestination?.shownFrom(
         target: Int,
         height: Int,
-    ): Int =
-        when {
-            this == null || bottom - top > height -> target
-            top < target -> floor(top).toInt()
-            bottom > target + height -> ceil(bottom - height).toInt()
-            else -> target
-        }
+    ): Int {
+        if (this == null) return target
+        val topShown = floor(top).toInt()
+        val bottomShown = ceil(bottom - height).toInt()
+        return target.coerceIn(minOf(topShown, bottomShown), maxOf(topShown, bottomShown))
+    }
 
     private fun rowOnPage(
         target: Int,
@@ -409,8 +429,16 @@ private data object KeyboardPagingTargetElement : ModifierNodeElement<KeyboardPa
 private class KeyboardPagingTargetNode :
     Modifier.Node(),
     FocusRequesterModifierNode,
+    FocusEventModifierNode,
     TraversableNode {
     override val traverseKey = TraverseKey
+
+    var isFocused = false
+        private set
+
+    override fun onFocusEvent(focusState: FocusState) {
+        isFocused = focusState.isFocused
+    }
 
     companion object TraverseKey
 }

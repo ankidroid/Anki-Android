@@ -2,9 +2,12 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.SystemClock
+import android.view.InputDevice
 import android.view.KeyEvent
+import android.view.MotionEvent
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
@@ -15,6 +18,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.settings.Prefs
@@ -141,5 +145,81 @@ class MoreKeyboardShortcutsTest : RobolectricTest() {
                 shadowOf(deckPicker).nextStartedActivity?.component?.className,
                 "Ctrl+Enter must not open Settings after it has scrolled offscreen",
             )
+        }
+
+    @Test
+    @Config(qualifiers = "w360dp-h300dp")
+    fun `Shift+Tab during Page Down keeps its row shown when the tabs return`() =
+        withPref(Prefs::devBottomNavEnabled, true) {
+            val deckPicker = launchMore()
+            val settings = composeRule.onNodeWithText(deckPicker.getString(CommonString.settings))
+            settings.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            settings.assertIsFocused()
+            val bottomNav = checkNotNull(deckPicker.binding.bottomNavigation)
+            val behavior = HideViewOnScrollBehavior.from(bottomNav)
+            behavior.slideOut(bottomNav, false)
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+
+            composeRule.mainClock.autoAdvance = false
+            deckPicker.press(KeyEvent.KEYCODE_PAGE_DOWN)
+            deckPicker.press(KeyEvent.KEYCODE_TAB, KeyEvent.META_SHIFT_ON or KeyEvent.META_SHIFT_LEFT_ON)
+            composeRule.mainClock.autoAdvance = true
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+
+            assertTrue(behavior.isScrolledIn)
+            composeRule.onNodeWithText(deckPicker.getString(CommonString.help_title_community)).assertIsFocused()
+            val list = composeRule.onNode(hasScrollAction()).fetchSemanticsNode().boundsInRoot
+            val row = composeRule.onNode(isFocused()).fetchSemanticsNode()
+            val top = row.positionInRoot.y
+            assertTrue(top >= list.top && top + row.size.height <= list.bottom, "The row Shift+Tab moved to must stay fully shown")
+        }
+
+    @Test
+    @SuppressLint("InlinedApi")
+    fun `Tab right after a rotary scroll shows its row`() =
+        withPref(Prefs::devBottomNavEnabled, true) {
+            val deckPicker = launchMore()
+            val settings = composeRule.onNodeWithText(deckPicker.getString(CommonString.settings))
+            settings.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            settings.assertIsFocused()
+
+            val time = SystemClock.uptimeMillis()
+            val properties = MotionEvent.PointerProperties().apply { id = 0 }
+            val coordinates = MotionEvent.PointerCoords().apply { setAxisValue(MotionEvent.AXIS_SCROLL, -4f) }
+            val event =
+                MotionEvent.obtain(
+                    time,
+                    time,
+                    MotionEvent.ACTION_SCROLL,
+                    1,
+                    arrayOf(properties),
+                    arrayOf(coordinates),
+                    0,
+                    0,
+                    1f,
+                    1f,
+                    0,
+                    0,
+                    InputDevice.SOURCE_ROTARY_ENCODER,
+                    0,
+                )
+            composeRule.mainClock.autoAdvance = false
+            try {
+                deckPicker.dispatchGenericMotionEvent(event)
+            } finally {
+                event.recycle()
+            }
+            deckPicker.press(KeyEvent.KEYCODE_TAB)
+            composeRule.mainClock.autoAdvance = true
+            composeRule.waitForIdle()
+            advanceRobolectricLooper()
+
+            composeRule.onNodeWithText(deckPicker.getString(CommonString.help_title_using_ankidroid)).assertIsFocused()
+            val list = composeRule.onNode(hasScrollAction()).fetchSemanticsNode().boundsInRoot
+            val row = composeRule.onNode(isFocused()).fetchSemanticsNode()
+            val top = row.positionInRoot.y
+            assertTrue(top >= list.top && top + row.size.height <= list.bottom, "The row Tab moved to must be fully shown")
         }
 }
