@@ -1424,6 +1424,60 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
     }
 
     @Test
+    fun `reposition - randomize card order`() {
+        val numberOfCards = 5
+        repeat(numberOfCards) { addBasicNote("New") }
+        runViewModelTest {
+            selectAll()
+            val selectedCardIds = queryAllSelectedCardIds()
+            val startingCardIdOrder = selectedCardIds.sortedBy { cardId -> col.getCard(cardId).due }
+            var isShuffledOrderFound = false
+
+            // Need to check the list multiple times for randomness because a shuffle may return same card order
+            for (attempt in 1..100) {
+                repositionSelectedRows(position = 1, step = 1, shuffle = true, shift = false)
+                val shuffledCardIdOrder = selectedCardIds.sortedBy { cardId -> col.getCard(cardId).due }
+                if (startingCardIdOrder != shuffledCardIdOrder) {
+                    isShuffledOrderFound = true
+                    break
+                }
+            }
+
+            val repositionedDues = selectedCardIds.map { cardId -> col.getCard(cardId).due }.sorted()
+
+            assertThat("cards order has changed", isShuffledOrderFound, equalTo(true))
+            assertThat("randomization occurs as per bounds", repositionedDues, equalTo((1..numberOfCards).toList()))
+        }
+    }
+
+    @Test
+    fun `reposition - remember randomize check`() {
+        repeat(2) { addBasicNote("New") }
+        runViewModelTest {
+            selectAll()
+            repositionSelectedRows(position = 2, step = 1, shuffle = true, shift = false)
+            val repositionResult = prepareToRepositionCards()
+            assertInstanceOf<RepositionData>(repositionResult, "non-error").apply {
+                assertThat("checking randomized should remain checked", random, equalTo(true))
+            }
+        }
+    }
+
+    @Test
+    fun `reposition - remember randomize uncheck`() {
+        repeat(2) { addBasicNote("New") }
+        runViewModelTest {
+            selectAll()
+            repositionSelectedRows(position = 2, step = 1, shuffle = true, shift = false)
+            repositionSelectedRows(position = 2, step = 1, shuffle = false, shift = false)
+            val repositionResult = prepareToRepositionCards()
+            assertInstanceOf<RepositionData>(repositionResult, "non-error").apply {
+                assertThat("unchecking randomized after checking should remain unchecked", random, equalTo(false))
+            }
+        }
+    }
+
+    @Test
     fun `preview - no notes`() {
         // add a card: a preview should
         addBasicNote("Hello", "").firstCard().update {

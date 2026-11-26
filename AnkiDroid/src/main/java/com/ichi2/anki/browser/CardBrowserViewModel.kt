@@ -1223,7 +1223,6 @@ class CardBrowserViewModel(
     /**
      * Obtains data to be displayed to the user then sent to [repositionSelectedRows]
      */
-    @NeedsTest("verify behavior for repositioning with 'Randomize order'")
     suspend fun prepareToRepositionCards(): RepositionCardsRequest {
         val selectedCardIds = queryAllSelectedCardIds()
 
