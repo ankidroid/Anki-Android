@@ -829,10 +829,14 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
     @Test
     fun `suspend - cards - all suspended`() =
         runViewModelTest(notes = 2) {
+            flowOfLastCompletedSearch.first { it != null }
             suspendAll()
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                assertThat(rowCount > 0, equalTo(true))
+                assertThat(selectedRowCount(), equalTo(rowCount))
+                assertThat(queryAllSelectedCardIds().all { col.getCard(it).queue == QueueType.Suspended }, equalTo(true))
+                toggleSuspendCards().join()
 
                 assertAllUnsuspended("all suspended: unsuspend")
             }
@@ -873,10 +877,14 @@ class CardBrowserViewModelTest : JvmCardBrowserViewModelTestBase() {
     @Test
     fun `suspend - notes - all suspended`() =
         runViewModelNotesTest(notes = 2) {
+            flowOfLastCompletedSearch.first { it != null }
             suspendAll()
             ensureOpsExecuted(1) {
                 selectAll()
-                toggleSuspendCards()
+                assertThat(rowCount > 0, equalTo(true))
+                assertThat(selectedRowCount(), equalTo(rowCount))
+                assertThat(queryAllSelectedCardIds().all { col.getCard(it).queue == QueueType.Suspended }, equalTo(true))
+                toggleSuspendCards().join()
                 assertAllUnsuspended("all suspended -> unsuspend")
             }
         }

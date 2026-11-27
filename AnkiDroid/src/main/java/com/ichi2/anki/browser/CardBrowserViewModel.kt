@@ -1149,7 +1149,7 @@ class CardBrowserViewModel(
      *
      * Refreshes the results with count feedback after the edit.
      */
-    fun toggleSuspendCards() =
+    fun toggleSuspendCards(undoName: String? = null) =
         viewModelScope.launch {
             if (!hasSelectedAnyRows()) {
                 return@launch
@@ -1161,7 +1161,9 @@ class CardBrowserViewModel(
                 undoableOp<OpChanges>(this@CardBrowserViewModel) {
                     val wantUnsuspend = cardIds.all { getCard(it).queue == QueueType.Suspended }
                     if (wantUnsuspend) {
-                        sched.unsuspendCards(cardIds)
+                        val undoStep = undoName?.let { addCustomUndoEntry(it) }
+                        val changes = sched.unsuspendCards(cardIds)
+                        undoStep?.let { mergeUndoEntries(it) } ?: changes
                     } else {
                         sched.suspendCards(cardIds).changes
                     }
@@ -1180,7 +1182,7 @@ class CardBrowserViewModel(
      * @return Whether the operation was bury/unbury, and the number of affected cards.
      * `null` if nothing happened
      */
-    suspend fun toggleBury(): BuryResult? {
+    suspend fun toggleBury(undoName: String? = null): BuryResult? {
         if (!hasSelectedAnyRows()) {
             Timber.w("no cards to bury")
             return null
@@ -1201,7 +1203,9 @@ class CardBrowserViewModel(
                 wasBuried = !wantUnbury
                 if (wantUnbury) {
                     Timber.i("unburying %d cards", cardIds.size)
-                    sched.unburyCards(cardIds)
+                    val undoStep = undoName?.let { addCustomUndoEntry(it) }
+                    val changes = sched.unburyCards(cardIds)
+                    undoStep?.let { mergeUndoEntries(it) } ?: changes
                 } else {
                     Timber.i("burying %d cards", cardIds.size)
                     sched.buryCards(cardIds).changes

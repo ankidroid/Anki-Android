@@ -322,6 +322,7 @@ class TranslationTest : JvmTest() {
                 "Theme", // CommonString.app_theme | TR.preferencesTheme()
                 "Timebox time limit", // CommonString.time_limit | TR.preferencesTimeboxTimeLimit()
                 "Undo", // CommonString.undo | TR.undoUndo()
+                "Unbury", // CommonString.undo_name_unbury | TR.studyingUnbury()
             )
 
         /**
