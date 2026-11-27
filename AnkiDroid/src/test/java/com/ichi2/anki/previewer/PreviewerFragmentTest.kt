@@ -3,14 +3,18 @@
 package com.ichi2.anki.previewer
 
 import android.view.KeyEvent
+import android.view.ViewGroup
+import android.webkit.WebView
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.parcelledCopy
 import com.ichi2.testutils.saveState
 import kotlinx.coroutines.runBlocking
@@ -19,6 +23,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -31,6 +37,42 @@ import kotlin.time.Duration.Companion.seconds
 class PreviewerFragmentTest : RobolectricTest() {
     // Changing the selected card renders its media controls, which requires a media folder.
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @Test
+    fun `each newly selected preview card can explain a blocked app link`() {
+        ensureCollectionLoadIsSynchronous()
+        val ids = addBasicAndReversedNote().cardIds(col)
+        val file = IdsFile(createTransientDirectory(), ids, IdsFile.Purpose.PREVIEW)
+        val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
+        Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+            val activity = controller.setup().get()
+            val preview = activity.fragment as PreviewerFragment
+            val webView = activity.findViewById<ViewGroup>(R.id.web_view_layout).getChildAt(0) as WebView
+            val request = mockWebResourceRequest("market://details?id=com.example")
+            val client = shadowOf(webView).webViewClient
+            val first = preview.viewModel.currentCard
+            advanceRobolectricLooperUntil { first.isCompleted }
+
+            client.shouldOverrideUrlLoading(webView, request)
+            advanceRobolectricLooper()
+            ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+            advanceRobolectricLooper()
+            preview.viewModel.onSliderChange(2)
+            advanceRobolectricLooperUntil { preview.viewModel.currentCard !== first && preview.viewModel.currentCard.isCompleted }
+            assertEquals(
+                ids[1],
+                runBlocking {
+                    preview.viewModel.currentCard
+                        .await()
+                        .id
+                },
+            )
+
+            client.shouldOverrideUrlLoading(webView, request)
+            advanceRobolectricLooper()
+            assertEquals(1, ShadowDialog.getShownDialogs().count { it.isShowing }, "the second card should explain its blocked link")
+        }
+    }
 
     @Test
     fun `missing selection closes previewer`() = assertUnavailableSelection { assertTrue(delete()) }

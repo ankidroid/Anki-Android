@@ -26,13 +26,18 @@ class ExternalAppLaunchWarningRecreationTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 
     @Test
-    fun `auto advance survives activity recreation while a launch warning is open`() =
+    fun `auto advance survives activity recreation while a launch warning is open`() = assertAutoAdvanceSurvivesRecreation(false)
+
+    @Test
+    fun `recreating the warning preserves auto advance with wait for audio enabled`() = assertAutoAdvanceSurvivesRecreation(true)
+
+    private fun assertAutoAdvanceSurvivesRecreation(waitForAudio: Boolean) =
         runTest {
             val card = addBasicNote().firstCard()
             val config = col.decks.configDictForDeckId(card.currentDeckId())
             config.secondsToShowQuestion = 0.0
             config.secondsToShowAnswer = 1.0
-            config.jsonObject.put("waitForAudio", false)
+            config.jsonObject.put("waitForAudio", waitForAudio)
             config.jsonObject.put(DeckConfig.ANSWER_ACTION, 2)
             col.decks.save(config)
             editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
@@ -46,6 +51,8 @@ class ExternalAppLaunchWarningRecreationTest : RobolectricTest() {
                 advanceUntilIdle()
                 reviewer.viewModel.onShowAnswer()
                 advanceUntilIdle()
+                reviewer.viewModel.cardMediaPlayer.playAvTagsJob
+                    ?.join()
                 reviewer.viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
                 testScheduler.runCurrent()
 
