@@ -3,22 +3,34 @@
 package com.ichi2.anki
 
 import android.content.DialogInterface
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.O
 import android.provider.Settings
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.backendError
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.testutils.skipTest
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
@@ -231,6 +243,26 @@ class SyncTest : RobolectricTest() {
             assertEquals("", Prefs.hkey)
             assertEquals("", Prefs.username)
             assertEquals(message, dialog.findViewById<TextView>(android.R.id.message)?.text?.toString())
+        }
+
+    @Test
+    fun `AnkiWeb reauthentication offers saved passwords after a regional sync redirect`() =
+        deckPicker {
+            if (SDK_INT < O) skipTest("Autofill requires API 26")
+            Prefs.currentSyncUri = "https://sync19.ankiweb.net/"
+            failSync(BackendSyncException.BackendSyncAuthFailedException(backendError { message = "Authentication failed" }))
+            assertEquals("", Prefs.hkey)
+
+            val credentialManager = mockk<CredentialManager>()
+            coEvery { credentialManager.getCredential(any(), any<GetCredentialRequest>()) } throws NoCredentialException()
+            mockkObject(CredentialManager.Companion) {
+                every { CredentialManager.create(any()) } returns credentialManager
+                val account = startRegularActivity<AccountActivity>(AccountActivity.getIntent(this))
+                advanceRobolectricLooper()
+
+                assertTrue(account.findViewById<View>(R.id.password).isImportantForAutofill)
+                coVerify(exactly = 1) { credentialManager.getCredential(any(), any<GetCredentialRequest>()) }
+            }
         }
 
     private fun DeckPicker.failSync(exception: BackendSyncException): AlertDialog {

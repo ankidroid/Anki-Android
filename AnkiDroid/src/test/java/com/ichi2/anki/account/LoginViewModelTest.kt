@@ -20,6 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
@@ -31,6 +32,29 @@ class LoginViewModelTest : RobolectricTest() {
     private var loginAttempts = 0
 
     @Test
+    fun `saved AnkiWeb credentials require a trusted HTTPS endpoint`() {
+        assertTrue(usesAnkiWebEndpoint("https://sync.ankiweb.net/"))
+        val untrustedEndpoints =
+            listOf(
+                "https://sync19.ankiweb.net.example.com/",
+                "https://sync19.ankiweb.net@example.com/",
+                "http://sync19.ankiweb.net/",
+                "https://sync19.ankiweb.net:8080/",
+            )
+        for (endpoint in untrustedEndpoints) {
+            assertFalse(usesAnkiWebEndpoint(endpoint), endpoint)
+        }
+    }
+
+    @Test
+    fun `custom sync disables saved AnkiWeb credentials even with an AnkiWeb redirect`() {
+        editPreferences { putBoolean("syncBaseUrl_switch", true) }
+        Prefs.currentSyncUri = "https://sync19.ankiweb.net/"
+
+        assertFalse(usesAnkiWebEndpoint())
+    }
+
+    @Test
     fun `successful login saves the account`() =
         runTest {
             emulateLogin { syncAuth { hkey = TEST_HKEY } }
@@ -40,6 +64,32 @@ class LoginViewModelTest : RobolectricTest() {
 
             assertEquals(USERNAME, Prefs.username)
             assertEquals(TEST_HKEY, Prefs.hkey)
+            assertEquals(LoginMessage.LoggedIn, viewModel.messages.last())
+        }
+
+    @Test
+    fun `successful login offers to save the credential`() =
+        runTest {
+            emulateLogin { syncAuth { hkey = TEST_HKEY } }
+            val viewModel = LoginViewModel()
+
+            viewModel.login(USERNAME, PASSWORD)
+
+            val (saveCredential, loggedIn) = viewModel.messages
+            val credential = assertIs<LoginMessage.SaveCredential>(saveCredential).credential
+            assertEquals(LoginMessage.LoggedIn, loggedIn)
+            assertEquals(USERNAME, credential.id)
+            assertEquals(PASSWORD, credential.password)
+        }
+
+    @Test
+    fun `login from a password manager does not offer to save the credential`() =
+        runTest {
+            emulateLogin { syncAuth { hkey = TEST_HKEY } }
+            val viewModel = LoginViewModel()
+
+            viewModel.login(USERNAME, PASSWORD, fromPasswordManager = true)
+
             assertEquals(listOf<LoginMessage>(LoginMessage.LoggedIn), viewModel.messages)
         }
 
@@ -90,7 +140,7 @@ class LoginViewModelTest : RobolectricTest() {
 
             assertEquals(1, loginAttempts)
             assertEquals(ViewModelProgress.Idle, viewModel.progressManager.progress.value)
-            assertEquals(listOf<LoginMessage>(LoginMessage.LoggedIn), viewModel.messages)
+            assertEquals(LoginMessage.LoggedIn, viewModel.messages.last())
         }
 
     @Test

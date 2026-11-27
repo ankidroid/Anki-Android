@@ -769,6 +769,7 @@ dependencies {
     implementation(libs.androidx.browser)
     implementation(libs.androidx.concurrent.futures.ktx)
     implementation(libs.androidx.core)
+    implementation(libs.androidx.credentials)
     implementation(libs.androidx.draganddrop)
     implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.fragment.ktx)
