@@ -4,16 +4,23 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.os.Looper
 import android.os.SystemClock
+import android.view.InputDevice
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.core.view.marginBottom
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
@@ -22,6 +29,7 @@ import com.ichi2.anki.databinding.FragmentMoreBinding
 import com.ichi2.anki.databinding.PageStatisticsBinding
 import com.ichi2.anki.pages.scrolledUpToBottom
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withPref
 import org.hamcrest.MatcherAssert.assertThat
@@ -29,9 +37,317 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowChoreographer
+import java.time.Duration
+import kotlin.math.abs
 
 @RunWith(AndroidJUnit4::class)
 class BottomNavigationScrollTest : RobolectricTest() {
+    @Test
+    fun `reaching the last browser row shows navigation and keeps the row above it`() {
+        repeat(80) { addBasicNote("Card $it", "Answer") }
+        withBottomNavigation { activity ->
+            val nav = activity.bottomNav
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+            val layout = list.layoutManager as LinearLayoutManager
+            val behavior = HideViewOnScrollBehavior.from(nav)
+            list.scrollToPosition(40)
+            advanceRobolectricLooper()
+            behavior.slideOut(nav)
+            advanceRobolectricLooper()
+            assertThat("the bar can hide away from the end", behavior.isScrolledOut, equalTo(true))
+
+            val lastPosition = list.adapter!!.itemCount - 1
+            list.scrollToPosition(lastPosition)
+            advanceRobolectricLooper()
+
+            assertThat("reaching the end reveals navigation", behavior.isScrolledIn, equalTo(true))
+            val lastRow = requireNotNull(layout.findViewByPosition(lastPosition))
+            assertThat(
+                "the last row is fully above navigation",
+                list.topOnScreen + layout.getDecoratedBottom(lastRow),
+                equalTo(nav.topOnScreen),
+            )
+            activity.scrollFrom(list, 40)
+            advanceRobolectricLooper()
+            assertThat("a further swipe at the end cannot hide navigation", behavior.isScrolledIn, equalTo(true))
+        }
+    }
+
+    @Test
+    fun `navigation stays visible when the browser list fits on screen`() =
+        withBottomNavigation { activity ->
+            val nav = activity.bottomNav
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+            activity.scrollFrom(list, 40)
+            advanceRobolectricLooper()
+            assertThat(HideViewOnScrollBehavior.from(nav).isScrolledIn, equalTo(true))
+        }
+
+    @Test
+    fun `a tiny reversal in a browser swipe does not reveal navigation`() =
+        runTest {
+            repeat(80) { addBasicNote("Card $it", "Answer") }
+            withPref(Prefs::devUsingCardBrowserSearchView, true) {
+                withBottomNavigation { activity ->
+                    val nav = activity.bottomNav
+                    nav.selectedItemId = NavigationItem.BROWSER.id
+                    advanceRobolectricLooper()
+                    val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+                    // This test uses touch scrolling, not keyboard focus scrolling.
+                    list.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+                    val appBar = activity.findViewById<AppBarLayout>(R.id.browser_app_bar)
+                    appBar.setExpanded(false, false)
+                    list.scrollToPosition(40)
+                    advanceRobolectricLooper()
+                    val behavior = HideViewOnScrollBehavior.from(nav)
+                    behavior.slideOut(nav)
+                    advanceRobolectricLooper()
+                    assertThat("navigation hides in the middle of the list", behavior.isScrolledOut, equalTo(true))
+                    val startY = list.topOnScreen + list.height / 2f
+                    val start = SystemClock.uptimeMillis()
+                    ShadowChoreographer.setPaused(true)
+                    ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
+
+                    fun touch(
+                        action: Int,
+                        y: Float,
+                    ) {
+                        val event = MotionEvent.obtain(start, SystemClock.uptimeMillis(), action, list.width / 2f, y, 0)
+                        activity.dispatchTouchEvent(event)
+                        event.recycle()
+                        shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(16))
+                    }
+
+                    val slop = ViewConfiguration.get(activity).scaledTouchSlop
+                    touch(MotionEvent.ACTION_DOWN, startY)
+                    val turningPoint = startY - slop - 24.dp.toPx(activity)
+                    touch(MotionEvent.ACTION_MOVE, turningPoint)
+                    assertThat(behavior.isScrolledOut, equalTo(true))
+                    touch(MotionEvent.ACTION_MOVE, turningPoint + 1)
+                    assertThat("a one-pixel reversal is not a new scroll direction", behavior.isScrolledOut, equalTo(true))
+                    // Sustain the faster return so velocity reflects the new direction.
+                    repeat(6) { step ->
+                        touch(MotionEvent.ACTION_MOVE, turningPoint + slop + (step + 1) * 16.dp.toPx(activity))
+                    }
+                    assertThat("a fast reversal reveals navigation", behavior.isScrolledIn, equalTo(true))
+                    touch(MotionEvent.ACTION_UP, turningPoint + slop + 96.dp.toPx(activity))
+                }
+            }
+        }
+
+    @Test
+    fun `a slow reverse drag scrolls the browser without restoring navigation`() =
+        runTest {
+            repeat(80) { addBasicNote("Card $it", "Answer") }
+            withPref(Prefs::devUsingCardBrowserSearchView, true) {
+                withBottomNavigation { activity ->
+                    val nav = activity.bottomNav
+                    nav.selectedItemId = NavigationItem.BROWSER.id
+                    advanceRobolectricLooper()
+                    val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+                    list.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+                    activity.findViewById<AppBarLayout>(R.id.browser_app_bar).setExpanded(false, false)
+                    list.scrollToPosition(40)
+                    advanceRobolectricLooper()
+                    val behavior = HideViewOnScrollBehavior.from(nav)
+                    behavior.slideOut(nav)
+                    advanceRobolectricLooper()
+                    assertThat(behavior.isScrolledOut, equalTo(true))
+                    val offsetBefore = list.computeVerticalScrollOffset()
+                    val startY = list.topOnScreen + 30f
+                    val start = SystemClock.uptimeMillis()
+                    ShadowChoreographer.setPaused(true)
+                    ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
+                    val down = MotionEvent.obtain(start, start, MotionEvent.ACTION_DOWN, list.width / 2f, startY, 0)
+                    activity.dispatchTouchEvent(down)
+                    down.recycle()
+                    repeat(12) { step ->
+                        shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(100))
+                        val move =
+                            MotionEvent.obtain(
+                                start,
+                                SystemClock.uptimeMillis(),
+                                MotionEvent.ACTION_MOVE,
+                                list.width / 2f,
+                                startY + (step + 1) * 20.dp.toPx(activity),
+                                0,
+                            )
+                        activity.dispatchTouchEvent(move)
+                        move.recycle()
+                        assertThat("a slow drag does not reopen navigation", behavior.isScrolledOut, equalTo(true))
+                    }
+                    val up =
+                        MotionEvent.obtain(
+                            start,
+                            SystemClock.uptimeMillis(),
+                            MotionEvent.ACTION_UP,
+                            list.width / 2f,
+                            startY + 240.dp.toPx(activity),
+                            0,
+                        )
+                    activity.dispatchTouchEvent(up)
+                    up.recycle()
+                    advanceRobolectricLooper()
+                    assertThat("the rows still follow the drag", list.computeVerticalScrollOffset() < offsetBefore, equalTo(true))
+                    assertThat("releasing a slow drag keeps navigation hidden", behavior.isScrolledOut, equalTo(true))
+                }
+            }
+        }
+
+    @Test
+    fun `mouse scrolling restores browser navigation after a touch gesture`() =
+        withBrowserAfterTouch { activity, list ->
+            val offsetBefore = list.computeVerticalScrollOffset()
+            val location = IntArray(2).also(list::getLocationInWindow)
+            val pointer =
+                MotionEvent.PointerProperties().apply {
+                    id = 0
+                    toolType = MotionEvent.TOOL_TYPE_MOUSE
+                }
+            val coordinates =
+                MotionEvent.PointerCoords().apply {
+                    x = location[0] + list.width / 2f
+                    y = location[1] + list.height / 2f
+                    setAxisValue(MotionEvent.AXIS_VSCROLL, 1f)
+                }
+            val time = SystemClock.uptimeMillis()
+            val wheel =
+                MotionEvent.obtain(
+                    time,
+                    time,
+                    MotionEvent.ACTION_SCROLL,
+                    1,
+                    arrayOf(pointer),
+                    arrayOf(coordinates),
+                    0,
+                    0,
+                    1f,
+                    1f,
+                    0,
+                    0,
+                    InputDevice.SOURCE_MOUSE,
+                    0,
+                )
+            activity.dispatchGenericMotionEvent(wheel)
+            // Robolectric does not forward the wheel event into the embedded browser.
+            // Deliver it to the list after the activity has seen the input.
+            wheel.offsetLocation(-location[0].toFloat(), -location[1].toFloat())
+            list.dispatchGenericMotionEvent(wheel)
+            wheel.recycle()
+            advanceRobolectricLooper()
+
+            assertThat("the mouse wheel scrolls toward earlier rows", list.computeVerticalScrollOffset() < offsetBefore, equalTo(true))
+            assertThat("mouse scrolling restores navigation", HideViewOnScrollBehavior.from(activity.bottomNav).isScrolledIn, equalTo(true))
+        }
+
+    @Test
+    fun `keyboard scrolling restores browser navigation after a touch gesture`() =
+        withBrowserAfterTouch { activity, list ->
+            list.isFocusableInTouchMode = true
+            assertThat(list.requestFocus(), equalTo(true))
+            val offsetBefore = list.computeVerticalScrollOffset()
+            activity.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PAGE_UP))
+            advanceRobolectricLooper()
+
+            assertThat("Page Up scrolls toward earlier rows", list.computeVerticalScrollOffset() < offsetBefore, equalTo(true))
+            assertThat(
+                "keyboard scrolling restores navigation",
+                HideViewOnScrollBehavior.from(activity.bottomNav).isScrolledIn,
+                equalTo(true),
+            )
+        }
+
+    private fun withBrowserAfterTouch(test: (DeckPicker, RecyclerView) -> Unit) {
+        repeat(80) { addBasicNote("Card $it", "Answer") }
+        withBottomNavigation { activity ->
+            activity.bottomNav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+            list.scrollToPosition(40)
+            advanceRobolectricLooper()
+            val behavior = HideViewOnScrollBehavior.from(activity.bottomNav)
+            behavior.slideOut(activity.bottomNav)
+            advanceRobolectricLooper()
+
+            val time = SystemClock.uptimeMillis()
+            for (action in listOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_CANCEL)) {
+                val event = MotionEvent.obtain(time, time, action, list.width / 2f, list.topOnScreen + list.height / 2f, 0)
+                activity.dispatchTouchEvent(event)
+                event.recycle()
+            }
+            assertThat(behavior.isScrolledOut, equalTo(true))
+            test(activity, list)
+        }
+    }
+
+    @Test
+    fun `returning navigation does not shift rows when browsing the middle of the list`() {
+        repeat(80) { addBasicNote("Card $it", "Answer") }
+        withBottomNavigation { activity ->
+            val nav = activity.bottomNav
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+            val layout = list.layoutManager as LinearLayoutManager
+            list.scrollToPosition(40)
+            advanceRobolectricLooper()
+            val behavior = HideViewOnScrollBehavior.from(nav)
+            behavior.slideOut(nav)
+            advanceRobolectricLooper()
+            val firstPosition = layout.findFirstVisibleItemPosition()
+            val firstTop = layout.getDecoratedTop(requireNotNull(layout.findViewByPosition(firstPosition)))
+
+            behavior.slideIn(nav)
+            advanceRobolectricLooper()
+
+            assertThat(layout.findFirstVisibleItemPosition(), equalTo(firstPosition))
+            assertThat(layout.getDecoratedTop(requireNotNull(layout.findViewByPosition(firstPosition))), equalTo(firstTop))
+        }
+    }
+
+    @Test
+    fun `the final row follows navigation throughout its return at the end`() =
+        runTest {
+            repeat(80) { addBasicNote("Card $it", "Answer") }
+            withPref(Prefs::devUsingCardBrowserSearchView, true) {
+                withBottomNavigation { activity ->
+                    val nav = activity.bottomNav
+                    nav.selectedItemId = NavigationItem.BROWSER.id
+                    advanceRobolectricLooper()
+                    val list = activity.findViewById<RecyclerView>(R.id.card_browser_list)
+                    list.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+                    val layout = list.layoutManager as LinearLayoutManager
+                    activity.findViewById<AppBarLayout>(R.id.browser_app_bar).setExpanded(false, false)
+                    list.scrollToPosition(40)
+                    advanceRobolectricLooper()
+                    val behavior = HideViewOnScrollBehavior.from(nav)
+                    behavior.slideOut(nav)
+                    advanceRobolectricLooper()
+                    assertThat(behavior.isScrolledOut, equalTo(true))
+                    ShadowChoreographer.setPaused(true)
+                    ShadowChoreographer.setFrameDelay(Duration.ofMillis(16))
+                    val lastPosition = list.adapter!!.itemCount - 1
+                    list.scrollToPosition(lastPosition)
+
+                    repeat(40) {
+                        shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(16))
+                        assertThat("navigation stays visible at the end", behavior.isScrolledIn, equalTo(true))
+                        val lastRow = requireNotNull(layout.findViewByPosition(lastPosition))
+                        val rowBottom = list.topOnScreen + layout.getDecoratedBottom(lastRow)
+                        assertThat("the final row follows the returning bar", abs(rowBottom - nav.topOnScreen), lessThanOrEqualTo(1))
+                    }
+                    assertThat(nav.translationY, equalTo(0f))
+                    assertThat(list.canScrollVertically(1), equalTo(false))
+                }
+            }
+        }
+
     @Test
     fun `scrolling down hides the bar and scrolling up restores it`() =
         withBottomNavigation { deckPicker ->
@@ -86,6 +402,7 @@ class BottomNavigationScrollTest : RobolectricTest() {
                     ) = Unit
                 }
             list.scrollToPosition(40)
+            advanceRobolectricLooper()
             deckPicker.scrollFrom(list, 40)
             assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
 
@@ -313,8 +630,39 @@ class BottomNavigationScrollTest : RobolectricTest() {
             deckPicker.scrollFrom(deckPicker.deckPickerBinding.decks, 40)
 
             assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
+            advanceRobolectricLooper()
             assertThat((container.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin < nav.height, equalTo(true))
         }
+
+    @Test
+    fun `browser clears rounded corners after the bottom bar hides`() {
+        repeat(80) { addBasicNote("Card $it", "Answer") }
+        withBottomNavigation { deckPicker ->
+            deckPicker.bottomNav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            deckPicker.findViewById<RecyclerView>(R.id.card_browser_list).scrollToPosition(40)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+            val scroller = deckPicker.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
+            assertThat("the visible bar already clears the corners", scroller.handleBottomInset, equalTo(0))
+
+            HideViewOnScrollBehavior.from(deckPicker.bottomNav).slideOut(deckPicker.bottomNav)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+
+            val container = deckPicker.binding.bottomNavFragmentContainer!!
+            assertThat(
+                "the container and handle together clear the rounded corners",
+                container.marginBottom + scroller.handleBottomInset,
+                equalTo(48.dp.toPx(deckPicker)),
+            )
+
+            HideViewOnScrollBehavior.from(deckPicker.bottomNav).slideIn(deckPicker.bottomNav)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+            assertThat("restoring the bar removes the extra padding", scroller.handleBottomInset, equalTo(0))
+        }
+    }
 
     private fun withBottomNavigation(test: (DeckPicker) -> Unit) =
         withPref(Prefs::devBottomNavEnabled, true) {
