@@ -74,8 +74,6 @@ class SharedDecksDownloadFragment : Fragment() {
 
     private var fileName: String? = null
 
-    private var completedDeck: Uri? = null
-
     private var handler: Handler = Handler(Looper.getMainLooper())
     private var isProgressCheckerRunning = false
 
@@ -170,7 +168,7 @@ class SharedDecksDownloadFragment : Fragment() {
                         },
                         onImportClick = {
                             Timber.i("Import deck button clicked")
-                            completedDeck?.let { openDownloadedDeck(requireContext(), it) }
+                            viewModel.completedDeck?.let { openDownloadedDeck(requireContext(), it) }
                         },
                         onTryAgainClick = ::retryDownload,
                         onOpenInBrowserClick = ::openInBrowser,
@@ -265,7 +263,6 @@ class SharedDecksDownloadFragment : Fragment() {
         }
         val currentFileName = fileToBeDownloaded.toFileName(extension = "apkg")
 
-        completedDeck = null
         // Store unique download ID to be used when onReceiveBroadcast() of AnkiBroadcastReceiver gets executed.
         downloadId =
             try {
@@ -423,10 +420,8 @@ class SharedDecksDownloadFragment : Fragment() {
                     return
                 }
 
-                completedDeck = downloadedDeck
-
                 // the progress checker can stop before it sees 100%, so complete it here
-                viewModel.onDownloadComplete()
+                viewModel.onDownloadComplete(downloadedDeck)
 
                 Timber.i("Opening downloaded deck for import")
                 openDownloadedDeck(context, downloadedDeck)

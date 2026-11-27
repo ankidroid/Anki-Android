@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.shareddeck
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.ichi2.anki.common.annotations.NeedsTest
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,9 +19,13 @@ class SharedDecksDownloadViewModel : ViewModel() {
 
     private val speedCalculator = DownloadSpeedCalculator()
 
+    internal var completedDeck: Uri? = null
+        private set
+
     /** A download was enqueued. Also called on a retry, which clears the failed state. */
     fun onDownloadStarted(fileName: String) {
         Timber.i("download started")
+        completedDeck = null
         speedCalculator.reset()
         uiState.value = SharedDecksDownloadUiState(fileName = fileName)
     }
@@ -54,8 +59,9 @@ class SharedDecksDownloadViewModel : ViewModel() {
         uiState.update { it.copy(isWaitingForNetwork = waiting) }
     }
 
-    fun onDownloadComplete() {
+    internal fun onDownloadComplete(downloadedDeck: Uri) {
         Timber.i("download complete")
+        completedDeck = downloadedDeck
         uiState.update { it.copy(phase = DownloadPhase.Complete, percent = 100f, secondsRemaining = 0) }
     }
 
