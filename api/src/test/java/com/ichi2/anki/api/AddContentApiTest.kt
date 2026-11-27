@@ -5,7 +5,6 @@ package com.ichi2.anki.api
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.UriMatcher
-import android.content.pm.ProviderInfo
 import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
@@ -17,7 +16,6 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -191,22 +189,17 @@ internal class AddContentApiTest {
     }
 
     private fun installAnkiDroid(metaData: Bundle?) {
-        val provider =
-            ProviderInfo().apply {
-                authority = FlashCardsContract.AUTHORITY
-                packageName = "com.ichi2.anki"
-                name = "com.ichi2.anki.provider.CardContentProvider"
-                this.metaData = metaData
-            }
-        shadowOf(RuntimeEnvironment.getApplication().packageManager).addOrUpdateProvider(provider)
+        AnkiDroidPackages.install(BuildConfig.ANKI_PACKAGE_NAME, Signing.Current(AnkiDroidPackages.RELEASE), metaData)
     }
 
-    private fun installFakeCardProvider(): FakeCardContentProvider =
-        Robolectric
+    private fun installFakeCardProvider(): FakeCardContentProvider {
+        installAnkiDroid(metaData = null)
+        return Robolectric
             .buildContentProvider(FakeCardContentProvider::class.java)
             .create(FlashCardsContract.AUTHORITY)
             .get()
             .apply { addNote(NOTE_ID, CARD_COUNT) }
+    }
 
     companion object {
         private const val NOTE_ID = 1L
