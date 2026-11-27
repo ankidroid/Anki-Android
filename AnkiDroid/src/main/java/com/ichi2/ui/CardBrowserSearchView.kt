@@ -4,11 +4,20 @@ package com.ichi2.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.EditText
+import com.ichi2.utils.PlainTextInputFilter
+import androidx.appcompat.R as AppCompatR
 
 class CardBrowserSearchView : AccessibleSearchView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    init {
+        findViewById<EditText>(AppCompatR.id.search_src_text).apply {
+            filters += PlainTextInputFilter
+        }
+    }
 
     /** Whether an action to set text should be ignored  */
     var ignoreValueChange = false

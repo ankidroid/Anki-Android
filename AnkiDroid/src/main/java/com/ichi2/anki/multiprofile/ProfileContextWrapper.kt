@@ -8,6 +8,7 @@ import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.utils.withFileNameSafe
 import timber.log.Timber
 import java.io.File
@@ -82,8 +83,8 @@ class ProfileContextWrapper private constructor(
             return super.openOrCreateDatabase(name, mode, factory, errorHandler)
         }
         var flags = SQLiteDatabase.CREATE_IF_NECESSARY
-        if (mode and MODE_ENABLE_WRITE_AHEAD_LOGGING != 0) flags = flags or SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING
-        if (mode and MODE_NO_LOCALIZED_COLLATORS != 0) flags = flags or SQLiteDatabase.NO_LOCALIZED_COLLATORS
+        if (mode.hasBitFlag(MODE_ENABLE_WRITE_AHEAD_LOGGING)) flags = flags or SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING
+        if (mode.hasBitFlag(MODE_NO_LOCALIZED_COLLATORS)) flags = flags or SQLiteDatabase.NO_LOCALIZED_COLLATORS
         return SQLiteDatabase.openDatabase(getDatabasePath(name).path, factory, flags, errorHandler)
     }
 

@@ -29,6 +29,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.darkenColor
 import com.ichi2.anki.common.utils.android.lightenColorAbsolute
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.common.utils.ext.hasBitFlag
 import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.common.utils.ext.setBitFlag
 import com.ichi2.anki.databinding.ItemCardBrowserBinding
@@ -112,7 +113,7 @@ class BrowserMultiColumnAdapter(
 
             this.itemView.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN &&
-                    event.buttonState and MotionEvent.BUTTON_SECONDARY != 0
+                    event.buttonState.hasBitFlag(MotionEvent.BUTTON_SECONDARY)
                 ) {
                     return@setOnTouchListener onRightClick()
                 }
