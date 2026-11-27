@@ -26,6 +26,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_CONFIRM_
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CORRUPT_COLLECTION
+import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_NETWORK_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE
@@ -201,6 +202,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     }.setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
                     .create()
             }
+            DIALOG_SYNC_NETWORK_ERROR ->
+                dialog
+                    .setPositiveButton(CommonString.dialog_ok, null)
+                    .create()
+                    .setupEnterKeyHandler()
         }
     }
 
@@ -222,7 +228,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 DIALOG_SYNC_BASIC_CHECK_ERROR,
                 DIALOG_COLLECTION_TOO_LARGE,
                 -> res().getString(CommonString.sync_error)
-                DIALOG_SYNC_CLOCK_OFF -> res().getString(CommonString.vague_error)
+                DIALOG_SYNC_CLOCK_OFF, DIALOG_SYNC_NETWORK_ERROR -> res().getString(CommonString.vague_error)
             }
 
     /**
@@ -330,6 +336,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         DIALOG_SYNC_BASIC_CHECK_ERROR(10),
         DIALOG_SYNC_CLOCK_OFF(11),
         DIALOG_COLLECTION_TOO_LARGE(12),
+        DIALOG_SYNC_NETWORK_ERROR(13),
         ;
 
         companion object {
