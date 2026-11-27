@@ -93,6 +93,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import java.io.File
@@ -1001,7 +1002,14 @@ class CardBrowserViewModel(
      * @throws BackendException if the row is deleted
      */
     fun transformBrowserRow(id: CardOrNoteId): Pair<BrowserRow, Boolean> {
-        val row = CollectionManager.getBackend().browserRowForId(id.cardOrNoteId)
+        val backend = CollectionManager.getBackend()
+        val row =
+            try {
+                backend.browserRowForId(id.cardOrNoteId)
+            } catch (_: BackendInvalidInputException) {
+                backend.setActiveBrowserColumns(flowOfActiveColumns.value.backendKeys)
+                backend.browserRowForId(id.cardOrNoteId)
+            }
         val isSelected = selectedRows.contains(id)
         return Pair(row, isSelected)
     }
