@@ -2,14 +2,13 @@
 
 package com.ichi2.anki.testutil
 
-import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.os.Bundle
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.MultipleFailureException
@@ -21,7 +20,7 @@ import kotlin.test.assertTrue
 
 /** Temporarily selects the test APK's IME and restores the previous keyboard even on failure. */
 class TestInputMethodRule(
-    private val executeShellCommand: (String) -> String = ::executeImeCommand,
+    private val settings: TestInputMethodSettings = TestInputMethodSettings(),
 ) : TestRule {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
     private val testPackage get() = instrumentation.context.packageName
@@ -33,16 +32,16 @@ class TestInputMethodRule(
     ): Statement =
         object : Statement() {
             override fun evaluate() {
-                val previous = executeShellCommand("settings get secure default_input_method").trim()
-                val ime = "$testPackage/${TestInputMethod::class.java.name}"
-                val wasEnabled = executeShellCommand("ime list -s").lineSequence().any { it.trim() == ime }
+                val previous = settings.defaultInputMethod
+                val ime = ComponentName(testPackage, TestInputMethod::class.java.name)
+                val wasEnabled = settings.isEnabled(ime)
                 val failures = mutableListOf<Throwable>()
                 try {
-                    val enableOutput = executeShellCommand("ime enable $ime")
-                    val selectOutput = executeShellCommand("ime set $ime")
+                    val enableOutput = settings.enable(ime)
+                    val selectOutput = settings.select(ime)
                     assertEquals(
                         ime,
-                        executeShellCommand("settings get secure default_input_method").trim(),
+                        settings.defaultInputMethod,
                         "Failed to select test keyboard $ime: $enableOutput$selectOutput",
                     )
                     base.evaluate()
@@ -51,11 +50,11 @@ class TestInputMethodRule(
                 }
                 // Attempt each cleanup independently, preserving the original test failure.
                 try {
-                    if (previous.isNotEmpty() && previous != "null") {
-                        val restoreOutput = executeShellCommand("ime set $previous")
+                    if (previous != null) {
+                        val restoreOutput = settings.select(previous)
                         assertEquals(
                             previous,
-                            executeShellCommand("settings get secure default_input_method").trim(),
+                            settings.defaultInputMethod,
                             "Failed to restore keyboard $previous: $restoreOutput",
                         )
                     }
@@ -64,9 +63,9 @@ class TestInputMethodRule(
                 }
                 try {
                     if (!wasEnabled) {
-                        val disableOutput = executeShellCommand("ime disable $ime")
+                        val disableOutput = settings.disable(ime)
                         assertFalse(
-                            executeShellCommand("ime list -s").lineSequence().any { it.trim() == ime },
+                            settings.isEnabled(ime),
                             "Failed to disable test keyboard $ime: $disableOutput",
                         )
                     }
@@ -138,8 +137,3 @@ class TestInputMethodRule(
         }
     }
 }
-
-// Commands need no shell syntax or stdin; the rule verifies the resulting keyboard state.
-@SuppressLint("DiscouragedApi")
-private fun executeImeCommand(command: String): String =
-    UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).executeShellCommand(command)
