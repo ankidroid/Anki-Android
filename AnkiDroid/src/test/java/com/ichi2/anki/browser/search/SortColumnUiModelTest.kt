@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.browser.search
 
+import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.browser.CardBrowserColumn
@@ -10,6 +11,7 @@ import com.ichi2.anki.browser.CardBrowserViewModelTestBase
 import com.ichi2.anki.browser.ColumnType
 import com.ichi2.anki.browser.JvmCardBrowserViewModelTestBase
 import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment.ColumnUiModel
+import com.ichi2.anki.model.SortType
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
@@ -103,7 +105,7 @@ class SortColumnUiModelTest : JvmCardBrowserViewModelTestBase() {
             assertEquals(ColumnType.NUMERIC, typeByKey["originalPosition"])
             assertEquals(ColumnType.DATE, typeByKey["noteCrt"])
             assertEquals(ColumnType.DATE, typeByKey["cardMod"])
-            assertEquals(ColumnType.UNSPECIFIED, typeByKey["cardDue"])
+            assertEquals(ColumnType.DUE, typeByKey["cardDue"])
         }
 
     @Test
@@ -182,5 +184,19 @@ class SortColumnUiModelAndroidTest : CardBrowserViewModelTestBase() {
             val item = assertInstanceOf<ColumnUiModel.NoOrdering>(initialItem)
             assertEquals(true, item.available)
             assertEquals("No sorting", item.getLabel(ApplicationProvider.getApplicationContext()))
+        }
+
+    @Test
+    fun `Due subtitle explains the sort direction`() =
+        runViewModelTest {
+            val due =
+                ColumnUiModel
+                    .buildList(this)
+                    .filterIsInstance<ColumnUiModel.AnkiColumn>()
+                    .single { it.key.value == "cardDue" }
+            val context = ApplicationProvider.getApplicationContext<Context>()
+
+            assertEquals("Earliest first", due.getSubtitle(context, SortType.CollectionOrdering(due.key, reverse = false)))
+            assertEquals("Latest first", due.getSubtitle(context, SortType.CollectionOrdering(due.key, reverse = true)))
         }
 }
