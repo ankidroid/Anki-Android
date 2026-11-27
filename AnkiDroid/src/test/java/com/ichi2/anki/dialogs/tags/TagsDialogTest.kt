@@ -55,6 +55,123 @@ import com.ichi2.anki.common.android.R as CommonR
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest : RobolectricTest() {
     @Test
+    fun `custom study cannot confirm more than 100 selected tags`() {
+        val note = addBasicNote()
+        val selectedTags = (1..101).map { "tag$it" }
+        col.tags.bulkAdd(
+            listOf(note.id),
+            selectedTags.joinToString(" "),
+        )
+        val args =
+            TagsDialog()
+                .withArguments(
+                    context = targetContext,
+                    type = TagsDialog.DialogType.CUSTOM_STUDY,
+                    noteIds = listOf(note.id),
+                    checkedTags = ArrayList(selectedTags),
+                ).requireArguments()
+        runTagsDialogScenario(args) { fragment ->
+            val positiveButton =
+                (fragment.requireDialog() as AlertDialog).positiveButton
+            assertFalse(
+                positiveButton.isEnabled,
+                "Confirm must be disabled when more than 100 tags are selected",
+            )
+        }
+    }
+
+    @Test
+    fun `custom study allows exactly 100 selected tags`() {
+        val note = addBasicNote()
+        val selectedTags = (1..100).map { "tag$it" }
+        col.tags.bulkAdd(listOf(note.id), selectedTags.joinToString(" "))
+        val args =
+            TagsDialog()
+                .withArguments(
+                    context = targetContext,
+                    type = TagsDialog.DialogType.CUSTOM_STUDY,
+                    noteIds = listOf(note.id),
+                    checkedTags = ArrayList(selectedTags),
+                ).requireArguments()
+        runTagsDialogScenario(args) { fragment ->
+            assertTrue(
+                (fragment.requireDialog() as AlertDialog).positiveButton.isEnabled,
+                "Exactly 100 tags should be allowed",
+            )
+        }
+    }
+
+    @Test
+    fun `custom study reenables Confirm after reducing selection to 100 tags`() {
+        val note = addBasicNote()
+        val selectedTags = (1..101).map { "tag$it" }
+        col.tags.bulkAdd(listOf(note.id), selectedTags.joinToString(" "))
+        val args =
+            TagsDialog()
+                .withArguments(
+                    context = targetContext,
+                    type = TagsDialog.DialogType.CUSTOM_STUDY,
+                    noteIds = listOf(note.id),
+                    checkedTags = ArrayList(selectedTags),
+                ).requireArguments()
+        runTagsDialogScenario(args) { fragment ->
+            val positiveButton =
+                (fragment.requireDialog() as AlertDialog).positiveButton
+            assertFalse(positiveButton.isEnabled)
+            val recycler = fragment.forceLayout()
+            val firstTag =
+                RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(
+                    recycler,
+                    0,
+                )
+            firstTag.checkBoxView.performClick()
+            advanceRobolectricLooper()
+            assertTrue(
+                positiveButton.isEnabled,
+                "Confirm should be enabled again after deselecting one tag",
+            )
+        }
+    }
+
+    @Test
+    fun `selecting all over 100 tags shows a warning`() {
+        val note = addBasicNote()
+        val tags = (1..101).map { "tag$it" }
+        col.tags.bulkAdd(listOf(note.id), tags.joinToString(" "))
+
+        val args =
+            TagsDialog()
+                .withArguments(
+                    context = targetContext,
+                    type = TagsDialog.DialogType.CUSTOM_STUDY,
+                    noteIds = listOf(note.id),
+                ).requireArguments()
+
+        runTagsDialogScenario(args) { fragment ->
+            val dialog = fragment.requireDialog() as AlertDialog
+            assertTrue(dialog.positiveButton.isEnabled)
+
+            assertTrue(
+                fragment.binding.toolbar.root.menu.performIdentifierAction(
+                    R.id.tags_dialog_action_select_all,
+                    0,
+                ),
+            )
+            advanceRobolectricLooper()
+
+            assertFalse(dialog.positiveButton.isEnabled)
+
+            val notice =
+                dialog
+                    .findViewById<android.widget.TextView>(
+                        com.google.android.material.R.id.snackbar_text,
+                    )?.text
+
+            assertTrue(notice?.contains("100") == true)
+        }
+    }
+
+    @Test
     fun `confirming removal of a parent does not preserve its display state`() {
         confirmTags(listOf("B B::child"), parentClicks = 1, selected = listOf("B::child"), preserved = emptyList())
     }
