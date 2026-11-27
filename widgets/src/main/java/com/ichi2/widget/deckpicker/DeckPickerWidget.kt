@@ -28,6 +28,7 @@ import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.widgets.R
+import com.ichi2.anki.widgets.databinding.WidgetDeckPickerLargeBinding
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetId
@@ -36,6 +37,7 @@ import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetIds
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cancelRecurringAlarm
+import com.ichi2.widget.fitMessage
 import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
@@ -79,22 +81,21 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             appWidgetId: AppWidgetId,
             deckIds: LongArray?,
         ) {
-            val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
             if (deckIds == null || deckIds.isEmpty()) {
-                showEmptyWidget(context, appWidgetManager, appWidgetId, remoteViews)
+                showEmptyWidget(context, appWidgetManager, appWidgetId)
                 return
             }
             applicationScope.launchCatching(errorMessageHandler = {}) {
                 val isCollectionEmpty = isCollectionEmpty()
                 if (isCollectionEmpty) {
-                    showEmptyCollection(context, appWidgetManager, appWidgetId, remoteViews)
+                    showEmptyCollection(context, appWidgetManager, appWidgetId)
                     return@launchCatching
                 }
 
                 val deckData = getDeckNamesAndStats(deckIds.toList())
 
                 if (deckData.isEmpty()) {
-                    showEmptyWidget(context, appWidgetManager, appWidgetId, remoteViews)
+                    showEmptyWidget(context, appWidgetManager, appWidgetId)
                     return@launchCatching
                 }
 
@@ -213,27 +214,53 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews,
-        ) = showMessage(context, appWidgetManager, appWidgetId, remoteViews, CommonString.empty_collection_state_in_widget)
+        ) = showMessage(
+            context,
+            appWidgetManager,
+            appWidgetId,
+            CommonString.empty_collection_state_in_widget,
+            shorterMessage = CommonString.empty_collection_state_in_widget_short,
+        )
 
         private fun showEmptyWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews,
-        ) = showMessage(context, appWidgetManager, appWidgetId, remoteViews, CommonString.empty_widget_state)
+        ) = showMessage(
+            context,
+            appWidgetManager,
+            appWidgetId,
+            CommonString.empty_widget_state,
+            shorterMessage = CommonString.empty_widget_state_short,
+        )
 
         private fun showMessage(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews,
             @StringRes message: Int,
+            @StringRes shorterMessage: Int,
         ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(message))
+            val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
+            appWidgetManager.updateAppWidget(
+                appWidgetId,
+                sizedRemoteViews(options) {
+                    createMessageViews(context, appWidgetId, context.getString(message), context.getString(shorterMessage), it)
+                },
+            )
+        }
+
+        private fun createMessageViews(
+            context: Context,
+            appWidgetId: AppWidgetId,
+            message: String,
+            shorterMessage: String,
+            size: SizeF,
+        ): RemoteViews {
+            val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
-            remoteViews.setBackgrounds(cornersTooRound = false)
+            remoteViews.setBackgrounds(size.cornersTooRound())
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.DeckPicker(appWidgetId.id).toIntent() }
             val configPendingIntent =
@@ -244,8 +271,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
-
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+            remoteViews.fitMessage(context, size, message, shorterMessage) { WidgetDeckPickerLargeBinding.bind(it).emptyWidget }
+            return remoteViews
         }
 
         /**

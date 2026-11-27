@@ -10,6 +10,7 @@ import android.util.SizeF
 import android.view.View.MeasureSpec
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import kotlinx.coroutines.test.TestScope
@@ -60,6 +61,18 @@ class DeckPickerWidgetScreenshotTest : ScreenshotTest() {
             captureWidget("minimum_height_large_font", heightDp = 50, fontScale = 2f)
         }
 
+    @Test
+    fun missingDeckMinimumSize() =
+        runTest {
+            captureWidget("missing_deck_minimum_size", deckIds = longArrayOf(), widthDp = 120, heightDp = 50)
+        }
+
+    @Test
+    fun emptyCollectionMinimumSize() =
+        runTest {
+            captureWidget("empty_collection_minimum_size", deckIds = longArrayOf(Consts.DEFAULT_DECK_ID), widthDp = 120, heightDp = 50)
+        }
+
     private fun TestScope.captureWidget(
         name: String,
         heightDp: Int,
@@ -70,25 +83,35 @@ class DeckPickerWidgetScreenshotTest : ScreenshotTest() {
             listOf("✅ French", "✅ German", "✅ Spanish", "✅ Italian", "✅ Japanese")
                 .mapIndexed { index, name -> addDeck(name).also { addNoteToDeck(it, count = index + 1) } }
                 .toLongArray()
+        captureWidget(name, deckIds, widthDp = 349, heightDp)
+    }
+
+    private fun TestScope.captureWidget(
+        name: String,
+        deckIds: LongArray,
+        widthDp: Int,
+        heightDp: Int,
+    ) {
         val manager = AppWidgetManager.getInstance(targetContext)
         val widgetId = AppWidgetId(1)
         shadowOf(manager).bindAppWidgetId(widgetId.id, ComponentName(targetContext, DeckPickerWidget::class.java))
         manager.updateAppWidgetOptions(
             widgetId.id,
             Bundle().apply {
-                putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 349)
-                putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH, 349)
+                putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, widthDp)
+                putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH, widthDp)
                 putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, heightDp)
                 putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, heightDp)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    putParcelableArrayList(AppWidgetManager.OPTION_APPWIDGET_SIZES, arrayListOf(SizeF(349f, heightDp.toFloat())))
+                    val size = SizeF(widthDp.toFloat(), heightDp.toFloat())
+                    putParcelableArrayList(AppWidgetManager.OPTION_APPWIDGET_SIZES, arrayListOf(size))
                 }
             },
         )
         DeckPickerWidget.updateWidget(targetContext, manager, widgetId, deckIds)
         advanceUntilIdle()
         val view = requireNotNull(shadowOf(manager).getViewFor(widgetId.id))
-        val width = 349.dp.toPx(targetContext)
+        val width = widthDp.dp.toPx(targetContext)
         val height = heightDp.dp.toPx(targetContext)
         view.measure(
             MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
