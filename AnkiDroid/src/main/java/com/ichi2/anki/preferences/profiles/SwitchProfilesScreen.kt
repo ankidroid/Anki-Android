@@ -6,10 +6,14 @@ package com.ichi2.anki.preferences.profiles
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.plus
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,15 +22,19 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +64,8 @@ fun SwitchProfilesScreen(
     profileToSwitchTo: ProfileItem?,
     isSwitchBlocked: Boolean,
     profileSwitchFailed: ProfileItem?,
+    profileToDelete: ProfileItem?,
+    profileDeleteFailed: ProfileItem?,
     onNavigateUp: () -> Unit,
     onProfileClick: (ProfileItem) -> Unit,
     onAddProfileClick: () -> Unit,
@@ -69,6 +79,9 @@ fun SwitchProfilesScreen(
     onSwitchBlockedDismiss: () -> Unit,
     onSwitchFailedDismiss: () -> Unit,
     onDeleteProfile: (ProfileItem) -> Unit,
+    onDeleteProfileConfirm: () -> Unit,
+    onDeleteProfileDismiss: () -> Unit,
+    onDeleteFailedDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -98,7 +111,7 @@ fun SwitchProfilesScreen(
     ) { contentPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = contentPadding,
+            contentPadding = contentPadding + PaddingValues(bottom = FabClearance),
         ) {
             items(profiles, key = { it.id.value }) { profile ->
                 ProfileRow(
@@ -161,9 +174,33 @@ fun SwitchProfilesScreen(
             },
         )
     }
+
+    profileToDelete?.let { profile ->
+        MessageDialog(
+            title = stringResource(CommonString.delete_profile_title, profile.name),
+            message = stringResource(CommonString.delete_profile_message),
+            confirmText = stringResource(CommonString.dialog_positive_delete),
+            onConfirm = onDeleteProfileConfirm,
+            onDismissRequest = onDeleteProfileDismiss,
+        )
+    }
+
+    profileDeleteFailed?.let { profile ->
+        AlertDialog(
+            onDismissRequest = onDeleteFailedDismiss,
+            text = { Text(stringResource(CommonString.delete_profile_failed, profile.name)) },
+            confirmButton = {
+                TextButton(onClick = onDeleteFailedDismiss) {
+                    Text(stringResource(CommonString.dialog_ok))
+                }
+            },
+        )
+    }
 }
 
 private val AvatarSize = 40.dp
+
+private val FabClearance = 72.dp
 
 @Composable
 private fun ProfileRow(
@@ -173,56 +210,74 @@ private fun ProfileRow(
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(
-                    horizontal = MaterialTheme.dimensions.space200,
-                    vertical = MaterialTheme.dimensions.space100,
-                ),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
+    val colors = MaterialTheme.colorScheme
+    val contentColor = if (profile.isActive) colors.onSecondaryContainer else LocalContentColor.current
+    CompositionLocalProvider(LocalContentColor provides contentColor) {
+        Row(
             modifier =
-                Modifier
-                    .size(AvatarSize)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = profile.initial,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        Text(
-            text = profile.name,
-            modifier =
-                Modifier
-                    .weight(1f)
+                modifier
+                    .fillMaxWidth()
+                    .background(if (profile.isActive) colors.secondaryContainer else Color.Transparent)
+                    .clickable(onClick = onClick)
                     .padding(
-                        start = MaterialTheme.dimensions.space150,
-                        end = MaterialTheme.dimensions.space100,
+                        horizontal = MaterialTheme.dimensions.space200,
+                        vertical = MaterialTheme.dimensions.space100,
                     ),
-            style = MaterialTheme.typography.titleMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-        IconButton(onClick = onEditClick) {
-            Icon(
-                painterResource(R.drawable.ic_popup_menu_item_editor),
-                contentDescription = stringResource(CommonString.edit_profile),
-            )
-        }
-        IconButton(onClick = onDeleteClick) {
-            Icon(
-                painterResource(R.drawable.ic_delete),
-                contentDescription = stringResource(CommonString.delete_profile),
-            )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(AvatarSize)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = profile.initial,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Column(
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(
+                            start = MaterialTheme.dimensions.space150,
+                            end = MaterialTheme.dimensions.space100,
+                        ),
+            ) {
+                Text(
+                    text = profile.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                if (profile.isActive) {
+                    Text(
+                        text = stringResource(CommonString.current_profile),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            IconButton(onClick = onEditClick) {
+                Icon(
+                    painterResource(R.drawable.ic_popup_menu_item_editor),
+                    contentDescription = stringResource(CommonString.edit_profile),
+                )
+            }
+            if (profile.isActive) {
+                Spacer(Modifier.minimumInteractiveComponentSize())
+            } else {
+                IconButton(onClick = onDeleteClick) {
+                    Icon(
+                        painterResource(R.drawable.ic_delete),
+                        contentDescription = stringResource(CommonString.delete_profile),
+                    )
+                }
+            }
         }
     }
 }
@@ -234,7 +289,7 @@ private fun SwitchProfilesScreenPreview() {
         SwitchProfilesScreen(
             profiles =
                 listOf(
-                    ProfileItem(id = ProfileId.DEFAULT, name = "Default"),
+                    ProfileItem(id = ProfileId.DEFAULT, name = "Default", isActive = true),
                     ProfileItem(id = ProfileId("p_work"), name = "Work"),
                 ),
             isAddProfileDialogVisible = false,
@@ -242,6 +297,8 @@ private fun SwitchProfilesScreenPreview() {
             profileToSwitchTo = null,
             isSwitchBlocked = false,
             profileSwitchFailed = null,
+            profileToDelete = null,
+            profileDeleteFailed = null,
             onNavigateUp = {},
             onProfileClick = {},
             onAddProfileClick = {},
@@ -255,6 +312,9 @@ private fun SwitchProfilesScreenPreview() {
             onSwitchBlockedDismiss = {},
             onSwitchFailedDismiss = {},
             onDeleteProfile = {},
+            onDeleteProfileConfirm = {},
+            onDeleteProfileDismiss = {},
+            onDeleteFailedDismiss = {},
         )
     }
 }

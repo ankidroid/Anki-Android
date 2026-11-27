@@ -53,6 +53,8 @@ class SwitchProfilesFragment : Fragment() {
                     val profileToSwitchTo by viewModel.profileToSwitchTo.collectAsStateWithLifecycle()
                     val isSwitchBlocked by viewModel.isSwitchBlocked.collectAsStateWithLifecycle()
                     val profileSwitchFailed by viewModel.profileSwitchFailed.collectAsStateWithLifecycle()
+                    val profileToDelete by viewModel.profileToDelete.collectAsStateWithLifecycle()
+                    val profileDeleteFailed by viewModel.profileDeleteFailed.collectAsStateWithLifecycle()
                     // TODO: pass the user actions as one sealed class (MVI) instead of a callback each
                     SwitchProfilesScreen(
                         profiles = profiles,
@@ -61,6 +63,8 @@ class SwitchProfilesFragment : Fragment() {
                         profileToSwitchTo = profileToSwitchTo,
                         isSwitchBlocked = isSwitchBlocked,
                         profileSwitchFailed = profileSwitchFailed,
+                        profileToDelete = profileToDelete,
+                        profileDeleteFailed = profileDeleteFailed,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
                         onProfileClick = viewModel::requestSwitch,
                         onAddProfileClick = viewModel::showAddProfileDialog,
@@ -73,7 +77,10 @@ class SwitchProfilesFragment : Fragment() {
                         onSwitchProfileDismiss = viewModel::dismissSwitchProfileDialog,
                         onSwitchBlockedDismiss = viewModel::dismissSwitchBlockedMessage,
                         onSwitchFailedDismiss = viewModel::dismissSwitchFailedMessage,
-                        onDeleteProfile = viewModel::deleteProfile,
+                        onDeleteProfile = viewModel::requestDelete,
+                        onDeleteProfileConfirm = viewModel::deleteProfile,
+                        onDeleteProfileDismiss = viewModel::dismissDeleteProfileDialog,
+                        onDeleteFailedDismiss = viewModel::dismissDeleteFailedMessage,
                     )
                 }
             }

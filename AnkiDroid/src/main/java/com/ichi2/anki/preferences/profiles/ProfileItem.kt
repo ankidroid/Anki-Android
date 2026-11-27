@@ -10,6 +10,8 @@ import com.ichi2.anki.multiprofile.ProfileId
 data class ProfileItem(
     val id: ProfileId,
     val name: String,
+    /** Whether this is the open profile, which is highlighted and can't be deleted. */
+    val isActive: Boolean = false,
 ) {
     /** Uppercased first character of the name, shown in the avatar circle. */
     val initial: String
