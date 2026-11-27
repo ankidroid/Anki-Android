@@ -1,0 +1,26 @@
+name: Check merge queue result
+description: Find a successful run of this workflow on the same merge-queue commit.
+inputs:
+  workflow:
+    description: File name of the calling workflow, such as tests_unit.yml.
+    required: true
+outputs:
+  skip:
+    description: "'true' when the exact commit already passed this workflow in the merge queue."
+    value: ${{ steps.lookup.outputs.skip }}
+runs:
+  using: composite
+  steps:
+    - id: lookup
+      if: github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        WORKFLOW: ${{ inputs.workflow }}
+      run: |
+        # An unavailable or unsuccessful lookup leaves test steps enabled.
+        passed=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/$WORKFLOW/runs?event=merge_group&head_sha=$GITHUB_SHA&status=success&per_page=1" --jq .total_count) || exit 0
+        if [[ "$passed" =~ ^[1-9][0-9]*$ ]]; then
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+          echo "$WORKFLOW already passed in the merge queue for $GITHUB_SHA"
+        fi

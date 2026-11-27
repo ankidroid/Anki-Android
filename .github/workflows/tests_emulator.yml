@@ -24,6 +24,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || 'ci' }}
@@ -139,6 +140,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 50
+
+      - name: Check merge queue result
+        id: already_tested
+        uses: ./.github/actions/already-tested
+        continue-on-error: true
+        timeout-minutes: 1
+        with:
+          workflow: tests_emulator.yml
 
       - name: Enable KVM group perms
         run: |
@@ -278,6 +287,7 @@ jobs:
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
+        if: steps.already_tested.outputs.skip != 'true'
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         timeout-minutes: 30
         with:
@@ -306,9 +316,11 @@ jobs:
         run: python3 .github/report_test_failures.py AnkiDroid/build/outputs/androidTest-results/connected adb-log.txt --title "Emulator test failures" --suite ":AnkiDroid:connectedPlayReleaseAndroidTest"
 
       - name: Build Release Smoke Test
+        if: steps.already_tested.outputs.skip != 'true'
         run: TEST_RELEASE_BUILD=false ./gradlew packagePlayRelease :baselineprofile:packageBenchmarkBenchmark -x lintVitalPlayRelease --daemon --stacktrace
 
       - name: Run Release Smoke Test
+        if: steps.already_tested.outputs.skip != 'true'
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         timeout-minutes: 10
         with:
@@ -327,6 +339,7 @@ jobs:
             TEST_RELEASE_BUILD=false bash .github/with_emulator_cleanup.sh python3 .github/run_release_smoke_test.py
 
       - name: Configure NDK tools PATH for alignment checking
+        if: steps.already_tested.outputs.skip != 'true'
         run: |
           echo "Using pre-installed NDK tools for alignment checking"
           if [ ! -d "$ANDROID_NDK_LATEST_HOME" ]; then
@@ -340,6 +353,7 @@ jobs:
           echo "export PATH=$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH" >> $GITHUB_ENV
 
       - name: Check APK ELF Alignment
+        if: steps.already_tested.outputs.skip != 'true'
         run: |
           chmod +x .github/check_elf_alignment.sh
           APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
@@ -354,6 +368,7 @@ jobs:
           .github/check_elf_alignment.sh $APK_PATH
 
       - name: Verify zipalign
+        if: steps.already_tested.outputs.skip != 'true'
         run: |
           APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
           echo "Verifying zipalign with 16KB alignment for $APK_PATH"
@@ -376,26 +391,27 @@ jobs:
 
       - name: Upload Test Report
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        if: always()
+        if: ${{ always() && steps.already_tested.outputs.skip != 'true' }}
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-${{ matrix.device }}-jacocoAndroidTestReport
           path: ~/work/Anki-Android/Anki-Android/AnkiDroid/build/reports/jacoco/
 
       - name: Upload Emulator Log
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        if: always()
+        if: ${{ always() && steps.already_tested.outputs.skip != 'true' }}
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-${{ matrix.device }}-adb_logs
           path: adb-log.txt
 
       - name: Upload Emulator Screen Record
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        if: always()
+        if: ${{ always() && steps.already_tested.outputs.skip != 'true' }}
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-${{ matrix.device }}-adb_video
           path: video.webm
 
       - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        if: steps.already_tested.outputs.skip != 'true'
         with:
           flags: emulator
           verbose: true

@@ -34,6 +34,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   # if a workflow is run against the same ref, only one at a time...
@@ -163,6 +164,14 @@ jobs:
         with:
           fetch-depth: 50
 
+      - name: Check merge queue result
+        id: already_tested
+        uses: ./.github/actions/already-tested
+        continue-on-error: true
+        timeout-minutes: 1
+        with:
+          workflow: tests_unit.yml
+
       - name: Set up Codecov
         id: codecov
         # Flake runs repeat the same tests. Only the first iteration uploads coverage.
@@ -203,6 +212,7 @@ jobs:
 
         # update workflows/README.md when modifying this step
       - name: Run Unit Tests
+        if: steps.already_tested.outputs.skip != 'true'
         # A step timeout fails the job rather than cancelling it, so the Gradle cache is still saved.
         # Leave at least 10m of the job timeout for setup (≤5m) and the cache upload (≤4m)
         timeout-minutes: 65
@@ -256,7 +266,7 @@ jobs:
         run: ./gradlew --stop
 
       - name: Upload unit coverage by module
-        if: steps.codecov.outcome == 'success' && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
+        if: steps.already_tested.outputs.skip != 'true' && steps.codecov.outcome == 'success' && hashFiles('AnkiDroid/build/reports/codecov/*-test.xml') != ''
         shell: bash
         env:
           CODECOV_PYTHON: ${{ steps.codecov.outputs.python-path }}
