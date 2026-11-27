@@ -27,6 +27,10 @@ import io.mockk.mockkStatic
 import io.mockk.runs
 import io.mockk.unmockkAll
 import io.mockk.verify
+import org.acra.ReportField
+import org.acra.data.CrashReportData
+import org.acra.file.CrashReportPersister
+import org.acra.file.ReportLocator
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -824,6 +828,37 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `deleteProfile removes only that profile's queued crash reports`() {
+        val manager = ProfileManager.create(context)
+        val removed = manager.createNewProfile(ProfileName.fromTrustedSource("Removed"))
+        val removedReport = queuedCrashReport(ProfileContextWrapper.create(context, removed, File(appDataRoot, removed.value)).filesDir)
+        val defaultReport = queuedCrashReport(context.filesDir)
+
+        manager.deleteProfile(removed)
+
+        assertFalse("A deleted profile's queued report must not be sent later", removedReport.exists())
+        assertTrue("Other profiles' queued reports must stay", defaultReport.exists())
+    }
+
+    @Test
+    fun `deleteProfile removes queued crash reports after app data moved`() {
+        val manager = ProfileManager.create(context)
+        val removed = manager.createNewProfile(ProfileName.fromTrustedSource("Removed"))
+        val kept = manager.createNewProfile(ProfileName.fromTrustedSource("Kept"))
+        File(appDataRoot, removed.value).mkdirs()
+        val oldDataRoot = File("/mnt/expand/0000/user/0", appDataRoot.name)
+        val removedReport = queuedCrashReport(File(oldDataRoot, "${removed.value}/files"))
+        val keptReport = queuedCrashReport(File(oldDataRoot, "${kept.value}/files"))
+        val defaultReport = queuedCrashReport(File(oldDataRoot, "files"))
+
+        manager.deleteProfile(removed)
+
+        assertFalse("A deleted profile's queued report must not be sent later", removedReport.exists())
+        assertTrue("Another profile's queued report must stay", keptReport.exists())
+        assertTrue("Default's queued report must stay", defaultReport.exists())
+    }
+
+    @Test
     fun `deleteProfile allows deleting default when not active`() {
         val manager = ProfileManager.create(context)
         val other = manager.createNewProfile(ProfileName.fromTrustedSource("Other"))
@@ -1094,6 +1129,12 @@ class ProfileManagerTest {
         context
             .getSharedPreferences(prefsName, Context.MODE_PRIVATE)
             .edit(commit = true) { putString(PREF_COLLECTION_PATH, dir.absolutePath) }
+    }
+
+    private fun queuedCrashReport(profileFilesDir: File): File {
+        val report = File(ReportLocator(context).approvedFolder, "${UUID.randomUUID()}.stacktrace")
+        CrashReportPersister().store(CrashReportData().apply { put(ReportField.FILE_PATH, profileFilesDir.absolutePath) }, report)
+        return report
     }
 
     private fun captureLogs(block: () -> Unit): List<String> {

@@ -31,6 +31,7 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import leakcanary.AppWatcher
+import org.acra.file.ReportLocator
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -172,6 +173,16 @@ class AnkiDroidAppTest {
             app.getDatabasePath("collection.db"),
             app.getDir("textures", Context.MODE_PRIVATE),
         ).forEach { assertTrue("$it is outside $profileDir", it.startsWith(profileDir)) }
+    }
+
+    @Test
+    fun `approved crash reports from a non-default profile are where the ACRA process sends them from`() {
+        profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_routed") }
+
+        val mainProcess = ReportLocator(startApplication())
+        val acraProcess = ReportLocator(frameworkBase)
+
+        assertEquals(acraProcess.approvedFolder, mainProcess.approvedFolder)
     }
 
     @Test

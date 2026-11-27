@@ -7,6 +7,7 @@ package com.ichi2.anki.analytics
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.edit
@@ -15,9 +16,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.anki.databinding.DialogFeedbackBinding
 import org.acra.dialog.CrashReportDialog
 import org.acra.dialog.CrashReportDialogHelper
+import org.acra.interaction.DialogInteraction
+import java.io.File
 
 /**
  * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
@@ -34,9 +38,12 @@ class AnkiDroidCrashReportDialog :
     DialogInterface.OnDismissListener {
     private lateinit var binding: DialogFeedbackBinding
     private var helper: CrashReportDialogHelper? = null
+    private val reportFolders = mutableSetOf<File>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedInstanceState?.getStringArrayList(STATE_REPORT_FOLDERS)?.mapTo(reportFolders, ::File)
+        addReportFolder(intent)
         val dialogBuilder = AlertDialog.Builder(this)
         dialogBuilder.setIcon(R.drawable.logo_star_144dp)
         dialogBuilder.setTitle(CommonString.feedback_title)
@@ -91,9 +98,24 @@ class AnkiDroidCrashReportDialog :
             // Therefore, on cancel, purge limits to make sure the user may actually send in future.
             // Better to maybe send to many reports than definitely too few.
             CrashReportService.deleteLimiterData(this)
-            helper!!.cancelReports()
+            cancelReports()
         }
         finish()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        addReportFolder(intent)
+    }
+
+    private fun addReportFolder(intent: Intent) {
+        val report = intent.getSerializableExtraCompat<File>(DialogInteraction.EXTRA_REPORT_FILE) ?: return
+        report.parentFile?.let { reportFolders += it }
+    }
+
+    private fun cancelReports() {
+        val folders = reportFolders.toList()
+        Thread { folders.forEach { folder -> folder.listFiles()?.forEach { it.delete() } } }.start()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -105,9 +127,11 @@ class AnkiDroidCrashReportDialog :
         binding.userComment.text?.let { comment ->
             outState.putString(STATE_COMMENT, comment.toString())
         }
+        outState.putStringArrayList(STATE_REPORT_FOLDERS, ArrayList(reportFolders.map { it.path }))
     }
 
     companion object {
         private const val STATE_COMMENT = "comment"
+        private const val STATE_REPORT_FOLDERS = "reportFolders"
     }
 }

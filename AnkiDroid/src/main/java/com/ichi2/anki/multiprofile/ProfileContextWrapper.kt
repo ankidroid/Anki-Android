@@ -95,13 +95,14 @@ class ProfileContextWrapper private constructor(
         }
 
     /**
-     * Used for things like ACRA, textures, etc.
+     * Used for things like textures. ACRA's approved reports are shared by every profile,
+     * because its report sender runs in the `:acra` process, which has no profile.
      */
     override fun getDir(
         name: String,
         mode: Int,
     ): File {
-        if (profileId.isDefault()) {
+        if (profileId.isDefault() || name == ACRA_APPROVED_REPORTS) {
             return super.getDir(name, mode)
         }
 
@@ -113,7 +114,7 @@ class ProfileContextWrapper private constructor(
         name: String,
         mode: Int,
     ): SharedPreferences {
-        if (profileId.isDefault()) {
+        if (profileId.isDefault() || name == ACRA_PREFERENCES) {
             return super.getSharedPreferences(name, mode)
         }
 
@@ -162,6 +163,9 @@ class ProfileContextWrapper private constructor(
     }
 
     companion object {
+        private const val ACRA_APPROVED_REPORTS = "ACRA-approved"
+        private const val ACRA_PREFERENCES = "acra"
+
         /**
          * Factory method to safely create a ProfileContextWrapper.
          *
