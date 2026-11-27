@@ -376,13 +376,7 @@ abstract class NavigationDrawerActivity(
             Runnable {
                 // Take action if a different item selected
                 when (item.itemId) {
-                    R.id.nav_decks -> {
-                        Timber.i("Navigating to decks")
-                        val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
-                        // opening DeckPicker should use the instance on the back stack & clear back history
-                        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        startActivity(deckPicker)
-                    }
+                    R.id.nav_decks -> openDeckPicker()
 
                     R.id.nav_browser -> {
                         Timber.i("Navigating to card browser")
@@ -413,6 +407,14 @@ abstract class NavigationDrawerActivity(
             }
         closeDrawer()
         return true
+    }
+
+    protected open fun openDeckPicker() {
+        Timber.i("Navigating to decks")
+        val deckPicker = Intent(this, DeckPicker::class.java)
+        // opening DeckPicker should use the instance on the back stack & clear back history
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(deckPicker)
     }
 
     protected fun openCardBrowser() {

@@ -10,8 +10,10 @@ import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Field
+import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
+import com.ichi2.anki.libanki.Utils
 import com.ichi2.utils.MapUtil.getKeyByValue
 import kotlin.math.min
 
@@ -22,6 +24,7 @@ class FieldState private constructor(
     private val editor: NoteEditorFragment,
 ) {
     private var customViewIds: List<Int>? = null
+    private var uneditedNoteChecksum: String? = null
 
     // Values beyond the current type's field count, retained until the draft is saved or discarded.
     private var hiddenFieldValues: List<String> = emptyList()
@@ -33,7 +36,7 @@ class FieldState private constructor(
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
         val fieldEditLines: List<FieldEditLine> =
             if (type.type == Type.INIT && customViewIds != null) {
-                recreateFields(customViewIds!!)
+                restoreFields(type, customViewIds!!)
             } else {
                 createFields(type).also { fields ->
                     for (field in fields) {
@@ -70,6 +73,15 @@ class FieldState private constructor(
     private fun recreateFields(viewIds: List<Int>): List<FieldEditLine> =
         viewIds.map { id -> FieldEditLine(editor.requireContext()).also { field -> field.id = id } }
 
+    private fun restoreFields(
+        type: FieldChangeType,
+        viewIds: List<Int>,
+    ): List<FieldEditLine> {
+        val unedited = uneditedNoteChecksum
+        if (unedited == null || unedited == editor.editorNote?.editorChecksum()) return recreateFields(viewIds)
+        return createFields(type).onEach { field -> field.id = generateSequence { View.generateViewId() }.first { it !in viewIds } }
+    }
+
     private fun createFields(type: FieldChangeType): List<FieldEditLine> {
         val fields = getFields(type)
         val editLines: MutableList<FieldEditLine> = ArrayList(fields.size)
@@ -94,6 +106,7 @@ class FieldState private constructor(
 
     fun setInstanceState(savedInstanceState: Bundle?) {
         customViewIds = savedInstanceState?.getIntegerArrayList("customViewIds")
+        uneditedNoteChecksum = savedInstanceState?.getString("uneditedNoteChecksum")
         hiddenFieldValues = savedInstanceState?.getStringArrayList("hiddenFieldValues").orEmpty()
     }
 
@@ -101,6 +114,8 @@ class FieldState private constructor(
         // Visible values are already saved by the field views; only save the hidden tail here.
         if (hiddenFieldValues.isNotEmpty()) {
             outState.putStringArrayList("hiddenFieldValues", ArrayList(hiddenFieldValues))
+        } else {
+            editor.uneditedNote?.let { outState.putString("uneditedNoteChecksum", it.editorChecksum()) }
         }
     }
 
@@ -196,3 +211,6 @@ class FieldState private constructor(
         }
     }
 }
+
+internal fun Note.editorChecksum(): String =
+    Utils.checksum((listOf(noteTypeId.toString()) + notetype.fieldsNames + fields).joinToString("\u001f"))

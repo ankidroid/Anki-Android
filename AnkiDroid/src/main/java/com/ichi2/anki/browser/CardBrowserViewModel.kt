@@ -193,6 +193,7 @@ class CardBrowserViewModel(
         /** Tablet pane: show pane and load the editor at [destination]. */
         data class LoadInPane(
             val destination: NoteEditorDestination,
+            val row: CardOrNoteId,
         ) : NoteEditorCommand
 
         /** Phone: launch the standalone NoteEditor activity at [destination]. */
@@ -368,6 +369,17 @@ class CardBrowserViewModel(
         private set(value) {
             flowOfPaneRow.value = value
         }
+
+    private var editorRow: CardOrNoteId? = null
+
+    fun onPaneEditorShown(row: CardOrNoteId?) {
+        editorRow = row
+        paneRow = row
+    }
+
+    fun restoreEditorRow(editedCard: Card?) {
+        paneRow = editedCard?.let { CardOrNoteId.fromCard(it, cardsOrNotes) } ?: editorRow
+    }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
@@ -768,7 +780,7 @@ class CardBrowserViewModel(
                 // when in mutliselect, only deselecting should update the pane
                 if (wasSelected && isFragmented) {
                     paneRow = id
-                    editNoteDestination(id)?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it)) }
+                    editNoteDestination(id)?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it, id)) }
                 }
             } else {
                 setNoteEditorRow(id)
@@ -814,7 +826,7 @@ class CardBrowserViewModel(
             }
             val destination = editNoteDestination(row) ?: return@launch
             flowOfNoteEditorCommand.emit(
-                if (isFragmented) NoteEditorCommand.LoadInPane(destination) else NoteEditorCommand.LaunchActivity(destination),
+                if (isFragmented) NoteEditorCommand.LoadInPane(destination, row) else NoteEditorCommand.LaunchActivity(destination),
             )
         }
 
@@ -1728,7 +1740,7 @@ class CardBrowserViewModel(
 
     /** Builds the post-search trailing-pane command from current ViewModel state (tablet only). */
     private suspend fun NoteEditorCommand.Companion.fromCurrentSearchState(): NoteEditorCommand =
-        paneRow?.let { row -> editNoteDestination(row) }?.let { NoteEditorCommand.LoadInPane(it) }
+        paneRow?.let { row -> editNoteDestination(row)?.let { NoteEditorCommand.LoadInPane(it, row) } }
             ?: NoteEditorCommand.HidePane
 
     companion object {
