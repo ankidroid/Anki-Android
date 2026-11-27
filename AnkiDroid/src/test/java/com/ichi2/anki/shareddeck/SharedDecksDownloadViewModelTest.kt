@@ -135,6 +135,55 @@ class SharedDecksDownloadViewModelTest {
             assertThat(formatDownloadPercent(7f), equalTo("7.0"))
         }
 
+    @Test
+    fun `isWaitingToStart is true when downloading with no bytes received`() {
+        val state =
+            SharedDecksDownloadUiState(
+                phase = DownloadPhase.Downloading,
+                percent = 0f,
+                downloadedBytes = 0,
+            )
+        assertThat(state.isWaitingToStart, equalTo(true))
+    }
+
+    @Test
+    fun `isWaitingToStart is false when not downloading`() {
+        DownloadPhase.entries
+            .filter { it != DownloadPhase.Downloading }
+            .forEach { downloadPhase ->
+                val state =
+                    SharedDecksDownloadUiState(
+                        phase = downloadPhase,
+                        percent = 0f,
+                        downloadedBytes = 0,
+                    )
+
+                assertThat("$downloadPhase is not waiting to start", state.isWaitingToStart, equalTo(false))
+            }
+    }
+
+    @Test
+    fun `isWaitingToStart is false when download percentage is null`() {
+        val state =
+            SharedDecksDownloadUiState(
+                phase = DownloadPhase.Downloading,
+                percent = null,
+                downloadedBytes = 0,
+            )
+        assertThat(state.isWaitingToStart, equalTo(false))
+    }
+
+    @Test
+    fun `isWaitingToStart is false when some bytes are downloaded`() {
+        val state =
+            SharedDecksDownloadUiState(
+                phase = DownloadPhase.Downloading,
+                percent = 1f,
+                downloadedBytes = 1,
+            )
+        assertThat(state.isWaitingToStart, equalTo(false))
+    }
+
     private fun withLocale(
         locale: Locale,
         block: () -> Unit,
