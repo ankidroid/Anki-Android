@@ -66,8 +66,8 @@ class PreferenceStepperCardTest : RobolectricTest() {
             }
         }
         composeRule.waitForIdle()
-        val minus = targetContext.getString(CommonString.minus_sign)
-        val plus = targetContext.getString(CommonString.plus_sign)
+        val minus = targetContext.getString(CommonString.decrease_value)
+        val plus = targetContext.getString(CommonString.increase_value)
         composeRule.onNodeWithContentDescription(minus).assertIsDisplayed()
         composeRule.onNodeWithContentDescription(plus).assertIsDisplayed()
     }
@@ -87,8 +87,8 @@ class PreferenceStepperCardTest : RobolectricTest() {
             }
         }
         composeRule.waitForIdle()
-        val minus = targetContext.getString(CommonString.minus_sign)
-        val plus = targetContext.getString(CommonString.plus_sign)
+        val minus = targetContext.getString(CommonString.decrease_value)
+        val plus = targetContext.getString(CommonString.increase_value)
         composeRule.onNodeWithContentDescription(minus, useUnmergedTree = true).assertWidthIsEqualTo(32.dp)
         composeRule.onNodeWithContentDescription(plus, useUnmergedTree = true).assertWidthIsEqualTo(32.dp)
     }
@@ -108,8 +108,8 @@ class PreferenceStepperCardTest : RobolectricTest() {
             }
         }
         composeRule.waitForIdle()
-        val minus = targetContext.getString(CommonString.minus_sign)
-        val plus = targetContext.getString(CommonString.plus_sign)
+        val minus = targetContext.getString(CommonString.decrease_value)
+        val plus = targetContext.getString(CommonString.increase_value)
         composeRule.onNodeWithContentDescription(minus, useUnmergedTree = true).assertWidthIsEqualTo(28.dp)
         composeRule.onNodeWithContentDescription(plus, useUnmergedTree = true).assertWidthIsEqualTo(28.dp)
     }
@@ -129,8 +129,8 @@ class PreferenceStepperCardTest : RobolectricTest() {
             }
         }
         composeRule.waitForIdle()
-        val minus = targetContext.getString(CommonString.minus_sign)
-        val plus = targetContext.getString(CommonString.plus_sign)
+        val minus = targetContext.getString(CommonString.decrease_value)
+        val plus = targetContext.getString(CommonString.increase_value)
         composeRule.onNodeWithContentDescription(minus, useUnmergedTree = true).assertWidthIsEqualTo(24.dp)
         composeRule.onNodeWithContentDescription(plus, useUnmergedTree = true).assertWidthIsEqualTo(24.dp)
     }
