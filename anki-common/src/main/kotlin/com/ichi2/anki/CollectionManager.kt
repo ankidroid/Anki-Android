@@ -418,6 +418,7 @@ object CollectionManager {
                         databaseBuilder = { backend -> createDatabaseUsingRustBackend(backend) },
                         backend = backend,
                     )
+                DayCutoffTracker.onCollectionOpened(collection!!)
             }
         } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
             // All consumers should better explain the issue

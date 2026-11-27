@@ -18,6 +18,7 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import org.junit.After
 import org.junit.Test
+import kotlin.time.Duration.Companion.days
 
 class DayRolloverHandlerTest : JvmTest() {
     @After
@@ -25,13 +26,30 @@ class DayRolloverHandlerTest : JvmTest() {
         unmockkAll()
     }
 
+    @Test
+    fun `first time change reports a rollover if the collection opened before the cutoff`() =
+        runTest {
+            val scheduler = col.sched
+            val cutoffAtOpen = scheduler.dayCutoff
+            mockkObject(scheduler, DayRolloverAlarm, WidgetStatus)
+            every { scheduler.dayCutoff } returns cutoffAtOpen + 1.days.inWholeSeconds
+            every { DayRolloverAlarm.scheduleNext(any()) } just runs
+            every { WidgetStatus.updateInBackground(any()) } just runs
+            val subscriber = mockk<ChangeManager.Subscriber>(relaxed = true)
+            ChangeManager.subscribe(subscriber)
+
+            repeat(2) { DayRolloverHandler.handleTimeChange() }
+
+            verify(exactly = 1) { subscriber.opExecuted(match { it.studyQueues }, null) }
+            verify(exactly = 1) { DayRolloverAlarm.scheduleNext(any()) }
+        }
+
     /** Issue 22041: overlapping initial time events must not flip the reviewer back to the question. */
     @Test
     fun `overlapping initial time changes do not report a day rollover`() =
         runTest {
-            val scheduler = col.sched
-            mockkObject(scheduler, DayRolloverAlarm, WidgetStatus)
-            every { scheduler.dayCutoff } returns 86400L
+            CollectionManager.ensureOpen()
+            mockkObject(DayRolloverAlarm, WidgetStatus)
             val subscriber = mockk<ChangeManager.Subscriber>(relaxed = true)
             ChangeManager.subscribe(subscriber)
             every { WidgetStatus.updateInBackground(any()) } just runs
