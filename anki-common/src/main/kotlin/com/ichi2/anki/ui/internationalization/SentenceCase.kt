@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ankicommon.R
+import java.util.Locale
 
 // Functions for handling a move from 'Title Case' in Anki Desktop to 'Sentence case' in AnkiDroid
 
@@ -46,6 +47,62 @@ fun String.toSentenceCase(
     if (this.matchesSentenceCaseResource(resString)) return resString
     return this
 }
+
+/**
+ * Converts English backend undo labels from title case to sentence case.
+ * Non-English labels are returned unchanged.
+ */
+fun String.toUndoSentenceCase(locale: Locale = Locale.getDefault()): String {
+    if (locale.language != Locale.ENGLISH.language) return this
+
+    val prefix = "Undo "
+    if (!startsWith(prefix) || length == prefix.length) return this
+
+    return prefix +
+        substring(prefix.length)
+            .toUndoOperationSentenceCase(locale, lowercaseFirstWord = true)
+}
+
+/**
+ * Converts English backend undo operation name to sentence case.
+ *
+ * Acronyms and names with internal capitals are preserved, while ordinary title-case words are
+ * lowercased after the first word.
+ */
+fun String.toUndoOperationSentenceCase(
+    locale: Locale = Locale.getDefault(),
+    lowercaseFirstWord: Boolean = false,
+): String {
+    if (locale.language != Locale.ENGLISH.language) return this
+
+    return split(" ")
+        .mapIndexed { index, word ->
+            fun transformSingleWord(
+                w: String,
+                isFirst: Boolean,
+            ): String {
+                val clean = w.filter { !it.isDirectionalIsolate() }
+                return when {
+                    isFirst && !lowercaseFirstWord -> w
+                    clean.length > 1 && clean.drop(1).any(Char::isUpperCase) -> w
+                    clean.all(Char::isUpperCase) -> w
+                    else -> w.lowercase(locale)
+                }
+            }
+
+            if (word.contains("/")) {
+                word
+                    .split("/")
+                    .mapIndexed { subIndex, subWord ->
+                        transformSingleWord(subWord, isFirst = (index == 0 && subIndex == 0))
+                    }.joinToString("/")
+            } else {
+                transformSingleWord(word, isFirst = (index == 0))
+            }
+        }.joinToString(" ")
+}
+
+private fun Char.isDirectionalIsolate(): Boolean = this in '\u2066'..'\u2069' || this in '\u202A'..'\u202E'
 
 /**
  * Whether this string is [resString], ignoring the differences which `sentence-case.xml` exists to fix
