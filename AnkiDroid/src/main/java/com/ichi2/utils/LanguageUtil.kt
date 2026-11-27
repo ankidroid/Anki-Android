@@ -315,6 +315,8 @@ object LanguageUtil {
 
     fun getLocaleCompat(resources: Resources): Locale? = ConfigurationCompat.getLocales(resources.configuration)[0]
 
+    fun getAppLocale(resources: Resources): Locale = getLocaleCompat(resources) ?: Locale.getDefault()
+
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
     /**

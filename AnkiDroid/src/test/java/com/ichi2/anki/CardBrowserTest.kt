@@ -2054,7 +2054,7 @@ class CardBrowserTest : RobolectricTest() {
             assertEquals(false, isSuspended(), "Card should initially be unsuspended")
 
             // Perform "Toggle suspend" action and verify the card is suspended.
-            cardBrowserFragment.toggleSuspendCards()
+            cardBrowserFragment.toggleSuspendCards().join()
             assertEquals(true, isSuspended(), "Unsuspended card should be suspended after toggleSuspend")
 
             // Get the Undo menu item on the action bar and its action view (the Undo button).
@@ -2063,6 +2063,7 @@ class CardBrowserTest : RobolectricTest() {
 
             // Simulate user's tapping the Undo button.
             val clicked = actionView?.performClick() ?: false
+            advanceRobolectricLooper()
 
             // Verify the tap is handled and the card is unsuspended.
             assertEquals(true, clicked, "Action view should handle click")

@@ -145,6 +145,7 @@ import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.ui.internationalization.toUndoSentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.utils.bottomCornerClearance
@@ -163,6 +164,7 @@ import com.ichi2.anki.utils.showSearchError
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.RtlCompliantActionProvider
+import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
@@ -628,7 +630,7 @@ class CardBrowserFragment :
 
         fun MenuItem.setupUndo() {
             isVisible = getColUnsafe().undoAvailable()
-            title = getColUnsafe().undoLabel()
+            title = getColUnsafe().undoLabel()?.toUndoSentenceCase(LanguageUtil.getAppLocale(resources))
         }
 
         fun SubMenu.setupFlags() {
@@ -1434,6 +1436,8 @@ class CardBrowserFragment :
         handler: Any?,
     ) {
         // TODO: dismiss undoSnackbar if it would undo a new action
+        invalidateMenu()
+
         if (handler === this || handler === activityViewModel) {
             return
         }
@@ -1683,6 +1687,8 @@ class CardBrowserFragment :
     fun onUndo() =
         launchCatchingTask {
             undoAndShowSnackbar()
+            activityViewModel.launchSearchForCards()
+            invalidateMenu()
         }
 
     /**
@@ -1731,14 +1737,21 @@ class CardBrowserFragment :
     fun toggleMark() =
         launchCatchingTask {
             activityViewModel.onEvent(BrowserEvent.ToggleMarkRequested)
+            invalidateMenu()
         }
 
-    fun toggleSuspendCards() = launchCatchingTask { activityViewModel.toggleSuspendCards().join() }
+    fun toggleSuspendCards() =
+        launchCatchingTask {
+            activityViewModel.toggleSuspendCards(getString(CommonString.undo_name_unsuspend)).join()
+            invalidateMenu()
+        }
 
     /** @see CardBrowserViewModel.toggleBury */
     fun toggleBury() =
         launchCatchingTask {
-            val result = activityViewModel.toggleBury() ?: return@launchCatchingTask
+            val result =
+                activityViewModel.toggleBury(getString(CommonString.undo_name_unbury))
+                    ?: return@launchCatchingTask
             // show a snackbar as there's currently no colored background for buried cards
             val message =
                 when (result.wasBuried) {
@@ -1746,6 +1759,7 @@ class CardBrowserFragment :
                     false -> resources.getQuantityString(CommonPlurals.unbury_cards_feedback, result.count, result.count)
                 }
             showUndoSnackbar(message)
+            invalidateMenu()
         }
 
     fun onPreview() {
@@ -1981,7 +1995,13 @@ class CardBrowserFragment :
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message) {
-            setAction(CommonString.undo) { launchCatchingTask { undoAndShowSnackbar() } }
+            setAction(CommonString.undo) {
+                launchCatchingTask {
+                    undoAndShowSnackbar()
+                    activityViewModel.launchSearchForCards()
+                    invalidateMenu()
+                }
+            }
             undoSnackbar = this
         }
     }
