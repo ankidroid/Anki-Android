@@ -326,10 +326,10 @@ abstract class AbstractFlashcardViewer :
     private fun resumeAutomaticAnswerAfterDialog() {
         if (!automaticAnswerEnabledBeforeDialog) return
         launchCatchingTask {
-            val waitingForActiveMedia =
+            val waitingForMedia =
                 automaticAnswerShouldWaitForMedia() &&
-                    (cardMediaPlayer.isPlaying || ReadText.textToSpeech?.isSpeaking == true)
-            if (waitingForActiveMedia) {
+                    (cardMediaPlayer.isPlaying || ReadText.isSpeechPending)
+            if (waitingForMedia) {
                 automaticAnswer.reEnableWithoutScheduling()
             } else {
                 automaticAnswer.reEnable(displayAnswer)

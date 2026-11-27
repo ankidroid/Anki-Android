@@ -45,6 +45,7 @@ import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.registerWebBrowser
 import io.mockk.coEvery
 import io.mockk.mockkObject
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
@@ -71,6 +72,7 @@ import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowTextToSpeech
 import timber.log.Timber
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import java.util.stream.Stream
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -418,6 +420,116 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         fun finish() {
             speaking = false
             utteranceProgressListener.onDone("stringId")
+        }
+    }
+
+    @Test
+    fun `legacy auto advance survives replacing an inline replay after warning dismissal`() {
+        val card = addBasicNote("front", "[sound:first.webm][sound:second.webm]").firstCard()
+        val config = col.decks.configDictForDeckId(card.currentDeckId())
+        config.secondsToShowAnswer = 60.0
+        config.jsonObject.put("waitForAudio", true)
+        col.decks.save(config)
+        val viewer = getViewer(addCard = false)
+        val webView = assertNotNull(viewer.webView)
+        val looper = shadowOf(Looper.getMainLooper())
+        val client = shadowOf(webView).webViewClient
+
+        fun waitUntilReady(condition: () -> Boolean) {
+            val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10)
+            while (!condition()) {
+                check(System.nanoTime() < deadline) { "Playback did not reach the expected state" }
+                looper.idle()
+                Thread.sleep(10)
+            }
+        }
+
+        fun awaitVideo(name: String) = waitUntilReady { shadowOf(webView).lastEvaluatedJavascript?.contains(name) == true }
+
+        fun finishPlayback() {
+            val playback = assertNotNull(viewer.cardMediaPlayer.playAvTagsJob)
+            viewer.cardMediaPlayer.onVideoFinished()
+            runBlocking { playback.join() }
+        }
+
+        viewer.automaticAnswer.enable()
+        viewer.displayCardAnswer()
+        awaitVideo("first.webm")
+        viewer.cardMediaPlayer.onVideoFinished()
+        awaitVideo("second.webm")
+        finishPlayback()
+        waitUntilReady { viewer.hasAutomaticAnswerQueued() }
+
+        client.shouldOverrideUrlLoading(webView, mockWebResourceRequest("playsound:a:0"))
+        awaitVideo("first.webm")
+        client.shouldOverrideUrlLoading(webView, mockWebResourceRequest("market://details?id=com.example"))
+        looper.idle()
+        ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+        waitUntilReady { !viewer.automaticAnswer.isDisabled }
+
+        client.shouldOverrideUrlLoading(webView, mockWebResourceRequest("playsound:a:1"))
+        awaitVideo("second.webm")
+        assertThat("wait until the replacement finishes", viewer.hasAutomaticAnswerQueued(), equalTo(false))
+        finishPlayback()
+        looper.idle()
+        assertThat("resume after the replacement finishes", viewer.hasAutomaticAnswerQueued(), equalTo(true))
+    }
+
+    @Test
+    @Config(sdk = [33], shadows = [PendingCardTextToSpeech::class])
+    fun `dismissal waits for speech queued before the engine initializes`() = assertWaitsForSpeech(chooseVoice = false)
+
+    @Test
+    @Config(sdk = [33], shadows = [PendingCardTextToSpeech::class])
+    fun `dismissal waits while the answer voice is being chosen`() = assertWaitsForSpeech(chooseVoice = true)
+
+    private fun assertWaitsForSpeech(chooseVoice: Boolean) {
+        ShadowTextToSpeech.addLanguageAvailability(Locale.US)
+        val card = addBasicNote("front", "spoken answer").firstCard()
+        val config = col.decks.configDictForDeckId(card.currentDeckId())
+        config.secondsToShowQuestion = 0.0
+        config.secondsToShowAnswer = 60.0
+        config.jsonObject.put("waitForAudio", true)
+        col.decks.save(config)
+        editPreferences { putBoolean("tts", true) }
+        MetaDB.storeLanguage(targetContext, card.currentDeckId(), card.ord, CardSide.QUESTION, "0")
+        MetaDB.storeLanguage(targetContext, card.currentDeckId(), card.ord, CardSide.ANSWER, if (chooseVoice) "" else "en_US")
+
+        mockkObject(TtsVoices) {
+            coEvery { TtsVoices.localesForEngine(any()) } returns listOf(Locale.US)
+            val viewer = getViewer(addCard = false)
+            val engine = assertNotNull(ReadText.textToSpeech)
+            val speech = Shadow.extract<PendingCardTextToSpeech>(engine)
+            val voiceLookup = CompletableDeferred<Unit>()
+            val availableVoices = CompletableDeferred<List<Locale>>()
+            if (chooseVoice) {
+                shadowOf(engine).onInitListener.onInit(TextToSpeech.SUCCESS)
+                advanceRobolectricLooperUntil { shadowOf(engine).utteranceProgressListener != null }
+                coEvery { TtsVoices.localesForEngine(any()) } coAnswers {
+                    voiceLookup.complete(Unit)
+                    availableVoices.await()
+                }
+            }
+            val webView = assertNotNull(viewer.webView)
+            viewer.automaticAnswer.enable()
+            viewer.displayCardAnswer()
+            val looper = shadowOf(Looper.getMainLooper())
+            looper.idle()
+            if (chooseVoice) advanceRobolectricLooperUntil { voiceLookup.isCompleted }
+            assertThat(viewer.hasAutomaticAnswerQueued(), equalTo(false))
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest("market://details?id=com.example"))
+            looper.idle()
+            ShadowDialog.getShownDialogs().single { it.isShowing }.cancel()
+            looper.idle()
+
+            assertThat("wait for the queued speech to start and finish", viewer.hasAutomaticAnswerQueued(), equalTo(false))
+            if (chooseVoice) {
+                availableVoices.complete(listOf(Locale.US))
+            } else {
+                shadowOf(engine).onInitListener.onInit(TextToSpeech.SUCCESS)
+                advanceRobolectricLooperUntil { speech.spokenText == "spoken answer" }
+                speech.finish()
+            }
         }
     }
 
