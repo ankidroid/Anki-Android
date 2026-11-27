@@ -1192,7 +1192,6 @@ class CardBrowserViewModel(
         return progressManager.withProgress {
             val cardIds = queryAllSelectedCardIds()
 
-            // this variable exists as `undoableOp` needs an OpChanges as return value
             var wasBuried: Boolean? = null
             undoableOp {
                 // this differs from Anki Desktop which uses the first selected card to determine the
