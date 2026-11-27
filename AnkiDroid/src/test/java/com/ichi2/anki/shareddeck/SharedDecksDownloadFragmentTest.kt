@@ -4,6 +4,7 @@ package com.ichi2.anki.shareddeck
 
 import android.app.DownloadManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -55,8 +58,10 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
 import java.io.File
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -370,6 +375,165 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `theme change during a download keeps the download instead of enqueuing it again`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        controller.start().resume().visible()
+        val activity = controller.get()
+        activity.supportFragmentManager.commitNow { add(R.id.shared_decks_fragment_container, downloadFragment()) }
+        shadowOf(Looper.getMainLooper()).idle()
+        val downloadId = activity.downloadManager.downloadIds().single()
+
+        val darkTheme =
+            Configuration(activity.resources.configuration).apply {
+                uiMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or Configuration.UI_MODE_NIGHT_YES
+            }
+        controller.configurationChange(darkTheme)
+        shadowOf(Looper.getMainLooper()).idle()
+
+        val recreated = controller.get()
+        assertNotSame(activity, recreated, "a theme change recreates the activity")
+        assertEquals(listOf(downloadId), recreated.downloadManager.downloadIds())
+
+        val request = shadowOf(shadowOf(recreated.downloadManager).getRequest(downloadId))
+        request.status = DownloadManager.STATUS_SUCCESSFUL
+        val fragment = recreated.supportFragmentManager.findFragmentById(R.id.shared_decks_fragment_container)
+        val download = Download(recreated, fragment as SharedDecksDownloadFragment, File(request.destination.path!!))
+        download.file.writeText("deck contents")
+        download.withFileProvider {
+            recreated.sendBroadcast(
+                Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId),
+            )
+        }
+
+        val intent = assertNotNull(shadowOf(recreated).nextStartedActivity, "the restored screen imports the deck")
+        assertEquals(download.uri, intent.data)
+    }
+
+    @Test
+    fun `completion during theme recreation is recovered without another broadcast`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        controller.start().resume().visible()
+        val activity = controller.get()
+        val fragment = downloadFragment()
+        activity.supportFragmentManager.commitNow { add(R.id.shared_decks_fragment_container, fragment) }
+        shadowOf(Looper.getMainLooper()).idle()
+        val downloadId = activity.downloadManager.downloadIds().single()
+        val request = shadowOf(shadowOf(activity.downloadManager).getRequest(downloadId))
+        val download = Download(activity, fragment, File(request.destination.path!!))
+        download.file.writeText("deck contents")
+        activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewDestroyed(
+                    fm: FragmentManager,
+                    f: Fragment,
+                ) {
+                    if (f !== fragment) return
+                    request.status = DownloadManager.STATUS_SUCCESSFUL
+                    // DownloadManager finishes while no view receiver is registered.
+                    activity.sendBroadcast(
+                        Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId),
+                    )
+                    shadowOf(Looper.getMainLooper()).idle()
+                }
+            },
+            false,
+        )
+        val darkTheme =
+            Configuration(activity.resources.configuration).apply {
+                uiMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or Configuration.UI_MODE_NIGHT_YES
+            }
+
+        download.withFileProvider { controller.configurationChange(darkTheme) }
+
+        val recreated = controller.get()
+        assertNotSame(activity, recreated)
+        val intent = assertNotNull(shadowOf(recreated).nextStartedActivity, "recover the completed download after the receiver gap")
+        assertEquals(download.uri, intent.data)
+        assertEquals(listOf(downloadId), recreated.downloadManager.downloadIds())
+    }
+
+    @Test
+    fun `failure while the view is detached offers retry when the view returns`() {
+        val download = startDownload()
+        download.activity.supportFragmentManager.commitNow { detach(download.fragment) }
+        download.complete(status = DownloadManager.STATUS_FAILED)
+
+        download.activity.supportFragmentManager.commitNow { attach(download.fragment) }
+        shadowOf(Looper.getMainLooper()).idle()
+
+        retryButton.assertExists()
+        verify(download.activity.downloadManager).enqueue(any())
+    }
+
+    @Test
+    fun `removed download while the view is detached offers retry when the view returns`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        controller.start().resume().visible()
+        val activity = controller.get()
+        val fragment = downloadFragment()
+        activity.supportFragmentManager.commitNow { add(R.id.shared_decks_fragment_container, fragment) }
+        val downloadId = activity.downloadManager.downloadIds().single()
+        activity.supportFragmentManager.commitNow { detach(fragment) }
+        activity.downloadManager.remove(downloadId)
+        activity.sendBroadcast(
+            Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId),
+        )
+        shadowOf(Looper.getMainLooper()).idle()
+
+        activity.supportFragmentManager.commitNow { attach(fragment) }
+        shadowOf(Looper.getMainLooper()).idle()
+
+        retryButton.assertExists()
+        assertTrue(activity.downloadManager.downloadIds().isEmpty())
+    }
+
+    @Test
+    fun `reattaching tolerates a missing download cursor`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        controller.start().resume()
+        val download = setupDownload(controller.get())
+        val manager = download.activity.supportFragmentManager
+        manager.commitNow { detach(download.fragment) }
+        whenever(download.activity.downloadManager.query(any())).thenReturn(null)
+
+        manager.commitNow { attach(download.fragment) }
+        controller.visible()
+
+        download.file.writeText("deck contents")
+        download.complete()
+        val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertEquals(download.uri, intent.data)
+    }
+
+    @Test
+    fun `missed completion recovers after a failed status query`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        controller.start().resume()
+        val download = setupDownload(controller.get())
+        val manager = download.activity.supportFragmentManager
+        manager.commitNow { detach(download.fragment) }
+        download.file.writeText("deck contents")
+        download.complete()
+        whenever(download.activity.downloadManager.query(any()))
+            .thenThrow(IllegalArgumentException("DownloadManager rejected the status query"))
+            .thenAnswer { downloadCursor(DownloadManager.STATUS_SUCCESSFUL, localUri = Uri.fromFile(download.file)) }
+
+        download.withFileProvider {
+            manager.commitNow { attach(download.fragment) }
+            controller.visible()
+            shadowOf(Looper.getMainLooper()).idleFor(2, TimeUnit.SECONDS)
+        }
+
+        val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity, "recover the missed completion")
+        assertEquals(download.uri, intent.data)
+    }
+
+    @Test
     fun `test getDeckIdFromDownloadURL with valid URL`() {
         val url = "https://ankiweb.net/svc/shared/download-deck/1104981491?t=some-token"
         assertEquals("1104981491", SharedDecksDownloadFragment.getDeckIdFromDownloadURL(url))
@@ -445,21 +609,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
                 }
                 on { query(any()) } doAnswer { downloadCursor(DownloadManager.STATUS_RUNNING) }
             }
-        val fragment =
-            SharedDecksDownloadFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putSerializable(
-                            SharedDecksActivity.ARG_DOWNLOAD_FILE,
-                            DownloadFile(
-                                url = "https://ankiweb.net/svc/shared/download-deck/1",
-                                userAgent = "AnkiDroid",
-                                contentDisposition = "attachment; filename=\"blank.apkg\"",
-                                mimeType = "application/octet-stream",
-                            ),
-                        )
-                    }
-            }
+        val fragment = downloadFragment()
         activity.supportFragmentManager.commitNow {
             add(R.id.shared_decks_fragment_container, fragment)
         }
@@ -468,6 +618,29 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         verify(activity.downloadManager, atLeastOnce()).enqueue(request.capture())
         return Download(activity, fragment, File(shadowOf(request.firstValue).destination.path!!))
     }
+
+    private fun downloadFragment() =
+        SharedDecksDownloadFragment().apply {
+            arguments =
+                Bundle().apply {
+                    putSerializable(
+                        SharedDecksActivity.ARG_DOWNLOAD_FILE,
+                        DownloadFile(
+                            url = "https://ankiweb.net/svc/shared/download-deck/1",
+                            userAgent = "AnkiDroid",
+                            contentDisposition = "attachment; filename=\"blank.apkg\"",
+                            mimeType = "application/octet-stream",
+                        ),
+                    )
+                }
+        }
+
+    private fun DownloadManager.downloadIds(): List<Long> =
+        query(DownloadManager.Query()).use { cursor ->
+            buildList {
+                while (cursor.moveToNext()) add(cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID)))
+            }
+        }
 
     private inner class Download(
         val activity: SharedDecksActivity,
