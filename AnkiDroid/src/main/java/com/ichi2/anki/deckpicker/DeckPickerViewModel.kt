@@ -50,6 +50,7 @@ import com.ichi2.anki.sync.syncStatus
 import com.ichi2.anki.syncAuth
 import com.ichi2.anki.utils.Destination
 import com.ichi2.utils.NetworkUtils
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -226,6 +227,8 @@ class DeckPickerViewModel :
     // Otherwise, the progress indicator remains indefinitely. This replay=1 ensures that the collector will
     // receive the dismissal event even if it starts after the emission.
     val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
+
+    val flowOfDeckListLoadFailed = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
 
     // TODO: Use a sensible default rather than null
     val flowOfOptionsMenuState = MutableStateFlow<OptionsMenuState?>(null)
@@ -494,38 +497,43 @@ class DeckPickerViewModel :
     fun reloadDeckCounts(): Job {
         loadDeckCounts?.cancel()
         val loadDeckCounts =
-            viewModelScope.launch(Dispatchers.IO) {
-                Timber.d("Refreshing deck list")
-                withCol {
-                    dueTree = sched.deckDueTree()
-                    flowOfCollectionHasNoCards.value = isEmpty
+            launchCatching(Dispatchers.IO) {
+                try {
+                    Timber.d("Refreshing deck list")
+                    withCol {
+                        dueTree = sched.deckDueTree()
+                        flowOfCollectionHasNoCards.value = isEmpty
+                    }
+
+                    // TODO: This is in the wrong place
+                    // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
+                    withCol { flowOfStudiedTodayStats.value = sched.studiedToday().replace("\n", " ") }
+
+                    /**
+                     * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
+                     * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
+                     */
+                    val currentSchedulerVersion = withCol { config.schedulerVersion }
+
+                    if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
+                        schedulerUpgradeDialogShownForVersion = 1L
+                        flowOfPromptUserToUpdateScheduler.emit(Unit)
+                    } else {
+                        schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
+                    }
+
+                    // TODO: This is in the wrong place
+                    // current deck may have changed
+                    withCol { focusedDeck = decks.current().id }
+                    refreshUndoMenuState()
+
+                    // Reopening can leave the counts and selection unchanged after a skipped display refresh.
+                    flowOfRefreshDeckList.emit(Unit)
+                    flowOfDecksReloaded.emit(Unit)
+                } catch (e: Exception) {
+                    if (e !is CancellationException) flowOfDeckListLoadFailed.tryEmit(Unit)
+                    throw e
                 }
-
-                // TODO: This is in the wrong place
-                // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                withCol { flowOfStudiedTodayStats.value = sched.studiedToday().replace("\n", " ") }
-
-                /**
-                 * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
-                 * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
-                 */
-                val currentSchedulerVersion = withCol { config.schedulerVersion }
-
-                if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
-                    schedulerUpgradeDialogShownForVersion = 1L
-                    flowOfPromptUserToUpdateScheduler.emit(Unit)
-                } else {
-                    schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
-                }
-
-                // TODO: This is in the wrong place
-                // current deck may have changed
-                withCol { focusedDeck = decks.current().id }
-                refreshUndoMenuState()
-
-                // Reopening can leave the counts and selection unchanged after a skipped display refresh.
-                flowOfRefreshDeckList.emit(Unit)
-                flowOfDecksReloaded.emit(Unit)
             }
         this.loadDeckCounts = loadDeckCounts
         return loadDeckCounts
