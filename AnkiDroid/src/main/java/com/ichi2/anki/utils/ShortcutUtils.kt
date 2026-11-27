@@ -6,6 +6,8 @@ package com.ichi2.anki.utils
 import android.content.Context
 import androidx.core.content.pm.ShortcutManagerCompat
 import com.ichi2.anki.common.crashreporting.runCatchingWithReport
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.multiprofile.ProfileId
 import timber.log.Timber
 
 /**
@@ -17,6 +19,15 @@ object ShortcutUtils {
      * Android's Binder IPC has a 1MB transaction limit.
      */
     private const val BATCH_SIZE = 100
+
+    /**
+     * The ID of the pinned shortcut for [deckId]: `1` in Default and `p_1a2b3c4d_1` in other
+     * profiles, so profiles don't replace each other's shortcut for the same deck ID.
+     */
+    fun deckShortcutId(
+        deckId: DeckId,
+        profileId: ProfileId,
+    ): String = if (profileId.isDefault()) deckId.toString() else "${profileId.value}_$deckId"
 
     /**
      * Disables shortcuts by their IDs, handling large lists by batching to avoid
