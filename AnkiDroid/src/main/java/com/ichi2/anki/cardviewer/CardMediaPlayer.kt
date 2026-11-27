@@ -45,6 +45,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.yield
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.Closeable
 import kotlin.time.Duration.Companion.milliseconds
@@ -220,14 +221,19 @@ class CardMediaPlayer : Closeable {
         // the lookup is part of the playback, so stopping the player also cancels it
         launchPlayback {
             val (cardSide, avTags) =
-                withCol {
-                    val cardSide =
-                        when (side) {
-                            SingleCardSide.FRONT -> CardSide.QUESTION
-                            SingleCardSide.BACK ->
-                                if (card.replayQuestionAudioOnAnswerSide(this)) CardSide.BOTH else CardSide.ANSWER
-                        }
-                    cardSide to card.avTags(this, cardSide)
+                try {
+                    withCol {
+                        val cardSide =
+                            when (side) {
+                                SingleCardSide.FRONT -> CardSide.QUESTION
+                                SingleCardSide.BACK ->
+                                    if (card.replayQuestionAudioOnAnswerSide(this)) CardSide.BOTH else CardSide.ANSWER
+                            }
+                        cardSide to card.avTags(this, cardSide)
+                    }
+                } catch (e: BackendInvalidInputException) {
+                    Timber.w(e, "Could not load Replay audio for card %d", card.id)
+                    return@launchPlayback
                 }
             playAvTags(avTags, cardSide)
         }

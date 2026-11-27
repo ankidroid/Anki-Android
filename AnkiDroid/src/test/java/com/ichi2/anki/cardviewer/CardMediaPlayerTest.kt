@@ -43,6 +43,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
@@ -409,6 +411,24 @@ class CardMediaPlayerTest : JvmTest() {
             }
 
             assertFalse(playedAfterStop.get(), "the replay started after stop returned")
+        }
+
+    @Test
+    fun `replay ends cleanly when the card is removed before the queued lookup`() =
+        runTest {
+            val card = addBasicNote("[sound:front.mp3]").firstCard()
+            val player = CardMediaPlayer(tagPlayer, CompletableDeferred(ttsPlayer), mockk(), StandardTestDispatcher(testScheduler))
+            player.setOnMediaGroupCompletedListener(onMediaGroupCompleted)
+            val completion = CompletableDeferred<Throwable?>()
+
+            player.replayAll(card, SingleCardSide.FRONT)
+            assertNotNull(player.playAvTagsJob).invokeOnCompletion { completion.complete(it) }
+            col.removeCardsAndOrphanedNotes(listOf(card.id))
+            runCurrent()
+
+            assertNull(completion.await(), "The deleted card should end Replay without a playback failure")
+            coVerify(exactly = 0) { tagPlayer.play(any(), any()) }
+            verify(exactly = 0) { onMediaGroupCompleted.invoke() }
         }
 
     @Test
