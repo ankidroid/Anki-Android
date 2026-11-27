@@ -81,6 +81,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldMetadata
+import com.ichi2.anki.dialogs.registerConfirmationHandler
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
 import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.libanki.CardOrdinal
@@ -95,6 +96,7 @@ import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.backend.model.toBackendNote
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.getStockNotetypeKinds
 import com.ichi2.anki.libanki.utils.append
@@ -114,6 +116,8 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
+import com.ichi2.anki.utils.ext.postSelf
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.utils.TruncatedString
@@ -121,8 +125,11 @@ import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.listItems
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import org.json.JSONArray
 import org.json.JSONException
@@ -158,6 +165,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
     @VisibleForTesting
     var tempNoteType: CardTemplateNotetype? = null
     private var fieldNames: List<String>? = null
+    private val collectionLoaded = CompletableDeferred<Unit>()
     private var noteTypeId: NoteTypeId = 0
     private var noteId: NoteId = 0
 
@@ -399,7 +407,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             tempNoteType?.let { putAll(it.toBundle()) }
             putLong(STATE_NOTE_TYPE_ID, noteTypeId)
             putLong(STATE_NOTE_ID, noteId)
-            putInt(STATE_STARTING_TEMPLATE_ORDINAL, ord)
+            putInt(STATE_STARTING_TEMPLATE_ORDINAL, if (mainBinding.cardTemplateEditorPager.adapter == null) startingOrdId else ord)
             putSerializable(STATE_TAB_TO_VIEW_ID, tabToViewId)
             putSerializable(STATE_TAB_TO_CURSOR_POSITION, tabToCursorPositions)
             super.onSaveInstanceState(this)
@@ -463,6 +471,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             mainBinding.cardTemplateEditorPager.setCurrentItem(startingOrdId, animationDisabled())
         }
         updateDiscardChangesCallback()
+        collectionLoaded.complete(Unit)
     }
 
     fun noteTypeHasChanged(): Boolean {
@@ -718,6 +727,10 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         val insertFieldRequestKey
             get() = "request_field_insert_$cardIndex"
 
+        private fun templateChangeRequestKey(page: Int) = "request_template_change_$page"
+
+        private fun fullSyncRequestKey(page: Int) = "request_template_full_sync_$page"
+
         var currentEditorViewId = 0
 
         private val currentEditTab: EditTab?
@@ -904,16 +917,86 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
              * when the user taps on the edit field, not every time the fragment loads.
              */
             if (isCurrentPage) {
-                binding.editText.post {
-                    binding.editText.requestFocus()
-                }
+                binding.editText.postSelf { it.requestFocus() }
             }
 
             parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
                 // this is guaranteed to be non null, as we put a non null value on the other side
                 insertField(bundle.getString(InsertFieldDialog.RESULT_INSERTED_FIELD)!!)
             }
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                templateEditor.collectionLoaded.await()
+                registerConfirmationHandler(templateChangeRequestKey(cardIndex)) { change ->
+                    whenEditorStarted(change) { applyTemplateChangeWithSyncCheck(change) }
+                }
+                registerConfirmationHandler(fullSyncRequestKey(cardIndex)) { change ->
+                    whenEditorStarted(change) {
+                        templateEditor.getColUnsafe.modSchema(check = false)
+                        applyTemplateChange(change)
+                        templateEditor.updateDiscardChangesCallback()
+                        templateEditor.dismissAllDialogFragments()
+                    }
+                }
+            }
             setupMenu()
+        }
+
+        /** Saved with each change, so it only applies to the same unsaved card types. */
+        private val currentDraft: Int
+            get() =
+                templateEditor.tempNoteType!!.let { draft ->
+                    listOf(
+                        draft.notetype.templates.jsonArray
+                            .toString(),
+                        List(draft.templateCount) { draft.getOriginalOrdinal(it) },
+                    ).hashCode()
+                }
+
+        private fun Collection.savedNoteType(): Int =
+            try {
+                getNotetype(templateEditor.noteTypeId)
+                    .toBuilder()
+                    .clearUsn()
+                    .build()
+                    .toByteString()
+                    .hashCode()
+            } catch (e: BackendNotFoundException) {
+                0
+            }
+
+        private fun Collection.templateChange(
+            change: TemplateChange,
+            draft: Int,
+            affectedCards: Int,
+        ) = Bundle().apply {
+            putString(RESULT_CHANGE, change.name)
+            putInt(RESULT_DRAFT, draft)
+            putInt(RESULT_NOTE_TYPE, savedNoteType())
+            putInt(RESULT_AFFECTED_CARDS, affectedCards)
+        }
+
+        private fun isUnchangedSince(change: Bundle): Boolean =
+            currentDraft == change.getInt(RESULT_DRAFT) &&
+                templateEditor.getColUnsafe.savedNoteType() == change.getInt(RESULT_NOTE_TYPE)
+
+        /**
+         * Call from a confirmation handler. Runs [action] once the editor is started, outside any
+         * fragment transaction, or closes the dialogs if the card types or the saved note type
+         * changed since [change] was made.
+         */
+        private fun whenEditorStarted(
+            change: Bundle,
+            action: () -> Unit,
+        ) {
+            templateEditor.lifecycleScope.launch {
+                templateEditor.withStarted {
+                    if (isUnchangedSince(change)) {
+                        action()
+                    } else {
+                        templateEditor.dismissAllDialogFragments()
+                    }
+                }
+            }
         }
 
         /*
@@ -1048,7 +1131,12 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 val newOrdinal = newPosition - 1
                 if (newOrdinal == currentPosition) return@showInstance
                 Timber.i("moving card template %d to %d", currentPosition, newOrdinal)
-                executeWithSyncCheck(Runnable { templateEditor.repositionTemplate(currentPosition, newOrdinal) })
+                applyTemplateChangeWithSyncCheck(
+                    templateEditor.getColUnsafe.templateChange(TemplateChange.REPOSITION, currentDraft, affectedCards = 0).apply {
+                        putInt(RESULT_ORD, currentPosition)
+                        putInt(RESULT_NEW_ORD, newOrdinal)
+                    },
+                )
             }
         }
 
@@ -1122,21 +1210,32 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     return@launch
                 }
 
-                if (deletionWouldOrphanNote(tempModel, ordinal)) {
+                val draft = currentDraft
+                val change =
+                    withCol {
+                        if (deletionWouldOrphanNote(tempModel, ordinal)) {
+                            null
+                        } else {
+                            templateChange(TemplateChange.DELETE, draft, cardsDeletedBy(tempModel, ordinal))
+                        }
+                    }
+                if (change == null) {
                     showOrphanNoteDialog()
                     return@launch
                 }
 
                 // Show confirmation dialog
-                val numAffectedCards =
-                    if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
-                        Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                        withCol { notetypes.tmplUseCount(tempModel.notetype, tempModel.getOriginalOrdinal(ordinal)!!) }
-                    } else {
-                        0
-                    }
-                confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
+                confirmDeleteCards(template, change)
             }
+        }
+
+        private fun Collection.cardsDeletedBy(
+            tempModel: CardTemplateNotetype,
+            ordinal: Int,
+        ): Int {
+            if (CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) return 0
+            Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
+            return notetypes.tmplUseCount(tempModel.notetype, tempModel.getOriginalOrdinal(ordinal)!!)
         }
 
         /* showOrphanNoteDialog shows a AlertDialog if the deletionWouldOrphanNote returns true
@@ -1165,11 +1264,15 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 return
             }
             val noteType = templateEditor.tempNoteType!!.notetype
+            val draft = currentDraft
             val newTemplate = buildNewTemplate(noteType)
             launchCatchingTask {
                 // Show confirmation dialog
-                val numAffectedCards = withProgress { withCol { countCardsCreatedBy(noteType, newTemplate) } }
-                confirmAddCards(noteType, newTemplate, numAffectedCards)
+                val change =
+                    withProgress {
+                        withCol { templateChange(TemplateChange.ADD, draft, countCardsCreatedBy(noteType, newTemplate)) }
+                    }
+                confirmAddCards(change)
             }
         }
 
@@ -1470,7 +1573,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             return requireArguments().getInt(ARG_CARD_INDEX)
         }
 
-        private suspend fun deletionWouldOrphanNote(
+        private fun Collection.deletionWouldOrphanNote(
             tempModel: CardTemplateNotetype?,
             position: Int,
         ): Boolean {
@@ -1482,7 +1585,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             // pending deletes could orphan cards
             if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
-                val cardIds = withCol { notetypes.getCardIdsForNoteType(tempModel.noteTypeId, currentDeletes) }
+                val cardIds = notetypes.getCardIdsForNoteType(tempModel.noteTypeId, currentDeletes)
                 if (cardIds == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
@@ -1532,15 +1635,13 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
          * Confirm if the user wants to delete all the cards associated with current template
          *
          * @param tmpl template to remove
-         * @param notetype note type to remove template from, modified in place by reference
-         * @param numAffectedCards number of cards which will be affected
+         * @param change the deletion, with the number of cards which will be affected
          */
         private fun confirmDeleteCards(
             tmpl: BackendCardTemplate,
-            notetype: NotetypeJson,
-            numAffectedCards: Int,
+            change: Bundle,
         ) {
-            val d = ConfirmationDialog()
+            val numAffectedCards = change.getInt(RESULT_AFFECTED_CARDS)
             val msg =
                 String.format(
                     resources.getQuantityString(
@@ -1550,29 +1651,23 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     numAffectedCards,
                     tmpl.jsonObject.optString("name"),
                 )
-            d.setArgs(
-                title = getString(CommonString.delete_card_type),
-                message = msg,
-                positiveButtonText = getString(CommonString.dialog_positive_delete),
+            templateEditor.showDialogFragment(
+                ConfirmationDialog.newInstance(
+                    requestKey = templateChangeRequestKey(templateEditor.ord),
+                    title = getString(CommonString.delete_card_type),
+                    message = msg,
+                    positiveButtonText = getString(CommonString.dialog_positive_delete),
+                    result = change.apply { putInt(RESULT_ORD, tmpl.ord) },
+                ),
             )
-
-            val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
-            val confirm = Runnable { executeWithSyncCheck(deleteCard) }
-            d.setConfirm(confirm)
-            templateEditor.showDialogFragment(d)
         }
 
         /**
          * Confirm if the user wants to add new card template
-         * @param notetype note type to add new template and modified in place by reference
-         * @param numAffectedCards number of cards which will be affected
+         * @param change the addition, with the number of cards which will be affected
          */
-        private fun confirmAddCards(
-            notetype: NotetypeJson,
-            newTemplate: BackendCardTemplate,
-            numAffectedCards: Int,
-        ) {
-            val d = ConfirmationDialog()
+        private fun confirmAddCards(change: Bundle) {
+            val numAffectedCards = change.getInt(RESULT_AFFECTED_CARDS)
             val msg =
                 String.format(
                     resources.getQuantityString(
@@ -1581,66 +1676,69 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     ),
                     numAffectedCards,
                 )
-            d.setArgs(
-                title = getString(CommonString.add_card_type),
-                message = msg,
-                positiveButtonText = getString(CommonString.menu_add),
+            templateEditor.showDialogFragment(
+                ConfirmationDialog.newInstance(
+                    requestKey = templateChangeRequestKey(templateEditor.ord),
+                    title = getString(CommonString.add_card_type),
+                    message = msg,
+                    positiveButtonText = getString(CommonString.menu_add),
+                    result = change.apply { putInt(RESULT_ORD, cardIndex) },
+                ),
             )
-
-            val addCard = Runnable { addNewTemplate(notetype, newTemplate) }
-            val confirm = Runnable { executeWithSyncCheck(addCard) }
-            d.setConfirm(confirm)
-            templateEditor.showDialogFragment(d)
         }
 
         /**
-         * Execute an action on the schema, asking the user to confirm that a full sync is ok
-         * If [schemaChangingAction] is successfully executed, then the template is reloaded.
+         * Apply a change to the schema, asking the user to confirm that a full sync is ok
+         * If [change] is successfully applied, then the template is reloaded.
          *
-         * This method is always useful because all calls to executeWithSyncCheck may need to refresh the previewer.
+         * This method is always useful because all calls to applyTemplateChangeWithSyncCheck may need to refresh the previewer.
          * Due to conditional generation (e.g., {{#c5}}foo{{/c5}} which is non-empty only if it's the 5th card and is
          * empty otherwise), it's important to reload the template. This is particularly useful for cloze types,
          * where a card can move from the 5th to the 6th position due to adding an extra card type, causing content
          * to change or be deleted.
          *
-         * @param schemaChangingAction The action to execute (adding / removing card)
+         * @param change The change to apply (adding / removing / moving card)
          */
-        private fun executeWithSyncCheck(schemaChangingAction: Runnable) {
+        private fun applyTemplateChangeWithSyncCheck(change: Bundle) {
             try {
                 templateEditor.getColUnsafe.modSchema(check = true)
-                schemaChangingAction.run()
+                applyTemplateChange(change)
                 templateEditor.updateDiscardChangesCallback()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
-                val d = ConfirmationDialog()
-                d.setArgs(resources.getString(CommonString.full_sync_confirmation))
-                val confirm =
-                    Runnable {
-                        templateEditor.getColUnsafe.modSchema(check = false)
-                        schemaChangingAction.run()
-                        templateEditor.updateDiscardChangesCallback()
-                        templateEditor.dismissAllDialogFragments()
-                    }
-                val cancel = Runnable { templateEditor.dismissAllDialogFragments() }
-                d.setConfirm(confirm)
-                d.setCancel(cancel)
-                templateEditor.showDialogFragment(d)
+                templateEditor.dismissAllDialogFragments()
+                templateEditor.showDialogFragment(
+                    ConfirmationDialog.newFullSyncInstance(
+                        context = requireContext(),
+                        requestKey = fullSyncRequestKey(templateEditor.ord),
+                        result = change,
+                    ),
+                )
+            }
+        }
+
+        private fun applyTemplateChange(change: Bundle) {
+            val notetype = templateEditor.tempNoteType!!.notetype
+            when (TemplateChange.valueOf(change.requireString(RESULT_CHANGE))) {
+                TemplateChange.ADD -> addNewTemplate(notetype, buildNewTemplate(notetype, change.getInt(RESULT_ORD)))
+                TemplateChange.DELETE -> deleteTemplate(change.getInt(RESULT_ORD), notetype)
+                TemplateChange.REPOSITION -> templateEditor.repositionTemplate(change.getInt(RESULT_ORD), change.getInt(RESULT_NEW_ORD))
             }
         }
 
         /**
-         * @param tmpl template to remove
+         * @param ord ordinal of the template to remove
          * @param notetype note type to remove from, updated in place by reference
          */
         private fun deleteTemplate(
-            tmpl: BackendCardTemplate,
+            ord: CardOrdinal,
             notetype: NotetypeJson,
         ) {
             val oldTemplates = notetype.templates
             val newTemplates = CardTemplates(JSONArray())
             for (possibleMatch in oldTemplates) {
-                if (possibleMatch.ord != tmpl.ord) {
+                if (possibleMatch.ord != ord) {
                     newTemplates.append(possibleMatch)
                 } else {
                     Timber.d("deleteTemplate() found match - removing template with ord %s", possibleMatch.ord)
@@ -1678,8 +1776,10 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             )
         }
 
-        private fun buildNewTemplate(noteType: NotetypeJson): BackendCardTemplate {
-            val oldCardIndex = requireArguments().getInt(ARG_CARD_INDEX)
+        private fun buildNewTemplate(
+            noteType: NotetypeJson,
+            oldCardIndex: Int = cardIndex,
+        ): BackendCardTemplate {
             val templates = noteType.templates
             val oldTemplate = templates[oldCardIndex]
             val newTemplate = Notetypes.newTemplate(newCardName(templates))
@@ -1776,6 +1876,12 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         STYLING,
     }
 
+    private enum class TemplateChange {
+        ADD,
+        DELETE,
+        REPOSITION,
+    }
+
     companion object {
         private const val STATE_TAB_TO_CURSOR_POSITION = "tabToCursorPosition"
         private const val ARG_EDITOR_VIEW_ID = "editorViewId"
@@ -1787,6 +1893,12 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         private const val STATE_NOTE_ID = "noteId"
         private const val STATE_STARTING_TEMPLATE_ORDINAL = "ordId"
         private const val ARG_CARD_INDEX = "card_ord"
+        private const val RESULT_CHANGE = "change"
+        private const val RESULT_ORD = "ord"
+        private const val RESULT_NEW_ORD = "new_ord"
+        private const val RESULT_DRAFT = "draft"
+        private const val RESULT_NOTE_TYPE = "note_type"
+        private const val RESULT_AFFECTED_CARDS = "affected_cards"
 
         // Keys for saving pane weights in SharedPreferences
         private const val PREF_TEMPLATE_EDITOR_PANE_WEIGHT = "cardTemplateEditorPaneWeight"
