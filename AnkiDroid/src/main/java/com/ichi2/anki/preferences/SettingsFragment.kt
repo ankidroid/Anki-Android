@@ -19,11 +19,13 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
+import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
 import com.ichi2.anki.common.analytics.getPreferenceReportableValue
 import com.ichi2.anki.databinding.FragmentSettingsBinding
+import com.ichi2.anki.ui.StableScrollbarLayoutManager
 import com.ichi2.preferences.DialogFragmentProvider
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -41,6 +43,8 @@ abstract class SettingsFragment :
     protected val binding by viewBinding(FragmentSettingsBinding::bind)
 
     abstract fun initSubscreen()
+
+    override fun onCreateLayoutManager(): RecyclerView.LayoutManager = StableScrollbarLayoutManager(requireContext())
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         Analytics.send(AnalyticsEvent.SettingTapped(preference.key))
