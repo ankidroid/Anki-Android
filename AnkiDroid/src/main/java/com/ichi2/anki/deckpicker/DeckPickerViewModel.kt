@@ -541,7 +541,7 @@ class DeckPickerViewModel :
     }
 
     fun toggleDeckExpand(deckId: DeckId) =
-        viewModelScope.launch {
+        launchCatching {
             withCol {
                 // update stored state
                 dueTree?.find(deckId)?.run {
