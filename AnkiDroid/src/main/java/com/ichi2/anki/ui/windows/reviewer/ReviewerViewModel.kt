@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
+import anki.scheduler.CardAnswer
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
@@ -119,6 +120,15 @@ class ReviewerViewModel(
 
     private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
     private var autoAdvancePausedForLaunchWarning = false
+
+    /** Completed unless a modal launch warning is open; automatic grades await it before writing */
+    private var launchWarningGate: CompletableDeferred<Unit>? = null
+
+    /** True while a timebox break dialog owns the pause: the next card re-schedules when it ends */
+    private var isTimeboxBreakShowing = false
+
+    /** True while [loadAndPlayMedia] is still preparing playback the auto-advance must wait for */
+    private var isMediaPlaybackPending = false
     private val isHtmlTypeAnswerEnabled = repository.isHtmlTypeAnswerEnabled
     val answerTimer = AnswerTimer()
     private val actionsMutex = Mutex()
@@ -215,30 +225,37 @@ class ReviewerViewModel(
      */
     private suspend fun showAnswerInternal() {
         Timber.v("ReviewerViewModel::onShowAnswer")
-        mutationSignal.await()
+        // The answer media has not started yet while this sequence renders: a launch warning
+        // dismissed in this window must let the media-completion listener schedule, not resume.
+        isMediaPlaybackPending = true
+        try {
+            mutationSignal.await()
 
-        val typedAnswerResult = CompletableDeferred<String>()
-        if (typeAnswerFlow.value != null) {
-            onTypedAnswerResultFlow.emit(typedAnswerResult)
-        } else {
-            typedAnswerResult.complete("")
-        }
-        typedAnswer = withTimeoutOrNull(1.seconds) {
-            typedAnswerResult.await()
-        } ?: ""
+            val typedAnswerResult = CompletableDeferred<String>()
+            if (typeAnswerFlow.value != null) {
+                onTypedAnswerResultFlow.emit(typedAnswerResult)
+            } else {
+                typedAnswerResult.complete("")
+            }
+            typedAnswer = withTimeoutOrNull(1.seconds) {
+                typedAnswerResult.await()
+            } ?: ""
 
-        updateNextTimes()
-        showAnswer()
-        loadAndPlayMedia(CardSide.ANSWER)
-        if (!autoAdvance.shouldWaitForAudio()) {
-            autoAdvance.onShowAnswer()
-        } // else wait for onMediaGroupCompleted
+            updateNextTimes()
+            showAnswer()
+            loadAndPlayMedia(CardSide.ANSWER)
+            if (!autoAdvance.shouldWaitForAudio()) {
+                autoAdvance.onShowAnswer()
+            } // else wait for onMediaGroupCompleted
 
-        if (answerTimer.state.value == AnswerTimerState.Hidden) return
-        val did = currentCard.await().currentDeckId()
-        val stopTimerOnAnswer = withCol { decks.configDictForDeckId(did) }.stopTimerOnAnswer
-        if (stopTimerOnAnswer) {
-            answerTimer.stop()
+            if (answerTimer.state.value == AnswerTimerState.Hidden) return
+            val did = currentCard.await().currentDeckId()
+            val stopTimerOnAnswer = withCol { decks.configDictForDeckId(did) }.stopTimerOnAnswer
+            if (stopTimerOnAnswer) {
+                answerTimer.stop()
+            }
+        } finally {
+            isMediaPlaybackPending = false
         }
     }
 
@@ -425,15 +442,22 @@ class ReviewerViewModel(
     /** Pauses auto-advance while a modal launch warning hides the current card. */
     fun pauseAutoAdvanceForLaunchWarning() {
         autoAdvancePausedForLaunchWarning = true
-        stopAutoAdvance()
+        launchWarningGate = CompletableDeferred()
+        autoAdvance.pause()
     }
 
     /** Restarts auto advance after [stopAutoAdvance] */
     fun resumeAutoAdvance() {
         autoAdvancePausedForLaunchWarning = false
+        launchWarningGate?.complete(Unit)
+        launchWarningGate = null
+        autoAdvance.resume()
+        // The timebox break dialog owns the pause: restarting a timer here would grade or bury
+        // the still-displayed card behind it. The next card re-schedules when the user continues.
+        if (isTimeboxBreakShowing) return
         if (!autoAdvance.isEnabled) return
         viewModelScope.launch {
-            if (autoAdvance.shouldWaitForAudio() && cardMediaPlayer.isPlaying) return@launch
+            if (autoAdvance.shouldWaitForAudio() && (cardMediaPlayer.isPlaying || isMediaPlaybackPending)) return@launch
             if (showingAnswer.value) {
                 autoAdvance.onShowAnswer()
             } else {
@@ -560,12 +584,13 @@ class ReviewerViewModel(
         val state = queueState.await() ?: return
         val card = currentCard.await()
         val answer =
-            withCol {
-                sched.answerCard(
-                    card = card,
-                    states = state.states,
-                    rating,
-                )
+            try {
+                answerCardBehindLaunchWarning(card, state, rating)
+            } catch (e: LaunchWarningOpenException) {
+                // The write was already queued on the collection when the warning opened:
+                // wait outside the queue, then write once the warning is dismissed.
+                launchWarningGate?.await()
+                answerCardBehindLaunchWarning(card, state, rating)
             }
 
         undoableOp(handler = this) { sched.answerCard(answer) }
@@ -591,6 +616,38 @@ class ReviewerViewModel(
         }
         actionFeedbackFlow.emit(message.toString())
     }
+
+    /**
+     * Writes the grade for [card], deferring it while the modal launch warning is open.
+     *
+     * The write cannot suspend inside the collection queue, so [LaunchWarningOpenException]
+     * is used to move the wait outside of it: a grade whose write was already queued when the
+     * warning opened must not change the card behind the dialog.
+     */
+    private suspend fun answerCardBehindLaunchWarning(
+        card: Card,
+        state: CurrentQueueState,
+        rating: Rating,
+    ): CardAnswer {
+        while (true) {
+            val gate = launchWarningGate
+            try {
+                return withCol {
+                    if (launchWarningGate?.isCompleted == false) throw LaunchWarningOpenException()
+                    sched.answerCard(
+                        card = card,
+                        states = state.states,
+                        rating,
+                    )
+                }
+            } catch (e: LaunchWarningOpenException) {
+                gate?.await()
+            }
+        }
+    }
+
+    /** Thrown when a collection write was attempted while the modal launch warning is open */
+    private class LaunchWarningOpenException : Exception()
 
     private suspend fun loadAndPlayMedia(side: CardSide) {
         Timber.v("ReviewerViewModel::loadAndPlaySounds")
@@ -625,17 +682,24 @@ class ReviewerViewModel(
             return
         }
         state.timeboxReached?.let {
+            isTimeboxBreakShowing = true
             timeBoxReachedFlow.emit(it)
             return
         }
+        isTimeboxBreakShowing = false
 
         val card = state.topCard
         currentCard = CompletableDeferred(card)
         setupAnswerTimer(card)
         autoAdvance.onCardChange(card)
         onCardUpdatedFlow.emit(Unit) // must be before showQuestion()
-        showQuestion()
-        loadAndPlayMedia(CardSide.QUESTION)
+        isMediaPlaybackPending = true
+        try {
+            showQuestion()
+            loadAndPlayMedia(CardSide.QUESTION)
+        } finally {
+            isMediaPlaybackPending = false
+        }
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(StudyCounts(state))
