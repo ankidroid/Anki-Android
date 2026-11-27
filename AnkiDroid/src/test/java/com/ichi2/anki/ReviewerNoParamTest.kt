@@ -12,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_DOWN
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_RIGHT
@@ -22,6 +23,7 @@ import com.ichi2.anki.common.preferences.SharedPreferencesTestHook
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.WhiteboardPenColor
+import com.ichi2.anki.pages.CardInfoFragment
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
@@ -29,16 +31,24 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.utils.ext.addBinding
+import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.themes.Themes.currentTheme
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
+import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.fakes.RoboMenuItem
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 /** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future  */
 @RunWith(AndroidJUnit4::class)
@@ -51,6 +61,88 @@ class ReviewerNoParamTest : RobolectricTest() {
         // This doesn't do an upgrade in the correct place
         MetaDB.resetDB(targetContext)
     }
+
+    /**
+     * After answering one card and burying the next, Previous card info should open the buried card.
+     * The user saw the buried card immediately before the current question.
+     */
+    @Test
+    fun `burying a card makes it the previous card in the legacy reviewer`() =
+        runTest {
+            updateDeckConfig(col.decks.selected()) { autoplay = false }
+            // Three cards let us answer one, bury another, and keep the Reviewer open on the third.
+            addBasicNote("First question", "First answer")
+            addBasicNote("Second question", "Second answer")
+            addBasicNote("Third question", "Third answer")
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
+            advanceRobolectricLooperUntil { reviewer.currentCardId != null }
+            reviewer.answerCardInner(Rating.EASY)
+            reviewer.updateCardAndRedraw()
+
+            val previouslyShownCardId = assertNotNull(reviewer.currentCardId)
+            assertTrue(reviewer.buryCard())
+            // The burial refreshes asynchronously. Wait for the current card to change before opening the menu.
+            advanceRobolectricLooperUntil { reviewer.currentCardId?.let { it != previouslyShownCardId } == true }
+            // Redrawing the current card should leave the earlier card in the history.
+            reviewer.updateCardAndRedraw()
+            assertTrue(reviewer.onOptionsItemSelected(RoboMenuItem(R.id.action_previous_card_info)))
+            val reviewerShadow = shadowOf(reviewer)
+            // Card info may check the collection asynchronously before navigating.
+            advanceRobolectricLooperUntil { reviewerShadow.peekNextStartedActivity() != null }
+            val started = assertNotNull(reviewerShadow.nextStartedActivity)
+            val arguments = assertNotNull(started.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS))
+
+            // The buggy result uses the first card's answer instead of the more recent buried card.
+            assertThat(arguments.getLong(CardInfoFragment.ARG_CARD_ID), equalTo(previouslyShownCardId))
+        }
+
+    /** A same-ID repetition after Again should still expose the card from the previous presentation. */
+    @Test
+    fun `reviewing the same card again makes it the previous card in the legacy reviewer`() =
+        runTest {
+            // A short learning step within learn-ahead gives the scheduler the same card twice.
+            col.config.set("collapseTime", 1200)
+            updateDeckConfig(col.decks.selected()) {
+                new.delays = JSONArray(listOf(1))
+                autoplay = false
+            }
+            val cardId = addBasicNote().firstCard().id
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
+            advanceRobolectricLooperUntil { reviewer.currentCardId == cardId }
+
+            // This is a new scheduler presentation after answering, even though the ID is unchanged.
+            reviewer.answerCardInner(Rating.AGAIN)
+            reviewer.updateCardAndRedraw()
+            assertThat(reviewer.currentCardId, equalTo(cardId))
+            assertTrue(reviewer.onOptionsItemSelected(RoboMenuItem(R.id.action_previous_card_info)))
+            val reviewerShadow = shadowOf(reviewer)
+            advanceRobolectricLooperUntil {
+                reviewerShadow.peekNextStartedActivity() != null || reviewer.snackbarText == TR.cardStatsNoCardClean()
+            }
+
+            // The buggy ID-equality guard treats the repetition as a redraw, so no Card Info opens.
+            val started = assertNotNull(reviewerShadow.nextStartedActivity)
+            val arguments = assertNotNull(started.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS))
+            assertThat(arguments.getLong(CardInfoFragment.ARG_CARD_ID), equalTo(cardId))
+        }
+
+    @Test
+    fun `audio completion after the review queue is empty is ignored`() =
+        runTest {
+            val config = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+            config.autoplay = false
+            col.decks.save(config)
+            addBasicNote()
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
+            advanceRobolectricLooperUntil { reviewer.currentCardId != null }
+            reviewer.answerCardInner(Rating.EASY)
+            reviewer.updateCardAndRedraw()
+            assertThat(reviewer.isFinishing, equalTo(true))
+
+            reviewer.onMediaGroupCompleted()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+        }
 
     @Test
     fun defaultWhiteboardColorIsUsedOnFirstRun() {

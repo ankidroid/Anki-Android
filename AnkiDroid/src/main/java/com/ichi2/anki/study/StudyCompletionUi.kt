@@ -3,28 +3,59 @@
 package com.ichi2.anki.study
 
 import android.content.Context
+import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.NavigationDrawerActivity.Companion.EXTRA_STARTED_WITH_SHORTCUT
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TIME_HOUR
 import com.ichi2.anki.common.time.TIME_MINUTE
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.snackbar.showSnackbar
 import kotlin.math.round
 
 /** Presents the end of a review session in the activity that owns its result. */
 object StudyCompletionUi {
-    fun openCongratsPage(activity: FragmentActivity) {
-        activity.startActivity(CongratsPage.getIntent(activity))
+    /** Result [Intent] extra containing the card ID from [ReviewerResult.NoMoreCards.WithPreviousCard]. */
+    const val EXTRA_PREVIOUS_CARD_ID = "previous_card_id"
+
+    /**
+     * Sets the activity result and finishes the Reviewer.
+     *
+     * @param activity The legacy Reviewer activity or the activity hosting the Reviewer fragment.
+     * @param result The [ReviewerResult] to deliver to the launcher.
+     */
+    fun finishReview(
+        activity: FragmentActivity,
+        result: ReviewerResult,
+    ) {
+        val previousCardId = (result as? ReviewerResult.NoMoreCards.WithPreviousCard)?.previousCardId
+        val data = previousCardId?.let { Intent().putExtra(EXTRA_PREVIOUS_CARD_ID, it) }
+        activity.setResult(result.resultCode, data)
+        activity.finish()
+        if (result is ReviewerResult.NoMoreCards && activity.intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
+            displayFromShortcut(activity, previousCardId)
+        }
     }
 
-    fun displayFromShortcut(activity: FragmentActivity) {
+    fun openCongratsPage(
+        activity: FragmentActivity,
+        previousCardId: CardId? = null,
+    ) {
+        activity.startActivity(CongratsPage.getIntent(activity, previousCardId))
+    }
+
+    private fun displayFromShortcut(
+        activity: FragmentActivity,
+        previousCardId: CardId?,
+    ) {
         if (displayNewCongratsScreen(activity)) {
-            openCongratsPage(activity)
+            openCongratsPage(activity, previousCardId)
         } else {
             activity.launchCatchingTask {
                 val state = withCol { currentDeckStudyState() }
@@ -36,9 +67,10 @@ object StudyCompletionUi {
     fun onReviewsCompleted(
         activity: FragmentActivity,
         state: DeckStudyState,
+        previousCardId: CardId?,
     ) {
         if (displayNewCongratsScreen(activity)) {
-            openCongratsPage(activity)
+            openCongratsPage(activity, previousCardId)
             return
         }
         when (state.availability) {

@@ -33,8 +33,11 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.NightTheme
+import com.ichi2.anki.study.ReviewerResult.Companion.RESULT_NO_MORE_CARDS
+import com.ichi2.anki.study.StudyCompletionUi.EXTRA_PREVIOUS_CARD_ID
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.testutils.RecordingInputMethodManager
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
@@ -71,6 +74,73 @@ class ReviewerFragmentTest : RobolectricTest() {
             remove(Prefs.key(R.string.disable_hardware_render_key))
         }
     }
+
+    @Test
+    fun `completing reviews returns the last answered card`() =
+        runTest {
+            val cardId = addBasicNote().firstCard().id
+            withReviewer { controller ->
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                viewModel.answerCard(Rating.EASY)
+                advanceUntilIdle()
+
+                val result = shadowOf(controller.get())
+                assertEquals(RESULT_NO_MORE_CARDS, result.resultCode)
+                assertEquals(cardId, result.resultIntent?.extras?.getLongOrNull(EXTRA_PREVIOUS_CARD_ID))
+            }
+        }
+
+    @Test
+    fun `suspending the only due card returns its ID`() = assertOnlyDueCardReturned(ViewerAction.SUSPEND_CARD)
+
+    @Test
+    fun `burying the only due card returns its ID`() = assertOnlyDueCardReturned(ViewerAction.BURY_CARD)
+
+    private fun assertOnlyDueCardReturned(action: ViewerAction) =
+        runTest {
+            val cardId = addBasicNote().firstCard().id
+            withReviewer { controller ->
+                viewModel.executeAction(action)
+                advanceUntilIdle()
+
+                val activity = controller.get()
+                val result = shadowOf(activity)
+                assertTrue(activity.isFinishing)
+                assertEquals(RESULT_NO_MORE_CARDS, result.resultCode)
+                assertEquals(cardId, result.resultIntent?.extras?.getLongOrNull(EXTRA_PREVIOUS_CARD_ID))
+            }
+        }
+
+    @Test
+    fun `deleting the last shown card returns no previous card ID`() =
+        runTest {
+            addBasicNote()
+            withReviewer { controller ->
+                viewModel.executeAction(ViewerAction.DELETE)
+
+                val activity = controller.get()
+                advanceRobolectricLooperUntil {
+                    advanceUntilIdle()
+                    activity.isFinishing
+                }
+                val result = shadowOf(activity)
+                assertEquals(RESULT_NO_MORE_CARDS, result.resultCode)
+                assertNull(result.resultIntent)
+            }
+        }
+
+    @Test
+    fun `an empty queue returns no previous card ID`() =
+        runTest {
+            withReviewer { controller ->
+                val activity = controller.get()
+                val result = shadowOf(activity)
+                assertTrue(activity.isFinishing)
+                assertEquals(RESULT_NO_MORE_CARDS, result.resultCode)
+                assertNull(result.resultIntent)
+            }
+        }
 
     @Test
     fun `recreated WebView retains keyboard support`() =

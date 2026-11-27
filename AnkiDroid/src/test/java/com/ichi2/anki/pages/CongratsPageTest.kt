@@ -22,11 +22,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
+import anki.scheduler.CardAnswer.Rating
 import anki.scheduler.CongratsInfoResponse
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
@@ -67,6 +70,41 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CongratsPageTest : RobolectricTest() {
+    @Test
+    fun `previous card info is hidden when opened without a previous card`() =
+        runTest {
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                scenario.onFragment { page ->
+                    val toolbar = page.requireView().findViewById<MaterialToolbar>(R.id.toolbar)
+                    assertFalse(toolbar.menu.findItem(R.id.action_previous_card_info)?.isVisible == true)
+                }
+            }
+        }
+
+    @Test
+    fun `returning to Congrats hides Previous card info if the card was deleted`() =
+        runTest {
+            val note = addBasicNote()
+            val previousCard = note.firstCard()
+            withCol { sched.answerCard(previousCard, Rating.EASY) }
+            val intent = CongratsPage.getIntent(targetContext, previousCard.id)
+
+            Robolectric.buildActivity(SingleFragmentActivity::class.java, intent).use { controller ->
+                val activity = controller.setup().get()
+                advanceUntilIdle()
+                val toolbar = activity.findViewById<MaterialToolbar>(R.id.toolbar)
+                val previousCardInfo = toolbar.menu.findItem(R.id.action_previous_card_info)
+                assertTrue(previousCardInfo.isVisible)
+
+                controller.pause().stop()
+                undoableOp { removeNotes(noteIds = listOf(note.id)) }
+                controller.restart().start().resume()
+                advanceUntilIdle()
+
+                assertFalse(previousCardInfo.isVisible)
+            }
+        }
+
     @Test
     fun `congrats polling does not require an attached activity`() =
         runTest {

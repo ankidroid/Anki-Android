@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -23,6 +24,8 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint.PREVIOUS_CARD_STUDY
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
@@ -30,12 +33,16 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.launchCatchingViewTask
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.showException
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.currentDeckStudyState
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.getCardOrNull
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
@@ -105,6 +112,37 @@ class CongratsPage : PageFragment() {
                 navigate(destination)
             }.launchIn(lifecycleScope)
 
+        val previousCardId = arguments?.getLongOrNull(ARG_PREVIOUS_CARD_ID)
+
+        suspend fun isPreviousCardAvailable(): Boolean = previousCardId != null && withCol { getCardOrNull(previousCardId) != null }
+
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.inflateMenu(R.menu.congrats)
+        (toolbar.menu as? MenuBuilder)?.setOptionalIconsVisible(true)
+        toolbar.menu.findItem(R.id.action_open_deck_options)?.title = TR.sentenceCase.deckOptions
+        val previousCardInfo =
+            toolbar.menu.findItem(R.id.action_previous_card_info).apply {
+                title = TR.sentenceCase.previousCardInfo
+                isVisible = false
+            }
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_open_deck_options -> viewModel.onDeckOptions()
+                R.id.action_previous_card_info -> {
+                    val cardId = previousCardId ?: return@setOnMenuItemClickListener false
+                    launchCatchingViewTask {
+                        if (isPreviousCardAvailable()) {
+                            navigate(CardInfoDestination(cardId, PREVIOUS_CARD_STUDY))
+                        } else {
+                            previousCardInfo.isVisible = false
+                        }
+                    }
+                }
+                else -> return@setOnMenuItemClickListener false
+            }
+            true
+        }
+
         // Subscribe before refreshing on STARTED so reload requests reach an active collector.
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -118,6 +156,7 @@ class CongratsPage : PageFragment() {
                 }
                 launch(start = CoroutineStart.UNDISPATCHED) {
                     viewModel.congratsRefreshState.collect { state ->
+                        previousCardInfo.isVisible = isPreviousCardAvailable()
                         when (state) {
                             CongratsRefreshState.ReloadPage -> {
                                 Timber.d("congrats: reloading page after rebuild")
@@ -126,18 +165,8 @@ class CongratsPage : PageFragment() {
                         }
                     }
                 }
+                previousCardInfo.isVisible = isPreviousCardAvailable()
                 viewModel.refreshIfNeeded()
-            }
-        }
-
-        with(view.findViewById<MaterialToolbar>(R.id.toolbar)) {
-            inflateMenu(R.menu.congrats)
-            menu.findItem(R.id.action_open_deck_options)?.title = TR.sentenceCase.deckOptions
-            setOnMenuItemClickListener { item ->
-                if (item.itemId == R.id.action_open_deck_options) {
-                    viewModel.onDeckOptions()
-                }
-                true
             }
         }
 
@@ -164,7 +193,17 @@ class CongratsPage : PageFragment() {
     }
 
     companion object {
-        fun getIntent(context: Context): Intent = SingleFragmentActivity.getIntent(context, fragmentClass = CongratsPage::class)
+        private const val ARG_PREVIOUS_CARD_ID = "previous_card_id"
+
+        fun getIntent(
+            context: Context,
+            previousCardId: CardId? = null,
+        ): Intent =
+            SingleFragmentActivity.getIntent(
+                context,
+                fragmentClass = CongratsPage::class,
+                arguments = previousCardId?.let { Bundle().apply { putLong(ARG_PREVIOUS_CARD_ID, it) } },
+            )
     }
 }
 

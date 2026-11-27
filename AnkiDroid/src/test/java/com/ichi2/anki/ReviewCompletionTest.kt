@@ -6,11 +6,16 @@ import android.content.Intent
 import android.view.KeyEvent
 import androidx.core.content.edit
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NavigationDrawerActivity.Companion.EXTRA_STARTED_WITH_SHORTCUT
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.pages.CardInfoFragment
 import com.ichi2.anki.pages.CongratsPage
+import com.ichi2.anki.study.ReviewerResult.Companion.RESULT_NO_MORE_CARDS
+import com.ichi2.anki.study.StudyCompletionUi.EXTRA_PREVIOUS_CARD_ID
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.testutils.ext.snackbarText
 import org.json.JSONArray
 import org.junit.Before
@@ -48,8 +53,7 @@ class ReviewCompletionTest : RobolectricTest() {
         col.setDeck(listOf(addBasicNote().firstCard().id), child)
         col.decks.select(col.decks.id("Parent"))
 
-        completeReview(expectEmpty = false) {
-            col.sched.answerCard(assertNotNull(col.sched.card), Rating.EASY)
+        completeReview(expectEmpty = false, rating = Rating.EASY) {
             assertEquals(0, col.sched.totalCount())
             assertEquals(1, col.decks.cardCount(child, includeSubdecks = true))
         }
@@ -60,11 +64,39 @@ class ReviewCompletionTest : RobolectricTest() {
         addBasicNote()
         val filtered = addDynamicDeck("Filtered", "")
 
-        completeReview(expectEmpty = false) {
-            col.sched.answerCard(assertNotNull(col.sched.card), Rating.EASY)
+        completeReview(expectEmpty = false, rating = Rating.EASY) {
             assertEquals(0, col.decks.cardCount(filtered, includeSubdecks = true))
         }
     }
+
+    @Test
+    fun `suspending the final card returns it for previous card info`() = assertLastShownCardReturned(Reviewer::suspendCard)
+
+    @Test
+    fun `burying the final card returns it for previous card info`() = assertLastShownCardReturned(Reviewer::buryCard)
+
+    private fun assertLastShownCardReturned(removeFromQueue: Reviewer.() -> Boolean) =
+        runTest {
+            addBasicNote("First question", "First answer")
+            addBasicNote("Second question", "Second answer")
+            val intent = Intent().putExtra(EXTRA_STARTED_WITH_SHORTCUT, fromShortcut)
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, intent)
+            advanceRobolectricLooperUntil { reviewer.currentCardId != null }
+            reviewer.answerCardInner(Rating.EASY)
+            reviewer.updateCardAndRedraw()
+
+            val lastCardId = assertNotNull(reviewer.currentCardId)
+            assertTrue(reviewer.removeFromQueue())
+            advanceRobolectricLooperUntil { reviewer.isFinishing }
+
+            val result = shadowOf(reviewer)
+            assertEquals(RESULT_NO_MORE_CARDS, result.resultCode)
+            assertEquals(lastCardId, result.resultIntent?.extras?.getLongOrNull(EXTRA_PREVIOUS_CARD_ID))
+            if (fromShortcut && newCongratsScreen) {
+                advanceRobolectricLooperUntil { result.peekNextStartedActivity() != null }
+                assertPreviousCardInfo(result.nextStartedActivity, lastCardId)
+            }
+        }
 
     @Test
     fun `learning later still shows completion with the next available time`() {
@@ -76,6 +108,7 @@ class ReviewCompletionTest : RobolectricTest() {
 
         completeReview(
             expectEmpty = false,
+            rating = Rating.AGAIN,
             expectedMessage = {
                 it.getString(
                     CommonString.studyoptions_congrats_next_due_in,
@@ -83,17 +116,17 @@ class ReviewCompletionTest : RobolectricTest() {
                 )
             },
         ) {
-            col.sched.answerCard(assertNotNull(col.sched.card), Rating.AGAIN)
             assertNull(col.sched.card)
         }
     }
 
     private fun completeReview(
         expectEmpty: Boolean,
+        rating: Rating,
         expectedMessage: (Context) -> String = {
             it.getString(if (expectEmpty) CommonString.empty_deck else CommonString.studyoptions_congrats_finished)
         },
-        finishCards: () -> Unit,
+        assertFinished: () -> Unit,
     ) {
         if (fromShortcut) {
             runTest {
@@ -103,8 +136,9 @@ class ReviewCompletionTest : RobolectricTest() {
                         Intent().putExtra(EXTRA_STARTED_WITH_SHORTCUT, true),
                     )
                 advanceRobolectricLooper()
-                assertNotNull(reviewer.currentCardId)
-                finishCards()
+                val cardId = assertNotNull(reviewer.currentCardId)
+                reviewer.answerCardInner(rating)
+                assertFinished()
                 val selected = col.decks.selected()
                 val undoStatus = col.undoStatus()
 
@@ -114,7 +148,7 @@ class ReviewCompletionTest : RobolectricTest() {
                 assertTrue(reviewer.isFinishing)
                 assertEquals(RESULT_NO_MORE_CARDS, shadowOf(reviewer).resultCode)
                 if (newCongratsScreen && !expectEmpty) {
-                    assertCongratsIntent(shadowOf(reviewer).nextStartedActivity)
+                    assertPreviousCardInfo(shadowOf(reviewer).nextStartedActivity, cardId)
                 } else {
                     assertNull(shadowOf(reviewer).nextStartedActivity)
                     assertEquals(expectedMessage(reviewer), ShadowToast.getTextOfLatestToast())
@@ -132,15 +166,23 @@ class ReviewCompletionTest : RobolectricTest() {
                 val review = assertNotNull(shadow.nextStartedActivityForResult)
                 assertEquals(Reviewer::class.java.name, review.intent.component?.className)
                 shadow.clearNextStartedActivities()
-                finishCards()
+                val reviewer = startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, review.intent)
+                advanceRobolectricLooper()
+                val cardId = assertNotNull(reviewer.currentCardId)
+                reviewer.answerCardInner(rating)
+                assertFinished()
                 val selected = col.decks.selected()
                 val undoStatus = col.undoStatus()
 
-                activityResultRegistry.dispatchResult(review.requestCode, RESULT_NO_MORE_CARDS, null)
+                reviewer.updateCardAndRedraw()
+                val reviewResult = shadowOf(reviewer)
+                assertEquals(RESULT_NO_MORE_CARDS, reviewResult.resultCode)
+                assertEquals(cardId, reviewResult.resultIntent?.extras?.getLongOrNull(EXTRA_PREVIOUS_CARD_ID))
+                activityResultRegistry.dispatchResult(review.requestCode, reviewResult.resultCode, reviewResult.resultIntent)
 
                 if (newCongratsScreen && !expectEmpty) {
                     advanceRobolectricLooperUntil { shadow.peekNextStartedActivity() != null }
-                    assertCongratsIntent(shadow.nextStartedActivity)
+                    assertPreviousCardInfo(shadow.nextStartedActivity, cardId)
                 } else {
                     advanceRobolectricLooperUntil { snackbarText == expectedMessage(this) }
                     assertNull(shadow.nextStartedActivity)
@@ -151,11 +193,27 @@ class ReviewCompletionTest : RobolectricTest() {
         }
     }
 
-    private fun assertCongratsIntent(intent: Intent?) {
+    private fun assertPreviousCardInfo(
+        intent: Intent?,
+        cardId: CardId,
+    ) {
+        val congratsIntent = assertNotNull(intent)
         assertEquals(
             CongratsPage::class.java.name,
-            assertNotNull(intent).getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME),
+            congratsIntent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME),
         )
+        val activity = startActivityNormallyOpenCollectionWithIntent(SingleFragmentActivity::class.java, congratsIntent)
+        val toolbar = activity.findViewById<MaterialToolbar>(R.id.toolbar)
+        // Congrats checks whether the returned card still exists before making the item visible.
+        advanceRobolectricLooperUntil { toolbar.menu.findItem(R.id.action_previous_card_info)?.isVisible == true }
+        assertTrue(toolbar.menu.performIdentifierAction(R.id.action_previous_card_info, 0))
+        val activityShadow = shadowOf(activity)
+        // The click rechecks the card in case it was deleted after the menu became visible.
+        advanceRobolectricLooperUntil { activityShadow.peekNextStartedActivity() != null }
+        val cardInfo = assertNotNull(activityShadow.nextStartedActivity)
+        assertEquals(CardInfoFragment::class.java.name, cardInfo.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+        val arguments = assertNotNull(cardInfo.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS))
+        assertEquals(cardId, arguments.getLong(CardInfoFragment.ARG_CARD_ID))
     }
 
     companion object {

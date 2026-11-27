@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.update
+import com.ichi2.anki.utils.ext.value
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,11 +24,7 @@ class EditDeckDescriptionDialogViewModel(
         get() = requireNotNull(stateHandle.get<DeckId>(ARG_DECK_ID))
 
     @VisibleForTesting
-    var userHasMadeChanges: Boolean
-        get() = stateHandle.get<Boolean>(STATE_USER_MADE_CHANGES) ?: false
-        set(value) {
-            stateHandle[STATE_USER_MADE_CHANGES] = value
-        }
+    var userHasMadeChanges by stateHandle.value(STATE_USER_MADE_CHANGES, defaultValue = false)
 
     private lateinit var initialDialogState: DeckDescriptionState
 

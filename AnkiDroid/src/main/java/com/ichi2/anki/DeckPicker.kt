@@ -191,6 +191,7 @@ import com.ichi2.anki.shareddeck.SharedDecksActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.study.ReviewerResult
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.study.currentDeckStudyState
@@ -208,6 +209,7 @@ import com.ichi2.anki.utils.ShortcutUtils
 import com.ichi2.anki.utils.ext.collectInLifecycle
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.onGlobalLayout
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -368,7 +370,7 @@ open class DeckPicker :
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             DeckPickerActivityResultCallback {
-                processReviewResults(it.resultCode)
+                processReviewResults(it)
             },
         )
 
@@ -1620,11 +1622,12 @@ open class DeckPicker :
         ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
     }
 
-    private fun processReviewResults(resultCode: Int) {
-        if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
+    private fun processReviewResults(result: ActivityResult) {
+        if (result.resultCode == ReviewerResult.RESULT_NO_MORE_CARDS) {
+            val previousCardId = result.data?.extras?.getLongOrNull(StudyCompletionUi.EXTRA_PREVIOUS_CARD_ID)
             launchCatchingTask {
                 val state = withCol { currentDeckStudyState() }
-                StudyCompletionUi.onReviewsCompleted(this@DeckPicker, state)
+                StudyCompletionUi.onReviewsCompleted(this@DeckPicker, state, previousCardId)
             }
             fragment?.refreshInterface()
         }

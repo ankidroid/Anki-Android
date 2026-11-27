@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
@@ -47,6 +45,7 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
+import com.ichi2.anki.study.ReviewerResult
 import com.ichi2.anki.tryRedo
 import com.ichi2.anki.tryUndo
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
@@ -56,8 +55,9 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.flag
-import com.ichi2.anki.utils.ext.getLongOrNull
+import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.anki.utils.ext.value
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -87,7 +87,7 @@ class ReviewerViewModel(
         }
     private val repository = StudyScreenRepository()
     private var isInputFocused = false
-    val finishResultFlow = MutableSharedFlow<Int>()
+    val finishResultFlow = MutableSharedFlow<ReviewerResult>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
@@ -201,6 +201,12 @@ class ReviewerViewModel(
 
     suspend fun getCardId() = currentCard.await().id
 
+    /** The card shown before the current card, used by Previous card info during review. */
+    private var previousCardId by savedStateHandle.value<CardId>(KEY_PREVIOUS_CARD_ID)
+
+    /** The most recent card shown, returned when the review finishes. */
+    private var lastShownCardId by savedStateHandle.value<CardId>(KEY_LAST_SHOWN_CARD_ID)
+
     /**
      * Sends an [eval] request to load the card answer, and updates components
      * with behavior specific to the `Answer` card side.
@@ -285,14 +291,14 @@ class ReviewerViewModel(
     }
 
     private suspend fun emitPreviousCardInfoDestination() {
-        val previousCardId: CardId? = savedStateHandle.getLongOrNull(KEY_PREVIOUS_CARD_ID)
-        if (previousCardId == null) {
-            Timber.i("No previous answered card found, ignoring request for 'previous card info'")
+        val cardId = previousCardId
+        if (cardId == null || withCol { getCardOrNull(cardId) == null }) {
+            Timber.i("No previous card available for 'previous card info'")
             actionFeedbackFlow.emit(TR.cardStatsNoCardClean())
             return
         }
-        val destination = CardInfoDestination(previousCardId, EntryPoint.PREVIOUS_CARD_STUDY)
-        Timber.i("Launching 'previous card info' for card %d", previousCardId)
+        val destination = CardInfoDestination(cardId, EntryPoint.PREVIOUS_CARD_STUDY)
+        Timber.i("Launching 'previous card info' for card %d", cardId)
         navigateFlow.emit(destination)
     }
 
@@ -379,18 +385,14 @@ class ReviewerViewModel(
 
     private suspend fun suspendCard() {
         val cardId = currentCard.await().id
-        undoableOp(handler = this) {
-            sched.suspendCards(ids = listOf(cardId))
-        }.count
+        undoableOp(handler = this) { sched.suspendCards(ids = listOf(cardId)) }
         actionFeedbackFlow.emit(TR.studyingCardSuspended())
         updateCurrentCard()
     }
 
     private suspend fun suspendNote() {
         val noteId = currentCard.await().nid
-        undoableOp(handler = this) {
-            sched.suspendNotes(ids = listOf(noteId))
-        }
+        undoableOp(handler = this) { sched.suspendNotes(ids = listOf(noteId)) }
         actionFeedbackFlow.emit(TR.studyingNoteSuspended())
         updateCurrentCard()
     }
@@ -469,7 +471,13 @@ class ReviewerViewModel(
         if (mutationSignal.isCompleted) {
             mutationSignal = CompletableDeferred()
         }
+        val cardId = currentCard.await().id
         super.showQuestion()
+        val lastShown = lastShownCardId
+        if (lastShown != cardId) {
+            lastShown?.let { previousCardId = it }
+            lastShownCardId = cardId
+        }
         runStateMutationHook()
         updateMarkIcon()
         updateFlagIcon()
@@ -538,7 +546,8 @@ class ReviewerViewModel(
 
         undoableOp(handler = this) { sched.answerCard(answer) }
         answerFeedbackFlow.emit(rating)
-        savedStateHandle[KEY_PREVIOUS_CARD_ID] = card.id
+        // Again can advance to a new presentation with the same card ID.
+        previousCardId = card.id
 
         val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
         if (wasLeech) {
@@ -589,7 +598,7 @@ class ReviewerViewModel(
             }
         val state = queueState.await()
         if (state == null) {
-            finishResultFlow.emit(RESULT_NO_MORE_CARDS)
+            finishResultFlow.emit(ReviewerResult.NoMoreCards.fromLastShownCard(lastShownCardId))
             return
         }
         state.timeboxReached?.let {
@@ -764,7 +773,7 @@ class ReviewerViewModel(
                     ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
                     ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)
                     ViewerAction.PAGE_DOWN -> pageDownFlow.emit(Unit)
-                    ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
+                    ViewerAction.EXIT -> finishResultFlow.emit(ReviewerResult.Exit)
                     ViewerAction.USER_ACTION_1 -> userAction(1)
                     ViewerAction.USER_ACTION_2 -> userAction(2)
                     ViewerAction.USER_ACTION_3 -> userAction(3)
@@ -846,6 +855,7 @@ class ReviewerViewModel(
 
     companion object {
         private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
+        private const val KEY_LAST_SHOWN_CARD_ID = "last_shown_card_id"
         private const val KEY_COUNTS = "counts"
     }
 }
