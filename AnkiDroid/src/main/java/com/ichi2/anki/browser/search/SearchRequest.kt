@@ -5,6 +5,7 @@ package com.ichi2.anki.browser.search
 import androidx.annotation.CheckResult
 import anki.search.SearchNode
 import anki.search.searchNode
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.SearchJoiner
@@ -83,3 +84,11 @@ private fun DeckNameId.toSearchNode(): SearchNode {
         searchNode { deck = currentName }
     }
 }
+
+suspend fun SearchRequest.toTagScopeSearch(): String =
+    withCol {
+        copyFilters { it.copy(tags = emptyList()) }
+            .toSearchString()
+            .getOrThrow()
+            .value
+    }
