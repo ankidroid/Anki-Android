@@ -5,14 +5,20 @@ package com.ichi2.anki.previewer
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.collection.opChanges
 import com.ichi2.anki.Flag
+import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.cardviewer.SoundTagPlayer
+import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.mockWebResourceRequest
 import io.mockk.coEvery
+import io.mockk.mockkConstructor
 import io.mockk.spyk
+import io.mockk.unmockkConstructor
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
@@ -27,6 +33,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.io.path.createTempDirectory
 import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
@@ -62,16 +70,27 @@ class PreviewerViewModelTest : JvmTest() {
                 note.cards().map { it.id }
             }
         updateDeckConfig(col.decks.selected()) { autoplay = false }
-        viewModel = spyk(PreviewerViewModel(SavedStateHandle(), cardIds, initialIndex = 0))
-        // the default implementation requires the Collection media directory,
-        // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
-        coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
-        runBlocking { withTimeout(10.seconds) { viewModel.currentCard.await() } }
+        viewModel = createViewModel(cardIds)
+    }
+
+    private fun createViewModel(cardIds: List<Long>): PreviewerViewModel {
+        val arguments =
+            mapOf(
+                PreviewerFragment.ARG_CARD_IDS_FILE to IdsFile(createTempDirectory().toFile(), cardIds, IdsFile.Purpose.SELECTION),
+                PreviewerFragment.ARG_CURRENT_INDEX to 0,
+            )
+        return spyk(PreviewerViewModel(SavedStateHandle(arguments), cardIds, initialIndex = 0)).also {
+            // the default implementation requires the Collection media directory,
+            // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
+            coEvery { it.prepareCardTextForDisplay(any()) } answers { firstArg() }
+            runBlocking { withTimeout(10.seconds) { it.currentCard.await() } }
+        }
     }
 
     @After
     override fun tearDown() {
         viewModel.viewModelScope.cancel()
+        unmockkConstructor(SoundTagPlayer::class)
         super.tearDown()
     }
 
@@ -315,6 +334,18 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `moving to the next card stops the audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            onNextButtonClick()
+            val audio = audioPlaying()
+
+            onNextButtonClick()
+
+            assertTrue("answer audio should stop", audio.isCancelled)
+        }
+
+    @Test
     fun `audio keeps playing after a configuration change`() =
         runTest {
             viewModel.onPageFinished(false)
@@ -325,6 +356,53 @@ class PreviewerViewModelTest : JvmTest() {
 
             assertFalse("audio should keep playing", audio.isCancelled)
         }
+
+    @Test
+    fun `replay plays the media of an edited note`() =
+        runTest {
+            val playedTags = mockPlayedSounds()
+            val note = addBasicNote("[sound:old.mp3]")
+            viewModel.viewModelScope.cancel()
+            viewModel = createViewModel(note.cards().map { it.id })
+            viewModel.onPageFinished(false)
+            advanceUntilIdle()
+
+            note.update { setItem("Front", "[sound:new.mp3]") }
+            viewModel.opExecuted(opChanges { noteText = true }, null)
+            advanceUntilIdle()
+            replayMedia()
+
+            assertEquals(listOf(SoundOrVideoTag("new.mp3")), playedTags.toList())
+        }
+
+    @Test
+    fun `replay plays media after the previewer is recreated`() =
+        runTest {
+            val playedTags = mockPlayedSounds()
+            val note = addBasicNote("[sound:front.mp3]")
+            viewModel.viewModelScope.cancel()
+            viewModel = createViewModel(note.cards().map { it.id })
+            viewModel.onPageFinished(isAfterRecreation = true)
+            advanceUntilIdle()
+
+            replayMedia()
+
+            assertEquals(listOf(SoundOrVideoTag("front.mp3")), playedTags.toList())
+        }
+
+    /** Mocks `[sound:]` playback so it ends at once. Returns the played tags */
+    private fun mockPlayedSounds(): List<SoundOrVideoTag> {
+        val playedTags = CopyOnWriteArrayList<SoundOrVideoTag>()
+        mockkConstructor(SoundTagPlayer::class)
+        coEvery { anyConstructed<SoundTagPlayer>().play(capture(playedTags), any()) } returns Unit
+        return playedTags
+    }
+
+    private suspend fun TestScope.replayMedia() {
+        viewModel.replayMedia()
+        advanceUntilIdle()
+        viewModel.cardMediaPlayer.awaitIdle()
+    }
 
     private fun audioPlaying() = Job().also { viewModel.cardMediaPlayer.playAvTagsJob = it }
 }

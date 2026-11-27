@@ -72,7 +72,7 @@ class AutoAdvance(
     }
 
     suspend fun onShowQuestion() {
-        answerActionJob?.cancel()
+        cancelQuestionAndAnswerActionJobs()
         if (!durationToShowQuestionFor().isPositive() || !isEnabled) return
 
         questionActionJob =
@@ -83,7 +83,7 @@ class AutoAdvance(
     }
 
     suspend fun onShowAnswer() {
-        questionActionJob?.cancel()
+        cancelQuestionAndAnswerActionJobs()
         if (!durationToShowAnswerFor().isPositive() || !isEnabled) return
 
         answerActionJob =

@@ -11,10 +11,20 @@ import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
+import com.ichi2.anki.libanki.DeckConfig
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import org.json.JSONTokener
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -27,6 +37,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerViewModelTest : RobolectricTest() {
@@ -115,6 +126,133 @@ class ReviewerViewModelTest : RobolectricTest() {
                 assertTrue(awaitItem().contains("two"))
                 expectNoEvents()
             }
+    }
+
+    @Test
+    fun `showing the answer stops the question audio`() =
+        runTest {
+            addBasicNote()
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            advanceUntilIdle()
+            val audio = Job().also { viewModel.cardMediaPlayer.playAvTagsJob = it }
+
+            viewModel.onShowAnswer()
+            advanceUntilIdle()
+
+            assertTrue(audio.isCancelled, "question audio should stop")
+        }
+
+    @Test
+    fun `the answer auto advances after interrupting a replay with autoplay disabled`() =
+        runTest {
+            val card = addBasicNote("[sound:question.mkv]").firstCard()
+            val viewModel = startReviewerWithAnswerTimer()
+            viewModel.awaitVideoStart("question.mkv") { viewModel.executeAction(ViewerAction.PLAY_MEDIA) }
+
+            viewModel.onShowAnswer()
+            runCurrent()
+            assertTrue(viewModel.showingAnswer.value)
+            advanceTimeBy(2.seconds)
+            runCurrent()
+
+            assertEquals(1, col.getCard(card.id).reps, "the answer timer should grade this card")
+        }
+
+    @Test
+    fun `the next question auto advances with autoplay disabled`() =
+        runTest {
+            addBasicNote("one")
+            addBasicNote("two")
+            updateDeckConfig(col.decks.selected()) {
+                secondsToShowQuestion = 1.0
+                secondsToShowAnswer = 0.0
+                jsonObject.put("waitForAudio", true)
+            }
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            runCurrent()
+            viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+            runCurrent()
+
+            viewModel.onShowAnswer()
+            viewModel.answerCard(Rating.GOOD)
+            runCurrent()
+            assertFalse(viewModel.showingAnswer.value)
+            advanceTimeBy(2.seconds)
+            runCurrent()
+
+            assertTrue(viewModel.showingAnswer.value, "the question timer should show the answer")
+        }
+
+    @Test
+    fun `finishing a question sound during the flip does not grade a still playing answer`() =
+        runTest {
+            val card = addBasicNote("[sound:question.mkv]", "[sound:answer.mkv]").firstCard()
+            val viewModel = startReviewerWithAnswerTimer()
+            updateDeckConfig(card.did) { autoplay = true }
+            viewModel.awaitVideoStart("question.mkv") { viewModel.playSoundFromUrl("playsound:q:0") }
+            val questionPlayback = assertNotNull(viewModel.cardMediaPlayer.playAvTagsJob)
+
+            // Hold delivery of _showAnswer to the WebView between the side change and answer playback.
+            val renderAnswer = CompletableDeferred<Unit>()
+            backgroundScope.launch(start = CoroutineStart.UNDISPATCHED) {
+                viewModel.eval.onSubscription { renderAnswer.await() }.collect()
+            }
+            viewModel.onShowAnswer()
+            runCurrent()
+            assertTrue(viewModel.showingAnswer.value)
+            viewModel.onVideoFinished()
+            questionPlayback.join()
+
+            viewModel.awaitVideoStart("answer.mkv") { renderAnswer.complete(Unit) }
+            advanceTimeBy(2.seconds)
+            runCurrent()
+
+            assertEquals(0, col.getCard(card.id).reps, "the answer recording has not finished")
+        }
+
+    @Test
+    fun `editing the note stops its obsolete recording`() =
+        runTest {
+            val note = addBasicNote("[sound:old.mkv]")
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            runCurrent()
+            viewModel.awaitVideoStart("old.mkv") { viewModel.executeAction(ViewerAction.PLAY_MEDIA) }
+            val oldPlayback = assertNotNull(viewModel.cardMediaPlayer.playAvTagsJob)
+
+            note.setItem("Front", "[sound:new.mkv]")
+            viewModel.opExecuted(col.updateNote(note), null)
+            runCurrent()
+
+            assertTrue(oldPlayback.isCancelled, "the removed recording is still playing")
+        }
+
+    private fun TestScope.startReviewerWithAnswerTimer(): ReviewerViewModel {
+        updateDeckConfig(col.decks.selected()) {
+            secondsToShowQuestion = 0.0
+            secondsToShowAnswer = 1.0
+            jsonObject.put(DeckConfig.ANSWER_ACTION, AnswerAction.ANSWER_GOOD.code)
+            jsonObject.put("waitForAudio", true)
+        }
+        val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+        viewModel.onPageFinished(false)
+        runCurrent()
+        viewModel.executeAction(ViewerAction.TOGGLE_AUTO_ADVANCE)
+        runCurrent()
+        return viewModel
+    }
+
+    private suspend fun ReviewerViewModel.awaitVideoStart(
+        filename: String,
+        start: () -> Unit,
+    ) {
+        eval.filter { "video.play()" in it && filename in it }.test {
+            start()
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test

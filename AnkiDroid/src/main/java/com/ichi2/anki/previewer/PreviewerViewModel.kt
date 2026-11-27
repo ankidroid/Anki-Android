@@ -71,12 +71,6 @@ class PreviewerViewModel(
         launchCatchingIO {
             if (isAfterRecreation) {
                 showCard(showAnswerOnReload)
-                // isAfterRecreation can either mean:
-                // * after config change (ViewModel exists)
-                // * after recreation (ViewModel did not exist)
-                // if the ViewModel existed, we want to continue playing audio
-                // if not, we want to setup the sound player
-                cardMediaPlayer.ensureAvTagsLoaded(currentCard.await())
             } else {
                 // re-render the current card
                 updateCurrentIndex { it }
@@ -91,11 +85,11 @@ class PreviewerViewModel(
             if (!backSideOnly.value && showingAnswer.value) {
                 cardMediaPlayer.stop()
                 showQuestion()
-                cardMediaPlayer.autoplayAllForSide(CardSide.QUESTION)
+                cardMediaPlayer.autoplayAllForSide(currentCard.await(), CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
                 cardMediaPlayer.stop()
                 showAnswer()
-                cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
+                cardMediaPlayer.autoplayAllForSide(currentCard.await(), CardSide.ANSWER)
             }
         }
     }
@@ -136,7 +130,7 @@ class PreviewerViewModel(
             if (!showingAnswer.value && !backSideOnly.value) {
                 cardMediaPlayer.stop()
                 showAnswer()
-                cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
+                cardMediaPlayer.autoplayAllForSide(currentCard.await(), CardSide.ANSWER)
             } else {
                 updateCurrentIndex { it + 1 }
             }
@@ -163,7 +157,7 @@ class PreviewerViewModel(
     fun replayMedia() {
         launchCatchingIO {
             val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
-            cardMediaPlayer.replayAll(side)
+            cardMediaPlayer.replayAll(currentCard.await(), side)
         }
     }
 
@@ -218,8 +212,7 @@ class PreviewerViewModel(
                 showingAnswer.value -> CardSide.ANSWER
                 else -> CardSide.QUESTION
             }
-        cardMediaPlayer.loadCardAvTags(currentCard.await())
-        cardMediaPlayer.autoplayAllForSide(side)
+        cardMediaPlayer.autoplayAllForSide(currentCard.await(), side)
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */
