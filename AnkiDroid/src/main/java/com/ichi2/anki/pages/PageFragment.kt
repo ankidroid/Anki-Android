@@ -58,6 +58,8 @@ abstract class PageFragment(
 
     protected open fun onWebViewCreated() { }
 
+    protected open fun onWebViewUnsupported() { }
+
     /**
      * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
      * By default, only bridge command is allowed, subclasses must redefine it if they expect bridge commands.
@@ -105,6 +107,7 @@ abstract class PageFragment(
             }
         if (isOutdated) {
             Timber.w("${this::class.simpleName} requires modern WebView version, aborting load")
+            onWebViewUnsupported()
             return
         }
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.setNavigationOnClickListener {

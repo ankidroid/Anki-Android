@@ -4,26 +4,38 @@
 package com.ichi2.anki.dialogs
 
 import androidx.lifecycle.ViewModel
+import com.ichi2.anki.ImportSession
+import com.ichi2.anki.ImportSessionId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 
 class ImportViewModel : ViewModel() {
-    val importAddFlow: StateFlow<String?>
-        field = MutableStateFlow<String?>(null)
+    val importAddFlow: StateFlow<ImportRequest?>
+        field = MutableStateFlow<ImportRequest?>(null)
 
-    val importReplaceFlow: StateFlow<String?>
-        field = MutableStateFlow<String?>(null)
+    val importReplaceFlow: StateFlow<ImportRequest?>
+        field = MutableStateFlow<ImportRequest?>(null)
 
-    fun triggerImportAdd(path: String) {
-        importAddFlow.value = path
+    fun triggerImportAdd(request: ImportRequest) {
+        importAddFlow.value = request
     }
 
-    fun triggerImportReplace(path: String) {
-        importReplaceFlow.value = path
+    fun triggerImportReplace(request: ImportRequest) {
+        importReplaceFlow.value = request
     }
 
-    fun takeImportAdd(): String? = importAddFlow.getAndUpdate { null }
+    fun takeImportAdd(): ImportRequest? = importAddFlow.getAndUpdate { null }
 
-    fun takeImportReplace(): String? = importReplaceFlow.getAndUpdate { null }
+    fun takeImportReplace(): ImportRequest? = importReplaceFlow.getAndUpdate { null }
+
+    override fun onCleared() {
+        ImportSession.finish(importAddFlow.value?.sessionId)
+        ImportSession.finish(importReplaceFlow.value?.sessionId)
+    }
 }
+
+data class ImportRequest(
+    val path: String,
+    val sessionId: ImportSessionId,
+)

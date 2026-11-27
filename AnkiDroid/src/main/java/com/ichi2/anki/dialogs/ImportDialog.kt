@@ -7,7 +7,11 @@ import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.ImportSession
+import com.ichi2.anki.ImportSessionId
+import com.ichi2.anki.ImportSessionViewModel
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM
@@ -21,6 +25,14 @@ import java.net.URLDecoder
 @NeedsTest("integration test: ImportDialog => DeckPicker")
 class ImportDialog : AsyncDialogFragment() {
     private val importViewModel: ImportViewModel by activityViewModels()
+    private val session: ImportSessionViewModel by viewModels()
+    private val sessionId: ImportSessionId?
+        get() = requireArguments().getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (!session.attach(requireContext(), sessionId)) dismiss()
+    }
 
     override val dialogHandlerMessage: DialogHandlerMessage
         get() =
@@ -28,10 +40,12 @@ class ImportDialog : AsyncDialogFragment() {
                 DIALOG_IMPORT_ADD_CONFIRM ->
                     ImportUtils.CollectionImportAdd(
                         packagePath,
+                        sessionId,
                     )
                 DIALOG_IMPORT_REPLACE_CONFIRM ->
                     ImportUtils.CollectionImportReplace(
                         packagePath,
+                        sessionId,
                     )
             }
 
@@ -52,7 +66,7 @@ class ImportDialog : AsyncDialogFragment() {
                     .setTitle(CommonString.import_title)
                     .setMessage(res().getString(CommonString.import_dialog_message_add, displayFileName))
                     .positiveButton(CommonString.import_message_add) {
-                        importViewModel.triggerImportAdd(packagePath)
+                        importViewModel.triggerImportAdd(ImportRequest(packagePath, session.transfer()))
                         activity?.dismissAllDialogFragments()
                     }.negativeButton(CommonString.dialog_cancel)
                     .create()
@@ -62,7 +76,7 @@ class ImportDialog : AsyncDialogFragment() {
                     .setTitle(CommonString.import_title)
                     .setMessage(res().getString(CommonString.import_message_replace_confirm, displayFileName))
                     .positiveButton(CommonString.dialog_positive_replace) {
-                        importViewModel.triggerImportReplace(packagePath)
+                        importViewModel.triggerImportReplace(ImportRequest(packagePath, session.transfer()))
                         activity?.dismissAllDialogFragments()
                     }.negativeButton(CommonString.dialog_cancel)
                     .create()
@@ -117,12 +131,14 @@ class ImportDialog : AsyncDialogFragment() {
         fun newInstance(
             dialogType: Type,
             packagePath: String,
+            sessionId: ImportSessionId? = null,
         ): ImportDialog =
             ImportDialog().apply {
                 arguments =
                     Bundle().apply {
                         putInt(ARG_DIALOG_TYPE, dialogType.code)
                         putString(ARG_PACKAGE_PATH, packagePath)
+                        putString(ImportSession.EXTRA_SESSION_ID, sessionId?.value)
                     }
             }
 

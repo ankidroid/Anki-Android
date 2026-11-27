@@ -13,14 +13,11 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
 
-class AnkiPackageImporterFragment : PageFragment() {
+class AnkiPackageImporterFragment : ImportPageFragment() {
     override val pagePath: String by lazy {
         val filePath = requireArguments().getString(ARG_FILE_PATH)
         "import-anki-package$filePath"
     }
-
-    /** Replaced on each page load: a recreated WebView reloads the page, which may start another import */
-    private var backCallback: ImportBackCallback? = null
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         backCallback?.remove()
@@ -34,14 +31,6 @@ class AnkiPackageImporterFragment : PageFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.title = TR.actionsImport()
-    }
-
-    override suspend fun handlePostRequest(
-        uri: PostRequestUri,
-        bytes: ByteArray,
-    ): ByteArray {
-        backCallback?.onPostRequest(uri)
-        return super.handlePostRequest(uri, bytes)
     }
 
     class AnkiPackageImporterWebViewClient : PageWebViewClient() {

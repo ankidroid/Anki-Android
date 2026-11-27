@@ -28,9 +28,11 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
+import org.robolectric.shadows.ShadowToast
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -91,6 +93,34 @@ class IntentHandlerImportTest : RobolectricTest() {
         }
 
     @Test
+    fun `recreating the intent handler while copying still opens the import`() =
+        runTest {
+            // Android can recreate the forwarding activity while a document provider is
+            // still returning the file. The recreated activity must complete that same import.
+            val uri = "content://import/deck.apkg".toUri()
+            val controller = Robolectric.buildActivity(IntentHandler::class.java, Intent(Intent.ACTION_VIEW, uri))
+            saveControllerForCleanup(controller)
+            val ioScheduler = TestCoroutineScheduler()
+            ioDispatcher = StandardTestDispatcher(ioScheduler)
+            val result = ImportResult.Success(ImportResolution.DeckPackage(ImportResolution.Source(uri, "deck.apkg")), "/cache/deck.apkg")
+            lateinit var original: IntentHandler
+            every { ImportUtils.prepareImport(any(), any()) } answers {
+                // Recreate before the old copy returns. The scheduler lets this test perform
+                // the lifecycle callbacks on the main thread with the old call still in flight.
+                if (firstArg<IntentHandler>() === original) controller.recreate()
+                result
+            }
+            original = controller.setup().get()
+            ioScheduler.runCurrent()
+
+            // The buggy handler rejects the recreated activity as a second import, so no
+            // package confirmation is queued after the original activity is destroyed.
+            val message = assertNotNull(DialogHandler(mockk<AnkiActivity>()).popMessage())
+            assertEquals(result.path, message.data.getString("importPath"))
+            assertEquals(DeckPicker::class.java.name, shadowOf(controller.get()).nextStartedActivity?.component?.className)
+        }
+
+    @Test
     fun `finishing before preparation completes suppresses import results`() =
         runTest {
             val source = ImportResolution.Source("content://import/deck.apkg".toUri(), "deck.apkg")
@@ -143,6 +173,45 @@ class IntentHandlerImportTest : RobolectricTest() {
             setIntroductionSlidesShown(false)
 
             assertTrue(launchImport().isFinishing)
+        }
+
+    @Test
+    fun `second intent is rejected before copying and cannot replace the pending confirmation`() =
+        runTest {
+            val source = ImportResolution.Source("content://import/deck.apkg".toUri(), "deck.apkg")
+            every { ImportUtils.prepareImport(any(), any()) } returns
+                ImportResult.Success(ImportResolution.DeckPackage(source), "/cache/deck.apkg")
+            val ioScheduler = TestCoroutineScheduler()
+            ioDispatcher = StandardTestDispatcher(ioScheduler)
+            val first = launchImport()
+
+            val second = launchImport()
+
+            assertTrue(second.isFinishing)
+            assertEquals("Finish or cancel the current import first.", ShadowToast.getTextOfLatestToast())
+            verify(exactly = 0) { ImportUtils.prepareImport(any(), any()) }
+            ioScheduler.runCurrent()
+            verify(exactly = 1) { ImportUtils.prepareImport(first, any()) }
+
+            assertTrue(launchImport().isFinishing)
+            ioScheduler.runCurrent()
+            verify(exactly = 1) { ImportUtils.prepareImport(any(), any()) }
+            val message = assertNotNull(DialogHandler(mockk<AnkiActivity>()).popMessage())
+            assertEquals("/cache/deck.apkg", message.data.getString("importPath"))
+            ImportSession.finish(message.data.getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId))
+            assertNotNull(ImportSession.acquire(targetContext)).finish()
+        }
+
+    @Test
+    fun `failed preparation allows another import`() =
+        runTest {
+            every { ImportUtils.prepareImport(any(), any()) } returns ImportResult.Failure("Missing file")
+            launchImport()
+            assertIs<AlertDialog>(ShadowDialog.getLatestDialog()).getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+
+            launchImport()
+
+            verify(exactly = 2) { ImportUtils.prepareImport(any(), any()) }
         }
 
     private fun launchImport(mimeType: String? = null): IntentHandler {

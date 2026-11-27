@@ -180,6 +180,7 @@ open class RobolectricTest(
 
         // See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
         DialogHandler.discardMessage()
+        ImportSession.resetForTests()
 
         // BUG: We do not reset the MetaDB
         MetaDB.closeDB()

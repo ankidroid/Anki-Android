@@ -20,6 +20,8 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.ImportSession
+import com.ichi2.anki.ImportSessionId
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.coroutines.applicationScope
@@ -575,46 +577,64 @@ object ImportUtils {
     /** Show confirmation dialog asking to confirm import with replace when file called "collection.apkg" */
     class CollectionImportReplace(
         private val importPath: String,
+        private val sessionId: ImportSessionId? = null,
     ) : DialogHandlerMessage(
             which = WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
             analyticName = "ImportReplaceDialog",
         ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of collection package APKG
-            activity.showImportDialog(ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
+            activity.showImportDialog(ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM, importPath, sessionId)
         }
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = Bundle().apply { putString("importPath", importPath) }
+                data =
+                    Bundle().apply {
+                        putString("importPath", importPath)
+                        putString(ImportSession.EXTRA_SESSION_ID, sessionId?.value)
+                    }
                 what = this@CollectionImportReplace.what
             }
 
         companion object {
-            fun fromMessage(message: Message): CollectionImportReplace = CollectionImportReplace(message.data.getString("importPath")!!)
+            fun fromMessage(message: Message): CollectionImportReplace =
+                CollectionImportReplace(
+                    message.data.getString("importPath")!!,
+                    message.data.getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId),
+                )
         }
     }
 
     /** Show confirmation dialog asking to confirm import with add */
     class CollectionImportAdd(
         private val importPath: String,
+        private val sessionId: ImportSessionId? = null,
     ) : DialogHandlerMessage(
             WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
             "ImportAddDialog",
         ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of deck package APKG
-            activity.showImportDialog(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, importPath)
+            activity.showImportDialog(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, importPath, sessionId)
         }
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = Bundle().apply { putString("importPath", importPath) }
+                data =
+                    Bundle().apply {
+                        putString("importPath", importPath)
+                        putString(ImportSession.EXTRA_SESSION_ID, sessionId?.value)
+                    }
                 what = this@CollectionImportAdd.what
             }
 
         companion object {
-            fun fromMessage(message: Message): CollectionImportAdd = CollectionImportAdd(message.data.getString("importPath")!!)
+            fun fromMessage(message: Message): CollectionImportAdd =
+                CollectionImportAdd(
+                    message.data.getString("importPath")!!,
+                    message.data.getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId),
+                )
         }
     }
 }

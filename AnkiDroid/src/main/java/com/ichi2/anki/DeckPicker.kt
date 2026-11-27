@@ -1077,10 +1077,10 @@ open class DeckPicker :
         viewModel.flowOfShowRightClickContextMenu.collectInLifecycle(::showDeckPickerRightClickContextMenu)
         // navigation should be done on RESUMED
         importViewModel.importAddFlow.filterNotNull().collectInLifecycle(Lifecycle.State.RESUMED) {
-            importViewModel.takeImportAdd()?.let(::importAdd)
+            importViewModel.takeImportAdd()?.let { importAdd(it.path, it.sessionId) }
         }
         importViewModel.importReplaceFlow.filterNotNull().collectInLifecycle(Lifecycle.State.RESUMED) {
-            importViewModel.takeImportReplace()?.let(::importReplace)
+            importViewModel.takeImportReplace()?.let { importReplace(it.path, it.sessionId) }
         }
     }
 
@@ -2208,15 +2208,21 @@ open class DeckPicker :
     }
 
     // Callback to import a file -- adding it to existing collection
-    fun importAdd(importPath: String) {
+    fun importAdd(
+        importPath: String,
+        sessionId: ImportSessionId? = null,
+    ) {
         Timber.d("importAdd() for file %s", importPath)
-        startActivity(AnkiPackageImporterFragment.getIntent(this, importPath))
+        startActivity(AnkiPackageImporterFragment.getIntent(this, importPath).putExtra(ImportSession.EXTRA_SESSION_ID, sessionId?.value))
     }
 
     // Callback to import a file -- replacing the existing collection
-    fun importReplace(importPath: String) {
+    fun importReplace(
+        importPath: String,
+        sessionId: ImportSessionId? = null,
+    ) {
         Timber.d("importReplace() for file %s", importPath)
-        importColpkg(importPath)
+        importColpkg(importPath, sessionId)
     }
 
     /**

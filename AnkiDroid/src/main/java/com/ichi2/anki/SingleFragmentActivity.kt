@@ -97,6 +97,14 @@ open class SingleFragmentActivity :
         }
     }
 
+    override fun onDestroy() {
+        // If startup stopped before creating the importer, no fragment owns the handoff.
+        if (!isChangingConfigurations && fragment == null) {
+            intent.getStringExtra(ImportSession.EXTRA_SESSION_ID)?.let { ImportSession.finish(ImportSessionId(it)) }
+        }
+        super.onDestroy()
+    }
+
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)!!
         return if (fragment is DispatchKeyEventListener) {

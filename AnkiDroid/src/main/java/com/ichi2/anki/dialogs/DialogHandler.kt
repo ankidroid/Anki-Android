@@ -11,6 +11,8 @@ import com.ichi2.anki.CollectionLoadingErrorDialog
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.ImportSession
+import com.ichi2.anki.ImportSessionId
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
@@ -81,12 +83,15 @@ class DialogHandler(
          */
         fun storeMessage(message: Message?) {
             Timber.d("Storing persistent message")
+            val previousId = sStoredMessage?.data?.getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId)
+            val nextId = message?.data?.getString(ImportSession.EXTRA_SESSION_ID)?.let(::ImportSessionId)
+            if (previousId != nextId) ImportSession.finish(previousId)
             sStoredMessage = message
         }
 
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
         fun discardMessage() {
-            sStoredMessage = null
+            storeMessage(null)
         }
     }
 }
