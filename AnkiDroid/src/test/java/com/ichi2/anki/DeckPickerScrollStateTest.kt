@@ -27,6 +27,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
@@ -257,7 +258,7 @@ class DeckPickerScrollStateTest : RobolectricTest() {
         target: Long,
     ) {
         val manager = list(activity).layoutManager as LinearLayoutManager
-        val position = activity.viewModel.findDeckPosition(target)
+        val position = assertNotNull(activity.viewModel.findDeckPosition(target, activity.viewModel.flowOfDeckList.value.data))
         advanceRobolectricLooperUntil {
             position in manager.findFirstVisibleItemPosition()..manager.findLastVisibleItemPosition()
         }
