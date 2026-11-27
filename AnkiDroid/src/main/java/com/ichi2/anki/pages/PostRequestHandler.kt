@@ -179,6 +179,18 @@ val uiMethods =
         "deckOptionsRequireClose" to { bytes, _ -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
 
+/**
+ * [uiMethods] which only affect the UI, so wait until the screen is visible.
+ *
+ * Don't add methods which change the collection: a delayed change could overwrite newer changes.
+ * `deckOptionsRequireClose` is excluded: it holds a lock which a later save waits for
+ */
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+val visibleScreenUiMethods = setOf("importDialogRequireClose")
+
+/** Whether [methodName] only affects the UI, so must wait until the screen is visible */
+fun requiresVisibleScreen(methodName: String) = methodName in visibleScreenUiMethods
+
 sealed class UiPostRequestResponse {
     /** The requested method was not a valid UI POST request */
     data object UnknownMethod : UiPostRequestResponse()
