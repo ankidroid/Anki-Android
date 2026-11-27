@@ -13,11 +13,8 @@ import android.os.Bundle
 import android.util.SizeF
 import android.util.TypedValue
 import android.view.View
-import android.view.View.MeasureSpec
 import android.widget.RemoteViews
-import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.core.util.TypedValueCompat
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -39,17 +36,23 @@ import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetIds
 import com.ichi2.widget.DayRolloverAlarm
+import com.ichi2.widget.OffscreenWidget
+import com.ichi2.widget.breaksOnlyBetweenWords
 import com.ichi2.widget.cancelRecurringAlarm
+import com.ichi2.widget.copyPadding
+import com.ichi2.widget.copyTextSize
 import com.ichi2.widget.deckpicker.DeckWidgetData
 import com.ichi2.widget.deckpicker.getDeckNameAndStats
+import com.ichi2.widget.fitMessage
 import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.getAppWidgetManager
+import com.ichi2.widget.largestFittingScale
+import com.ichi2.widget.paddings
 import com.ichi2.widget.setRecurringAlarm
+import com.ichi2.widget.setScaledPadding
 import com.ichi2.widget.sizedRemoteViews
 import com.ichi2.widget.updateAppWidget
 import timber.log.Timber
-import java.text.BreakIterator
-import kotlin.math.roundToInt
 
 /**
  * This widget displays a deck with the respective new, learning, and review card counts.
@@ -181,7 +184,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
-            remoteViews.fitMessage(context, size, message, shorterMessage)
+            remoteViews.fitMessage(context, size, message, shorterMessage) { WidgetCardAnalysisBinding.bind(it).emptyWidget }
             return remoteViews
         }
 
@@ -282,102 +285,6 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             if (shrunk) fitsAtScale(largestFittingScale(textSizes.max()) { fitsAtScale(it) })
             textViews.forEach { copyTextSize(context, it, shrunk) }
             paddedViews.forEach { copyPadding(it) }
-        }
-
-        /**
-         * Fits the message in [size] without splitting a word: first by trimming the padding,
-         * then by switching to [shorterText], and only then by shrinking the text.
-         *
-         * @param context used to inflate and measure the layout
-         * @param size the widget size in dp, unbounded where a side is 0
-         * @param text shown when it fits, trimming the padding if needed
-         * @param shorterText shown when [text] does not fit even without padding, shrunk if it still does not fit
-         */
-        private fun RemoteViews.fitMessage(
-            context: Context,
-            size: SizeF,
-            text: String,
-            shorterText: String,
-        ) {
-            val widget = OffscreenWidget(context, this, size)
-            val message = WidgetCardAnalysisBinding.bind(widget.root).emptyWidget
-            val textSize = message.textSize
-            val padding = message.paddings
-
-            fun fits(
-                paddingScale: Float,
-                textScale: Float = 1f,
-            ): Boolean {
-                message.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * textScale)
-                message.setScaledPadding(padding, paddingScale)
-                return widget.fitsHeight() && message.breaksOnlyBetweenWords()
-            }
-
-            fun fitsWithLessPadding(candidate: String): Boolean {
-                message.text = candidate
-                return when {
-                    fits(paddingScale = 1f) -> true
-                    !fits(paddingScale = 0f) -> false
-                    else -> {
-                        fits(largestFittingScale(padding.max().toFloat()) { fits(paddingScale = it) })
-                        true
-                    }
-                }
-            }
-
-            val shrunk = !fitsWithLessPadding(text) && !fitsWithLessPadding(shorterText)
-            if (shrunk) fits(paddingScale = 0f, textScale = largestFittingScale(textSize) { fits(paddingScale = 0f, textScale = it) })
-            copyTextSize(context, message, shrunk)
-            setTextViewText(R.id.empty_widget, message.text)
-            copyPadding(message)
-        }
-
-        /** Binary search for the largest scale that still fits, to within 1px of [largestSize]. */
-        private inline fun largestFittingScale(
-            largestSize: Float,
-            fitsAtScale: (Float) -> Boolean,
-        ): Float {
-            var minScale = 0f
-            var maxScale = 1f
-            while ((maxScale - minScale) * largestSize > 1f) {
-                val scale = (minScale + maxScale) / 2
-                if (fitsAtScale(scale)) minScale = scale else maxScale = scale
-            }
-            return minScale
-        }
-
-        private fun RemoteViews.copyTextSize(
-            context: Context,
-            view: TextView,
-            shrunk: Boolean,
-        ) = if (shrunk) {
-            setTextViewTextSize(view.id, TypedValue.COMPLEX_UNIT_PX, view.textSize)
-        } else {
-            setTextViewTextSize(
-                view.id,
-                TypedValue.COMPLEX_UNIT_SP,
-                TypedValueCompat.pxToSp(view.textSize, context.resources.displayMetrics),
-            )
-        }
-
-        private fun RemoteViews.copyPadding(view: View) =
-            setViewPadding(view.id, view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
-
-        private val View.paddings get() = listOf(paddingLeft, paddingTop, paddingRight, paddingBottom)
-
-        private fun View.setScaledPadding(
-            padding: List<Int>,
-            scale: Float,
-        ) {
-            val (left, top, right, bottom) = padding.map { (it * scale).roundToInt() }
-            setPadding(left, top, right, bottom)
-        }
-
-        private fun TextView.breaksOnlyBetweenWords(): Boolean {
-            val layout = layout ?: return true
-            val lineBreaks = BreakIterator.getLineInstance()
-            lineBreaks.setText(text.toString())
-            return (0 until layout.lineCount - 1).all { lineBreaks.isBoundary(layout.getLineEnd(it)) }
         }
 
         /**
@@ -529,25 +436,5 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             cancelRecurringAlarm(context, appWidgetId, CardAnalysisWidget::class.java)
             widgetPreferences.deleteDeckData(appWidgetId)
         }
-    }
-}
-
-private class OffscreenWidget(
-    context: Context,
-    views: RemoteViews,
-    size: SizeF,
-) {
-    private val density = context.resources.displayMetrics.density
-    private val widthSpec =
-        MeasureSpec.makeMeasureSpec(
-            (size.width * density).roundToInt(),
-            if (size.width > 0) MeasureSpec.EXACTLY else MeasureSpec.UNSPECIFIED,
-        )
-    private val availableHeight = if (size.height > 0) size.height * density else Float.POSITIVE_INFINITY
-    val root: View = views.apply(context, null)
-
-    fun fitsHeight(): Boolean {
-        root.measure(widthSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
-        return root.measuredHeight <= availableHeight
     }
 }

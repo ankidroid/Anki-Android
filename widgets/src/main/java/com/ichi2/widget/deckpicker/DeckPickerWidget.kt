@@ -16,7 +16,7 @@ import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.RemoteViews
 import android.widget.TextView
-import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -161,20 +161,19 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 remoteViews.addView(R.id.deckCollection, deckView)
             }
 
-            val cornersTooRound = size.height > 0 && size.height < CORNER_RADIUS_DP * 3
-            remoteViews.setBackgrounds(
+            remoteViews.setBackgrounds(size.cornersTooRound())
+            return remoteViews
+        }
+
+        private fun SizeF.cornersTooRound() = height > 0 && height < CORNER_RADIUS_DP * 3
+
+        private fun RemoteViews.setBackgrounds(cornersTooRound: Boolean) {
+            val background =
                 if (cornersTooRound) {
                     R.drawable.widget_deck_picker_rounded_background_small
                 } else {
                     R.drawable.widget_deck_picker_rounded_background
-                },
-            )
-            return remoteViews
-        }
-
-        private fun RemoteViews.setBackgrounds(
-            @DrawableRes background: Int,
-        ) {
+                }
             setInt(android.R.id.background, "setBackgroundResource", background)
             setInt(R.id.deckCollection, "setBackgroundResource", background)
         }
@@ -215,35 +214,26 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
-        ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_collection_state_in_widget))
-            remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
-            remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
-            remoteViews.setBackgrounds(R.drawable.widget_deck_picker_rounded_background)
-
-            val configIntent = with(DeferredNavigation) { WidgetConfigDestination.DeckPicker(appWidgetId.id).toIntent() }
-            val configPendingIntent =
-                PendingIntent.getActivity(
-                    context,
-                    appWidgetId.id,
-                    configIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
-            remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
-
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
-        }
+        ) = showMessage(context, appWidgetManager, appWidgetId, remoteViews, CommonString.empty_collection_state_in_widget)
 
         private fun showEmptyWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
+        ) = showMessage(context, appWidgetManager, appWidgetId, remoteViews, CommonString.empty_widget_state)
+
+        private fun showMessage(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: AppWidgetId,
+            remoteViews: RemoteViews,
+            @StringRes message: Int,
         ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_widget_state))
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(message))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
-            remoteViews.setBackgrounds(R.drawable.widget_deck_picker_rounded_background)
+            remoteViews.setBackgrounds(cornersTooRound = false)
 
             val configIntent = with(DeferredNavigation) { WidgetConfigDestination.DeckPicker(appWidgetId.id).toIntent() }
             val configPendingIntent =
