@@ -9,7 +9,6 @@ import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
 import android.content.ActivityNotFoundException
 import android.content.ClipData
-import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -51,11 +50,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.Insets
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
-import androidx.core.util.component1
-import androidx.core.util.component2
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -85,7 +81,6 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.navigate
@@ -101,7 +96,6 @@ import com.ichi2.anki.common.utils.ext.addingDefaultsMode
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
-import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.databinding.FragmentNoteEditorBinding
@@ -179,8 +173,6 @@ import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
-import com.ichi2.utils.ClipboardUtil.hasMedia
-import com.ichi2.utils.ClipboardUtil.items
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NoteFieldDecorator
@@ -430,40 +422,6 @@ class NoteEditorFragment :
                 }
             },
         )
-
-    /**
-     * Listener for handling content received via drag and drop or copy and paste.
-     * This listener processes URIs contained in the payload and attempts to paste the content into the target EditText view.
-     */
-    private val onReceiveContentListener =
-        OnReceiveContentListener { view, payload ->
-            val (uriContent, remaining) = payload.partition { item -> item.uri != null }
-
-            if (uriContent == null) {
-                return@OnReceiveContentListener remaining
-            }
-
-            val clip = uriContent.clip
-            val description = clip.description
-
-            if (!hasMedia(description)) {
-                return@OnReceiveContentListener remaining
-            }
-
-            for (uri in clip.items().map { it.uri }) {
-                lifecycleScope.launch {
-                    try {
-                        val pasteAsPng = shouldPasteAsPng()
-                        multimediaController.onPaste(view as EditText, uri, description, pasteAsPng)
-                    } catch (e: Exception) {
-                        Timber.w(e)
-                        CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
-                    }
-                }
-            }
-
-            return@OnReceiveContentListener remaining
-        }
 
     private class NoteEditorActivityResultCallback(
         private val callback: (result: ActivityResult) -> Unit,
@@ -1849,11 +1807,11 @@ class NoteEditorFragment :
         requestTemplateEditLauncher.launch(intent)
     }
 
-    /** Appends a string at the selection point, or appends to the end if not in focus  */
+    /** Inserts text at the selection, or appends it when the field lacks focus. */
     @VisibleForTesting
     fun insertStringInField(
         fieldEditText: EditText?,
-        formattedValue: String?,
+        formattedValue: CharSequence?,
     ) {
         if (fieldEditText!!.hasFocus()) {
             // Crashes if start > end, although this is fine for a selection via keyboard.
@@ -1890,9 +1848,6 @@ class NoteEditorFragment :
     internal fun markMultimediaChanged() {
         changed = true
     }
-
-    /** Determines whether pasted images should be handled as PNG format. **/
-    private suspend fun shouldPasteAsPng() = withCol { config.pasteImagesAsPng }
 
     val currentFields: Fields
         get() = editorNote!!.notetype.fields
@@ -1937,17 +1892,7 @@ class NoteEditorFragment :
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
             val newEditText = editLineView.binding.editText
-            lifecycleScope.launch {
-                val pasteAsPng = shouldPasteAsPng()
-                newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
-                    multimediaController.onPaste(
-                        editText!!,
-                        uri!!,
-                        description!!,
-                        pasteAsPng,
-                    )
-                }
-            }
+            multimediaController.registerPasteListener(newEditText)
             editLineView.configureView(
                 requireActivity(),
                 MEDIA_MIME_TYPES,
@@ -1957,7 +1902,7 @@ class NoteEditorFragment :
                     .setHighlightCornerRadiusPx(0)
                     .addInnerEditTexts(newEditText)
                     .build(),
-                onReceiveContentListener,
+                multimediaController.onReceiveContentListener,
             )
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {

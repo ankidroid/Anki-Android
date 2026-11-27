@@ -4,6 +4,7 @@
 package com.ichi2.anki.noteeditor
 
 import android.content.ClipDescription
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,11 +12,18 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.view.ContentInfoCompat
+import androidx.core.view.OnReceiveContentListener
+import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.MediaRegistration
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.launchCatchingTask
@@ -30,6 +38,8 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
+import com.ichi2.utils.ClipboardUtil.hasMedia
+import com.ichi2.utils.ClipboardUtil.items
 import com.ichi2.utils.ContentResolverUtil
 import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.Job
@@ -39,7 +49,7 @@ import timber.log.Timber
 import java.io.File
 
 /**
- * Owns the multimedia capture lifecycle for a [NoteEditorFragment].
+ * Handles multimedia capture and paste for a [NoteEditorFragment].
  *
  * Must be created during fragment initialization to register the Gallery picker.
  * The [launcher] must already be registered; its callback forwards to [handleActions] / [handleResult].
@@ -232,29 +242,107 @@ internal class NoteEditorMultimediaController(
         galleryPicker.onRestoreInstanceState(state)
     }
 
+    fun registerPasteListener(field: FieldEditText) {
+        field.setPasteListener { editText, uri, description ->
+            onPaste(editText, uri!!, description!!, getColUnsafe().config.pasteImagesAsPng)
+        }
+    }
+
+    /**
+     * Listener for handling content received via drag and drop or copy and paste.
+     *
+     * If the clip advertises media and contains a URI, handle the entire clip to preserve the order of
+     * text and media. In other clips, pass text items through to default handling.
+     */
+    val onReceiveContentListener =
+        OnReceiveContentListener { view, payload ->
+            val clip = payload.clip
+            if (!hasMedia(clip.description)) {
+                return@OnReceiveContentListener payload.partition { it.uri != null }.second
+            }
+            if (clip.items().none { it.uri != null }) {
+                return@OnReceiveContentListener payload
+            }
+
+            // Read the live preference synchronously. Launching a coroutine for withCol could
+            // let Save read the field before the media is inserted.
+            val pasteAsPng =
+                try {
+                    getColUnsafe().config.pasteImagesAsPng
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
+                    return@OnReceiveContentListener payload.partition { it.uri != null }.second
+                }
+            val content = readReceivedContent(view.context, payload, pasteAsPng)
+            if (content.isEmpty()) return@OnReceiveContentListener null
+
+            val field = view as EditText
+            fragment.insertStringInField(field, content)
+            if (field.hasFocus() && field.hasSelection()) {
+                field.setSelection(maxOf(field.selectionStart, field.selectionEnd))
+            }
+            null
+        }
+
+    /** Builds one insertion so both media and text retain their position in the clip. */
+    private fun readReceivedContent(
+        context: Context,
+        payload: ContentInfoCompat,
+        pasteAsPng: Boolean,
+    ): CharSequence =
+        buildSpannedString {
+            val clip = payload.clip
+            var followsText = false
+            for (item in clip.items()) {
+                val uri = item.uri
+                if (uri != null) {
+                    val tag = importPastedMedia(context, uri, clip.description, pasteAsPng) ?: continue
+                    append(tag)
+                    followsText = false
+                } else {
+                    val text =
+                        if (payload.flags and ContentInfoCompat.FLAG_CONVERT_TO_PLAIN_TEXT != 0) {
+                            item.coerceToText(context)?.toString()
+                        } else {
+                            item.coerceToStyledText(context)
+                        } ?: continue
+                    if (followsText) append('\n')
+                    append(text)
+                    followsText = true
+                }
+            }
+        }
+
     /**
      * Handles clipboard/drag-and-drop paste of a media [uri] into [editText].
      * Returns `true` if the paste produced a media tag, `false` otherwise.
      */
-    fun onPaste(
+    private fun onPaste(
         editText: EditText,
         uri: Uri,
         description: ClipDescription,
         pasteAsPng: Boolean,
     ): Boolean {
-        val context = fragment.requireContext()
-        val mediaTag =
-            MediaRegistration.onPaste(
-                context,
-                uri,
-                description,
-                pasteAsPng,
-                showError = { type -> fragment.showSnackbar(type.toHumanReadableString(context)) },
-            ) ?: return false
+        val mediaTag = importPastedMedia(fragment.requireContext(), uri, description, pasteAsPng) ?: return false
 
         fragment.insertStringInField(editText, mediaTag)
         return true
     }
+
+    private fun importPastedMedia(
+        context: Context,
+        uri: Uri,
+        description: ClipDescription,
+        pasteAsPng: Boolean,
+    ): String? =
+        MediaRegistration.onPaste(
+            context,
+            uri,
+            description,
+            pasteAsPng,
+            showError = { error -> fragment.showSnackbar(error.toHumanReadableString(context)) },
+        )
 
     /** Imports the captured media into the collection if the result carries any. */
     fun handleResult(result: MultimediaResult.Success) {
