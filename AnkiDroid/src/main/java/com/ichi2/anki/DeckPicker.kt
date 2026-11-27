@@ -2475,10 +2475,21 @@ open class DeckPicker :
             viewModel.deleteDeck(did).join()
         }
 
-    private fun deleteSelectedDeck() =
+    private fun deleteSelectedDeck() {
+        val sidePanel = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
         launchCatchingTask {
-            viewModel.deleteSelectedDeck().join()
+            viewModel
+                .deleteSelectedDeck(
+                    hasSidePanel = sidePanel != null,
+                    shownDeckId =
+                        when (sidePanel) {
+                            is StudyOptionsFragment -> sidePanel.shownDeckId
+                            is ScheduleRemindersFragment -> sidePanel.shownDeckId
+                            else -> null
+                        },
+                ).join()
         }
+    }
 
     private fun emptyFiltered(did: DeckId) {
         launchCatchingTask {
