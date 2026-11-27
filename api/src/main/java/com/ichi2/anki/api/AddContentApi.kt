@@ -3,14 +3,13 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 package com.ichi2.anki.api
 
-import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Process
 import android.util.SparseArray
 import com.ichi2.anki.FlashCardsContract
@@ -29,13 +28,28 @@ import java.util.Locale
  * On Android M (and higher) the #READ_WRITE_PERMISSION is required for all read/write operations.
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
  * this may be extended to all operations at a later date.
+ *
+ * The API talks to the trusted AnkiDroid provider when it is the sole option, or to the provider
+ * the user chose. Use [getSelectedProvider] to check what the API will use, and launch
+ * [getProviderChooserIntent] from your UI when the user wants to choose a provider.
  */
 @Suppress("unused")
 public class AddContentApi(
     context: Context,
 ) {
     private val context: Context = context.applicationContext
-    private val resolver: ContentResolver = this.context.contentResolver
+    private val selection = ProviderSelection(this.context)
+    private val resolver = TrustedResolver(this.context, selection)
+
+    // The resolver rejects calls when there is no provider in use.
+    private val authorityUri: Uri
+        get() = FlashCardsContract.getAuthorityUri(selection.inUse()?.authority ?: FlashCardsContract.AUTHORITY)
+    private val notesUri get() = Note.getContentUri(authorityUri)
+    private val notesV2Uri get() = Note.getContentUriV2(authorityUri)
+    private val modelsUri get() = Model.getContentUri(authorityUri)
+    private val decksUri get() = Deck.getContentAllUri(authorityUri)
+    private val selectedDeckUri get() = Deck.getContentSelectedUri(authorityUri)
+    private val mediaUri get() = AnkiMedia.getContentUri(authorityUri)
 
     /**
      * Create a new note with specified fields, tags, and model and place it in the specified deck.
@@ -75,7 +89,7 @@ public class AddContentApi(
         deckId: Long,
         values: ContentValues,
     ): Uri? {
-        val newNoteUri = resolver.insert(Note.CONTENT_URI, values) ?: return null
+        val newNoteUri = resolver.insert(notesUri, values) ?: return null
         // Move cards to specified deck
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
         val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return null
@@ -131,10 +145,13 @@ public class AddContentApi(
      * then set FLAG_GRANT_READ_URI_PERMISSION using something like:
      *
      * ```
-     *     getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-     *     // Then when file is added, remove the permission
-     *     // add File ...
-     * getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
+     * val provider = AddContentApi.getSelectedProvider(context) ?: return
+     * context.grantUriPermission(provider.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+     * try {
+     *     api.addMediaFromUri(uri, "My_Image_File", "image")
+     * } finally {
+     *     context.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+     * }
      * ```
      *
      * Example usage:
@@ -169,7 +186,7 @@ public class AddContentApi(
                 put(AnkiMedia.PREFERRED_NAME, preferredName.replace(" ", "_"))
             }
         return try {
-            val returnUri = resolver.insert(AnkiMedia.CONTENT_URI, contentValues)
+            val returnUri = resolver.insert(mediaUri, contentValues)
             // get the filename from Uri, return [sound:%s] % file.getName()
             val fname = File(returnUri!!.path!!).toString()
             formatMediaName(fname, mimeType)
@@ -197,14 +214,7 @@ public class AddContentApi(
     public fun findDuplicateNotes(
         mid: Long,
         key: String,
-    ): List<NoteInfo?> {
-        val notes = compat.findDuplicateNotes(mid, listOf(key))
-        return if (notes!!.size() == 0) {
-            emptyList<NoteInfo>()
-        } else {
-            notes.valueAt(0)
-        }
-    }
+    ): List<NoteInfo?> = compat.findDuplicateNotes(mid, listOf(key))?.get(0).orEmpty()
 
     /**
      * Find all notes in the collection which have mid and a first field that matches key
@@ -257,7 +267,7 @@ public class AddContentApi(
      * @return object containing the contents of note with noteID or null if there was a problem
      */
     public fun getNote(noteId: Long): NoteInfo? {
-        val noteUri = Uri.withAppendedPath(Note.CONTENT_URI, noteId.toString())
+        val noteUri = Uri.withAppendedPath(notesUri, noteId.toString())
         val query = resolver.query(noteUri, PROJECTION, null, null, null) ?: return null
         return query.use { cursor ->
             if (!cursor.moveToNext()) {
@@ -274,7 +284,7 @@ public class AddContentApi(
         tags: Set<String?>?,
     ): Boolean {
         val contentUri =
-            Note.CONTENT_URI
+            notesUri
                 .buildUpon()
                 .appendPath(noteId.toString())
                 .build()
@@ -303,7 +313,7 @@ public class AddContentApi(
             // avoid situation where addNote will pass, but deleteNote will fail
             throw SecurityException("previewNewNote requires full read-write-permission")
         }
-        val newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, setOf(TEST_TAG))
+        val newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, setOf(TEST_TAG)) ?: return null
         // Build map of HTML for each generated card
         val cards: MutableMap<String, Map<String, String>> = HashMap()
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
@@ -322,7 +332,7 @@ public class AddContentApi(
             }
         }
         // Delete the note
-        resolver.delete(newNoteUri!!, null, null)
+        resolver.delete(newNoteUri, null, null)
         return cards
     }
 
@@ -397,7 +407,7 @@ public class AddContentApi(
                 put(Model.DECK_ID, did)
                 put(Model.SORT_FIELD_INDEX, sortf)
             }
-        val modelUri = resolver.insert(Model.CONTENT_URI, values) ?: return null
+        val modelUri = resolver.insert(modelsUri, values) ?: return null
         // Set the remaining template parameters
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         for (i in cards.indices) {
@@ -421,7 +431,7 @@ public class AddContentApi(
     public val currentModelId: Long
         get() {
             // Get the current model
-            val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID)
+            val uri = Uri.withAppendedPath(modelsUri, Model.CURRENT_MODEL_ID)
             val singleModelQuery = resolver.query(uri, null, null, null, null) ?: return -1L
             return singleModelQuery.use { singleModelCursor ->
                 singleModelCursor.moveToFirst()
@@ -436,7 +446,7 @@ public class AddContentApi(
      */
     public fun getFieldList(modelId: Long): Array<String>? {
         // Get the current model
-        val uri = Uri.withAppendedPath(Model.CONTENT_URI, modelId.toString())
+        val uri = Uri.withAppendedPath(modelsUri, modelId.toString())
         val modelQuery = resolver.query(uri, null, null, null, null) ?: return null
         var splitFlds: Array<String>? = null
         modelQuery.use { modelCursor ->
@@ -465,7 +475,7 @@ public class AddContentApi(
     public fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
         val allModelsQuery =
-            resolver.query(Model.CONTENT_URI, null, null, null, null)
+            resolver.query(modelsUri, null, null, null, null)
                 ?: return null
         val models: MutableMap<Long, String> = HashMap()
         allModelsQuery.use { allModelsCursor ->
@@ -488,7 +498,7 @@ public class AddContentApi(
      * @param mid id of model
      * @return the name of the model, or null if no model was found
      */
-    public fun getModelName(mid: Long): String? = modelList!![mid]
+    public fun getModelName(mid: Long): String? = modelList?.get(mid)
 
     /**
      * Create a new deck with specified name and save the reference to SharedPreferences for later
@@ -498,7 +508,7 @@ public class AddContentApi(
     public fun addNewDeck(deckName: String): Long? {
         // Create a new note
         val values = ContentValues().apply { put(Deck.DECK_NAME, deckName) }
-        val newDeckUri = resolver.insert(Deck.CONTENT_ALL_URI, values)
+        val newDeckUri = resolver.insert(decksUri, values)
         return if (newDeckUri != null) {
             newDeckUri.lastPathSegment!!.toLong()
         } else {
@@ -519,7 +529,7 @@ public class AddContentApi(
         rawFlag: Int,
     ): Boolean {
         val cardsUri =
-            Note.CONTENT_URI
+            notesUri
                 .buildUpon()
                 .appendPath(noteId.toString())
                 .appendPath("cards")
@@ -536,7 +546,7 @@ public class AddContentApi(
         cardsQuery.use { cardsCursor ->
             while (cardsCursor.moveToNext()) {
                 val cardUri =
-                    Note.CONTENT_URI
+                    notesUri
                         .buildUpon()
                         .appendPath(noteId.toString())
                         .appendPath("cards")
@@ -569,7 +579,7 @@ public class AddContentApi(
         get() {
             val selectedDeckQuery =
                 resolver.query(
-                    Deck.CONTENT_SELECTED_URI,
+                    selectedDeckUri,
                     null,
                     null,
                     null,
@@ -592,7 +602,7 @@ public class AddContentApi(
         get() {
             // Get the current model
             val allDecksQuery =
-                resolver.query(Deck.CONTENT_ALL_URI, null, null, null, null) ?: return null
+                resolver.query(decksUri, null, null, null, null) ?: return null
             val decks: MutableMap<Long, String> = HashMap()
             allDecksQuery.use { allDecksCursor ->
                 while (allDecksCursor.moveToNext()) {
@@ -610,7 +620,7 @@ public class AddContentApi(
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
      */
-    public fun getDeckName(did: Long): String? = deckList!![did]
+    public fun getDeckName(did: Long): String? = deckList?.get(did)
 
     /**
      * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
@@ -626,24 +636,13 @@ public class AddContentApi(
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
     public val apiHostSpecVersion: Int
-        @SuppressLint("WrongConstant") // ComponentInfoFlags bug: GET_META_DATA.toLong() was invalid
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
+            val provider = selection.inUse() ?: return ANKIDROID_NOT_INSTALLED
             val info =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    context.packageManager.resolveContentProvider(
-                        FlashCardsContract.AUTHORITY,
-                        PackageManager.ComponentInfoFlags.of(
-                            PackageManager.GET_META_DATA.toLong(),
-                        ),
-                    )
-                } else {
-                    context.packageManager.resolveContentProvider(
-                        FlashCardsContract.AUTHORITY,
-                        PackageManager.GET_META_DATA,
-                    )
-                } ?: return ANKIDROID_NOT_INSTALLED
+                AnkiDroidProvider.find(context.packageManager, PackageManager.GET_META_DATA, provider.authority)
+                    ?: return ANKIDROID_NOT_INSTALLED
 
             return if (info.metaData != null &&
                 info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)
@@ -656,7 +655,7 @@ public class AddContentApi(
 
     private fun hasReadWritePermission(): Boolean =
         context.checkPermission(
-            READ_WRITE_PERMISSION,
+            selection.inUse()?.permission ?: READ_WRITE_PERMISSION,
             Process.myPid(),
             Process.myUid(),
         ) == PackageManager.PERMISSION_GRANTED
@@ -703,7 +702,7 @@ public class AddContentApi(
             val modelName = getModelName(modelId) ?: return null
             val queryFormat = "note:\"$modelName\""
             return resolver.query(
-                Note.CONTENT_URI,
+                notesUri,
                 PROJECTION,
                 queryFormat,
                 null,
@@ -730,7 +729,7 @@ public class AddContentApi(
                 val selection = String.format(queryFormat, keys[outputPos])
                 val query =
                     resolver.query(
-                        Note.CONTENT_URI,
+                        notesUri,
                         PROJECTION,
                         selection,
                         null,
@@ -768,7 +767,7 @@ public class AddContentApi(
     private inner class CompatV2 : CompatV1() {
         override fun queryNotes(modelId: Long): Cursor? =
             resolver.query(
-                Note.CONTENT_URI_V2,
+                notesV2Uri,
                 PROJECTION,
                 String.format(Locale.US, "%s=%d", Note.MID, modelId),
                 null,
@@ -780,7 +779,7 @@ public class AddContentApi(
             valuesArr: Array<ContentValues>,
         ): Int {
             val builder =
-                Note.CONTENT_URI.buildUpon().appendQueryParameter(
+                notesUri.buildUpon().appendQueryParameter(
                     Note.DECK_ID_QUERY_PARAM,
                     deckId.toString(),
                 )
@@ -814,7 +813,7 @@ public class AddContentApi(
                 )
             val notesTableQuery =
                 resolver.query(
-                    Note.CONTENT_URI_V2,
+                    notesV2Uri,
                     PROJECTION,
                     sel,
                     null,
@@ -857,24 +856,117 @@ public class AddContentApi(
             )
 
         /**
-         * Get the AnkiDroid package name that the API will communicate with.
-         * This can be used to check that a supported version of AnkiDroid is installed,
-         * or to get the application label and icon, etc.
+         * Get the verified AnkiDroid package that holds [FlashCardsContract.AUTHORITY].
+         *
+         * The app holding [FlashCardsContract.AUTHORITY] counts as AnkiDroid only if it has AnkiDroid's
+         * package name and is signed with AnkiDroid's release key. Other builds of AnkiDroid are accepted
+         * only while the calling app is debuggable. Apps that use [FlashCardsContract] directly should
+         * verify the package via this method before using the fixed AnkiDroid URIs. Use
+         * [getSelectedProvider] for the provider used by this class.
+         *
          * @param context a Context that can be used to get the PackageManager
-         * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
+         * @return the package name of verified AnkiDroid, or null if unavailable
          */
         @JvmStatic // required for API
-        public fun getAnkiDroidPackageName(context: Context): String? {
-            val manager = context.packageManager
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                manager
-                    .resolveContentProvider(
-                        FlashCardsContract.AUTHORITY,
-                        PackageManager.ComponentInfoFlags.of(0L),
-                    )?.packageName
-            } else {
-                manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)?.packageName
-            }
+        public fun getAnkiDroidPackageName(context: Context): String? = AnkiDroidProvider.resolve(context)?.packageName
+
+        /**
+         * The provider selected for API calls, with its package, authority and permission.
+         * Returns null when no provider is available or the user still needs to choose.
+         */
+        @JvmStatic
+        public fun getSelectedProvider(context: Context): FlashCardsProvider? = ProviderSelection(context).inUse()
+
+        /**
+         * Installed apps offering the [FlashCardsContract] provider that this app can use: AnkiDroid,
+         * its parallel builds and forks, if this app requests their permission in its manifest.
+         * Providers declare [FlashCardsContract.ACTION_FLASHCARDS_PROVIDER] to be found.
+         * @param context a Context that can be used to get the PackageManager
+         * @return the providers, AnkiDroid first, empty if none is installed
+         */
+        @JvmStatic // required for API
+        public fun getProviders(context: Context): List<FlashCardsProvider> = ProviderSelection(context).installed()
+
+        /**
+         * An explicit intent for the provider chooser. Launch it for a result from a visible Activity
+         * in response to a user action, such as tapping a setting.
+         *
+         * The Activity returns [android.app.Activity.RESULT_OK] after saving the choice and
+         * [android.app.Activity.RESULT_CANCELED] otherwise. Read [getSelectedProvider] after success.
+         */
+        @JvmStatic // required for API
+        public fun getProviderChooserIntent(context: Context): Intent = Intent(context, ProviderChooserActivity::class.java)
+    }
+}
+
+/**
+ * The [ContentResolver] calls [AddContentApi] makes, which only reach the provider in use: AnkiDroid
+ * signed with its release key, or the app the user chose. Blocked calls return null or 0, as for a failed call.
+ */
+private class TrustedResolver(
+    context: Context,
+    private val selection: ProviderSelection,
+) {
+    private val resolver: ContentResolver = context.contentResolver
+
+    private fun blocked(uri: Uri): Boolean {
+        val provider = selection.inUse() ?: return true
+        return provider.authority != uri.authority
+    }
+
+    fun query(
+        uri: Uri,
+        projection: Array<String>?,
+        selection: String?,
+        selectionArgs: Array<String>?,
+        sortOrder: String?,
+    ): Cursor? {
+        if (blocked(uri)) {
+            return null
         }
+        return resolver.query(uri, projection, selection, selectionArgs, sortOrder)
+    }
+
+    fun insert(
+        uri: Uri,
+        values: ContentValues,
+    ): Uri? {
+        if (blocked(uri)) {
+            return null
+        }
+        return resolver.insert(uri, values)
+    }
+
+    fun bulkInsert(
+        uri: Uri,
+        values: Array<ContentValues>,
+    ): Int {
+        if (blocked(uri)) {
+            return 0
+        }
+        return resolver.bulkInsert(uri, values)
+    }
+
+    fun update(
+        uri: Uri,
+        values: ContentValues,
+        where: String?,
+        selectionArgs: Array<String>?,
+    ): Int {
+        if (blocked(uri)) {
+            return 0
+        }
+        return resolver.update(uri, values, where, selectionArgs)
+    }
+
+    fun delete(
+        uri: Uri,
+        where: String?,
+        selectionArgs: Array<String>?,
+    ): Int {
+        if (blocked(uri)) {
+            return 0
+        }
+        return resolver.delete(uri, where, selectionArgs)
     }
 }
