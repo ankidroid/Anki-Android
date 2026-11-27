@@ -210,6 +210,7 @@ abstract class NavigationDrawerActivity(
                     super.onDrawerOpened(drawerView)
                     invalidateOptionsMenu()
                     drawerBackCallback.isEnabled = true
+                    prioritizeDrawerBackCallback()
                 }
             }
         if (drawerLayout is ClosableDrawerLayout) {
@@ -258,6 +259,12 @@ abstract class NavigationDrawerActivity(
      */
     @CallSuper
     protected open fun setupBackPressedCallbacks() {
+        prioritizeDrawerBackCallback()
+    }
+
+    /** Keep an open drawer above Back callbacks registered later by fragments or other overlays. */
+    protected fun prioritizeDrawerBackCallback() {
+        drawerBackCallback.remove()
         onBackPressedDispatcher.addCallback(this, drawerBackCallback)
     }
 

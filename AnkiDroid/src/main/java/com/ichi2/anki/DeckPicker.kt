@@ -127,6 +127,7 @@ import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerProgress
+import com.ichi2.anki.deckpicker.DeckPickerSidePanel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AutomaticSyncAction
@@ -542,11 +543,8 @@ open class DeckPicker :
 
         setViewBinding(binding)
         if (!fragmented) {
-            // On recreation into this single-pane layout (e.g. a foldable changing form
-            // factor), saved state can still hold the split-pane's side panel fragment.
-            // A restored fragment without its container is never displayed, but it would
-            // still reach its view lifecycle and register its menu items with this
-            // activity. Remove it before that happens. See #21555.
+            // Remove the pane owner before its views are created. Its child FragmentManager
+            // is discarded too, so Back cannot restore content into the missing container.
             supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)?.let { restoredFragment ->
                 supportFragmentManager.commitNow {
                     remove(restoredFragment)
@@ -624,6 +622,7 @@ open class DeckPicker :
                 toggleListener =
                     FloatingActionBarToggleListener { isOpening ->
                         closeFloatingActionBarBackPressCallback.isEnabled = isOpening
+                        if (isOpening) prioritizeOverlayBackCallbacks()
                     },
                 initiallyOpen = savedInstanceState?.getBoolean("mIsFABOpen") == true,
             )
@@ -715,6 +714,12 @@ open class DeckPicker :
         onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback())
         onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
         super.setupBackPressedCallbacks()
+    }
+
+    private fun prioritizeOverlayBackCallbacks() {
+        closeFloatingActionBarBackPressCallback.remove()
+        onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
+        prioritizeDrawerBackCallback()
     }
 
     override fun fitsSystemWindows(): Boolean = false
@@ -2228,12 +2233,20 @@ open class DeckPicker :
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
-
-        // Only clear navigation when closing another side panel. Import dialogs can already
-        // be on the back stack when startup finishes, and must survive panel initialization.
-        val sidePanel = supportFragmentManager.findFragmentById(containerId)
+        val pane =
+            supportFragmentManager.findFragmentById(containerId) as? DeckPickerSidePanel ?: DeckPickerSidePanel().also {
+                supportFragmentManager.commitNow {
+                    replace(containerId, it)
+                    setPrimaryNavigationFragment(it)
+                }
+                // A restored Add menu may already be open before the pane registers its Back callback.
+                prioritizeOverlayBackCallbacks()
+            }
+        val paneManager = pane.childFragmentManager
+        // Only the pane's navigation is cleared; activity-level dialogs have their own history.
+        val sidePanel = paneManager.findFragmentById(R.id.studyoptions_content)
         if (sidePanel != null && sidePanel !is StudyOptionsFragment) {
-            supportFragmentManager.popBackStackImmediate(
+            paneManager.popBackStackImmediate(
                 null,
                 FragmentManager.POP_BACK_STACK_INCLUSIVE,
             )
@@ -2243,8 +2256,8 @@ open class DeckPicker :
         if (studyOptions != null) {
             studyOptions.refreshInterface()
         } else {
-            supportFragmentManager.commitNow {
-                replace(containerId, StudyOptionsFragment())
+            paneManager.commitNow {
+                replace(R.id.studyoptions_content, StudyOptionsFragment())
             }
         }
         return true
@@ -2254,20 +2267,24 @@ open class DeckPicker :
     private fun tryShowScheduleRemindersPanel(deckId: DeckId): Boolean {
         val sidePanel = binding.studyoptionsFragment ?: return false
         if (!sidePanel.isVisible) return false
+        val paneManager = studyOptionsFragmentManager ?: return false
         val newFragment =
             ScheduleRemindersFragment.newInstance(
                 scope = ReviewReminderScope.DeckSpecific(deckId),
                 host = ScheduleRemindersFragment.FragmentHost.STUDY_OPTIONS_FRAGMENT,
             )
-        supportFragmentManager.commit {
-            replace(sidePanel.id, newFragment)
+        paneManager.commit {
+            replace(R.id.studyoptions_content, newFragment)
             addToBackStack(null)
         }
         return true
     }
 
     val fragment: StudyOptionsFragment?
-        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) as? StudyOptionsFragment
+        get() = studyOptionsFragmentManager?.findFragmentById(R.id.studyoptions_content) as? StudyOptionsFragment
+
+    internal val studyOptionsFragmentManager: FragmentManager?
+        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)?.childFragmentManager
 
     /**
      * Refresh the deck picker when the SD card is inserted.
