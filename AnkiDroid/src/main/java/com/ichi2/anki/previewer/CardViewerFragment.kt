@@ -224,7 +224,7 @@ abstract class CardViewerFragment(
         viewModel.onError.receiveAsFlow().collectInViewLifecycle { requireActivity().showException(it) }
 
         viewModel.onMediaError.collectInViewLifecycle {
-            showMediaErrorSnackbar(it)
+            showMediaErrorSnackbar()
         }
         viewModel.onTtsError.collectInViewLifecycle {
             showSnackbar(it.localizedErrorMessage(requireContext()))
@@ -369,9 +369,24 @@ abstract class CardViewerFragment(
         ) {
             Timber.w("WebView error received")
             Timber.d("WebView error %d (%s): %s %s", error.errorCode, error.description, request.method, request.url)
-            viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
-                showMediaErrorSnackbar(filename)
-            }
+            viewModel.mediaErrorHandler.processFailure(request) { showMediaErrorSnackbar() }
+        }
+
+        override fun onReceivedHttpError(
+            view: WebView,
+            request: WebResourceRequest,
+            errorResponse: WebResourceResponse,
+        ) {
+            Timber.w("WebView HTTP error received")
+            Timber.d(
+                "WebView HTTP error %d (%s): %s %s",
+                errorResponse.statusCode,
+                errorResponse.reasonPhrase,
+                request.method,
+                request.url,
+            )
+            if (request.method != "GET") return
+            viewModel.mediaErrorHandler.processFailure(request) { showMediaErrorSnackbar() }
         }
     }
 
@@ -447,8 +462,8 @@ abstract class CardViewerFragment(
         }
     }
 
-    private fun showMediaErrorSnackbar(filename: String) {
-        showSnackbar(getString(CommonString.card_viewer_could_not_find_image, filename)) {
+    private fun showMediaErrorSnackbar() {
+        showSnackbar(CommonString.card_viewer_missing_media) {
             setAction(CommonString.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
