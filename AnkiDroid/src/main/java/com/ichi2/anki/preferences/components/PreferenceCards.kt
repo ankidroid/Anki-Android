@@ -3,14 +3,21 @@
 package com.ichi2.anki.preferences.components
 
 import android.content.res.Configuration
+import android.graphics.Rect
+import android.view.ViewTreeObserver
+import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -30,10 +37,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,6 +54,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -60,6 +70,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.settings.enums.Theme
@@ -152,12 +167,34 @@ fun PreferenceStepperCard(
             else -> 24.dp
         }
     var textValue by rememberSaveable { mutableStateOf(value.toString()) }
+    var isInputFocused by remember { mutableStateOf(false) }
+    var isStepperOperating by remember { mutableStateOf(false) }
+    var isUserEdited by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
+    if (!isInputFocused && !isUserEdited && textValue != value.toString()) {
+        textValue = value.toString()
+    }
+
     LaunchedEffect(value) {
-        if (textValue.toIntOrNull() != value) {
+        if (!isUserEdited) {
             textValue = value.toString()
         }
+    }
+
+    // DEFECT: Accessible scrolling or tapping outside may leave an unfocused accessibility edit uncommitted.
+    fun commitOrRevert(force: Boolean = false) {
+        if (isStepperOperating) return
+        val parsedInput = textValue.toIntOrNull()
+        if (parsedInput != null && parsedInput in validRange) {
+            if ((force || isUserEdited) && parsedInput != value) {
+                onValueChange(parsedInput)
+            }
+            textValue = parsedInput.toString()
+        } else {
+            textValue = value.toString()
+        }
+        isUserEdited = false
     }
 
     val count = textValue.toIntOrNull() ?: value
@@ -176,69 +213,98 @@ fun PreferenceStepperCard(
             IconButtonDefaults.filledTonalIconButtonColors()
         }
 
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = if (isLandscape) 10.dp else 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+        val isNarrowPane = maxWidth <= 340.dp
+        val horizontalCardPadding = if (isNarrowPane) 4.dp else 20.dp
+        val buttonSize = if (isNarrowPane) 44.dp else 56.dp
+
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
         ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = preferenceCardContentColor(),
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = horizontalCardPadding, vertical = if (isLandscape) 10.dp else 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                StepperButton(
-                    iconRes = CommonR.drawable.ic_remove,
-                    contentDescription = stringResource(CommonString.minus_sign),
-                    enabled = (textValue.toIntOrNull() ?: value) > validRange.first,
-                    colors = buttonColors,
-                    border = controlBorder,
-                    iconSize = iconSize,
-                    onClick = {
-                        val currentVal = textValue.toIntOrNull() ?: value
-                        val prevVal = (currentVal - 1).coerceIn(validRange)
-                        textValue = prevVal.toString()
-                        onValueChange(prevVal)
-                        focusManager.clearFocus()
-                    },
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = preferenceCardContentColor(),
                 )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    val currentDraft =
+                        textValue.toIntOrNull()?.takeIf { it in validRange } ?: value
 
-                StepperInputField(
-                    textValue = textValue,
-                    onTextChange = { textValue = it },
-                    value = value,
-                    onValueChange = onValueChange,
-                    validRange = validRange,
-                    suffixText = suffixText,
-                    controlBorder = controlBorder,
-                )
+                    // DEFECT: Stepper buttons miss taps near their inner edges on narrow screens (e.g. w320dp).
+                    // DEFECT: Two rapid stepper taps before Compose recomposes can be coalesced into a single increment.
+                    StepperButton(
+                        iconRes = CommonR.drawable.ic_remove,
+                        contentDescription = stringResource(CommonString.minus_sign),
+                        enabled = currentDraft > validRange.first,
+                        colors = buttonColors,
+                        border = controlBorder,
+                        buttonSize = buttonSize,
+                        iconSize = iconSize,
+                        onClick = {
+                            isStepperOperating = true
+                            try {
+                                val draft = textValue.toIntOrNull() ?: value
+                                val prevVal = (draft - 1).coerceIn(validRange)
+                                isUserEdited = false
+                                textValue = value.toString()
+                                focusManager.clearFocus()
+                                onValueChange(prevVal)
+                            } finally {
+                                isStepperOperating = false
+                            }
+                        },
+                    )
 
-                StepperButton(
-                    iconRes = CommonR.drawable.ic_add,
-                    contentDescription = stringResource(CommonString.plus_sign),
-                    enabled = (textValue.toIntOrNull() ?: value) < validRange.last,
-                    colors = buttonColors,
-                    border = controlBorder,
-                    iconSize = iconSize,
-                    onClick = {
-                        val currentVal = textValue.toIntOrNull() ?: value
-                        val nextVal = (currentVal + 1).coerceIn(validRange)
-                        textValue = nextVal.toString()
-                        onValueChange(nextVal)
-                        focusManager.clearFocus()
-                    },
-                )
+                    StepperInputField(
+                        textValue = textValue,
+                        onTextChange = {
+                            textValue = it
+                            isUserEdited = true
+                        },
+                        validRange = validRange,
+                        suffixText = suffixText,
+                        controlBorder = controlBorder,
+                        isNarrowPane = isNarrowPane,
+                        commitOrRevert = ::commitOrRevert,
+                        onFocusChange = { isInputFocused = it },
+                    )
+
+                    StepperButton(
+                        iconRes = CommonR.drawable.ic_add,
+                        contentDescription = stringResource(CommonString.plus_sign),
+                        enabled = currentDraft < validRange.last,
+                        colors = buttonColors,
+                        border = controlBorder,
+                        buttonSize = buttonSize,
+                        iconSize = iconSize,
+                        onClick = {
+                            isStepperOperating = true
+                            try {
+                                val draft = textValue.toIntOrNull() ?: value
+                                val nextVal = (draft + 1).coerceIn(validRange)
+                                isUserEdited = false
+                                textValue = value.toString()
+                                focusManager.clearFocus()
+                                onValueChange(nextVal)
+                            } finally {
+                                isStepperOperating = false
+                            }
+                        },
+                    )
+                }
             }
         }
     }
@@ -253,11 +319,12 @@ private fun StepperButton(
     border: BorderStroke?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    buttonSize: Dp = 56.dp,
     iconSize: Dp = 24.dp,
 ) {
     OutlinedIconButton(
         onClick = onClick,
-        modifier = modifier.size(56.dp),
+        modifier = modifier.size(buttonSize),
         shape = RoundedCornerShape(16.dp),
         colors = colors,
         border = border,
@@ -271,26 +338,80 @@ private fun StepperButton(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun RowScope.StepperInputField(
     textValue: String,
     onTextChange: (String) -> Unit,
-    value: Int,
-    onValueChange: (Int) -> Unit,
     validRange: IntRange,
     suffixText: String,
     controlBorder: BorderStroke?,
+    isNarrowPane: Boolean,
+    commitOrRevert: (force: Boolean) -> Unit,
+    onFocusChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
-    fun commitOrRevert() {
-        val p = textValue.toIntOrNull()
-        if (p != null && p in validRange) {
-            onValueChange(p)
-        } else {
-            onTextChange(value.toString())
+    BackHandler(enabled = isFocused) {
+        commitOrRevert(false)
+        focusManager.clearFocus(force = true)
+    }
+
+    val isImeVisible = WindowInsets.isImeVisible
+    LaunchedEffect(isImeVisible) {
+        if (!isImeVisible && isFocused) {
+            focusManager.clearFocus(force = true)
+        }
+    }
+
+    val currentCommitOrRevert by rememberUpdatedState(commitOrRevert)
+
+    val view = LocalView.current
+    DisposableEffect(view, isFocused) {
+        val decorView = view.rootView
+        var wasOpen = ViewCompat.getRootWindowInsets(decorView)?.isVisible(WindowInsetsCompat.Type.ime()) == true
+        val listener =
+            ViewTreeObserver.OnGlobalLayoutListener {
+                val insets = ViewCompat.getRootWindowInsets(decorView)
+                val isImeNow = insets?.isVisible(WindowInsetsCompat.Type.ime()) == true
+                val rect = Rect()
+                decorView.getWindowVisibleDisplayFrame(rect)
+                val screenHeight = decorView.height
+                val keypadHeight = screenHeight - rect.bottom
+                val isOpen = isImeNow || (screenHeight > 0 && keypadHeight > screenHeight * 0.15)
+                if (wasOpen && !isOpen && isFocused) {
+                    currentCommitOrRevert(false)
+                    focusManager.clearFocus(force = true)
+                }
+                wasOpen = isOpen
+            }
+        decorView.viewTreeObserver.addOnGlobalLayoutListener(listener)
+        onDispose {
+            decorView.viewTreeObserver.removeOnGlobalLayoutListener(listener)
+        }
+    }
+
+    // Commits valid uncommitted text when backgrounding the screen (e.g. pressing Home).
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_STOP) {
+                    currentCommitOrRevert(false)
+                }
+            }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    // Commits valid uncommitted text or reverts invalid input when leaving composition (e.g. back press).
+    DisposableEffect(Unit) {
+        onDispose {
+            currentCommitOrRevert(false)
         }
     }
 
@@ -306,26 +427,23 @@ private fun RowScope.StepperInputField(
     OutlinedTextField(
         value = textValue,
         onValueChange = { input ->
-            val digits = input.filter { it.isDigit() }
-            val noLeadingZeros =
-                if (digits.length > 1 && digits.startsWith("0")) {
-                    digits.trimStart('0').ifEmpty { "0" }
-                } else {
-                    digits
-                }
+            val digits =
+                input
+                    .filter { it.isDigit() }
+                    .map { ('0'.code + Character.digit(it, 10)).toChar() }
+                    .joinToString("")
+            val significantDigits = digits.trimStart('0')
             val maxDigits = validRange.last.toString().length
-            val filtered = noLeadingZeros.take(maxDigits)
-            onTextChange(filtered)
-            val p = filtered.toIntOrNull()
-            if (p != null && p in validRange) {
-                onValueChange(p)
+            if (significantDigits.length > maxDigits) {
+                return@OutlinedTextField
             }
+            onTextChange(digits)
         },
         modifier =
             modifier
                 .weight(1f, fill = false)
-                .widthIn(max = 130.dp)
-                .padding(horizontal = 3.dp)
+                .widthIn(max = 220.dp)
+                .padding(horizontal = 0.dp)
                 .then(
                     if (inputBorder != null) {
                         Modifier.border(inputBorder, RoundedCornerShape(12.dp))
@@ -335,14 +453,15 @@ private fun RowScope.StepperInputField(
                 ).onFocusChanged { focusState ->
                     val lostFocus = isFocused && !focusState.isFocused
                     isFocused = focusState.isFocused
+                    onFocusChange(focusState.isFocused)
                     if (lostFocus) {
-                        commitOrRevert()
+                        commitOrRevert(false)
                     }
                 },
         suffix = {
             Text(
                 text = suffixText,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.labelMedium.copy(fontSize = if (isNarrowPane) 8.sp else 9.sp),
                 color = preferenceCardContentColor(),
             )
         },
@@ -369,7 +488,7 @@ private fun RowScope.StepperInputField(
         keyboardActions =
             KeyboardActions(
                 onDone = {
-                    commitOrRevert()
+                    commitOrRevert(true)
                     focusManager.clearFocus()
                 },
             ),
