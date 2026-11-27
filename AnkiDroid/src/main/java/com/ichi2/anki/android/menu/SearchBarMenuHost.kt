@@ -58,7 +58,9 @@ interface SearchBarMenuHost : MenuHost {
     // alias to make `MenuHostHelper { invalidateMenu() }` more readable
     // now: `MenuHostHelper { invalidateSearchBarMenu() }`
     fun invalidateSearchBarMenu() {
-        searchBar?.menu?.rebuild(menuHostHelper, menuInflater)
+        val searchBar = searchBar ?: return
+        searchBar.setOnMenuItemClickListener { menuItem -> menuHostHelper.onMenuItemSelected(menuItem) }
+        searchBar.menu.rebuild(menuHostHelper, menuInflater)
     }
 }
 
@@ -81,9 +83,5 @@ private fun Menu.rebuild(
         // Setup RtlCompliantActionProvider (undo)
         val rtlActionProvider = MenuItemCompat.getActionProvider(menuItem) as? RtlCompliantActionProvider
         rtlActionProvider?.clickHandler = { _, menuItem -> menuHostHelper.onMenuItemSelected(menuItem) }
-
-        menuItem.setOnMenuItemClickListener { item ->
-            menuHostHelper.onMenuItemSelected(item)
-        }
     }
 }
