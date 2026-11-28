@@ -8,11 +8,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
@@ -22,7 +26,10 @@ import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.noteeditor.NoteEditorMultimediaController.Companion.STATE_KEY_IMAGE_CACHE
+import com.ichi2.anki.setCardBrowserFragmented
 import com.ichi2.anki.throwOnShowError
+import com.ichi2.anki.waitForSearchResults
+import com.ichi2.testutils.withSplitPaneUi
 import io.mockk.every
 import io.mockk.mockkConstructor
 import io.mockk.verify
@@ -270,6 +277,39 @@ class NoteEditorMultimediaControllerTest : RobolectricTest() {
             dispatcher.close()
         }
     }
+
+    @Test
+    fun `restored attachment menu keeps its target field`() =
+        withSplitPaneUi {
+            ensureCollectionLoadIsSynchronous()
+            setCardBrowserFragmented(true)
+            addBasicNote("front", "back")
+            val controller = startActivityControllerNormallyOpenCollectionWithIntent(CardBrowser::class.java, Intent())
+            controller.get().viewModel.setQuery("deck:Default", forceRefresh = true)
+            controller.get().waitForSearchResults()
+            advanceRobolectricLooper()
+            val editor = requireNotNull(controller.get().fragment)
+            editor
+                .requireView()
+                .findViewById<ViewGroup>(R.id.CardEditorEditFieldsLayout)
+                .getChildAt(1)
+                .findViewById<View>(R.id.media_button)
+                .performClick()
+            advanceRobolectricLooper()
+
+            controller.recreate()
+            advanceRobolectricLooper()
+            val restoredEditor = requireNotNull(controller.get().fragment)
+            val sheet = restoredEditor.parentFragmentManager.findFragmentByTag("MultimediaBottomSheet") as MultimediaBottomSheet
+            assertThat("the attachment menu is restored", sheet.requireDialog().isShowing, equalTo(true))
+            sheet.requireView().findViewById<View>(R.id.multimedia_action_recording).performClick()
+            advanceRobolectricLooper()
+
+            val started = shadowOf(controller.get()).nextStartedActivity
+            assertThat("the chosen recorder opens", started?.component?.className, equalTo(MultimediaActivity::class.java.name))
+            val argsFile = started!!.extras!!.getSerializableCompat<File>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)!!
+            assertThat("the original field remains selected", MultimediaArgsStorage.create(targetContext).read(argsFile).index, equalTo(1))
+        }
 
     private fun openNoteEditor(): NoteEditorFragment {
         ensureCollectionLoadIsSynchronous()
