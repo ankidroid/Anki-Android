@@ -57,6 +57,13 @@ object ReadText {
     private var ttsEngine: String? = null
     private var languageSelectionJob: Job? = null
 
+    /** Whether speech is initializing, waiting for a voice to be chosen, or currently speaking */
+    val isSpeechPending: Boolean
+        get() =
+            (initialization != null && ttsEngine == null) ||
+                languageSelectionJob?.isActive == true ||
+                textToSpeech?.isSpeaking == true
+
     private fun speak(
         text: String?,
         loc: String,

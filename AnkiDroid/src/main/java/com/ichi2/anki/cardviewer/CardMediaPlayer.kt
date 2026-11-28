@@ -211,6 +211,9 @@ class CardMediaPlayer : Closeable {
                         Timber.w(e, "Exception playing AV Tag")
                     }
                     Timber.v("completed playing one AV Tag")
+                    // An inline replay replaced the automatic playback: release the hold
+                    // that callers keep on media, so a pending auto-advance can resume.
+                    onMediaGroupCompleted?.invoke()
                     playAvTagsJob = null
                 }
             }

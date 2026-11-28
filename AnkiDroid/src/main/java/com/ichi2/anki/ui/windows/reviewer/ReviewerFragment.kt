@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager
@@ -211,6 +212,7 @@ class ReviewerFragment :
 
         viewModel.onCardUpdatedFlow
             .onEach {
+                onCardChanged()
                 // reset zoom if the card changes (incl. bury/suspend)
                 reviewerWebViewClient.resetZoom()
                 binding.typeAnswerEditText.text = null
@@ -364,6 +366,19 @@ class ReviewerFragment :
 
         if (whiteboardFragment?.onScreenShake() != true) {
             bindingMap.onGesture(Gesture.SHAKE)
+        }
+    }
+
+    override fun onLaunchWarningShown() {
+        // pause auto-advance so cards are not graded behind the dialog
+        viewModel.pauseAutoAdvanceForLaunchWarning()
+    }
+
+    override fun onLaunchWarningDismissed() {
+        // Settings can dismiss the dialog after this fragment has stopped. Do not restart a timer
+        // while the reviewer is covered; it will be restored when the card is rendered again.
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            viewModel.resumeAutoAdvance()
         }
     }
 

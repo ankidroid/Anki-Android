@@ -3,6 +3,7 @@
 package com.ichi2.anki.previewer
 
 import android.os.Build
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
@@ -39,6 +40,9 @@ import org.robolectric.shadows.ShadowDialog
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // WebChromeClient
 @RunWith(AndroidJUnit4::class)
 class CardViewerFragmentTest : RobolectricTest() {
+    // Changing the selected card renders its media controls, which requires a media folder.
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     @Test
     fun `web links open with external app permission disabled`() {
         editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
@@ -66,6 +70,112 @@ class CardViewerFragmentTest : RobolectricTest() {
             for (url in urls) {
                 shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
                 targetContext.assertNoActivityStarted(url)
+            }
+        }
+    }
+
+    @Test
+    fun `blocked launch warnings do not stack`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        withCardViewerWebView { webView ->
+            repeat(3) {
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("intent://example.org/#Intent;scheme=https;end"),
+                )
+                advanceRobolectricLooper()
+            }
+            assertThat(
+                "blocked navigation must not stack modal warnings over the card",
+                ShadowDialog.getShownDialogs().size,
+                equalTo(1),
+            )
+        }
+    }
+
+    @Test
+    fun `dismissing the launch warning stops it reopening for repeated launches`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        withCardViewerWebView { webView ->
+            val url = "intent://example.org/#Intent;scheme=https;end"
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
+            advanceRobolectricLooper()
+            assertThat(ShadowDialog.getShownDialogs().size, equalTo(1))
+
+            ShadowDialog.getLatestDialog().cancel()
+            advanceRobolectricLooper()
+
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
+            advanceRobolectricLooper()
+            assertThat(
+                "a dismissed warning must not reopen while the same card is displayed",
+                ShadowDialog.getShownDialogs().size,
+                equalTo(1),
+            )
+        }
+    }
+
+    @Test
+    fun `launch warning can be shown again after previewing a different card`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+
+        // The previewer contains two cards from the reversed note. The warning must be scoped to
+        // the card that triggered it, rather than suppressing all later cards in this activity.
+        val note = addBasicAndReversedNote()
+        val intent =
+            PreviewerFragment.getIntent(
+                targetContext,
+                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col), IdsFile.Purpose.PREVIEW),
+                currentIndex = 0,
+            )
+
+        ActivityScenario.launch<CardViewerActivity>(intent).use { scenario ->
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            scenario.onActivity { activity ->
+                val webViewLayout = activity.findViewById<ViewGroup>(R.id.web_view_layout)
+                val webView =
+                    (0 until webViewLayout.childCount)
+                        .map { webViewLayout.getChildAt(it) }
+                        .filterIsInstance<WebView>()
+                        .single()
+                val nextButton = activity.findViewById<View>(R.id.next_button)
+
+                // Trigger and dismiss the warning for the first card. The dismissal intentionally
+                // enables suppression until the fragment reports a card change.
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("market://details?id=com.example"),
+                )
+                advanceRobolectricLooper()
+                assertThat(ShadowDialog.getShownDialogs().count { it.isShowing }, equalTo(1))
+                ShadowDialog.getLatestDialog().cancel()
+                advanceRobolectricLooper()
+
+                // Move from the first card's question to answer, then to the second card.
+                // The navigation runs on a background dispatcher: wait for each step to land,
+                // otherwise the second click only repeats the first one.
+                val previewer = activity.fragment as PreviewerFragment
+                nextButton.performClick()
+                advanceRobolectricLooperUntil { previewer.viewModel.showingAnswer.value }
+                nextButton.performClick()
+                advanceRobolectricLooperUntil { previewer.viewModel.currentIndex.value == 1 }
+                advanceRobolectricLooper()
+
+                // This assertion fails on the reviewed commit because PreviewerFragment never
+                // resets suppression when PreviewerViewModel changes currentIndex.
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                    webView,
+                    mockWebResourceRequest("market://details?id=com.example"),
+                )
+                advanceRobolectricLooper()
+                assertThat(
+                    "a new preview card must be allowed to show its own launch warning",
+                    ShadowDialog.getShownDialogs().count { it.isShowing },
+                    equalTo(1),
+                )
             }
         }
     }

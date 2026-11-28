@@ -40,6 +40,10 @@ class AutoAdvance(
                 cancelQuestionAndAnswerActionJobs()
             }
         }
+
+    /** While paused, no actions are scheduled: a modal dialog is hiding the reviewer */
+    private var isPaused = false
+
     private var questionActionJob: Job? = null
     private var answerActionJob: Job? = null
 
@@ -63,6 +67,15 @@ class AutoAdvance(
         answerActionJob?.cancel()
     }
 
+    fun pause() {
+        isPaused = true
+        cancelQuestionAndAnswerActionJobs()
+    }
+
+    fun resume() {
+        isPaused = false
+    }
+
     fun onCardChange(card: Card) {
         cancelQuestionAndAnswerActionJobs()
         settings =
@@ -73,6 +86,8 @@ class AutoAdvance(
 
     suspend fun onShowQuestion() {
         answerActionJob?.cancel()
+        questionActionJob?.cancel()
+        if (isPaused) return
         if (!durationToShowQuestionFor().isPositive() || !isEnabled) return
 
         questionActionJob =
@@ -84,6 +99,8 @@ class AutoAdvance(
 
     suspend fun onShowAnswer() {
         questionActionJob?.cancel()
+        answerActionJob?.cancel()
+        if (isPaused) return
         if (!durationToShowAnswerFor().isPositive() || !isEnabled) return
 
         answerActionJob =

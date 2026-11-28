@@ -36,6 +36,7 @@ import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.pages.PostRequestBridge
 import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.ExternalAppLaunchWarning
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showException
 import com.ichi2.anki.snackbar.showSnackbar
@@ -67,7 +68,39 @@ abstract class CardViewerFragment(
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
 
-    private val appPermission by lazy { AppPermissions(requireContext()) { showSnackbar(it) } }
+    private var launchWarningSuppressed = false
+
+    private val appPermission
+        by lazy {
+            AppPermissions(
+                requireContext(),
+                showSnackbar = { showSnackbar(it) },
+                showLaunchDeniedDialog = { launchWarning.show() },
+            )
+        }
+
+    private val launchWarning
+        by lazy {
+            ExternalAppLaunchWarning(
+                requireActivity(),
+                onDialogShown = { onLaunchWarningShown() },
+                onDialogDismissed = {
+                    launchWarningSuppressed = true
+                    onLaunchWarningDismissed()
+                },
+                initiallySuppressed = launchWarningSuppressed,
+            )
+        }
+
+    /** Called when the launch warning opens. Subclasses can pause auto-advance here. */
+    protected open fun onLaunchWarningShown() {
+        // no automation here by default
+    }
+
+    /** Called when the launch warning is dismissed. Subclasses can resume auto-advance here. */
+    protected open fun onLaunchWarningDismissed() {
+        // no automation here by default
+    }
 
     /** The [PermissionRequest] being asked about via [optInDialog] or [microphonePermissionLauncher] */
     private var activeRequest: PermissionRequest? = null
@@ -106,6 +139,16 @@ abstract class CardViewerFragment(
             positiveButton(CommonString.dialog_ok) { openAppSettingsScreen() }
             negativeButton(CommonString.dialog_cancel)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        launchWarningSuppressed = savedInstanceState?.getBoolean(STATE_LAUNCH_WARNING_SUPPRESSED) == true
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(STATE_LAUNCH_WARNING_SUPPRESSED, launchWarningSuppressed)
+        super.onSaveInstanceState(outState)
     }
 
     /**
@@ -156,6 +199,16 @@ abstract class CardViewerFragment(
         viewModel.eval.collectInViewLifecycle(Lifecycle.State.CREATED) { eval ->
             webViewLayout.evaluateJavascript(eval)
         }
+    }
+
+    /** Allows a new warning when the displayed card, rather than merely its side, changes. */
+    protected fun onCardChanged() {
+        launchWarningSuppressed = false
+        launchWarning.onCardChanged()
+    }
+
+    private companion object {
+        const val STATE_LAUNCH_WARNING_SUPPRESSED = "launchWarningSuppressed"
     }
 
     override fun onStart() {

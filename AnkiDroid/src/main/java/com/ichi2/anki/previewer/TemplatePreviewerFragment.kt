@@ -56,6 +56,14 @@ class TemplatePreviewerFragment :
                 }
         }
 
+        var displayedOrd: CardOrdinal? = null
+        viewModel.ordFlow.collectInViewLifecycle { ord ->
+            // Reset suppression only after the initially displayed template changes. Resetting on
+            // the first emission would undo suppression restored after an activity recreation.
+            if (displayedOrd != null && displayedOrd != ord) onCardChanged()
+            displayedOrd = ord
+        }
+
         binding.webViewContainer.setFrameStyle()
     }
 

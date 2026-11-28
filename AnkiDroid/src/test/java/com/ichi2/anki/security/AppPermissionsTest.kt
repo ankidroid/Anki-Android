@@ -27,7 +27,14 @@ import kotlin.test.assertNull
 @Config(application = EmptyApplication::class)
 class AppPermissionsTest : RobolectricTest() {
     private val snackbars = mutableListOf<String>()
-    private val permissions get() = AppPermissions(targetContext) { snackbars += it }
+    private var launchDeniedDialogCount = 0
+    private val permissions
+        get() =
+            AppPermissions(
+                targetContext,
+                showSnackbar = { snackbars += it },
+                showLaunchDeniedDialog = { launchDeniedDialogCount++ },
+            )
 
     @Before
     fun resetDenialCounter() {
@@ -72,11 +79,13 @@ class AppPermissionsTest : RobolectricTest() {
     fun jsPermission_suppressionIsProcessWideAcrossInstances() {
         repeat(2) {
             assertFailsWith<DangerousJsPermissionDeniedException> {
-                AppPermissions(targetContext) { snackbars += it }.requirePermission(QUERY_COLLECTION)
+                AppPermissions(targetContext, showSnackbar = { snackbars += it })
+                    .requirePermission(QUERY_COLLECTION)
             }
         }
         assertFailsWith<DangerousJsPermissionDeniedException> {
-            AppPermissions(targetContext) { snackbars += it }.requirePermission(QUERY_COLLECTION)
+            AppPermissions(targetContext, showSnackbar = { snackbars += it })
+                .requirePermission(QUERY_COLLECTION)
         }
         assertThat(snackbars.size, equalTo(2))
     }
@@ -92,6 +101,7 @@ class AppPermissionsTest : RobolectricTest() {
             assertThat(intent.categories, equalTo(setOf(Intent.CATEGORY_BROWSABLE)))
             assertNull(intent.selector)
         }
+        assertThat(launchDeniedDialogCount, equalTo(0))
         assertThat(snackbars.size, equalTo(0))
     }
 
@@ -107,7 +117,8 @@ class AppPermissionsTest : RobolectricTest() {
         for (url in urls) {
             assertNull(permissions.createUrlIntent(url.toUri()), url)
         }
-        assertThat(snackbars.size, equalTo(2))
+        assertThat(launchDeniedDialogCount, equalTo(urls.size))
+        assertThat(snackbars.size, equalTo(0))
     }
 
     @Test
@@ -118,6 +129,7 @@ class AppPermissionsTest : RobolectricTest() {
         assertThat(intent.action, equalTo(Intent.ACTION_VIEW))
         assertThat(intent.data, equalTo(url))
         assertNull(intent.categories)
+        assertThat(launchDeniedDialogCount, equalTo(0))
         assertThat(snackbars.size, equalTo(0))
     }
 
@@ -131,21 +143,19 @@ class AppPermissionsTest : RobolectricTest() {
         allowCardExternalLaunch = true
         assertThat(permissions.checkCanLaunchExternalApps(), equalTo(true))
         assertThat(snackbars.size, equalTo(0))
+        assertThat(launchDeniedDialogCount, equalTo(0))
     }
 
     @Test
-    fun launchExternalApps_snackbarShownForFirstTwoDenialsThenSuppressed() {
+    fun launchExternalApps_deniedShowsDialogOnEveryDenial() {
         repeat(5) { assertThat(permissions.checkCanLaunchExternalApps(), equalTo(false)) }
-        assertThat(snackbars.size, equalTo(2))
+        assertThat(launchDeniedDialogCount, equalTo(5))
     }
 
     @Test
-    fun launchExternalApps_suppressionIsProcessWideAcrossInstances() {
-        repeat(2) {
-            AppPermissions(targetContext) { snackbars += it }.checkCanLaunchExternalApps()
-        }
-        AppPermissions(targetContext) { snackbars += it }.checkCanLaunchExternalApps()
-        assertThat(snackbars.size, equalTo(2))
+    fun launchExternalApps_deniedDoesNotShowSnackbar() {
+        repeat(5) { permissions.checkCanLaunchExternalApps() }
+        assertThat(snackbars.size, equalTo(0))
     }
 }
 
