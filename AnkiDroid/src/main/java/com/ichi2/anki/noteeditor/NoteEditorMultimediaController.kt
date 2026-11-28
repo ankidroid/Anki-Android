@@ -49,6 +49,7 @@ internal class NoteEditorMultimediaController(
     private val launcher: ActivityResultLauncher<Intent>,
 ) {
     private var actionJob: Job? = null
+    private var pendingActionFieldIndex: Int? = null
 
     private val mediaImports = mutableListOf<Job>()
 
@@ -77,10 +78,12 @@ internal class NoteEditorMultimediaController(
      */
     fun handleActions(fieldIndex: Int) {
         actionJob?.cancel()
+        pendingActionFieldIndex = fieldIndex
         actionJob =
             fragment.launchCatchingTask {
                 // Must come before loading the note, or a choice made while the collection is busy is lost.
                 val action = fragment.multimediaViewModel.multimediaAction.first()
+                pendingActionFieldIndex = null
                 Timber.i("Selected multimedia action: %s", action)
                 val note = fragment.getCurrentMultimediaEditableNote()
                 if (note.isEmpty) return@launchCatchingTask
@@ -222,6 +225,7 @@ internal class NoteEditorMultimediaController(
 
     fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable(STATE_KEY_IMAGE_CACHE, pastedImageCache)
+        pendingActionFieldIndex?.let { outState.putInt(STATE_KEY_PENDING_ACTION_FIELD_INDEX, it) }
         galleryPicker.onSaveInstanceState(outState)
     }
 
@@ -230,6 +234,12 @@ internal class NoteEditorMultimediaController(
             state.getSerializableCompat<HashMap<String, String>>(STATE_KEY_IMAGE_CACHE)
                 ?: HashMap()
         galleryPicker.onRestoreInstanceState(state)
+        if (
+            state.containsKey(STATE_KEY_PENDING_ACTION_FIELD_INDEX) &&
+            fragment.parentFragmentManager.findFragmentByTag(MULTIMEDIA_BOTTOM_SHEET_TAG) != null
+        ) {
+            handleActions(state.getInt(STATE_KEY_PENDING_ACTION_FIELD_INDEX))
+        }
     }
 
     /**
@@ -320,5 +330,7 @@ internal class NoteEditorMultimediaController(
     companion object {
         @VisibleForTesting
         const val STATE_KEY_IMAGE_CACHE = "imageCache"
+        private const val STATE_KEY_PENDING_ACTION_FIELD_INDEX = "pendingActionFieldIndex"
+        private const val MULTIMEDIA_BOTTOM_SHEET_TAG = "MultimediaBottomSheet"
     }
 }
